@@ -55,7 +55,7 @@ export const browserSpeechProvider: WordRecognitionProvider = {
   recognize({ targetWord, otherWord, lang = "en-US", signal }) {
     const Recognition = getSpeechRecognitionConstructor();
     if (!Recognition) {
-      return Promise.resolve("unsupported");
+      return Promise.resolve("unsupported" as const);
     }
 
     return new Promise((resolve) => {
@@ -67,7 +67,12 @@ export const browserSpeechProvider: WordRecognitionProvider = {
       recognition.maxAlternatives = 3;
 
       const finish = (
-        outcome: "target" | "other" | "unclear" | "unsupported" | "error",
+        outcome:
+          | "target"
+          | "other"
+          | "unclear"
+          | "unsupported"
+          | "error",
       ) => {
         if (settled) return;
         settled = true;

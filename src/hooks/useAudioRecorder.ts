@@ -32,6 +32,7 @@ export function useAudioRecorder() {
   const [status, setStatus] = useState<RecorderStatus>("idle");
   const [error, setError] = useState<RecorderError | null>(null);
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
+  const [blob, setBlob] = useState<Blob | null>(null);
   const [elapsedMs, setElapsedMs] = useState(0);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -40,6 +41,7 @@ export function useAudioRecorder() {
   const timerRef = useRef<number | null>(null);
   const tickRef = useRef<number | null>(null);
   const objectUrlRef = useRef<string | null>(null);
+  const blobRef = useRef<Blob | null>(null);
 
   const revokeUrl = useCallback(() => {
     if (objectUrlRef.current) {
@@ -47,6 +49,8 @@ export function useAudioRecorder() {
       objectUrlRef.current = null;
       setObjectUrl(null);
     }
+    blobRef.current = null;
+    setBlob(null);
   }, []);
 
   const stopTracks = useCallback(() => {
@@ -104,7 +108,14 @@ export function useAudioRecorder() {
     setStatus("requesting");
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      });
       streamRef.current = stream;
       chunksRef.current = [];
 
@@ -126,21 +137,23 @@ export function useAudioRecorder() {
 
       recorder.onstop = () => {
         clearTimers();
-        const blob = new Blob(chunksRef.current, {
+        const nextBlob = new Blob(chunksRef.current, {
           type: recorder.mimeType || "audio/webm",
         });
         stopTracks();
         mediaRecorderRef.current = null;
 
-        if (blob.size === 0) {
+        if (nextBlob.size === 0) {
           setError("unknown");
           setStatus("error");
           return;
         }
 
-        const url = URL.createObjectURL(blob);
+        const url = URL.createObjectURL(nextBlob);
         objectUrlRef.current = url;
+        blobRef.current = nextBlob;
         setObjectUrl(url);
+        setBlob(nextBlob);
         setStatus("ready");
         setElapsedMs(0);
       };
@@ -186,6 +199,7 @@ export function useAudioRecorder() {
     status,
     error,
     objectUrl,
+    blob,
     elapsedMs,
     maxMs: MAX_MS,
     start,

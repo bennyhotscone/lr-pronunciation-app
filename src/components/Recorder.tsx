@@ -10,7 +10,8 @@ import {
 
 type Props = {
   disabled?: boolean;
-  onRecorded?: () => void;
+  onRecorded?: (blob: Blob) => void;
+  onCleared?: () => void;
   onBusyChange?: (busy: boolean) => void;
 };
 
@@ -27,11 +28,17 @@ function errorMessage(error: RecorderError): string {
   }
 }
 
-export function Recorder({ disabled, onRecorded, onBusyChange }: Props) {
+export function Recorder({
+  disabled,
+  onRecorded,
+  onCleared,
+  onBusyChange,
+}: Props) {
   const {
     status,
     error,
     objectUrl,
+    blob,
     elapsedMs,
     maxMs,
     start,
@@ -41,13 +48,15 @@ export function Recorder({ disabled, onRecorded, onBusyChange }: Props) {
   } = useAudioRecorder();
 
   const onRecordedRef = useRef(onRecorded);
+  const onClearedRef = useRef(onCleared);
   const onBusyChangeRef = useRef(onBusyChange);
   const countedUrlRef = useRef<string | null>(null);
 
   useEffect(() => {
     onRecordedRef.current = onRecorded;
+    onClearedRef.current = onCleared;
     onBusyChangeRef.current = onBusyChange;
-  }, [onRecorded, onBusyChange]);
+  }, [onRecorded, onCleared, onBusyChange]);
 
   useEffect(() => {
     const busy = status === "requesting" || status === "recording";
@@ -55,14 +64,19 @@ export function Recorder({ disabled, onRecorded, onBusyChange }: Props) {
   }, [status]);
 
   useEffect(() => {
-    if (status === "ready" && objectUrl && countedUrlRef.current !== objectUrl) {
+    if (
+      status === "ready" &&
+      objectUrl &&
+      blob &&
+      countedUrlRef.current !== objectUrl
+    ) {
       countedUrlRef.current = objectUrl;
-      onRecordedRef.current?.();
+      onRecordedRef.current?.(blob);
     }
     if (status === "idle") {
       countedUrlRef.current = null;
     }
-  }, [status, objectUrl]);
+  }, [status, objectUrl, blob]);
 
   const remaining = Math.max(0, Math.ceil((maxMs - elapsedMs) / 1000));
   const liveMessage = isRecording
@@ -70,7 +84,7 @@ export function Recorder({ disabled, onRecorded, onBusyChange }: Props) {
     : error
       ? errorMessage(error)
       : status === "ready"
-        ? "Recording ready for playback."
+        ? "Recording ready. Checking pronunciation…"
         : "";
 
   return (
@@ -81,7 +95,8 @@ export function Recorder({ disabled, onRecorded, onBusyChange }: Props) {
       </h2>
       <p className="rounded-2xl bg-accent-soft/70 px-3 py-2 text-sm text-foreground">
         Privacy: recordings stay on this device. Nothing is uploaded. Audio is
-        not saved after you reload.
+        not saved after you reload. After you record, the app reuses that same
+        clip for the on-device check — you only speak once.
       </p>
 
       <div className="flex flex-wrap gap-2">
@@ -109,14 +124,20 @@ export function Recorder({ disabled, onRecorded, onBusyChange }: Props) {
           type="button"
           className="btn-secondary touch-target rounded-2xl px-4 py-3 font-bold disabled:opacity-50"
           disabled={status === "idle" || isRecording}
-          onClick={clear}
+          onClick={() => {
+            clear();
+            onClearedRef.current?.();
+          }}
         >
           Clear
         </button>
       </div>
 
       {isRecording ? (
-        <p className="rounded-2xl bg-coral/15 px-3 py-2 text-sm font-bold text-coral" role="status">
+        <p
+          className="rounded-2xl bg-coral/15 px-3 py-2 text-sm font-bold text-coral"
+          role="status"
+        >
           Recording… auto-stops in {remaining}s
         </p>
       ) : null}

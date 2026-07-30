@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ListeningQuiz } from "@/components/ListeningQuiz";
 import { PairCard } from "@/components/PairCard";
+import { RecognitionDiagnosticsPanel } from "@/components/RecognitionDiagnosticsPanel";
 import { RecognitionResult } from "@/components/RecognitionResult";
 import { Recorder } from "@/components/Recorder";
 import { StatusLiveRegion } from "@/components/StatusLiveRegion";
 import { useLocalProgress } from "@/hooks/useLocalProgress";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { getOtherWord, getPairBySequence, PAIR_COUNT } from "@/lib/pair-utils";
+import { installRecognitionSelfTestGlobal } from "@/lib/recognition/selfTest";
 import { outcomeToLabel } from "@/lib/recognition/types";
 
 type Mode = "listening" | "speaking";
@@ -28,10 +30,49 @@ export default function PracticePage() {
   const [targetSide, setTargetSide] = useState<"left" | "right">("left");
   const [micBusy, setMicBusy] = useState<MicBusy>(null);
   const [listeningRound, setListeningRound] = useState(0);
+  const [recordingBlob, setRecordingBlob] = useState<Blob | null>(null);
+  const autoCheckTokenRef = useRef(0);
+  const warmedRef = useRef(false);
 
   const pair = useMemo(
     () => getPairBySequence(progress.currentSequence),
     [progress.currentSequence],
+  );
+
+  const { supported: recognitionSupported, preload: preloadRecognition } =
+    recognition;
+
+  useEffect(() => {
+    installRecognitionSelfTestGlobal();
+  }, []);
+
+  // Warm the model once the student opens Speaking so the first check is faster.
+  useEffect(() => {
+    if (mode !== "speaking" || !recognitionSupported || warmedRef.current) {
+      return;
+    }
+    warmedRef.current = true;
+    void preloadRecognition();
+  }, [mode, recognitionSupported, preloadRecognition]);
+
+  const runCheck = useCallback(
+    async (blob: Blob, pairId: string, targetWord: string, otherWord: string) => {
+      setMicBusy("recognize");
+      try {
+        const result = await recognition.recognize({
+          targetWord,
+          otherWord,
+          audioBlob: blob,
+        });
+        if (result === "other") {
+          recordRecognitionConfusion(pairId);
+        }
+        return result;
+      } finally {
+        setMicBusy(null);
+      }
+    },
+    [recognition, recordRecognitionConfusion],
   );
 
   if (!ready) {
@@ -44,7 +85,8 @@ export default function PracticePage() {
 
   const targetWord = targetSide === "left" ? pair.leftWord : pair.rightWord;
   const otherWord = getOtherWord(pair, targetWord);
-  const liveRecognition = outcomeToLabel(recognition.outcome);
+  const liveRecognition =
+    recognition.statusMessage || outcomeToLabel(recognition.outcome);
 
   return (
     <div className="space-y-4">
@@ -143,7 +185,20 @@ export default function PracticePage() {
             <Recorder
               disabled={micBusy === "recognize"}
               onBusyChange={(busy) => setMicBusy(busy ? "record" : null)}
-              onRecorded={recordSpeakingAttempt}
+              onCleared={() => {
+                autoCheckTokenRef.current += 1;
+                setRecordingBlob(null);
+                recognition.reset();
+              }}
+              onRecorded={(blob) => {
+                recordSpeakingAttempt();
+                setRecordingBlob(blob);
+                const token = ++autoCheckTokenRef.current;
+                void runCheck(blob, pair.id, targetWord, otherWord).then(() => {
+                  // Ignore stale auto-checks if the student cleared / re-recorded.
+                  if (token !== autoCheckTokenRef.current) return;
+                });
+              }}
             />
           </div>
 
@@ -152,45 +207,60 @@ export default function PracticePage() {
               <p className="chip bg-amber/30 text-foreground">Experimental</p>
               <h2 className="mt-2 text-lg font-bold">On-device AI word check</h2>
               <p className="mt-1 text-sm text-muted">
-                A small speech model runs in your browser and compares its
-                transcript with this word pair. Audio is not uploaded. The
-                first check downloads the model and may take longer.
+                After you record, the same clip is checked automatically on this
+                device. Nothing is uploaded. The first check downloads a small
+                speech model and may take longer.
               </p>
               <p className="mt-2 text-xs text-muted">
-                This is not phoneme-level pronunciation scoring and can still
-                mishear close L/R words or accents.
+                This is a forced choice between the two pair words — not
+                phoneme-level pronunciation scoring. Close L/R pairs and strong
+                accents can still be misheard.
               </p>
             </div>
 
             {!recognition.supported ? (
               <p className="rounded-2xl bg-accent-soft/70 px-3 py-2 text-sm">
                 On-device recognition needs a modern browser with microphone
-                access and Web Workers.
+                access, AudioContext, and Web Workers.
               </p>
             ) : (
               <button
                 type="button"
                 className="btn-secondary touch-target w-full rounded-2xl px-4 py-3 font-bold disabled:opacity-50"
-                disabled={micBusy === "record" || recognition.isListening}
+                disabled={
+                  !recordingBlob ||
+                  micBusy === "record" ||
+                  recognition.isBusy
+                }
                 onClick={() => {
-                  setMicBusy("recognize");
-                  void recognition
-                    .recognize({ targetWord, otherWord })
-                    .then((result) => {
-                      if (result === "other") {
-                        recordRecognitionConfusion(pair.id);
-                      }
-                    })
-                    .finally(() => setMicBusy(null));
+                  if (!recordingBlob) return;
+                  void runCheck(
+                    recordingBlob,
+                    pair.id,
+                    targetWord,
+                    otherWord,
+                  );
                 }}
               >
-                {recognition.isListening
-                  ? "Listening / checking…"
-                  : "Check with on-device AI"}
+                {recognition.isBusy
+                  ? recognition.outcome === "loading"
+                    ? "Loading on-device model…"
+                    : "Checking recording…"
+                  : recordingBlob
+                    ? "Re-check this recording"
+                    : "Record first to check"}
               </button>
             )}
 
-            <RecognitionResult outcome={recognition.outcome} />
+            <RecognitionResult
+              outcome={recognition.outcome}
+              statusMessage={recognition.statusMessage}
+              loadProgress={recognition.loadProgress}
+            />
+
+            <RecognitionDiagnosticsPanel
+              diagnostics={recognition.diagnostics}
+            />
           </section>
 
           <div className="flex gap-2">
@@ -200,6 +270,7 @@ export default function PracticePage() {
               disabled={progress.currentSequence <= 1}
               onClick={() => {
                 recognition.reset();
+                setRecordingBlob(null);
                 setCurrentSequence(progress.currentSequence - 1);
               }}
             >
@@ -211,6 +282,7 @@ export default function PracticePage() {
               disabled={progress.currentSequence >= PAIR_COUNT}
               onClick={() => {
                 recognition.reset();
+                setRecordingBlob(null);
                 setCurrentSequence(progress.currentSequence + 1);
               }}
             >

@@ -1,26 +1,40 @@
+import { canDecodeAudio, decodeBlobToPcm } from "@/lib/recognition/audio";
 import { matchPairWords } from "@/lib/recognition/normalizeTranscript";
 import type {
+  RecognitionBackend,
+  RecognitionDiagnostics,
   RecognitionOutcome,
+  RecognizeOptions,
   WordRecognitionProvider,
 } from "@/lib/recognition/types";
-
-const RECORDING_MS = 2800;
-const TARGET_SAMPLE_RATE = 16_000;
+import { EMPTY_DIAGNOSTICS } from "@/lib/recognition/types";
 
 type WorkerResponse =
-  | { id: number; type: "ready" }
+  | {
+      id: number;
+      type: "ready";
+      backend: RecognitionBackend;
+      modelId: string;
+    }
+  | { id: number; type: "progress"; progress: number }
   | { id: number; type: "result"; transcript: string }
   | { id: number; type: "error"; message: string };
 
+type PendingRequest = {
+  resolve: (value: WorkerResponse) => void;
+  reject: (error: Error) => void;
+  onProgress?: (progress: number) => void;
+};
+
 let worker: Worker | null = null;
 let nextRequestId = 0;
-const pending = new Map<
-  number,
-  {
-    resolve: (transcript: string) => void;
-    reject: (error: Error) => void;
-  }
->();
+const pending = new Map<number, PendingRequest>();
+
+const diagnostics: RecognitionDiagnostics = { ...EMPTY_DIAGNOSTICS };
+
+function updateDiagnostics(patch: Partial<RecognitionDiagnostics>) {
+  Object.assign(diagnostics, patch);
+}
 
 function getWorker(): Worker {
   if (!worker) {
@@ -30,21 +44,31 @@ function getWorker(): Worker {
     worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
       const request = pending.get(event.data.id);
       if (!request) return;
-      pending.delete(event.data.id);
 
+      if (event.data.type === "progress") {
+        request.onProgress?.(event.data.progress);
+        updateDiagnostics({ loadProgress: event.data.progress });
+        return;
+      }
+
+      pending.delete(event.data.id);
       if (event.data.type === "error") {
         request.reject(new Error(event.data.message));
       } else {
-        request.resolve(
-          event.data.type === "result" ? event.data.transcript : "",
-        );
+        request.resolve(event.data);
       }
     };
-    worker.onerror = () => {
+    worker.onerror = (event) => {
+      const message = event.message || "On-device model worker failed";
       for (const request of pending.values()) {
-        request.reject(new Error("On-device model worker failed"));
+        request.reject(new Error(message));
       }
       pending.clear();
+      updateDiagnostics({
+        modelLoaded: false,
+        lastError: message,
+        statusMessage: "Worker crashed while loading the on-device model.",
+      });
       worker?.terminate();
       worker = null;
     };
@@ -53,144 +77,106 @@ function getWorker(): Worker {
 }
 
 function requestWorker(
-  message: { type: "load" } | { type: "transcribe"; audio: Float32Array },
-): Promise<string> {
+  message:
+    | { type: "load" }
+    | {
+        type: "transcribe";
+        audio: Float32Array;
+        candidates?: [string, string];
+      },
+  onProgress?: (progress: number) => void,
+): Promise<WorkerResponse> {
   const id = ++nextRequestId;
   const modelWorker = getWorker();
   return new Promise((resolve, reject) => {
-    pending.set(id, { resolve, reject });
+    pending.set(id, { resolve, reject, onProgress });
     if (message.type === "transcribe") {
-      modelWorker.postMessage({ ...message, id }, [message.audio.buffer]);
+      // Copy before transfer so the caller can keep using the original buffer.
+      const transferable = message.audio.slice();
+      modelWorker.postMessage(
+        { ...message, audio: transferable, id },
+        [transferable.buffer],
+      );
     } else {
       modelWorker.postMessage({ ...message, id });
     }
   });
 }
 
-function resample(input: Float32Array, sourceRate: number): Float32Array {
-  if (sourceRate === TARGET_SAMPLE_RATE) return input;
+async function ensureModel(
+  onProgress?: (progress: number | null) => void,
+  onStatus?: (message: string) => void,
+): Promise<{ backend: RecognitionBackend; modelId: string }> {
+  if (diagnostics.modelLoaded && diagnostics.modelId) {
+    onProgress?.(100);
+    return {
+      backend: diagnostics.backend,
+      modelId: diagnostics.modelId,
+    };
+  }
 
-  const outputLength = Math.round(
-    input.length * (TARGET_SAMPLE_RATE / sourceRate),
+  onStatus?.(
+    "Loading the on-device model… first time only (stays on this device).",
   );
-  const output = new Float32Array(outputLength);
-  const ratio = sourceRate / TARGET_SAMPLE_RATE;
+  updateDiagnostics({
+    statusMessage: "Downloading / loading on-device model…",
+    loadProgress: 0,
+    lastError: "",
+  });
+  onProgress?.(0);
 
-  for (let index = 0; index < outputLength; index += 1) {
-    const sourcePosition = index * ratio;
-    const left = Math.floor(sourcePosition);
-    const right = Math.min(left + 1, input.length - 1);
-    const fraction = sourcePosition - left;
-    output[index] =
-      input[left] * (1 - fraction) + input[right] * fraction;
+  try {
+    const response = await requestWorker({ type: "load" }, (progress) => {
+      onProgress?.(progress);
+      updateDiagnostics({ loadProgress: progress });
+    });
+    if (response.type !== "ready") {
+      throw new Error("Unexpected worker response while loading the model");
+    }
+    updateDiagnostics({
+      modelLoaded: true,
+      modelId: response.modelId,
+      backend: response.backend,
+      loadProgress: 100,
+      statusMessage: `Model ready (${response.backend}).`,
+      lastError: "",
+    });
+    onProgress?.(100);
+    onStatus?.("Model ready. Checking your recording…");
+    return { backend: response.backend, modelId: response.modelId };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Failed to load on-device model";
+    updateDiagnostics({
+      modelLoaded: false,
+      lastError: message,
+      statusMessage: "Recognition unavailable — model failed to load.",
+      loadProgress: null,
+    });
+    throw error;
   }
-  return output;
 }
 
-function prepareAudio(
-  chunks: Float32Array[],
-  sourceRate: number,
-): Float32Array | null {
-  const length = chunks.reduce((total, chunk) => total + chunk.length, 0);
-  if (length === 0) return null;
-
-  const joined = new Float32Array(length);
-  let offset = 0;
-  for (const chunk of chunks) {
-    joined.set(chunk, offset);
-    offset += chunk.length;
-  }
-
-  let peak = 0;
-  let energy = 0;
-  for (const sample of joined) {
-    const magnitude = Math.abs(sample);
-    peak = Math.max(peak, magnitude);
-    energy += sample * sample;
-  }
-  const rms = Math.sqrt(energy / joined.length);
-  if (peak < 0.025 || rms < 0.004) return null;
-
-  const resampled = resample(joined, sourceRate);
-  const scale = Math.min(1 / peak, 4);
-  if (scale > 1) {
-    for (let index = 0; index < resampled.length; index += 1) {
-      resampled[index] *= scale;
-    }
-  }
-  return resampled;
+function isAbortError(error: unknown): boolean {
+  return error instanceof DOMException && error.name === "AbortError";
 }
 
-async function captureAudio(signal?: AbortSignal): Promise<Float32Array | null> {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: {
-      channelCount: 1,
-      echoCancellation: true,
-      noiseSuppression: true,
-      autoGainControl: true,
-    },
-  });
-  const AudioContextConstructor =
-    window.AudioContext ??
-    (
-      window as Window & {
-        webkitAudioContext?: typeof AudioContext;
-      }
-    ).webkitAudioContext;
-
-  if (!AudioContextConstructor) {
-    stream.getTracks().forEach((track) => track.stop());
-    throw new Error("Audio processing is unavailable");
-  }
-
-  const context = new AudioContextConstructor();
-  const source = context.createMediaStreamSource(stream);
-  const processor = context.createScriptProcessor(4096, 1, 1);
-  const mutedOutput = context.createGain();
-  const chunks: Float32Array[] = [];
-
-  mutedOutput.gain.value = 0;
-  source.connect(processor);
-  processor.connect(mutedOutput);
-  mutedOutput.connect(context.destination);
-  processor.onaudioprocess = (event) => {
-    chunks.push(new Float32Array(event.inputBuffer.getChannelData(0)));
-  };
-
-  await context.resume();
-
-  return new Promise((resolve, reject) => {
-    let settled = false;
-    const timer = window.setTimeout(() => finish(), RECORDING_MS);
-
-    const cleanup = () => {
-      window.clearTimeout(timer);
-      signal?.removeEventListener("abort", onAbort);
-      processor.onaudioprocess = null;
-      source.disconnect();
-      processor.disconnect();
-      mutedOutput.disconnect();
-      stream.getTracks().forEach((track) => track.stop());
-      void context.close();
-    };
-    const finish = (error?: Error) => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      if (error) {
-        reject(error);
-      } else {
-        resolve(prepareAudio(chunks, context.sampleRate));
-      }
-    };
-    const onAbort = () => finish(new DOMException("Aborted", "AbortError"));
-
-    if (signal?.aborted) {
-      onAbort();
-      return;
+function classifyMediaError(
+  error: unknown,
+): Exclude<RecognitionOutcome, "idle" | "listening" | "loading"> {
+  if (error instanceof DOMException) {
+    if (
+      error.name === "NotAllowedError" ||
+      error.name === "SecurityError" ||
+      error.name === "NotFoundError" ||
+      error.name === "NotReadableError" ||
+      error.name === "DevicesNotFoundError"
+    ) {
+      return "unsupported";
     }
-    signal?.addEventListener("abort", onAbort, { once: true });
-  });
+    if (error.name === "AbortError") return "error";
+  }
+  return "error";
 }
 
 export const onDeviceWhisperProvider: WordRecognitionProvider = {
@@ -198,50 +184,141 @@ export const onDeviceWhisperProvider: WordRecognitionProvider = {
     return (
       typeof window !== "undefined" &&
       typeof Worker !== "undefined" &&
-      Boolean(navigator.mediaDevices?.getUserMedia) &&
+      canDecodeAudio() &&
       Boolean(
-        window.AudioContext ||
-          (
-            window as Window & {
-              webkitAudioContext?: typeof AudioContext;
-            }
-          ).webkitAudioContext,
+        // Recording OR a synthetic PCM path is enough for support checks.
+        navigator.mediaDevices?.getUserMedia || true,
       )
     );
+  },
+
+  getDiagnostics() {
+    return { ...diagnostics };
+  },
+
+  async preload(onProgress) {
+    return ensureModel(onProgress);
   },
 
   async recognize({
     targetWord,
     otherWord,
     signal,
-  }): Promise<Exclude<RecognitionOutcome, "idle" | "listening">> {
-    if (!this.isSupported()) return "unsupported";
+    audioBlob,
+    audioSamples,
+    onStatus,
+    onProgress,
+    onDiagnostics,
+  }: RecognizeOptions): Promise<
+    Exclude<RecognitionOutcome, "idle" | "listening" | "loading">
+  > {
+    const publish = (patch: Partial<RecognitionDiagnostics>) => {
+      updateDiagnostics(patch);
+      onDiagnostics?.({ ...diagnostics });
+    };
+
+    if (!this.isSupported()) {
+      publish({
+        lastOutcome: "unsupported",
+        lastError: "Browser missing Worker or AudioContext support.",
+        statusMessage: "Recognition unavailable in this browser.",
+      });
+      return "unsupported";
+    }
+
+    if (!audioBlob && !audioSamples) {
+      publish({
+        lastOutcome: "unsupported",
+        lastError: "No recording provided.",
+        statusMessage:
+          "Record yourself first, then the check reuses that recording.",
+      });
+      return "unsupported";
+    }
 
     try {
-      const modelReady = requestWorker({ type: "load" });
-      const audio = await captureAudio(signal);
-      if (!audio) return "unclear";
+      await ensureModel(onProgress, onStatus);
+      if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
 
-      await modelReady;
-      if (signal?.aborted) return "error";
-      const transcript = await requestWorker({ type: "transcribe", audio });
-      return matchPairWords(transcript, targetWord, otherWord);
-    } catch (error) {
-      if (error instanceof DOMException) {
-        if (
-          error.name === "NotAllowedError" ||
-          error.name === "SecurityError" ||
-          error.name === "NotFoundError" ||
-          error.name === "NotReadableError" ||
-          error.name === "DevicesNotFoundError"
-        ) {
-          return "unsupported";
+      onStatus?.("Preparing your recording…");
+      publish({ statusMessage: "Decoding recording…" });
+
+      let samples: Float32Array;
+      if (audioSamples) {
+        samples = audioSamples;
+      } else if (audioBlob) {
+        const prepared = await decodeBlobToPcm(audioBlob);
+        if (prepared.silent) {
+          publish({
+            lastTranscript: "",
+            lastOutcome: "unclear",
+            lastError: "",
+            statusMessage:
+              "Recording was too quiet. Try again closer to the mic.",
+          });
+          return "unclear";
         }
-        if (error.name === "AbortError") {
-          return "error";
-        }
+        samples = prepared.samples;
+      } else {
+        return "unsupported";
       }
-      return "error";
+
+      if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+
+      onStatus?.("Checking with the on-device model…");
+      publish({ statusMessage: "Running on-device transcription…" });
+
+      // Copy — the worker transfers the ArrayBuffer away.
+      const audioForWorker = samples.slice();
+      const response = await requestWorker({
+        type: "transcribe",
+        audio: audioForWorker,
+        candidates: [targetWord, otherWord],
+      });
+
+      if (response.type !== "result") {
+        throw new Error("Unexpected worker response during transcription");
+      }
+
+      const transcript = response.transcript ?? "";
+      const outcome = matchPairWords(transcript, targetWord, otherWord);
+      publish({
+        lastTranscript: transcript,
+        lastOutcome: outcome,
+        lastError: "",
+        statusMessage:
+          outcome === "unclear"
+            ? `Heard “${transcript.trim() || "(silence)"}” — not close enough to either word.`
+            : `Heard “${transcript.trim()}”.`,
+      });
+      return outcome;
+    } catch (error) {
+      if (isAbortError(error)) {
+        publish({
+          lastOutcome: "error",
+          lastError: "Aborted",
+          statusMessage: "Check cancelled.",
+        });
+        return "error";
+      }
+
+      const outcome = classifyMediaError(error);
+      const message =
+        error instanceof Error ? error.message : "Recognition failed";
+      publish({
+        lastOutcome: outcome,
+        lastError: message,
+        statusMessage:
+          outcome === "unsupported"
+            ? `Recognition unavailable: ${message}`
+            : `Error: ${message}`,
+      });
+      return outcome;
     }
   },
 };
+
+/** Test-only helper: reset module diagnostics between Vitest cases. */
+export function __resetWhisperDiagnosticsForTests() {
+  Object.assign(diagnostics, EMPTY_DIAGNOSTICS);
+}
