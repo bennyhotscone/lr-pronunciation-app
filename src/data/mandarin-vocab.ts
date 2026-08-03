@@ -181,7 +181,7 @@ export const MANDARIN_VOCAB_WORDS: MandarinVocabWord[] = [
   {
     rank: 19,
     word: "this",
-    audioFile: "",
+    audioFile: "0019-this.mp3",
     zh: "这个；这",
     en: "used to point to something near or just mentioned",
     group: 1,

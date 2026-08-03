@@ -45,6 +45,7 @@ next-env.d.ts
 # local audio-cut / ASR scratch
 public/audio/mandarin-vocab/_wav_probe/
 public/audio/mandarin-vocab/_rejected/
+public/audio/mandarin-vocab/_bulk_overwrite_backup_1-20/
 public/audio/mandarin-vocab/asr-*.json
 scripts/_align_tmp/
 scripts/_spot_wav/
