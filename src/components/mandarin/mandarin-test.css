@@ -1,0 +1,358 @@
+/* Preserved thermometer / quiz chrome from the standalone HTML POC.
+   Scoped under .mandarin-vocab-test so it does not fight global site styles. */
+
+.mandarin-vocab-test {
+  --mv-card: #fffdf8;
+  --mv-ink: #172026;
+  --mv-muted: #657077;
+  --mv-accent: #e6a900;
+  --mv-accent2: #173a52;
+  --mv-ok: #16784b;
+  --mv-bad: #a12d2d;
+  color: var(--mv-ink);
+}
+
+.mandarin-vocab-test .mv-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.mandarin-vocab-test .mv-card {
+  background: var(--mv-card);
+  border: 1px solid #d7d0c4;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 16px 45px rgba(41, 43, 38, 0.08);
+}
+
+.mandarin-vocab-test .mv-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: var(--mv-muted);
+  font-size: 0.95rem;
+}
+
+.mandarin-vocab-test .mv-ref {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--mv-accent2);
+  background: #eef5fa;
+}
+
+.mandarin-vocab-test .mv-ref-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mv-accent2);
+}
+
+.mandarin-vocab-test .mv-ref-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--mv-ink);
+  letter-spacing: 0.02em;
+}
+
+.mandarin-vocab-test .mv-ref-hint {
+  flex: 1 1 12rem;
+  font-size: 0.82rem;
+  color: var(--mv-muted);
+  line-height: 1.3;
+}
+
+.mandarin-vocab-test .mv-ref-inline {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--mv-accent2);
+}
+
+.mandarin-vocab-test .mv-modes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+
+.mandarin-vocab-test .mv-mode {
+  border: 1px solid #bcb6ab;
+  background: white;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.mandarin-vocab-test .mv-mode.active {
+  background: var(--mv-accent2);
+  color: #fff;
+  border-color: var(--mv-accent2);
+}
+
+.mandarin-vocab-test .mv-audioBox {
+  text-align: center;
+  padding: 18px 0 8px;
+}
+
+.mandarin-vocab-test .mv-play {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--mv-accent);
+  font-size: 2.2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(230, 169, 0, 0.3);
+}
+
+.mandarin-vocab-test .mv-listenCount {
+  margin-top: 10px;
+  color: var(--mv-muted);
+}
+
+.mandarin-vocab-test .mv-reveal {
+  display: block;
+  margin: 14px auto;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--mv-accent2);
+  font-weight: 700;
+}
+
+.mandarin-vocab-test .mv-word {
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  min-height: 44px;
+  margin: 8px 0 20px;
+}
+
+.mandarin-vocab-test .mv-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mandarin-vocab-test .mv-opt {
+  padding: 16px;
+  text-align: left;
+  border: 1px solid #c8c1b5;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.mandarin-vocab-test .mv-opt:hover:not(:disabled) {
+  border-color: var(--mv-accent2);
+}
+
+.mandarin-vocab-test .mv-opt.correct {
+  background: #e4f5ec;
+  border-color: var(--mv-ok);
+}
+
+.mandarin-vocab-test .mv-opt.wrong {
+  background: #fbe8e8;
+  border-color: var(--mv-bad);
+}
+
+.mandarin-vocab-test .mv-opt:disabled {
+  cursor: default;
+}
+
+.mandarin-vocab-test .mv-feedback {
+  min-height: 54px;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.mandarin-vocab-test .mv-feedback.ok {
+  background: #e4f5ec;
+  color: var(--mv-ok);
+}
+
+.mandarin-vocab-test .mv-feedback.bad {
+  background: #fbe8e8;
+  color: var(--mv-bad);
+}
+
+.mandarin-vocab-test .mv-footerrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  gap: 12px;
+}
+
+.mandarin-vocab-test .mv-next {
+  background: var(--mv-accent2);
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mandarin-vocab-test .mv-next:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mandarin-vocab-test .mv-bar {
+  height: 9px;
+  background: #ddd6ca;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.mandarin-vocab-test .mv-fill {
+  height: 100%;
+  background: var(--mv-accent);
+  width: 0;
+  transition: width 0.35s ease;
+}
+
+.mandarin-vocab-test .mv-progressSide {
+  background: #fffdf8;
+  border: 1px solid #d7d0c4;
+  border-radius: 18px;
+  padding: 18px 12px;
+  box-shadow: 0 16px 45px rgba(41, 43, 38, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+}
+
+.mandarin-vocab-test .mv-thermo {
+  position: relative;
+  width: 46px;
+  height: 320px;
+  border: 4px solid var(--mv-accent2);
+  border-radius: 28px;
+  background: #ece7dc;
+  overflow: hidden;
+}
+
+.mandarin-vocab-test .mv-mercury {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: linear-gradient(180deg, #f5c240, #e58d00);
+  transition: height 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mandarin-vocab-test .mv-bulb {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--mv-accent);
+  border: 4px solid var(--mv-accent2);
+  margin-top: -10px;
+  z-index: 2;
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.mandarin-vocab-test .mv-progressLabel {
+  text-align: center;
+  font-weight: 900;
+  margin-top: 18px;
+}
+
+.mandarin-vocab-test .mv-progressSub {
+  text-align: center;
+  color: var(--mv-muted);
+  font-size: 0.85rem;
+  line-height: 1.3;
+  margin-top: 6px;
+}
+
+.mandarin-vocab-test .mv-saveNote {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--mv-muted);
+  text-align: center;
+}
+
+.mandarin-vocab-test .mv-note {
+  font-size: 0.9rem;
+  color: var(--mv-muted);
+  margin-top: 18px;
+  line-height: 1.45;
+}
+
+@media (max-width: 760px) {
+  .mandarin-vocab-test .mv-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mandarin-vocab-test .mv-progressSide {
+    min-height: auto;
+    flex-direction: row;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .mandarin-vocab-test .mv-thermo {
+    width: 220px;
+    height: 28px;
+    border-radius: 20px;
+  }
+
+  .mandarin-vocab-test .mv-mercury {
+    top: 0;
+    bottom: 0;
+    width: 0;
+    height: 100% !important;
+    transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mandarin-vocab-test .mv-bulb {
+    width: 54px;
+    height: 54px;
+    margin: 0 0 0 -14px;
+  }
+
+  .mandarin-vocab-test .mv-progressLabel,
+  .mandarin-vocab-test .mv-progressSub,
+  .mandarin-vocab-test .mv-saveNote {
+    text-align: left;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .mandarin-vocab-test .mv-options {
+    grid-template-columns: 1fr;
+  }
+
+  .mandarin-vocab-test .mv-card {
+    padding: 18px;
+  }
+
+  .mandarin-vocab-test .mv-play {
+    width: 82px;
+    height: 82px;
+  }
+}

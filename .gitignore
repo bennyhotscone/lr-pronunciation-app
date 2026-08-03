@@ -41,3 +41,22 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# local audio-cut / ASR scratch
+public/audio/mandarin-vocab/_wav_probe/
+public/audio/mandarin-vocab/_rejected/
+public/audio/mandarin-vocab/asr-*.json
+scripts/_align_tmp/
+scripts/_spot_wav/
+scripts/docx_tmp/
+scripts/docx_tmp.zip
+scripts/silence-*.txt
+scripts/silence-cut-log.txt
+scripts/segment-asr.json
+scripts/asr-verify*.json
+scripts/spot-check*.json
+scripts/align-result.json
+scripts/speech-segments.json
+scripts/coca_try.csv
+scripts/all.dart
+

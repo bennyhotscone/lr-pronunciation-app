@@ -70,6 +70,18 @@ export default function HomePage() {
             {hasStarted ? "Continue practising →" : "Start practising →"}
           </Link>
 
+          <Link
+            href="/english-for-mandarin-speakers"
+            className="touch-target inline-flex w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-amber bg-gradient-to-br from-amber/30 via-white to-accent-soft px-4 py-4 text-center shadow-md shadow-amber/20 transition hover:brightness-105"
+          >
+            <span className="text-base font-bold text-foreground sm:text-lg">
+              English for Mandarin Speakers
+            </span>
+            <span className="text-sm font-semibold text-muted">
+              中文母语者英语课程
+            </span>
+          </Link>
+
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Link
               href="/practice"
