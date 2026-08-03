@@ -1,0 +1,2012 @@
+{
+  "generatedAt": "2026-08-03T01:43:57.987Z",
+  "sourceMp3": "C:\\Users\\Administrator\\Downloads\\0001 (4).mp3",
+  "wordList": "filiph/english_words frequency lemmas (single 'to')",
+  "noiseDb": "-35dB",
+  "minSilence": "0.22",
+  "padSec": 0.08,
+  "analyzeSeconds": 900,
+  "candidateSegments": 683,
+  "clips": [
+    {
+      "rank": 1,
+      "word": "the",
+      "audio": "0001-the.mp3",
+      "startTime": 0.188,
+      "endTime": 0.837,
+      "speechStart": 0.268,
+      "speechEnd": 0.757,
+      "duration": 0.648
+    },
+    {
+      "rank": 2,
+      "word": "be",
+      "audio": "0002-be.mp3",
+      "startTime": 1.285,
+      "endTime": 1.88,
+      "speechStart": 1.365,
+      "speechEnd": 1.8,
+      "duration": 0.594
+    },
+    {
+      "rank": 3,
+      "word": "and",
+      "audio": "0003-and.mp3",
+      "startTime": 2.413,
+      "endTime": 3.23,
+      "speechStart": 2.493,
+      "speechEnd": 3.15,
+      "duration": 0.817
+    },
+    {
+      "rank": 4,
+      "word": "of",
+      "audio": "0004-of.mp3",
+      "startTime": 3.631,
+      "endTime": 4.315,
+      "speechStart": 3.711,
+      "speechEnd": 4.235,
+      "duration": 0.684
+    },
+    {
+      "rank": 5,
+      "word": "a",
+      "audio": "0005-a.mp3",
+      "startTime": 4.787,
+      "endTime": 5.345,
+      "speechStart": 4.867,
+      "speechEnd": 5.265,
+      "duration": 0.559
+    },
+    {
+      "rank": 6,
+      "word": "in",
+      "audio": "0006-in.mp3",
+      "startTime": 5.814,
+      "endTime": 6.436,
+      "speechStart": 5.894,
+      "speechEnd": 6.356,
+      "duration": 0.622
+    },
+    {
+      "rank": 7,
+      "word": "to",
+      "audio": "0007-to.mp3",
+      "startTime": 6.911,
+      "endTime": 7.578,
+      "speechStart": 6.991,
+      "speechEnd": 7.498,
+      "duration": 0.668
+    },
+    {
+      "rank": 8,
+      "word": "have",
+      "audio": "0008-have.mp3",
+      "startTime": 8.047,
+      "endTime": 8.831,
+      "speechStart": 8.127,
+      "speechEnd": 8.751,
+      "duration": 0.783
+    },
+    {
+      "rank": 9,
+      "word": "it",
+      "audio": "0009-it.mp3",
+      "startTime": 9.272,
+      "endTime": 9.94,
+      "speechStart": 9.352,
+      "speechEnd": 9.86,
+      "duration": 0.668
+    },
+    {
+      "rank": 10,
+      "word": "I",
+      "audio": "0010-i.mp3",
+      "startTime": 10.398,
+      "endTime": 11.036,
+      "speechStart": 10.478,
+      "speechEnd": 10.956,
+      "duration": 0.638
+    },
+    {
+      "rank": 11,
+      "word": "that",
+      "audio": "0011-that.mp3",
+      "startTime": 11.546,
+      "endTime": 12.088,
+      "speechStart": 11.626,
+      "speechEnd": 12.008,
+      "duration": 0.542
+    },
+    {
+      "rank": 12,
+      "word": "for",
+      "audio": "0012-for.mp3",
+      "startTime": 12.513,
+      "endTime": 13.273,
+      "speechStart": 12.593,
+      "speechEnd": 13.193,
+      "duration": 0.76
+    },
+    {
+      "rank": 13,
+      "word": "you",
+      "audio": "0013-you.mp3",
+      "startTime": 13.735,
+      "endTime": 14.537,
+      "speechStart": 13.815,
+      "speechEnd": 14.457,
+      "duration": 0.802
+    },
+    {
+      "rank": 14,
+      "word": "he",
+      "audio": "0014-he.mp3",
+      "startTime": 15.017,
+      "endTime": 15.693,
+      "speechStart": 15.097,
+      "speechEnd": 15.613,
+      "duration": 0.676
+    },
+    {
+      "rank": 15,
+      "word": "with",
+      "audio": "0015-with.mp3",
+      "startTime": 16.148,
+      "endTime": 16.727,
+      "speechStart": 16.228,
+      "speechEnd": 16.647,
+      "duration": 0.578
+    },
+    {
+      "rank": 16,
+      "word": "on",
+      "audio": "0016-on.mp3",
+      "startTime": 17.218,
+      "endTime": 17.947,
+      "speechStart": 17.298,
+      "speechEnd": 17.867,
+      "duration": 0.73
+    },
+    {
+      "rank": 17,
+      "word": "do",
+      "audio": "0017-do.mp3",
+      "startTime": 18.438,
+      "endTime": 19.081,
+      "speechStart": 18.518,
+      "speechEnd": 19.001,
+      "duration": 0.643
+    },
+    {
+      "rank": 18,
+      "word": "say",
+      "audio": "0018-say.mp3",
+      "startTime": 19.6,
+      "endTime": 20.215,
+      "speechStart": 19.68,
+      "speechEnd": 20.135,
+      "duration": 0.615
+    },
+    {
+      "rank": 19,
+      "word": "this",
+      "audio": "0019-this.mp3",
+      "startTime": 20.703,
+      "endTime": 21.505,
+      "speechStart": 20.783,
+      "speechEnd": 21.425,
+      "duration": 0.801
+    },
+    {
+      "rank": 20,
+      "word": "they",
+      "audio": "0020-they.mp3",
+      "startTime": 22.037,
+      "endTime": 22.732,
+      "speechStart": 22.116,
+      "speechEnd": 22.652,
+      "duration": 0.696
+    },
+    {
+      "rank": 21,
+      "word": "at",
+      "audio": "0021-at.mp3",
+      "startTime": 23.226,
+      "endTime": 24.071,
+      "speechStart": 23.306,
+      "speechEnd": 23.991,
+      "duration": 0.845
+    },
+    {
+      "rank": 22,
+      "word": "but",
+      "audio": "0022-but.mp3",
+      "startTime": 24.599,
+      "endTime": 25.284,
+      "speechStart": 24.679,
+      "speechEnd": 25.204,
+      "duration": 0.685
+    },
+    {
+      "rank": 23,
+      "word": "we",
+      "audio": "0023-we.mp3",
+      "startTime": 25.705,
+      "endTime": 26.389,
+      "speechStart": 25.785,
+      "speechEnd": 26.309,
+      "duration": 0.683
+    },
+    {
+      "rank": 24,
+      "word": "his",
+      "audio": "0024-his.mp3",
+      "startTime": 26.852,
+      "endTime": 27.509,
+      "speechStart": 26.932,
+      "speechEnd": 27.429,
+      "duration": 0.657
+    },
+    {
+      "rank": 25,
+      "word": "from",
+      "audio": "0025-from.mp3",
+      "startTime": 27.983,
+      "endTime": 28.677,
+      "speechStart": 28.063,
+      "speechEnd": 28.598,
+      "duration": 0.694
+    },
+    {
+      "rank": 26,
+      "word": "not",
+      "audio": "0026-not.mp3",
+      "startTime": 29.113,
+      "endTime": 29.989,
+      "speechStart": 29.193,
+      "speechEnd": 29.909,
+      "duration": 0.876
+    },
+    {
+      "rank": 27,
+      "word": "by",
+      "audio": "0027-by.mp3",
+      "startTime": 30.515,
+      "endTime": 31.274,
+      "speechStart": 30.595,
+      "speechEnd": 31.195,
+      "duration": 0.76
+    },
+    {
+      "rank": 28,
+      "word": "she",
+      "audio": "0028-she.mp3",
+      "startTime": 31.762,
+      "endTime": 32.413,
+      "speechStart": 31.842,
+      "speechEnd": 32.333,
+      "duration": 0.651
+    },
+    {
+      "rank": 29,
+      "word": "or",
+      "audio": "0029-or.mp3",
+      "startTime": 32.957,
+      "endTime": 33.508,
+      "speechStart": 33.037,
+      "speechEnd": 33.428,
+      "duration": 0.552
+    },
+    {
+      "rank": 30,
+      "word": "as",
+      "audio": "0030-as.mp3",
+      "startTime": 33.951,
+      "endTime": 34.692,
+      "speechStart": 34.031,
+      "speechEnd": 34.612,
+      "duration": 0.741
+    },
+    {
+      "rank": 31,
+      "word": "what",
+      "audio": "0031-what.mp3",
+      "startTime": 35.163,
+      "endTime": 35.974,
+      "speechStart": 35.243,
+      "speechEnd": 35.894,
+      "duration": 0.81
+    },
+    {
+      "rank": 32,
+      "word": "go",
+      "audio": "0032-go.mp3",
+      "startTime": 36.395,
+      "endTime": 37.178,
+      "speechStart": 36.475,
+      "speechEnd": 37.098,
+      "duration": 0.783
+    },
+    {
+      "rank": 33,
+      "word": "their",
+      "audio": "0033-their.mp3",
+      "startTime": 37.62,
+      "endTime": 38.285,
+      "speechStart": 37.7,
+      "speechEnd": 38.205,
+      "duration": 0.665
+    },
+    {
+      "rank": 34,
+      "word": "can",
+      "audio": "0034-can.mp3",
+      "startTime": 38.816,
+      "endTime": 39.514,
+      "speechStart": 38.896,
+      "speechEnd": 39.434,
+      "duration": 0.698
+    },
+    {
+      "rank": 35,
+      "word": "who",
+      "audio": "0035-who.mp3",
+      "startTime": 39.959,
+      "endTime": 40.695,
+      "speechStart": 40.039,
+      "speechEnd": 40.615,
+      "duration": 0.735
+    },
+    {
+      "rank": 36,
+      "word": "get",
+      "audio": "0036-get.mp3",
+      "startTime": 41.209,
+      "endTime": 41.81,
+      "speechStart": 41.289,
+      "speechEnd": 41.73,
+      "duration": 0.601
+    },
+    {
+      "rank": 37,
+      "word": "if",
+      "audio": "0037-if.mp3",
+      "startTime": 42.24,
+      "endTime": 42.989,
+      "speechStart": 42.32,
+      "speechEnd": 42.909,
+      "duration": 0.748
+    },
+    {
+      "rank": 38,
+      "word": "would",
+      "audio": "0038-would.mp3",
+      "startTime": 43.52,
+      "endTime": 44.22,
+      "speechStart": 43.6,
+      "speechEnd": 44.14,
+      "duration": 0.7
+    },
+    {
+      "rank": 39,
+      "word": "her",
+      "audio": "0039-her.mp3",
+      "startTime": 44.683,
+      "endTime": 45.29,
+      "speechStart": 44.763,
+      "speechEnd": 45.21,
+      "duration": 0.607
+    },
+    {
+      "rank": 40,
+      "word": "all",
+      "audio": "0040-all.mp3",
+      "startTime": 45.811,
+      "endTime": 46.472,
+      "speechStart": 45.891,
+      "speechEnd": 46.392,
+      "duration": 0.661
+    },
+    {
+      "rank": 41,
+      "word": "my",
+      "audio": "0041-my.mp3",
+      "startTime": 47.024,
+      "endTime": 47.859,
+      "speechStart": 47.104,
+      "speechEnd": 47.779,
+      "duration": 0.835
+    },
+    {
+      "rank": 42,
+      "word": "make",
+      "audio": "0042-make.mp3",
+      "startTime": 48.332,
+      "endTime": 49.014,
+      "speechStart": 48.412,
+      "speechEnd": 48.934,
+      "duration": 0.681
+    },
+    {
+      "rank": 43,
+      "word": "about",
+      "audio": "0043-about.mp3",
+      "startTime": 49.452,
+      "endTime": 50.277,
+      "speechStart": 49.532,
+      "speechEnd": 50.197,
+      "duration": 0.825
+    },
+    {
+      "rank": 44,
+      "word": "know",
+      "audio": "0044-know.mp3",
+      "startTime": 50.699,
+      "endTime": 51.595,
+      "speechStart": 50.779,
+      "speechEnd": 51.515,
+      "duration": 0.896
+    },
+    {
+      "rank": 45,
+      "word": "will",
+      "audio": "0045-will.mp3",
+      "startTime": 52.084,
+      "endTime": 52.902,
+      "speechStart": 52.164,
+      "speechEnd": 52.822,
+      "duration": 0.818
+    },
+    {
+      "rank": 46,
+      "word": "up",
+      "audio": "0046-up.mp3",
+      "startTime": 53.343,
+      "endTime": 54.089,
+      "speechStart": 53.423,
+      "speechEnd": 54.009,
+      "duration": 0.746
+    },
+    {
+      "rank": 47,
+      "word": "one",
+      "audio": "0047-one.mp3",
+      "startTime": 54.533,
+      "endTime": 55.343,
+      "speechStart": 54.613,
+      "speechEnd": 55.263,
+      "duration": 0.81
+    },
+    {
+      "rank": 48,
+      "word": "time",
+      "audio": "0048-time.mp3",
+      "startTime": 55.789,
+      "endTime": 56.503,
+      "speechStart": 55.869,
+      "speechEnd": 56.423,
+      "duration": 0.714
+    },
+    {
+      "rank": 49,
+      "word": "there",
+      "audio": "0049-there.mp3",
+      "startTime": 56.963,
+      "endTime": 57.529,
+      "speechStart": 57.043,
+      "speechEnd": 57.449,
+      "duration": 0.566
+    },
+    {
+      "rank": 50,
+      "word": "year",
+      "audio": "0050-year.mp3",
+      "startTime": 58.055,
+      "endTime": 58.866,
+      "speechStart": 58.135,
+      "speechEnd": 58.786,
+      "duration": 0.811
+    },
+    {
+      "rank": 51,
+      "word": "so",
+      "audio": "0051-so.mp3",
+      "startTime": 59.36,
+      "endTime": 60.085,
+      "speechStart": 59.44,
+      "speechEnd": 60.005,
+      "duration": 0.724
+    },
+    {
+      "rank": 52,
+      "word": "think",
+      "audio": "0052-think.mp3",
+      "startTime": 60.495,
+      "endTime": 61.273,
+      "speechStart": 60.575,
+      "speechEnd": 61.193,
+      "duration": 0.778
+    },
+    {
+      "rank": 53,
+      "word": "when",
+      "audio": "0053-when.mp3",
+      "startTime": 61.747,
+      "endTime": 62.574,
+      "speechStart": 61.827,
+      "speechEnd": 62.494,
+      "duration": 0.827
+    },
+    {
+      "rank": 54,
+      "word": "which",
+      "audio": "0054-which.mp3",
+      "startTime": 63.022,
+      "endTime": 63.831,
+      "speechStart": 63.102,
+      "speechEnd": 63.751,
+      "duration": 0.809
+    },
+    {
+      "rank": 55,
+      "word": "them",
+      "audio": "0055-them.mp3",
+      "startTime": 64.318,
+      "endTime": 65.135,
+      "speechStart": 64.398,
+      "speechEnd": 65.055,
+      "duration": 0.817
+    },
+    {
+      "rank": 56,
+      "word": "some",
+      "audio": "0056-some.mp3",
+      "startTime": 65.575,
+      "endTime": 66.289,
+      "speechStart": 65.655,
+      "speechEnd": 66.209,
+      "duration": 0.714
+    },
+    {
+      "rank": 57,
+      "word": "me",
+      "audio": "0057-me.mp3",
+      "startTime": 66.807,
+      "endTime": 67.603,
+      "speechStart": 66.887,
+      "speechEnd": 67.523,
+      "duration": 0.796
+    },
+    {
+      "rank": 58,
+      "word": "people",
+      "audio": "0058-people.mp3",
+      "startTime": 68.104,
+      "endTime": 68.819,
+      "speechStart": 68.184,
+      "speechEnd": 68.739,
+      "duration": 0.715
+    },
+    {
+      "rank": 59,
+      "word": "take",
+      "audio": "0059-take.mp3",
+      "startTime": 69.297,
+      "endTime": 70.07,
+      "speechStart": 69.377,
+      "speechEnd": 69.99,
+      "duration": 0.772
+    },
+    {
+      "rank": 60,
+      "word": "out",
+      "audio": "0060-out.mp3",
+      "startTime": 70.555,
+      "endTime": 71.298,
+      "speechStart": 70.635,
+      "speechEnd": 71.218,
+      "duration": 0.744
+    },
+    {
+      "rank": 61,
+      "word": "into",
+      "audio": "0061-into.mp3",
+      "startTime": 71.788,
+      "endTime": 72.449,
+      "speechStart": 71.868,
+      "speechEnd": 72.369,
+      "duration": 0.661
+    },
+    {
+      "rank": 62,
+      "word": "just",
+      "audio": "0062-just.mp3",
+      "startTime": 72.88,
+      "endTime": 73.659,
+      "speechStart": 72.96,
+      "speechEnd": 73.579,
+      "duration": 0.778
+    },
+    {
+      "rank": 63,
+      "word": "see",
+      "audio": "0063-see.mp3",
+      "startTime": 74.073,
+      "endTime": 74.926,
+      "speechStart": 74.153,
+      "speechEnd": 74.846,
+      "duration": 0.853
+    },
+    {
+      "rank": 64,
+      "word": "him",
+      "audio": "0064-him.mp3",
+      "startTime": 75.385,
+      "endTime": 76.258,
+      "speechStart": 75.465,
+      "speechEnd": 76.178,
+      "duration": 0.874
+    },
+    {
+      "rank": 65,
+      "word": "your",
+      "audio": "0065-your.mp3",
+      "startTime": 76.675,
+      "endTime": 77.349,
+      "speechStart": 76.755,
+      "speechEnd": 77.269,
+      "duration": 0.674
+    },
+    {
+      "rank": 66,
+      "word": "come",
+      "audio": "0066-come.mp3",
+      "startTime": 77.838,
+      "endTime": 78.563,
+      "speechStart": 77.918,
+      "speechEnd": 78.483,
+      "duration": 0.725
+    },
+    {
+      "rank": 67,
+      "word": "could",
+      "audio": "0067-could.mp3",
+      "startTime": 79.075,
+      "endTime": 79.785,
+      "speechStart": 79.155,
+      "speechEnd": 79.706,
+      "duration": 0.71
+    },
+    {
+      "rank": 68,
+      "word": "now",
+      "audio": "0068-now.mp3",
+      "startTime": 80.253,
+      "endTime": 80.952,
+      "speechStart": 80.333,
+      "speechEnd": 80.872,
+      "duration": 0.699
+    },
+    {
+      "rank": 69,
+      "word": "than",
+      "audio": "0069-than.mp3",
+      "startTime": 81.419,
+      "endTime": 82.103,
+      "speechStart": 81.499,
+      "speechEnd": 82.023,
+      "duration": 0.684
+    },
+    {
+      "rank": 70,
+      "word": "like",
+      "audio": "0070-like.mp3",
+      "startTime": 82.599,
+      "endTime": 83.295,
+      "speechStart": 82.679,
+      "speechEnd": 83.215,
+      "duration": 0.696
+    },
+    {
+      "rank": 71,
+      "word": "other",
+      "audio": "0071-other.mp3",
+      "startTime": 83.775,
+      "endTime": 84.671,
+      "speechStart": 83.855,
+      "speechEnd": 84.591,
+      "duration": 0.896
+    },
+    {
+      "rank": 72,
+      "word": "how",
+      "audio": "0072-how.mp3",
+      "startTime": 85.107,
+      "endTime": 85.733,
+      "speechStart": 85.187,
+      "speechEnd": 85.653,
+      "duration": 0.626
+    },
+    {
+      "rank": 73,
+      "word": "then",
+      "audio": "0073-then.mp3",
+      "startTime": 86.225,
+      "endTime": 87.004,
+      "speechStart": 86.305,
+      "speechEnd": 86.924,
+      "duration": 0.779
+    },
+    {
+      "rank": 74,
+      "word": "its",
+      "audio": "0074-its.mp3",
+      "startTime": 87.489,
+      "endTime": 88.114,
+      "speechStart": 87.569,
+      "speechEnd": 88.034,
+      "duration": 0.625
+    },
+    {
+      "rank": 75,
+      "word": "our",
+      "audio": "0075-our.mp3",
+      "startTime": 88.564,
+      "endTime": 89.27,
+      "speechStart": 88.644,
+      "speechEnd": 89.19,
+      "duration": 0.706
+    },
+    {
+      "rank": 76,
+      "word": "two",
+      "audio": "0076-two.mp3",
+      "startTime": 89.76,
+      "endTime": 90.42,
+      "speechStart": 89.84,
+      "speechEnd": 90.34,
+      "duration": 0.66
+    },
+    {
+      "rank": 77,
+      "word": "more",
+      "audio": "0077-more.mp3",
+      "startTime": 90.888,
+      "endTime": 91.678,
+      "speechStart": 90.968,
+      "speechEnd": 91.598,
+      "duration": 0.79
+    },
+    {
+      "rank": 78,
+      "word": "these",
+      "audio": "0078-these.mp3",
+      "startTime": 92.184,
+      "endTime": 92.868,
+      "speechStart": 92.264,
+      "speechEnd": 92.788,
+      "duration": 0.684
+    },
+    {
+      "rank": 79,
+      "word": "want",
+      "audio": "0079-want.mp3",
+      "startTime": 93.308,
+      "endTime": 94.122,
+      "speechStart": 93.388,
+      "speechEnd": 94.042,
+      "duration": 0.814
+    },
+    {
+      "rank": 80,
+      "word": "way",
+      "audio": "0080-way.mp3",
+      "startTime": 94.621,
+      "endTime": 95.44,
+      "speechStart": 94.701,
+      "speechEnd": 95.36,
+      "duration": 0.819
+    },
+    {
+      "rank": 81,
+      "word": "look",
+      "audio": "0081-look.mp3",
+      "startTime": 95.901,
+      "endTime": 96.62,
+      "speechStart": 95.981,
+      "speechEnd": 96.54,
+      "duration": 0.719
+    },
+    {
+      "rank": 82,
+      "word": "first",
+      "audio": "0082-first.mp3",
+      "startTime": 97.08,
+      "endTime": 97.811,
+      "speechStart": 97.16,
+      "speechEnd": 97.731,
+      "duration": 0.731
+    },
+    {
+      "rank": 83,
+      "word": "also",
+      "audio": "0083-also.mp3",
+      "startTime": 98.279,
+      "endTime": 99.046,
+      "speechStart": 98.359,
+      "speechEnd": 98.966,
+      "duration": 0.767
+    },
+    {
+      "rank": 84,
+      "word": "new",
+      "audio": "0084-new.mp3",
+      "startTime": 99.535,
+      "endTime": 100.591,
+      "speechStart": 99.615,
+      "speechEnd": 100.511,
+      "duration": 1.056
+    },
+    {
+      "rank": 85,
+      "word": "because",
+      "audio": "0085-because.mp3",
+      "startTime": 101.016,
+      "endTime": 101.907,
+      "speechStart": 101.096,
+      "speechEnd": 101.827,
+      "duration": 0.891
+    },
+    {
+      "rank": 86,
+      "word": "day",
+      "audio": "0086-day.mp3",
+      "startTime": 102.378,
+      "endTime": 103.165,
+      "speechStart": 102.458,
+      "speechEnd": 103.085,
+      "duration": 0.787
+    },
+    {
+      "rank": 87,
+      "word": "use",
+      "audio": "0087-use.mp3",
+      "startTime": 103.643,
+      "endTime": 104.6,
+      "speechStart": 103.723,
+      "speechEnd": 104.52,
+      "duration": 0.958
+    },
+    {
+      "rank": 88,
+      "word": "no",
+      "audio": "0088-no.mp3",
+      "startTime": 105.129,
+      "endTime": 105.77,
+      "speechStart": 105.209,
+      "speechEnd": 105.69,
+      "duration": 0.641
+    },
+    {
+      "rank": 89,
+      "word": "man",
+      "audio": "0089-man.mp3",
+      "startTime": 106.313,
+      "endTime": 106.996,
+      "speechStart": 106.392,
+      "speechEnd": 106.916,
+      "duration": 0.684
+    },
+    {
+      "rank": 90,
+      "word": "find",
+      "audio": "0090-find.mp3",
+      "startTime": 107.455,
+      "endTime": 108.286,
+      "speechStart": 107.535,
+      "speechEnd": 108.206,
+      "duration": 0.831
+    },
+    {
+      "rank": 91,
+      "word": "here",
+      "audio": "0091-here.mp3",
+      "startTime": 108.831,
+      "endTime": 109.649,
+      "speechStart": 108.911,
+      "speechEnd": 109.569,
+      "duration": 0.818
+    },
+    {
+      "rank": 92,
+      "word": "thing",
+      "audio": "0092-thing.mp3",
+      "startTime": 110.1,
+      "endTime": 110.711,
+      "speechStart": 110.18,
+      "speechEnd": 110.631,
+      "duration": 0.611
+    },
+    {
+      "rank": 93,
+      "word": "give",
+      "audio": "0093-give.mp3",
+      "startTime": 111.138,
+      "endTime": 112.184,
+      "speechStart": 111.218,
+      "speechEnd": 112.104,
+      "duration": 1.047
+    },
+    {
+      "rank": 94,
+      "word": "many",
+      "audio": "0094-many.mp3",
+      "startTime": 112.644,
+      "endTime": 113.371,
+      "speechStart": 112.724,
+      "speechEnd": 113.291,
+      "duration": 0.727
+    },
+    {
+      "rank": 95,
+      "word": "well",
+      "audio": "0095-well.mp3",
+      "startTime": 113.909,
+      "endTime": 114.612,
+      "speechStart": 113.989,
+      "speechEnd": 114.532,
+      "duration": 0.703
+    },
+    {
+      "rank": 96,
+      "word": "only",
+      "audio": "0096-only.mp3",
+      "startTime": 115.15,
+      "endTime": 115.866,
+      "speechStart": 115.23,
+      "speechEnd": 115.786,
+      "duration": 0.716
+    },
+    {
+      "rank": 97,
+      "word": "those",
+      "audio": "0097-those.mp3",
+      "startTime": 116.39,
+      "endTime": 117.122,
+      "speechStart": 116.47,
+      "speechEnd": 117.042,
+      "duration": 0.732
+    },
+    {
+      "rank": 98,
+      "word": "tell",
+      "audio": "0098-tell.mp3",
+      "startTime": 117.575,
+      "endTime": 118.411,
+      "speechStart": 117.655,
+      "speechEnd": 118.331,
+      "duration": 0.836
+    },
+    {
+      "rank": 99,
+      "word": "very",
+      "audio": "0099-very.mp3",
+      "startTime": 118.91,
+      "endTime": 119.723,
+      "speechStart": 118.99,
+      "speechEnd": 119.643,
+      "duration": 0.813
+    },
+    {
+      "rank": 100,
+      "word": "even",
+      "audio": "0100-even.mp3",
+      "startTime": 120.217,
+      "endTime": 120.942,
+      "speechStart": 120.297,
+      "speechEnd": 120.862,
+      "duration": 0.725
+    },
+    {
+      "rank": 101,
+      "word": "back",
+      "audio": "0101-back.mp3",
+      "startTime": 121.443,
+      "endTime": 122.286,
+      "speechStart": 121.523,
+      "speechEnd": 122.206,
+      "duration": 0.843
+    },
+    {
+      "rank": 102,
+      "word": "any",
+      "audio": "0102-any.mp3",
+      "startTime": 122.792,
+      "endTime": 123.506,
+      "speechStart": 122.872,
+      "speechEnd": 123.426,
+      "duration": 0.714
+    },
+    {
+      "rank": 103,
+      "word": "good",
+      "audio": "0103-good.mp3",
+      "startTime": 123.967,
+      "endTime": 124.723,
+      "speechStart": 124.047,
+      "speechEnd": 124.643,
+      "duration": 0.756
+    },
+    {
+      "rank": 104,
+      "word": "woman",
+      "audio": "0104-woman.mp3",
+      "startTime": 125.215,
+      "endTime": 125.897,
+      "speechStart": 125.295,
+      "speechEnd": 125.817,
+      "duration": 0.681
+    },
+    {
+      "rank": 105,
+      "word": "through",
+      "audio": "0105-through.mp3",
+      "startTime": 126.376,
+      "endTime": 127.079,
+      "speechStart": 126.456,
+      "speechEnd": 126.999,
+      "duration": 0.702
+    },
+    {
+      "rank": 106,
+      "word": "us",
+      "audio": "0106-us.mp3",
+      "startTime": 127.526,
+      "endTime": 128.147,
+      "speechStart": 127.606,
+      "speechEnd": 128.067,
+      "duration": 0.621
+    },
+    {
+      "rank": 107,
+      "word": "life",
+      "audio": "0107-life.mp3",
+      "startTime": 128.622,
+      "endTime": 129.351,
+      "speechStart": 128.702,
+      "speechEnd": 129.271,
+      "duration": 0.729
+    },
+    {
+      "rank": 108,
+      "word": "child",
+      "audio": "0108-child.mp3",
+      "startTime": 129.871,
+      "endTime": 130.575,
+      "speechStart": 129.951,
+      "speechEnd": 130.495,
+      "duration": 0.704
+    },
+    {
+      "rank": 109,
+      "word": "work",
+      "audio": "0109-work.mp3",
+      "startTime": 131.059,
+      "endTime": 131.853,
+      "speechStart": 131.139,
+      "speechEnd": 131.773,
+      "duration": 0.794
+    },
+    {
+      "rank": 110,
+      "word": "down",
+      "audio": "0110-down.mp3",
+      "startTime": 132.329,
+      "endTime": 133.072,
+      "speechStart": 132.409,
+      "speechEnd": 132.992,
+      "duration": 0.743
+    },
+    {
+      "rank": 111,
+      "word": "may",
+      "audio": "0111-may.mp3",
+      "startTime": 133.556,
+      "endTime": 134.49,
+      "speechStart": 133.636,
+      "speechEnd": 134.41,
+      "duration": 0.935
+    },
+    {
+      "rank": 112,
+      "word": "after",
+      "audio": "0112-after.mp3",
+      "startTime": 134.918,
+      "endTime": 135.898,
+      "speechStart": 134.998,
+      "speechEnd": 135.818,
+      "duration": 0.98
+    },
+    {
+      "rank": 113,
+      "word": "should",
+      "audio": "0113-should.mp3",
+      "startTime": 136.456,
+      "endTime": 137.155,
+      "speechStart": 136.536,
+      "speechEnd": 137.075,
+      "duration": 0.699
+    },
+    {
+      "rank": 114,
+      "word": "call",
+      "audio": "0114-call.mp3",
+      "startTime": 137.567,
+      "endTime": 138.323,
+      "speechStart": 137.647,
+      "speechEnd": 138.243,
+      "duration": 0.755
+    },
+    {
+      "rank": 115,
+      "word": "world",
+      "audio": "0115-world.mp3",
+      "startTime": 138.851,
+      "endTime": 139.669,
+      "speechStart": 138.931,
+      "speechEnd": 139.589,
+      "duration": 0.818
+    },
+    {
+      "rank": 116,
+      "word": "over",
+      "audio": "0116-over.mp3",
+      "startTime": 140.095,
+      "endTime": 140.941,
+      "speechStart": 140.175,
+      "speechEnd": 140.861,
+      "duration": 0.846
+    },
+    {
+      "rank": 117,
+      "word": "school",
+      "audio": "0117-school.mp3",
+      "startTime": 141.405,
+      "endTime": 142.136,
+      "speechStart": 141.485,
+      "speechEnd": 142.056,
+      "duration": 0.731
+    },
+    {
+      "rank": 118,
+      "word": "still",
+      "audio": "0118-still.mp3",
+      "startTime": 142.67,
+      "endTime": 143.417,
+      "speechStart": 142.75,
+      "speechEnd": 143.337,
+      "duration": 0.746
+    },
+    {
+      "rank": 119,
+      "word": "try",
+      "audio": "0119-try.mp3",
+      "startTime": 143.873,
+      "endTime": 144.777,
+      "speechStart": 143.953,
+      "speechEnd": 144.697,
+      "duration": 0.904
+    },
+    {
+      "rank": 120,
+      "word": "last",
+      "audio": "0120-last.mp3",
+      "startTime": 145.224,
+      "endTime": 145.935,
+      "speechStart": 145.304,
+      "speechEnd": 145.855,
+      "duration": 0.71
+    },
+    {
+      "rank": 121,
+      "word": "ask",
+      "audio": "0121-ask.mp3",
+      "startTime": 146.416,
+      "endTime": 147.262,
+      "speechStart": 146.496,
+      "speechEnd": 147.182,
+      "duration": 0.846
+    },
+    {
+      "rank": 122,
+      "word": "need",
+      "audio": "0122-need.mp3",
+      "startTime": 147.71,
+      "endTime": 148.595,
+      "speechStart": 147.79,
+      "speechEnd": 148.515,
+      "duration": 0.885
+    },
+    {
+      "rank": 123,
+      "word": "too",
+      "audio": "0123-too.mp3",
+      "startTime": 149.091,
+      "endTime": 149.892,
+      "speechStart": 149.171,
+      "speechEnd": 149.812,
+      "duration": 0.801
+    },
+    {
+      "rank": 124,
+      "word": "feel",
+      "audio": "0124-feel.mp3",
+      "startTime": 150.335,
+      "endTime": 150.957,
+      "speechStart": 150.415,
+      "speechEnd": 150.877,
+      "duration": 0.622
+    },
+    {
+      "rank": 125,
+      "word": "three",
+      "audio": "0125-three.mp3",
+      "startTime": 151.421,
+      "endTime": 152.344,
+      "speechStart": 151.501,
+      "speechEnd": 152.263,
+      "duration": 0.923
+    },
+    {
+      "rank": 126,
+      "word": "state",
+      "audio": "0126-state.mp3",
+      "startTime": 152.834,
+      "endTime": 153.645,
+      "speechStart": 152.914,
+      "speechEnd": 153.565,
+      "duration": 0.811
+    },
+    {
+      "rank": 127,
+      "word": "never",
+      "audio": "0127-never.mp3",
+      "startTime": 154.097,
+      "endTime": 155.064,
+      "speechStart": 154.177,
+      "speechEnd": 154.984,
+      "duration": 0.967
+    },
+    {
+      "rank": 128,
+      "word": "become",
+      "audio": "0128-become.mp3",
+      "startTime": 155.462,
+      "endTime": 156.353,
+      "speechStart": 155.542,
+      "speechEnd": 156.273,
+      "duration": 0.891
+    },
+    {
+      "rank": 129,
+      "word": "between",
+      "audio": "0129-between.mp3",
+      "startTime": 156.764,
+      "endTime": 157.418,
+      "speechStart": 156.844,
+      "speechEnd": 157.338,
+      "duration": 0.654
+    },
+    {
+      "rank": 130,
+      "word": "high",
+      "audio": "0130-high.mp3",
+      "startTime": 157.904,
+      "endTime": 158.687,
+      "speechStart": 157.984,
+      "speechEnd": 158.607,
+      "duration": 0.783
+    },
+    {
+      "rank": 131,
+      "word": "really",
+      "audio": "0131-really.mp3",
+      "startTime": 159.217,
+      "endTime": 160.036,
+      "speechStart": 159.297,
+      "speechEnd": 159.956,
+      "duration": 0.819
+    },
+    {
+      "rank": 132,
+      "word": "something",
+      "audio": "0132-something.mp3",
+      "startTime": 160.534,
+      "endTime": 161.366,
+      "speechStart": 160.614,
+      "speechEnd": 161.286,
+      "duration": 0.832
+    },
+    {
+      "rank": 133,
+      "word": "most",
+      "audio": "0133-most.mp3",
+      "startTime": 161.919,
+      "endTime": 162.632,
+      "speechStart": 161.999,
+      "speechEnd": 162.552,
+      "duration": 0.714
+    },
+    {
+      "rank": 134,
+      "word": "another",
+      "audio": "0134-another.mp3",
+      "startTime": 163.17,
+      "endTime": 164.034,
+      "speechStart": 163.25,
+      "speechEnd": 163.954,
+      "duration": 0.865
+    },
+    {
+      "rank": 135,
+      "word": "much",
+      "audio": "0135-much.mp3",
+      "startTime": 164.493,
+      "endTime": 165.438,
+      "speechStart": 164.573,
+      "speechEnd": 165.358,
+      "duration": 0.945
+    },
+    {
+      "rank": 136,
+      "word": "family",
+      "audio": "0136-family.mp3",
+      "startTime": 165.873,
+      "endTime": 166.612,
+      "speechStart": 165.953,
+      "speechEnd": 166.532,
+      "duration": 0.739
+    },
+    {
+      "rank": 137,
+      "word": "own",
+      "audio": "0137-own.mp3",
+      "startTime": 167.081,
+      "endTime": 168.119,
+      "speechStart": 167.161,
+      "speechEnd": 168.039,
+      "duration": 1.038
+    },
+    {
+      "rank": 138,
+      "word": "leave",
+      "audio": "0138-leave.mp3",
+      "startTime": 168.606,
+      "endTime": 169.345,
+      "speechStart": 168.686,
+      "speechEnd": 169.265,
+      "duration": 0.74
+    },
+    {
+      "rank": 139,
+      "word": "put",
+      "audio": "0139-put.mp3",
+      "startTime": 169.789,
+      "endTime": 170.787,
+      "speechStart": 169.869,
+      "speechEnd": 170.707,
+      "duration": 0.998
+    },
+    {
+      "rank": 140,
+      "word": "old",
+      "audio": "0140-old.mp3",
+      "startTime": 171.256,
+      "endTime": 172.106,
+      "speechStart": 171.336,
+      "speechEnd": 172.026,
+      "duration": 0.85
+    },
+    {
+      "rank": 141,
+      "word": "while",
+      "audio": "0141-while.mp3",
+      "startTime": 172.631,
+      "endTime": 173.534,
+      "speechStart": 172.711,
+      "speechEnd": 173.454,
+      "duration": 0.903
+    },
+    {
+      "rank": 142,
+      "word": "mean",
+      "audio": "0142-mean.mp3",
+      "startTime": 173.914,
+      "endTime": 174.764,
+      "speechStart": 173.994,
+      "speechEnd": 174.684,
+      "duration": 0.849
+    },
+    {
+      "rank": 143,
+      "word": "keep",
+      "audio": "0143-keep.mp3",
+      "startTime": 175.178,
+      "endTime": 176.021,
+      "speechStart": 175.258,
+      "speechEnd": 175.941,
+      "duration": 0.843
+    },
+    {
+      "rank": 144,
+      "word": "student",
+      "audio": "0144-student.mp3",
+      "startTime": 176.411,
+      "endTime": 177.11,
+      "speechStart": 176.491,
+      "speechEnd": 177.03,
+      "duration": 0.699
+    },
+    {
+      "rank": 145,
+      "word": "why",
+      "audio": "0145-why.mp3",
+      "startTime": 177.617,
+      "endTime": 178.552,
+      "speechStart": 177.697,
+      "speechEnd": 178.472,
+      "duration": 0.935
+    },
+    {
+      "rank": 146,
+      "word": "let",
+      "audio": "0146-let.mp3",
+      "startTime": 178.963,
+      "endTime": 179.741,
+      "speechStart": 179.043,
+      "speechEnd": 179.661,
+      "duration": 0.778
+    },
+    {
+      "rank": 147,
+      "word": "great",
+      "audio": "0147-great.mp3",
+      "startTime": 180.155,
+      "endTime": 180.985,
+      "speechStart": 180.235,
+      "speechEnd": 180.905,
+      "duration": 0.83
+    },
+    {
+      "rank": 148,
+      "word": "same",
+      "audio": "0148-same.mp3",
+      "startTime": 181.441,
+      "endTime": 182.281,
+      "speechStart": 181.521,
+      "speechEnd": 182.201,
+      "duration": 0.841
+    },
+    {
+      "rank": 149,
+      "word": "big",
+      "audio": "0149-big.mp3",
+      "startTime": 182.727,
+      "endTime": 183.521,
+      "speechStart": 182.808,
+      "speechEnd": 183.441,
+      "duration": 0.793
+    },
+    {
+      "rank": 150,
+      "word": "group",
+      "audio": "0150-group.mp3",
+      "startTime": 183.997,
+      "endTime": 184.793,
+      "speechStart": 184.077,
+      "speechEnd": 184.713,
+      "duration": 0.796
+    },
+    {
+      "rank": 151,
+      "word": "begin",
+      "audio": "0151-begin.mp3",
+      "startTime": 185.301,
+      "endTime": 185.943,
+      "speechStart": 185.381,
+      "speechEnd": 185.863,
+      "duration": 0.643
+    },
+    {
+      "rank": 152,
+      "word": "seem",
+      "audio": "0152-seem.mp3",
+      "startTime": 186.448,
+      "endTime": 187.308,
+      "speechStart": 186.528,
+      "speechEnd": 187.228,
+      "duration": 0.86
+    },
+    {
+      "rank": 153,
+      "word": "country",
+      "audio": "0153-country.mp3",
+      "startTime": 187.79,
+      "endTime": 188.545,
+      "speechStart": 187.87,
+      "speechEnd": 188.465,
+      "duration": 0.755
+    },
+    {
+      "rank": 154,
+      "word": "help",
+      "audio": "0154-help.mp3",
+      "startTime": 189.081,
+      "endTime": 189.81,
+      "speechStart": 189.161,
+      "speechEnd": 189.73,
+      "duration": 0.729
+    },
+    {
+      "rank": 155,
+      "word": "talk",
+      "audio": "0155-talk.mp3",
+      "startTime": 190.301,
+      "endTime": 191.072,
+      "speechStart": 190.381,
+      "speechEnd": 190.992,
+      "duration": 0.771
+    },
+    {
+      "rank": 156,
+      "word": "where",
+      "audio": "0156-where.mp3",
+      "startTime": 191.542,
+      "endTime": 192.486,
+      "speechStart": 191.622,
+      "speechEnd": 192.406,
+      "duration": 0.943
+    },
+    {
+      "rank": 157,
+      "word": "turn",
+      "audio": "0157-turn.mp3",
+      "startTime": 192.925,
+      "endTime": 193.611,
+      "speechStart": 193.005,
+      "speechEnd": 193.531,
+      "duration": 0.686
+    },
+    {
+      "rank": 158,
+      "word": "problem",
+      "audio": "0158-problem.mp3",
+      "startTime": 194.127,
+      "endTime": 194.975,
+      "speechStart": 194.208,
+      "speechEnd": 194.895,
+      "duration": 0.847
+    },
+    {
+      "rank": 159,
+      "word": "every",
+      "audio": "0159-every.mp3",
+      "startTime": 195.533,
+      "endTime": 196.352,
+      "speechStart": 195.613,
+      "speechEnd": 196.272,
+      "duration": 0.819
+    },
+    {
+      "rank": 160,
+      "word": "start",
+      "audio": "0160-start.mp3",
+      "startTime": 196.804,
+      "endTime": 197.725,
+      "speechStart": 196.884,
+      "speechEnd": 197.645,
+      "duration": 0.921
+    },
+    {
+      "rank": 161,
+      "word": "hand",
+      "audio": "0161-hand.mp3",
+      "startTime": 198.271,
+      "endTime": 198.956,
+      "speechStart": 198.351,
+      "speechEnd": 198.876,
+      "duration": 0.685
+    },
+    {
+      "rank": 162,
+      "word": "might",
+      "audio": "0162-might.mp3",
+      "startTime": 199.415,
+      "endTime": 200.227,
+      "speechStart": 199.495,
+      "speechEnd": 200.147,
+      "duration": 0.811
+    },
+    {
+      "rank": 163,
+      "word": "American",
+      "audio": "0163-american.mp3",
+      "startTime": 200.811,
+      "endTime": 201.55,
+      "speechStart": 200.891,
+      "speechEnd": 201.47,
+      "duration": 0.739
+    },
+    {
+      "rank": 164,
+      "word": "show",
+      "audio": "0164-show.mp3",
+      "startTime": 202.05,
+      "endTime": 202.888,
+      "speechStart": 202.13,
+      "speechEnd": 202.808,
+      "duration": 0.838
+    },
+    {
+      "rank": 165,
+      "word": "part",
+      "audio": "0165-part.mp3",
+      "startTime": 203.347,
+      "endTime": 204.147,
+      "speechStart": 203.427,
+      "speechEnd": 204.067,
+      "duration": 0.8
+    },
+    {
+      "rank": 166,
+      "word": "against",
+      "audio": "0166-against.mp3",
+      "startTime": 204.606,
+      "endTime": 205.457,
+      "speechStart": 204.686,
+      "speechEnd": 205.377,
+      "duration": 0.851
+    },
+    {
+      "rank": 167,
+      "word": "place",
+      "audio": "0167-place.mp3",
+      "startTime": 205.932,
+      "endTime": 206.657,
+      "speechStart": 206.012,
+      "speechEnd": 206.577,
+      "duration": 0.726
+    },
+    {
+      "rank": 168,
+      "word": "such",
+      "audio": "0168-such.mp3",
+      "startTime": 207.069,
+      "endTime": 207.845,
+      "speechStart": 207.149,
+      "speechEnd": 207.765,
+      "duration": 0.776
+    },
+    {
+      "rank": 169,
+      "word": "again",
+      "audio": "0169-again.mp3",
+      "startTime": 208.296,
+      "endTime": 209.369,
+      "speechStart": 208.376,
+      "speechEnd": 209.289,
+      "duration": 1.073
+    },
+    {
+      "rank": 170,
+      "word": "few",
+      "audio": "0170-few.mp3",
+      "startTime": 209.807,
+      "endTime": 210.656,
+      "speechStart": 209.887,
+      "speechEnd": 210.576,
+      "duration": 0.849
+    },
+    {
+      "rank": 171,
+      "word": "case",
+      "audio": "0171-case.mp3",
+      "startTime": 211.153,
+      "endTime": 211.994,
+      "speechStart": 211.233,
+      "speechEnd": 211.914,
+      "duration": 0.841
+    },
+    {
+      "rank": 172,
+      "word": "week",
+      "audio": "0172-week.mp3",
+      "startTime": 212.47,
+      "endTime": 213.189,
+      "speechStart": 212.55,
+      "speechEnd": 213.109,
+      "duration": 0.719
+    },
+    {
+      "rank": 173,
+      "word": "company",
+      "audio": "0173-company.mp3",
+      "startTime": 213.712,
+      "endTime": 214.76,
+      "speechStart": 213.792,
+      "speechEnd": 214.68,
+      "duration": 1.048
+    },
+    {
+      "rank": 174,
+      "word": "system",
+      "audio": "0174-system.mp3",
+      "startTime": 215.157,
+      "endTime": 216.185,
+      "speechStart": 215.237,
+      "speechEnd": 216.105,
+      "duration": 1.028
+    },
+    {
+      "rank": 175,
+      "word": "each",
+      "audio": "0175-each.mp3",
+      "startTime": 216.604,
+      "endTime": 217.674,
+      "speechStart": 216.684,
+      "speechEnd": 217.594,
+      "duration": 1.07
+    },
+    {
+      "rank": 176,
+      "word": "right",
+      "audio": "0176-right.mp3",
+      "startTime": 218.13,
+      "endTime": 218.997,
+      "speechStart": 218.21,
+      "speechEnd": 218.917,
+      "duration": 0.867
+    },
+    {
+      "rank": 177,
+      "word": "program",
+      "audio": "0177-program.mp3",
+      "startTime": 219.411,
+      "endTime": 220.207,
+      "speechStart": 219.491,
+      "speechEnd": 220.127,
+      "duration": 0.797
+    },
+    {
+      "rank": 178,
+      "word": "hear",
+      "audio": "0178-hear.mp3",
+      "startTime": 220.628,
+      "endTime": 221.524,
+      "speechStart": 220.708,
+      "speechEnd": 221.444,
+      "duration": 0.896
+    },
+    {
+      "rank": 179,
+      "word": "question",
+      "audio": "0179-question.mp3",
+      "startTime": 221.966,
+      "endTime": 222.676,
+      "speechStart": 222.046,
+      "speechEnd": 222.596,
+      "duration": 0.71
+    },
+    {
+      "rank": 180,
+      "word": "during",
+      "audio": "0180-during.mp3",
+      "startTime": 223.187,
+      "endTime": 224.035,
+      "speechStart": 223.267,
+      "speechEnd": 223.955,
+      "duration": 0.848
+    },
+    {
+      "rank": 181,
+      "word": "play",
+      "audio": "0181-play.mp3",
+      "startTime": 224.45,
+      "endTime": 225.364,
+      "speechStart": 224.53,
+      "speechEnd": 225.284,
+      "duration": 0.914
+    },
+    {
+      "rank": 182,
+      "word": "government",
+      "audio": "0182-government.mp3",
+      "startTime": 225.762,
+      "endTime": 226.649,
+      "speechStart": 225.842,
+      "speechEnd": 226.569,
+      "duration": 0.887
+    },
+    {
+      "rank": 183,
+      "word": "run",
+      "audio": "0183-run.mp3",
+      "startTime": 227.118,
+      "endTime": 227.997,
+      "speechStart": 227.198,
+      "speechEnd": 227.917,
+      "duration": 0.879
+    },
+    {
+      "rank": 184,
+      "word": "small",
+      "audio": "0184-small.mp3",
+      "startTime": 228.451,
+      "endTime": 229.337,
+      "speechStart": 228.531,
+      "speechEnd": 229.256,
+      "duration": 0.886
+    },
+    {
+      "rank": 185,
+      "word": "number",
+      "audio": "0185-number.mp3",
+      "startTime": 229.816,
+      "endTime": 230.634,
+      "speechStart": 229.896,
+      "speechEnd": 230.554,
+      "duration": 0.817
+    },
+    {
+      "rank": 186,
+      "word": "off",
+      "audio": "0186-off.mp3",
+      "startTime": 231.13,
+      "endTime": 232.033,
+      "speechStart": 231.21,
+      "speechEnd": 231.953,
+      "duration": 0.903
+    },
+    {
+      "rank": 187,
+      "word": "always",
+      "audio": "0187-always.mp3",
+      "startTime": 232.448,
+      "endTime": 233.308,
+      "speechStart": 232.528,
+      "speechEnd": 233.228,
+      "duration": 0.859
+    },
+    {
+      "rank": 188,
+      "word": "move",
+      "audio": "0188-move.mp3",
+      "startTime": 233.747,
+      "endTime": 234.661,
+      "speechStart": 233.827,
+      "speechEnd": 234.581,
+      "duration": 0.914
+    },
+    {
+      "rank": 189,
+      "word": "night",
+      "audio": "0189-night.mp3",
+      "startTime": 235.161,
+      "endTime": 235.927,
+      "speechStart": 235.241,
+      "speechEnd": 235.847,
+      "duration": 0.766
+    },
+    {
+      "rank": 190,
+      "word": "live",
+      "audio": "0190-live.mp3",
+      "startTime": 236.412,
+      "endTime": 237.141,
+      "speechStart": 236.492,
+      "speechEnd": 237.061,
+      "duration": 0.729
+    },
+    {
+      "rank": 191,
+      "word": "Mr",
+      "audio": "0191-mr.mp3",
+      "startTime": 237.568,
+      "endTime": 238.399,
+      "speechStart": 237.648,
+      "speechEnd": 238.319,
+      "duration": 0.831
+    },
+    {
+      "rank": 192,
+      "word": "point",
+      "audio": "0192-point.mp3",
+      "startTime": 238.846,
+      "endTime": 239.603,
+      "speechStart": 238.926,
+      "speechEnd": 239.523,
+      "duration": 0.757
+    },
+    {
+      "rank": 193,
+      "word": "believe",
+      "audio": "0193-believe.mp3",
+      "startTime": 240.012,
+      "endTime": 240.942,
+      "speechStart": 240.092,
+      "speechEnd": 240.862,
+      "duration": 0.93
+    },
+    {
+      "rank": 194,
+      "word": "hold",
+      "audio": "0194-hold.mp3",
+      "startTime": 241.374,
+      "endTime": 241.985,
+      "speechStart": 241.454,
+      "speechEnd": 241.905,
+      "duration": 0.612
+    },
+    {
+      "rank": 195,
+      "word": "today",
+      "audio": "0195-today.mp3",
+      "startTime": 242.392,
+      "endTime": 243.166,
+      "speechStart": 242.472,
+      "speechEnd": 243.086,
+      "duration": 0.774
+    },
+    {
+      "rank": 196,
+      "word": "bring",
+      "audio": "0196-bring.mp3",
+      "startTime": 243.608,
+      "endTime": 244.492,
+      "speechStart": 243.688,
+      "speechEnd": 244.412,
+      "duration": 0.883
+    },
+    {
+      "rank": 197,
+      "word": "happen",
+      "audio": "0197-happen.mp3",
+      "startTime": 244.971,
+      "endTime": 245.889,
+      "speechStart": 245.051,
+      "speechEnd": 245.809,
+      "duration": 0.918
+    },
+    {
+      "rank": 198,
+      "word": "next",
+      "audio": "0198-next.mp3",
+      "startTime": 246.315,
+      "endTime": 247.136,
+      "speechStart": 246.395,
+      "speechEnd": 247.056,
+      "duration": 0.822
+    },
+    {
+      "rank": 199,
+      "word": "without",
+      "audio": "0199-without.mp3",
+      "startTime": 247.575,
+      "endTime": 248.69,
+      "speechStart": 247.655,
+      "speechEnd": 248.61,
+      "duration": 1.115
+    },
+    {
+      "rank": 200,
+      "word": "before",
+      "audio": "0200-before.mp3",
+      "startTime": 249.16,
+      "endTime": 249.978,
+      "speechStart": 249.24,
+      "speechEnd": 249.898,
+      "duration": 0.818
+    }
+  ]
+}

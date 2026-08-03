@@ -1,0 +1,2583 @@
+{
+  "missing": [
+    19,
+    30
+  ],
+  "bookRanked": [
+    {
+      "rank": 1,
+      "word": "the",
+      "pos": "a",
+      "all": [
+        {
+          "word": "the",
+          "pos": "a",
+          "rank": 1,
+          "raw": "thea1"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "word": "be",
+      "pos": "v",
+      "all": [
+        {
+          "word": "be",
+          "pos": "v",
+          "rank": 2,
+          "raw": "bev2"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "word": "and",
+      "pos": "c",
+      "all": [
+        {
+          "word": "and",
+          "pos": "c",
+          "rank": 3,
+          "raw": "andc3"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "word": "of",
+      "pos": "i",
+      "all": [
+        {
+          "word": "of",
+          "pos": "i",
+          "rank": 4,
+          "raw": "ofi4"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "word": "a",
+      "pos": "a",
+      "all": [
+        {
+          "word": "a",
+          "pos": "a",
+          "rank": 5,
+          "raw": "aa5"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "word": "in",
+      "pos": "i",
+      "all": [
+        {
+          "word": "in",
+          "pos": "i",
+          "rank": 6,
+          "raw": "ini6"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "word": "to",
+      "pos": "t",
+      "all": [
+        {
+          "word": "to",
+          "pos": "t",
+          "rank": 7,
+          "raw": "tot7"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "word": "have",
+      "pos": "v",
+      "all": [
+        {
+          "word": "have",
+          "pos": "v",
+          "rank": 8,
+          "raw": "havev8"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "word": "to",
+      "pos": "i",
+      "all": [
+        {
+          "word": "to",
+          "pos": "i",
+          "rank": 9,
+          "raw": "toi9"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "word": "it",
+      "pos": "p",
+      "all": [
+        {
+          "word": "it",
+          "pos": "p",
+          "rank": 10,
+          "raw": "itp10"
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "word": "I",
+      "pos": "p",
+      "all": [
+        {
+          "word": "I",
+          "pos": "p",
+          "rank": 11,
+          "raw": "Ip11"
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "word": "that",
+      "pos": "c",
+      "all": [
+        {
+          "word": "that",
+          "pos": "c",
+          "rank": 12,
+          "raw": "thatc12"
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "word": "for",
+      "pos": "i",
+      "all": [
+        {
+          "word": "for",
+          "pos": "i",
+          "rank": 13,
+          "raw": "fori13"
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "word": "you",
+      "pos": "p",
+      "all": [
+        {
+          "word": "you",
+          "pos": "p",
+          "rank": 14,
+          "raw": "youp14"
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "word": "he",
+      "pos": "p",
+      "all": [
+        {
+          "word": "he",
+          "pos": "p",
+          "rank": 15,
+          "raw": "hep15"
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "word": "with",
+      "pos": "i",
+      "all": [
+        {
+          "word": "with",
+          "pos": "i",
+          "rank": 16,
+          "raw": "withi16"
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "word": "on",
+      "pos": "i",
+      "all": [
+        {
+          "word": "on",
+          "pos": "i",
+          "rank": 17,
+          "raw": "oni17"
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "word": "do",
+      "pos": "v",
+      "all": [
+        {
+          "word": "do",
+          "pos": "v",
+          "rank": 18,
+          "raw": "dov18"
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "word": "say",
+      "pos": "v",
+      "all": [
+        {
+          "word": "say",
+          "pos": "v",
+          "rank": 20,
+          "raw": "sayv20"
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "word": "they",
+      "pos": "p",
+      "all": [
+        {
+          "word": "they",
+          "pos": "p",
+          "rank": 21,
+          "raw": "theyp21"
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "word": "this",
+      "pos": "d",
+      "all": [
+        {
+          "word": "this",
+          "pos": "d",
+          "rank": 22,
+          "raw": "thisd22"
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "word": "but",
+      "pos": "c",
+      "all": [
+        {
+          "word": "but",
+          "pos": "c",
+          "rank": 23,
+          "raw": "butc23"
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "word": "at",
+      "pos": "i",
+      "all": [
+        {
+          "word": "at",
+          "pos": "i",
+          "rank": 24,
+          "raw": "ati24"
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "word": "we",
+      "pos": "p",
+      "all": [
+        {
+          "word": "we",
+          "pos": "p",
+          "rank": 25,
+          "raw": "wep25"
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "word": "his",
+      "pos": "a",
+      "all": [
+        {
+          "word": "his",
+          "pos": "a",
+          "rank": 26,
+          "raw": "hisa26"
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "word": "from",
+      "pos": "i",
+      "all": [
+        {
+          "word": "from",
+          "pos": "i",
+          "rank": 27,
+          "raw": "fromi27"
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "word": "that",
+      "pos": "d",
+      "all": [
+        {
+          "word": "that",
+          "pos": "d",
+          "rank": 28,
+          "raw": "thatd28"
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "word": "not",
+      "pos": "x",
+      "all": [
+        {
+          "word": "not",
+          "pos": "x",
+          "rank": 29,
+          "raw": "notx29"
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "word": "by",
+      "pos": "i",
+      "all": [
+        {
+          "word": "by",
+          "pos": "i",
+          "rank": 31,
+          "raw": "byi31"
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "word": "or",
+      "pos": "c",
+      "all": [
+        {
+          "word": "or",
+          "pos": "c",
+          "rank": 32,
+          "raw": "orc32"
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "word": "she",
+      "pos": "p",
+      "all": [
+        {
+          "word": "she",
+          "pos": "p",
+          "rank": 33,
+          "raw": "shep33"
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "word": "as",
+      "pos": "c",
+      "all": [
+        {
+          "word": "as",
+          "pos": "c",
+          "rank": 34,
+          "raw": "asc34"
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "word": "what",
+      "pos": "d",
+      "all": [
+        {
+          "word": "what",
+          "pos": "d",
+          "rank": 35,
+          "raw": "whatd35"
+        }
+      ]
+    },
+    {
+      "rank": 36,
+      "word": "go",
+      "pos": "v",
+      "all": [
+        {
+          "word": "go",
+          "pos": "v",
+          "rank": 36,
+          "raw": "gov36"
+        }
+      ]
+    },
+    {
+      "rank": 37,
+      "word": "their",
+      "pos": "a",
+      "all": [
+        {
+          "word": "their",
+          "pos": "a",
+          "rank": 37,
+          "raw": "theira37"
+        }
+      ]
+    },
+    {
+      "rank": 38,
+      "word": "will",
+      "pos": "v",
+      "all": [
+        {
+          "word": "will",
+          "pos": "v",
+          "rank": 38,
+          "raw": "willv38"
+        }
+      ]
+    },
+    {
+      "rank": 39,
+      "word": "who",
+      "pos": "p",
+      "all": [
+        {
+          "word": "who",
+          "pos": "p",
+          "rank": 39,
+          "raw": "whop39"
+        }
+      ]
+    },
+    {
+      "rank": 40,
+      "word": "can",
+      "pos": "v",
+      "all": [
+        {
+          "word": "can",
+          "pos": "v",
+          "rank": 40,
+          "raw": "canv40"
+        }
+      ]
+    },
+    {
+      "rank": 41,
+      "word": "get",
+      "pos": "v",
+      "all": [
+        {
+          "word": "get",
+          "pos": "v",
+          "rank": 41,
+          "raw": "getv41"
+        }
+      ]
+    },
+    {
+      "rank": 42,
+      "word": "if",
+      "pos": "c",
+      "all": [
+        {
+          "word": "if",
+          "pos": "c",
+          "rank": 42,
+          "raw": "ifc42"
+        }
+      ]
+    },
+    {
+      "rank": 43,
+      "word": "all",
+      "pos": "d",
+      "all": [
+        {
+          "word": "all",
+          "pos": "d",
+          "rank": 43,
+          "raw": "alld43"
+        }
+      ]
+    },
+    {
+      "rank": 44,
+      "word": "would",
+      "pos": "v",
+      "all": [
+        {
+          "word": "would",
+          "pos": "v",
+          "rank": 44,
+          "raw": "wouldv44"
+        }
+      ]
+    },
+    {
+      "rank": 45,
+      "word": "her",
+      "pos": "a",
+      "all": [
+        {
+          "word": "her",
+          "pos": "a",
+          "rank": 45,
+          "raw": "hera45"
+        }
+      ]
+    },
+    {
+      "rank": 46,
+      "word": "make",
+      "pos": "v",
+      "all": [
+        {
+          "word": "make",
+          "pos": "v",
+          "rank": 46,
+          "raw": "makev46"
+        }
+      ]
+    },
+    {
+      "rank": 47,
+      "word": "about",
+      "pos": "i",
+      "all": [
+        {
+          "word": "about",
+          "pos": "i",
+          "rank": 47,
+          "raw": "abouti47"
+        }
+      ]
+    },
+    {
+      "rank": 48,
+      "word": "my",
+      "pos": "a",
+      "all": [
+        {
+          "word": "my",
+          "pos": "a",
+          "rank": 48,
+          "raw": "mya48"
+        }
+      ]
+    },
+    {
+      "rank": 49,
+      "word": "know",
+      "pos": "v",
+      "all": [
+        {
+          "word": "know",
+          "pos": "v",
+          "rank": 49,
+          "raw": "knowv49"
+        }
+      ]
+    },
+    {
+      "rank": 50,
+      "word": "as",
+      "pos": "i",
+      "all": [
+        {
+          "word": "as",
+          "pos": "i",
+          "rank": 50,
+          "raw": "asi50"
+        }
+      ]
+    },
+    {
+      "rank": 51,
+      "word": "there",
+      "pos": "e",
+      "all": [
+        {
+          "word": "there",
+          "pos": "e",
+          "rank": 51,
+          "raw": "theree51"
+        }
+      ]
+    },
+    {
+      "rank": 52,
+      "word": "one",
+      "pos": "m",
+      "all": [
+        {
+          "word": "one",
+          "pos": "m",
+          "rank": 52,
+          "raw": "onem52"
+        }
+      ]
+    },
+    {
+      "rank": 53,
+      "word": "up",
+      "pos": "r",
+      "all": [
+        {
+          "word": "up",
+          "pos": "r",
+          "rank": 53,
+          "raw": "upr53"
+        }
+      ]
+    },
+    {
+      "rank": 54,
+      "word": "time",
+      "pos": "n",
+      "all": [
+        {
+          "word": "time",
+          "pos": "n",
+          "rank": 54,
+          "raw": "timen54"
+        }
+      ]
+    },
+    {
+      "rank": 55,
+      "word": "year",
+      "pos": "n",
+      "all": [
+        {
+          "word": "year",
+          "pos": "n",
+          "rank": 55,
+          "raw": "yearn55"
+        }
+      ]
+    },
+    {
+      "rank": 56,
+      "word": "so",
+      "pos": "r",
+      "all": [
+        {
+          "word": "so",
+          "pos": "r",
+          "rank": 56,
+          "raw": "sor56"
+        }
+      ]
+    },
+    {
+      "rank": 57,
+      "word": "think",
+      "pos": "v",
+      "all": [
+        {
+          "word": "think",
+          "pos": "v",
+          "rank": 57,
+          "raw": "thinkv57"
+        }
+      ]
+    },
+    {
+      "rank": 58,
+      "word": "see",
+      "pos": "v",
+      "all": [
+        {
+          "word": "see",
+          "pos": "v",
+          "rank": 58,
+          "raw": "seev58"
+        }
+      ]
+    },
+    {
+      "rank": 59,
+      "word": "which",
+      "pos": "d",
+      "all": [
+        {
+          "word": "which",
+          "pos": "d",
+          "rank": 59,
+          "raw": "whichd59"
+        }
+      ]
+    },
+    {
+      "rank": 60,
+      "word": "when",
+      "pos": "c",
+      "all": [
+        {
+          "word": "when",
+          "pos": "c",
+          "rank": 60,
+          "raw": "whenc60"
+        }
+      ]
+    },
+    {
+      "rank": 61,
+      "word": "some",
+      "pos": "d",
+      "all": [
+        {
+          "word": "some",
+          "pos": "d",
+          "rank": 61,
+          "raw": "somed61"
+        }
+      ]
+    },
+    {
+      "rank": 62,
+      "word": "them",
+      "pos": "p",
+      "all": [
+        {
+          "word": "them",
+          "pos": "p",
+          "rank": 62,
+          "raw": "themp62"
+        }
+      ]
+    },
+    {
+      "rank": 63,
+      "word": "people",
+      "pos": "n",
+      "all": [
+        {
+          "word": "people",
+          "pos": "n",
+          "rank": 63,
+          "raw": "peoplen63"
+        }
+      ]
+    },
+    {
+      "rank": 64,
+      "word": "take",
+      "pos": "v",
+      "all": [
+        {
+          "word": "take",
+          "pos": "v",
+          "rank": 64,
+          "raw": "takev64"
+        }
+      ]
+    },
+    {
+      "rank": 65,
+      "word": "me",
+      "pos": "p",
+      "all": [
+        {
+          "word": "me",
+          "pos": "p",
+          "rank": 65,
+          "raw": "mep65"
+        }
+      ]
+    },
+    {
+      "rank": 66,
+      "word": "out",
+      "pos": "r",
+      "all": [
+        {
+          "word": "out",
+          "pos": "r",
+          "rank": 66,
+          "raw": "outr66"
+        }
+      ]
+    },
+    {
+      "rank": 67,
+      "word": "into",
+      "pos": "i",
+      "all": [
+        {
+          "word": "into",
+          "pos": "i",
+          "rank": 67,
+          "raw": "intoi67"
+        }
+      ]
+    },
+    {
+      "rank": 68,
+      "word": "just",
+      "pos": "r",
+      "all": [
+        {
+          "word": "just",
+          "pos": "r",
+          "rank": 68,
+          "raw": "justr68"
+        }
+      ]
+    },
+    {
+      "rank": 69,
+      "word": "him",
+      "pos": "p",
+      "all": [
+        {
+          "word": "him",
+          "pos": "p",
+          "rank": 69,
+          "raw": "himp69"
+        }
+      ]
+    },
+    {
+      "rank": 70,
+      "word": "come",
+      "pos": "v",
+      "all": [
+        {
+          "word": "come",
+          "pos": "v",
+          "rank": 70,
+          "raw": "comev70"
+        }
+      ]
+    },
+    {
+      "rank": 71,
+      "word": "your",
+      "pos": "a",
+      "all": [
+        {
+          "word": "your",
+          "pos": "a",
+          "rank": 71,
+          "raw": "youra71"
+        }
+      ]
+    },
+    {
+      "rank": 72,
+      "word": "now",
+      "pos": "r",
+      "all": [
+        {
+          "word": "now",
+          "pos": "r",
+          "rank": 72,
+          "raw": "nowr72"
+        }
+      ]
+    },
+    {
+      "rank": 73,
+      "word": "could",
+      "pos": "v",
+      "all": [
+        {
+          "word": "could",
+          "pos": "v",
+          "rank": 73,
+          "raw": "couldv73"
+        }
+      ]
+    },
+    {
+      "rank": 74,
+      "word": "than",
+      "pos": "c",
+      "all": [
+        {
+          "word": "than",
+          "pos": "c",
+          "rank": 74,
+          "raw": "thanc74"
+        }
+      ]
+    },
+    {
+      "rank": 75,
+      "word": "like",
+      "pos": "i",
+      "all": [
+        {
+          "word": "like",
+          "pos": "i",
+          "rank": 75,
+          "raw": "likei75"
+        }
+      ]
+    },
+    {
+      "rank": 76,
+      "word": "other",
+      "pos": "j",
+      "all": [
+        {
+          "word": "other",
+          "pos": "j",
+          "rank": 76,
+          "raw": "otherj76"
+        }
+      ]
+    },
+    {
+      "rank": 77,
+      "word": "then",
+      "pos": "r",
+      "all": [
+        {
+          "word": "then",
+          "pos": "r",
+          "rank": 77,
+          "raw": "thenr77"
+        }
+      ]
+    },
+    {
+      "rank": 78,
+      "word": "how",
+      "pos": "r",
+      "all": [
+        {
+          "word": "how",
+          "pos": "r",
+          "rank": 78,
+          "raw": "howr78"
+        }
+      ]
+    },
+    {
+      "rank": 79,
+      "word": "its",
+      "pos": "a",
+      "all": [
+        {
+          "word": "its",
+          "pos": "a",
+          "rank": 79,
+          "raw": "itsa79"
+        }
+      ]
+    },
+    {
+      "rank": 80,
+      "word": "two",
+      "pos": "m",
+      "all": [
+        {
+          "word": "two",
+          "pos": "m",
+          "rank": 80,
+          "raw": "twom80"
+        }
+      ]
+    },
+    {
+      "rank": 81,
+      "word": "our",
+      "pos": "a",
+      "all": [
+        {
+          "word": "our",
+          "pos": "a",
+          "rank": 81,
+          "raw": "oura81"
+        }
+      ]
+    },
+    {
+      "rank": 82,
+      "word": "more",
+      "pos": "r",
+      "all": [
+        {
+          "word": "more",
+          "pos": "r",
+          "rank": 82,
+          "raw": "morer82"
+        }
+      ]
+    },
+    {
+      "rank": 83,
+      "word": "these",
+      "pos": "d",
+      "all": [
+        {
+          "word": "these",
+          "pos": "d",
+          "rank": 83,
+          "raw": "thesed83"
+        }
+      ]
+    },
+    {
+      "rank": 84,
+      "word": "want",
+      "pos": "v",
+      "all": [
+        {
+          "word": "want",
+          "pos": "v",
+          "rank": 84,
+          "raw": "wantv84"
+        }
+      ]
+    },
+    {
+      "rank": 85,
+      "word": "way",
+      "pos": "n",
+      "all": [
+        {
+          "word": "way",
+          "pos": "n",
+          "rank": 85,
+          "raw": "wayn85"
+        }
+      ]
+    },
+    {
+      "rank": 86,
+      "word": "no",
+      "pos": "a",
+      "all": [
+        {
+          "word": "no",
+          "pos": "a",
+          "rank": 86,
+          "raw": "noa86"
+        }
+      ]
+    },
+    {
+      "rank": 87,
+      "word": "look",
+      "pos": "v",
+      "all": [
+        {
+          "word": "look",
+          "pos": "v",
+          "rank": 87,
+          "raw": "lookv87"
+        }
+      ]
+    },
+    {
+      "rank": 88,
+      "word": "first",
+      "pos": "m",
+      "all": [
+        {
+          "word": "first",
+          "pos": "m",
+          "rank": 88,
+          "raw": "firstm88"
+        }
+      ]
+    },
+    {
+      "rank": 89,
+      "word": "also",
+      "pos": "r",
+      "all": [
+        {
+          "word": "also",
+          "pos": "r",
+          "rank": 89,
+          "raw": "alsor89"
+        }
+      ]
+    },
+    {
+      "rank": 90,
+      "word": "new",
+      "pos": "j",
+      "all": [
+        {
+          "word": "new",
+          "pos": "j",
+          "rank": 90,
+          "raw": "newj90"
+        }
+      ]
+    },
+    {
+      "rank": 91,
+      "word": "because",
+      "pos": "c",
+      "all": [
+        {
+          "word": "because",
+          "pos": "c",
+          "rank": 91,
+          "raw": "becausec91"
+        }
+      ]
+    },
+    {
+      "rank": 92,
+      "word": "day",
+      "pos": "n",
+      "all": [
+        {
+          "word": "day",
+          "pos": "n",
+          "rank": 92,
+          "raw": "dayn92"
+        }
+      ]
+    },
+    {
+      "rank": 93,
+      "word": "more",
+      "pos": "d",
+      "all": [
+        {
+          "word": "more",
+          "pos": "d",
+          "rank": 93,
+          "raw": "mored93"
+        }
+      ]
+    },
+    {
+      "rank": 94,
+      "word": "use",
+      "pos": "v",
+      "all": [
+        {
+          "word": "use",
+          "pos": "v",
+          "rank": 94,
+          "raw": "usev94"
+        }
+      ]
+    },
+    {
+      "rank": 95,
+      "word": "man",
+      "pos": "n",
+      "all": [
+        {
+          "word": "man",
+          "pos": "n",
+          "rank": 95,
+          "raw": "mann95"
+        }
+      ]
+    },
+    {
+      "rank": 96,
+      "word": "here",
+      "pos": "r",
+      "all": [
+        {
+          "word": "here",
+          "pos": "r",
+          "rank": 96,
+          "raw": "herer96"
+        }
+      ]
+    },
+    {
+      "rank": 97,
+      "word": "find",
+      "pos": "v",
+      "all": [
+        {
+          "word": "find",
+          "pos": "v",
+          "rank": 97,
+          "raw": "findv97"
+        }
+      ]
+    },
+    {
+      "rank": 98,
+      "word": "give",
+      "pos": "v",
+      "all": [
+        {
+          "word": "give",
+          "pos": "v",
+          "rank": 98,
+          "raw": "givev98"
+        }
+      ]
+    },
+    {
+      "rank": 99,
+      "word": "thing",
+      "pos": "n",
+      "all": [
+        {
+          "word": "thing",
+          "pos": "n",
+          "rank": 99,
+          "raw": "thingn99"
+        }
+      ]
+    },
+    {
+      "rank": 100,
+      "word": "well",
+      "pos": "r",
+      "all": [
+        {
+          "word": "well",
+          "pos": "r",
+          "rank": 100,
+          "raw": "wellr100"
+        }
+      ]
+    },
+    {
+      "rank": 101,
+      "word": "many",
+      "pos": "d",
+      "all": [
+        {
+          "word": "many",
+          "pos": "d",
+          "rank": 101,
+          "raw": "manyd101"
+        }
+      ]
+    },
+    {
+      "rank": 102,
+      "word": "only",
+      "pos": "r",
+      "all": [
+        {
+          "word": "only",
+          "pos": "r",
+          "rank": 102,
+          "raw": "onlyr102"
+        }
+      ]
+    },
+    {
+      "rank": 103,
+      "word": "those",
+      "pos": "d",
+      "all": [
+        {
+          "word": "those",
+          "pos": "d",
+          "rank": 103,
+          "raw": "thosed103"
+        }
+      ]
+    },
+    {
+      "rank": 104,
+      "word": "tell",
+      "pos": "v",
+      "all": [
+        {
+          "word": "tell",
+          "pos": "v",
+          "rank": 104,
+          "raw": "tellv104"
+        }
+      ]
+    },
+    {
+      "rank": 105,
+      "word": "very",
+      "pos": "r",
+      "all": [
+        {
+          "word": "very",
+          "pos": "r",
+          "rank": 105,
+          "raw": "veryr105"
+        }
+      ]
+    },
+    {
+      "rank": 106,
+      "word": "one",
+      "pos": "p",
+      "all": [
+        {
+          "word": "one",
+          "pos": "p",
+          "rank": 106,
+          "raw": "onep106"
+        }
+      ]
+    },
+    {
+      "rank": 107,
+      "word": "even",
+      "pos": "r",
+      "all": [
+        {
+          "word": "even",
+          "pos": "r",
+          "rank": 107,
+          "raw": "evenr107"
+        }
+      ]
+    },
+    {
+      "rank": 108,
+      "word": "her",
+      "pos": "p",
+      "all": [
+        {
+          "word": "her",
+          "pos": "p",
+          "rank": 108,
+          "raw": "herp108"
+        }
+      ]
+    },
+    {
+      "rank": 109,
+      "word": "back",
+      "pos": "r",
+      "all": [
+        {
+          "word": "back",
+          "pos": "r",
+          "rank": 109,
+          "raw": "backr109"
+        }
+      ]
+    },
+    {
+      "rank": 110,
+      "word": "any",
+      "pos": "d",
+      "all": [
+        {
+          "word": "any",
+          "pos": "d",
+          "rank": 110,
+          "raw": "anyd110"
+        }
+      ]
+    },
+    {
+      "rank": 111,
+      "word": "good",
+      "pos": "j",
+      "all": [
+        {
+          "word": "good",
+          "pos": "j",
+          "rank": 111,
+          "raw": "goodj111"
+        }
+      ]
+    },
+    {
+      "rank": 112,
+      "word": "us",
+      "pos": "p",
+      "all": [
+        {
+          "word": "us",
+          "pos": "p",
+          "rank": 112,
+          "raw": "usp112"
+        }
+      ]
+    },
+    {
+      "rank": 113,
+      "word": "through",
+      "pos": "i",
+      "all": [
+        {
+          "word": "through",
+          "pos": "i",
+          "rank": 113,
+          "raw": "throughi113"
+        }
+      ]
+    },
+    {
+      "rank": 114,
+      "word": "woman",
+      "pos": "n",
+      "all": [
+        {
+          "word": "woman",
+          "pos": "n",
+          "rank": 114,
+          "raw": "womann114"
+        }
+      ]
+    },
+    {
+      "rank": 115,
+      "word": "life",
+      "pos": "n",
+      "all": [
+        {
+          "word": "life",
+          "pos": "n",
+          "rank": 115,
+          "raw": "lifen115"
+        }
+      ]
+    },
+    {
+      "rank": 116,
+      "word": "child",
+      "pos": "n",
+      "all": [
+        {
+          "word": "child",
+          "pos": "n",
+          "rank": 116,
+          "raw": "childn116"
+        }
+      ]
+    },
+    {
+      "rank": 117,
+      "word": "there",
+      "pos": "r",
+      "all": [
+        {
+          "word": "there",
+          "pos": "r",
+          "rank": 117,
+          "raw": "therer117"
+        }
+      ]
+    },
+    {
+      "rank": 118,
+      "word": "down",
+      "pos": "r",
+      "all": [
+        {
+          "word": "down",
+          "pos": "r",
+          "rank": 118,
+          "raw": "downr118"
+        }
+      ]
+    },
+    {
+      "rank": 119,
+      "word": "work",
+      "pos": "v",
+      "all": [
+        {
+          "word": "work",
+          "pos": "v",
+          "rank": 119,
+          "raw": "workv119"
+        }
+      ]
+    },
+    {
+      "rank": 120,
+      "word": "after",
+      "pos": "i",
+      "all": [
+        {
+          "word": "after",
+          "pos": "i",
+          "rank": 120,
+          "raw": "afteri120"
+        }
+      ]
+    },
+    {
+      "rank": 121,
+      "word": "call",
+      "pos": "v",
+      "all": [
+        {
+          "word": "call",
+          "pos": "v",
+          "rank": 121,
+          "raw": "callv121"
+        }
+      ]
+    },
+    {
+      "rank": 122,
+      "word": "may",
+      "pos": "v",
+      "all": [
+        {
+          "word": "may",
+          "pos": "v",
+          "rank": 122,
+          "raw": "mayv122"
+        }
+      ]
+    },
+    {
+      "rank": 123,
+      "word": "world",
+      "pos": "n",
+      "all": [
+        {
+          "word": "world",
+          "pos": "n",
+          "rank": 123,
+          "raw": "worldn123"
+        }
+      ]
+    },
+    {
+      "rank": 124,
+      "word": "over",
+      "pos": "i",
+      "all": [
+        {
+          "word": "over",
+          "pos": "i",
+          "rank": 124,
+          "raw": "overi124"
+        }
+      ]
+    },
+    {
+      "rank": 125,
+      "word": "should",
+      "pos": "v",
+      "all": [
+        {
+          "word": "should",
+          "pos": "v",
+          "rank": 125,
+          "raw": "shouldv125"
+        }
+      ]
+    },
+    {
+      "rank": 126,
+      "word": "still",
+      "pos": "r",
+      "all": [
+        {
+          "word": "still",
+          "pos": "r",
+          "rank": 126,
+          "raw": "stillr126"
+        }
+      ]
+    },
+    {
+      "rank": 127,
+      "word": "try",
+      "pos": "v",
+      "all": [
+        {
+          "word": "try",
+          "pos": "v",
+          "rank": 127,
+          "raw": "tryv127"
+        }
+      ]
+    },
+    {
+      "rank": 128,
+      "word": "in",
+      "pos": "r",
+      "all": [
+        {
+          "word": "in",
+          "pos": "r",
+          "rank": 128,
+          "raw": "inr128"
+        }
+      ]
+    },
+    {
+      "rank": 129,
+      "word": "school",
+      "pos": "n",
+      "all": [
+        {
+          "word": "school",
+          "pos": "n",
+          "rank": 129,
+          "raw": "schooln129"
+        }
+      ]
+    },
+    {
+      "rank": 130,
+      "word": "as",
+      "pos": "r",
+      "all": [
+        {
+          "word": "as",
+          "pos": "r",
+          "rank": 130,
+          "raw": "asr130"
+        }
+      ]
+    },
+    {
+      "rank": 131,
+      "word": "last",
+      "pos": "m",
+      "all": [
+        {
+          "word": "last",
+          "pos": "m",
+          "rank": 131,
+          "raw": "lastm131"
+        }
+      ]
+    },
+    {
+      "rank": 132,
+      "word": "ask",
+      "pos": "v",
+      "all": [
+        {
+          "word": "ask",
+          "pos": "v",
+          "rank": 132,
+          "raw": "askv132"
+        }
+      ]
+    },
+    {
+      "rank": 133,
+      "word": "too",
+      "pos": "r",
+      "all": [
+        {
+          "word": "too",
+          "pos": "r",
+          "rank": 133,
+          "raw": "toor133"
+        }
+      ]
+    },
+    {
+      "rank": 134,
+      "word": "need",
+      "pos": "v",
+      "all": [
+        {
+          "word": "need",
+          "pos": "v",
+          "rank": 134,
+          "raw": "needv134"
+        }
+      ]
+    },
+    {
+      "rank": 135,
+      "word": "three",
+      "pos": "m",
+      "all": [
+        {
+          "word": "three",
+          "pos": "m",
+          "rank": 135,
+          "raw": "threem135"
+        }
+      ]
+    },
+    {
+      "rank": 136,
+      "word": "feel",
+      "pos": "v",
+      "all": [
+        {
+          "word": "feel",
+          "pos": "v",
+          "rank": 136,
+          "raw": "feelv136"
+        }
+      ]
+    },
+    {
+      "rank": 137,
+      "word": "when",
+      "pos": "r",
+      "all": [
+        {
+          "word": "when",
+          "pos": "r",
+          "rank": 137,
+          "raw": "whenr137"
+        }
+      ]
+    },
+    {
+      "rank": 138,
+      "word": "become",
+      "pos": "v",
+      "all": [
+        {
+          "word": "become",
+          "pos": "v",
+          "rank": 138,
+          "raw": "becomev138"
+        }
+      ]
+    },
+    {
+      "rank": 139,
+      "word": "state",
+      "pos": "n",
+      "all": [
+        {
+          "word": "state",
+          "pos": "n",
+          "rank": 139,
+          "raw": "staten139"
+        }
+      ]
+    },
+    {
+      "rank": 140,
+      "word": "never",
+      "pos": "r",
+      "all": [
+        {
+          "word": "never",
+          "pos": "r",
+          "rank": 140,
+          "raw": "neverr140"
+        }
+      ]
+    },
+    {
+      "rank": 141,
+      "word": "between",
+      "pos": "i",
+      "all": [
+        {
+          "word": "between",
+          "pos": "i",
+          "rank": 141,
+          "raw": "betweeni141"
+        }
+      ]
+    },
+    {
+      "rank": 142,
+      "word": "high",
+      "pos": "j",
+      "all": [
+        {
+          "word": "high",
+          "pos": "j",
+          "rank": 142,
+          "raw": "highj142"
+        }
+      ]
+    },
+    {
+      "rank": 143,
+      "word": "something",
+      "pos": "p",
+      "all": [
+        {
+          "word": "something",
+          "pos": "p",
+          "rank": 143,
+          "raw": "somethingp143"
+        }
+      ]
+    },
+    {
+      "rank": 144,
+      "word": "really",
+      "pos": "r",
+      "all": [
+        {
+          "word": "really",
+          "pos": "r",
+          "rank": 144,
+          "raw": "reallyr144"
+        }
+      ]
+    },
+    {
+      "rank": 145,
+      "word": "most",
+      "pos": "r",
+      "all": [
+        {
+          "word": "most",
+          "pos": "r",
+          "rank": 145,
+          "raw": "mostr145"
+        }
+      ]
+    },
+    {
+      "rank": 146,
+      "word": "another",
+      "pos": "d",
+      "all": [
+        {
+          "word": "another",
+          "pos": "d",
+          "rank": 146,
+          "raw": "anotherd146"
+        }
+      ]
+    },
+    {
+      "rank": 147,
+      "word": "much",
+      "pos": "d",
+      "all": [
+        {
+          "word": "much",
+          "pos": "d",
+          "rank": 147,
+          "raw": "muchd147"
+        }
+      ]
+    },
+    {
+      "rank": 148,
+      "word": "own",
+      "pos": "d",
+      "all": [
+        {
+          "word": "own",
+          "pos": "d",
+          "rank": 148,
+          "raw": "ownd148"
+        }
+      ]
+    },
+    {
+      "rank": 149,
+      "word": "family",
+      "pos": "n",
+      "all": [
+        {
+          "word": "family",
+          "pos": "n",
+          "rank": 149,
+          "raw": "familyn149"
+        }
+      ]
+    },
+    {
+      "rank": 150,
+      "word": "out",
+      "pos": "i",
+      "all": [
+        {
+          "word": "out",
+          "pos": "i",
+          "rank": 150,
+          "raw": "outi150"
+        }
+      ]
+    },
+    {
+      "rank": 151,
+      "word": "house",
+      "pos": "n",
+      "all": [
+        {
+          "word": "house",
+          "pos": "n",
+          "rank": 151,
+          "raw": "housen151"
+        }
+      ]
+    },
+    {
+      "rank": 152,
+      "word": "leave",
+      "pos": "v",
+      "all": [
+        {
+          "word": "leave",
+          "pos": "v",
+          "rank": 152,
+          "raw": "leavev152"
+        }
+      ]
+    },
+    {
+      "rank": 153,
+      "word": "put",
+      "pos": "v",
+      "all": [
+        {
+          "word": "put",
+          "pos": "v",
+          "rank": 153,
+          "raw": "putv153"
+        }
+      ]
+    },
+    {
+      "rank": 154,
+      "word": "old",
+      "pos": "j",
+      "all": [
+        {
+          "word": "old",
+          "pos": "j",
+          "rank": 154,
+          "raw": "oldj154"
+        }
+      ]
+    },
+    {
+      "rank": 155,
+      "word": "on",
+      "pos": "r",
+      "all": [
+        {
+          "word": "on",
+          "pos": "r",
+          "rank": 155,
+          "raw": "onr155"
+        }
+      ]
+    },
+    {
+      "rank": 156,
+      "word": "while",
+      "pos": "c",
+      "all": [
+        {
+          "word": "while",
+          "pos": "c",
+          "rank": 156,
+          "raw": "whilec156"
+        }
+      ]
+    },
+    {
+      "rank": 157,
+      "word": "mean",
+      "pos": "v",
+      "all": [
+        {
+          "word": "mean",
+          "pos": "v",
+          "rank": 157,
+          "raw": "meanv157"
+        }
+      ]
+    },
+    {
+      "rank": 158,
+      "word": "let",
+      "pos": "v",
+      "all": [
+        {
+          "word": "let",
+          "pos": "v",
+          "rank": 158,
+          "raw": "letv158"
+        }
+      ]
+    },
+    {
+      "rank": 159,
+      "word": "why",
+      "pos": "r",
+      "all": [
+        {
+          "word": "why",
+          "pos": "r",
+          "rank": 159,
+          "raw": "whyr159"
+        }
+      ]
+    },
+    {
+      "rank": 160,
+      "word": "president",
+      "pos": "n",
+      "all": [
+        {
+          "word": "president",
+          "pos": "n",
+          "rank": 160,
+          "raw": "presidentn160"
+        }
+      ]
+    },
+    {
+      "rank": 161,
+      "word": "keep",
+      "pos": "v",
+      "all": [
+        {
+          "word": "keep",
+          "pos": "v",
+          "rank": 161,
+          "raw": "keepv161"
+        }
+      ]
+    },
+    {
+      "rank": 162,
+      "word": "same",
+      "pos": "d",
+      "all": [
+        {
+          "word": "same",
+          "pos": "d",
+          "rank": 162,
+          "raw": "samed162"
+        }
+      ]
+    },
+    {
+      "rank": 163,
+      "word": "great",
+      "pos": "j",
+      "all": [
+        {
+          "word": "great",
+          "pos": "j",
+          "rank": 163,
+          "raw": "greatj163"
+        }
+      ]
+    },
+    {
+      "rank": 164,
+      "word": "begin",
+      "pos": "v",
+      "all": [
+        {
+          "word": "begin",
+          "pos": "v",
+          "rank": 164,
+          "raw": "beginv164"
+        }
+      ]
+    },
+    {
+      "rank": 165,
+      "word": "big",
+      "pos": "j",
+      "all": [
+        {
+          "word": "big",
+          "pos": "j",
+          "rank": 165,
+          "raw": "bigj165"
+        }
+      ]
+    },
+    {
+      "rank": 166,
+      "word": "seem",
+      "pos": "v",
+      "all": [
+        {
+          "word": "seem",
+          "pos": "v",
+          "rank": 166,
+          "raw": "seemv166"
+        }
+      ]
+    },
+    {
+      "rank": 167,
+      "word": "group",
+      "pos": "n",
+      "all": [
+        {
+          "word": "group",
+          "pos": "n",
+          "rank": 167,
+          "raw": "groupn167"
+        }
+      ]
+    },
+    {
+      "rank": 168,
+      "word": "country",
+      "pos": "n",
+      "all": [
+        {
+          "word": "country",
+          "pos": "n",
+          "rank": 168,
+          "raw": "countryn168"
+        }
+      ]
+    },
+    {
+      "rank": 169,
+      "word": "talk",
+      "pos": "v",
+      "all": [
+        {
+          "word": "talk",
+          "pos": "v",
+          "rank": 169,
+          "raw": "talkv169"
+        }
+      ]
+    },
+    {
+      "rank": 170,
+      "word": "problem",
+      "pos": "n",
+      "all": [
+        {
+          "word": "problem",
+          "pos": "n",
+          "rank": 170,
+          "raw": "problemn170"
+        }
+      ]
+    },
+    {
+      "rank": 171,
+      "word": "where",
+      "pos": "c",
+      "all": [
+        {
+          "word": "where",
+          "pos": "c",
+          "rank": 171,
+          "raw": "wherec171"
+        }
+      ]
+    },
+    {
+      "rank": 172,
+      "word": "turn",
+      "pos": "v",
+      "all": [
+        {
+          "word": "turn",
+          "pos": "v",
+          "rank": 172,
+          "raw": "turnv172"
+        }
+      ]
+    },
+    {
+      "rank": 173,
+      "word": "student",
+      "pos": "n",
+      "all": [
+        {
+          "word": "student",
+          "pos": "n",
+          "rank": 173,
+          "raw": "studentn173"
+        }
+      ]
+    },
+    {
+      "rank": 174,
+      "word": "every",
+      "pos": "a",
+      "all": [
+        {
+          "word": "every",
+          "pos": "a",
+          "rank": 174,
+          "raw": "everya174"
+        }
+      ]
+    },
+    {
+      "rank": 175,
+      "word": "hand",
+      "pos": "n",
+      "all": [
+        {
+          "word": "hand",
+          "pos": "n",
+          "rank": 175,
+          "raw": "handn175"
+        }
+      ]
+    },
+    {
+      "rank": 176,
+      "word": "help",
+      "pos": "v",
+      "all": [
+        {
+          "word": "help",
+          "pos": "v",
+          "rank": 176,
+          "raw": "helpv176"
+        }
+      ]
+    },
+    {
+      "rank": 177,
+      "word": "against",
+      "pos": "i",
+      "all": [
+        {
+          "word": "against",
+          "pos": "i",
+          "rank": 177,
+          "raw": "againsti177"
+        }
+      ]
+    },
+    {
+      "rank": 178,
+      "word": "start",
+      "pos": "v",
+      "all": [
+        {
+          "word": "start",
+          "pos": "v",
+          "rank": 178,
+          "raw": "startv178"
+        }
+      ]
+    },
+    {
+      "rank": 179,
+      "word": "American",
+      "pos": "j",
+      "all": [
+        {
+          "word": "American",
+          "pos": "j",
+          "rank": 179,
+          "raw": "Americanj179"
+        }
+      ]
+    },
+    {
+      "rank": 180,
+      "word": "part",
+      "pos": "n",
+      "all": [
+        {
+          "word": "part",
+          "pos": "n",
+          "rank": 180,
+          "raw": "partn180"
+        }
+      ]
+    },
+    {
+      "rank": 181,
+      "word": "show",
+      "pos": "v",
+      "all": [
+        {
+          "word": "show",
+          "pos": "v",
+          "rank": 181,
+          "raw": "showv181"
+        }
+      ]
+    },
+    {
+      "rank": 182,
+      "word": "about",
+      "pos": "r",
+      "all": [
+        {
+          "word": "about",
+          "pos": "r",
+          "rank": 182,
+          "raw": "aboutr182"
+        }
+      ]
+    },
+    {
+      "rank": 183,
+      "word": "over",
+      "pos": "r",
+      "all": [
+        {
+          "word": "over",
+          "pos": "r",
+          "rank": 183,
+          "raw": "overr183"
+        }
+      ]
+    },
+    {
+      "rank": 184,
+      "word": "might",
+      "pos": "v",
+      "all": [
+        {
+          "word": "might",
+          "pos": "v",
+          "rank": 184,
+          "raw": "mightv184"
+        }
+      ]
+    },
+    {
+      "rank": 185,
+      "word": "such",
+      "pos": "d",
+      "all": [
+        {
+          "word": "such",
+          "pos": "d",
+          "rank": 185,
+          "raw": "suchd185"
+        }
+      ]
+    },
+    {
+      "rank": 186,
+      "word": "place",
+      "pos": "n",
+      "all": [
+        {
+          "word": "place",
+          "pos": "n",
+          "rank": 186,
+          "raw": "placen186"
+        }
+      ]
+    },
+    {
+      "rank": 187,
+      "word": "again",
+      "pos": "r",
+      "all": [
+        {
+          "word": "again",
+          "pos": "r",
+          "rank": 187,
+          "raw": "againr187"
+        }
+      ]
+    },
+    {
+      "rank": 188,
+      "word": "city",
+      "pos": "n",
+      "all": [
+        {
+          "word": "city",
+          "pos": "n",
+          "rank": 188,
+          "raw": "cityn188"
+        }
+      ]
+    },
+    {
+      "rank": 189,
+      "word": "case",
+      "pos": "n",
+      "all": [
+        {
+          "word": "case",
+          "pos": "n",
+          "rank": 189,
+          "raw": "casen189"
+        }
+      ]
+    },
+    {
+      "rank": 190,
+      "word": "most",
+      "pos": "d",
+      "all": [
+        {
+          "word": "most",
+          "pos": "d",
+          "rank": 190,
+          "raw": "mostd190"
+        }
+      ]
+    },
+    {
+      "rank": 191,
+      "word": "few",
+      "pos": "d",
+      "all": [
+        {
+          "word": "few",
+          "pos": "d",
+          "rank": 191,
+          "raw": "fewd191"
+        }
+      ]
+    },
+    {
+      "rank": 192,
+      "word": "system",
+      "pos": "n",
+      "all": [
+        {
+          "word": "system",
+          "pos": "n",
+          "rank": 192,
+          "raw": "systemn192"
+        }
+      ]
+    },
+    {
+      "rank": 193,
+      "word": "week",
+      "pos": "n",
+      "all": [
+        {
+          "word": "week",
+          "pos": "n",
+          "rank": 193,
+          "raw": "weekn193"
+        }
+      ]
+    },
+    {
+      "rank": 194,
+      "word": "where",
+      "pos": "r",
+      "all": [
+        {
+          "word": "where",
+          "pos": "r",
+          "rank": 194,
+          "raw": "wherer194"
+        }
+      ]
+    },
+    {
+      "rank": 195,
+      "word": "company",
+      "pos": "n",
+      "all": [
+        {
+          "word": "company",
+          "pos": "n",
+          "rank": 195,
+          "raw": "companyn195"
+        }
+      ]
+    },
+    {
+      "rank": 196,
+      "word": "each",
+      "pos": "d",
+      "all": [
+        {
+          "word": "each",
+          "pos": "d",
+          "rank": 196,
+          "raw": "eachd196"
+        }
+      ]
+    },
+    {
+      "rank": 197,
+      "word": "percent",
+      "pos": "n",
+      "all": [
+        {
+          "word": "percent",
+          "pos": "n",
+          "rank": 197,
+          "raw": "percentn197"
+        }
+      ]
+    },
+    {
+      "rank": 198,
+      "word": "hear",
+      "pos": "v",
+      "all": [
+        {
+          "word": "hear",
+          "pos": "v",
+          "rank": 198,
+          "raw": "hearv198"
+        }
+      ]
+    },
+    {
+      "rank": 199,
+      "word": "so",
+      "pos": "c",
+      "all": [
+        {
+          "word": "so",
+          "pos": "c",
+          "rank": 199,
+          "raw": "soc199"
+        }
+      ]
+    },
+    {
+      "rank": 200,
+      "word": "during",
+      "pos": "i",
+      "all": [
+        {
+          "word": "during",
+          "pos": "i",
+          "rank": 200,
+          "raw": "duringi200"
+        }
+      ]
+    }
+  ],
+  "allCount": 5028
+}
