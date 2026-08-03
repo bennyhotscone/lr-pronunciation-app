@@ -17,7 +17,7 @@ export default function EnglishForMandarinSpeakersPage() {
           href="/english-for-mandarin-speakers/review"
           className="underline underline-offset-2"
         >
-          Audio clip review (first batch)
+          Audio clip review (all files)
         </Link>
       </p>
     </div>
