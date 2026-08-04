@@ -331,10 +331,10 @@ export function MandarinVocabTest() {
           </div>
 
           <p className="mv-note">
-            Built for 50 groups of 100 words (5,000 total). This quiz uses the
-            first available frequency words with realigned audio. Rank 19 “this”
-            is missing from the ZIP batch (the clip that was there is “they”, now
-            rank 20). Spot-check every clip on the review page before we cut more.
+            Built for 50 groups of 100 words (5,000 total). This quiz currently
+            uses only the first clips that have vocabulary + audio wired in —
+            bulk files past that are <strong>draft</strong> until verified in
+            Audio Studio. Do not treat all manifest clips as approved.
           </p>
         </div>
 

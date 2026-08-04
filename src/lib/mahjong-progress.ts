@@ -1,51 +1,49 @@
-export const MAHJONG_SAVE_KEY = "lr-mandarin-mahjong-v1";
-
-export type MahjongMatchMode = "audio-zh" | "word-zh";
+export const MAHJONG_SAVE_KEY = "lr-mandarin-mahjong-v2";
 
 export type MahjongProgressSaved = {
-  mode: MahjongMatchMode;
+  /** Frequency batch: 1 = ranks 1–50, 2 = 51–100 */
+  batch: number;
   pairCount: number;
   wins: number;
-  bestMoves: number | null;
-  clearedRanks: number[];
+  bestMovesByBatch: Record<string, number>;
+  /** Ranks the learner has successfully matched at least once */
+  masteredRanks: number[];
 };
 
 const DEFAULT: MahjongProgressSaved = {
-  mode: "audio-zh",
+  batch: 1,
   pairCount: 6,
   wins: 0,
-  bestMoves: null,
-  clearedRanks: [],
+  bestMovesByBatch: {},
+  masteredRanks: [],
 };
 
 export function loadMahjongProgress(): MahjongProgressSaved {
-  if (typeof window === "undefined") return { ...DEFAULT };
+  if (typeof window === "undefined") return { ...DEFAULT, bestMovesByBatch: {} };
   try {
     const raw = localStorage.getItem(MAHJONG_SAVE_KEY);
-    if (!raw) return { ...DEFAULT };
+    if (!raw) return { ...DEFAULT, bestMovesByBatch: {} };
     const parsed = JSON.parse(raw) as Partial<MahjongProgressSaved>;
-    const mode: MahjongMatchMode =
-      parsed.mode === "word-zh" || parsed.mode === "audio-zh"
-        ? parsed.mode
-        : "audio-zh";
+    const batch =
+      parsed.batch === 1 || parsed.batch === 2 ? parsed.batch : 1;
     const pairCount =
       parsed.pairCount === 4 || parsed.pairCount === 6 || parsed.pairCount === 8
         ? parsed.pairCount
         : 6;
     return {
-      mode,
+      batch,
       pairCount,
       wins: typeof parsed.wins === "number" ? parsed.wins : 0,
-      bestMoves:
-        typeof parsed.bestMoves === "number" && parsed.bestMoves > 0
-          ? parsed.bestMoves
-          : null,
-      clearedRanks: Array.isArray(parsed.clearedRanks)
-        ? parsed.clearedRanks.filter((n): n is number => typeof n === "number")
+      bestMovesByBatch:
+        parsed.bestMovesByBatch && typeof parsed.bestMovesByBatch === "object"
+          ? parsed.bestMovesByBatch
+          : {},
+      masteredRanks: Array.isArray(parsed.masteredRanks)
+        ? parsed.masteredRanks.filter((n): n is number => typeof n === "number")
         : [],
     };
   } catch {
-    return { ...DEFAULT };
+    return { ...DEFAULT, bestMovesByBatch: {} };
   }
 }
 

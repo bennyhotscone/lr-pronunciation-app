@@ -2,6 +2,19 @@
 
 This package is designed to be copied into a new Cursor project or attached to Cursor Plan Mode.
 
+## Mandarin course tools (live site)
+
+- **Quiz:** `/english-for-mandarin-speakers`
+- **Mahjong match (English ↔ 中文):** `/english-for-mandarin-speakers/mahjong`  
+  Frequency batches of 50 (ranks 1–50, then 51–100). Group 2 unlocks after all of group 1 is mastered in-browser. INDEX PDF has lemmas only — Chinese glosses in `src/data/mandarin-vocab.ts` are curated study glosses.
+- **Public audio review:** `/english-for-mandarin-speakers/review`  
+  Draft-length flags only; not a claim that clips are pedagogically good.
+- **Audio Studio (password):** `/english-for-mandarin-speakers/studio`  
+  - Prefer env `MANDARIN_STUDIO_PASSWORD` on Vercel.  
+  - Fallback password (change it): see `STUDIO_PASSWORD_FALLBACK` in `src/lib/studio-progress.ts` (default `lrmastery-studio`).  
+  - Notes / OK / Needs addressing persist in **localStorage**; use Export/Import JSON.  
+  - Record / upload **downloads** a correctly named file — Vercel cannot persist writes into `public/`. Commit replacements into `public/audio/mandarin-vocab/`.
+
 ## What is fixed
 
 - The app is for Japanese and Thai learners of English.

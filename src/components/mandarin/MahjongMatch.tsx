@@ -3,30 +3,27 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  ACTIVE_VOCAB_WORDS,
-  audioUrl,
+  MAHJONG_BATCH_SIZE,
+  wordsInMahjongBatch,
   type MandarinVocabWord,
 } from "@/data/mandarin-vocab";
 import {
   loadMahjongProgress,
   saveMahjongProgress,
-  type MahjongMatchMode,
 } from "@/lib/mahjong-progress";
 import "./mahjong-match.css";
 
-type TileFace = "audio" | "word" | "zh";
+type TileFace = "word" | "zh";
 
 type Tile = {
   id: string;
   pairId: number;
   face: TileFace;
   label: string;
-  audioFile?: string;
   refLabel: string;
 };
 
 type PairCount = 4 | 6 | 8;
-
 type Feedback = { kind: "ok" | "bad"; text: string } | null;
 
 function shuffle<T>(arr: T[]): T[] {
@@ -42,55 +39,42 @@ function refOf(rank: number): string {
   return `#${String(rank).padStart(4, "0")}`;
 }
 
-function pickWords(count: number): MandarinVocabWord[] {
-  return shuffle(ACTIVE_VOCAB_WORDS).slice(0, count);
+function pickWords(pool: MandarinVocabWord[], count: number): MandarinVocabWord[] {
+  return shuffle(pool).slice(0, Math.min(count, pool.length));
 }
 
-function buildTiles(words: MandarinVocabWord[], mode: MahjongMatchMode): Tile[] {
+function buildTiles(words: MandarinVocabWord[]): Tile[] {
   const tiles: Tile[] = [];
   for (const w of words) {
     const refLabel = refOf(w.rank);
-    if (mode === "audio-zh") {
-      tiles.push({
-        id: `${w.rank}-audio`,
-        pairId: w.rank,
-        face: "audio",
-        label: "Listen",
-        audioFile: w.audioFile,
-        refLabel,
-      });
-      tiles.push({
-        id: `${w.rank}-zh`,
-        pairId: w.rank,
-        face: "zh",
-        label: w.zh,
-        refLabel,
-      });
-    } else {
-      tiles.push({
-        id: `${w.rank}-word`,
-        pairId: w.rank,
-        face: "word",
-        label: w.word,
-        refLabel,
-      });
-      tiles.push({
-        id: `${w.rank}-zh`,
-        pairId: w.rank,
-        face: "zh",
-        label: w.zh,
-        refLabel,
-      });
-    }
+    tiles.push({
+      id: `${w.rank}-word`,
+      pairId: w.rank,
+      face: "word",
+      label: w.word,
+      refLabel,
+    });
+    tiles.push({
+      id: `${w.rank}-zh`,
+      pairId: w.rank,
+      face: "zh",
+      label: w.zh,
+      refLabel,
+    });
   }
   return shuffle(tiles);
 }
 
+function batchLabel(batch: number): string {
+  const start = (batch - 1) * MAHJONG_BATCH_SIZE + 1;
+  const end = batch * MAHJONG_BATCH_SIZE;
+  return `${start}–${end}`;
+}
+
 export function MahjongMatch() {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const lockRef = useRef(false);
   const [hydrated, setHydrated] = useState(false);
-  const [mode, setMode] = useState<MahjongMatchMode>("audio-zh");
+  const [batch, setBatch] = useState(1);
   const [pairCount, setPairCount] = useState<PairCount>(6);
   const [tiles, setTiles] = useState<Tile[]>([]);
   const [flipped, setFlipped] = useState<string[]>([]);
@@ -99,34 +83,50 @@ export function MahjongMatch() {
   const [moves, setMoves] = useState(0);
   const [dealKey, setDealKey] = useState(0);
   const [wins, setWins] = useState(0);
-  const [bestMoves, setBestMoves] = useState<number | null>(null);
-  const [clearedRanks, setClearedRanks] = useState<number[]>([]);
+  const [bestMovesByBatch, setBestMovesByBatch] = useState<Record<string, number>>(
+    {},
+  );
+  const [masteredRanks, setMasteredRanks] = useState<number[]>([]);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [won, setWon] = useState(false);
 
+  const pool = useMemo(() => wordsInMahjongBatch(batch), [batch]);
+  const masteredSet = useMemo(() => new Set(masteredRanks), [masteredRanks]);
+
+  const batch1Mastered = useMemo(() => {
+    const g1 = wordsInMahjongBatch(1);
+    return g1.length > 0 && g1.every((w) => masteredSet.has(w.rank));
+  }, [masteredSet]);
+
+  const batchProgress = useMemo(() => {
+    const done = pool.filter((w) => masteredSet.has(w.rank)).length;
+    return { done, total: pool.length };
+  }, [pool, masteredSet]);
+
   const persist = useCallback(
     (next: Partial<{
-      mode: MahjongMatchMode;
+      batch: number;
       pairCount: PairCount;
       wins: number;
-      bestMoves: number | null;
-      clearedRanks: number[];
+      bestMovesByBatch: Record<string, number>;
+      masteredRanks: number[];
     }>) => {
       saveMahjongProgress({
-        mode: next.mode ?? mode,
+        batch: next.batch ?? batch,
         pairCount: next.pairCount ?? pairCount,
         wins: next.wins ?? wins,
-        bestMoves: next.bestMoves !== undefined ? next.bestMoves : bestMoves,
-        clearedRanks: next.clearedRanks ?? clearedRanks,
+        bestMovesByBatch: next.bestMovesByBatch ?? bestMovesByBatch,
+        masteredRanks: next.masteredRanks ?? masteredRanks,
       });
     },
-    [mode, pairCount, wins, bestMoves, clearedRanks],
+    [batch, pairCount, wins, bestMovesByBatch, masteredRanks],
   );
 
   const deal = useCallback(
-    (nextMode: MahjongMatchMode, nextPairs: PairCount) => {
+    (nextBatch: number, nextPairs: PairCount) => {
       lockRef.current = false;
-      setTiles(buildTiles(pickWords(nextPairs), nextMode));
+      const words = wordsInMahjongBatch(nextBatch);
+      setTiles(buildTiles(pickWords(words, nextPairs)));
       setFlipped([]);
       setMatched(new Set());
       setWrongIds(new Set());
@@ -140,22 +140,21 @@ export function MahjongMatch() {
 
   useEffect(() => {
     const saved = loadMahjongProgress();
-    setMode(saved.mode);
+    const startBatch =
+      saved.batch === 2 &&
+      wordsInMahjongBatch(1).every((w) => saved.masteredRanks.includes(w.rank))
+        ? 2
+        : saved.batch === 2
+          ? 1
+          : saved.batch;
+    setBatch(startBatch);
     setPairCount(saved.pairCount as PairCount);
     setWins(saved.wins);
-    setBestMoves(saved.bestMoves);
-    setClearedRanks(saved.clearedRanks);
-    deal(saved.mode, saved.pairCount as PairCount);
+    setBestMovesByBatch(saved.bestMovesByBatch);
+    setMasteredRanks(saved.masteredRanks);
+    deal(startBatch, saved.pairCount as PairCount);
     setHydrated(true);
   }, [deal]);
-
-  const playAudio = useCallback((file: string) => {
-    if (!audioRef.current) audioRef.current = new Audio();
-    const a = audioRef.current;
-    a.pause();
-    a.src = audioUrl(file);
-    void a.play().catch(() => {});
-  }, []);
 
   const remaining = useMemo(
     () => tiles.filter((t) => !matched.has(t.pairId)).length / 2,
@@ -168,17 +167,14 @@ export function MahjongMatch() {
     if (flipped.includes(tile.id)) return;
     if (flipped.length >= 2) return;
 
-    if (tile.face === "audio" && tile.audioFile) {
-      playAudio(tile.audioFile);
-    }
-
     const nextFlipped = [...flipped, tile.id];
     setFlipped(nextFlipped);
     setFeedback(null);
 
     if (nextFlipped.length < 2) return;
 
-    setMoves((m) => m + 1);
+    const moveCount = moves + 1;
+    setMoves(moveCount);
     const [aId, bId] = nextFlipped;
     const a = tiles.find((t) => t.id === aId);
     const b = tiles.find((t) => t.id === bId);
@@ -187,51 +183,52 @@ export function MahjongMatch() {
     if (a.pairId === b.pairId && a.face !== b.face) {
       lockRef.current = true;
       setFeedback({ kind: "ok", text: `Match · ${a.refLabel}` });
-      const moveCount = moves + 1;
       window.setTimeout(() => {
         setMatched((prev) => {
           const nextMatched = new Set(prev);
           nextMatched.add(a.pairId);
-          const cleared = pairCount;
-          if (nextMatched.size === cleared) {
-            setWon(true);
-            setWins((w) => {
-              const nextWins = w + 1;
-              setBestMoves((bBest) => {
-                const nextBest =
-                  bBest == null ? moveCount : Math.min(bBest, moveCount);
-                setClearedRanks((cr) => {
-                  const nextCleared = cr.includes(a.pairId)
-                    ? cr
-                    : [...cr, a.pairId].sort((x, y) => x - y);
+
+          setMasteredRanks((cr) => {
+            const nextMastered = cr.includes(a.pairId)
+              ? cr
+              : [...cr, a.pairId].sort((x, y) => x - y);
+
+            if (nextMatched.size === Math.min(pairCount, pool.length)) {
+              const key = String(batch);
+              setWon(true);
+              setWins((w) => {
+                const nextWins = w + 1;
+                setBestMovesByBatch((bm) => {
+                  const prevBest = bm[key];
+                  const nextBest =
+                    prevBest == null
+                      ? moveCount
+                      : Math.min(prevBest, moveCount);
+                  const nextBm = { ...bm, [key]: nextBest };
                   saveMahjongProgress({
-                    mode,
+                    batch,
                     pairCount,
                     wins: nextWins,
-                    bestMoves: nextBest,
-                    clearedRanks: nextCleared,
+                    bestMovesByBatch: nextBm,
+                    masteredRanks: nextMastered,
                   });
-                  return nextCleared;
+                  return nextBm;
                 });
-                return nextBest;
+                return nextWins;
               });
-              return nextWins;
-            });
-            setFeedback({ kind: "ok", text: "Board cleared!" });
-          } else {
-            setClearedRanks((cr) => {
-              if (cr.includes(a.pairId)) return cr;
-              const nextCleared = [...cr, a.pairId].sort((x, y) => x - y);
+              setFeedback({ kind: "ok", text: "Board cleared!" });
+            } else if (!cr.includes(a.pairId)) {
               saveMahjongProgress({
-                mode,
+                batch,
                 pairCount,
                 wins,
-                bestMoves,
-                clearedRanks: nextCleared,
+                bestMovesByBatch,
+                masteredRanks: nextMastered,
               });
-              return nextCleared;
-            });
-          }
+            }
+            return nextMastered;
+          });
+
           return nextMatched;
         });
         setFlipped([]);
@@ -252,16 +249,17 @@ export function MahjongMatch() {
     }
   };
 
-  const changeMode = (next: MahjongMatchMode) => {
-    setMode(next);
-    persist({ mode: next });
+  const selectBatch = (next: number) => {
+    if (next === 2 && !batch1Mastered) return;
+    setBatch(next);
+    persist({ batch: next });
     deal(next, pairCount);
   };
 
   const changePairs = (next: PairCount) => {
     setPairCount(next);
     persist({ pairCount: next });
-    deal(mode, next);
+    deal(batch, next);
   };
 
   if (!hydrated) {
@@ -272,33 +270,42 @@ export function MahjongMatch() {
     );
   }
 
+  const best = bestMovesByBatch[String(batch)];
+
   return (
     <div className="mahjong-match">
       <section className="mj-hero" aria-labelledby="mj-title">
-        <p className="mj-chip">Mahjong match · vocab</p>
+        <p className="mj-chip">Mahjong match · English ↔ 中文</p>
         <h1 id="mj-title" className="mj-title">
           Pair the tiles
         </h1>
         <p className="mj-lede">
-          Classic board feel — flip two tiles, clear the table. Match English
-          sound or spelling with Mandarin meaning. Ref numbers help you report
-          a bad clip.
+          Match each English word with its Mandarin meaning. Frequency groups of{" "}
+          {MAHJONG_BATCH_SIZE}: clear every word in group 1 to unlock group 2.
+          Chinese glosses are curated for study (the INDEX PDF is lemmas only).
         </p>
 
-        <div className="mj-toolbar" role="group" aria-label="Match type">
+        <div className="mj-toolbar" role="group" aria-label="Frequency group">
           <button
             type="button"
-            className={`mj-btn mj-btn-ghost ${mode === "audio-zh" ? "is-active" : ""}`}
-            onClick={() => changeMode("audio-zh")}
+            className={`mj-btn mj-btn-ghost ${batch === 1 ? "is-active" : ""}`}
+            onClick={() => selectBatch(1)}
           >
-            听音 ↔ 中文
+            Group 1 · {batchLabel(1)}
           </button>
           <button
             type="button"
-            className={`mj-btn mj-btn-ghost ${mode === "word-zh" ? "is-active" : ""}`}
-            onClick={() => changeMode("word-zh")}
+            className={`mj-btn mj-btn-ghost ${batch === 2 ? "is-active" : ""}`}
+            onClick={() => selectBatch(2)}
+            disabled={!batch1Mastered}
+            title={
+              batch1Mastered
+                ? `Play ranks ${batchLabel(2)}`
+                : "Master all 50 words in group 1 first"
+            }
           >
-            Word ↔ 中文
+            Group 2 · {batchLabel(2)}
+            {batch1Mastered ? "" : " 🔒"}
           </button>
         </div>
 
@@ -316,7 +323,7 @@ export function MahjongMatch() {
           <button
             type="button"
             className="mj-btn mj-btn-primary"
-            onClick={() => deal(mode, pairCount)}
+            onClick={() => deal(batch, pairCount)}
           >
             New deal
           </button>
@@ -328,12 +335,14 @@ export function MahjongMatch() {
             <div className="mj-stat-label">Moves</div>
           </div>
           <div className="mj-stat">
-            <div className="mj-stat-val">{remaining}</div>
-            <div className="mj-stat-label">Left</div>
+            <div className="mj-stat-val">
+              {batchProgress.done}/{batchProgress.total}
+            </div>
+            <div className="mj-stat-label">Mastered</div>
           </div>
           <div className="mj-stat">
-            <div className="mj-stat-val">{bestMoves ?? "—"}</div>
-            <div className="mj-stat-label">Best</div>
+            <div className="mj-stat-val">{best ?? "—"}</div>
+            <div className="mj-stat-label">Best clear</div>
           </div>
         </div>
       </section>
@@ -363,11 +372,11 @@ export function MahjongMatch() {
                     .filter(Boolean)
                     .join(" ")}
                   style={{ animationDelay: `${Math.min(i, 12) * 35}ms` }}
-                  disabled={isMatched || lockRef.current}
+                  disabled={isMatched}
                   aria-label={
                     isFlipped
                       ? `${tile.face} ${tile.label} ${tile.refLabel}`
-                      : `Face-down tile`
+                      : "Face-down tile"
                   }
                   aria-pressed={isFlipped}
                   onClick={() => onFlip(tile)}
@@ -378,24 +387,13 @@ export function MahjongMatch() {
                     </span>
                     <span className="mj-face mj-face-front">
                       <span className="mj-ref">{tile.refLabel}</span>
-                      {tile.face === "audio" ? (
-                        <span className="mj-face-audio">
-                          <span className="mj-speaker" aria-hidden="true">
-                            ♪
-                          </span>
-                          <span className="mj-listen-hint">Tap sound</span>
-                        </span>
-                      ) : tile.face === "word" ? (
+                      {tile.face === "word" ? (
                         <span className="mj-face-word">{tile.label}</span>
                       ) : (
                         <span className="mj-face-zh">{tile.label}</span>
                       )}
                       <span className="mj-kind">
-                        {tile.face === "audio"
-                          ? "Audio"
-                          : tile.face === "word"
-                            ? "English"
-                            : "中文"}
+                        {tile.face === "word" ? "English" : "中文"}
                       </span>
                     </span>
                   </span>
@@ -412,27 +410,36 @@ export function MahjongMatch() {
         aria-live="polite"
       >
         {feedback?.text ??
-          (mode === "audio-zh"
-            ? "Flip a sound tile and its Mandarin meaning."
-            : "Flip an English word and its Mandarin meaning.")}
+          `Group ${batch} (${batchLabel(batch)}) · ${remaining} pairs left on the table`}
       </p>
 
       {won ? (
         <div className="mj-win">
           <h2>Table cleared</h2>
           <p>
-            {moves} moves · {wins} win{wins === 1 ? "" : "s"} saved on this
-            device
-            {bestMoves != null ? ` · best ${bestMoves}` : ""}
+            {moves} moves · group {batch} progress {batchProgress.done}/
+            {batchProgress.total} mastered
+            {batch === 1 && batch1Mastered
+              ? " · Group 2 unlocked!"
+              : ""}
           </p>
           <div className="mj-toolbar" style={{ justifyContent: "center" }}>
             <button
               type="button"
               className="mj-btn mj-btn-primary"
-              onClick={() => deal(mode, pairCount)}
+              onClick={() => deal(batch, pairCount)}
             >
               Deal again
             </button>
+            {batch === 1 && batch1Mastered ? (
+              <button
+                type="button"
+                className="mj-btn mj-btn-ghost is-active"
+                onClick={() => selectBatch(2)}
+              >
+                Open group 2
+              </button>
+            ) : null}
           </div>
         </div>
       ) : null}

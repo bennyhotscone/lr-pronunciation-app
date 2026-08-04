@@ -20,7 +20,7 @@ export default function EnglishForMandarinSpeakersPage() {
           Mahjong match
         </span>
         <span className="text-sm font-semibold text-[#f0e6c8]/90">
-          听音 / 单词 ↔ 中文 · tiled pairing game
+          English ↔ 中文 · frequency groups of 50
         </span>
       </Link>
       <p className="text-center text-sm text-muted">
@@ -28,7 +28,14 @@ export default function EnglishForMandarinSpeakersPage() {
           href="/english-for-mandarin-speakers/review"
           className="underline underline-offset-2"
         >
-          Audio clip review (all files)
+          Audio clip review
+        </Link>
+        {" · "}
+        <Link
+          href="/english-for-mandarin-speakers/studio"
+          className="underline underline-offset-2"
+        >
+          Audio Studio (password)
         </Link>
       </p>
     </div>
