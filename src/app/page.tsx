@@ -82,6 +82,18 @@ export default function HomePage() {
             </span>
           </Link>
 
+          <Link
+            href="/english-for-mandarin-speakers/mahjong"
+            className="touch-target inline-flex w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-[#8b5a2b]/40 bg-gradient-to-br from-[#214f3c] via-[#1a4d3a] to-[#16382b] px-4 py-3.5 text-center text-[#fffaf0] shadow-md shadow-[#0e261c]/25 transition hover:brightness-110"
+          >
+            <span className="font-[family-name:var(--font-display)] text-base font-semibold sm:text-lg">
+              Mahjong vocab match
+            </span>
+            <span className="text-sm font-semibold text-[#f0e6c8]/85">
+              Pair English ↔ 中文 on a tile board
+            </span>
+          </Link>
+
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Link
               href="/practice"
