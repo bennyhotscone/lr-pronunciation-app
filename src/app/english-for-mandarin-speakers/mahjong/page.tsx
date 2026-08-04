@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { MahjongMatch } from "@/components/mandarin/MahjongMatch";
 
 export const metadata: Metadata = {
-  title: "Mahjong Match · English for Mandarin Speakers",
+  title: "Mahjong Solitaire · English for Mandarin Speakers",
   description:
-    "Match English audio or words with Mandarin meanings on a mahjong-style board.",
+    "Classic Mahjong Solitaire: match English words with Mandarin glosses on a stacked tile board.",
 };
 
 export default function MandarinMahjongPage() {

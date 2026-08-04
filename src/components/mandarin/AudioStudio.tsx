@@ -527,7 +527,7 @@ export function AudioStudio() {
           Public review
         </Link>
         <Link href="/english-for-mandarin-speakers/mahjong" className="underline">
-          Mahjong
+          Mahjong Solitaire
         </Link>
       </div>
     </div>

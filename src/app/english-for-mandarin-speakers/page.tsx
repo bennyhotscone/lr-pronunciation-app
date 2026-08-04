@@ -17,10 +17,10 @@ export default function EnglishForMandarinSpeakersPage() {
         className="touch-target flex w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-[#8b5a2b]/50 bg-gradient-to-br from-[#214f3c] via-[#1a4d3a] to-[#0e261c] px-4 py-4 text-center text-[#fffaf0] shadow-md shadow-[#0e261c]/30 transition hover:brightness-110"
       >
         <span className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight">
-          Mahjong match
+          Mahjong Solitaire
         </span>
         <span className="text-sm font-semibold text-[#f0e6c8]/90">
-          English ↔ 中文 · frequency groups of 50
+          Stacked board · English ↔ 中文 · groups of 50
         </span>
       </Link>
       <p className="text-center text-sm text-muted">

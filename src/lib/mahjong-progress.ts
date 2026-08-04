@@ -1,9 +1,8 @@
-export const MAHJONG_SAVE_KEY = "lr-mandarin-mahjong-v2";
+export const MAHJONG_SAVE_KEY = "lr-mandarin-mahjong-v3";
 
 export type MahjongProgressSaved = {
   /** Frequency batch: 1 = ranks 1–50, 2 = 51–100 */
   batch: number;
-  pairCount: number;
   wins: number;
   bestMovesByBatch: Record<string, number>;
   /** Ranks the learner has successfully matched at least once */
@@ -12,7 +11,6 @@ export type MahjongProgressSaved = {
 
 const DEFAULT: MahjongProgressSaved = {
   batch: 1,
-  pairCount: 6,
   wins: 0,
   bestMovesByBatch: {},
   masteredRanks: [],
@@ -21,18 +19,18 @@ const DEFAULT: MahjongProgressSaved = {
 export function loadMahjongProgress(): MahjongProgressSaved {
   if (typeof window === "undefined") return { ...DEFAULT, bestMovesByBatch: {} };
   try {
-    const raw = localStorage.getItem(MAHJONG_SAVE_KEY);
+    // Prefer v3; migrate mastered ranks from memory-match v2 if present.
+    const rawV3 = localStorage.getItem(MAHJONG_SAVE_KEY);
+    const rawV2 = localStorage.getItem("lr-mandarin-mahjong-v2");
+    const raw = rawV3 ?? rawV2;
     if (!raw) return { ...DEFAULT, bestMovesByBatch: {} };
-    const parsed = JSON.parse(raw) as Partial<MahjongProgressSaved>;
+    const parsed = JSON.parse(raw) as Partial<MahjongProgressSaved> & {
+      pairCount?: number;
+    };
     const batch =
       parsed.batch === 1 || parsed.batch === 2 ? parsed.batch : 1;
-    const pairCount =
-      parsed.pairCount === 4 || parsed.pairCount === 6 || parsed.pairCount === 8
-        ? parsed.pairCount
-        : 6;
     return {
       batch,
-      pairCount,
       wins: typeof parsed.wins === "number" ? parsed.wins : 0,
       bestMovesByBatch:
         parsed.bestMovesByBatch && typeof parsed.bestMovesByBatch === "object"

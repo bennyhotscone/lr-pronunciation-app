@@ -5,7 +5,7 @@ This package is designed to be copied into a new Cursor project or attached to C
 ## Mandarin course tools (live site)
 
 - **Quiz:** `/english-for-mandarin-speakers`
-- **Mahjong match (English ↔ 中文):** `/english-for-mandarin-speakers/mahjong`  
+- **Mahjong Solitaire (English ↔ 中文):** `/english-for-mandarin-speakers/mahjong`  
   Frequency batches of 50 (ranks 1–50, then 51–100). Group 2 unlocks after all of group 1 is mastered in-browser. INDEX PDF has lemmas only — Chinese glosses in `src/data/mandarin-vocab.ts` are curated study glosses.
 - **Public audio review:** `/english-for-mandarin-speakers/review`  
   Draft-length flags only; not a claim that clips are pedagogically good.
