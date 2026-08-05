@@ -1,7 +1,7 @@
 export const MAHJONG_SAVE_KEY = "lr-mandarin-mahjong-v3";
 export const MAHJONG_MODE_KEY = "lr-mandarin-mahjong-mode-v1";
 
-export type MahjongPlayMode = "en-zh" | "audio-zh";
+export type MahjongPlayMode = "en-zh" | "audio-zh" | "audio-en";
 
 export type MahjongProgressSaved = {
   /** Frequency batch: 1 = ranks 1–50, 2 = 51–100 */
@@ -53,11 +53,19 @@ export function saveMahjongProgress(state: MahjongProgressSaved): void {
   localStorage.setItem(MAHJONG_SAVE_KEY, JSON.stringify(state));
 }
 
+const VALID_MODES: readonly MahjongPlayMode[] = [
+  "en-zh",
+  "audio-zh",
+  "audio-en",
+];
+
 export function loadMahjongMode(): MahjongPlayMode {
   if (typeof window === "undefined") return "en-zh";
   try {
     const raw = localStorage.getItem(MAHJONG_MODE_KEY);
-    return raw === "audio-zh" ? "audio-zh" : "en-zh";
+    return VALID_MODES.includes(raw as MahjongPlayMode)
+      ? (raw as MahjongPlayMode)
+      : "en-zh";
   } catch {
     return "en-zh";
   }
