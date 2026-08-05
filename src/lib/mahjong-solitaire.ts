@@ -139,19 +139,24 @@ export function isCovered(tile: SolitaireTile, tiles: SolitaireTile[]): boolean 
   );
 }
 
+/**
+ * Same-layer side contact: Y footprints overlap and the neighbor’s X
+ * abuts this tile on the given side (unit grid, including 0.5 offsets).
+ * Using an abutment band (not only exact x±1) keeps half-step layouts honest.
+ */
 function hasSideNeighbor(
   tile: SolitaireTile,
   tiles: SolitaireTile[],
   side: -1 | 1,
 ): boolean {
-  return tiles.some(
-    (t) =>
-      !t.removed &&
-      t.id !== tile.id &&
-      t.z === tile.z &&
-      Math.abs(t.y - tile.y) < 1 - EPS &&
-      Math.abs(t.x - (tile.x + side)) < EPS,
-  );
+  return tiles.some((t) => {
+    if (t.removed || t.id === tile.id || t.z !== tile.z) return false;
+    // Footprint is 1×1; require meaningful vertical overlap.
+    if (Math.abs(t.y - tile.y) >= 1 - EPS) return false;
+    // Neighbor must sit immediately to the left (−1) or right (+1).
+    const expected = tile.x + side;
+    return Math.abs(t.x - expected) < 0.5 - EPS;
+  });
 }
 
 /** Classic Mahjong Solitaire: uncovered and free on left or right. */

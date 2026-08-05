@@ -211,9 +211,9 @@ export default function MandarinAudioReviewPage() {
         </Link>
         <Link
           href="/english-for-mandarin-speakers/studio"
-          className="btn-primary relative z-30 inline-flex touch-target rounded-2xl px-4 py-2 text-sm font-bold"
+          className="btn-primary relative z-30 inline-flex min-h-[48px] touch-target rounded-2xl px-5 py-3 text-sm font-bold"
         >
-          Open Audio Studio
+          Open Audio Studio · 1–50 checklist
         </Link>
       </div>
 

@@ -12,8 +12,11 @@ This package is designed to be copied into a new Cursor project or attached to C
 - **Audio Studio (password):** `/english-for-mandarin-speakers/studio`  
   - Prefer env `MANDARIN_STUDIO_PASSWORD` on Vercel.  
   - Fallback password (change it): see `STUDIO_PASSWORD_FALLBACK` in `src/lib/studio-progress.ts` (default `lrmastery-studio`).  
-  - Notes / OK / Needs addressing persist in **localStorage**; use Export/Import JSON.  
-  - Record / upload **downloads** a correctly named file — Vercel cannot persist writes into `public/`. Commit replacements into `public/audio/mandarin-vocab/`.
+  - First **50** frequency words: batch filters (1–10 … 41–50), play, **OK / Needs addressing / unmarked**, notes.  
+  - Notes / status persist in **localStorage**; use Export/Import JSON.  
+  - Record / upload → **preview**, then **download** a correctly named `NNNN-word.ext` file. Optional IndexedDB copy for same-browser replay.  
+  - Vercel cannot persist writes into `public/` — commit replacements into `public/audio/mandarin-vocab/`.  
+  - This is the quality gate before trusting Mahjong Audio modes.
 
 ## What is fixed
 

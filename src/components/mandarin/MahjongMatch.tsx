@@ -515,7 +515,10 @@ export function MahjongMatch() {
       setWrongIds(new Set([a.id, b.id]));
       setFeedback({
         kind: "bad",
-        text: `Not a pair · ${a.refLabel} / ${b.refLabel}`,
+        text:
+          a.pairId === b.pairId
+            ? `Same Ref but wrong faces · ${a.refLabel}`
+            : `Different words · ${a.refLabel} ≠ ${b.refLabel} — match the same Ref #`,
       });
       window.setTimeout(() => {
         setWrongIds(new Set());
@@ -691,7 +694,11 @@ export function MahjongMatch() {
               const wrong = wrongIds.has(tile.id);
               const matching = matchingIds.has(tile.id);
               const zIndex =
-                tile.z * 40 + Math.floor(tile.y * 6) + Math.floor(tile.x) + 1;
+                (free ? 800 : 0) +
+                tile.z * 40 +
+                Math.floor(tile.y * 6) +
+                Math.floor(tile.x) +
+                1;
 
               return (
                 <button
@@ -859,6 +866,9 @@ export function MahjongMatch() {
       <div className="mj-links">
         <Link href="/english-for-mandarin-speakers" className="mj-link">
           ← Vocab quiz
+        </Link>
+        <Link href="/english-for-mandarin-speakers/studio" className="mj-link">
+          Audio Studio
         </Link>
         <Link href="/english-for-mandarin-speakers/review" className="mj-link">
           Audio review

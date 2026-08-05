@@ -56,6 +56,25 @@ describe("mahjong solitaire free-tile rules", () => {
     expect(isFree(mid, tiles)).toBe(false);
   });
 
+  it("free-tile rules work on half-offset same-layer rows", () => {
+    // Typical layer-1 grid: ox/oy = 0.5 — adjacent pair should both be free.
+    const a = tile({ id: "a", x: 1.5, y: 0.5, z: 1, pairId: 42, face: "word" });
+    const b = tile({ id: "b", x: 2.5, y: 0.5, z: 1, pairId: 42, face: "zh" });
+    const tiles = [a, b];
+    expect(isFree(a, tiles)).toBe(true);
+    expect(isFree(b, tiles)).toBe(true);
+    expect(canMatch(a, b)).toBe(true);
+    expect(hasValidMove(tiles)).toBe(true);
+
+    // Three-in-a-row on half grid: ends free, middle locked.
+    const left = tile({ id: "l", x: 0.5, y: 1.5, z: 1 });
+    const mid = tile({ id: "m", x: 1.5, y: 1.5, z: 1 });
+    const right = tile({ id: "r", x: 2.5, y: 1.5, z: 1 });
+    expect(isFree(left, [left, mid, right])).toBe(true);
+    expect(isFree(right, [left, mid, right])).toBe(true);
+    expect(isFree(mid, [left, mid, right])).toBe(false);
+  });
+
   it("reopens a middle tile after a neighbor is removed", () => {
     const left = tile({ id: "l", x: 0, y: 0, z: 0, removed: true });
     const mid = tile({ id: "m", x: 1, y: 0, z: 0 });
