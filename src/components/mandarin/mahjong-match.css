@@ -214,6 +214,31 @@
     inset 0 2px 16px rgba(0, 0, 0, 0.28);
   transform: rotateX(8deg);
   transform-origin: center top;
+  overflow: hidden;
+}
+
+.mahjong-match .mj-dragon {
+  position: absolute;
+  left: 50%;
+  top: 0.35rem;
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: none;
+  color: rgba(240, 214, 120, 0.92);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  animation: mj-dragon-fly 1.15s ease-out both;
+}
+
+.mahjong-match .mj-dragon-svg {
+  width: min(42vw, 11rem);
+  height: auto;
+  display: block;
+}
+
+.mahjong-match .mj-dragon-path {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: mj-dragon-draw 1s ease-out both;
 }
 
 .mahjong-match .mj-table::before {
@@ -289,6 +314,47 @@
   z-index: 0;
 }
 
+.mahjong-match .mj-tile-flourish {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 0.42rem;
+  pointer-events: none;
+  opacity: 0.7;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 8%, rgba(160, 40, 40, 0.07), transparent 55%),
+    radial-gradient(ellipse 55% 35% at 12% 88%, rgba(30, 90, 70, 0.08), transparent 60%),
+    radial-gradient(ellipse 45% 30% at 90% 80%, rgba(160, 40, 40, 0.05), transparent 55%);
+}
+
+/* Subtle cloud / wave ink lines (CSS-only motif) */
+.mahjong-match .mj-tile-flourish::before {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 10%;
+  height: 7px;
+  border-radius: 50%;
+  border-top: 1px solid rgba(140, 50, 40, 0.18);
+  border-bottom: 1px solid transparent;
+  opacity: 0.85;
+}
+
+.mahjong-match .mj-tile-flourish::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 16%;
+  height: 6px;
+  border-radius: 40%;
+  box-shadow:
+    0 -1px 0 rgba(28, 80, 60, 0.12),
+    8px -2px 0 -1px rgba(28, 80, 60, 0.08),
+    -8px -2px 0 -1px rgba(28, 80, 60, 0.08);
+}
+
 .mahjong-match .mj-tile-face {
   position: relative;
   z-index: 1;
@@ -316,12 +382,59 @@
   inset: 3px;
   border-radius: 0.28rem;
   border: 1px solid rgba(160, 130, 80, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(180, 40, 36, 0.06);
   pointer-events: none;
 }
 
 .mahjong-match .mj-tile.is-zh .mj-tile-face {
   background:
     linear-gradient(165deg, #fff9f0 0%, #f3e8d4 50%, #e8d8bc 100%);
+}
+
+.mahjong-match .mj-tile.is-audio .mj-tile-face {
+  background:
+    linear-gradient(165deg, #f7fbff 0%, #eef4f0 48%, #e4ebe3 100%);
+}
+
+.mahjong-match .mj-face-audio {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12rem;
+  padding-top: 0.15rem;
+}
+
+.mahjong-match .mj-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(1.35rem, 5vw, 1.75rem);
+  height: clamp(1.35rem, 5vw, 1.75rem);
+  border-radius: 50%;
+  font-size: clamp(0.55rem, 2vw, 0.72rem);
+  color: #134f38;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.75), transparent 55%),
+    linear-gradient(145deg, #e8f2ea, #c5dccb);
+  border: 1px solid rgba(31, 107, 74, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 2px rgba(20, 60, 40, 0.12);
+  padding-left: 0.12rem;
+}
+
+.mahjong-match .mj-audio-ref {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(0.48rem, 1.5vw, 0.58rem);
+  font-weight: 800;
+  color: #1f6b4a;
+  letter-spacing: 0.02em;
+}
+
+.mahjong-match .mj-tile.is-audio .mj-ref {
+  opacity: 0;
 }
 
 .mahjong-match .mj-ref {
@@ -477,6 +590,52 @@
   }
 }
 
+@keyframes mj-dragon-fly {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px) scale(0.85);
+  }
+  25% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-42%) translateY(-10px) scale(1.05);
+  }
+}
+
+@keyframes mj-dragon-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.mahjong-match .mj-stuck {
+  margin: 0.75rem auto 0;
+  max-width: 28rem;
+  text-align: center;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(145deg, #fff6f0, #f3e4d4);
+  border: 1.5px solid rgba(161, 45, 45, 0.28);
+  box-shadow: 0 10px 24px rgba(92, 40, 26, 0.1);
+}
+
+.mahjong-match .mj-stuck p {
+  margin: 0 0 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #7a2a2a;
+}
+
+.mahjong-match .mj-stuck .mj-btn {
+  min-height: 42px;
+}
+
 .mahjong-match .mj-status {
   margin: 0.7rem auto 0;
   max-width: 42rem;
@@ -572,8 +731,28 @@
   .mahjong-match .mj-tile.is-wrong .mj-tile-body,
   .mahjong-match .mj-tile.is-matching,
   .mahjong-match .mj-tile.is-deal,
-  .mahjong-match .mj-win {
+  .mahjong-match .mj-win,
+  .mahjong-match .mj-dragon,
+  .mahjong-match .mj-dragon-path {
     animation: none !important;
     transition: none !important;
+  }
+
+  .mahjong-match .mj-dragon-path {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .mahjong-match .mj-board {
+    max-height: min(62vh, 480px);
+  }
+
+  .mahjong-match .mj-face-zh {
+    font-size: clamp(0.42rem, 2.6vw, 0.6rem);
+  }
+
+  .mahjong-match .mj-face-word {
+    font-size: clamp(0.52rem, 3vw, 0.78rem);
   }
 }

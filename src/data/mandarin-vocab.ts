@@ -155,6 +155,22 @@ export const MANDARIN_VOCAB_WORDS: MandarinVocabWord[] = [
   entry(100, "even", "甚至；即使", "used to emphasize surprise or inclusion"),
 ];
 
+/** MP3s exist under public/audio/mandarin-vocab for ranks 1–200. */
+function hydrateAudioFiles(words: MandarinVocabWord[]): void {
+  for (const w of words) {
+    if (!w.audioFile) {
+      const n = String(w.rank).padStart(4, "0");
+      const slug = w.word
+        .toLowerCase()
+        .replace(/'/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      w.audioFile = `${n}-${slug}.mp3`;
+    }
+  }
+}
+hydrateAudioFiles(MANDARIN_VOCAB_WORDS);
+
 /** Words with definitions + audio available for the live listening quiz. */
 export const ACTIVE_VOCAB_WORDS = MANDARIN_VOCAB_WORDS.filter(
   (w) => w.zh.length > 0 && w.en.length > 0 && w.audioFile.length > 0,
@@ -173,6 +189,15 @@ export function wordsInMahjongBatch(batch: number): MandarinVocabWord[] {
   const start = (batch - 1) * MAHJONG_BATCH_SIZE + 1;
   const end = batch * MAHJONG_BATCH_SIZE;
   return MAHJONG_VOCAB_WORDS.filter((w) => w.rank >= start && w.rank <= end);
+}
+
+/** Batch words that have both a Mandarin gloss and an audio clip filename. */
+export function wordsWithAudioInMahjongBatch(
+  batch: number,
+): MandarinVocabWord[] {
+  return wordsInMahjongBatch(batch).filter(
+    (w) => w.zh.length > 0 && w.audioFile.length > 0,
+  );
 }
 
 export function audioUrl(audioFile: string): string {

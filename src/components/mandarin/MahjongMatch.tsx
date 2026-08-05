@@ -11,20 +11,28 @@ import {
 import Link from "next/link";
 import {
   MAHJONG_BATCH_SIZE,
+  audioUrl,
   wordsInMahjongBatch,
+  wordsWithAudioInMahjongBatch,
   type MandarinVocabWord,
 } from "@/data/mandarin-vocab";
 import {
+  loadMahjongMode,
   loadMahjongProgress,
+  saveMahjongMode,
   saveMahjongProgress,
+  type MahjongPlayMode,
 } from "@/lib/mahjong-progress";
 import {
-  TEMPLE_LAYOUT,
-  LAYOUT_PAIR_COUNT,
-  LAYOUT_BOUNDS,
   canMatch,
-  isFree,
+  freeTileIds,
+  hasValidMove,
+  pickLayout,
+  placeOnLayout,
+  remixRemaining,
   shuffleSlots,
+  type FaceSpec,
+  type LayoutInfo,
   type SolitaireTile,
 } from "@/lib/mahjong-solitaire";
 import "./mahjong-match.css";
@@ -39,17 +47,31 @@ function pickWords(pool: MandarinVocabWord[], count: number): MandarinVocabWord[
   return shuffleSlots(pool).slice(0, Math.min(count, pool.length));
 }
 
-function buildDeal(words: MandarinVocabWord[]): SolitaireTile[] {
-  const faces: Omit<SolitaireTile, "x" | "y" | "z" | "removed">[] = [];
+function buildFaces(
+  words: MandarinVocabWord[],
+  mode: MahjongPlayMode,
+): FaceSpec[] {
+  const faces: FaceSpec[] = [];
   for (const w of words) {
     const refLabel = refOf(w.rank);
-    faces.push({
-      id: `${w.rank}-word`,
-      pairId: w.rank,
-      face: "word",
-      label: w.word,
-      refLabel,
-    });
+    if (mode === "audio-zh") {
+      faces.push({
+        id: `${w.rank}-audio`,
+        pairId: w.rank,
+        face: "audio",
+        label: w.word,
+        refLabel,
+        audioFile: w.audioFile,
+      });
+    } else {
+      faces.push({
+        id: `${w.rank}-word`,
+        pairId: w.rank,
+        face: "word",
+        label: w.word,
+        refLabel,
+      });
+    }
     faces.push({
       id: `${w.rank}-zh`,
       pairId: w.rank,
@@ -58,18 +80,15 @@ function buildDeal(words: MandarinVocabWord[]): SolitaireTile[] {
       refLabel,
     });
   }
-  const shuffled = shuffleSlots(faces);
-  const slots = shuffleSlots([...TEMPLE_LAYOUT]);
-  return shuffled.map((face, i) => {
-    const slot = slots[i]!;
-    return {
-      ...face,
-      x: slot.x,
-      y: slot.y,
-      z: slot.z,
-      removed: false,
-    };
-  });
+  return faces;
+}
+
+function buildDeal(
+  words: MandarinVocabWord[],
+  mode: MahjongPlayMode,
+  layout: LayoutInfo,
+): SolitaireTile[] {
+  return placeOnLayout(buildFaces(words, mode), layout.slots);
 }
 
 function batchLabel(batch: number): string {
@@ -78,11 +97,37 @@ function batchLabel(batch: number): string {
   return `${start}–${end}`;
 }
 
+function modeHint(mode: MahjongPlayMode): string {
+  return mode === "audio-zh"
+    ? "Click a free tile — Audio tiles play the word. Match ▶ Audio ↔ 中文."
+    : "Click a free tile, then its English ↔ 中文 pair.";
+}
+
+function otherFaceLabel(face: SolitaireTile["face"], mode: MahjongPlayMode): string {
+  if (face === "zh") return mode === "audio-zh" ? "Audio" : "English";
+  return "中文";
+}
+
+function faceClass(face: SolitaireTile["face"]): string {
+  if (face === "zh") return "is-zh";
+  if (face === "audio") return "is-audio";
+  return "is-en";
+}
+
+function faceKind(face: SolitaireTile["face"]): string {
+  if (face === "zh") return "中文";
+  if (face === "audio") return "Audio";
+  return "EN";
+}
+
 export function MahjongMatch() {
   const lockRef = useRef(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [mode, setMode] = useState<MahjongPlayMode>("en-zh");
   const [batch, setBatch] = useState(1);
   const [tiles, setTiles] = useState<SolitaireTile[]>([]);
+  const [layout, setLayout] = useState<LayoutInfo>(() => pickLayout(18));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [wrongIds, setWrongIds] = useState<Set<string>>(() => new Set());
   const [matchingIds, setMatchingIds] = useState<Set<string>>(() => new Set());
@@ -96,8 +141,9 @@ export function MahjongMatch() {
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [won, setWon] = useState(false);
   const [selectedRef, setSelectedRef] = useState<string | null>(null);
+  const [showDragon, setShowDragon] = useState(false);
+  const [audioPoolSize, setAudioPoolSize] = useState(0);
 
-  const pool = useMemo(() => wordsInMahjongBatch(batch), [batch]);
   const masteredSet = useMemo(() => new Set(masteredRanks), [masteredRanks]);
 
   const batch1Mastered = useMemo(() => {
@@ -106,42 +152,74 @@ export function MahjongMatch() {
   }, [masteredSet]);
 
   const batchProgress = useMemo(() => {
-    const done = pool.filter((w) => masteredSet.has(w.rank)).length;
-    return { done, total: pool.length };
-  }, [pool, masteredSet]);
+    const batchPool = wordsInMahjongBatch(batch);
+    const done = batchPool.filter((w) => masteredSet.has(w.rank)).length;
+    return { done, total: batchPool.length };
+  }, [batch, masteredSet]);
 
-  const freeIds = useMemo(() => {
-    const set = new Set<string>();
-    for (const t of tiles) {
-      if (isFree(t, tiles)) set.add(t.id);
-    }
-    return set;
-  }, [tiles]);
+  const freeIds = useMemo(() => freeTileIds(tiles), [tiles]);
 
-  const remaining = useMemo(
+  const remainingPairs = useMemo(
     () => tiles.filter((t) => !t.removed).length / 2,
     [tiles],
   );
 
-  const deal = useCallback((nextBatch: number) => {
-    lockRef.current = false;
-    const words = wordsInMahjongBatch(nextBatch);
-    setTiles(buildDeal(pickWords(words, LAYOUT_PAIR_COUNT)));
-    setSelectedId(null);
-    setSelectedRef(null);
-    setWrongIds(new Set());
-    setMatchingIds(new Set());
-    setMoves(0);
-    setFeedback({
-      kind: "hint",
-      text: "Click a free tile, then its English ↔ 中文 pair.",
-    });
-    setWon(false);
-    setDealKey((k) => k + 1);
+  const stuck = useMemo(() => {
+    if (won || tiles.length === 0) return false;
+    const left = tiles.some((t) => !t.removed);
+    return left && !hasValidMove(tiles);
+  }, [tiles, won]);
+
+  const playAudio = useCallback((file?: string) => {
+    if (!file) return;
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      const el = new Audio(audioUrl(file));
+      audioRef.current = el;
+      void el.play().catch(() => {
+        /* autoplay policies / missing file — Ref still visible */
+      });
+    } catch {
+      /* ignore */
+    }
   }, []);
+
+  const triggerDragon = useCallback(() => {
+    setShowDragon(true);
+    window.setTimeout(() => setShowDragon(false), 1200);
+  }, []);
+
+  const deal = useCallback(
+    (nextBatch: number, nextMode: MahjongPlayMode) => {
+      lockRef.current = false;
+      const wordsPool =
+        nextMode === "audio-zh"
+          ? wordsWithAudioInMahjongBatch(nextBatch)
+          : wordsInMahjongBatch(nextBatch);
+      setAudioPoolSize(wordsPool.length);
+      const nextLayout = pickLayout(wordsPool.length);
+      const words = pickWords(wordsPool, nextLayout.pairCount);
+      setLayout(nextLayout);
+      setTiles(buildDeal(words, nextMode, nextLayout));
+      setSelectedId(null);
+      setSelectedRef(null);
+      setWrongIds(new Set());
+      setMatchingIds(new Set());
+      setMoves(0);
+      setFeedback({ kind: "hint", text: modeHint(nextMode) });
+      setWon(false);
+      setDealKey((k) => k + 1);
+      if (Math.random() < 0.35) triggerDragon();
+    },
+    [triggerDragon],
+  );
 
   useEffect(() => {
     const saved = loadMahjongProgress();
+    const savedMode = loadMahjongMode();
     const startBatch =
       saved.batch === 2 &&
       wordsInMahjongBatch(1).every((w) => saved.masteredRanks.includes(w.rank))
@@ -150,10 +228,11 @@ export function MahjongMatch() {
           ? 1
           : saved.batch;
     setBatch(startBatch);
+    setMode(savedMode);
     setWins(saved.wins);
     setBestMovesByBatch(saved.bestMovesByBatch);
     setMasteredRanks(saved.masteredRanks);
-    deal(startBatch);
+    deal(startBatch, savedMode);
     setHydrated(true);
   }, [deal]);
 
@@ -174,6 +253,29 @@ export function MahjongMatch() {
     [batch, wins, bestMovesByBatch, masteredRanks],
   );
 
+  const remix = useCallback(() => {
+    if (lockRef.current || won) return;
+    lockRef.current = true;
+    setSelectedId(null);
+    setSelectedRef(null);
+    setWrongIds(new Set());
+    setMatchingIds(new Set());
+    setTiles((prev) => {
+      let next = remixRemaining(prev);
+      // Retry a few shuffles if still stuck (rare).
+      for (let i = 0; i < 8 && !hasValidMove(next) && next.some((t) => !t.removed); i++) {
+        next = remixRemaining(next);
+      }
+      return next;
+    });
+    setDealKey((k) => k + 1);
+    setFeedback({
+      kind: "hint",
+      text: "Remixed remaining tiles — same words, new positions.",
+    });
+    lockRef.current = false;
+  }, [won]);
+
   const onTileClick = (tile: SolitaireTile) => {
     if (lockRef.current || won || tile.removed) return;
     if (!freeIds.has(tile.id)) {
@@ -184,12 +286,16 @@ export function MahjongMatch() {
       return;
     }
 
+    if (tile.face === "audio") {
+      playAudio(tile.audioFile);
+    }
+
     if (!selectedId) {
       setSelectedId(tile.id);
       setSelectedRef(tile.refLabel);
       setFeedback({
         kind: "hint",
-        text: `Selected ${tile.refLabel} · find the ${tile.face === "word" ? "中文" : "English"} match`,
+        text: `Selected ${tile.refLabel} · find the ${otherFaceLabel(tile.face, mode)} match`,
       });
       return;
     }
@@ -218,6 +324,7 @@ export function MahjongMatch() {
       setFeedback({ kind: "ok", text: `Match · ${a.refLabel}` });
       setSelectedId(null);
       setSelectedRef(null);
+      if (Math.random() < 0.18) triggerDragon();
 
       window.setTimeout(() => {
         setTiles((prev) => {
@@ -234,6 +341,7 @@ export function MahjongMatch() {
             if (cleared) {
               const key = String(batch);
               setWon(true);
+              triggerDragon();
               setWins((w) => {
                 const nextWins = w + 1;
                 setBestMovesByBatch((bm) => {
@@ -288,7 +396,14 @@ export function MahjongMatch() {
     if (next === 2 && !batch1Mastered) return;
     setBatch(next);
     persist({ batch: next });
-    deal(next);
+    deal(next, mode);
+  };
+
+  const selectMode = (next: MahjongPlayMode) => {
+    if (next === mode) return;
+    setMode(next);
+    saveMahjongMode(next);
+    deal(batch, next);
   };
 
   if (!hydrated) {
@@ -300,21 +415,50 @@ export function MahjongMatch() {
   }
 
   const best = bestMovesByBatch[String(batch)];
-  const cols = LAYOUT_BOUNDS.maxX - LAYOUT_BOUNDS.minX + 1;
-  const rows = LAYOUT_BOUNDS.maxY - LAYOUT_BOUNDS.minY + 1;
+  const cols = layout.bounds.maxX - layout.bounds.minX + 1;
+  const rows = layout.bounds.maxY - layout.bounds.minY + 1;
+  const modeTitle =
+    mode === "audio-zh" ? "Audio ↔ 中文" : "English ↔ 中文";
+  const audioHonest =
+    mode === "audio-zh" && audioPoolSize < MAHJONG_BATCH_SIZE
+      ? ` · ${audioPoolSize}/${MAHJONG_BATCH_SIZE} with audio in this group`
+      : mode === "audio-zh"
+        ? ` · ${layout.pairCount} audio pairs on board`
+        : ` · ${layout.pairCount} pairs`;
 
   return (
     <div className="mahjong-match">
       <section className="mj-hero" aria-labelledby="mj-title">
-        <p className="mj-chip">Mahjong Solitaire · English ↔ 中文</p>
+        <p className="mj-chip">Mahjong Solitaire · {modeTitle}</p>
         <h1 id="mj-title" className="mj-title">
           Clear the table
         </h1>
         <p className="mj-lede">
           Stacked tiles — only free ones (nothing on top, open on left or right)
-          can be selected. Match English with its Mandarin gloss. Master all{" "}
-          {MAHJONG_BATCH_SIZE} words in group 1 to unlock group 2.
+          can be selected. Match{" "}
+          {mode === "audio-zh"
+            ? "spoken English audio with its Mandarin gloss"
+            : "English with its Mandarin gloss"}
+          . Master all {MAHJONG_BATCH_SIZE} words in group 1 to unlock group 2.
+          {audioHonest}.
         </p>
+
+        <div className="mj-toolbar" role="group" aria-label="Play mode">
+          <button
+            type="button"
+            className={`mj-btn mj-btn-ghost ${mode === "en-zh" ? "is-active" : ""}`}
+            onClick={() => selectMode("en-zh")}
+          >
+            English ↔ 中文
+          </button>
+          <button
+            type="button"
+            className={`mj-btn mj-btn-ghost ${mode === "audio-zh" ? "is-active" : ""}`}
+            onClick={() => selectMode("audio-zh")}
+          >
+            Audio ↔ 中文
+          </button>
+        </div>
 
         <div className="mj-toolbar" role="group" aria-label="Frequency group">
           <button
@@ -340,8 +484,17 @@ export function MahjongMatch() {
           </button>
           <button
             type="button"
+            className="mj-btn mj-btn-ghost"
+            onClick={remix}
+            disabled={won || remainingPairs === 0}
+            title="Reshuffle remaining tiles to unlock new pairs"
+          >
+            Remix tiles
+          </button>
+          <button
+            type="button"
             className="mj-btn mj-btn-primary"
-            onClick={() => deal(batch)}
+            onClick={() => deal(batch, mode)}
           >
             New deal
           </button>
@@ -373,6 +526,28 @@ export function MahjongMatch() {
 
       <div className="mj-table-wrap">
         <div className="mj-table" aria-label="Mahjong solitaire board">
+          {showDragon ? (
+            <div className="mj-dragon" aria-hidden="true">
+              <svg viewBox="0 0 120 48" className="mj-dragon-svg">
+                <path
+                  className="mj-dragon-path"
+                  d="M8 30c8-14 18-18 28-12 6 4 8 4 14-2 8-8 16-8 24-2 6 4 10 6 18 4 8-2 14 2 20 10"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+                <circle cx="104" cy="28" r="3.2" fill="currentColor" />
+                <path
+                  d="M96 18c4 2 8 6 10 10"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+          ) : null}
           <div
             className="mj-board"
             key={dealKey}
@@ -403,36 +578,42 @@ export function MahjongMatch() {
                     selected ? "is-selected" : "",
                     wrong ? "is-wrong" : "",
                     matching ? "is-matching" : "",
-                    tile.face === "zh" ? "is-zh" : "is-en",
+                    faceClass(tile.face),
                   ]
                     .filter(Boolean)
                     .join(" ")}
                   style={
                     {
-                      "--mj-x": tile.x - LAYOUT_BOUNDS.minX,
-                      "--mj-y": tile.y - LAYOUT_BOUNDS.minY,
+                      "--mj-x": tile.x - layout.bounds.minX,
+                      "--mj-y": tile.y - layout.bounds.minY,
                       "--mj-z": tile.z,
                       zIndex,
-                      animationDelay: `${Math.min(i, 20) * 22}ms`,
+                      animationDelay: `${Math.min(i, 24) * 18}ms`,
                     } as CSSProperties
                   }
                   disabled={matching}
                   aria-disabled={!free}
                   aria-pressed={selected}
-                  aria-label={`${free ? "Free" : "Blocked"} ${tile.face === "word" ? "English" : "Chinese"} ${tile.label} ${tile.refLabel}`}
+                  aria-label={`${free ? "Free" : "Blocked"} ${faceKind(tile.face)} ${tile.face === "audio" ? "audio" : tile.label} ${tile.refLabel}`}
                   onClick={() => onTileClick(tile)}
                 >
                   <span className="mj-tile-body">
                     <span className="mj-tile-face">
+                      <span className="mj-tile-flourish" aria-hidden="true" />
                       <span className="mj-ref">{tile.refLabel}</span>
-                      {tile.face === "word" ? (
+                      {tile.face === "audio" ? (
+                        <span className="mj-face-audio">
+                          <span className="mj-play" aria-hidden="true">
+                            ▶
+                          </span>
+                          <span className="mj-audio-ref">{tile.refLabel}</span>
+                        </span>
+                      ) : tile.face === "word" ? (
                         <span className="mj-face-word">{tile.label}</span>
                       ) : (
                         <span className="mj-face-zh">{tile.label}</span>
                       )}
-                      <span className="mj-kind">
-                        {tile.face === "word" ? "EN" : "中文"}
-                      </span>
+                      <span className="mj-kind">{faceKind(tile.face)}</span>
                     </span>
                   </span>
                 </button>
@@ -442,19 +623,33 @@ export function MahjongMatch() {
         </div>
       </div>
 
+      {stuck || (freeIds.size === 0 && remainingPairs > 0 && !won) ? (
+        <div className="mj-stuck" role="status">
+          <p>
+            {freeIds.size === 0 && remainingPairs > 0
+              ? "No free tiles — Remix to reshuffle remaining words."
+              : "No matching free pairs left on the board."}
+          </p>
+          <button type="button" className="mj-btn mj-btn-primary" onClick={remix}>
+            Remix tiles
+          </button>
+        </div>
+      ) : null}
+
       <p
         className={`mj-status ${feedback ? `is-${feedback.kind}` : ""}`}
         role="status"
         aria-live="polite"
       >
         {feedback?.text ??
-          `Group ${batch} (${batchLabel(batch)}) · ${remaining} pairs left · Ref on each tile`}
+          `Group ${batch} (${batchLabel(batch)}) · ${remainingPairs} pairs left · Ref on each tile`}
       </p>
 
       <p className="mj-howto">
         How to play: free tiles lift slightly and glow. Select one, then its
-        pair. Use <strong>Ref</strong> (e.g. <code>#0021</code>) when reporting
-        a bad gloss.
+        pair. {mode === "audio-zh" ? "Audio tiles show ▶ and Ref — tap to hear." : null}{" "}
+        Use <strong>Remix</strong> if you get stuck. Report bad glosses with{" "}
+        <strong>Ref</strong> (e.g. <code>#0021</code>).
       </p>
 
       {won ? (
@@ -469,7 +664,7 @@ export function MahjongMatch() {
             <button
               type="button"
               className="mj-btn mj-btn-primary"
-              onClick={() => deal(batch)}
+              onClick={() => deal(batch, mode)}
             >
               Deal again
             </button>

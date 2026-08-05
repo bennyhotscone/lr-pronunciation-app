@@ -1,9 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
   TEMPLE_LAYOUT,
+  FORTRESS_LAYOUT,
+  GREAT_WALL_LAYOUT,
   canMatch,
+  hasValidMove,
   isCovered,
   isFree,
+  pickLayout,
+  remixRemaining,
   type SolitaireTile,
 } from "@/lib/mahjong-solitaire";
 
@@ -21,10 +26,15 @@ function tile(
 }
 
 describe("mahjong solitaire free-tile rules", () => {
-  it("deals the temple layout with 36 slots", () => {
+  it("offers layouts from 36 up to 96 tiles (≤100)", () => {
     expect(TEMPLE_LAYOUT).toHaveLength(36);
-    expect(TEMPLE_LAYOUT.filter((s) => s.z === 0)).toHaveLength(24);
-    expect(TEMPLE_LAYOUT.filter((s) => s.z === 1)).toHaveLength(12);
+    expect(FORTRESS_LAYOUT).toHaveLength(72);
+    expect(GREAT_WALL_LAYOUT).toHaveLength(96);
+    expect(GREAT_WALL_LAYOUT.length).toBeLessThanOrEqual(100);
+    expect(pickLayout(50).pairCount).toBe(48);
+    expect(pickLayout(40).pairCount).toBe(40);
+    expect(pickLayout(20).pairCount).toBe(18);
+    expect(pickLayout(10).pairCount).toBe(10);
   });
 
   it("treats a covered tile as not free", () => {
@@ -53,12 +63,71 @@ describe("mahjong solitaire free-tile rules", () => {
     expect(isFree(mid, [left, mid, right])).toBe(true);
   });
 
-  it("matches only English ↔ 中文 of the same rank", () => {
+  it("matches opposite faces of the same rank (EN↔ZH or Audio↔ZH)", () => {
     const a = tile({ id: "1w", x: 0, y: 0, z: 0, pairId: 3, face: "word" });
     const b = tile({ id: "1z", x: 1, y: 0, z: 0, pairId: 3, face: "zh" });
     const c = tile({ id: "2w", x: 2, y: 0, z: 0, pairId: 4, face: "word" });
+    const d = tile({
+      id: "1a",
+      x: 3,
+      y: 0,
+      z: 0,
+      pairId: 3,
+      face: "audio",
+      label: "▶",
+    });
     expect(canMatch(a, b)).toBe(true);
+    expect(canMatch(d, b)).toBe(true);
     expect(canMatch(a, c)).toBe(false);
     expect(canMatch(a, { ...a, id: "dup", face: "word" })).toBe(false);
+  });
+
+  it("detects when no valid free pairs remain", () => {
+    // Two free ends, wrong faces (both EN) → stuck
+    const a = tile({ id: "a", x: 0, y: 0, z: 0, pairId: 1, face: "word" });
+    const b = tile({ id: "b", x: 1, y: 0, z: 0, pairId: 1, face: "zh" });
+    const c = tile({ id: "c", x: 2, y: 0, z: 0, pairId: 2, face: "word" });
+    // mid blocks sides: free are a and c (same face family, different ranks)
+    expect(hasValidMove([a, b, c])).toBe(false);
+    // after removing mid, a+b can match
+    expect(hasValidMove([a, { ...b, removed: true }, c])).toBe(false);
+    const open = [
+      tile({ id: "w", x: 0, y: 0, z: 0, pairId: 5, face: "word" }),
+      tile({ id: "z", x: 2, y: 0, z: 0, pairId: 5, face: "zh" }),
+    ];
+    expect(hasValidMove(open)).toBe(true);
+  });
+
+  it("remix keeps remaining faces and slot count", () => {
+    const tiles = [
+      tile({ id: "1w", x: 0, y: 0, z: 0, pairId: 1, face: "word" }),
+      tile({ id: "1z", x: 1, y: 0, z: 0, pairId: 1, face: "zh" }),
+      tile({
+        id: "2w",
+        x: 2,
+        y: 0,
+        z: 0,
+        pairId: 2,
+        face: "word",
+        removed: true,
+      }),
+      tile({
+        id: "2z",
+        x: 3,
+        y: 0,
+        z: 0,
+        pairId: 2,
+        face: "zh",
+        removed: true,
+      }),
+    ];
+    const next = remixRemaining(tiles);
+    expect(next.filter((t) => !t.removed)).toHaveLength(2);
+    expect(next.filter((t) => t.removed)).toHaveLength(2);
+    const faces = next
+      .filter((t) => !t.removed)
+      .map((t) => `${t.pairId}:${t.face}`)
+      .sort();
+    expect(faces).toEqual(["1:word", "1:zh"]);
   });
 });
