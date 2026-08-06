@@ -7,10 +7,7 @@ import {
   MANDARIN_VOCAB_WORDS,
   expectedAudioFile,
 } from "@/data/mandarin-vocab";
-import {
-  invalidateAudioOverridesCache,
-  useAudioOverrides,
-} from "@/lib/audio-overrides-client";
+import { useAudioOverrides } from "@/lib/audio-overrides-client";
 import { rankKey, type AudioOverrideMap } from "@/lib/audio-overrides";
 import {
   deleteStudioClip,
@@ -148,7 +145,8 @@ export function AudioStudio() {
   const [msg, setMsg] = useState<string | null>(null);
   const [msgTone, setMsgTone] = useState<"info" | "ok" | "err">("info");
   const [savingPermanent, setSavingPermanent] = useState(false);
-  const { overrides, refresh: refreshOverrides, resolveUrl } = useAudioOverrides();
+  const { overrides, refresh: refreshOverrides, apply: applyOverrides, resolveUrl } =
+    useAudioOverrides();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -299,10 +297,19 @@ export function AudioStudio() {
   };
 
   const playSrc = (rank: number, src: string, label: string) => {
-    if (!audioRef.current) audioRef.current = new Audio();
-    const a = audioRef.current;
-    a.pause();
+    // Always allocate a fresh Audio element so browsers cannot reuse a cached
+    // decode of a previous clip (stable Blob CDN URLs used to do this).
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+      audioRef.current.onerror = null;
+      audioRef.current.removeAttribute("src");
+      audioRef.current.load();
+    }
+    const a = new Audio();
+    audioRef.current = a;
     a.src = src;
+    a.load();
     setPlaying(rank);
     setMsg(null);
     void a.play().catch(() => {
@@ -514,11 +521,18 @@ export function AudioStudio() {
         );
         return;
       }
-      invalidateAudioOverridesCache();
-      if (data.overrides) {
+      // Optimistic: apply POST map immediately so list Play hits the new Blob URL
+      // (with fresh ?v=) before GET round-trip; then soft-confirm via refetch.
+      if (data.overrides && typeof data.overrides === "object") {
+        applyOverrides(data.overrides);
+      } else if (data.entry) {
+        const key = String(preview.rank).padStart(4, "0");
+        applyOverrides({ ...overrides, [key]: data.entry });
+      }
+      try {
         await refreshOverrides();
-      } else {
-        await refreshOverrides();
+      } catch {
+        /* keep optimistic map */
       }
       // Optional local mirror for offline preview on this device
       try {

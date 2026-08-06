@@ -113,10 +113,14 @@ export function MandarinVocabTest() {
         queueMicrotask(() => {
           const w = words[wordIndex];
           if (!w) return;
-          const el = audioRef.current ?? new Audio();
+          const prev = audioRef.current;
+          if (prev) {
+            prev.pause();
+            prev.removeAttribute("src");
+            prev.load();
+          }
+          const el = new Audio(resolveUrl(w.rank, w.audioFile));
           audioRef.current = el;
-          el.src = resolveUrl(w.rank, w.audioFile);
-          el.currentTime = 0;
           void el.play().catch(() => {});
           setListens(1);
         });
@@ -134,10 +138,14 @@ export function MandarinVocabTest() {
 
   const play = () => {
     if (!current) return;
-    const el = audioRef.current ?? new Audio();
+    const prev = audioRef.current;
+    if (prev) {
+      prev.pause();
+      prev.removeAttribute("src");
+      prev.load();
+    }
+    const el = new Audio(resolveUrl(current.rank, current.audioFile));
     audioRef.current = el;
-    el.src = resolveUrl(current.rank, current.audioFile);
-    el.currentTime = 0;
     void el.play().catch(() => {});
     setListens((n) => {
       const next = n + 1;

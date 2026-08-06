@@ -97,16 +97,19 @@ export async function saveAudioOverride(input: {
   }
 
   const updatedAt = new Date().toISOString();
+  const key = String(input.rank).padStart(4, "0");
   let url: string;
 
   if (mode === "blob") {
     const { put } = await import("@vercel/blob");
-    const pathname = `${BLOB_PREFIX}/${input.filename}`;
+    // Unique pathname per save so CDN cannot serve a previous clip at the same URL.
+    const pathname = `${BLOB_PREFIX}/${key}-${Date.now()}-${input.filename}`;
     const blob = await put(pathname, input.bytes, {
       access: "public",
       contentType: input.contentType || "application/octet-stream",
       addRandomSuffix: false,
       allowOverwrite: true,
+      cacheControlMaxAge: 0,
     });
     url = blob.url;
   } else {
@@ -117,7 +120,6 @@ export async function saveAudioOverride(input: {
     url = `/audio/mandarin-vocab/${input.filename}`;
   }
 
-  const key = String(input.rank).padStart(4, "0");
   const entry: AudioOverrideEntry = {
     url,
     filename: input.filename,

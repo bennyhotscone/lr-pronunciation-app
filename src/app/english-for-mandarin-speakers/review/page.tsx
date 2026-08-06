@@ -148,10 +148,15 @@ export default function MandarinAudioReviewPage() {
 
   const playClip = useCallback(
     (row: ClipRow) => {
-      if (!audioRef.current) audioRef.current = new Audio();
-      const a = audioRef.current;
-      a.pause();
-      a.src = resolveUrl(row.rank, row.audioFile);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.onended = null;
+        audioRef.current.onerror = null;
+        audioRef.current.removeAttribute("src");
+        audioRef.current.load();
+      }
+      const a = new Audio(resolveUrl(row.rank, row.audioFile));
+      audioRef.current = a;
       setPlayingRank(row.rank);
       void a.play().catch(() => setPlayingRank(null));
       a.onended = () => setPlayingRank(null);
