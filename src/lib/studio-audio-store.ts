@@ -31,14 +31,23 @@ export function blobMissingErrorMessage(): string {
   );
 }
 
+async function streamToText(stream: ReadableStream<Uint8Array>): Promise<string> {
+  const res = new Response(stream);
+  return res.text();
+}
+
 async function readOverridesFromBlob(): Promise<AudioOverrideMap> {
-  const { head } = await import("@vercel/blob");
+  const { get } = await import("@vercel/blob");
   try {
-    const meta = await head(OVERRIDES_BLOB_PATH);
-    const bust = `${meta.url}${meta.url.includes("?") ? "&" : "?"}t=${Date.now()}`;
-    const res = await fetch(bust, { cache: "no-store" });
-    if (!res.ok) return {};
-    const data = (await res.json()) as AudioOverrideMap;
+    // Bypass CDN — overwriting studio-audio-overrides.json otherwise serves stale
+    // maps for several seconds, so Play falls back to the old static clip.
+    const result = await get(OVERRIDES_BLOB_PATH, {
+      access: "public",
+      useCache: false,
+    });
+    if (!result || result.statusCode !== 200 || !result.stream) return {};
+    const raw = await streamToText(result.stream);
+    const data = JSON.parse(raw) as AudioOverrideMap;
     return data && typeof data === "object" ? data : {};
   } catch {
     return {};
