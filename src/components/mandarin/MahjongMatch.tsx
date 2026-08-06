@@ -198,14 +198,30 @@ function mismatchFeedback(
   a: SolitaireTile,
   b: SolitaireTile,
   mode: MahjongPlayMode,
+  showRefs: boolean,
 ): string {
   if (a.face === b.face) {
-    return `Same ${faceKindLong(a.face)} face · pick the matching ${otherFaceLabel(a.face, mode)} · ${a.refLabel} ≠ ${b.refLabel}`;
+    return showRefs
+      ? `Same ${faceKindLong(a.face)} face · pick the matching ${otherFaceLabel(a.face, mode)} · ${a.refLabel} ≠ ${b.refLabel}`
+      : `Same ${faceKindLong(a.face)} face · pick the matching ${otherFaceLabel(a.face, mode)}.`;
   }
   if (a.pairId === b.pairId) {
-    return `Same Ref but wrong faces · ${a.refLabel}`;
+    return showRefs
+      ? `Same Ref but wrong faces · ${a.refLabel}`
+      : "Same word but wrong faces for this mode.";
   }
-  return `Different words · ${a.refLabel} (${a.label}) ≠ ${b.refLabel} (${b.label})`;
+  return showRefs
+    ? `Different words · ${a.refLabel} (${a.label}) ≠ ${b.refLabel} (${b.label})`
+    : "Different words — try another free pair.";
+}
+
+function readShowRefsFlag(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return new URLSearchParams(window.location.search).get("dev") === "1";
+  } catch {
+    return false;
+  }
 }
 
 function faceClass(face: SolitaireTile["face"]): string {
@@ -279,6 +295,7 @@ export function MahjongMatch() {
   const [toastPulse, setToastPulse] = useState(0);
   const [won, setWon] = useState(false);
   const [selectedRef, setSelectedRef] = useState<string | null>(null);
+  const [showRefs, setShowRefs] = useState(false);
   const [showDragon, setShowDragon] = useState(false);
   const [audioPoolSize, setAudioPoolSize] = useState(0);
   const [bursts, setBursts] = useState<MatchBurst[]>([]);
@@ -357,7 +374,7 @@ export function MahjongMatch() {
         const el = new Audio(resolveUrl(rank, file));
         audioRef.current = el;
         void el.play().catch(() => {
-          /* autoplay policies / missing file — Ref still visible */
+          /* autoplay policies / missing file */
         });
       } catch {
         /* ignore */
@@ -372,7 +389,7 @@ export function MahjongMatch() {
   }, []);
 
   const celebrateMatch = useCallback(
-    (a: SolitaireTile, b: SolitaireTile, refLabel: string) => {
+    (a: SolitaireTile, b: SolitaireTile, scoreLabel: string) => {
       const mid = midpointOfTiles(a, b, layout, boardRef.current);
       const key = ++burstKeyRef.current;
       setBursts((prev) => [
@@ -381,7 +398,7 @@ export function MahjongMatch() {
       ]);
       setScorePops((prev) => [
         ...prev.slice(-3),
-        { key, x: mid.x, y: mid.y, label: `+1 · ${refLabel}` },
+        { key, x: mid.x, y: mid.y, label: scoreLabel },
       ]);
       window.setTimeout(() => {
         setBursts((prev) => prev.filter((p) => p.key !== key));
@@ -419,6 +436,7 @@ export function MahjongMatch() {
   );
 
   useEffect(() => {
+    setShowRefs(readShowRefsFlag());
     const saved = loadMahjongProgress();
     const savedMode = loadMahjongMode();
     const startBatch =
@@ -503,7 +521,9 @@ export function MahjongMatch() {
       setSelectedRef(tile.refLabel);
       pushFeedback({
         kind: "hint",
-        text: `Selected ${tile.refLabel} · needs pair: ${otherFaceLabel(tile.face, mode)}`,
+        text: showRefs
+          ? `Selected ${tile.refLabel} · needs pair: ${otherFaceLabel(tile.face, mode)}`
+          : `Selected · needs pair: ${otherFaceLabel(tile.face, mode)}`,
       });
       return;
     }
@@ -522,7 +542,9 @@ export function MahjongMatch() {
       setSelectedRef(tile.refLabel);
       pushFeedback({
         kind: "hint",
-        text: `Selected ${tile.refLabel} · needs pair: ${otherFaceLabel(tile.face, mode)}`,
+        text: showRefs
+          ? `Selected ${tile.refLabel} · needs pair: ${otherFaceLabel(tile.face, mode)}`
+          : `Selected · needs pair: ${otherFaceLabel(tile.face, mode)}`,
       });
       return;
     }
@@ -535,11 +557,11 @@ export function MahjongMatch() {
       setMatchingIds(new Set([a.id, b.id]));
       pushFeedback({
         kind: "ok",
-        text: `Match · ${a.refLabel} (${a.label})`,
+        text: showRefs ? `Match · ${a.refLabel} (${a.label})` : `Match · ${a.label}`,
       });
       setSelectedId(null);
       setSelectedRef(null);
-      celebrateMatch(a, b, a.refLabel);
+      celebrateMatch(a, b, showRefs ? `+1 · ${a.refLabel}` : "+1");
 
       window.setTimeout(() => {
         setTiles((prev) => {
@@ -596,7 +618,7 @@ export function MahjongMatch() {
       setWrongIds(new Set([a.id, b.id]));
       pushFeedback({
         kind: "bad",
-        text: mismatchFeedback(a, b, mode),
+        text: mismatchFeedback(a, b, mode, showRefs),
       });
       window.setTimeout(() => {
         setWrongIds(new Set());
@@ -604,7 +626,9 @@ export function MahjongMatch() {
         setSelectedRef(b.refLabel);
         pushFeedback({
           kind: "hint",
-          text: `Selected ${b.refLabel} · needs pair: ${otherFaceLabel(b.face, mode)}`,
+          text: showRefs
+            ? `Selected ${b.refLabel} · needs pair: ${otherFaceLabel(b.face, mode)}`
+            : `Selected · needs pair: ${otherFaceLabel(b.face, mode)}`,
         });
         lockRef.current = false;
       }, 520);
@@ -646,7 +670,10 @@ export function MahjongMatch() {
   return (
     <div className="mahjong-match">
       <section className="mj-hero" aria-labelledby="mj-title">
-        <p className="mj-chip">Mahjong Solitaire · {modeTitle}</p>
+        <p className="mj-chip">
+          Mahjong Solitaire · {modeTitle}
+          {showRefs ? " · Dev Refs" : ""}
+        </p>
         <h1 id="mj-title" className="mj-title">
           Clear the table
         </h1>
@@ -725,12 +752,14 @@ export function MahjongMatch() {
             <div className="mj-stat-val">{best ?? "—"}</div>
             <div className="mj-stat-label">Best clear</div>
           </div>
-          <div className="mj-stat mj-stat-ref" aria-live="polite">
-            <div className="mj-stat-val mj-stat-ref-val">
-              {selectedRef ?? "—"}
+          {showRefs ? (
+            <div className="mj-stat mj-stat-ref" aria-live="polite">
+              <div className="mj-stat-val mj-stat-ref-val">
+                {selectedRef ?? "—"}
+              </div>
+              <div className="mj-stat-label">Ref</div>
             </div>
-            <div className="mj-stat-label">Ref</div>
-          </div>
+          ) : null}
         </div>
       </section>
 
@@ -822,20 +851,26 @@ export function MahjongMatch() {
                   disabled={matching}
                   aria-disabled={!free}
                   aria-pressed={selected}
-                  aria-label={`${free ? "Free" : "Blocked"} ${faceKind(tile.face)} ${tile.face === "audio" ? "audio" : tile.label} ${tile.refLabel}`}
+                  aria-label={`${free ? "Free" : "Blocked"} ${faceKind(tile.face)} ${tile.face === "audio" ? "audio" : tile.label}${showRefs ? ` ${tile.refLabel}` : ""}`}
                   onClick={() => onTileClick(tile)}
                 >
                   <span className="mj-tile-body">
                     <span className="mj-tile-face">
                       <span className="mj-tile-flourish" aria-hidden="true" />
                       <span className="mj-tile-seal" aria-hidden="true" />
-                      <span className="mj-ref">{tile.refLabel}</span>
+                      {showRefs ? (
+                        <span className="mj-ref">{tile.refLabel}</span>
+                      ) : null}
                       {tile.face === "audio" ? (
                         <span className="mj-face-audio">
                           <span className="mj-play" aria-hidden="true">
                             ▶
                           </span>
-                          <span className="mj-audio-ref">{tile.refLabel}</span>
+                          {showRefs ? (
+                            <span className="mj-audio-ref">{tile.refLabel}</span>
+                          ) : (
+                            <span className="mj-audio-hint">Tap</span>
+                          )}
                         </span>
                       ) : tile.face === "word" ? (
                         <span className="mj-face-word">{tile.label}</span>
@@ -916,18 +951,27 @@ export function MahjongMatch() {
         aria-live="polite"
       >
         {feedback?.text ??
-          `Group ${batch} (${batchLabel(batch)}) · ${remainingPairs} pairs left · Ref on each tile`}
+          `Group ${batch} (${batchLabel(batch)}) · ${remainingPairs} pairs left`}
       </p>
 
       <p className="mj-howto">
         How to play: free tiles lift slightly and glow; locked tiles look grey
         and will say &quot;Tile locked&quot; if tapped. Select one free tile, then its
-        matching pair (same Ref #, opposite face — e.g. ▶ Audio ↔ English).{" "}
+        matching pair (opposite face — e.g. ▶ Audio ↔ English)
+        {showRefs ? " with the same Ref #" : ""}.{" "}
         {needsAudioPool(mode)
-          ? "Audio tiles show ▶ and Ref only (not the spelling) — tap to hear."
+          ? showRefs
+            ? "Audio tiles show ▶ and Ref only (not the spelling) — tap to hear."
+            : "Audio tiles show ▶ only (not the spelling) — tap to hear."
           : null}{" "}
-        Use <strong>Remix</strong> if you get stuck. Report bad glosses with{" "}
-        <strong>Ref</strong> (e.g. <code>#0021</code>).
+        Use <strong>Remix</strong> if you get stuck.
+        {showRefs ? (
+          <>
+            {" "}
+            Dev mode: report bad glosses with <strong>Ref</strong> (e.g.{" "}
+            <code>#0021</code>).
+          </>
+        ) : null}
       </p>
 
       {won ? (
