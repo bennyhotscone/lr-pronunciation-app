@@ -4,7 +4,10 @@ import {
   OVERRIDES_BLOB_PATH,
   OVERRIDES_PUBLIC_REL,
   OVERRIDES_VERSION_PREFIX,
+  audioOverrideTombstone,
+  isActiveAudioOverride,
   mergeAudioOverrideMaps,
+  rankKey,
   type AudioOverrideEntry,
   type AudioOverrideMap,
 } from "@/lib/audio-overrides";
@@ -224,4 +227,42 @@ export async function saveAudioOverride(input: {
 
   overrides = mergeAudioOverrideMaps(await loadOverrides(), { [key]: entry });
   return { entry, overrides, mode };
+}
+
+/**
+ * Remove a rank’s permanent override. Writes a tombstone so stale CDN snapshots
+ * cannot revive the cleared URL via merge.
+ */
+export async function deleteAudioOverride(
+  rank: number,
+): Promise<{ overrides: AudioOverrideMap; mode: "blob" | "local" }> {
+  const mode = storageMode();
+  if (mode === "unavailable") {
+    throw new Error(blobMissingErrorMessage());
+  }
+
+  const key = rankKey(rank);
+  const tombstone = audioOverrideTombstone();
+  let overrides: AudioOverrideMap = { [key]: tombstone };
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const loaded = await loadOverrides();
+    overrides = mergeAudioOverrideMaps(loaded, { [key]: tombstone });
+    if (mode === "blob") {
+      await writeOverridesToBlob(overrides);
+    } else {
+      await writeOverridesToLocal(overrides);
+    }
+    const verify = await loadOverrides();
+    if (!isActiveAudioOverride(verify[key])) {
+      const merged = mergeAudioOverrideMaps(verify, { [key]: tombstone });
+      return { overrides: merged, mode };
+    }
+    await new Promise((r) => setTimeout(r, 150 * (attempt + 1)));
+  }
+
+  const merged = mergeAudioOverrideMaps(await loadOverrides(), {
+    [key]: tombstone,
+  });
+  return { overrides: merged, mode };
 }

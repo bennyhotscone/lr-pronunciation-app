@@ -8,7 +8,12 @@ import {
   expectedAudioFile,
 } from "@/data/mandarin-vocab";
 import { useAudioOverrides } from "@/lib/audio-overrides-client";
-import { rankKey, type AudioOverrideMap } from "@/lib/audio-overrides";
+import {
+  audioOverrideTombstone,
+  isActiveAudioOverride,
+  rankKey,
+  type AudioOverrideMap,
+} from "@/lib/audio-overrides";
 import {
   deleteStudioClip,
   getAllStudioClipRanks,
@@ -145,6 +150,7 @@ export function AudioStudio() {
   const [msg, setMsg] = useState<string | null>(null);
   const [msgTone, setMsgTone] = useState<"info" | "ok" | "err">("info");
   const [savingPermanent, setSavingPermanent] = useState(false);
+  const [clearingRank, setClearingRank] = useState<number | null>(null);
   const { overrides, refresh: refreshOverrides, apply: applyOverrides, resolveUrl } =
     useAudioOverrides();
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -238,7 +244,7 @@ export function AudioStudio() {
         status: n?.status ?? "unchecked",
         note: n?.note ?? "",
         hasLocalClip: localClipRanks.has(rank),
-        hasServerOverride: Boolean(overrides[rankKey(rank)]?.url),
+        hasServerOverride: isActiveAudioOverride(overrides[rankKey(rank)]),
       });
     }
     return list;
@@ -603,6 +609,71 @@ export function AudioStudio() {
     }
   };
 
+  /** Clear permanent Blob override for this rank (available on every row). */
+  const clearPermanentAudio = async (rank: number) => {
+    if (clearingRank != null) return;
+    const pw = getStudioSessionPassword();
+    if (!pw) {
+      flash("Session expired — lock and unlock Studio again, then retry Clear audio.", "err");
+      return;
+    }
+    setClearingRank(rank);
+    if (playing === rank) stopPlayback();
+    if (preview?.rank === rank) clearPreview();
+    flash(`Clearing permanent audio for ${refOf(rank)}…`, "info");
+    try {
+      // Optimistic tombstone so Play falls back immediately
+      applyOverrides({ [rankKey(rank)]: audioOverrideTombstone() });
+      const res = await fetch(`/api/studio/audio?rank=${rank}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-studio-password": pw,
+        },
+        body: JSON.stringify({ password: pw }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+        overrides?: AudioOverrideMap;
+      };
+      if (!res.ok || !data.ok) {
+        flash(
+          data.error ||
+            `Clear failed (${res.status}). Check Blob token / studio password.`,
+          "err",
+        );
+        try {
+          await refreshOverrides();
+        } catch {
+          /* keep optimistic tombstone */
+        }
+        return;
+      }
+      if (data.overrides && typeof data.overrides === "object") {
+        applyOverrides(data.overrides);
+      } else {
+        applyOverrides({ [rankKey(rank)]: audioOverrideTombstone() });
+      }
+      try {
+        await refreshOverrides();
+      } catch {
+        /* keep optimistic map */
+      }
+      window.setTimeout(() => {
+        void refreshOverrides();
+      }, 1500);
+      flash(
+        `Cleared permanent override for ${refOf(rank)}. Play uses the static file (or silence) until you upload again.`,
+        "ok",
+      );
+    } catch {
+      flash("Network error while clearing audio — try again.", "err");
+    } finally {
+      setClearingRank(null);
+    }
+  };
+
   if (!mounted) {
     return <p className="text-sm text-muted">Loading studio…</p>;
   }
@@ -927,6 +998,19 @@ export function AudioStudio() {
                   Clear browser copy
                 </button>
               ) : null}
+              <button
+                type="button"
+                className="touch-target rounded-xl px-3 py-2.5 text-sm font-bold text-danger underline disabled:opacity-50"
+                disabled={clearingRank != null}
+                onClick={() => void clearPermanentAudio(row.rank)}
+                title={
+                  row.hasServerOverride
+                    ? "Remove permanent Blob override for this rank"
+                    : "Clear permanent override if any (Play falls back to static file)"
+                }
+              >
+                {clearingRank === row.rank ? "Clearing…" : "Clear audio"}
+              </button>
             </div>
 
             <div className="mt-2 flex flex-wrap gap-2">

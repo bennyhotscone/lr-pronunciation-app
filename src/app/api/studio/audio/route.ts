@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   blobMissingErrorMessage,
+  deleteAudioOverride,
   loadOverrides,
   saveAudioOverride,
   storageMode,
@@ -21,6 +22,61 @@ export async function GET() {
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to load overrides";
     return NextResponse.json({ overrides: {}, error: message }, { status: 200 });
+  }
+}
+
+/**
+ * DELETE ?rank=N — remove permanent Blob/local override for that rank (studio password).
+ * Body JSON `{ password }` optional if `x-studio-password` / Bearer is set.
+ */
+export async function DELETE(request: Request) {
+  const mode = storageMode();
+  if (mode === "unavailable") {
+    return NextResponse.json(
+      { ok: false, error: blobMissingErrorMessage() },
+      { status: 503 },
+    );
+  }
+
+  let bodyPassword: unknown;
+  try {
+    const contentType = request.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      const json = (await request.json()) as { password?: unknown };
+      bodyPassword = json?.password;
+    }
+  } catch {
+    /* password may come from header only */
+  }
+
+  const password = passwordFromRequest(request, bodyPassword);
+  if (!checkStudioPassword(password)) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  const url = new URL(request.url);
+  const rankRaw = url.searchParams.get("rank");
+  const rank = rankRaw != null ? Number(rankRaw) : NaN;
+  if (!Number.isInteger(rank) || rank < 1 || rank > 5000) {
+    return NextResponse.json(
+      { ok: false, error: "Invalid rank (expected integer 1–5000)" },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const { overrides } = await deleteAudioOverride(rank);
+    return NextResponse.json({
+      ok: true,
+      mode,
+      rank,
+      cleared: true,
+      overrides,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Clear failed";
+    const status = message.includes("Vercel Blob") ? 503 : 500;
+    return NextResponse.json({ ok: false, error: message }, { status });
   }
 }
 

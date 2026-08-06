@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
+  isActiveAudioOverride,
   mergeAudioOverrideMaps,
+  rankKey,
   resolveAudioPlaybackUrl,
   type AudioOverrideMap,
 } from "@/lib/audio-overrides";
@@ -30,6 +32,16 @@ export function applyAudioOverrides(map: AudioOverrideMap): void {
   notify(next);
 }
 
+/**
+ * Replace the entire cache (e.g. after DELETE). Prefer apply + tombstones when
+ * merging with a partial map; use this when the server returns the full authoritative map.
+ */
+export function replaceAudioOverrides(map: AudioOverrideMap): void {
+  cache = map && typeof map === "object" ? map : {};
+  inflight = null;
+  notify(cache);
+}
+
 export async function fetchAudioOverrides(
   force = false,
 ): Promise<AudioOverrideMap> {
@@ -48,7 +60,7 @@ export async function fetchAudioOverrides(
         data.overrides && typeof data.overrides === "object"
           ? data.overrides
           : {};
-      // Merge so a briefly stale GET cannot wipe a newer optimistic POST map
+      // Merge so a briefly stale GET cannot wipe a newer optimistic POST/DELETE map
       const next = mergeAudioOverrideMaps(previous, remote);
       cache = next;
       notify(next);
@@ -77,6 +89,12 @@ export function useAudioOverrides() {
   const apply = useCallback((map: AudioOverrideMap) => {
     applyAudioOverrides(map);
     setOverrides(mergeAudioOverrideMaps(cache, map));
+    setLoaded(true);
+  }, []);
+
+  const replace = useCallback((map: AudioOverrideMap) => {
+    replaceAudioOverrides(map);
+    setOverrides(cache ?? {});
     setLoaded(true);
   }, []);
 
@@ -112,5 +130,10 @@ export function useAudioOverrides() {
     [overrides],
   );
 
-  return { overrides, loaded, refresh, apply, resolveUrl };
+  const hasOverride = useCallback(
+    (rank: number) => isActiveAudioOverride(overrides[rankKey(rank)]),
+    [overrides],
+  );
+
+  return { overrides, loaded, refresh, apply, replace, resolveUrl, hasOverride };
 }
