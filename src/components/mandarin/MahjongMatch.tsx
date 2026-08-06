@@ -25,6 +25,7 @@ import {
 } from "@/lib/mahjong-progress";
 import {
   canMatch,
+  freeMatchingPartnerIds,
   freeTileIds,
   hasValidMove,
   pickLayout,
@@ -38,6 +39,8 @@ import {
 import "./mahjong-match.css";
 
 type Feedback = { kind: "ok" | "bad" | "hint"; text: string } | null;
+
+const FEEDBACK_TOAST_MS = 4200;
 
 type BurstParticle = {
   id: number;
@@ -176,10 +179,33 @@ function otherFaceLabel(
   mode: MahjongPlayMode,
 ): string {
   if (mode === "audio-en") {
-    return face === "audio" ? "English" : "Audio";
+    return face === "audio" ? "English word" : "▶ audio";
   }
-  if (face === "zh") return mode === "audio-zh" ? "Audio" : "English";
+  if (mode === "audio-zh") {
+    return face === "audio" ? "中文" : "▶ audio";
+  }
+  if (face === "zh") return "English word";
   return "中文";
+}
+
+function faceKindLong(face: SolitaireTile["face"]): string {
+  if (face === "zh") return "中文";
+  if (face === "audio") return "Audio";
+  return "English";
+}
+
+function mismatchFeedback(
+  a: SolitaireTile,
+  b: SolitaireTile,
+  mode: MahjongPlayMode,
+): string {
+  if (a.face === b.face) {
+    return `Same ${faceKindLong(a.face)} face · pick the matching ${otherFaceLabel(a.face, mode)} · ${a.refLabel} ≠ ${b.refLabel}`;
+  }
+  if (a.pairId === b.pairId) {
+    return `Same Ref but wrong faces · ${a.refLabel}`;
+  }
+  return `Different words · ${a.refLabel} (${a.label}) ≠ ${b.refLabel} (${b.label})`;
 }
 
 function faceClass(face: SolitaireTile["face"]): string {
@@ -250,14 +276,41 @@ export function MahjongMatch() {
   );
   const [masteredRanks, setMasteredRanks] = useState<number[]>([]);
   const [feedback, setFeedback] = useState<Feedback>(null);
+  const [toastPulse, setToastPulse] = useState(0);
   const [won, setWon] = useState(false);
   const [selectedRef, setSelectedRef] = useState<string | null>(null);
   const [showDragon, setShowDragon] = useState(false);
   const [audioPoolSize, setAudioPoolSize] = useState(0);
   const [bursts, setBursts] = useState<MatchBurst[]>([]);
   const [scorePops, setScorePops] = useState<ScorePop[]>([]);
+  const feedbackTimerRef = useRef<number | null>(null);
+  const feedbackGenRef = useRef(0);
 
   const masteredSet = useMemo(() => new Set(masteredRanks), [masteredRanks]);
+
+  const pushFeedback = useCallback((next: Feedback) => {
+    const gen = ++feedbackGenRef.current;
+    setFeedback(next);
+    setToastPulse((n) => n + 1);
+    if (feedbackTimerRef.current != null) {
+      window.clearTimeout(feedbackTimerRef.current);
+      feedbackTimerRef.current = null;
+    }
+    if (next && next.kind !== "hint") {
+      feedbackTimerRef.current = window.setTimeout(() => {
+        if (feedbackGenRef.current === gen) setFeedback(null);
+        feedbackTimerRef.current = null;
+      }, FEEDBACK_TOAST_MS);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (feedbackTimerRef.current != null) {
+        window.clearTimeout(feedbackTimerRef.current);
+      }
+    };
+  }, []);
 
   const batch1Mastered = useMemo(() => {
     const g1 = wordsInMahjongBatch(1);
@@ -271,6 +324,16 @@ export function MahjongMatch() {
   }, [batch, masteredSet]);
 
   const freeIds = useMemo(() => freeTileIds(tiles), [tiles]);
+
+  const selectedTile = useMemo(
+    () => (selectedId ? tiles.find((t) => t.id === selectedId) : undefined),
+    [selectedId, tiles],
+  );
+
+  const partnerIds = useMemo(
+    () => freeMatchingPartnerIds(selectedTile, tiles),
+    [selectedTile, tiles],
+  );
 
   const remainingPairs = useMemo(
     () => tiles.filter((t) => !t.removed).length / 2,
@@ -347,12 +410,12 @@ export function MahjongMatch() {
       setBursts([]);
       setScorePops([]);
       setMoves(0);
-      setFeedback({ kind: "hint", text: modeHint(nextMode) });
+      pushFeedback({ kind: "hint", text: modeHint(nextMode) });
       setWon(false);
       setDealKey((k) => k + 1);
       if (Math.random() < 0.35) triggerDragon();
     },
-    [triggerDragon],
+    [pushFeedback, triggerDragon],
   );
 
   useEffect(() => {
@@ -407,19 +470,26 @@ export function MahjongMatch() {
       return next;
     });
     setDealKey((k) => k + 1);
-    setFeedback({
+    pushFeedback({
       kind: "hint",
       text: "Remixed remaining tiles — same words, new positions.",
     });
     lockRef.current = false;
-  }, [won]);
+  }, [pushFeedback, won]);
 
   const onTileClick = (tile: SolitaireTile) => {
-    if (lockRef.current || won || tile.removed) return;
+    if (won || tile.removed) return;
+    if (lockRef.current) {
+      pushFeedback({
+        kind: "hint",
+        text: "Wait for the previous match to finish…",
+      });
+      return;
+    }
     if (!freeIds.has(tile.id)) {
-      setFeedback({
+      pushFeedback({
         kind: "bad",
-        text: "Blocked — only free tiles (open left or right, nothing on top).",
+        text: "Tile locked — need open left or right, and nothing stacked on top.",
       });
       return;
     }
@@ -431,9 +501,9 @@ export function MahjongMatch() {
     if (!selectedId) {
       setSelectedId(tile.id);
       setSelectedRef(tile.refLabel);
-      setFeedback({
+      pushFeedback({
         kind: "hint",
-        text: `Selected ${tile.refLabel} · find the ${otherFaceLabel(tile.face, mode)} match`,
+        text: `Selected ${tile.refLabel} · needs pair: ${otherFaceLabel(tile.face, mode)}`,
       });
       return;
     }
@@ -441,7 +511,7 @@ export function MahjongMatch() {
     if (selectedId === tile.id) {
       setSelectedId(null);
       setSelectedRef(null);
-      setFeedback({ kind: "hint", text: "Selection cleared." });
+      pushFeedback({ kind: "hint", text: "Selection cleared." });
       return;
     }
 
@@ -450,6 +520,10 @@ export function MahjongMatch() {
     if (!a || a.removed) {
       setSelectedId(tile.id);
       setSelectedRef(tile.refLabel);
+      pushFeedback({
+        kind: "hint",
+        text: `Selected ${tile.refLabel} · needs pair: ${otherFaceLabel(tile.face, mode)}`,
+      });
       return;
     }
 
@@ -459,7 +533,10 @@ export function MahjongMatch() {
     if (canMatch(a, b)) {
       lockRef.current = true;
       setMatchingIds(new Set([a.id, b.id]));
-      setFeedback({ kind: "ok", text: `Match · ${a.refLabel}` });
+      pushFeedback({
+        kind: "ok",
+        text: `Match · ${a.refLabel} (${a.label})`,
+      });
       setSelectedId(null);
       setSelectedRef(null);
       celebrateMatch(a, b, a.refLabel);
@@ -497,7 +574,7 @@ export function MahjongMatch() {
                 });
                 return nextWins;
               });
-              setFeedback({ kind: "ok", text: "Board cleared!" });
+              pushFeedback({ kind: "ok", text: "Board cleared!" });
             } else if (!cr.includes(a.pairId)) {
               saveMahjongProgress({
                 batch,
@@ -517,17 +594,18 @@ export function MahjongMatch() {
     } else {
       lockRef.current = true;
       setWrongIds(new Set([a.id, b.id]));
-      setFeedback({
+      pushFeedback({
         kind: "bad",
-        text:
-          a.pairId === b.pairId
-            ? `Same Ref but wrong faces · ${a.refLabel}`
-            : `Different words · ${a.refLabel} ≠ ${b.refLabel} — match the same Ref #`,
+        text: mismatchFeedback(a, b, mode),
       });
       window.setTimeout(() => {
         setWrongIds(new Set());
         setSelectedId(b.id);
         setSelectedRef(b.refLabel);
+        pushFeedback({
+          kind: "hint",
+          text: `Selected ${b.refLabel} · needs pair: ${otherFaceLabel(b.face, mode)}`,
+        });
         lockRef.current = false;
       }, 520);
     }
@@ -657,6 +735,16 @@ export function MahjongMatch() {
       </section>
 
       <div className="mj-table-wrap">
+        {feedback ? (
+          <div
+            key={toastPulse}
+            className={`mj-toast is-${feedback.kind}`}
+            role="status"
+            aria-live="assertive"
+          >
+            {feedback.text}
+          </div>
+        ) : null}
         <div className="mj-table" aria-label="Mahjong solitaire board">
           {showDragon ? (
             <div className="mj-dragon" aria-hidden="true">
@@ -697,8 +785,10 @@ export function MahjongMatch() {
               const selected = selectedId === tile.id;
               const wrong = wrongIds.has(tile.id);
               const matching = matchingIds.has(tile.id);
+              const partner = partnerIds.has(tile.id);
               const zIndex =
                 (free ? 800 : 0) +
+                (partner ? 40 : 0) +
                 tile.z * 40 +
                 Math.floor(tile.y * 6) +
                 Math.floor(tile.x) +
@@ -715,6 +805,7 @@ export function MahjongMatch() {
                     selected ? "is-selected" : "",
                     wrong ? "is-wrong" : "",
                     matching ? "is-matching" : "",
+                    partner ? "is-partner" : "",
                     faceClass(tile.face),
                   ]
                     .filter(Boolean)
@@ -829,10 +920,11 @@ export function MahjongMatch() {
       </p>
 
       <p className="mj-howto">
-        How to play: free tiles lift slightly and glow. Select one, then its
-        pair.{" "}
+        How to play: free tiles lift slightly and glow; locked tiles look grey
+        and will say &quot;Tile locked&quot; if tapped. Select one free tile, then its
+        matching pair (same Ref #, opposite face — e.g. ▶ Audio ↔ English).{" "}
         {needsAudioPool(mode)
-          ? "Audio tiles show ▶ and Ref — tap to hear."
+          ? "Audio tiles show ▶ and Ref only (not the spelling) — tap to hear."
           : null}{" "}
         Use <strong>Remix</strong> if you get stuck. Report bad glosses with{" "}
         <strong>Ref</strong> (e.g. <code>#0021</code>).

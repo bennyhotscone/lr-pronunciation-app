@@ -4,6 +4,7 @@ import {
   FORTRESS_LAYOUT,
   GREAT_WALL_LAYOUT,
   canMatch,
+  freeMatchingPartnerIds,
   hasValidMove,
   isCovered,
   isFree,
@@ -99,6 +100,99 @@ describe("mahjong solitaire free-tile rules", () => {
     expect(canMatch(d, b)).toBe(true);
     expect(canMatch(a, c)).toBe(false);
     expect(canMatch(a, { ...a, id: "dup", face: "word" })).toBe(false);
+  });
+
+  it("Audio↔English only matches same-rank audio with English face", () => {
+    const weAudio = tile({
+      id: "23a",
+      x: 0,
+      y: 0,
+      z: 0,
+      pairId: 23,
+      face: "audio",
+      label: "we",
+      refLabel: "#0023",
+    });
+    const weWord = tile({
+      id: "23w",
+      x: 2,
+      y: 0,
+      z: 0,
+      pairId: 23,
+      face: "word",
+      label: "we",
+      refLabel: "#0023",
+    });
+    const hisAudio = tile({
+      id: "24a",
+      x: 4,
+      y: 0,
+      z: 0,
+      pairId: 24,
+      face: "audio",
+      label: "his",
+      refLabel: "#0024",
+    });
+    const hisWord = tile({
+      id: "24w",
+      x: 6,
+      y: 0,
+      z: 0,
+      pairId: 24,
+      face: "word",
+      label: "his",
+      refLabel: "#0024",
+    });
+    expect(canMatch(weAudio, weWord)).toBe(true);
+    expect(canMatch(weAudio, hisAudio)).toBe(false);
+    expect(canMatch(weAudio, hisWord)).toBe(false);
+    expect(canMatch(hisAudio, hisWord)).toBe(true);
+
+    const free = [weAudio, weWord, hisAudio, hisWord];
+    expect(freeMatchingPartnerIds(weAudio, free)).toEqual(new Set(["23w"]));
+    expect(freeMatchingPartnerIds(hisWord, free)).toEqual(new Set(["24a"]));
+  });
+
+  it("lists free matching partners and ignores blocked ones", () => {
+    const left = tile({
+      id: "a",
+      x: 0,
+      y: 0,
+      z: 0,
+      pairId: 23,
+      face: "audio",
+      label: "we",
+    });
+    const mid = tile({
+      id: "m",
+      x: 1,
+      y: 0,
+      z: 0,
+      pairId: 99,
+      face: "word",
+      label: "block",
+    });
+    const partnerBlocked = tile({
+      id: "b",
+      x: 2,
+      y: 0,
+      z: 0,
+      pairId: 23,
+      face: "word",
+      label: "we",
+    });
+    // mid locked between; ends free but different faces same rank → partners free
+    expect(isFree(left, [left, mid, partnerBlocked])).toBe(true);
+    expect(isFree(partnerBlocked, [left, mid, partnerBlocked])).toBe(true);
+    expect(freeMatchingPartnerIds(left, [left, mid, partnerBlocked])).toEqual(
+      new Set(["b"]),
+    );
+
+    // Cover partner with a tile above → no free partner
+    const cover = tile({ id: "c", x: 1.5, y: -0.2, z: 1 });
+    const covered = [left, mid, partnerBlocked, cover];
+    expect(isFree(partnerBlocked, covered)).toBe(false);
+    expect(freeMatchingPartnerIds(left, covered).size).toBe(0);
   });
 
   it("detects when no valid free pairs remain", () => {

@@ -172,6 +172,21 @@ export function canMatch(a: SolitaireTile, b: SolitaireTile): boolean {
   return a.pairId === b.pairId && a.face !== b.face && a.id !== b.id;
 }
 
+/** Free opposite-face tiles that match the selected tile (same rank). */
+export function freeMatchingPartnerIds(
+  selected: SolitaireTile | undefined,
+  tiles: SolitaireTile[],
+): Set<string> {
+  const ids = new Set<string>();
+  if (!selected || selected.removed) return ids;
+  for (const t of tiles) {
+    if (!t.removed && isFree(t, tiles) && canMatch(selected, t)) {
+      ids.add(t.id);
+    }
+  }
+  return ids;
+}
+
 /** True when at least one free opposite-face pair of the same rank exists. */
 export function hasValidMove(tiles: SolitaireTile[]): boolean {
   const free = tiles.filter((t) => isFree(t, tiles));
