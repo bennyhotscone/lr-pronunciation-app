@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {
+  mergeAudioOverrideMaps,
   resolveAudioPlaybackUrl,
   type AudioOverrideMap,
 } from "@/lib/audio-overrides";
@@ -23,9 +24,10 @@ export function invalidateAudioOverridesCache(): void {
 
 /** Immediately seed the module cache + notify all mounted hooks (e.g. POST body). */
 export function applyAudioOverrides(map: AudioOverrideMap): void {
-  cache = map && typeof map === "object" ? map : {};
+  const next = mergeAudioOverrideMaps(cache, map);
+  cache = next;
   inflight = null;
-  notify(cache);
+  notify(next);
 }
 
 export async function fetchAudioOverrides(
@@ -42,10 +44,12 @@ export async function fetchAudioOverrides(
         return previous ?? cache ?? {};
       }
       const data = (await res.json()) as { overrides?: AudioOverrideMap };
-      const next =
+      const remote =
         data.overrides && typeof data.overrides === "object"
           ? data.overrides
           : {};
+      // Merge so a briefly stale GET cannot wipe a newer optimistic POST map
+      const next = mergeAudioOverrideMaps(previous, remote);
       cache = next;
       notify(next);
       return next;
@@ -72,7 +76,7 @@ export function useAudioOverrides() {
 
   const apply = useCallback((map: AudioOverrideMap) => {
     applyAudioOverrides(map);
-    setOverrides(map && typeof map === "object" ? map : {});
+    setOverrides(mergeAudioOverrideMaps(cache, map));
     setLoaded(true);
   }, []);
 

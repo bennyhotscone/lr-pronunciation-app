@@ -522,18 +522,23 @@ export function AudioStudio() {
         return;
       }
       // Optimistic: apply POST map immediately so list Play hits the new Blob URL
-      // (with fresh ?v=) before GET round-trip; then soft-confirm via refetch.
+      // before GET catch-up. Merge-on-refetch prevents a briefly stale GET from
+      // wiping this entry.
       if (data.overrides && typeof data.overrides === "object") {
         applyOverrides(data.overrides);
       } else if (data.entry) {
         const key = String(preview.rank).padStart(4, "0");
-        applyOverrides({ ...overrides, [key]: data.entry });
+        applyOverrides({ [key]: data.entry });
       }
       try {
         await refreshOverrides();
       } catch {
         /* keep optimistic map */
       }
+      // Second soft confirm after Blob replication (non-blocking)
+      window.setTimeout(() => {
+        void refreshOverrides();
+      }, 1500);
       // Optional local mirror for offline preview on this device
       try {
         await putStudioClip(preview.rank, preview.filename, preview.blob);

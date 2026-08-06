@@ -3,11 +3,16 @@ import path from "path";
 import {
   OVERRIDES_BLOB_PATH,
   OVERRIDES_PUBLIC_REL,
+  OVERRIDES_VERSION_PREFIX,
+  mergeAudioOverrideMaps,
   type AudioOverrideEntry,
   type AudioOverrideMap,
 } from "@/lib/audio-overrides";
 
 const BLOB_PREFIX = "studio-audio";
+
+/** Same-isolate sticky map so GETs right after POST do not lose the write. */
+let lastWritten: { map: AudioOverrideMap; at: number } | null = null;
 
 function hasBlobToken(): boolean {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim());
@@ -36,33 +41,96 @@ async function streamToText(stream: ReadableStream<Uint8Array>): Promise<string>
   return res.text();
 }
 
-async function readOverridesFromBlob(): Promise<AudioOverrideMap> {
-  const { get } = await import("@vercel/blob");
+function looksLikeOverrideMap(data: unknown): data is AudioOverrideMap {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return false;
+  // Reject pointer envelopes if we ever store them
+  if ("latest" in data && "url" in data && Object.keys(data).length <= 3) {
+    return false;
+  }
+  return true;
+}
+
+async function parseOverrideStream(
+  stream: ReadableStream<Uint8Array>,
+): Promise<AudioOverrideMap | null> {
   try {
-    // Bypass CDN — overwriting studio-audio-overrides.json otherwise serves stale
-    // maps for several seconds, so Play falls back to the old static clip.
+    const raw = await streamToText(stream);
+    const data = JSON.parse(raw) as unknown;
+    return looksLikeOverrideMap(data) ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+async function readOverridesFromBlob(): Promise<AudioOverrideMap> {
+  const { get, list } = await import("@vercel/blob");
+  const maps: AudioOverrideMap[] = [];
+
+  try {
+    const listed = await list({ prefix: OVERRIDES_VERSION_PREFIX, limit: 1000 });
+    const recent = [...listed.blobs]
+      .sort((a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime())
+      .slice(0, 15);
+    for (const item of recent) {
+      try {
+        const result = await get(item.pathname, {
+          access: "public",
+          useCache: false,
+        });
+        if (result?.statusCode === 200 && result.stream) {
+          const map = await parseOverrideStream(result.stream);
+          if (map) maps.push(map);
+        }
+      } catch {
+        /* skip broken snapshot */
+      }
+    }
+  } catch {
+    /* list unavailable — fall through to legacy */
+  }
+
+  try {
     const result = await get(OVERRIDES_BLOB_PATH, {
       access: "public",
       useCache: false,
     });
-    if (!result || result.statusCode !== 200 || !result.stream) return {};
-    const raw = await streamToText(result.stream);
-    const data = JSON.parse(raw) as AudioOverrideMap;
-    return data && typeof data === "object" ? data : {};
+    if (result?.statusCode === 200 && result.stream) {
+      const map = await parseOverrideStream(result.stream);
+      if (map) maps.push(map);
+    }
   } catch {
-    return {};
+    /* legacy missing */
   }
+
+  let merged = mergeAudioOverrideMaps(...maps);
+  if (
+    lastWritten &&
+    Date.now() - lastWritten.at < 15_000
+  ) {
+    merged = mergeAudioOverrideMaps(merged, lastWritten.map);
+  }
+  return merged;
 }
 
 async function writeOverridesToBlob(map: AudioOverrideMap): Promise<string> {
   const { put } = await import("@vercel/blob");
-  const blob = await put(OVERRIDES_BLOB_PATH, JSON.stringify(map, null, 2), {
+  // Append-only snapshot (never overwritten → no stale CDN bytes for this URL)
+  const versioned = `${OVERRIDES_VERSION_PREFIX}${Date.now()}.json`;
+  const blob = await put(versioned, JSON.stringify(map, null, 2), {
+    access: "public",
+    contentType: "application/json",
+    addRandomSuffix: false,
+    cacheControlMaxAge: 60 * 60 * 24 * 365,
+  });
+  // Legacy fixed path for older code + human inspection
+  await put(OVERRIDES_BLOB_PATH, JSON.stringify(map, null, 2), {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
     cacheControlMaxAge: 0,
   });
+  lastWritten = { map, at: Date.now() };
   return blob.url;
 }
 
@@ -134,14 +202,26 @@ export async function saveAudioOverride(input: {
     filename: input.filename,
     updatedAt,
   };
-  const overrides = await loadOverrides();
-  overrides[key] = entry;
 
-  if (mode === "blob") {
-    await writeOverridesToBlob(overrides);
-  } else {
-    await writeOverridesToLocal(overrides);
+  // Merge against whatever we can read, write, and verify so a stale CDN snapshot
+  // cannot drop this rank (or wipe a sibling rank) from the returned map.
+  let overrides: AudioOverrideMap = { [key]: entry };
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const loaded = await loadOverrides();
+    overrides = mergeAudioOverrideMaps(loaded, { [key]: entry });
+    if (mode === "blob") {
+      await writeOverridesToBlob(overrides);
+    } else {
+      await writeOverridesToLocal(overrides);
+    }
+    const verify = await loadOverrides();
+    if (verify[key]?.url === entry.url) {
+      overrides = mergeAudioOverrideMaps(verify, { [key]: entry });
+      return { entry, overrides, mode };
+    }
+    await new Promise((r) => setTimeout(r, 150 * (attempt + 1)));
   }
 
+  overrides = mergeAudioOverrideMaps(await loadOverrides(), { [key]: entry });
   return { entry, overrides, mode };
 }
