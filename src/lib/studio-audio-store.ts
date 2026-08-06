@@ -35,7 +35,8 @@ async function readOverridesFromBlob(): Promise<AudioOverrideMap> {
   const { head } = await import("@vercel/blob");
   try {
     const meta = await head(OVERRIDES_BLOB_PATH);
-    const res = await fetch(meta.url, { cache: "no-store" });
+    const bust = `${meta.url}${meta.url.includes("?") ? "&" : "?"}t=${Date.now()}`;
+    const res = await fetch(bust, { cache: "no-store" });
     if (!res.ok) return {};
     const data = (await res.json()) as AudioOverrideMap;
     return data && typeof data === "object" ? data : {};
@@ -51,6 +52,7 @@ async function writeOverridesToBlob(map: AudioOverrideMap): Promise<string> {
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
+    cacheControlMaxAge: 0,
   });
   return blob.url;
 }
