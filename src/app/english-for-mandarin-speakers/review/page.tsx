@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { AUDIO_BASE, audioUrl } from "@/data/mandarin-vocab";
+import { AUDIO_BASE } from "@/data/mandarin-vocab";
+import { useAudioOverrides } from "@/lib/audio-overrides-client";
 
 type ManifestClip = {
   rank: number;
@@ -87,6 +88,7 @@ export default function MandarinAudioReviewPage() {
   const [playingRank, setPlayingRank] = useState<number | null>(null);
   const [probing, setProbing] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { resolveUrl } = useAudioOverrides();
 
   useEffect(() => {
     setMounted(true);
@@ -144,16 +146,19 @@ export default function MandarinAudioReviewPage() {
   );
   const maxRank = rows.length ? rows[rows.length - 1]!.rank : 0;
 
-  const playClip = useCallback((row: ClipRow) => {
-    if (!audioRef.current) audioRef.current = new Audio();
-    const a = audioRef.current;
-    a.pause();
-    a.src = audioUrl(row.audioFile);
-    setPlayingRank(row.rank);
-    void a.play().catch(() => setPlayingRank(null));
-    a.onended = () => setPlayingRank(null);
-    a.onerror = () => setPlayingRank(null);
-  }, []);
+  const playClip = useCallback(
+    (row: ClipRow) => {
+      if (!audioRef.current) audioRef.current = new Audio();
+      const a = audioRef.current;
+      a.pause();
+      a.src = resolveUrl(row.rank, row.audioFile);
+      setPlayingRank(row.rank);
+      void a.play().catch(() => setPlayingRank(null));
+      a.onended = () => setPlayingRank(null);
+      a.onerror = () => setPlayingRank(null);
+    },
+    [resolveUrl],
+  );
 
   const probeVisible = useCallback(async () => {
     if (probing || visible.length === 0) return;
@@ -161,7 +166,7 @@ export default function MandarinAudioReviewPage() {
     const updates = new Map<number, { duration: number | null; flag: DurationFlag }>();
     for (const row of visible) {
       // eslint-disable-next-line no-await-in-loop
-      const result = await probeDuration(audioUrl(row.audioFile));
+      const result = await probeDuration(resolveUrl(row.rank, row.audioFile));
       updates.set(row.rank, result);
     }
     setRows((prev) =>
@@ -171,7 +176,7 @@ export default function MandarinAudioReviewPage() {
       }),
     );
     setProbing(false);
-  }, [probing, visible]);
+  }, [probing, visible, resolveUrl]);
 
   if (!mounted) {
     return (

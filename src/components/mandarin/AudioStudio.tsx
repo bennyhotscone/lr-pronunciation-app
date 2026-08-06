@@ -5,9 +5,13 @@ import Link from "next/link";
 import {
   AUDIO_BASE,
   MANDARIN_VOCAB_WORDS,
-  audioUrl,
   expectedAudioFile,
 } from "@/data/mandarin-vocab";
+import {
+  invalidateAudioOverridesCache,
+  useAudioOverrides,
+} from "@/lib/audio-overrides-client";
+import { rankKey, type AudioOverrideMap } from "@/lib/audio-overrides";
 import {
   deleteStudioClip,
   getAllStudioClipRanks,
@@ -15,6 +19,7 @@ import {
   putStudioClip,
 } from "@/lib/studio-audio-db";
 import {
+  getStudioSessionPassword,
   isStudioAuthed,
   loadStudioNotes,
   saveStudioNotes,
@@ -43,6 +48,7 @@ type StudioRow = {
   status: StudioVerifyStatus;
   note: string;
   hasLocalClip: boolean;
+  hasServerOverride: boolean;
 };
 
 type PreviewState = {
@@ -140,6 +146,9 @@ export function AudioStudio() {
   const [recordingRank, setRecordingRank] = useState<number | null>(null);
   const [preview, setPreview] = useState<PreviewState | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
+  const [msgTone, setMsgTone] = useState<"info" | "ok" | "err">("info");
+  const [savingPermanent, setSavingPermanent] = useState(false);
+  const { overrides, refresh: refreshOverrides, resolveUrl } = useAudioOverrides();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -231,10 +240,11 @@ export function AudioStudio() {
         status: n?.status ?? "unchecked",
         note: n?.note ?? "",
         hasLocalClip: localClipRanks.has(rank),
+        hasServerOverride: Boolean(overrides[rankKey(rank)]?.url),
       });
     }
     return list;
-  }, [manifestByRank, notes, localClipRanks]);
+  }, [manifestByRank, notes, localClipRanks, overrides]);
 
   const okCount = useMemo(
     () => rows.filter((r) => r.status === "ok").length,
@@ -266,12 +276,17 @@ export function AudioStudio() {
         setAuthError("Wrong password");
         return;
       }
-      setStudioAuthed(true);
+      setStudioAuthed(true, password);
       setAuthed(true);
       setPassword("");
     } catch {
       setAuthError("Could not verify password");
     }
+  };
+
+  const flash = (text: string, tone: "info" | "ok" | "err" = "info") => {
+    setMsg(text);
+    setMsgTone(tone);
   };
 
   const stopPlayback = () => {
@@ -292,24 +307,24 @@ export function AudioStudio() {
     setMsg(null);
     void a.play().catch(() => {
       setPlaying(null);
-      setMsg(`Could not play ${label} (missing, blocked, or empty).`);
+      flash(`Could not play ${label} (missing, blocked, or empty).`, "err");
     });
     a.onended = () => setPlaying(null);
     a.onerror = () => {
       setPlaying(null);
-      setMsg(`Could not play ${label} (missing or decode error).`);
+      flash(`Could not play ${label} (missing or decode error).`, "err");
     };
   };
 
   const playPublished = (row: StudioRow) => {
-    playSrc(row.rank, audioUrl(row.audioFile), row.audioFile);
+    playSrc(row.rank, resolveUrl(row.rank, row.audioFile), row.audioFile);
   };
 
   const playLocal = async (rank: number) => {
     try {
       const clip = await getStudioClip(rank);
       if (!clip) {
-        setMsg(`No local replacement stored for ${refOf(rank)}.`);
+        flash(`No browser-only copy stored for ${refOf(rank)}.`, "err");
         return;
       }
       const url = URL.createObjectURL(clip.blob);
@@ -317,7 +332,7 @@ export function AudioStudio() {
       // Revoke after play starts; keep long enough for load
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
     } catch {
-      setMsg("Could not read local replacement from IndexedDB.");
+      flash("Could not read browser-only copy from IndexedDB.", "err");
     }
   };
 
@@ -380,9 +395,9 @@ export function AudioStudio() {
         return;
       }
       persistNotes({ ...notes, ...parsed.ranks });
-      setMsg("Imported notes into this browser (localStorage).");
+      flash("Imported notes into this browser (localStorage).", "ok");
     } catch {
-      setMsg("Could not parse import JSON.");
+      flash("Could not parse import JSON.", "err");
     }
   };
 
@@ -390,8 +405,9 @@ export function AudioStudio() {
     clearPreview();
     const objectUrl = URL.createObjectURL(blob);
     setPreview({ rank, blob, filename, objectUrl, source });
-    setMsg(
-      `Preview ready for ${refOf(rank)}. Listen, then Download (named ${filename}) to drop into public/audio/mandarin-vocab/.`,
+    flash(
+      `Preview ready for ${refOf(rank)}. Listen, then Save permanently so every browser/device gets this clip.`,
+      "info",
     );
   };
 
@@ -415,7 +431,7 @@ export function AudioStudio() {
   const startRecord = async (rank: number) => {
     if (recordingRank != null) return;
     if (typeof MediaRecorder === "undefined") {
-      setMsg("MediaRecorder not supported in this browser.");
+      flash("MediaRecorder not supported in this browser.", "err");
       return;
     }
     try {
@@ -452,9 +468,9 @@ export function AudioStudio() {
       mediaRecorderRef.current = rec;
       rec.start(250);
       setRecordingRank(rank);
-      setMsg(`Recording ${refOf(rank)}… tap Stop when finished.`);
+      flash(`Recording ${refOf(rank)}… tap Stop when finished.`, "info");
     } catch {
-      setMsg("Microphone permission denied or unavailable on this device.");
+      flash("Microphone permission denied or unavailable on this device.", "err");
     }
   };
 
@@ -462,30 +478,96 @@ export function AudioStudio() {
     mediaRecorderRef.current?.stop();
   };
 
+  const savePreviewPermanent = async () => {
+    if (!preview || savingPermanent) return;
+    const pw = getStudioSessionPassword();
+    if (!pw) {
+      flash("Session expired — lock and unlock Studio again, then retry Save permanently.", "err");
+      return;
+    }
+    setSavingPermanent(true);
+    flash(`Uploading ${preview.filename} permanently…`, "info");
+    try {
+      const form = new FormData();
+      form.set("password", pw);
+      form.set("rank", String(preview.rank));
+      form.set("filename", preview.filename);
+      const row = rows.find((r) => r.rank === preview.rank);
+      if (row?.word) form.set("word", row.word);
+      form.set("audio", preview.blob, preview.filename);
+      const res = await fetch("/api/studio/audio", {
+        method: "POST",
+        headers: { "x-studio-password": pw },
+        body: form,
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+        entry?: { url: string; filename: string; updatedAt: string };
+        overrides?: AudioOverrideMap;
+      };
+      if (!res.ok || !data.ok) {
+        flash(
+          data.error ||
+            `Permanent save failed (${res.status}). Enable Vercel Blob and set BLOB_READ_WRITE_TOKEN.`,
+          "err",
+        );
+        return;
+      }
+      invalidateAudioOverridesCache();
+      if (data.overrides) {
+        await refreshOverrides();
+      } else {
+        await refreshOverrides();
+      }
+      // Optional local mirror for offline preview on this device
+      try {
+        await putStudioClip(preview.rank, preview.filename, preview.blob);
+        setLocalClipRanks((prev) => new Set(prev).add(preview.rank));
+      } catch {
+        /* optional */
+      }
+      flash(
+        `Saved permanently: ${data.entry?.filename ?? preview.filename}. Live on the site for everyone.`,
+        "ok",
+      );
+      clearPreview();
+    } catch {
+      flash(
+        "Network error while uploading. Permanent save did not complete — try again.",
+        "err",
+      );
+    } finally {
+      setSavingPermanent(false);
+    }
+  };
+
   const savePreviewLocal = async () => {
     if (!preview) return;
     try {
       await putStudioClip(preview.rank, preview.filename, preview.blob);
       setLocalClipRanks((prev) => new Set(prev).add(preview.rank));
-      setMsg(
-        `Saved ${preview.filename} in this browser (IndexedDB). Still download + commit to publish on Vercel.`,
+      flash(
+        `Browser-only copy of ${preview.filename} kept here. Use Save permanently to publish for everyone.`,
+        "info",
       );
     } catch {
-      setMsg("Could not save to IndexedDB — you can still Download the file.");
+      flash("Could not save browser-only copy — use Save permanently or Download.", "err");
     }
   };
 
   const downloadPreview = () => {
     if (!preview) return;
     downloadBlob(preview.blob, preview.filename);
-    setMsg(
-      `Downloaded ${preview.filename}. Commit to public/audio/mandarin-vocab/ (Vercel cannot write public/ for you).`,
+    flash(
+      `Downloaded ${preview.filename} as backup. Prefer Save permanently to update the live site.`,
+      "info",
     );
   };
 
   const discardPreview = () => {
     clearPreview();
-    setMsg("Preview discarded.");
+    flash("Preview discarded.", "info");
   };
 
   const clearLocalClip = async (rank: number) => {
@@ -496,9 +578,9 @@ export function AudioStudio() {
         next.delete(rank);
         return next;
       });
-      setMsg(`Cleared local replacement for ${refOf(rank)}.`);
+      flash(`Cleared browser-only copy for ${refOf(rank)}.`, "info");
     } catch {
-      setMsg("Could not clear local clip.");
+      flash("Could not clear browser-only copy.", "err");
     }
   };
 
@@ -559,11 +641,10 @@ export function AudioStudio() {
           This is how we decide clips are good enough for Mahjong Audio modes —
           play each word, mark <strong>OK</strong> or{" "}
           <strong>Needs addressing</strong>, leave notes, and re-record or upload
-          replacements. Status lives in this browser (export JSON backup).{" "}
-          <strong>Vercel cannot write into public/</strong> — Record/Upload
-          downloads a correctly named file for you to put in{" "}
-          <code className="text-xs">public/audio/mandarin-vocab/</code>. Optional:
-          keep a same-browser copy in IndexedDB for replay.
+          replacements. Status lives in this browser (export JSON backup). After
+          preview, use <strong>Save permanently</strong> so every learner (all
+          browsers/devices) hears the new clip via Vercel Blob — no git commit
+          required.
         </p>
       </div>
 
@@ -639,7 +720,16 @@ export function AudioStudio() {
       </div>
 
       {msg ? (
-        <p className="rounded-xl border border-amber/40 bg-amber/15 px-3 py-2 text-sm">
+        <p
+          className={`rounded-xl border px-3 py-2 text-sm ${
+            msgTone === "ok"
+              ? "border-success/40 bg-success/15"
+              : msgTone === "err"
+                ? "border-danger/40 bg-danger/10"
+                : "border-amber/40 bg-amber/15"
+          }`}
+          role="status"
+        >
           {msg}
         </p>
       ) : null}
@@ -666,30 +756,41 @@ export function AudioStudio() {
             <button
               type="button"
               className="btn-primary touch-target rounded-xl px-4 py-3 text-sm font-bold"
+              disabled={savingPermanent}
+              onClick={() => void savePreviewPermanent()}
+            >
+              {savingPermanent ? "Saving permanently…" : "Save permanently"}
+            </button>
+            <button
+              type="button"
+              className="btn-secondary touch-target rounded-xl px-4 py-3 text-sm font-bold"
+              disabled={savingPermanent}
               onClick={downloadPreview}
             >
               Download {preview.filename}
             </button>
             <button
               type="button"
-              className="btn-secondary touch-target rounded-xl px-4 py-3 text-sm font-bold"
+              className="touch-target rounded-xl px-4 py-3 text-sm font-bold text-muted underline"
+              disabled={savingPermanent}
               onClick={() => void savePreviewLocal()}
             >
-              Save in this browser
+              Browser-only copy
             </button>
             <button
               type="button"
               className="touch-target rounded-xl px-4 py-3 text-sm font-bold text-muted underline"
+              disabled={savingPermanent}
               onClick={discardPreview}
             >
               Discard
             </button>
           </div>
           <p className="text-xs text-muted">
-            Publish path: drop the downloaded file into{" "}
-            <code>public/audio/mandarin-vocab/</code> and redeploy. Prefer MP3 for
-            production; phone recordings are often WebM/M4A — convert if needed, but
-            keep the <code>NNNN-word</code> basename.
+            <strong>Save permanently</strong> uploads to Vercel Blob and updates
+            the live override map for quiz, mahjong, and review. Download is a
+            local backup only. Prefer MP3 when you can; phone recordings are often
+            WebM/M4A.
           </p>
         </div>
       ) : null}
@@ -743,9 +844,14 @@ export function AudioStudio() {
                   missing in manifest
                 </span>
               ) : null}
+              {row.hasServerOverride ? (
+                <span className="ml-2 font-sans font-bold text-success">
+                  · live override
+                </span>
+              ) : null}
               {row.hasLocalClip ? (
-                <span className="ml-2 font-sans font-bold text-accent">
-                  · local replace in browser
+                <span className="ml-2 font-sans font-bold text-muted">
+                  · browser-only copy
                 </span>
               ) : null}
             </p>
@@ -765,7 +871,7 @@ export function AudioStudio() {
                   className="btn-secondary touch-target rounded-xl px-3 py-2.5 text-sm font-bold"
                   onClick={() => void playLocal(row.rank)}
                 >
-                  Play local replace
+                  Play browser-only copy
                 </button>
               ) : null}
               <button
@@ -799,7 +905,7 @@ export function AudioStudio() {
                   className="touch-target rounded-xl px-3 py-2.5 text-sm font-bold text-muted underline"
                   onClick={() => void clearLocalClip(row.rank)}
                 >
-                  Clear local
+                  Clear browser copy
                 </button>
               ) : null}
             </div>

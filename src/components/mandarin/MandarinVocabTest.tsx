@@ -5,10 +5,10 @@ import {
   ACTIVE_VOCAB_WORDS,
   MODE_BASE_POINTS,
   MODE_LABELS,
-  audioUrl,
   type DifficultyMode,
   type MandarinVocabWord,
 } from "@/data/mandarin-vocab";
+import { useAudioOverrides } from "@/lib/audio-overrides-client";
 import {
   loadMandarinProgress,
   saveMandarinProgress,
@@ -24,6 +24,7 @@ type Feedback = { kind: "ok" | "bad"; text: string } | null;
 export function MandarinVocabTest() {
   const words = ACTIVE_VOCAB_WORDS;
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { resolveUrl } = useAudioOverrides();
   const [hydrated, setHydrated] = useState(false);
   const [mode, setMode] = useState<DifficultyMode>("mandarin");
   const [idx, setIdx] = useState(0);
@@ -114,14 +115,14 @@ export function MandarinVocabTest() {
           if (!w) return;
           const el = audioRef.current ?? new Audio();
           audioRef.current = el;
-          el.src = audioUrl(w.audioFile);
+          el.src = resolveUrl(w.rank, w.audioFile);
           el.currentTime = 0;
           void el.play().catch(() => {});
           setListens(1);
         });
       }
     },
-    [buildOptions, words],
+    [buildOptions, words, resolveUrl],
   );
 
   useEffect(() => {
@@ -135,7 +136,7 @@ export function MandarinVocabTest() {
     if (!current) return;
     const el = audioRef.current ?? new Audio();
     audioRef.current = el;
-    el.src = audioUrl(current.audioFile);
+    el.src = resolveUrl(current.rank, current.audioFile);
     el.currentTime = 0;
     void el.play().catch(() => {});
     setListens((n) => {

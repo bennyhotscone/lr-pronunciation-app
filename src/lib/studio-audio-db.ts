@@ -1,7 +1,6 @@
 /**
- * Browser-only store for teacher audio replacements.
- * Vercel cannot write public/; blobs live here for same-browser replay,
- * and teachers download correctly named files to commit.
+ * Browser-only optional mirror of teacher audio replacements.
+ * Permanent publishing uses POST /api/studio/audio (Vercel Blob).
  */
 
 const DB_NAME = "lr-mandarin-studio-audio-v1";

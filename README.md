@@ -14,9 +14,35 @@ This package is designed to be copied into a new Cursor project or attached to C
   - Fallback password (change it): see `STUDIO_PASSWORD_FALLBACK` in `src/lib/studio-progress.ts` (default `lrmastery-studio`).  
   - First **50** frequency words: batch filters (1–10 … 41–50), play, **OK / Needs addressing / unmarked**, notes.  
   - Notes / status persist in **localStorage**; use Export/Import JSON.  
-  - Record / upload → **preview**, then **download** a correctly named `NNNN-word.ext` file. Optional IndexedDB copy for same-browser replay.  
-  - Vercel cannot persist writes into `public/` — commit replacements into `public/audio/mandarin-vocab/`.  
+  - Record / upload → preview → **Save permanently** (primary). Uploads to **Vercel Blob** and updates a public override map so quiz, mahjong, review, and studio all play the new clip everywhere.  
+  - Download named file remains a secondary backup. Browser-only IndexedDB copy is de-emphasized.  
   - This is the quality gate before trusting Mahjong Audio modes.
+
+### Permanent audio overrides (Vercel)
+
+Uploads require these **Production** env vars on the Vercel project:
+
+| Variable | Purpose |
+| --- | --- |
+| `BLOB_READ_WRITE_TOKEN` | From Vercel → Storage → Blob (create a Blob store, link to this project). Required for permanent saves on production. |
+| `MANDARIN_STUDIO_PASSWORD` | Password for Studio unlock + upload writes. |
+
+**Dashboard steps if CLI cannot create Blob:**
+
+1. Open the project on [vercel.com](https://vercel.com) → **Storage** → **Create Database** → **Blob**.
+2. Link it to this project (Production).
+3. Confirm `BLOB_READ_WRITE_TOKEN` appears under **Settings → Environment Variables**.
+4. Set `MANDARIN_STUDIO_PASSWORD` (or keep the code fallback only for local testing).
+5. Redeploy (`vercel --prod` or push to the production branch).
+
+Without `BLOB_READ_WRITE_TOKEN` on Vercel, `POST /api/studio/audio` returns a clear **503** error (it will **not** silently fall back to IndexedDB). Locally (`next dev` without Vercel), uploads write under `public/audio/mandarin-vocab/` plus a local override JSON.
+
+APIs:
+
+- `POST /api/studio/audio` — multipart `audio` + `rank` + `filename`; auth via `password` field or `x-studio-password` header.
+- `GET /api/studio/overrides` (or `GET /api/studio/audio`) — public override map `{ "0012": { url, filename, updatedAt } }`.
+
+Playback order: override URL (`?v=updatedAt`) → else `/audio/mandarin-vocab/NNNN-word.mp3`.
 
 ## What is fixed
 

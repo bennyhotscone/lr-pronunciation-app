@@ -11,11 +11,11 @@ import {
 import Link from "next/link";
 import {
   MAHJONG_BATCH_SIZE,
-  audioUrl,
   wordsInMahjongBatch,
   wordsWithAudioInMahjongBatch,
   type MandarinVocabWord,
 } from "@/data/mandarin-vocab";
+import { useAudioOverrides } from "@/lib/audio-overrides-client";
 import {
   loadMahjongMode,
   loadMahjongProgress,
@@ -233,6 +233,7 @@ export function MahjongMatch() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const boardRef = useRef<HTMLDivElement | null>(null);
   const burstKeyRef = useRef(0);
+  const { resolveUrl } = useAudioOverrides();
   const [hydrated, setHydrated] = useState(false);
   const [mode, setMode] = useState<MahjongPlayMode>("en-zh");
   const [batch, setBatch] = useState(1);
@@ -282,22 +283,25 @@ export function MahjongMatch() {
     return left && !hasValidMove(tiles);
   }, [tiles, won]);
 
-  const playAudio = useCallback((file?: string) => {
-    if (!file) return;
-    try {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
+  const playAudio = useCallback(
+    (rank?: number, file?: string) => {
+      if (!file || rank == null) return;
+      try {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current = null;
+        }
+        const el = new Audio(resolveUrl(rank, file));
+        audioRef.current = el;
+        void el.play().catch(() => {
+          /* autoplay policies / missing file — Ref still visible */
+        });
+      } catch {
+        /* ignore */
       }
-      const el = new Audio(audioUrl(file));
-      audioRef.current = el;
-      void el.play().catch(() => {
-        /* autoplay policies / missing file — Ref still visible */
-      });
-    } catch {
-      /* ignore */
-    }
-  }, []);
+    },
+    [resolveUrl],
+  );
 
   const triggerDragon = useCallback(() => {
     setShowDragon(true);
@@ -421,7 +425,7 @@ export function MahjongMatch() {
     }
 
     if (tile.face === "audio") {
-      playAudio(tile.audioFile);
+      playAudio(tile.pairId, tile.audioFile);
     }
 
     if (!selectedId) {
