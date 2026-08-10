@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/", label: "Home", icon: "🏠" },
-  { href: "/learn", label: "Learn", icon: "👂" },
-  { href: "/practice", label: "Practice", icon: "🎙️" },
-  { href: "/progress", label: "Progress", icon: "⭐" },
+  { href: "/pronunciation", label: "Home", icon: "🏠", match: "exact" as const },
+  { href: "/learn", label: "Learn", icon: "👂", match: "prefix" as const },
+  { href: "/practice", label: "Practice", icon: "🎙️", match: "prefix" as const },
+  { href: "/progress", label: "Progress", icon: "⭐", match: "prefix" as const },
 ] as const;
 
 export function AppHeader() {
@@ -35,11 +35,11 @@ export function AppHeader() {
         </Link>
         <p className="chip bg-amber/25 text-foreground">Free · on device</p>
       </div>
-      <nav aria-label="Main" className="grid grid-cols-4 gap-1.5">
+      <nav aria-label="Pronunciation" className="grid grid-cols-4 gap-1.5">
         {links.map((link) => {
           const active =
-            link.href === "/"
-              ? pathname === "/"
+            link.match === "exact"
+              ? pathname === link.href
               : pathname.startsWith(link.href);
           return (
             <Link

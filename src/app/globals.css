@@ -174,3 +174,46 @@ body {
 .pulse-attention {
   animation: pulse-ring 2s ease-out infinite;
 }
+
+@keyframes landing-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes landing-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-fade-in {
+  animation: landing-fade-in 0.7s ease-out both;
+}
+
+.landing-fade-up {
+  animation: landing-fade-up 0.65s ease-out both;
+}
+
+.landing-hero {
+  min-height: min(72dvh, 720px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-fade-in,
+  .landing-fade-up,
+  .animate-soft-bounce,
+  .pulse-attention {
+    animation: none;
+  }
+}
