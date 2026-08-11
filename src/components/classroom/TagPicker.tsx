@@ -9,7 +9,7 @@ export function TagPicker({
   name = "tags",
   title = "",
   body = "",
-  enableAi = true,
+  enableAi = false,
 }: {
   classId: string;
   knownTags: string[];

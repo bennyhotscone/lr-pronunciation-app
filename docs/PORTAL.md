@@ -37,7 +37,11 @@ Public `/signup` is **STUDENT only**. Seed admin already teaches.
 - Teacher adds goals + checklist steps on the student page.  
 - Student sees them on Goals; **only teacher can tick steps**.
 
-## Prove (automated)
+## Lesson summary & info tags (free)
+
+- Each lesson shows a **Summary** built from the teacher’s summary text (or title + sub-entries). No LLM, **$0**.
+- **Info tags** on a lesson are clickable. Students see matching classroom posts/files/lessons plus free links (Wikipedia, Wiktionary, Simple English, British Council, YouGlish). No API keys.
+
 
 ```bash
 node scripts/classroom-golden-path.mjs https://lrmastery.guru
