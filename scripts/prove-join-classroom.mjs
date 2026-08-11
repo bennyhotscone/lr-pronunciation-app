@@ -174,7 +174,13 @@ async function main() {
       location: joinCodeAuthed.headers.get("location"),
     };
 
-    // Should NOT bounce logged-in student from /join back to /portal only
+    // Accept 200 or redirect into the classroom (invite link auto-join)
+    const loc = joinCodeAuthed.headers.get("location") || "";
+    results.joinCodeAuthedOk =
+      joinCodeAuthed.status === 200 ||
+      ((joinCodeAuthed.status === 307 || joinCodeAuthed.status === 302) &&
+        loc.includes("/portal/classrooms/"));
+
     const joinAuthed = await fetch(`${BASE}/join`, {
       headers: { Cookie: cookies },
       redirect: "manual",
@@ -186,7 +192,8 @@ async function main() {
 
     const bouncedAway =
       (joinAuthed.status === 307 || joinAuthed.status === 302) &&
-      (joinAuthed.headers.get("location") || "").endsWith("/portal");
+      (joinAuthed.headers.get("location") || "").replace(/\/$/, "").endsWith("/portal") &&
+      !(joinAuthed.headers.get("location") || "").includes("/portal/join");
     results.joinNotBounced = !bouncedAway;
 
     const ok =
@@ -194,7 +201,8 @@ async function main() {
       results.studentSession &&
       results.studentRole === "STUDENT" &&
       results.portalJoinAuthed.status === 200 &&
-      results.joinNotBounced;
+      results.joinNotBounced &&
+      results.joinCodeAuthedOk;
 
     console.log(JSON.stringify({ ok, BASE, ...results }, null, 2));
     if (!ok) process.exit(1);

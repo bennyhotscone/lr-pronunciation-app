@@ -3,7 +3,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { normalizeInviteCode } from "@/lib/invite-code";
-import { studentJoinClassroomByCode } from "@/lib/classroom-actions";
+import { enrollStudentWithInviteCode } from "@/lib/enroll-student";
 import { redirect } from "next/navigation";
 import { JoinCodeForm } from "@/components/classroom/JoinCodeForm";
 
@@ -87,11 +87,8 @@ export default async function JoinByCodePage({
     );
   }
 
-  // Logged-in student: join in this request, then hard-navigate
-  const fd = new FormData();
-  fd.set("code", code);
-  const result = await studentJoinClassroomByCode(fd);
-  if (result && "ok" in result && result.ok && result.classId) {
+  const result = await enrollStudentWithInviteCode(session.user.id, code);
+  if ("ok" in result && result.ok) {
     redirect(`/portal/classrooms/${result.classId}`);
   }
 
@@ -101,7 +98,7 @@ export default async function JoinByCodePage({
         Couldn&apos;t join
       </h1>
       <p className="mt-3 text-muted">
-        {"error" in (result || {}) ? (result as { error?: string }).error : "Something went wrong."}
+        {"error" in result ? result.error : "Something went wrong."}
       </p>
       <div className="mt-6 text-left">
         <JoinCodeForm initialCode={code} />

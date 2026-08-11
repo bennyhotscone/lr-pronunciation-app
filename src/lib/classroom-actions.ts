@@ -8,9 +8,9 @@ import {
   studentCanAccessClass,
 } from "@/lib/portal-access";
 import { generateInviteCode, normalizeInviteCode } from "@/lib/invite-code";
+import { enrollStudentWithInviteCode } from "@/lib/enroll-student";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 
 async function requireStaffSession() {
   const session = await auth();
@@ -109,27 +109,10 @@ export async function studentJoinClassroomByCode(formData: FormData) {
       needAuth: true as const,
     };
   }
-  const code = normalizeInviteCode(String(formData.get("code") || ""));
-  if (code.length < 4) return { error: "Enter a valid invite code." };
-
-  const klass = await prisma.class.findFirst({
-    where: { inviteCode: code, archivedAt: null },
-  });
-  if (!klass) return { error: "No classroom found for that code. Check it with your teacher." };
-
-  await prisma.classMembership.upsert({
-    where: {
-      classId_studentId: { classId: klass.id, studentId: session.user.id },
-    },
-    create: { classId: klass.id, studentId: session.user.id, status: "ACTIVE" },
-    update: { status: "ACTIVE", leftAt: null },
-  });
-
-  revalidatePath("/portal");
-  revalidatePath("/portal/join");
-  revalidatePath(`/portal/classrooms/${klass.id}`);
-  // Return classId — client navigates. (redirect() from server actions is unreliable here.)
-  return { ok: true as const, classId: klass.id, className: klass.name };
+  return enrollStudentWithInviteCode(
+    session.user.id,
+    String(formData.get("code") || ""),
+  );
 }
 
 export async function teacherCreateClassPost(formData: FormData) {
