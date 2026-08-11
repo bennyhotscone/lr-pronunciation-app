@@ -3,7 +3,11 @@ import { normalizeInviteCode } from "@/lib/invite-code";
 import { revalidatePath } from "next/cache";
 
 /** Shared join logic (safe to call from RSC pages or server actions). */
-export async function enrollStudentWithInviteCode(studentId: string, rawCode: string) {
+export async function enrollStudentWithInviteCode(
+  studentId: string,
+  rawCode: string,
+  options?: { revalidate?: boolean },
+) {
   const code = normalizeInviteCode(rawCode);
   if (code.length < 4) {
     return { error: "Enter a valid invite code." as const };
@@ -26,9 +30,12 @@ export async function enrollStudentWithInviteCode(studentId: string, rawCode: st
     update: { status: "ACTIVE", leftAt: null },
   });
 
-  revalidatePath("/portal");
-  revalidatePath("/portal/join");
-  revalidatePath(`/portal/classrooms/${klass.id}`);
+  // Do not call revalidatePath during RSC page render — it 500s. Only from actions.
+  if (options?.revalidate) {
+    revalidatePath("/portal");
+    revalidatePath("/portal/join");
+    revalidatePath(`/portal/classrooms/${klass.id}`);
+  }
 
   return { ok: true as const, classId: klass.id, className: klass.name, code };
 }
