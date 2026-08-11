@@ -4,6 +4,11 @@ import { requireRole } from "@/lib/portal-access";
 import { AddStudentForm } from "@/components/portal/AddStudentForm";
 import { teacherCreateClass } from "@/lib/portal-actions";
 
+async function createClassAction(formData: FormData): Promise<void> {
+  "use server";
+  await teacherCreateClass(formData);
+}
+
 export default async function TeacherDashboardPage() {
   const session = await requireRole("TEACHER");
   const [students, classes] = await Promise.all([
@@ -37,7 +42,7 @@ export default async function TeacherDashboardPage() {
           <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold">
             Create class
           </h2>
-          <form action={teacherCreateClass} className="mt-4 grid gap-3">
+          <form action={createClassAction} className="mt-4 grid gap-3">
             <input
               name="name"
               required
