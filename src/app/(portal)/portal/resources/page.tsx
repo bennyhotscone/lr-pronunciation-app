@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { getActiveClassIdsForStudent, requireRole } from "@/lib/portal-access";
+import { portalResourceDownloadHref } from "@/lib/portal-files";
 
 export default async function ResourcesPage() {
   const session = await requireRole("STUDENT");
@@ -23,7 +24,7 @@ export default async function ResourcesPage() {
           <li key={f.id} className="card flex items-center justify-between gap-3 rounded-2xl p-4">
             <div>
               <a
-                href={f.blobUrl}
+                href={portalResourceDownloadHref(f.id)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold underline-offset-2 hover:underline"
@@ -36,7 +37,7 @@ export default async function ResourcesPage() {
               </p>
             </div>
             <a
-              href={f.blobUrl}
+              href={portalResourceDownloadHref(f.id)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary rounded-xl px-3 py-2 text-xs font-bold"

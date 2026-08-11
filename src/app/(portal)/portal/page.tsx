@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { getActiveClassIdsForStudent, requireRole } from "@/lib/portal-access";
 import { getAvatar } from "@/lib/avatars";
+import { portalResourceDownloadHref } from "@/lib/portal-files";
 
 export default async function MyDeskPage() {
   const session = await requireRole("STUDENT");
@@ -146,7 +147,7 @@ export default async function MyDeskPage() {
               {newFiles.map((f) => (
                 <li key={f.id}>
                   <a
-                    href={f.blobUrl}
+                    href={portalResourceDownloadHref(f.id)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-semibold text-foreground underline-offset-2 hover:underline"
@@ -174,7 +175,7 @@ export default async function MyDeskPage() {
               {justForYou.map((f) => (
                 <li key={f.id} className="text-sm">
                   <span className="chip bg-amber/25">File</span>{" "}
-                  <a href={f.blobUrl} target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-2 hover:underline">
+                  <a href={portalResourceDownloadHref(f.id)} target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-2 hover:underline">
                     {f.title}
                   </a>
                 </li>

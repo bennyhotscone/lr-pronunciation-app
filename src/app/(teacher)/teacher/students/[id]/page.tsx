@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { requireRole } from "@/lib/portal-access";
 import { StudentAssignTools } from "@/components/portal/StudentAssignTools";
 import { getAvatar } from "@/lib/avatars";
+import { portalResourceDownloadHref } from "@/lib/portal-files";
 
 export default async function TeacherStudentPage({
   params,
@@ -75,7 +76,7 @@ export default async function TeacherStudentPage({
           <ul className="mt-2 space-y-1 text-sm">
             {student.individualResources.map((r) => (
               <li key={r.id}>
-                <a href={r.blobUrl} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
+                <a href={portalResourceDownloadHref(r.id)} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
                   {r.title}
                 </a>
               </li>

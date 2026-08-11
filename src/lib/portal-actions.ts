@@ -270,25 +270,31 @@ export async function teacherUploadResource(formData: FormData) {
   }
   if (classId) await assertTeacherOwnsClass(session.user.id, classId);
 
-  const scope = classId || studentId!;
-  const uploaded = await uploadPortalFile({ file, scope });
+  try {
+    const scope = classId || studentId!;
+    const uploaded = await uploadPortalFile({ file, scope });
 
-  await prisma.resource.create({
-    data: {
-      title,
-      description: description || null,
-      filename: uploaded.filename,
-      blobPath: uploaded.blobPath,
-      blobUrl: uploaded.blobUrl,
-      mimeType: uploaded.mimeType,
-      sizeBytes: uploaded.sizeBytes,
-      classId,
-      studentId,
-      lessonId,
-      uploadedById: session.user.id,
-      category: studentId && !classId ? "just-for-you" : "class",
-    },
-  });
+    await prisma.resource.create({
+      data: {
+        title,
+        description: description || null,
+        filename: uploaded.filename,
+        blobPath: uploaded.blobPath,
+        blobUrl: uploaded.blobUrl,
+        mimeType: uploaded.mimeType,
+        sizeBytes: uploaded.sizeBytes,
+        classId,
+        studentId,
+        lessonId,
+        uploadedById: session.user.id,
+        category: studentId && !classId ? "just-for-you" : "class",
+      },
+    });
+  } catch (err) {
+    return {
+      error: err instanceof Error ? err.message : "Upload failed",
+    };
+  }
 
   if (classId) revalidatePath(`/teacher/classes/${classId}`);
   if (studentId) revalidatePath(`/teacher/students/${studentId}`);

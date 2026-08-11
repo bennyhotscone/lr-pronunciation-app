@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { assertTeacherOwnsClass, requireRole } from "@/lib/portal-access";
 import { ClassTools } from "@/components/portal/ClassTools";
+import { portalResourceDownloadHref } from "@/lib/portal-files";
 
 export default async function TeacherClassPage({
   params,
@@ -73,7 +74,7 @@ export default async function TeacherClassPage({
           <ul className="mt-2 space-y-1 text-sm">
             {resources.slice(0, 5).map((r) => (
               <li key={r.id}>
-                <a href={r.blobUrl} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
+                <a href={portalResourceDownloadHref(r.id)} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">
                   {r.title}
                 </a>
               </li>

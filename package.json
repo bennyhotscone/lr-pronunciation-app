@@ -12,6 +12,7 @@
     "db:push": "prisma db push",
     "db:seed": "node prisma/seed.mjs",
     "portal:e2e": "node scripts/portal-http-e2e.mjs",
+    "portal:prod-files": "node scripts/portal-prod-files-e2e.mjs",
     "postinstall": "prisma generate"
   },
   "prisma": {
