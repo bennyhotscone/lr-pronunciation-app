@@ -11,6 +11,7 @@ import { generateInviteCode } from "@/lib/invite-code";
 import { enrollStudentWithInviteCode } from "@/lib/enroll-student";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 async function requireStaffSession() {
   const session = await auth();
