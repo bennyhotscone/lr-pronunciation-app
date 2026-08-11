@@ -113,6 +113,7 @@ export async function studentJoinClassroomByCode(formData: FormData) {
   return enrollStudentWithInviteCode(
     session.user.id,
     String(formData.get("code") || ""),
+    { revalidate: true },
   );
 }
 
