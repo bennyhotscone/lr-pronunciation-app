@@ -27,7 +27,7 @@ export function JoinCodeForm({
           fd.set("code", code);
           try {
             const res = await studentJoinClassroomByCode(fd);
-            if (res?.needAuth) {
+            if (res && "needAuth" in res && res.needAuth) {
               const cb =
                 loginCallbackBase === "/join" || loginCallbackBase.startsWith("/join/")
                   ? `/join/${code}`
@@ -35,11 +35,11 @@ export function JoinCodeForm({
               router.push(`/login?callbackUrl=${encodeURIComponent(cb)}`);
               return;
             }
-            if (res?.error) {
+            if (res && "error" in res && res.error) {
               setError(res.error);
               return;
             }
-            if (res?.ok && res.classId) {
+            if (res && "ok" in res && res.ok && res.classId) {
               router.push(`/portal/classrooms/${res.classId}`);
               router.refresh();
               return;

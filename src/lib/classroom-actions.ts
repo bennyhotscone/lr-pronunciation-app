@@ -7,7 +7,7 @@ import {
   isStaff,
   studentCanAccessClass,
 } from "@/lib/portal-access";
-import { generateInviteCode, normalizeInviteCode } from "@/lib/invite-code";
+import { generateInviteCode } from "@/lib/invite-code";
 import { enrollStudentWithInviteCode } from "@/lib/enroll-student";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
