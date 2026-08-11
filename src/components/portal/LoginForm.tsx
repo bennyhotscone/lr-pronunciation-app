@@ -75,7 +75,8 @@ export function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
           Sign up
         </Link>
         <p className="mt-3 text-xs leading-relaxed text-muted">
-          Students create their own accounts here. Teachers receive accounts from LR Mastery.
+          Students create their own accounts here. Teachers are invited by an admin from the
+          dashboard — there is no public teacher signup.
         </p>
       </div>
     </div>

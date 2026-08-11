@@ -59,7 +59,12 @@ export function ClassTools({
       <section className="card rounded-2xl p-5">
         <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">Enroll student</h2>
         <p className="mt-1 text-sm text-muted">
-          Live membership: students see current class lessons/files while enrolled.
+          Students do not get an invite code. They must have an account first (they use{" "}
+          <a href="/signup" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
+            /signup
+          </a>{" "}
+          or you use <strong>Add Student</strong> on the dashboard), then you enroll them here.
+          While enrolled they see this class&apos;s lessons, files, and posts on My Desk.
         </p>
         <form
           className="mt-3 flex flex-wrap gap-2"

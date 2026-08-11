@@ -25,6 +25,30 @@ Role is set when the account is created (or by admin). There is no dual-role acc
 - Shared `MANDARIN_STUDIO_PASSWORD` is **no longer** the primary gate (optional legacy tooling may still reference it; the live UI and routes use admin session)
 - Teachers and students are redirected away from studio
 
+## How to create a teacher account
+
+Public `/signup` is **STUDENT only**. Teachers never self-register.
+
+### You are the seed admin (usual case)
+
+1. Log in at https://lrmastery.guru/login with `teacher@lrmastery.guru`
+2. You land on https://lrmastery.guru/teacher with an **Admin** badge
+3. You already have full teacher powers (classes, students, posts, etc.) plus Studio — **you do not need a second “teacher” account to teach**
+4. Mandarin Studio stays on this admin login: https://lrmastery.guru/english-for-mandarin-speakers/studio
+
+### Invite another person as TEACHER (staff)
+
+1. Stay logged in as admin → https://lrmastery.guru/teacher
+2. Open **Invite a teacher** (`#create-teacher`) — form: email, full name, optional preferred name, password
+3. Click **Create teacher account** — role in DB is always `TEACHER`
+4. Share the email + password; they log in at https://lrmastery.guru/login and land on `/teacher`
+5. They can teach; they **cannot** open Mandarin Studio (admin-only)
+
+### Students
+
+- Self-signup: https://lrmastery.guru/signup → `/portal`
+- Or admin/teacher creates them from the dashboard → Add Student
+
 ## Student accounts
 
 Students may **self-signup** at [`/signup`](/signup) (email + password + name). Public signup always creates `STUDENT` — never `TEACHER` or `ADMIN`.

@@ -50,7 +50,11 @@ export default async function TeacherDashboardPage() {
         ) : null}
       </div>
       <p className="mt-2 text-muted">
-        Classes, students, lessons, files, homework, and classroom posts.
+        Create a class, add students, then share lessons and files. Students sign up at{" "}
+        <Link href="/signup" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
+          /signup
+        </Link>{" "}
+        (or you create them below), then enroll them into the class.
       </p>
 
       {admin ? (
@@ -64,13 +68,42 @@ export default async function TeacherDashboardPage() {
         </p>
       ) : null}
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <AddStudentForm />
+      {admin ? (
+        <div className="card mt-6 rounded-2xl border border-sand-accent/30 bg-sand-accent/5 p-4 text-sm leading-relaxed">
+          <p className="font-bold text-foreground">How teacher accounts work</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-muted">
+            <li>
+              Your admin login already includes full teaching tools — no second account needed to
+              teach.
+            </li>
+            <li>
+              Public <Link href="/signup" className="font-semibold text-sand-accent underline-offset-2 hover:underline">/signup</Link>{" "}
+              is for students only.
+            </li>
+            <li>
+              To invite staff: scroll to{" "}
+              <a href="#create-teacher" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
+                Invite a teacher
+              </a>{" "}
+              below, create email + password, then they use{" "}
+              <Link href="/login" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
+                /login
+              </Link>
+              .
+            </li>
+          </ul>
+        </div>
+      ) : null}
 
-        <div className="card rounded-2xl p-5">
-          <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold">
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <div id="create-class" className="card rounded-2xl border border-sand-accent/30 p-5 lg:order-first">
+          <p className="chip bg-sand-accent/20 text-sand-accent">Start here today</p>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-xl font-semibold">
             Create class
           </h2>
+          <p className="mt-1 text-sm text-muted">
+            Example: “Tuesday afternoon”. After creating, enroll students from the class page.
+          </p>
           <form action={createClassAction} className="mt-4 grid gap-3">
             <input
               name="name"
@@ -94,6 +127,8 @@ export default async function TeacherDashboardPage() {
             </button>
           </form>
         </div>
+
+        <AddStudentForm />
       </div>
 
       {admin ? (

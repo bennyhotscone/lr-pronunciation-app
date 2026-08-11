@@ -15,8 +15,14 @@ export default function SignupPage() {
         Create your account
       </h1>
       <p className="mt-3 text-base leading-relaxed text-muted">
-        Students sign up here for My Desk. Teachers get accounts from LR Mastery — there is no
-        public teacher or admin signup.
+        Students sign up here for My Desk. There is{" "}
+        <strong className="text-foreground">no public teacher or admin signup</strong> — teachers
+        are invited by an LR Mastery admin from{" "}
+        <code className="text-sm">/teacher</code> → Invite a teacher, then log in at{" "}
+        <Link href="/login" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
+          /login
+        </Link>
+        .
       </p>
       <SignupForm />
       <p className="mt-6 text-sm text-muted">
