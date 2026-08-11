@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { requireStaff } from "@/lib/portal-access";
 import { StudentAssignTools } from "@/components/portal/StudentAssignTools";
+import { StudentPasswordTools } from "@/components/portal/StudentPasswordTools";
 import { getAvatar } from "@/lib/avatars";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
 
@@ -109,6 +110,7 @@ export default async function TeacherStudentPage({
         </section>
       </div>
 
+      <StudentPasswordTools studentId={student.id} />
       <StudentAssignTools studentId={student.id} studentLabel={label} />
     </div>
   );

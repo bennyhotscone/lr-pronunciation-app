@@ -74,6 +74,7 @@ model User {
   progressEvents       LearningProgress[]
   classPostsAuthored   ClassPost[]          @relation("ClassPostAuthor")
   classPostComments    ClassPostComment[]   @relation("ClassPostCommentAuthor")
+  passwordResetTokens  PasswordResetToken[]
 }
 
 model StudentProfile {
@@ -342,4 +343,18 @@ model ClassPostComment {
 
   @@index([postId, createdAt])
   @@index([parentId])
+}
+
+/// One-time password reset tokens (store hash only; raw token goes in email/link).
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
 }

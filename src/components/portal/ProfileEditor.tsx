@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { AVATARS } from "@/lib/avatars";
 import { updateStudentProfile } from "@/lib/portal-actions";
@@ -11,9 +12,11 @@ export function ProfileEditor({
   preferredName: string;
   avatarId: string;
 }) {
+  const router = useRouter();
   const [selected, setSelected] = useState(avatarId);
   const [name, setName] = useState(preferredName);
   const [msg, setMsg] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
   return (
@@ -21,10 +24,14 @@ export function ProfileEditor({
       className="mt-6 space-y-6"
       action={(fd) => {
         setMsg(null);
+        setErr(null);
         startTransition(async () => {
           const res = await updateStudentProfile(fd);
-          if (res?.error) setMsg(res.error);
-          else setMsg("Profile saved.");
+          if (res?.error) setErr(res.error);
+          else {
+            setMsg("Profile saved.");
+            router.refresh();
+          }
         });
       }}
     >
@@ -35,7 +42,7 @@ export function ProfileEditor({
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="w-full max-w-md rounded-xl border border-border bg-white px-3 py-2.5"
+          className="w-full max-w-md rounded-xl border border-border bg-background/60 px-3 py-2.5"
         />
       </label>
 
@@ -49,7 +56,9 @@ export function ProfileEditor({
               type="button"
               onClick={() => setSelected(a.id)}
               className={`flex flex-col items-center gap-1 rounded-2xl border-2 p-3 transition ${
-                selected === a.id ? "border-coral shadow-md" : "border-transparent bg-white/60"
+                selected === a.id
+                  ? "border-sand-accent shadow-md"
+                  : "border-transparent bg-surface/60"
               }`}
               style={{ background: a.bg }}
               aria-pressed={selected === a.id}
@@ -57,12 +66,13 @@ export function ProfileEditor({
               <span className="text-3xl" aria-hidden>
                 {a.emoji}
               </span>
-              <span className="text-xs font-semibold">{a.label}</span>
+              <span className="text-xs font-semibold text-[#1a1714]">{a.label}</span>
             </button>
           ))}
         </div>
       </fieldset>
 
+      {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
       {msg ? <p className="text-sm font-semibold text-success">{msg}</p> : null}
 
       <button

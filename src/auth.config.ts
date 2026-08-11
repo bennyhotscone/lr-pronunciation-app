@@ -27,6 +27,12 @@ export const authConfig = {
         pathname === "/english-for-mandarin-speakers/studio" ||
         pathname.startsWith("/english-for-mandarin-speakers/studio/");
       const isLogin = pathname === "/login";
+      const isSignup = pathname === "/signup";
+      const isAuthPublic =
+        isLogin ||
+        isSignup ||
+        pathname === "/forgot-password" ||
+        pathname === "/reset-password";
 
       if ((isPortal || isTeacher) && !isLoggedIn) return false;
 
@@ -45,7 +51,7 @@ export const authConfig = {
       if (isTeacher && role && !isStaff(role)) {
         return Response.redirect(new URL("/portal", request.nextUrl.origin));
       }
-      if (isLogin && isLoggedIn) {
+      if (isAuthPublic && isLoggedIn) {
         const dest = isStaff(role) ? "/teacher" : "/portal";
         return Response.redirect(new URL(dest, request.nextUrl.origin));
       }

@@ -25,6 +25,22 @@ Role is set when the account is created (or by admin). There is no dual-role acc
 - Shared `MANDARIN_STUDIO_PASSWORD` is **no longer** the primary gate (optional legacy tooling may still reference it; the live UI and routes use admin session)
 - Teachers and students are redirected away from studio
 
+## Student accounts
+
+Students may **self-signup** at [`/signup`](/signup) (email + password + name). Public signup always creates `STUDENT` — never `TEACHER` or `ADMIN`.
+
+Teachers/admins can still create student accounts from `/teacher` → **Add Student**.
+
+### Password reset
+
+| Path | Behaviour |
+| --- | --- |
+| `/forgot-password` | Creates a DB-backed one-time token (1 hour). Emails link when `RESEND_API_KEY` (+ optional `EMAIL_FROM`) is set on Vercel. |
+| `/reset-password?token=…` | Sets a new password if the token is valid and unused. |
+| Teacher student page | **Set password** or **Generate reset link** (copyable) when email is not configured. |
+
+Without Resend, the forgot-password form does **not** pretend an email was sent — it tells the user to ask their teacher, and tokens are still written to Postgres (also logged in server logs for operators).
+
 ## Seed admin
 
 | Field | Value |
@@ -92,21 +108,26 @@ Prefixes:
 | `AUTH_TRUST_HOST` | Recommended (`true`) | Trust host on Vercel |
 | `BLOB_READ_WRITE_TOKEN` | **Required on Production** for portal uploads | Shared Blob store; portal writes only under `portal-files/` |
 | `MANDARIN_STUDIO_PASSWORD` | Optional / legacy | Studio primary auth is now ADMIN session |
+| `RESEND_API_KEY` | For password-reset email | Sends real reset emails via Resend |
+| `EMAIL_FROM` / `RESEND_FROM` | Optional | From address (defaults to Resend onboarding sender) |
 
-## Student accounts
+## Student accounts (continued)
 
-Students do **not** self-signup in v1. Staff create accounts from `/teacher` → **Add Student**. Share the temp password; they log in at `/login` and land on `/portal` (My Desk).
+Staff can still create students from `/teacher` → **Add Student**. Public self-signup is documented above.
 
 ## Key routes
 
 | Route | Who |
 | --- | --- |
-| `/login` | Everyone |
+| `/login` | Everyone — includes **Sign up** + **Forgot password?** |
+| `/signup` | Public — creates **STUDENT** only |
+| `/forgot-password` | Public — issues DB reset token (+ email when Resend configured) |
+| `/reset-password?token=…` | Public — sets new password when token valid |
 | `/teacher` | ADMIN + TEACHER |
 | `/teacher/classes/[id]` | Enroll, posts, pin, lessons, files, homework, session basket |
-| `/teacher/students/[id]` | Just-for-you assignments + goals |
+| `/teacher/students/[id]` | Assignments, goals, **set password / reset link** |
 | `/portal` | Student My Desk |
-| `/portal/profile` | Preferred name + curated avatar |
+| `/portal/profile` | Preferred name + curated avatar (persisted in Postgres) |
 | `/english-for-mandarin-speakers/studio` | **ADMIN only** |
 | `POST /api/portal/resources` | Staff multipart upload |
 | `POST /api/portal/session-basket` | Staff session-basket upload |

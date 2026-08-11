@@ -1,28 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LoginForm } from "@/components/portal/LoginForm";
+import { SignupForm } from "@/components/portal/SignupForm";
 
 export const metadata: Metadata = {
-  title: "Log in",
-  description: "Sign in to the LR Mastery student portal or teacher dashboard.",
+  title: "Sign up",
+  description: "Create a student account for the LR Mastery portal.",
 };
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ callbackUrl?: string }>;
-}) {
-  const sp = await searchParams;
+export default function SignupPage() {
   return (
     <div className="mx-auto flex max-w-md flex-col items-stretch justify-center pt-12 sm:pt-20">
-      <p className="chip bg-sand-accent/20 text-foreground">Portal</p>
+      <p className="chip bg-sand-accent/20 text-foreground">Student signup</p>
       <h1 className="mt-4 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-        Log in
+        Create your account
       </h1>
       <p className="mt-3 text-base leading-relaxed text-muted">
-        Sign in with your LR Mastery email and password. Students can also create an account below.
+        Students sign up here for My Desk. Teachers get accounts from LR Mastery — there is no
+        public teacher or admin signup.
       </p>
-      <LoginForm callbackUrl={sp.callbackUrl} />
+      <SignupForm />
       <p className="mt-6 text-sm text-muted">
         <Link href="/" className="font-semibold text-foreground underline-offset-2 hover:underline">
           ← Back to home

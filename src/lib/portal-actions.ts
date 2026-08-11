@@ -14,7 +14,13 @@ import {
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import {
+  consumePasswordResetToken,
+  issuePasswordResetForEmail,
+} from "@/lib/password-reset";
+import { createRawResetToken, hashResetToken, isMailConfigured } from "@/lib/mail";
 
 function randomTempPassword() {
   const n = Math.random().toString(36).slice(2, 8);
@@ -67,6 +73,175 @@ export async function loginAction(formData: FormData) {
     }
     throw err;
   }
+}
+
+/** Public student self-signup — always creates STUDENT, never TEACHER/ADMIN. */
+export async function signupStudentAction(formData: FormData) {
+  const email = String(formData.get("email") || "")
+    .trim()
+    .toLowerCase();
+  const password = String(formData.get("password") || "");
+  const fullName = String(formData.get("fullName") || "").trim();
+  const preferredName = String(formData.get("preferredName") || "").trim();
+
+  if (!email || !password || !fullName) {
+    return { error: "Email, full name, and password are required." };
+  }
+  if (password.length < 8) {
+    return { error: "Password must be at least 8 characters." };
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { error: "Enter a valid email address." };
+  }
+
+  const existing = await prisma.user.findUnique({ where: { email } });
+  if (existing) {
+    return { error: "An account with that email already exists. Try logging in." };
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const display = preferredName || fullName.split(" ")[0] || fullName;
+
+  await prisma.user.create({
+    data: {
+      email,
+      passwordHash,
+      role: "STUDENT",
+      profile: {
+        create: {
+          fullName,
+          preferredName: display,
+          avatarId: "fox",
+        },
+      },
+    },
+  });
+
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: "/portal",
+    });
+  } catch (err) {
+    if (err instanceof AuthError) {
+      return {
+        error: "Account created, but auto-login failed. Please log in.",
+      };
+    }
+    throw err;
+  }
+}
+
+export async function requestPasswordResetAction(formData: FormData) {
+  const email = String(formData.get("email") || "")
+    .trim()
+    .toLowerCase();
+  if (!email) return { error: "Enter your email address." };
+
+  const h = await headers();
+  const host = h.get("x-forwarded-host") || h.get("host") || "localhost:3000";
+  const proto = h.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
+  const origin = `${proto}://${host}`;
+
+  const result = await issuePasswordResetForEmail({ email, origin });
+  return {
+    ok: true as const,
+    mailed: result.mailed,
+    mailConfigured: result.mailConfigured,
+    message: result.mailed
+      ? "If an account exists for that email, a reset link was sent. Check your inbox."
+      : result.mailConfigured
+        ? "If an account exists, a reset was prepared. Email sending hit an error — ask your teacher to set a new password, or try again later."
+        : "If an account exists, a one-time reset was prepared. Email delivery is not configured on this server yet — ask your teacher or admin to set a new password (or generate a reset link from your student page).",
+  };
+}
+
+export async function resetPasswordAction(formData: FormData) {
+  const token = String(formData.get("token") || "").trim();
+  const password = String(formData.get("password") || "");
+  const confirm = String(formData.get("confirm") || "");
+  if (!token) return { error: "Missing reset token." };
+  if (password !== confirm) return { error: "Passwords do not match." };
+
+  const result = await consumePasswordResetToken({
+    rawToken: token,
+    newPassword: password,
+  });
+  if ("error" in result) return { error: result.error };
+
+  return { ok: true as const };
+}
+
+/** Staff: set a student's password directly (always works without email). */
+export async function teacherSetStudentPassword(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+
+  const studentId = String(formData.get("studentId") || "");
+  let newPassword = String(formData.get("newPassword") || "").trim();
+  if (!studentId) return { error: "Student required." };
+  if (!newPassword) newPassword = randomTempPassword();
+  if (newPassword.length < 8) {
+    return { error: "Password must be at least 8 characters." };
+  }
+
+  const student = await prisma.user.findFirst({
+    where: { id: studentId, role: "STUDENT", archivedAt: null },
+  });
+  if (!student) return { error: "Student not found." };
+
+  const passwordHash = await bcrypt.hash(newPassword, 10);
+  await prisma.user.update({
+    where: { id: studentId },
+    data: { passwordHash },
+  });
+  // Invalidate outstanding reset tokens
+  await prisma.passwordResetToken.updateMany({
+    where: { userId: studentId, usedAt: null },
+    data: { usedAt: new Date() },
+  });
+
+  revalidatePath(`/teacher/students/${studentId}`);
+  return { ok: true as const, email: student.email, newPassword };
+}
+
+/** Staff: mint a copyable one-time reset link for a student. */
+export async function teacherIssueStudentResetLink(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+
+  const studentId = String(formData.get("studentId") || "");
+  const student = await prisma.user.findFirst({
+    where: { id: studentId, role: "STUDENT", archivedAt: null },
+  });
+  if (!student) return { error: "Student not found." };
+
+  await prisma.passwordResetToken.updateMany({
+    where: { userId: studentId, usedAt: null },
+    data: { usedAt: new Date() },
+  });
+
+  const raw = createRawResetToken();
+  await prisma.passwordResetToken.create({
+    data: {
+      userId: studentId,
+      tokenHash: hashResetToken(raw),
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000),
+    },
+  });
+
+  const h = await headers();
+  const host = h.get("x-forwarded-host") || h.get("host") || "localhost:3000";
+  const proto = h.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
+  const resetUrl = `${proto}://${host}/reset-password?token=${raw}`;
+
+  return {
+    ok: true as const,
+    resetUrl,
+    mailConfigured: isMailConfigured(),
+    expiresIn: "1 hour",
+  };
 }
 
 export async function teacherCreateStudent(formData: FormData) {
