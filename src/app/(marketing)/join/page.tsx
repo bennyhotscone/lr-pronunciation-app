@@ -1,15 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { auth } from "@/auth";
-import { JoinCodeForm } from "@/components/classroom/JoinCodeForm";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Join with code",
 };
 
-export default async function JoinPage() {
+export default async function JoinPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ code?: string; error?: string }>;
+}) {
   const session = await auth();
-  const isStudent = session?.user?.role === "STUDENT";
+  const sp = await searchParams;
+  // Logged-in students should use the desk join page (same native form + theme)
+  if (session?.user?.role === "STUDENT") {
+    const q = new URLSearchParams();
+    if (sp.code) q.set("code", sp.code);
+    if (sp.error) q.set("error", sp.error);
+    const suffix = q.toString() ? `?${q}` : "";
+    redirect(`/portal/join${suffix}`);
+  }
+
   const isStaff =
     session?.user?.role === "ADMIN" || session?.user?.role === "TEACHER";
 
@@ -20,7 +33,7 @@ export default async function JoinPage() {
         Join a classroom
       </h1>
       <p className="mt-2 text-muted">
-        Enter the invite code from your teacher. You&apos;ll land in that classroom right away.
+        Enter the invite code from your teacher. Sign in as a student first if you haven&apos;t.
       </p>
 
       {isStaff ? (
@@ -32,7 +45,27 @@ export default async function JoinPage() {
           </Link>
         </p>
       ) : (
-        <JoinCodeForm />
+        <form action="/api/portal/join" method="post" className="mt-8 space-y-4">
+          <label className="block">
+            <span className="mb-1.5 block text-sm font-semibold">Invite code</span>
+            <input
+              name="code"
+              required
+              defaultValue={sp.code || ""}
+              autoCapitalize="characters"
+              className="w-full rounded-xl border border-border bg-background/60 px-3 py-3 font-mono text-lg tracking-widest uppercase"
+              placeholder="K7M2PQ"
+            />
+          </label>
+          {sp.error ? (
+            <p className="rounded-xl bg-danger/10 px-3 py-2 text-sm font-semibold text-danger">
+              {sp.error}
+            </p>
+          ) : null}
+          <button type="submit" className="btn-primary w-full rounded-xl px-4 py-3 text-sm font-bold">
+            Join classroom
+          </button>
+        </form>
       )}
 
       {!session?.user ? (
@@ -44,13 +77,6 @@ export default async function JoinPage() {
           {" · "}
           <Link href="/login" className="font-semibold underline-offset-2 hover:underline">
             Log in
-          </Link>
-        </p>
-      ) : isStudent ? (
-        <p className="mt-6 text-sm text-muted">
-          Signed in as a student.{" "}
-          <Link href="/portal" className="font-semibold underline-offset-2 hover:underline">
-            Back to My Desk
           </Link>
         </p>
       ) : null}
