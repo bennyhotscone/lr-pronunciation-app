@@ -4,7 +4,13 @@ import { auth, signIn } from "@/auth";
 import { prisma } from "@/lib/db";
 import { isValidAvatarId } from "@/lib/avatars";
 import { uploadPortalFile } from "@/lib/portal-files";
-import { assertTeacherOwnsClass } from "@/lib/portal-access";
+import {
+  assertTeacherOwnsClass,
+  homeForRole,
+  isAdmin,
+  isStaff,
+  studentCanAccessClassPost,
+} from "@/lib/portal-access";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -13,6 +19,14 @@ import { redirect } from "next/navigation";
 function randomTempPassword() {
   const n = Math.random().toString(36).slice(2, 8);
   return `Temp${n}!`;
+}
+
+async function requireStaffSession() {
+  const session = await auth();
+  if (!session?.user?.id || !isStaff(session.user.role)) {
+    return null;
+  }
+  return session;
 }
 
 export async function loginAction(formData: FormData) {
@@ -33,11 +47,13 @@ export async function loginAction(formData: FormData) {
 
   const safeCallback =
     callbackUrl.startsWith("/") && !callbackUrl.startsWith("//") ? callbackUrl : "";
-  const defaultDest = user.role === "TEACHER" ? "/teacher" : "/portal";
-  // Avoid sending teachers to /portal (or students to /teacher) via stale callback.
+  const defaultDest = homeForRole(user.role);
   let redirectTo = safeCallback || defaultDest;
-  if (user.role === "TEACHER" && redirectTo.startsWith("/portal")) redirectTo = "/teacher";
+  if (isStaff(user.role) && redirectTo.startsWith("/portal")) redirectTo = "/teacher";
   if (user.role === "STUDENT" && redirectTo.startsWith("/teacher")) redirectTo = "/portal";
+  if (user.role !== "ADMIN" && redirectTo.startsWith("/english-for-mandarin-speakers/studio")) {
+    redirectTo = defaultDest;
+  }
 
   try {
     await signIn("credentials", {
@@ -54,10 +70,8 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function teacherCreateStudent(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
 
   const email = String(formData.get("email") || "")
     .trim()
@@ -98,11 +112,55 @@ export async function teacherCreateStudent(formData: FormData) {
   };
 }
 
-export async function teacherCreateClass(formData: FormData): Promise<void> {
+/** Admin only — creates a TEACHER account (never ADMIN). */
+export async function adminCreateTeacher(formData: FormData) {
   const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    throw new Error("Unauthorized");
+  if (!session?.user?.id || !isAdmin(session.user.role)) {
+    return { error: "Unauthorized" };
   }
+
+  const email = String(formData.get("email") || "")
+    .trim()
+    .toLowerCase();
+  const fullName = String(formData.get("fullName") || "").trim();
+  const preferredName = String(formData.get("preferredName") || "").trim();
+  let tempPassword = String(formData.get("tempPassword") || "").trim();
+  if (!email || !fullName) {
+    return { error: "Email and full name are required." };
+  }
+  if (!tempPassword) tempPassword = randomTempPassword();
+
+  const existing = await prisma.user.findUnique({ where: { email } });
+  if (existing) return { error: "A user with that email already exists." };
+
+  const passwordHash = await bcrypt.hash(tempPassword, 10);
+  const user = await prisma.user.create({
+    data: {
+      email,
+      passwordHash,
+      role: "TEACHER",
+      profile: {
+        create: {
+          fullName,
+          preferredName: preferredName || fullName.split(" ")[0] || fullName,
+          avatarId: "book",
+        },
+      },
+    },
+  });
+
+  revalidatePath("/teacher");
+  return {
+    ok: true as const,
+    teacherId: user.id,
+    email,
+    tempPassword,
+  };
+}
+
+export async function teacherCreateClass(formData: FormData): Promise<void> {
+  const session = await requireStaffSession();
+  if (!session) throw new Error("Unauthorized");
   const name = String(formData.get("name") || "").trim();
   const description = String(formData.get("description") || "").trim();
   const level = String(formData.get("level") || "").trim();
@@ -124,13 +182,11 @@ export async function teacherCreateClass(formData: FormData): Promise<void> {
 }
 
 export async function enrollStudentInClass(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
   const classId = String(formData.get("classId") || "");
   const studentId = String(formData.get("studentId") || "");
-  await assertTeacherOwnsClass(session.user.id, classId);
+  await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   await prisma.classMembership.upsert({
     where: { classId_studentId: { classId, studentId } },
@@ -144,13 +200,11 @@ export async function enrollStudentInClass(formData: FormData) {
 }
 
 export async function removeStudentFromClass(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
   const classId = String(formData.get("classId") || "");
   const studentId = String(formData.get("studentId") || "");
-  await assertTeacherOwnsClass(session.user.id, classId);
+  await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   await prisma.classMembership.updateMany({
     where: { classId, studentId },
@@ -163,10 +217,8 @@ export async function removeStudentFromClass(formData: FormData) {
 }
 
 export async function teacherAddLesson(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
 
   const title = String(formData.get("title") || "").trim();
   const summary = String(formData.get("summary") || "").trim();
@@ -180,7 +232,7 @@ export async function teacherAddLesson(formData: FormData) {
   if (!classId && !studentId) {
     return { error: "Assign to a class or an individual student." };
   }
-  if (classId) await assertTeacherOwnsClass(session.user.id, classId);
+  if (classId) await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   const tags = tagsRaw
     ? tagsRaw
@@ -188,6 +240,16 @@ export async function teacherAddLesson(formData: FormData) {
         .map((t) => t.trim())
         .filter(Boolean)
     : [];
+
+  const basketRaw = String(formData.get("basketItems") || "");
+  let basketItems: BasketMeta[] = [];
+  if (basketRaw) {
+    try {
+      basketItems = JSON.parse(basketRaw) as BasketMeta[];
+    } catch {
+      basketItems = [];
+    }
+  }
 
   const lesson = await prisma.lesson.create({
     data: {
@@ -202,6 +264,16 @@ export async function teacherAddLesson(formData: FormData) {
     },
   });
 
+  if (basketItems.length) {
+    await attachBasketItemsAsResources({
+      items: basketItems,
+      uploadedById: session.user.id,
+      classId,
+      studentId,
+      lessonId: lesson.id,
+    });
+  }
+
   if (classId) revalidatePath(`/teacher/classes/${classId}`);
   if (studentId) revalidatePath(`/teacher/students/${studentId}`);
   revalidatePath("/portal");
@@ -210,10 +282,8 @@ export async function teacherAddLesson(formData: FormData) {
 }
 
 export async function teacherAddHomework(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
 
   const title = String(formData.get("title") || "").trim();
   const instructions = String(formData.get("instructions") || "").trim();
@@ -228,7 +298,7 @@ export async function teacherAddHomework(formData: FormData) {
   if (!classId && !studentId) {
     return { error: "Assign homework to a class or student." };
   }
-  if (classId) await assertTeacherOwnsClass(session.user.id, classId);
+  if (classId) await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   await prisma.homework.create({
     data: {
@@ -249,10 +319,8 @@ export async function teacherAddHomework(formData: FormData) {
 }
 
 export async function teacherUploadResource(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
 
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) {
@@ -268,7 +336,7 @@ export async function teacherUploadResource(formData: FormData) {
   if (!classId && !studentId) {
     return { error: "Assign the file to a class or student." };
   }
-  if (classId) await assertTeacherOwnsClass(session.user.id, classId);
+  if (classId) await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   try {
     const scope = classId || studentId!;
@@ -397,10 +465,8 @@ export async function upsertGoalProgress(formData: FormData) {
 }
 
 export async function teacherAddGoal(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
   const studentId = String(formData.get("studentId") || "");
   const title = String(formData.get("title") || "").trim();
   const description = String(formData.get("description") || "").trim();
@@ -419,10 +485,8 @@ export async function teacherAddGoal(formData: FormData) {
 }
 
 export async function teacherAddRecommendation(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
-  }
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
   const title = String(formData.get("title") || "").trim();
   const url = String(formData.get("url") || "").trim();
   const description = String(formData.get("description") || "").trim();
@@ -431,7 +495,7 @@ export async function teacherAddRecommendation(formData: FormData) {
   const approval = String(formData.get("approval") || "APPROVED");
   if (!title) return { error: "Title required." };
   if (!classId && !studentId) return { error: "Assign to class or student." };
-  if (classId) await assertTeacherOwnsClass(session.user.id, classId);
+  if (classId) await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   await prisma.recommendation.create({
     data: {
@@ -446,6 +510,180 @@ export async function teacherAddRecommendation(formData: FormData) {
   });
   if (classId) revalidatePath(`/teacher/classes/${classId}`);
   if (studentId) revalidatePath(`/teacher/students/${studentId}`);
+  revalidatePath("/portal");
+  return { ok: true as const };
+}
+
+type BasketMeta = {
+  blobPath: string;
+  blobUrl: string;
+  filename: string;
+  mimeType: string;
+  sizeBytes: number;
+};
+
+async function attachBasketItemsAsResources(opts: {
+  items: BasketMeta[];
+  uploadedById: string;
+  classId: string | null;
+  studentId: string | null;
+  lessonId?: string | null;
+}) {
+  for (const item of opts.items) {
+    if (!item.blobPath?.startsWith("portal-files/session-basket/")) continue;
+    await prisma.resource.create({
+      data: {
+        title: item.filename || "Session file",
+        filename: item.filename || "file",
+        blobPath: item.blobPath,
+        blobUrl: item.blobUrl,
+        mimeType: item.mimeType || "application/octet-stream",
+        sizeBytes: item.sizeBytes ?? null,
+        classId: opts.classId,
+        studentId: opts.studentId,
+        lessonId: opts.lessonId || null,
+        uploadedById: opts.uploadedById,
+        category: "session-basket",
+      },
+    });
+  }
+}
+
+export async function teacherCreateClassPost(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+
+  const classId = String(formData.get("classId") || "");
+  const title = String(formData.get("title") || "").trim();
+  const body = String(formData.get("body") || "").trim();
+  const pin = String(formData.get("pin") || "") === "1";
+  if (!classId || !title || !body) {
+    return { error: "Class, title, and body are required." };
+  }
+  await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
+
+  const basketRaw = String(formData.get("basketItems") || "");
+  let basketItems: BasketMeta[] = [];
+  if (basketRaw) {
+    try {
+      basketItems = JSON.parse(basketRaw) as BasketMeta[];
+    } catch {
+      basketItems = [];
+    }
+  }
+
+  const post = await prisma.classPost.create({
+    data: {
+      classId,
+      authorId: session.user.id,
+      title,
+      body,
+      pinnedAt: pin ? new Date() : null,
+      attachments: basketItems.length
+        ? {
+            create: basketItems
+              .filter((i) => i.blobPath?.startsWith("portal-files/"))
+              .map((i) => ({
+                filename: i.filename || "file",
+                blobPath: i.blobPath,
+                blobUrl: i.blobUrl,
+                mimeType: i.mimeType || "application/octet-stream",
+                sizeBytes: i.sizeBytes ?? null,
+              })),
+          }
+        : undefined,
+    },
+  });
+
+  revalidatePath(`/teacher/classes/${classId}`);
+  revalidatePath("/portal");
+  return { ok: true as const, postId: post.id };
+}
+
+export async function teacherTogglePinPost(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+  const postId = String(formData.get("postId") || "");
+  const post = await prisma.classPost.findUnique({ where: { id: postId } });
+  if (!post) return { error: "Post not found." };
+  await assertTeacherOwnsClass(session.user.id, post.classId, session.user.role);
+
+  await prisma.classPost.update({
+    where: { id: postId },
+    data: { pinnedAt: post.pinnedAt ? null : new Date() },
+  });
+
+  revalidatePath(`/teacher/classes/${post.classId}`);
+  revalidatePath("/portal");
+  return { ok: true as const, pinned: !post.pinnedAt };
+}
+
+export async function studentCommentOnPost(formData: FormData) {
+  const session = await auth();
+  if (!session?.user?.id || session.user.role !== "STUDENT") {
+    return { error: "Unauthorized" };
+  }
+  const postId = String(formData.get("postId") || "");
+  const body = String(formData.get("body") || "").trim();
+  const parentId = String(formData.get("parentId") || "") || null;
+  if (!postId || !body) return { error: "Comment text is required." };
+
+  const allowed = await studentCanAccessClassPost(session.user.id, postId);
+  if (!allowed) return { error: "You cannot comment on this post." };
+
+  if (parentId) {
+    const parent = await prisma.classPostComment.findFirst({
+      where: { id: parentId, postId },
+    });
+    if (!parent) return { error: "Parent comment not found." };
+  }
+
+  await prisma.classPostComment.create({
+    data: {
+      postId,
+      authorId: session.user.id,
+      body,
+      parentId,
+    },
+  });
+
+  const post = await prisma.classPost.findUnique({ where: { id: postId } });
+  if (post) {
+    revalidatePath(`/teacher/classes/${post.classId}`);
+    revalidatePath("/portal");
+  }
+  return { ok: true as const };
+}
+
+export async function staffCommentOnPost(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+  const postId = String(formData.get("postId") || "");
+  const body = String(formData.get("body") || "").trim();
+  const parentId = String(formData.get("parentId") || "") || null;
+  if (!postId || !body) return { error: "Comment text is required." };
+
+  const post = await prisma.classPost.findUnique({ where: { id: postId } });
+  if (!post) return { error: "Post not found." };
+  await assertTeacherOwnsClass(session.user.id, post.classId, session.user.role);
+
+  if (parentId) {
+    const parent = await prisma.classPostComment.findFirst({
+      where: { id: parentId, postId },
+    });
+    if (!parent) return { error: "Parent comment not found." };
+  }
+
+  await prisma.classPostComment.create({
+    data: {
+      postId,
+      authorId: session.user.id,
+      body,
+      parentId,
+    },
+  });
+
+  revalidatePath(`/teacher/classes/${post.classId}`);
   revalidatePath("/portal");
   return { ok: true as const };
 }

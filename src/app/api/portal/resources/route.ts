@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
-import { assertTeacherOwnsClass } from "@/lib/portal-access";
+import { assertTeacherOwnsClass, isStaff } from "@/lib/portal-access";
 import {
   blobMissingErrorMessage,
   portalStorageMode,
@@ -12,13 +12,13 @@ import { revalidatePath } from "next/cache";
 export const runtime = "nodejs";
 
 /**
- * Teacher upload API (FormData).
+ * Teacher/Admin upload API (FormData).
  * Fields: file, title?, description?, classId?, studentId?, lessonId?
  * Production requires BLOB_READ_WRITE_TOKEN (no local sandbox).
  */
 export async function POST(request: Request) {
   const session = await auth();
-  if (!session?.user?.id || session.user.role !== "TEACHER") {
+  if (!session?.user?.id || !isStaff(session.user.role)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    if (classId) await assertTeacherOwnsClass(session.user.id, classId);
+    if (classId) await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
   } catch {
     return NextResponse.json({ error: "Class not found or access denied" }, { status: 403 });
   }

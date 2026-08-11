@@ -67,7 +67,9 @@ export function portalResourceDownloadHref(resourceId: string) {
  */
 export async function uploadPortalFile(opts: {
   file: File;
-  scope: string; // classId or userId
+  scope: string; // classId, userId, or "session-basket/{userId}"
+  /** Skip MIME allow-list (session basket still enforces size). */
+  skipMimeCheck?: boolean;
 }): Promise<{
   blobPath: string;
   blobUrl: string;
@@ -75,7 +77,11 @@ export async function uploadPortalFile(opts: {
   mimeType: string;
   sizeBytes: number;
 }> {
-  assertAllowedPortalFile(opts.file);
+  if (!opts.skipMimeCheck) {
+    assertAllowedPortalFile(opts.file);
+  } else if (opts.file.size > MAX_BYTES) {
+    throw new Error("File too large (max 15MB).");
+  }
   const mode = portalStorageMode();
   if (mode === "unavailable") {
     throw new Error(blobMissingErrorMessage());

@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { STUDIO_PASSWORD_FALLBACK } from "@/lib/studio-progress";
 
 export function getStudioPassword(): string {
@@ -15,13 +16,25 @@ export function passwordFromRequest(
 ): string | null {
   const header = request.headers.get("x-studio-password");
   if (header?.trim()) return header.trim();
-  const auth = request.headers.get("authorization");
-  if (auth?.toLowerCase().startsWith("bearer ")) {
-    const token = auth.slice(7).trim();
+  const authHeader = request.headers.get("authorization");
+  if (authHeader?.toLowerCase().startsWith("bearer ")) {
+    const token = authHeader.slice(7).trim();
     if (token) return token;
   }
   if (typeof bodyPassword === "string" && bodyPassword.trim()) {
     return bodyPassword.trim();
   }
   return null;
+}
+
+/**
+ * Studio mutating APIs require an authenticated ADMIN session.
+ * Optional studio password may still be sent by legacy clients but is no longer required.
+ */
+export async function requireStudioAdmin() {
+  const session = await auth();
+  if (!session?.user?.id || session.user.role !== "ADMIN") {
+    return null;
+  }
+  return session;
 }

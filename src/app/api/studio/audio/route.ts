@@ -6,7 +6,7 @@ import {
   saveAudioOverride,
   storageMode,
 } from "@/lib/studio-audio-store";
-import { checkStudioPassword, passwordFromRequest } from "@/lib/studio-auth";
+import { requireStudioAdmin } from "@/lib/studio-auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -25,33 +25,22 @@ export async function GET() {
   }
 }
 
-/**
- * DELETE ?rank=N — remove permanent Blob/local override for that rank (studio password).
- * Body JSON `{ password }` optional if `x-studio-password` / Bearer is set.
- */
+/** DELETE ?rank=N — admin session required. */
 export async function DELETE(request: Request) {
+  const session = await requireStudioAdmin();
+  if (!session) {
+    return NextResponse.json(
+      { ok: false, error: "Admin login required" },
+      { status: 401 },
+    );
+  }
+
   const mode = storageMode();
   if (mode === "unavailable") {
     return NextResponse.json(
       { ok: false, error: blobMissingErrorMessage() },
       { status: 503 },
     );
-  }
-
-  let bodyPassword: unknown;
-  try {
-    const contentType = request.headers.get("content-type") || "";
-    if (contentType.includes("application/json")) {
-      const json = (await request.json()) as { password?: unknown };
-      bodyPassword = json?.password;
-    }
-  } catch {
-    /* password may come from header only */
-  }
-
-  const password = passwordFromRequest(request, bodyPassword);
-  if (!checkStudioPassword(password)) {
-    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
   const url = new URL(request.url);
@@ -80,11 +69,16 @@ export async function DELETE(request: Request) {
   }
 }
 
-/**
- * POST multipart: password (or header), rank, filename (optional), audio file.
- * Stores clip in Vercel Blob (or local public/ when developing) and updates override manifest.
- */
+/** POST multipart — admin session required. */
 export async function POST(request: Request) {
+  const session = await requireStudioAdmin();
+  if (!session) {
+    return NextResponse.json(
+      { ok: false, error: "Admin login required" },
+      { status: 401 },
+    );
+  }
+
   const mode = storageMode();
   if (mode === "unavailable") {
     return NextResponse.json(
@@ -101,11 +95,6 @@ export async function POST(request: Request) {
       { ok: false, error: "Expected multipart form data" },
       { status: 400 },
     );
-  }
-
-  const password = passwordFromRequest(request, form.get("password"));
-  if (!checkStudioPassword(password)) {
-    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
 
   const rankRaw = form.get("rank");
@@ -159,7 +148,6 @@ export async function POST(request: Request) {
     filename = `${String(rank).padStart(4, "0")}-${word}.${ext}`;
   }
 
-  // Sanitize filename — basename only, expected NNNN-slug.ext
   filename = pathBasename(filename).replace(/[^a-zA-Z0-9._-]/g, "");
   if (!/^\d{4}-.+\.[a-z0-9]+$/i.test(filename)) {
     return NextResponse.json(

@@ -1,16 +1,29 @@
 import { NextResponse } from "next/server";
-import { checkStudioPassword } from "@/lib/studio-auth";
+import { requireStudioAdmin } from "@/lib/studio-auth";
 
+/** Studio gate: ADMIN session only (replaces shared password as primary auth). */
+export async function GET() {
+  const session = await requireStudioAdmin();
+  if (!session) {
+    return NextResponse.json({ ok: false, admin: false }, { status: 401 });
+  }
+  return NextResponse.json({
+    ok: true,
+    admin: true,
+    email: session.user.email ?? null,
+  });
+}
+
+/** Legacy password check retained for tooling; page unlock uses GET + admin session. */
 export async function POST(request: Request) {
-  let body: { password?: string } = {};
-  try {
-    body = (await request.json()) as { password?: string };
-  } catch {
-    return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
+  const session = await requireStudioAdmin();
+  if (!session) {
+    return NextResponse.json(
+      { ok: false, error: "Admin login required" },
+      { status: 401 },
+    );
   }
-  const ok = checkStudioPassword(body.password);
-  if (!ok) {
-    return NextResponse.json({ ok: false }, { status: 401 });
-  }
-  return NextResponse.json({ ok: true });
+  // Ignore body password — session is the source of truth.
+  void request;
+  return NextResponse.json({ ok: true, admin: true });
 }

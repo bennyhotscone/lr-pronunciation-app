@@ -1,4 +1,9 @@
 import type { NextAuthConfig } from "next-auth";
+import type { Role } from "@prisma/client";
+
+function isStaff(role: Role | string | undefined | null) {
+  return role === "ADMIN" || role === "TEACHER";
+}
 
 /**
  * Edge-safe Auth.js config (no Prisma / Node APIs).
@@ -14,21 +19,34 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request }) {
       const { pathname } = request.nextUrl;
-      const role = auth?.user?.role;
+      const role = auth?.user?.role as Role | undefined;
       const isLoggedIn = Boolean(auth?.user);
       const isPortal = pathname.startsWith("/portal");
       const isTeacher = pathname.startsWith("/teacher");
+      const isStudio =
+        pathname === "/english-for-mandarin-speakers/studio" ||
+        pathname.startsWith("/english-for-mandarin-speakers/studio/");
       const isLogin = pathname === "/login";
 
       if ((isPortal || isTeacher) && !isLoggedIn) return false;
+
+      if (isStudio) {
+        if (!isLoggedIn) return false;
+        if (role !== "ADMIN") {
+          const dest = isStaff(role) ? "/teacher" : "/portal";
+          return Response.redirect(new URL(dest, request.nextUrl.origin));
+        }
+        return true;
+      }
+
       if (isPortal && role && role !== "STUDENT") {
         return Response.redirect(new URL("/teacher", request.nextUrl.origin));
       }
-      if (isTeacher && role && role !== "TEACHER") {
+      if (isTeacher && role && !isStaff(role)) {
         return Response.redirect(new URL("/portal", request.nextUrl.origin));
       }
       if (isLogin && isLoggedIn) {
-        const dest = role === "TEACHER" ? "/teacher" : "/portal";
+        const dest = isStaff(role) ? "/teacher" : "/portal";
         return Response.redirect(new URL(dest, request.nextUrl.origin));
       }
       return true;

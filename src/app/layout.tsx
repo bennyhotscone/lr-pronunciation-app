@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
 const sourceSans = Source_Sans_3({
@@ -7,9 +7,10 @@ const sourceSans = Source_Sans_3({
   subsets: ["latin"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#ff7a59",
+  themeColor: "#1a1714",
 };
 
 export default function RootLayout({
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${fraunces.variable} h-full`}>
+    <html lang="en" className={`${sourceSans.variable} ${cormorant.variable} h-full`}>
       <body className="min-h-full antialiased">{children}</body>
     </html>
   );

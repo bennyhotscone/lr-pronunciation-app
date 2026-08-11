@@ -3,6 +3,19 @@ import { prisma } from "@/lib/db";
 import type { Role } from "@prisma/client";
 import { redirect } from "next/navigation";
 
+export function isStaff(role: Role | undefined | null): boolean {
+  return role === "ADMIN" || role === "TEACHER";
+}
+
+export function isAdmin(role: Role | undefined | null): boolean {
+  return role === "ADMIN";
+}
+
+export function homeForRole(role: Role | undefined | null): string {
+  if (isStaff(role)) return "/teacher";
+  return "/portal";
+}
+
 export async function requireSession() {
   const session = await auth();
   if (!session?.user?.id) {
@@ -11,10 +24,29 @@ export async function requireSession() {
   return session;
 }
 
+/** Exact role match; redirects other signed-in users to their home. */
 export async function requireRole(role: Role) {
   const session = await requireSession();
   if (session.user.role !== role) {
-    redirect(session.user.role === "TEACHER" ? "/teacher" : "/portal");
+    redirect(homeForRole(session.user.role));
+  }
+  return session;
+}
+
+/** Teacher dashboard + tools: ADMIN or TEACHER. */
+export async function requireStaff() {
+  const session = await requireSession();
+  if (!isStaff(session.user.role)) {
+    redirect("/portal");
+  }
+  return session;
+}
+
+/** Mandarin Studio + admin-only actions. */
+export async function requireAdmin() {
+  const session = await requireSession();
+  if (!isAdmin(session.user.role)) {
+    redirect(homeForRole(session.user.role));
   }
   return session;
 }
@@ -28,9 +60,22 @@ export async function getActiveClassIdsForStudent(studentId: string): Promise<st
   return rows.map((r) => r.classId);
 }
 
-export async function assertTeacherOwnsClass(teacherId: string, classId: string) {
+/**
+ * Class ownership for staff.
+ * Teachers: only classes they teach.
+ * Admins: any non-archived class (or classes they teach).
+ */
+export async function assertTeacherOwnsClass(userId: string, classId: string, role?: Role) {
+  const sessionRole = role ?? (await auth())?.user?.role;
+  if (sessionRole === "ADMIN") {
+    const klass = await prisma.class.findFirst({
+      where: { id: classId, archivedAt: null },
+    });
+    if (!klass) throw new Error("Class not found or access denied");
+    return klass;
+  }
   const klass = await prisma.class.findFirst({
-    where: { id: classId, teacherId, archivedAt: null },
+    where: { id: classId, teacherId: userId, archivedAt: null },
   });
   if (!klass) {
     throw new Error("Class not found or access denied");
@@ -72,4 +117,10 @@ export async function studentCanAccessResource(studentId: string, resourceId: st
     return studentCanAccessLesson(studentId, resource.lessonId);
   }
   return false;
+}
+
+export async function studentCanAccessClassPost(studentId: string, postId: string) {
+  const post = await prisma.classPost.findUnique({ where: { id: postId } });
+  if (!post) return false;
+  return studentCanAccessClass(studentId, post.classId);
 }

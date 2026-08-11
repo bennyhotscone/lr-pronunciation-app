@@ -1,19 +1,24 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
-import { studentCanAccessResource } from "@/lib/portal-access";
+import { isStaff, studentCanAccessResource } from "@/lib/portal-access";
 import { readPortalFileBytes } from "@/lib/portal-files";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-async function teacherCanAccessResource(teacherId: string, resourceId: string) {
+async function staffCanAccessResource(
+  userId: string,
+  role: string,
+  resourceId: string,
+) {
   const resource = await prisma.resource.findUnique({
     where: { id: resourceId },
     include: { class: { select: { teacherId: true } } },
   });
   if (!resource) return false;
-  if (resource.uploadedById === teacherId) return true;
-  if (resource.class?.teacherId === teacherId) return true;
+  if (role === "ADMIN") return true;
+  if (resource.uploadedById === userId) return true;
+  if (resource.class?.teacherId === userId) return true;
   // Individual assignments: any teacher (same as teacher student pages)
   if (resource.studentId) return true;
   return false;
@@ -42,8 +47,8 @@ export async function GET(
 
   const role = session.user.role;
   let allowed = false;
-  if (role === "TEACHER") {
-    allowed = await teacherCanAccessResource(session.user.id, id);
+  if (isStaff(role)) {
+    allowed = await staffCanAccessResource(session.user.id, role, id);
   } else if (role === "STUDENT") {
     allowed = await studentCanAccessResource(session.user.id, id);
   }

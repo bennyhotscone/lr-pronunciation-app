@@ -1,23 +1,38 @@
 import Link from "next/link";
-import { requireRole } from "@/lib/portal-access";
+import { requireStaff, isAdmin } from "@/lib/portal-access";
 import { signOut } from "@/auth";
+import { BrandWordmark } from "@/components/BrandMark";
 
 export default async function TeacherLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await requireRole("TEACHER");
+  const session = await requireStaff();
+  const admin = isAdmin(session.user.role);
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-12 pt-3 sm:px-6">
       <header className="flex flex-wrap items-center justify-between gap-3 py-2">
-        <div className="flex items-center gap-4">
-          <Link href="/" className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-[0.04em]">
-            LR MASTERY
+        <div className="flex flex-wrap items-center gap-4">
+          <Link href="/">
+            <BrandWordmark />
           </Link>
-          <nav className="flex gap-3 text-sm font-bold">
-            <Link href="/teacher">Dashboard</Link>
+          <nav className="flex items-center gap-3 text-sm font-bold">
+            <Link href="/teacher" className="hover:text-sand-accent">
+              Dashboard
+            </Link>
+            {admin ? (
+              <>
+                <span className="chip bg-sand-accent/25 text-sand-accent">Admin</span>
+                <Link
+                  href="/english-for-mandarin-speakers/studio"
+                  className="text-sand-accent hover:underline"
+                >
+                  Studio
+                </Link>
+              </>
+            ) : null}
           </nav>
         </div>
         <form

@@ -9,6 +9,10 @@ import {
   teacherAddRecommendation,
   teacherUploadResource,
 } from "@/lib/portal-actions";
+import {
+  BasketAttachFields,
+  SessionBasketPanel,
+} from "@/components/portal/SessionBasket";
 
 type StudentOption = { id: string; label: string };
 type LessonOption = { id: string; title: string };
@@ -29,7 +33,11 @@ export function ClassTools({
   const enrolled = new Set(enrolledIds);
   const notEnrolled = students.filter((s) => !enrolled.has(s.id));
 
-  function run(action: (fd: FormData) => Promise<{ error?: string; ok?: boolean }>, fd: FormData, okMsg: string) {
+  function run(
+    action: (fd: FormData) => Promise<{ error?: string; ok?: boolean }>,
+    fd: FormData,
+    okMsg: string,
+  ) {
     setMsg(null);
     startTransition(async () => {
       const res = await action(fd);
@@ -41,10 +49,12 @@ export function ClassTools({
   return (
     <div className="mt-8 space-y-6">
       {msg ? (
-        <p className="rounded-xl bg-teal/15 px-3 py-2 text-sm font-semibold" role="status">
+        <p className="rounded-xl bg-sand-accent/15 px-3 py-2 text-sm font-semibold" role="status">
           {msg}
         </p>
       ) : null}
+
+      <SessionBasketPanel />
 
       <section className="card rounded-2xl p-5">
         <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">Enroll student</h2>
@@ -56,7 +66,11 @@ export function ClassTools({
           action={(fd) => run(enrollStudentInClass, fd, "Student enrolled.")}
         >
           <input type="hidden" name="classId" value={classId} />
-          <select name="studentId" required className="min-w-[200px] flex-1 rounded-xl border border-border bg-white px-3 py-2">
+          <select
+            name="studentId"
+            required
+            className="min-w-[200px] flex-1 rounded-xl border border-border bg-background/60 px-3 py-2"
+          >
             <option value="">Select student…</option>
             {notEnrolled.map((s) => (
               <option key={s.id} value={s.id}>
@@ -64,7 +78,11 @@ export function ClassTools({
               </option>
             ))}
           </select>
-          <button type="submit" disabled={pending || notEnrolled.length === 0} className="btn-primary rounded-xl px-4 py-2 text-sm font-bold disabled:opacity-50">
+          <button
+            type="submit"
+            disabled={pending || notEnrolled.length === 0}
+            className="btn-primary rounded-xl px-4 py-2 text-sm font-bold disabled:opacity-50"
+          >
             Enroll
           </button>
         </form>
@@ -95,11 +113,35 @@ export function ClassTools({
           action={(fd) => run(teacherAddLesson, fd, "Lesson added for the class.")}
         >
           <input type="hidden" name="classId" value={classId} />
-          <input name="title" required placeholder="Title" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <input name="date" type="date" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <textarea name="summary" rows={3} placeholder="Summary" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <textarea name="teacherNotes" rows={2} placeholder="Teacher notes (optional)" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <input name="tags" placeholder="Tags (comma-separated)" className="rounded-xl border border-border bg-white px-3 py-2" />
+          <BasketAttachFields />
+          <input
+            name="title"
+            required
+            placeholder="Title"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <input
+            name="date"
+            type="date"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <textarea
+            name="summary"
+            rows={3}
+            placeholder="Summary"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <textarea
+            name="teacherNotes"
+            rows={2}
+            placeholder="Teacher notes (optional)"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <input
+            name="tags"
+            placeholder="Tags (comma-separated)"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
           <button type="submit" disabled={pending} className="btn-primary rounded-xl px-4 py-2 text-sm font-bold">
             Save lesson
           </button>
@@ -110,11 +152,17 @@ export function ClassTools({
         <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">Upload file (class)</h2>
         <form
           className="mt-3 grid gap-3"
-          action={(fd) => run(teacherUploadResource, fd, "File uploaded — students will see it on My Desk.")}
+          action={(fd) =>
+            run(teacherUploadResource, fd, "File uploaded — students will see it on My Desk.")
+          }
         >
           <input type="hidden" name="classId" value={classId} />
-          <input name="title" placeholder="Title (optional)" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <select name="lessonId" className="rounded-xl border border-border bg-white px-3 py-2">
+          <input
+            name="title"
+            placeholder="Title (optional)"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <select name="lessonId" className="rounded-xl border border-border bg-background/60 px-3 py-2">
             <option value="">No lesson link</option>
             {lessons.map((l) => (
               <option key={l.id} value={l.id}>
@@ -122,7 +170,12 @@ export function ClassTools({
               </option>
             ))}
           </select>
-          <input name="file" type="file" required className="rounded-xl border border-border bg-white px-3 py-2" />
+          <input
+            name="file"
+            type="file"
+            required
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
           <button type="submit" disabled={pending} className="btn-primary rounded-xl px-4 py-2 text-sm font-bold">
             Upload to class
           </button>
@@ -136,10 +189,25 @@ export function ClassTools({
           action={(fd) => run(teacherAddHomework, fd, "Homework assigned to class.")}
         >
           <input type="hidden" name="classId" value={classId} />
-          <input name="title" required placeholder="Title" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <textarea name="instructions" required rows={3} placeholder="Instructions" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <input name="dueAt" type="date" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <select name="lessonId" className="rounded-xl border border-border bg-white px-3 py-2">
+          <input
+            name="title"
+            required
+            placeholder="Title"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <textarea
+            name="instructions"
+            required
+            rows={3}
+            placeholder="Instructions"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <input
+            name="dueAt"
+            type="date"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <select name="lessonId" className="rounded-xl border border-border bg-background/60 px-3 py-2">
             <option value="">No lesson link</option>
             {lessons.map((l) => (
               <option key={l.id} value={l.id}>
@@ -154,16 +222,32 @@ export function ClassTools({
       </section>
 
       <section className="card rounded-2xl p-5">
-        <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">Recommended practice</h2>
+        <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">
+          Recommended practice
+        </h2>
         <form
           className="mt-3 grid gap-3"
           action={(fd) => run(teacherAddRecommendation, fd, "Recommendation published.")}
         >
           <input type="hidden" name="classId" value={classId} />
           <input type="hidden" name="approval" value="APPROVED" />
-          <input name="title" required placeholder="Title" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <input name="url" placeholder="https://…" className="rounded-xl border border-border bg-white px-3 py-2" />
-          <textarea name="description" rows={2} placeholder="Why this helps" className="rounded-xl border border-border bg-white px-3 py-2" />
+          <input
+            name="title"
+            required
+            placeholder="Title"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <input
+            name="url"
+            placeholder="https://…"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
+          <textarea
+            name="description"
+            rows={2}
+            placeholder="Why this helps"
+            className="rounded-xl border border-border bg-background/60 px-3 py-2"
+          />
           <button type="submit" disabled={pending} className="btn-secondary rounded-xl px-4 py-2 text-sm font-bold">
             Add recommendation
           </button>

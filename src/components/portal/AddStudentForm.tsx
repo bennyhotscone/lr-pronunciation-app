@@ -36,21 +36,21 @@ export function AddStudentForm() {
       >
         <label className="block sm:col-span-2">
           <span className="mb-1 block text-sm font-semibold">Email</span>
-          <input name="email" type="email" required className="w-full rounded-xl border border-border bg-white px-3 py-2" />
+          <input name="email" type="email" required className="w-full rounded-xl border border-border bg-background/60 px-3 py-2" />
         </label>
         <label className="block">
           <span className="mb-1 block text-sm font-semibold">Full name</span>
-          <input name="fullName" required className="w-full rounded-xl border border-border bg-white px-3 py-2" />
+          <input name="fullName" required className="w-full rounded-xl border border-border bg-background/60 px-3 py-2" />
         </label>
         <label className="block">
           <span className="mb-1 block text-sm font-semibold">Preferred name</span>
-          <input name="preferredName" className="w-full rounded-xl border border-border bg-white px-3 py-2" />
+          <input name="preferredName" className="w-full rounded-xl border border-border bg-background/60 px-3 py-2" />
         </label>
         <label className="block sm:col-span-2">
           <span className="mb-1 block text-sm font-semibold">
             Temp password (optional — auto-generated if blank)
           </span>
-          <input name="tempPassword" className="w-full rounded-xl border border-border bg-white px-3 py-2" />
+          <input name="tempPassword" className="w-full rounded-xl border border-border bg-background/60 px-3 py-2" />
         </label>
         {error ? <p className="sm:col-span-2 text-sm font-semibold text-danger">{error}</p> : null}
         {created ? (

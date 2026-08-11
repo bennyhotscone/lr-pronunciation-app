@@ -3,37 +3,53 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-const TEACHER_EMAIL = "teacher@lrmastery.guru";
-const TEACHER_PASSWORD = "TeacherTemp2026!";
+/** Sole seed admin — change password after first production login. */
+const ADMIN_EMAIL = "teacher@lrmastery.guru";
+const ADMIN_PASSWORD = "TeacherTemp2026!";
 
 async function main() {
-  const passwordHash = await bcrypt.hash(TEACHER_PASSWORD, 10);
+  const passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 10);
 
-  const teacher = await prisma.user.upsert({
-    where: { email: TEACHER_EMAIL },
+  const admin = await prisma.user.upsert({
+    where: { email: ADMIN_EMAIL },
     update: {
       passwordHash,
-      role: "TEACHER",
+      role: "ADMIN",
       archivedAt: null,
     },
     create: {
-      email: TEACHER_EMAIL,
+      email: ADMIN_EMAIL,
       passwordHash,
-      role: "TEACHER",
+      role: "ADMIN",
       profile: {
         create: {
-          fullName: "LR Mastery Teacher",
-          preferredName: "Teacher",
+          fullName: "LR Mastery Admin",
+          preferredName: "Admin",
           avatarId: "book",
         },
       },
     },
   });
 
-  console.log("Seeded teacher:");
-  console.log(`  email:    ${TEACHER_EMAIL}`);
-  console.log(`  password: ${TEACHER_PASSWORD}`);
-  console.log(`  id:       ${teacher.id}`);
+  // Ensure profile preferred name if user already existed without profile update path
+  await prisma.studentProfile.upsert({
+    where: { userId: admin.id },
+    create: {
+      userId: admin.id,
+      fullName: "LR Mastery Admin",
+      preferredName: "Admin",
+      avatarId: "book",
+    },
+    update: {
+      preferredName: "Admin",
+    },
+  });
+
+  console.log("Seeded admin:");
+  console.log(`  email:    ${ADMIN_EMAIL}`);
+  console.log(`  password: ${ADMIN_PASSWORD}`);
+  console.log(`  role:     ADMIN`);
+  console.log(`  id:       ${admin.id}`);
 }
 
 main()

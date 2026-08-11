@@ -21,7 +21,6 @@ import {
   putStudioClip,
 } from "@/lib/studio-audio-db";
 import {
-  getStudioSessionPassword,
   isStudioAuthed,
   loadStudioNotes,
   saveStudioNotes,
@@ -134,7 +133,7 @@ function batchRange(filter: BatchFilter): { start: number; end: number } | null 
 export function AudioStudio() {
   const [mounted, setMounted] = useState(false);
   const [authed, setAuthed] = useState(false);
-  const [password, setPassword] = useState("");
+  const [authChecking, setAuthChecking] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
   const [notes, setNotes] = useState<Record<string, StudioRankNote>>({});
   const [manifestByRank, setManifestByRank] = useState<Map<number, ManifestClip>>(
@@ -170,9 +169,36 @@ export function AudioStudio() {
 
   useEffect(() => {
     setMounted(true);
-    setAuthed(isStudioAuthed());
     setNotes(loadStudioNotes());
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/studio-auth", { cache: "no-store" });
+        if (cancelled) return;
+        if (res.ok) {
+          setStudioAuthed(true);
+          setAuthed(true);
+          setAuthError(null);
+        } else {
+          setStudioAuthed(false);
+          setAuthed(false);
+          setAuthError(
+            res.status === 401
+              ? "Sign in as ADMIN to open Audio Studio."
+              : "Could not verify admin session.",
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setAuthed(isStudioAuthed());
+          setAuthError("Could not verify admin session.");
+        }
+      } finally {
+        if (!cancelled) setAuthChecking(false);
+      }
+    })();
     return () => {
+      cancelled = true;
       audioRef.current?.pause();
       streamRef.current?.getTracks().forEach((t) => t.stop());
     };
@@ -267,26 +293,6 @@ export function AudioStudio() {
       return r.rank >= range.start && r.rank <= range.end;
     });
   }, [rows, filter]);
-
-  const login = async () => {
-    setAuthError(null);
-    try {
-      const res = await fetch("/api/studio-auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-      if (!res.ok) {
-        setAuthError("Wrong password");
-        return;
-      }
-      setStudioAuthed(true, password);
-      setAuthed(true);
-      setPassword("");
-    } catch {
-      setAuthError("Could not verify password");
-    }
-  };
 
   const flash = (text: string, tone: "info" | "ok" | "err" = "info") => {
     setMsg(text);
@@ -493,16 +499,10 @@ export function AudioStudio() {
 
   const savePreviewPermanent = async () => {
     if (!preview || savingPermanent) return;
-    const pw = getStudioSessionPassword();
-    if (!pw) {
-      flash("Session expired — lock and unlock Studio again, then retry Save permanently.", "err");
-      return;
-    }
     setSavingPermanent(true);
     flash(`Uploading ${preview.filename} permanently…`, "info");
     try {
       const form = new FormData();
-      form.set("password", pw);
       form.set("rank", String(preview.rank));
       form.set("filename", preview.filename);
       const row = rows.find((r) => r.rank === preview.rank);
@@ -510,7 +510,6 @@ export function AudioStudio() {
       form.set("audio", preview.blob, preview.filename);
       const res = await fetch("/api/studio/audio", {
         method: "POST",
-        headers: { "x-studio-password": pw },
         body: form,
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -612,11 +611,6 @@ export function AudioStudio() {
   /** Clear permanent Blob override for this rank (available on every row). */
   const clearPermanentAudio = async (rank: number) => {
     if (clearingRank != null) return;
-    const pw = getStudioSessionPassword();
-    if (!pw) {
-      flash("Session expired — lock and unlock Studio again, then retry Clear audio.", "err");
-      return;
-    }
     setClearingRank(rank);
     if (playing === rank) stopPlayback();
     if (preview?.rank === rank) clearPreview();
@@ -626,11 +620,6 @@ export function AudioStudio() {
       applyOverrides({ [rankKey(rank)]: audioOverrideTombstone() });
       const res = await fetch(`/api/studio/audio?rank=${rank}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "x-studio-password": pw,
-        },
-        body: JSON.stringify({ password: pw }),
       });
       const data = (await res.json().catch(() => ({}))) as {
         ok?: boolean;
@@ -640,7 +629,7 @@ export function AudioStudio() {
       if (!res.ok || !data.ok) {
         flash(
           data.error ||
-            `Clear failed (${res.status}). Check Blob token / studio password.`,
+            `Clear failed (${res.status}). Admin session + Blob token required.`,
           "err",
         );
         try {
@@ -674,42 +663,29 @@ export function AudioStudio() {
     }
   };
 
-  if (!mounted) {
+  if (!mounted || authChecking) {
     return <p className="text-sm text-muted">Loading studio…</p>;
   }
 
   if (!authed) {
     return (
-      <div className="relative z-20 mx-auto max-w-md space-y-4 rounded-2xl border border-border bg-white p-5 shadow-md">
-        <p className="chip bg-amber/25">Teacher / admin</p>
+      <div className="relative z-20 mx-auto max-w-md space-y-4 rounded-2xl border border-border bg-surface p-5 shadow-md">
+        <p className="chip bg-amber/25">Admin only</p>
         <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">
           Audio Studio
         </h1>
         <p className="text-sm text-muted">
-          Quality-gate draft bulk audio for the first 50 frequency words before
-          trusting Mahjong Audio modes. Password required.
+          Mandarin studio audio overrides require an authenticated{" "}
+          <strong>ADMIN</strong> account. Teachers and students cannot open this
+          page.
         </p>
-        <label className="block text-sm font-bold">
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") void login();
-            }}
-            className="mt-1 w-full rounded-xl border border-border px-3 py-3 text-base font-normal"
-            autoComplete="current-password"
-          />
-        </label>
         {authError ? <p className="text-sm text-danger">{authError}</p> : null}
-        <button
-          type="button"
-          className="btn-primary touch-target w-full rounded-2xl px-4 py-3.5 text-base font-bold"
-          onClick={() => void login()}
+        <Link
+          href="/login?callbackUrl=/english-for-mandarin-speakers/studio"
+          className="btn-primary touch-target inline-flex w-full items-center justify-center rounded-2xl px-4 py-3.5 text-base font-bold"
         >
-          Unlock Studio
-        </button>
+          Sign in as admin
+        </Link>
         <Link
           href="/english-for-mandarin-speakers/review"
           className="block text-center text-sm font-bold underline"

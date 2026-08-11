@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
-import { requireRole } from "@/lib/portal-access";
+import { isAdmin, requireStaff } from "@/lib/portal-access";
 import { AddStudentForm } from "@/components/portal/AddStudentForm";
+import { AddTeacherForm } from "@/components/portal/AddTeacherForm";
 import { teacherCreateClass } from "@/lib/portal-actions";
+import { BrandMark } from "@/components/BrandMark";
 
 async function createClassAction(formData: FormData): Promise<void> {
   "use server";
@@ -10,30 +12,57 @@ async function createClassAction(formData: FormData): Promise<void> {
 }
 
 export default async function TeacherDashboardPage() {
-  const session = await requireRole("TEACHER");
-  const [students, classes] = await Promise.all([
+  const session = await requireStaff();
+  const admin = isAdmin(session.user.role);
+
+  const [students, classes, teachers] = await Promise.all([
     prisma.user.findMany({
       where: { role: "STUDENT", archivedAt: null },
       include: { profile: true },
       orderBy: { createdAt: "desc" },
     }),
     prisma.class.findMany({
-      where: { teacherId: session.user.id, archivedAt: null },
+      where: admin
+        ? { archivedAt: null }
+        : { teacherId: session.user.id, archivedAt: null },
       include: {
         _count: { select: { memberships: { where: { status: "ACTIVE" } } } },
       },
       orderBy: { createdAt: "desc" },
     }),
+    admin
+      ? prisma.user.findMany({
+          where: { role: "TEACHER", archivedAt: null },
+          include: { profile: true },
+          orderBy: { createdAt: "desc" },
+        })
+      : Promise.resolve([]),
   ]);
 
   return (
     <div>
-      <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
-        Teacher dashboard
-      </h1>
+      <div className="flex flex-wrap items-center gap-3">
+        <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
+          {admin ? "Admin dashboard" : "Teacher dashboard"}
+        </h1>
+        {admin ? (
+          <span className="chip bg-sand-accent/25 text-sand-accent">Admin</span>
+        ) : null}
+      </div>
       <p className="mt-2 text-muted">
-        Create once, share many — classes, students, lessons, files and homework.
+        Classes, students, lessons, files, homework, and classroom posts.
       </p>
+
+      {admin ? (
+        <p className="mt-3">
+          <Link
+            href="/english-for-mandarin-speakers/studio"
+            className="text-sm font-bold text-sand-accent underline-offset-2 hover:underline"
+          >
+            Open Mandarin Audio Studio →
+          </Link>
+        </p>
+      ) : null}
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <AddStudentForm />
@@ -47,18 +76,18 @@ export default async function TeacherDashboardPage() {
               name="name"
               required
               placeholder="Class name"
-              className="rounded-xl border border-border bg-white px-3 py-2"
+              className="rounded-xl border border-border bg-background/60 px-3 py-2"
             />
             <input
               name="level"
               placeholder="Level (optional)"
-              className="rounded-xl border border-border bg-white px-3 py-2"
+              className="rounded-xl border border-border bg-background/60 px-3 py-2"
             />
             <textarea
               name="description"
               rows={2}
               placeholder="Description"
-              className="rounded-xl border border-border bg-white px-3 py-2"
+              className="rounded-xl border border-border bg-background/60 px-3 py-2"
             />
             <button type="submit" className="btn-primary rounded-xl px-4 py-2.5 text-sm font-bold">
               Create class
@@ -66,6 +95,21 @@ export default async function TeacherDashboardPage() {
           </form>
         </div>
       </div>
+
+      {admin ? (
+        <>
+          <AddTeacherForm />
+          {teachers.length ? (
+            <ul className="mt-4 space-y-1 text-sm text-muted">
+              {teachers.map((t) => (
+                <li key={t.id}>
+                  {t.profile?.preferredName || t.profile?.fullName || t.email} — {t.email}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </>
+      ) : null}
 
       <section className="mt-10">
         <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold">Classes</h2>
@@ -113,6 +157,10 @@ export default async function TeacherDashboardPage() {
           {!students.length ? <li className="text-sm text-muted">No students yet.</li> : null}
         </ul>
       </section>
+
+      <div className="mt-12 opacity-40">
+        <BrandMark size={36} />
+      </div>
     </div>
   );
 }

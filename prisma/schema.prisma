@@ -8,6 +8,7 @@ datasource db {
 }
 
 enum Role {
+  ADMIN
   TEACHER
   STUDENT
 }
@@ -71,6 +72,8 @@ model User {
   teacherNotesAbout    TeacherNote[]        @relation("NoteStudent")
   recommendations      Recommendation[]     @relation("RecommendationStudent")
   progressEvents       LearningProgress[]
+  classPostsAuthored   ClassPost[]          @relation("ClassPostAuthor")
+  classPostComments    ClassPostComment[]   @relation("ClassPostCommentAuthor")
 }
 
 model StudentProfile {
@@ -105,6 +108,7 @@ model Class {
   resources       Resource[]
   homework        Homework[]
   recommendations Recommendation[]
+  posts           ClassPost[]
 }
 
 /// Live membership policy: ACTIVE membership grants current class library access.
@@ -285,4 +289,57 @@ model LearningProgress {
 
   @@unique([userId, kind, refId])
   @@index([userId, kind])
+}
+
+/// Classroom bulletin: teachers/admins post; students comment/reply.
+/// Pinned posts (pinnedAt set) sort above unpinned, newest pin first.
+model ClassPost {
+  id        String    @id @default(cuid())
+  classId   String
+  authorId  String
+  title     String
+  body      String
+  pinnedAt  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  class       Class                 @relation(fields: [classId], references: [id], onDelete: Cascade)
+  author      User                  @relation("ClassPostAuthor", fields: [authorId], references: [id])
+  comments    ClassPostComment[]
+  attachments ClassPostAttachment[]
+
+  @@index([classId, pinnedAt, createdAt])
+}
+
+model ClassPostAttachment {
+  id        String   @id @default(cuid())
+  postId    String
+  filename  String
+  blobPath  String
+  blobUrl   String
+  mimeType  String
+  sizeBytes Int?
+  createdAt DateTime @default(now())
+
+  post ClassPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model ClassPostComment {
+  id        String   @id @default(cuid())
+  postId    String
+  authorId  String
+  body      String
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post    ClassPost         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author  User              @relation("ClassPostCommentAuthor", fields: [authorId], references: [id])
+  parent  ClassPostComment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies ClassPostComment[] @relation("CommentReplies")
+
+  @@index([postId, createdAt])
+  @@index([parentId])
 }

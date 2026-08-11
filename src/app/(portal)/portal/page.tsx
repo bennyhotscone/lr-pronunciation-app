@@ -3,6 +3,14 @@ import { prisma } from "@/lib/db";
 import { getActiveClassIdsForStudent, requireRole } from "@/lib/portal-access";
 import { getAvatar } from "@/lib/avatars";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
+import { ClassPostList, type PostView } from "@/components/portal/ClassPosts";
+
+function authorLabel(user: {
+  email: string;
+  profile: { preferredName: string | null; fullName: string | null } | null;
+}) {
+  return user.profile?.preferredName || user.profile?.fullName || user.email;
+}
 
 export default async function MyDeskPage() {
   const session = await requireRole("STUDENT");
@@ -13,63 +21,111 @@ export default async function MyDeskPage() {
   const name =
     profile?.preferredName || session.user.preferredName || session.user.name || "there";
 
-  const [latestLesson, homework, newFiles, justForYou, goals, classes, recommendations] =
-    await Promise.all([
-      prisma.lesson.findFirst({
-        where: {
-          OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-        },
-        orderBy: { date: "desc" },
-        include: { class: { select: { name: true } } },
-      }),
-      prisma.homework.findMany({
-        where: {
-          OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-          status: "ASSIGNED",
-        },
-        orderBy: { dueAt: "asc" },
-        take: 8,
-        include: { class: { select: { name: true } } },
-      }),
-      prisma.resource.findMany({
-        where: {
-          OR: [
-            { studentId },
-            ...(classIds.length ? [{ classId: { in: classIds } }] : []),
+  const [
+    latestLesson,
+    homework,
+    newFiles,
+    justForYou,
+    goals,
+    classes,
+    recommendations,
+    rawPosts,
+  ] = await Promise.all([
+    prisma.lesson.findFirst({
+      where: {
+        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
+      },
+      orderBy: { date: "desc" },
+      include: { class: { select: { name: true } } },
+    }),
+    prisma.homework.findMany({
+      where: {
+        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
+        status: "ASSIGNED",
+      },
+      orderBy: { dueAt: "asc" },
+      take: 8,
+      include: { class: { select: { name: true } } },
+    }),
+    prisma.resource.findMany({
+      where: {
+        OR: [
+          { studentId },
+          ...(classIds.length ? [{ classId: { in: classIds } }] : []),
+        ],
+      },
+      orderBy: { createdAt: "desc" },
+      take: 8,
+    }),
+    prisma.resource.findMany({
+      where: { studentId, classId: null },
+      orderBy: { createdAt: "desc" },
+      take: 6,
+    }),
+    prisma.goal.findMany({
+      where: { studentId, status: "ACTIVE" },
+      orderBy: { updatedAt: "desc" },
+      take: 4,
+    }),
+    prisma.class.findMany({
+      where: { id: { in: classIds } },
+      orderBy: { name: "asc" },
+    }),
+    prisma.recommendation.findMany({
+      where: {
+        approval: "APPROVED",
+        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
+      },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+    }),
+    classIds.length
+      ? prisma.classPost.findMany({
+          where: { classId: { in: classIds } },
+          include: {
+            author: { include: { profile: true } },
+            attachments: true,
+            comments: {
+              include: { author: { include: { profile: true } } },
+              orderBy: { createdAt: "asc" },
+            },
+            class: { select: { name: true } },
+          },
+          orderBy: [
+            { pinnedAt: { sort: "desc", nulls: "last" } },
+            { createdAt: "desc" },
           ],
-        },
-        orderBy: { createdAt: "desc" },
-        take: 8,
-      }),
-      prisma.resource.findMany({
-        where: { studentId, classId: null },
-        orderBy: { createdAt: "desc" },
-        take: 6,
-      }),
-      prisma.goal.findMany({
-        where: { studentId, status: "ACTIVE" },
-        orderBy: { updatedAt: "desc" },
-        take: 4,
-      }),
-      prisma.class.findMany({
-        where: { id: { in: classIds } },
-        orderBy: { name: "asc" },
-      }),
-      prisma.recommendation.findMany({
-        where: {
-          approval: "APPROVED",
-          OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-        },
-        orderBy: { createdAt: "desc" },
-        take: 5,
-      }),
-    ]);
+          take: 8,
+        })
+      : Promise.resolve([]),
+  ]);
 
   const justForYouLessons = await prisma.lesson.findMany({
     where: { studentId },
     orderBy: { date: "desc" },
     take: 4,
   });
+
+  const posts: PostView[] = rawPosts.map((p) => ({
+    id: p.id,
+    title: p.title,
+    body: p.body,
+    pinnedAt: p.pinnedAt?.toISOString() ?? null,
+    createdAt: p.createdAt.toISOString(),
+    authorLabel: `${authorLabel(p.author)}${"class" in p && p.class ? ` · ${p.class.name}` : ""}`,
+    attachments: p.attachments.map((a) => ({
+      id: a.id,
+      filename: a.filename,
+      blobUrl: a.blobUrl,
+    })),
+    comments: p.comments.map((c) => ({
+      id: c.id,
+      body: c.body,
+      createdAt: c.createdAt.toISOString(),
+      authorLabel: authorLabel(c.author),
+      parentId: c.parentId,
+    })),
+  }));
 
   return (
     <div>
@@ -108,6 +164,13 @@ export default async function MyDeskPage() {
           ) : (
             <p className="mt-2 text-sm text-muted">No lessons yet — check back after class.</p>
           )}
+        </section>
+
+        <section className="card rounded-2xl p-5 md:col-span-2">
+          <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-muted">
+            Classroom posts
+          </h2>
+          <ClassPostList posts={posts} mode="student" />
         </section>
 
         <section className="card rounded-2xl p-5">
@@ -175,7 +238,12 @@ export default async function MyDeskPage() {
               {justForYou.map((f) => (
                 <li key={f.id} className="text-sm">
                   <span className="chip bg-amber/25">File</span>{" "}
-                  <a href={portalResourceDownloadHref(f.id)} target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-2 hover:underline">
+                  <a
+                    href={portalResourceDownloadHref(f.id)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline-offset-2 hover:underline"
+                  >
                     {f.title}
                   </a>
                 </li>
@@ -233,7 +301,12 @@ export default async function MyDeskPage() {
               {recommendations.map((r) => (
                 <li key={r.id}>
                   {r.url ? (
-                    <a href={r.url} target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-2 hover:underline">
+                    <a
+                      href={r.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold underline-offset-2 hover:underline"
+                    >
                       {r.title}
                     </a>
                   ) : (

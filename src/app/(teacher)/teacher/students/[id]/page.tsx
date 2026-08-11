@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { requireRole } from "@/lib/portal-access";
+import { requireStaff } from "@/lib/portal-access";
 import { StudentAssignTools } from "@/components/portal/StudentAssignTools";
 import { getAvatar } from "@/lib/avatars";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
@@ -11,7 +11,7 @@ export default async function TeacherStudentPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  await requireRole("TEACHER");
+  await requireStaff();
   const { id } = await params;
 
   const student = await prisma.user.findFirst({

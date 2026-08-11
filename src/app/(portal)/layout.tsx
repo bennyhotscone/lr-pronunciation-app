@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/portal-access";
 import { getAvatar } from "@/lib/avatars";
 import { signOut } from "@/auth";
 import { prisma } from "@/lib/db";
+import { BrandWordmark } from "@/components/BrandMark";
 
 const studentLinks = [
   { href: "/portal", label: "My Desk" },
@@ -29,13 +30,13 @@ export default async function PortalLayout({
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
       <header className="flex items-center justify-between gap-3 py-2">
-        <Link href="/" className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-[0.04em]">
-          LR MASTERY
+        <Link href="/">
+          <BrandWordmark />
         </Link>
         <div className="flex items-center gap-2">
           <Link
             href="/portal/profile"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-white/80 px-2.5 py-1.5 text-sm font-semibold"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-2.5 py-1.5 text-sm font-semibold"
           >
             <span
               className="inline-flex h-8 w-8 items-center justify-center rounded-full text-lg"
@@ -59,7 +60,7 @@ export default async function PortalLayout({
         </div>
       </header>
       <main className="flex-1 py-4">{children}</main>
-      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border/80 bg-white/95 backdrop-blur">
+      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border/80 bg-[#1a1714]/95 backdrop-blur">
         <ul className="mx-auto flex max-w-5xl items-stretch justify-around px-1 py-1">
           {studentLinks.map((l) => (
             <li key={l.href}>
