@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LoginForm } from "@/components/portal/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Student Portal",
-  description: "Student portal — coming in Phase 2.",
+  title: "Log in",
+  description: "Sign in to the LR Mastery student portal or teacher dashboard.",
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ callbackUrl?: string }>;
+}) {
+  const sp = await searchParams;
   return (
-    <div className="mx-auto flex max-w-xl flex-col items-start justify-center pt-16 sm:pt-24">
+    <div className="mx-auto flex max-w-md flex-col items-stretch justify-center pt-12 sm:pt-20">
       <p className="chip bg-coral/20 text-foreground">Portal</p>
       <h1 className="mt-4 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight sm:text-4xl">
-        Student Portal
+        Log in
       </h1>
-      <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
-        Portal coming soon. Lessons, goals, homework, files and your learning
-        diary arrive in Phase 2.
+      <p className="mt-3 text-base leading-relaxed text-muted">
+        Teachers and students sign in with the email and password from your LR Mastery account.
       </p>
-      <div className="mt-8 flex flex-wrap gap-3">
-        <Link
-          href="/"
-          className="btn-primary touch-target inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold"
-        >
+      <LoginForm callbackUrl={sp.callbackUrl} />
+      <p className="mt-6 text-sm text-muted">
+        <Link href="/" className="font-semibold text-foreground underline-offset-2 hover:underline">
           ← Back to home
         </Link>
-        <Link
-          href="/pronunciation"
-          className="btn-secondary touch-target inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold"
-        >
-          Practise now
-        </Link>
-      </div>
+      </p>
     </div>
   );
 }

@@ -1,0 +1,288 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  TEACHER
+  STUDENT
+}
+
+enum MembershipStatus {
+  ACTIVE
+  LEFT
+  ARCHIVED
+}
+
+enum HomeworkStatus {
+  ASSIGNED
+  SUBMITTED
+  REVIEWED
+}
+
+enum GoalStatus {
+  ACTIVE
+  ACHIEVED
+  PAUSED
+}
+
+enum DiaryVisibility {
+  SHARED
+  PRIVATE
+}
+
+enum RecommendationApproval {
+  DRAFT
+  APPROVED
+  REJECTED
+}
+
+enum RecommendationType {
+  LINK
+  TOOL
+  ACTIVITY
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  role         Role
+  archivedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  profile              StudentProfile?
+  taughtClasses        Class[]              @relation("ClassTeacher")
+  memberships          ClassMembership[]
+  uploadedResources    Resource[]           @relation("ResourceUploader")
+  createdLessons       Lesson[]             @relation("LessonCreator")
+  createdHomework      Homework[]           @relation("HomeworkCreator")
+  studentHomework      Homework[]           @relation("HomeworkStudent")
+  individualLessons    Lesson[]             @relation("LessonStudent")
+  individualResources  Resource[]           @relation("ResourceStudent")
+  goals                Goal[]
+  diaryEntries         DiaryEntry[]
+  teacherNotesAuthored TeacherNote[]        @relation("NoteAuthor")
+  teacherNotesAbout    TeacherNote[]        @relation("NoteStudent")
+  recommendations      Recommendation[]     @relation("RecommendationStudent")
+  progressEvents       LearningProgress[]
+}
+
+model StudentProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  fullName           String?
+  preferredName      String?
+  avatarId           String   @default("fox")
+  englishLevel       String?
+  firstLanguage      String?
+  courseType         String?
+  learningObjectives String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Class {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  level       String?
+  teacherId   String
+  archivedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  teacher         User               @relation("ClassTeacher", fields: [teacherId], references: [id])
+  memberships     ClassMembership[]
+  lessons         Lesson[]
+  resources       Resource[]
+  homework        Homework[]
+  recommendations Recommendation[]
+}
+
+/// Live membership policy: ACTIVE membership grants current class library access.
+/// Leaving (LEFT/ARCHIVED) removes class-scoped access immediately.
+/// Individual (studentId) assignments persist regardless of class membership.
+model ClassMembership {
+  id        String           @id @default(cuid())
+  classId   String
+  studentId String
+  status    MembershipStatus @default(ACTIVE)
+  joinedAt  DateTime         @default(now())
+  leftAt    DateTime?
+
+  class   Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, studentId])
+  @@index([studentId, status])
+}
+
+model Lesson {
+  id           String   @id @default(cuid())
+  title        String
+  date         DateTime @default(now())
+  summary      String?
+  teacherNotes String?
+  tags         String[] @default([])
+  topics       String[] @default([])
+  classId      String?
+  studentId    String?
+  createdById  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  class           Class?            @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student         User?             @relation("LessonStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  createdBy       User              @relation("LessonCreator", fields: [createdById], references: [id])
+  resources       Resource[]
+  homework        Homework[]
+  recommendations Recommendation[]
+
+  @@index([classId, date])
+  @@index([studentId, date])
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  filename    String
+  blobPath    String
+  blobUrl     String
+  mimeType    String
+  category    String?
+  description String?
+  sizeBytes   Int?
+  lessonId    String?
+  classId     String?
+  studentId   String?
+  uploadedById String
+  createdAt   DateTime @default(now())
+
+  lesson     Lesson? @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  class      Class?  @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student    User?   @relation("ResourceStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  uploadedBy User    @relation("ResourceUploader", fields: [uploadedById], references: [id])
+
+  @@index([classId, createdAt])
+  @@index([studentId, createdAt])
+  @@index([lessonId])
+}
+
+model Homework {
+  id           String         @id @default(cuid())
+  title        String
+  instructions String
+  dueAt        DateTime?
+  status       HomeworkStatus @default(ASSIGNED)
+  lessonId     String?
+  classId      String?
+  studentId    String?
+  createdById  String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  lesson    Lesson? @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  class     Class?  @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student   User?   @relation("HomeworkStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  createdBy User    @relation("HomeworkCreator", fields: [createdById], references: [id])
+
+  @@index([classId, dueAt])
+  @@index([studentId, dueAt])
+}
+
+model Goal {
+  id            String     @id @default(cuid())
+  studentId     String
+  title         String
+  description   String?
+  targetDate    DateTime?
+  status        GoalStatus @default(ACTIVE)
+  progressPct   Int        @default(0)
+  teacherNotes  String?
+  studentNotes  String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, status])
+}
+
+model DiaryEntry {
+  id         String          @id @default(cuid())
+  studentId  String
+  date       DateTime        @default(now())
+  title      String?
+  body       String
+  confidence Int?
+  tag        String?
+  visibility DiaryVisibility @default(SHARED)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, date])
+}
+
+model TeacherNote {
+  id               String   @id @default(cuid())
+  studentId        String
+  body             String
+  visibleToStudent Boolean  @default(false)
+  createdById      String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  student   User @relation("NoteStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  createdBy User @relation("NoteAuthor", fields: [createdById], references: [id])
+
+  @@index([studentId])
+}
+
+model Recommendation {
+  id          String                 @id @default(cuid())
+  title       String
+  url         String?
+  description String?
+  type        RecommendationType     @default(LINK)
+  topic       String?
+  difficulty  String?
+  approval    RecommendationApproval @default(DRAFT)
+  classId     String?
+  studentId   String?
+  lessonId    String?
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+
+  class   Class?  @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student User?   @relation("RecommendationStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  lesson  Lesson? @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+
+  @@index([classId, approval])
+  @@index([studentId, approval])
+}
+
+/// Portal learning progress persisted in DB (not localStorage).
+model LearningProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  kind      String
+  refId     String?
+  data      Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kind, refId])
+  @@index([userId, kind])
+}

@@ -2,6 +2,20 @@
 
 This package is designed to be copied into a new Cursor project or attached to Cursor Plan Mode.
 
+## Student / Teacher Portal
+
+See **[docs/PORTAL.md](docs/PORTAL.md)** for Auth.js + Postgres setup, env vars, and seed credentials.
+
+| Route | Purpose |
+| --- | --- |
+| `/login` | Real credentials login |
+| `/teacher` | Teacher dashboard (students, classes, lessons, files, homework) |
+| `/portal` | Student My Desk |
+
+Seed teacher (after `npm run db:seed`): `teacher@lrmastery.guru` / `TeacherTemp2026!`
+
+Students are created by teachers (no public signup). Portal files use Blob prefix `portal-files/` — Mandarin studio (`studio-audio/`, `/api/studio/*`) is unchanged.
+
 ## Mandarin course tools (live site)
 
 - **Quiz:** `/english-for-mandarin-speakers`

@@ -32,6 +32,17 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# local portal file uploads (dev fallback when Blob token missing)
+/public/portal-uploads/
+
+# local e2e scratch
+scripts/.last-e2e-student.json
+scripts/.last-auth-check.json
+scripts/.env.portal-db
+.env.portal-db
+
 
 # vercel
 .vercel
