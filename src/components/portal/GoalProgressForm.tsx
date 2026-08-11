@@ -27,7 +27,7 @@ export function GoalProgressForm({
         <input
           name="studentNotes"
           defaultValue={studentNotes}
-          placeholder="How is this going for you?"
+          placeholder="What do you still find hard? What can you do now?"
           className="mt-1 block w-full rounded-lg border border-border bg-white px-2 py-1"
         />
       </label>

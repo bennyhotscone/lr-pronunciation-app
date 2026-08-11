@@ -9,7 +9,7 @@ const studentLinks = [
   { href: "/portal", label: "My Desk" },
   { href: "/portal/join", label: "Join" },
   { href: "/portal/resources", label: "Files" },
-  { href: "/portal/goals", label: "Goals" },
+  { href: "/portal/goals", label: "Skills" },
   { href: "/portal/profile", label: "Profile" },
 ];
 

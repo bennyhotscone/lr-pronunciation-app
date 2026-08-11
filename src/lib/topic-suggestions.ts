@@ -393,3 +393,31 @@ export function matchTopicPack(topic: string): TopicSuggestionPack | null {
   }
   return null;
 }
+
+/**
+ * Turn pack breakdown lines into student competency / can-do checks.
+ * Keeps teacher editor packs as short topic labels.
+ */
+export function competencyChecksFromPack(items: string[]): string[] {
+  return items
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => {
+      if (/^practice:\s*/i.test(item)) {
+        const rest = item.replace(/^practice:\s*/i, "").trim();
+        const body = rest.charAt(0).toLowerCase() + rest.slice(1);
+        return `I can ${body}`;
+      }
+      if (
+        /^form:/i.test(item) ||
+        /\bvs\b/i.test(item) ||
+        /^compared/i.test(item) ||
+        /^meaning/i.test(item)
+      ) {
+        const body = item.charAt(0).toLowerCase() + item.slice(1);
+        return `I understand ${body}`;
+      }
+      const body = item.charAt(0).toLowerCase() + item.slice(1);
+      return `I can use ${body}`;
+    });
+}

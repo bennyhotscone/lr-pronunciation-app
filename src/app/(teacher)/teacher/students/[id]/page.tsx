@@ -75,9 +75,10 @@ export default async function TeacherStudentPage({
       </section>
 
       <section className="card mt-4 rounded-2xl p-4">
-        <h2 className="text-xs font-bold uppercase text-muted">Goals &amp; checklists</h2>
+        <h2 className="text-xs font-bold uppercase text-muted">Skills &amp; competencies</h2>
         <p className="mt-1 text-xs text-muted">
-          Tick steps when the student has earned them — students cannot check these themselves.
+          Confirm competency checks when the student can do them — students can&apos;t tick teacher
+          skills themselves.
         </p>
         <ul className="mt-3 space-y-4">
           {student.goals.map((g) => (

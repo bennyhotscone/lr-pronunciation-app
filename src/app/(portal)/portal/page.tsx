@@ -141,10 +141,10 @@ export default async function MyDeskPage() {
       <section className="desk-panel mt-8 rounded-2xl p-5">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-            Goals
+            Skills checklist
           </h2>
           <Link href="/portal/goals" className="text-xs font-bold text-desk-accent">
-            Open goals →
+            Open skills →
           </Link>
         </div>
         {goals.length ? (
@@ -152,12 +152,13 @@ export default async function MyDeskPage() {
             {goals.map((g) => {
               const total = g.checklistItems.length;
               const done = g.checklistItems.filter((i) => i.done).length;
+              const selfHelp = g.source === "STUDENT_HELP";
               return (
                 <li key={g.id} className="rounded-xl border border-wood/20 bg-paper/80 px-4 py-3">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <p className="font-semibold text-ink">{g.title}</p>
                     <p className="text-xs font-bold text-desk-accent">
-                      {total ? `${done}/${total} steps` : `${g.progressPct}%`}
+                      {total ? `${done}/${total} checks` : `${g.progressPct}%`}
                     </p>
                   </div>
                   {g.description ? (
@@ -186,16 +187,18 @@ export default async function MyDeskPage() {
                         </li>
                       ))}
                       {total > 5 ? (
-                        <li className="text-xs text-ink/45">+{total - 5} more on Goals page</li>
+                        <li className="text-xs text-ink/45">+{total - 5} more on Skills page</li>
                       ) : null}
                     </ul>
                   ) : (
                     <p className="mt-2 text-xs text-ink/45">
-                      Waiting for your teacher to add checklist steps.
+                      Waiting for competency checks to be added.
                     </p>
                   )}
                   <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
-                    Teacher checks steps off — you can&apos;t tick these yourself
+                    {selfHelp
+                      ? "You tick these when you feel competent"
+                      : "Teacher confirms these — you can’t tick teacher skills yourself"}
                   </p>
                 </li>
               );
@@ -203,8 +206,8 @@ export default async function MyDeskPage() {
           </ul>
         ) : (
           <p className="text-sm text-ink/55">
-            No goals yet. When your teacher sets goals for you, the checklist shows up here so you
-            can track progress.
+            No skills checklists yet. Use “I need more help” on a lesson, or wait for your teacher
+            to set skills.
           </p>
         )}
       </section>

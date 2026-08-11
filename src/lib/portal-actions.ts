@@ -796,20 +796,23 @@ export async function studentAddTopicHelpGoal(formData: FormData) {
   }
 
   const { freeHelpPracticeSteps } = await import("@/lib/info-tag-links");
-  const { matchTopicPack } = await import("@/lib/topic-suggestions");
+  const { matchTopicPack, competencyChecksFromPack } = await import(
+    "@/lib/topic-suggestions"
+  );
   const pack = matchTopicPack(topic);
   const steps = [
     ...freeHelpPracticeSteps(topic),
-    ...(pack?.items || []).map((item) => `Focus: ${item}`),
+    ...competencyChecksFromPack(pack?.items || []),
   ]
     .map((s) => s.trim())
     .filter(Boolean)
     .slice(0, 12);
 
-  const title = `Self-study: ${pack?.label || topic}`;
+  const skillLabel = pack?.label || topic;
+  const title = `Skills: ${skillLabel}`;
   const description = classId
-    ? `Extra practice you requested from a classroom lesson (topic: ${topic}). Free links + home checklist — no paid AI.`
-    : `Extra practice you requested (topic: ${topic}). Free links + home checklist — no paid AI.`;
+    ? `Competency checklist for “${skillLabel}” from your classroom. Tick what you understand and can do — not a to-do list.`
+    : `Competency checklist for “${skillLabel}”. Tick what you understand and can do — not a to-do list.`;
 
   const existing = await prisma.goal.findFirst({
     where: {
@@ -822,21 +825,18 @@ export async function studentAddTopicHelpGoal(formData: FormData) {
   });
 
   if (existing) {
-    const have = new Set(existing.checklistItems.map((i) => i.title.toLowerCase()));
-    const missing = steps.filter((s) => !have.has(s.toLowerCase()));
-    if (missing.length) {
-      const start = existing.checklistItems.length;
-      await prisma.goalChecklistItem.createMany({
-        data: missing.map((itemTitle, index) => ({
-          goalId: existing.id,
-          title: itemTitle,
-          sortOrder: start + index,
-        })),
-      });
-    }
+    // Refresh to competency wording when the student asks for help again.
+    await prisma.goalChecklistItem.deleteMany({ where: { goalId: existing.id } });
+    await prisma.goalChecklistItem.createMany({
+      data: steps.map((itemTitle, index) => ({
+        goalId: existing.id,
+        title: itemTitle,
+        sortOrder: index,
+      })),
+    });
     await prisma.goal.update({
       where: { id: existing.id },
-      data: { description, title },
+      data: { description, title, progressPct: 0 },
     });
     await syncGoalProgressFromChecklist(existing.id);
     await prisma.learningProgress.upsert({

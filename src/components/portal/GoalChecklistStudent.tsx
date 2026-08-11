@@ -16,7 +16,7 @@ export function GoalChecklistStudent({
   return (
     <div className="mt-3">
       <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-        Self-study checklist ({done}/{items.length}) — you can tick these
+        Competency checks ({done}/{items.length}) — tick when you can do this
       </p>
       <ul className="mt-2 space-y-1.5">
         {items.map((item) => (

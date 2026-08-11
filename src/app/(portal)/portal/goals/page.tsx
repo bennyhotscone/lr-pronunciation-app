@@ -16,10 +16,13 @@ export default async function GoalsPage() {
 
   return (
     <div>
-      <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">Goals</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
+        Skills checklist
+      </h1>
       <p className="mt-2 text-muted">
-        Teacher goals stay teacher-checked for accountability. Self-study goals from “I need more
-        help” are yours to tick as you practise.
+        Track what you understand and can do. Teacher skills stay teacher-checked for
+        accountability; skills you request for extra help are yours to tick as you get
+        confident.
       </p>
       <ul className="mt-6 space-y-4">
         {goals.map((g) => {
@@ -34,7 +37,7 @@ export default async function GoalsPage() {
                       : "bg-[#ebe8e0] text-muted"
                   }`}
                 >
-                  {selfHelp ? "Self-study" : "Teacher goal"}
+                  {selfHelp ? "My skills" : "Teacher skills"}
                 </span>
                 {g.topicTag ? (
                   <span className="rounded bg-[#f3f2ee] px-2 py-0.5 text-[0.65rem] font-semibold text-muted ring-1 ring-border">
@@ -47,7 +50,7 @@ export default async function GoalsPage() {
               <div className="progress-bar mt-3">
                 <span style={{ width: `${g.progressPct}%` }} />
               </div>
-              <p className="mt-1 text-xs text-muted">{g.progressPct}% complete</p>
+              <p className="mt-1 text-xs text-muted">{g.progressPct}% confident</p>
               {selfHelp ? (
                 <GoalChecklistStudent items={g.checklistItems} />
               ) : (
@@ -57,7 +60,12 @@ export default async function GoalsPage() {
             </li>
           );
         })}
-        {!goals.length ? <li className="text-sm text-muted">No goals yet.</li> : null}
+        {!goals.length ? (
+          <li className="text-sm text-muted">
+            No skills checklists yet. Ask for more help on a lesson topic, or wait for your
+            teacher to set skills for you.
+          </li>
+        ) : null}
       </ul>
     </div>
   );

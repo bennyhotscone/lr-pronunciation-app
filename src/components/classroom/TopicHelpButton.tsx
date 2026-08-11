@@ -131,10 +131,10 @@ export function TopicHelpButton({
           })}
 
           <div className="border-t border-border pt-3">
-            <p className="text-sm font-semibold text-ink">Add to my learning goals</p>
+            <p className="text-sm font-semibold text-ink">Add to my skills checklist</p>
             <p className="mt-1 text-xs text-muted">
-              Creates a self-study goal with a home practice checklist. You can tick your own
-              steps; teacher goals stay teacher-checked.
+              Saves a competency checklist (can-do + understanding). You tick what you can do;
+              teacher skills stay teacher-confirmed.
             </p>
             <form
               className="mt-2"
@@ -146,8 +146,8 @@ export function TopicHelpButton({
                   else {
                     setMsg(
                       res.created
-                        ? "Added to your Goals. Open Goals to track your checklist."
-                        : "Updated your existing self-study goal for this topic.",
+                        ? "Added to your Skills checklist."
+                        : "Updated your skills checklist for this topic.",
                     );
                   }
                 });
@@ -160,14 +160,14 @@ export function TopicHelpButton({
                 disabled={pending || !active}
                 className="btn-primary rounded-md px-3 py-2 text-sm font-bold disabled:opacity-50"
               >
-                {pending ? "Saving…" : "Add to my goals"}
+                {pending ? "Saving…" : "Add to skills checklist"}
               </button>
             </form>
             {msg ? (
               <p className="mt-2 text-sm text-success">
                 {msg}{" "}
                 <Link href="/portal/goals" className="font-bold underline-offset-2 hover:underline">
-                  View Goals →
+                  View Skills →
                 </Link>
               </p>
             ) : null}

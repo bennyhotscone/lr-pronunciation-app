@@ -70,18 +70,15 @@ export function freeInfoTagLinks(tag: string): InfoTagLink[] {
   ];
 }
 
-/** Home-study checklist steps — templates + curated ESL packs, never LLM-generated. */
+/** Home skill-building steps — a few study actions + understanding checks (no LLM). */
 export function freeHelpPracticeSteps(tag: string): string[] {
   const t = normalizeTag(tag);
   if (!t) return [];
 
-  // Lazy import avoided — callers that need pack enrichment should use matchTopicPack.
   return [
-    `Watch one short free video explaining “${t}”`,
-    `Read one free online explanation of “${t}”`,
-    `Do one free practice exercise on “${t}”`,
-    `Write 5 of your own example sentences using “${t}”`,
-    `Review your classroom notes/files about “${t}”`,
+    `I understand what “${t}” is used for in English`,
+    `I have checked a clear explanation of “${t}” (video or reading)`,
+    `I can write my own examples using “${t}”`,
   ];
 }
 
