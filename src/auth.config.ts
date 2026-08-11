@@ -28,13 +28,11 @@ export const authConfig = {
         pathname.startsWith("/english-for-mandarin-speakers/studio/");
       const isLogin = pathname === "/login";
       const isSignup = pathname === "/signup";
-      const isAuthPublic =
-        isLogin ||
-        isSignup ||
-        pathname === "/forgot-password" ||
-        pathname === "/reset-password" ||
-        pathname === "/join" ||
-        pathname.startsWith("/join/");
+      const isPasswordReset =
+        pathname === "/forgot-password" || pathname === "/reset-password";
+      const isJoin = pathname === "/join" || pathname.startsWith("/join/");
+      // Join must stay reachable while logged in (students enter/use invite codes).
+      const isAccountForm = isLogin || isSignup || isPasswordReset;
 
       if ((isPortal || isTeacher) && !isLoggedIn) return false;
 
@@ -53,10 +51,26 @@ export const authConfig = {
       if (isTeacher && role && !isStaff(role)) {
         return Response.redirect(new URL("/portal", request.nextUrl.origin));
       }
-      if (isAuthPublic && isLoggedIn) {
+
+      // Bounce away from login/signup only — never block /join for students.
+      if (isAccountForm && isLoggedIn) {
+        const callback = request.nextUrl.searchParams.get("callbackUrl");
+        const safe =
+          callback &&
+          callback.startsWith("/") &&
+          !callback.startsWith("//") &&
+          (callback.startsWith("/join") ||
+            callback.startsWith("/portal") ||
+            callback.startsWith("/teacher") ||
+            callback.startsWith("/english-for-mandarin-speakers"));
+        if (safe) {
+          return Response.redirect(new URL(callback, request.nextUrl.origin));
+        }
         const dest = isStaff(role) ? "/teacher" : "/portal";
         return Response.redirect(new URL(dest, request.nextUrl.origin));
       }
+
+      if (isJoin) return true;
       return true;
     },
     async jwt({ token, user, trigger, session }) {

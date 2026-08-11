@@ -104,7 +104,10 @@ export async function teacherRegenerateInviteCode(formData: FormData) {
 export async function studentJoinClassroomByCode(formData: FormData) {
   const session = await auth();
   if (!session?.user?.id || session.user.role !== "STUDENT") {
-    return { error: "Sign in as a student to join a classroom." };
+    return {
+      error: "Sign in as a student to join a classroom.",
+      needAuth: true as const,
+    };
   }
   const code = normalizeInviteCode(String(formData.get("code") || ""));
   if (code.length < 4) return { error: "Enter a valid invite code." };
@@ -112,7 +115,7 @@ export async function studentJoinClassroomByCode(formData: FormData) {
   const klass = await prisma.class.findFirst({
     where: { inviteCode: code, archivedAt: null },
   });
-  if (!klass) return { error: "No classroom found for that code." };
+  if (!klass) return { error: "No classroom found for that code. Check it with your teacher." };
 
   await prisma.classMembership.upsert({
     where: {
@@ -123,8 +126,10 @@ export async function studentJoinClassroomByCode(formData: FormData) {
   });
 
   revalidatePath("/portal");
+  revalidatePath("/portal/join");
   revalidatePath(`/portal/classrooms/${klass.id}`);
-  redirect(`/portal/classrooms/${klass.id}`);
+  // Return classId — client navigates. (redirect() from server actions is unreliable here.)
+  return { ok: true as const, classId: klass.id, className: klass.name };
 }
 
 export async function teacherCreateClassPost(formData: FormData) {

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { normalizeInviteCode } from "@/lib/invite-code";
 import { studentJoinClassroomByCode } from "@/lib/classroom-actions";
 import { redirect } from "next/navigation";
+import { JoinCodeForm } from "@/components/classroom/JoinCodeForm";
 
 export const metadata: Metadata = {
   title: "Join classroom",
@@ -23,13 +24,6 @@ export default async function JoinByCodePage({
     where: { inviteCode: code, archivedAt: null },
     select: { id: true, name: true, inviteCode: true },
   });
-
-  if (session?.user?.role === "STUDENT" && klass) {
-    // Auto-join when opening invite link while logged in as student
-    const fd = new FormData();
-    fd.set("code", code);
-    await studentJoinClassroomByCode(fd);
-  }
 
   if (session?.user && session.user.role !== "STUDENT") {
     return (
@@ -55,9 +49,9 @@ export default async function JoinByCodePage({
           Invite not found
         </h1>
         <p className="mt-3 text-muted">Check the code with your teacher and try again.</p>
-        <Link href="/join" className="mt-6 inline-block font-bold underline">
-          Enter a code manually
-        </Link>
+        <div className="mt-6 text-left">
+          <JoinCodeForm />
+        </div>
       </div>
     );
   }
@@ -71,7 +65,8 @@ export default async function JoinByCodePage({
           {klass.name}
         </h1>
         <p className="mt-2 text-muted">
-          Create a free student account (or log in), then you&apos;ll join this classroom automatically.
+          Create a free student account (or log in), then you&apos;ll join this classroom
+          automatically.
         </p>
         <div className="mt-8 grid gap-3">
           <Link
@@ -92,6 +87,28 @@ export default async function JoinByCodePage({
     );
   }
 
-  // Should have redirected via join action
-  redirect(`/portal/classrooms/${klass.id}`);
+  // Logged-in student: join in this request, then hard-navigate
+  const fd = new FormData();
+  fd.set("code", code);
+  const result = await studentJoinClassroomByCode(fd);
+  if (result && "ok" in result && result.ok && result.classId) {
+    redirect(`/portal/classrooms/${result.classId}`);
+  }
+
+  return (
+    <div className="mx-auto max-w-md pt-16 text-center">
+      <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
+        Couldn&apos;t join
+      </h1>
+      <p className="mt-3 text-muted">
+        {"error" in (result || {}) ? (result as { error?: string }).error : "Something went wrong."}
+      </p>
+      <div className="mt-6 text-left">
+        <JoinCodeForm initialCode={code} />
+      </div>
+      <Link href="/portal" className="mt-6 inline-block font-bold underline">
+        Back to My Desk
+      </Link>
+    </div>
+  );
 }

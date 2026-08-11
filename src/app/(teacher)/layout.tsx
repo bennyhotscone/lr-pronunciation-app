@@ -16,8 +16,8 @@ export default async function TeacherLayout({
       <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-12 pt-3 sm:px-6">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-chalk/15 py-3">
           <div className="flex flex-wrap items-center gap-4">
-            <Link href="/" className="text-chalk">
-              <BrandWordmark />
+            <Link href="/" className="text-chalk hover:text-chalk-accent">
+              <BrandWordmark className="text-inherit" />
             </Link>
             <nav className="flex items-center gap-3 text-sm font-bold text-chalk/85">
               <Link href="/teacher" className="hover:text-chalk-accent">

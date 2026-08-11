@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { requireStaff } from "@/lib/portal-access";
 import { StudentAssignTools } from "@/components/portal/StudentAssignTools";
 import { StudentPasswordTools } from "@/components/portal/StudentPasswordTools";
+import { TeacherGoalChecklist } from "@/components/portal/TeacherGoalChecklist";
 import { getAvatar } from "@/lib/avatars";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
 
@@ -26,7 +27,11 @@ export default async function TeacherStudentPage({
       individualLessons: { orderBy: { date: "desc" }, take: 10 },
       individualResources: { orderBy: { createdAt: "desc" }, take: 10 },
       studentHomework: { orderBy: { createdAt: "desc" }, take: 10 },
-      goals: { orderBy: { updatedAt: "desc" }, take: 10 },
+      goals: {
+        orderBy: { updatedAt: "desc" },
+        take: 10,
+        include: { checklistItems: { orderBy: { sortOrder: "asc" } } },
+      },
       diaryEntries: { orderBy: { date: "desc" }, take: 5 },
     },
   });
@@ -97,15 +102,23 @@ export default async function TeacherStudentPage({
             {!student.diaryEntries.length ? <li className="text-muted">None</li> : null}
           </ul>
         </section>
-        <section className="card rounded-2xl p-4">
-          <h2 className="text-xs font-bold uppercase text-muted">Goals</h2>
-          <ul className="mt-2 space-y-1 text-sm">
+        <section className="card rounded-2xl p-4 md:col-span-2">
+          <h2 className="text-xs font-bold uppercase text-muted">Goals &amp; checklists</h2>
+          <p className="mt-1 text-xs text-muted">
+            Tick steps when the student has earned them — students cannot check these themselves.
+          </p>
+          <ul className="mt-3 space-y-4">
             {student.goals.map((g) => (
-              <li key={g.id}>
-                {g.title} ({g.progressPct}%)
+              <li key={g.id} className="rounded-xl border border-border bg-white/50 p-3">
+                <p className="font-semibold text-sm">
+                  {g.title}{" "}
+                  <span className="font-normal text-muted">({g.progressPct}%)</span>
+                </p>
+                {g.description ? <p className="mt-1 text-xs text-muted">{g.description}</p> : null}
+                <TeacherGoalChecklist goalId={g.id} items={g.checklistItems} />
               </li>
             ))}
-            {!student.goals.length ? <li className="text-muted">None</li> : null}
+            {!student.goals.length ? <li className="text-sm text-muted">None yet — add below.</li> : null}
           </ul>
         </section>
       </div>

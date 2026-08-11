@@ -1,5 +1,4 @@
 import { SiteHeader } from "@/components/SiteHeader";
-import { BrandMark } from "@/components/BrandMark";
 
 export default function MarketingLayout({
   children,
@@ -18,9 +17,10 @@ export default function MarketingLayout({
       />
       <SiteHeader />
       <main className="relative z-10 flex-1">{children}</main>
-      <footer className="relative z-10 mt-10 flex items-center justify-center gap-2 opacity-50">
-        <BrandMark size={22} />
-        <span className="text-xs tracking-[0.14em] text-muted">LR MASTERY</span>
+      <footer className="relative z-10 mt-10 flex items-center justify-center opacity-50">
+        <span className="font-[family-name:var(--font-display)] text-xs tracking-[0.14em] text-muted">
+          LR Mastery
+        </span>
       </footer>
     </div>
   );

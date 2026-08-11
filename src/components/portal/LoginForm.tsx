@@ -69,7 +69,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl?: string }) {
       <div className="mt-6 rounded-2xl border border-border bg-surface/60 p-4 text-center">
         <p className="text-sm text-muted">New student?</p>
         <Link
-          href="/signup"
+          href={callbackUrl ? `/signup?callbackUrl=${encodeURIComponent(callbackUrl)}` : "/signup"}
           className="btn-secondary touch-target mt-3 inline-flex w-full items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold"
         >
           Sign up

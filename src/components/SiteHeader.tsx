@@ -11,7 +11,7 @@ export async function SiteHeader() {
 
   return (
     <header className="relative z-20 flex items-center justify-between gap-4 py-3">
-      <Link href="/" className="touch-target">
+      <Link href="/" className="touch-target text-foreground">
         <BrandWordmark />
       </Link>
       <div className="flex items-center gap-2">

@@ -3,13 +3,12 @@
 import { useTransition } from "react";
 import { upsertGoalProgress } from "@/lib/portal-actions";
 
+/** Students can leave notes; they cannot tick checklist items or set % themselves. */
 export function GoalProgressForm({
   goalId,
-  progressPct,
   studentNotes,
 }: {
   goalId: string;
-  progressPct: number;
   studentNotes: string;
 }) {
   const [pending, startTransition] = useTransition();
@@ -23,27 +22,17 @@ export function GoalProgressForm({
       }}
     >
       <input type="hidden" name="goalId" value={goalId} />
-      <label className="text-xs font-semibold">
-        Progress %
-        <input
-          name="progressPct"
-          type="number"
-          min={0}
-          max={100}
-          defaultValue={progressPct}
-          className="mt-1 block w-24 rounded-lg border border-border bg-white px-2 py-1"
-        />
-      </label>
       <label className="min-w-[12rem] flex-1 text-xs font-semibold">
-        Notes
+        Your notes
         <input
           name="studentNotes"
           defaultValue={studentNotes}
+          placeholder="How is this going for you?"
           className="mt-1 block w-full rounded-lg border border-border bg-white px-2 py-1"
         />
       </label>
       <button type="submit" disabled={pending} className="btn-secondary rounded-lg px-3 py-1.5 text-xs font-bold">
-        Save
+        Save notes
       </button>
     </form>
   );

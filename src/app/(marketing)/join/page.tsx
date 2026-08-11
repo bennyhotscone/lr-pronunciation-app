@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { auth } from "@/auth";
 import { JoinCodeForm } from "@/components/classroom/JoinCodeForm";
 
 export const metadata: Metadata = {
   title: "Join with code",
 };
 
-export default function JoinPage() {
+export default async function JoinPage() {
+  const session = await auth();
+  const isStudent = session?.user?.role === "STUDENT";
+  const isStaff =
+    session?.user?.role === "ADMIN" || session?.user?.role === "TEACHER";
+
   return (
     <div className="mx-auto max-w-md pt-16">
       <p className="chip bg-teal/20">Student</p>
@@ -14,18 +20,40 @@ export default function JoinPage() {
         Join a classroom
       </h1>
       <p className="mt-2 text-muted">
-        Enter the invite code from your teacher. Sign up first if you don&apos;t have an account.
+        Enter the invite code from your teacher. You&apos;ll land in that classroom right away.
       </p>
-      <JoinCodeForm />
-      <p className="mt-6 text-sm text-muted">
-        <Link href="/signup" className="font-semibold underline-offset-2 hover:underline">
-          Sign up
-        </Link>
-        {" · "}
-        <Link href="/login" className="font-semibold underline-offset-2 hover:underline">
-          Log in
-        </Link>
-      </p>
+
+      {isStaff ? (
+        <p className="mt-6 rounded-xl border border-border bg-surface/70 px-4 py-3 text-sm text-muted">
+          You&apos;re signed in as staff. Log out (or use a private window) and sign in as a{" "}
+          <strong>student</strong> to join with a code.{" "}
+          <Link href="/teacher" className="font-semibold text-sand-accent underline">
+            Teacher dashboard
+          </Link>
+        </p>
+      ) : (
+        <JoinCodeForm />
+      )}
+
+      {!session?.user ? (
+        <p className="mt-6 text-sm text-muted">
+          No account yet?{" "}
+          <Link href="/signup" className="font-semibold underline-offset-2 hover:underline">
+            Sign up
+          </Link>
+          {" · "}
+          <Link href="/login" className="font-semibold underline-offset-2 hover:underline">
+            Log in
+          </Link>
+        </p>
+      ) : isStudent ? (
+        <p className="mt-6 text-sm text-muted">
+          Signed in as a student.{" "}
+          <Link href="/portal" className="font-semibold underline-offset-2 hover:underline">
+            Back to My Desk
+          </Link>
+        </p>
+      ) : null}
     </div>
   );
 }

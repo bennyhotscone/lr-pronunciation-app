@@ -77,6 +77,77 @@ body {
   min-height: 100dvh;
 }
 
+/* Trapper-keeper vinyl binder behind the student desk */
+.trapper-keeper {
+  position: relative;
+  overflow-x: clip;
+}
+
+.trapper-keeper-binder {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    /* binder rings */
+    radial-gradient(circle at 1.35rem 18%, #2a3340 0 0.35rem, transparent 0.4rem),
+    radial-gradient(circle at 1.35rem 36%, #2a3340 0 0.35rem, transparent 0.4rem),
+    radial-gradient(circle at 1.35rem 54%, #2a3340 0 0.35rem, transparent 0.4rem),
+    radial-gradient(circle at 1.35rem 72%, #2a3340 0 0.35rem, transparent 0.4rem),
+    /* spine strip */
+    linear-gradient(90deg, #1a3d48 0, #1a3d48 2.75rem, transparent 2.75rem),
+    /* vinyl texture + classic teal cover behind paper area */
+    repeating-linear-gradient(
+      125deg,
+      rgba(255, 255, 255, 0.04) 0 2px,
+      transparent 2px 7px
+    ),
+    radial-gradient(ellipse 90% 70% at 70% 20%, rgba(120, 210, 200, 0.18), transparent 55%),
+    linear-gradient(165deg, #1f5c66 0%, #17474f 42%, #12383e 100%);
+  opacity: 0.92;
+}
+
+.trapper-keeper-binder::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  right: max(1rem, calc(50% - 26rem));
+  width: min(11rem, 28vw);
+  height: min(14rem, 32vh);
+  border-radius: 0.75rem 1.25rem 1.25rem 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%),
+    linear-gradient(145deg, #c45c7a, #9a3d58);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  opacity: 0.55;
+  transform: rotate(8deg);
+}
+
+@media (max-width: 640px) {
+  .trapper-keeper-binder::after {
+    opacity: 0.28;
+    width: 7rem;
+    height: 9rem;
+    right: 0.5rem;
+  }
+}
+
+.theme-desk .desk-shell,
+.theme-desk .desk-panel,
+.theme-desk main > * {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-desk .progress-bar {
+  background: rgba(47, 111, 94, 0.18);
+}
+
+.theme-desk .progress-bar > span {
+  background: linear-gradient(90deg, #245646, #2f6f5e);
+}
+
 .board-panel {
   background: linear-gradient(160deg, rgba(26, 47, 36, 0.92), rgba(15, 28, 22, 0.96));
   border: 1px solid rgba(232, 239, 228, 0.12);

@@ -611,24 +611,39 @@ export async function saveDiaryEntry(formData: FormData) {
   return { ok: true as const };
 }
 
+async function syncGoalProgressFromChecklist(goalId: string) {
+  const items = await prisma.goalChecklistItem.findMany({
+    where: { goalId },
+    select: { done: true },
+  });
+  if (!items.length) return null;
+  const done = items.filter((i) => i.done).length;
+  const progressPct = Math.round((done / items.length) * 100);
+  await prisma.goal.update({
+    where: { id: goalId },
+    data: { progressPct },
+  });
+  return progressPct;
+}
+
+/** Students may update notes only — checklist ticks are teacher-only. */
 export async function upsertGoalProgress(formData: FormData) {
   const session = await auth();
   if (!session?.user || session.user.role !== "STUDENT") {
     return { error: "Unauthorized" };
   }
   const goalId = String(formData.get("goalId") || "");
-  const progressPct = Number(formData.get("progressPct") || 0);
   const studentNotes = String(formData.get("studentNotes") || "").trim();
 
   const goal = await prisma.goal.findFirst({
     where: { id: goalId, studentId: session.user.id },
+    include: { checklistItems: { select: { id: true } } },
   });
   if (!goal) return { error: "Goal not found." };
 
   await prisma.goal.update({
     where: { id: goalId },
     data: {
-      progressPct: Math.max(0, Math.min(100, progressPct)),
       studentNotes: studentNotes || null,
     },
   });
@@ -645,10 +660,10 @@ export async function upsertGoalProgress(formData: FormData) {
       userId: session.user.id,
       kind: "goal",
       refId: goalId,
-      data: { progressPct, studentNotes },
+      data: { progressPct: goal.progressPct, studentNotes },
     },
     update: {
-      data: { progressPct, studentNotes },
+      data: { progressPct: goal.progressPct, studentNotes },
     },
   });
 
@@ -663,17 +678,97 @@ export async function teacherAddGoal(formData: FormData) {
   const studentId = String(formData.get("studentId") || "");
   const title = String(formData.get("title") || "").trim();
   const description = String(formData.get("description") || "").trim();
+  const checklistRaw = String(formData.get("checklistItems") || "");
+  const checklistTitles = checklistRaw
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, 40);
   if (!studentId || !title) return { error: "Student and title required." };
+
+  const student = await prisma.user.findFirst({
+    where: { id: studentId, role: "STUDENT" },
+    select: { id: true },
+  });
+  if (!student) return { error: "Student not found." };
 
   await prisma.goal.create({
     data: {
       studentId,
       title,
       description: description || null,
+      checklistItems: checklistTitles.length
+        ? {
+            create: checklistTitles.map((itemTitle, index) => ({
+              title: itemTitle,
+              sortOrder: index,
+            })),
+          }
+        : undefined,
     },
   });
   revalidatePath(`/teacher/students/${studentId}`);
   revalidatePath("/portal/goals");
+  return { ok: true as const };
+}
+
+export async function teacherAddGoalChecklistItem(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+  const goalId = String(formData.get("goalId") || "");
+  const title = String(formData.get("title") || "").trim();
+  if (!goalId || !title) return { error: "Goal and checklist step required." };
+
+  const goal = await prisma.goal.findUnique({ where: { id: goalId } });
+  if (!goal) return { error: "Goal not found." };
+
+  const last = await prisma.goalChecklistItem.findFirst({
+    where: { goalId },
+    orderBy: { sortOrder: "desc" },
+    select: { sortOrder: true },
+  });
+
+  await prisma.goalChecklistItem.create({
+    data: {
+      goalId,
+      title,
+      sortOrder: (last?.sortOrder ?? -1) + 1,
+    },
+  });
+  await syncGoalProgressFromChecklist(goalId);
+
+  revalidatePath(`/teacher/students/${goal.studentId}`);
+  revalidatePath("/portal/goals");
+  revalidatePath("/portal");
+  return { ok: true as const };
+}
+
+/** Only teachers/admins can tick checklist items (accountability). */
+export async function teacherToggleGoalChecklistItem(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+  const itemId = String(formData.get("itemId") || "");
+  if (!itemId) return { error: "Item required." };
+
+  const item = await prisma.goalChecklistItem.findUnique({
+    where: { id: itemId },
+    include: { goal: true },
+  });
+  if (!item) return { error: "Checklist item not found." };
+
+  const nextDone = !item.done;
+  await prisma.goalChecklistItem.update({
+    where: { id: itemId },
+    data: {
+      done: nextDone,
+      doneAt: nextDone ? new Date() : null,
+    },
+  });
+  await syncGoalProgressFromChecklist(item.goalId);
+
+  revalidatePath(`/teacher/students/${item.goal.studentId}`);
+  revalidatePath("/portal/goals");
+  revalidatePath("/portal");
   return { ok: true as const };
 }
 

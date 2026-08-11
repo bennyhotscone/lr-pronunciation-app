@@ -224,9 +224,26 @@ model Goal {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
-  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student         User                 @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  checklistItems  GoalChecklistItem[]
 
   @@index([studentId, status])
+}
+
+/// Checklist steps on a student goal. Only teachers/admins can mark items done (accountability).
+model GoalChecklistItem {
+  id        String    @id @default(cuid())
+  goalId    String
+  title     String
+  sortOrder Int       @default(0)
+  done      Boolean   @default(false)
+  doneAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  goal Goal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  @@index([goalId, sortOrder])
 }
 
 model DiaryEntry {

@@ -34,6 +34,12 @@ Public `/signup` is **STUDENT only**. Seed admin already teaches.
 3. Join completes → https://lrmastery.guru/portal/classrooms/[id]  
 4. Use **Stream**, **Class diary**, and **Files** (also listed on My Desk / All files)
 
+## Goals & checklist accountability
+
+- Teachers add goals on a student page, with optional checklist steps (one per line).
+- Students see goals + checklist on **My Desk → Goals** and can leave notes.
+- **Only teachers/admins can tick checklist items.** Progress % updates from ticks automatically.
+
 ## Prisma claim (if DB expires)
 
 https://create-db.prisma.io/claim?projectID=proj_d6g83y9mw7zy52fxwngbfzhs

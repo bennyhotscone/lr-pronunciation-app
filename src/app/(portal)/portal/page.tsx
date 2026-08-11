@@ -21,7 +21,7 @@ export default async function MyDeskPage() {
   const name =
     profile?.preferredName || session.user.preferredName || session.user.name || "there";
 
-  const [classes, postsRaw, files, homework] = await Promise.all([
+  const [classes, postsRaw, files, homework, goals] = await Promise.all([
     prisma.class.findMany({
       where: { id: { in: classIds } },
       orderBy: { name: "asc" },
@@ -59,6 +59,12 @@ export default async function MyDeskPage() {
       orderBy: { dueAt: "asc" },
       take: 6,
       include: { class: { select: { name: true } } },
+    }),
+    prisma.goal.findMany({
+      where: { studentId, status: "ACTIVE" },
+      include: { checklistItems: { orderBy: { sortOrder: "asc" } } },
+      orderBy: { updatedAt: "desc" },
+      take: 4,
     }),
   ]);
 
@@ -101,7 +107,7 @@ export default async function MyDeskPage() {
           <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
             Your classrooms
           </h2>
-          <Link href="/join" className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline">
+          <Link href="/portal/join" className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline">
             Join with invite code →
           </Link>
         </div>
@@ -124,10 +130,81 @@ export default async function MyDeskPage() {
         ) : (
           <p className="mt-3 text-sm text-ink/55">
             You are not in a classroom yet. Ask your teacher for an invite code or link, then{" "}
-            <Link href="/join" className="font-semibold text-desk-accent underline">
+            <Link href="/portal/join" className="font-semibold text-desk-accent underline">
               join here
             </Link>
             .
+          </p>
+        )}
+      </section>
+
+      <section className="desk-panel mt-8 rounded-2xl p-5">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
+            Goals
+          </h2>
+          <Link href="/portal/goals" className="text-xs font-bold text-desk-accent">
+            Open goals →
+          </Link>
+        </div>
+        {goals.length ? (
+          <ul className="space-y-4">
+            {goals.map((g) => {
+              const total = g.checklistItems.length;
+              const done = g.checklistItems.filter((i) => i.done).length;
+              return (
+                <li key={g.id} className="rounded-xl border border-wood/20 bg-paper/80 px-4 py-3">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <p className="font-semibold text-ink">{g.title}</p>
+                    <p className="text-xs font-bold text-desk-accent">
+                      {total ? `${done}/${total} steps` : `${g.progressPct}%`}
+                    </p>
+                  </div>
+                  {g.description ? (
+                    <p className="mt-1 text-sm text-ink/55">{g.description}</p>
+                  ) : null}
+                  <div className="progress-bar mt-3">
+                    <span style={{ width: `${g.progressPct}%` }} />
+                  </div>
+                  {total ? (
+                    <ul className="mt-3 space-y-1.5">
+                      {g.checklistItems.slice(0, 5).map((item) => (
+                        <li key={item.id} className="flex items-start gap-2 text-sm text-ink/80">
+                          <span
+                            className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
+                              item.done
+                                ? "border-desk-accent bg-desk-accent text-paper"
+                                : "border-wood/40 bg-white text-transparent"
+                            }`}
+                            aria-hidden
+                          >
+                            ✓
+                          </span>
+                          <span className={item.done ? "text-ink/45 line-through" : ""}>
+                            {item.title}
+                          </span>
+                        </li>
+                      ))}
+                      {total > 5 ? (
+                        <li className="text-xs text-ink/45">+{total - 5} more on Goals page</li>
+                      ) : null}
+                    </ul>
+                  ) : (
+                    <p className="mt-2 text-xs text-ink/45">
+                      Waiting for your teacher to add checklist steps.
+                    </p>
+                  )}
+                  <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
+                    Teacher checks steps off — you can&apos;t tick these yourself
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="text-sm text-ink/55">
+            No goals yet. When your teacher sets goals for you, the checklist shows up here so you
+            can track progress.
           </p>
         )}
       </section>

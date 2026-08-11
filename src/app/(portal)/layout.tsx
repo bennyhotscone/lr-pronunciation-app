@@ -7,7 +7,7 @@ import { BrandWordmark } from "@/components/BrandMark";
 
 const studentLinks = [
   { href: "/portal", label: "My Desk" },
-  { href: "/join", label: "Join" },
+  { href: "/portal/join", label: "Join" },
   { href: "/portal/resources", label: "Files" },
   { href: "/portal/goals", label: "Goals" },
   { href: "/portal/profile", label: "Profile" },
@@ -27,11 +27,12 @@ export default async function PortalLayout({
     profile?.preferredName || session.user.preferredName || session.user.name || "Student";
 
   return (
-    <div className="theme-desk min-h-dvh">
-      <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
+    <div className="theme-desk trapper-keeper min-h-dvh">
+      <div className="trapper-keeper-binder" aria-hidden />
+      <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
         <header className="flex items-center justify-between gap-3 border-b border-wood/25 py-3">
-          <Link href="/">
-            <BrandWordmark />
+          <Link href="/" className="text-ink">
+            <BrandWordmark className="text-inherit" />
           </Link>
           <div className="flex items-center gap-2">
             <Link
