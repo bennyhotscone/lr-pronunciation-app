@@ -811,8 +811,8 @@ export async function studentAddTopicHelpGoal(formData: FormData) {
   const skillLabel = pack?.label || topic;
   const title = `Skills: ${skillLabel}`;
   const description = classId
-    ? `Competency checklist for “${skillLabel}” from your classroom. Tick what you understand and can do — not a to-do list.`
-    : `Competency checklist for “${skillLabel}”. Tick what you understand and can do — not a to-do list.`;
+    ? `Competency checklist for “${skillLabel}” from your classroom. Only your teacher can tick these off.`
+    : `Competency checklist for “${skillLabel}”. Only your teacher can tick these off.`;
 
   const existing = await prisma.goal.findFirst({
     where: {
@@ -900,58 +900,9 @@ export async function studentAddTopicHelpGoal(formData: FormData) {
   return { ok: true as const, goalId: goal.id, created: true as const };
 }
 
-/** Students may tick checklist items only on their own STUDENT_HELP goals. */
-export async function studentToggleSelfHelpChecklistItem(formData: FormData) {
-  const session = await auth();
-  if (!session?.user || session.user.role !== "STUDENT") {
-    return { error: "Unauthorized" };
-  }
-  const itemId = String(formData.get("itemId") || "");
-  if (!itemId) return { error: "Item required." };
-
-  const item = await prisma.goalChecklistItem.findUnique({
-    where: { id: itemId },
-    include: { goal: true },
-  });
-  if (!item || item.goal.studentId !== session.user.id) {
-    return { error: "Checklist item not found." };
-  }
-  if (item.goal.source !== "STUDENT_HELP") {
-    return { error: "Only your teacher can mark official goal steps." };
-  }
-
-  const nextDone = !item.done;
-  await prisma.goalChecklistItem.update({
-    where: { id: itemId },
-    data: {
-      done: nextDone,
-      doneAt: nextDone ? new Date() : null,
-    },
-  });
-  const progressPct = await syncGoalProgressFromChecklist(item.goalId);
-
-  await prisma.learningProgress.upsert({
-    where: {
-      userId_kind_refId: {
-        userId: session.user.id,
-        kind: "goal",
-        refId: item.goalId,
-      },
-    },
-    create: {
-      userId: session.user.id,
-      kind: "goal",
-      refId: item.goalId,
-      data: { progressPct: progressPct ?? 0, source: "STUDENT_HELP" },
-    },
-    update: {
-      data: { progressPct: progressPct ?? 0, source: "STUDENT_HELP" },
-    },
-  });
-
-  revalidatePath("/portal/goals");
-  revalidatePath("/portal");
-  return { ok: true as const };
+/** Students cannot tick checklist items — only teachers/admins confirm competency. */
+export async function studentToggleSelfHelpChecklistItem(_formData: FormData) {
+  return { error: "Only your teacher can tick skills off. You can leave notes instead." };
 }
 
 export async function teacherAddRecommendation(formData: FormData) {

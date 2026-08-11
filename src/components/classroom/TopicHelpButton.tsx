@@ -133,8 +133,8 @@ export function TopicHelpButton({
           <div className="border-t border-border pt-3">
             <p className="text-sm font-semibold text-ink">Add to my skills checklist</p>
             <p className="mt-1 text-xs text-muted">
-              Saves a competency checklist (can-do + understanding). You tick what you can do;
-              teacher skills stay teacher-confirmed.
+              Asks your teacher to track this topic as competencies. Only the teacher can tick
+              checks off — you can leave notes.
             </p>
             <form
               className="mt-2"
@@ -146,8 +146,8 @@ export function TopicHelpButton({
                   else {
                     setMsg(
                       res.created
-                        ? "Added to your Skills checklist."
-                        : "Updated your skills checklist for this topic.",
+                        ? "Added to your Skills checklist. Your teacher confirms the checks."
+                        : "Updated this topic on your Skills checklist.",
                     );
                   }
                 });

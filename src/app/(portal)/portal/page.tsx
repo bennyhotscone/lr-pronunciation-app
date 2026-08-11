@@ -189,7 +189,7 @@ export default async function MyDeskPage() {
                       </p>
                     )}
                     <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
-                      Teacher confirms these — they guide class &amp; homework
+                      Only your teacher can tick these off — they guide class &amp; homework
                     </p>
                   </li>
                 );
@@ -250,7 +250,7 @@ export default async function MyDeskPage() {
                         ))}
                         {total > 4 ? (
                           <li className="text-xs text-ink/45">
-                            +{total - 4} more — tick these on the{" "}
+                            +{total - 4} more on the{" "}
                             <Link href="/portal/goals" className="font-semibold text-desk-accent">
                               Skills page
                             </Link>
@@ -258,6 +258,9 @@ export default async function MyDeskPage() {
                         ) : null}
                       </ul>
                     ) : null}
+                    <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
+                      Only your teacher can tick these off
+                    </p>
                   </li>
                 );
               })}

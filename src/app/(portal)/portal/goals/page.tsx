@@ -2,7 +2,6 @@ import { prisma } from "@/lib/db";
 import { requireRole } from "@/lib/portal-access";
 import { GoalProgressForm } from "@/components/portal/GoalProgressForm";
 import { GoalChecklistReadOnly } from "@/components/portal/GoalChecklistReadOnly";
-import { GoalChecklistStudent } from "@/components/portal/GoalChecklistStudent";
 
 export default async function GoalsPage() {
   const session = await requireRole("STUDENT");
@@ -20,9 +19,8 @@ export default async function GoalsPage() {
         Skills checklist
       </h1>
       <p className="mt-2 text-muted">
-        Track what you understand and can do. Teacher skills stay teacher-checked for
-        accountability; skills you request for extra help are yours to tick as you get
-        confident.
+        Competency checks for class and homework. Only your teacher can tick items off — you can
+        leave notes about how it feels.
       </p>
       <ul className="mt-6 space-y-4">
         {goals.map((g) => {
@@ -37,7 +35,7 @@ export default async function GoalsPage() {
                       : "bg-[#ebe8e0] text-muted"
                   }`}
                 >
-                  {selfHelp ? "My skills" : "Teacher skills"}
+                  {selfHelp ? "Extra help request" : "Class focus"}
                 </span>
                 {g.topicTag ? (
                   <span className="rounded bg-[#f3f2ee] px-2 py-0.5 text-[0.65rem] font-semibold text-muted ring-1 ring-border">
@@ -50,12 +48,8 @@ export default async function GoalsPage() {
               <div className="progress-bar mt-3">
                 <span style={{ width: `${g.progressPct}%` }} />
               </div>
-              <p className="mt-1 text-xs text-muted">{g.progressPct}% confident</p>
-              {selfHelp ? (
-                <GoalChecklistStudent items={g.checklistItems} />
-              ) : (
-                <GoalChecklistReadOnly items={g.checklistItems} />
-              )}
+              <p className="mt-1 text-xs text-muted">{g.progressPct}% confirmed by teacher</p>
+              <GoalChecklistReadOnly items={g.checklistItems} />
               <GoalProgressForm goalId={g.id} studentNotes={g.studentNotes || ""} />
             </li>
           );

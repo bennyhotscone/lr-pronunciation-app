@@ -8,7 +8,7 @@ export function GoalChecklistReadOnly({
   return (
     <div className="mt-3">
       <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-        Competency checklist ({done}/{items.length}) — teacher confirms these
+        Competency checklist ({done}/{items.length}) — only your teacher ticks these
       </p>
       <ul className="mt-2 space-y-1.5">
         {items.map((item) => (
