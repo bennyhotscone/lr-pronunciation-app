@@ -21,7 +21,7 @@ export default async function MyDeskPage() {
   const name =
     profile?.preferredName || session.user.preferredName || session.user.name || "there";
 
-  const [classes, postsRaw, files, homework, goals] = await Promise.all([
+  const [classes, postsRaw, files, homework, goalsRaw] = await Promise.all([
     prisma.class.findMany({
       where: { id: { in: classIds } },
       orderBy: { name: "asc" },
@@ -60,13 +60,23 @@ export default async function MyDeskPage() {
       take: 6,
       include: { class: { select: { name: true } } },
     }),
+    // Always show every active skill — this is the desk focus rail.
     prisma.goal.findMany({
       where: { studentId, status: "ACTIVE" },
       include: { checklistItems: { orderBy: { sortOrder: "asc" } } },
       orderBy: { updatedAt: "desc" },
-      take: 4,
     }),
   ]);
+
+  // Teacher focus skills first (class / homework direction), then student self-study.
+  const goals = [...goalsRaw].sort((a, b) => {
+    const aTeach = a.source === "STUDENT_HELP" ? 1 : 0;
+    const bTeach = b.source === "STUDENT_HELP" ? 1 : 0;
+    if (aTeach !== bTeach) return aTeach - bTeach;
+    return b.updatedAt.getTime() - a.updatedAt.getTime();
+  });
+  const focusSkills = goals.filter((g) => g.source !== "STUDENT_HELP");
+  const mySkills = goals.filter((g) => g.source === "STUDENT_HELP");
 
   const posts: StreamPost[] = postsRaw.map((p) => ({
     id: p.id,
@@ -102,12 +112,169 @@ export default async function MyDeskPage() {
         </div>
       </div>
 
+      {/* Always-visible focus rail — skills decide class + homework focus */}
+      <section className="desk-panel mt-8 rounded-2xl border-desk-accent/25 p-5 ring-1 ring-desk-accent/20">
+        <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
+              Always on your desk
+            </p>
+            <h2 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-ink">
+              Skills we&apos;re focusing on
+            </h2>
+            <p className="mt-1 text-sm text-ink/60">
+              This is what class and homework are aiming at — competency, not a to-do list.
+            </p>
+          </div>
+          <Link
+            href="/portal/goals"
+            className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
+          >
+            Full skills page →
+          </Link>
+        </div>
+
+        {focusSkills.length ? (
+          <div className="mt-4 space-y-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-muted">
+              Teacher focus ({focusSkills.length})
+            </p>
+            <ul className="space-y-4">
+              {focusSkills.map((g) => {
+                const total = g.checklistItems.length;
+                const done = g.checklistItems.filter((i) => i.done).length;
+                return (
+                  <li
+                    key={g.id}
+                    className="rounded-xl border border-desk-accent/25 bg-paper px-4 py-3"
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <p className="font-semibold text-ink">{g.title}</p>
+                      <p className="text-xs font-bold text-desk-accent">
+                        {total ? `${done}/${total} checks` : `${g.progressPct}%`}
+                      </p>
+                    </div>
+                    {g.description ? (
+                      <p className="mt-1 text-sm text-ink/55">{g.description}</p>
+                    ) : null}
+                    <div className="progress-bar mt-3">
+                      <span style={{ width: `${g.progressPct}%` }} />
+                    </div>
+                    {total ? (
+                      <ul className="mt-3 space-y-1.5">
+                        {g.checklistItems.map((item) => (
+                          <li
+                            key={item.id}
+                            className="flex items-start gap-2 text-sm text-ink/80"
+                          >
+                            <span
+                              className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
+                                item.done
+                                  ? "border-desk-accent bg-desk-accent text-paper"
+                                  : "border-wood/40 bg-white text-transparent"
+                              }`}
+                              aria-hidden
+                            >
+                              ✓
+                            </span>
+                            <span className={item.done ? "text-ink/45 line-through" : ""}>
+                              {item.title}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-2 text-xs text-ink/45">
+                        Waiting for competency checks from your teacher.
+                      </p>
+                    )}
+                    <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
+                      Teacher confirms these — they guide class &amp; homework
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : (
+          <p className="mt-4 rounded-xl border border-dashed border-wood/30 bg-paper/70 px-4 py-3 text-sm text-ink/60">
+            No teacher focus skills yet. When your teacher sets skills for you, they stay here so
+            you always know what class and homework are building toward.
+          </p>
+        )}
+
+        {mySkills.length ? (
+          <div className="mt-6 space-y-3 border-t border-wood/15 pt-5">
+            <p className="text-xs font-bold uppercase tracking-wide text-muted">
+              Extra help I requested ({mySkills.length})
+            </p>
+            <ul className="space-y-3">
+              {mySkills.map((g) => {
+                const total = g.checklistItems.length;
+                const done = g.checklistItems.filter((i) => i.done).length;
+                return (
+                  <li
+                    key={g.id}
+                    className="rounded-xl border border-wood/20 bg-paper/80 px-4 py-3"
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <p className="font-semibold text-ink">{g.title}</p>
+                      <p className="text-xs font-bold text-desk-accent">
+                        {total ? `${done}/${total} checks` : `${g.progressPct}%`}
+                      </p>
+                    </div>
+                    <div className="progress-bar mt-2">
+                      <span style={{ width: `${g.progressPct}%` }} />
+                    </div>
+                    {total ? (
+                      <ul className="mt-2 space-y-1">
+                        {g.checklistItems.slice(0, 4).map((item) => (
+                          <li
+                            key={item.id}
+                            className="flex items-start gap-2 text-sm text-ink/80"
+                          >
+                            <span
+                              className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
+                                item.done
+                                  ? "border-desk-accent bg-desk-accent text-paper"
+                                  : "border-wood/40 bg-white text-transparent"
+                              }`}
+                              aria-hidden
+                            >
+                              ✓
+                            </span>
+                            <span className={item.done ? "text-ink/45 line-through" : ""}>
+                              {item.title}
+                            </span>
+                          </li>
+                        ))}
+                        {total > 4 ? (
+                          <li className="text-xs text-ink/45">
+                            +{total - 4} more — tick these on the{" "}
+                            <Link href="/portal/goals" className="font-semibold text-desk-accent">
+                              Skills page
+                            </Link>
+                          </li>
+                        ) : null}
+                      </ul>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
+      </section>
+
       <section className="desk-panel mt-8 rounded-2xl p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
             Your classrooms
           </h2>
-          <Link href="/portal/join" className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline">
+          <Link
+            href="/portal/join"
+            className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
+          >
             Join with invite code →
           </Link>
         </div>
@@ -134,80 +301,6 @@ export default async function MyDeskPage() {
               join here
             </Link>
             .
-          </p>
-        )}
-      </section>
-
-      <section className="desk-panel mt-8 rounded-2xl p-5">
-        <div className="mb-3 flex items-center justify-between gap-2">
-          <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-            Skills checklist
-          </h2>
-          <Link href="/portal/goals" className="text-xs font-bold text-desk-accent">
-            Open skills →
-          </Link>
-        </div>
-        {goals.length ? (
-          <ul className="space-y-4">
-            {goals.map((g) => {
-              const total = g.checklistItems.length;
-              const done = g.checklistItems.filter((i) => i.done).length;
-              const selfHelp = g.source === "STUDENT_HELP";
-              return (
-                <li key={g.id} className="rounded-xl border border-wood/20 bg-paper/80 px-4 py-3">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <p className="font-semibold text-ink">{g.title}</p>
-                    <p className="text-xs font-bold text-desk-accent">
-                      {total ? `${done}/${total} checks` : `${g.progressPct}%`}
-                    </p>
-                  </div>
-                  {g.description ? (
-                    <p className="mt-1 text-sm text-ink/55">{g.description}</p>
-                  ) : null}
-                  <div className="progress-bar mt-3">
-                    <span style={{ width: `${g.progressPct}%` }} />
-                  </div>
-                  {total ? (
-                    <ul className="mt-3 space-y-1.5">
-                      {g.checklistItems.slice(0, 5).map((item) => (
-                        <li key={item.id} className="flex items-start gap-2 text-sm text-ink/80">
-                          <span
-                            className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
-                              item.done
-                                ? "border-desk-accent bg-desk-accent text-paper"
-                                : "border-wood/40 bg-white text-transparent"
-                            }`}
-                            aria-hidden
-                          >
-                            ✓
-                          </span>
-                          <span className={item.done ? "text-ink/45 line-through" : ""}>
-                            {item.title}
-                          </span>
-                        </li>
-                      ))}
-                      {total > 5 ? (
-                        <li className="text-xs text-ink/45">+{total - 5} more on Skills page</li>
-                      ) : null}
-                    </ul>
-                  ) : (
-                    <p className="mt-2 text-xs text-ink/45">
-                      Waiting for competency checks to be added.
-                    </p>
-                  )}
-                  <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
-                    {selfHelp
-                      ? "You tick these when you feel competent"
-                      : "Teacher confirms these — you can’t tick teacher skills yourself"}
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="text-sm text-ink/55">
-            No skills checklists yet. Use “I need more help” on a lesson, or wait for your teacher
-            to set skills.
           </p>
         )}
       </section>
@@ -243,6 +336,9 @@ export default async function MyDeskPage() {
           <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
             Homework
           </h2>
+          <p className="mt-1 text-xs text-ink/50">
+            Homework should line up with the skills at the top of your desk.
+          </p>
           <ul className="mt-3 space-y-2 text-sm">
             {homework.map((h) => (
               <li key={h.id}>
