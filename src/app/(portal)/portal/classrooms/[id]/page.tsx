@@ -2,11 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { requireRole, studentCanAccessClass } from "@/lib/portal-access";
-import { ClassroomStream, type StreamPost } from "@/components/classroom/ClassroomStream";
-import { ClassFilesList } from "@/components/classroom/ClassFilesList";
-import { InfoTag } from "@/components/classroom/InfoTag";
+import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomStream";
+import {
+  ClassroomOrganiser,
+  type OrganiserTab,
+} from "@/components/classroom/ClassroomOrganiser";
 import { TagExplorePanel } from "@/components/classroom/TagExplorePanel";
-import { portalResourceDownloadHref } from "@/lib/portal-files";
 import { buildFreeLessonSummary } from "@/lib/lesson-summary";
 import { normalizeTag } from "@/lib/info-tag-links";
 
@@ -22,12 +23,17 @@ export default async function StudentClassroomPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tag?: string }>;
+  searchParams: Promise<{ tag?: string; tab?: string; day?: string }>;
 }) {
   const session = await requireRole("STUDENT");
   const { id } = await params;
   const sp = await searchParams;
   const activeTag = sp.tag ? normalizeTag(sp.tag) : null;
+  const initialTab = (
+    ["stream", "timeline", "lessons", "calendar", "files", "tests"] as const
+  ).includes(sp.tab as OrganiserTab)
+    ? (sp.tab as OrganiserTab)
+    : "stream";
 
   const allowed = await studentCanAccessClass(session.user.id, id);
   if (!allowed) notFound();
@@ -56,7 +62,7 @@ export default async function StudentClassroomPage({
       where: { classId: id },
       include: { subEntries: { orderBy: { sortOrder: "asc" } }, attachments: true },
       orderBy: { day: "desc" },
-      take: 20,
+      take: 80,
     }),
     prisma.resource.findMany({
       where: { classId: id },
@@ -87,15 +93,31 @@ export default async function StudentClassroomPage({
     })),
   }));
 
-  const filteredPosts = activeTag
-    ? posts.filter((p) => (p.tags || []).map(normalizeTag).includes(activeTag))
-    : posts;
-  const filteredLessons = activeTag
-    ? lessons.filter((l) => (l.tags || []).map(normalizeTag).includes(activeTag))
-    : lessons;
-  const filteredFiles = activeTag
-    ? files.filter((f) => (f.tags || []).map(normalizeTag).includes(activeTag))
-    : files;
+  const streamLessons: StreamLesson[] = lessons.map((d) => ({
+    id: d.id,
+    day: d.day.toISOString(),
+    title: d.title,
+    summary: buildFreeLessonSummary({
+      title: d.title,
+      summary: d.summary,
+      subEntries: d.subEntries,
+      tags: d.tags || [],
+    }),
+    tags: d.tags || [],
+    createdAt: d.createdAt.toISOString(),
+    subEntries: d.subEntries.map((s) => ({
+      id: s.id,
+      kind: s.kind,
+      title: s.title,
+      body: s.body,
+    })),
+    attachments: d.attachments.map((a) => ({
+      id: a.id,
+      filename: a.filename,
+      mimeType: a.mimeType,
+      resourceId: a.resourceId,
+    })),
+  }));
 
   return (
     <div className="space-y-8">
@@ -107,7 +129,7 @@ export default async function StudentClassroomPage({
           {klass.name}
         </h1>
         <p className="mt-1 text-base text-muted">
-          Stream · lessons · files — click a tag for free study links
+          Organiser: stream, timeline, lessons, calendar, files, and tests
         </p>
       </div>
 
@@ -126,133 +148,33 @@ export default async function StudentClassroomPage({
         />
       ) : null}
 
-      <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-        <ClassroomStream
-          classId={id}
-          posts={filteredPosts}
-          canPost={false}
-          knownTags={knownTags}
-        />
-
-        <div className="space-y-6">
-          <section className="card rounded-xl p-5">
-            <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-              Files
-            </h2>
-            <p className="mt-1 text-sm text-muted">
-              Download again anytime — these stay in your classroom.
-            </p>
-            <div className="mt-3">
-              <ClassFilesList
-                files={filteredFiles.map((f) => ({
-                  id: f.id,
-                  title: f.title,
-                  filename: f.filename,
-                  tags: f.tags || [],
-                }))}
-                knownTags={knownTags}
-              />
-            </div>
-            <Link
-              href="/portal/resources"
-              className="mt-3 inline-block text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
-            >
-              All my files →
-            </Link>
-          </section>
-
-          <section className="card rounded-xl p-5">
-            <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-              Lessons
-            </h2>
-            <ul className="mt-3 space-y-5">
-              {filteredLessons.map((d) => {
-                const summary = buildFreeLessonSummary({
-                  title: d.title,
-                  summary: d.summary,
-                  subEntries: d.subEntries,
-                  tags: d.tags || [],
-                });
-                return (
-                  <li key={d.id} className="border-b border-border pb-5 last:border-0 last:pb-0">
-                    <p className="font-semibold text-ink">
-                      {d.day.toISOString().slice(0, 10)}
-                      {d.title ? ` · ${d.title}` : ""}
-                    </p>
-
-                    <div className="mt-3 rounded-lg border border-border bg-[#f3f2ee] p-3">
-                      <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
-                        Summary
-                      </p>
-                      <p className="mt-1 text-sm leading-relaxed text-ink">{summary}</p>
-                      <p className="mt-2 text-[0.7rem] text-muted">
-                        Free summary from the lesson notes — no paid AI.
-                      </p>
-                    </div>
-
-                    {(d.tags || []).length ? (
-                      <div className="mt-3">
-                        <p className="text-xs font-bold uppercase tracking-wide text-muted">
-                          Info tags
-                        </p>
-                        <p className="mt-1 flex flex-wrap gap-1.5">
-                          {d.tags.map((t) => (
-                            <InfoTag
-                              key={t}
-                              tag={t}
-                              classId={id}
-                              active={activeTag === normalizeTag(t)}
-                            />
-                          ))}
-                        </p>
-                      </div>
-                    ) : null}
-
-                    {d.subEntries.length ? (
-                      <ul className="mt-3 space-y-1.5 text-sm text-muted">
-                        {d.subEntries.map((s) => (
-                          <li key={s.id}>
-                            <span className="text-xs font-bold uppercase text-desk-accent">
-                              {s.kind}
-                            </span>{" "}
-                            <span className="text-ink">{s.title}</span>
-                            {s.body ? <span> — {s.body}</span> : null}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    {d.attachments.length ? (
-                      <ul className="mt-2 text-sm">
-                        {d.attachments.map((a) => (
-                          <li key={a.id}>
-                            {a.resourceId ? (
-                              <a
-                                href={portalResourceDownloadHref(a.resourceId)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-semibold text-desk-accent underline-offset-2 hover:underline"
-                              >
-                                {a.filename}
-                              </a>
-                            ) : (
-                              <span className="text-ink">{a.filename}</span>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </li>
-                );
-              })}
-              {!filteredLessons.length ? (
-                <li className="text-sm text-muted">
-                  {activeTag ? `No lessons tagged “${activeTag}”.` : "No lessons yet."}
-                </li>
-              ) : null}
-            </ul>
-          </section>
-        </div>
-      </div>
+      <ClassroomOrganiser
+        classId={id}
+        posts={
+          activeTag
+            ? posts.filter((p) => (p.tags || []).map(normalizeTag).includes(activeTag))
+            : posts
+        }
+        lessons={
+          activeTag
+            ? streamLessons.filter((l) =>
+                (l.tags || []).map(normalizeTag).includes(activeTag),
+              )
+            : streamLessons
+        }
+        files={(activeTag
+          ? files.filter((f) => (f.tags || []).map(normalizeTag).includes(activeTag))
+          : files
+        ).map((f) => ({
+          id: f.id,
+          title: f.title,
+          filename: f.filename,
+          tags: f.tags || [],
+          mimeType: f.mimeType,
+        }))}
+        knownTags={knownTags}
+        initialTab={initialTab}
+      />
     </div>
   );
 }

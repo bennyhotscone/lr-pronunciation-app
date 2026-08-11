@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { InfoTagLearnMore } from "@/components/classroom/InfoTag";
+import { TopicHelpButton } from "@/components/classroom/TopicHelpButton";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
 import { normalizeTag } from "@/lib/info-tag-links";
 
@@ -98,6 +99,7 @@ export function TagExplorePanel({
       </div>
 
       <InfoTagLearnMore tag={t} />
+      <TopicHelpButton classId={classId} topics={[t]} defaultTopic={t} />
     </section>
   );
 }

@@ -772,6 +772,188 @@ export async function teacherToggleGoalChecklistItem(formData: FormData) {
   return { ok: true as const };
 }
 
+/**
+ * Student self-help from “I need more help with this topic”.
+ * Free: curated links elsewhere; here we only create/update a STUDENT_HELP goal + practice checklist.
+ */
+export async function studentAddTopicHelpGoal(formData: FormData) {
+  const session = await auth();
+  if (!session?.user || session.user.role !== "STUDENT") {
+    return { error: "Unauthorized" };
+  }
+
+  const topicRaw = String(formData.get("topic") || "").trim();
+  const classId = String(formData.get("classId") || "").trim() || null;
+  const topic = topicRaw.toLowerCase().replace(/\s+/g, " ");
+  if (!topic || topic.length > 80) return { error: "Pick a topic first." };
+
+  if (classId) {
+    const member = await prisma.classMembership.findFirst({
+      where: { classId, studentId: session.user.id, status: "ACTIVE" },
+      select: { id: true },
+    });
+    if (!member) return { error: "Not a member of that classroom." };
+  }
+
+  const { freeHelpPracticeSteps } = await import("@/lib/info-tag-links");
+  const { matchTopicPack } = await import("@/lib/topic-suggestions");
+  const pack = matchTopicPack(topic);
+  const steps = [
+    ...freeHelpPracticeSteps(topic),
+    ...(pack?.items || []).map((item) => `Focus: ${item}`),
+  ]
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 12);
+
+  const title = `Self-study: ${pack?.label || topic}`;
+  const description = classId
+    ? `Extra practice you requested from a classroom lesson (topic: ${topic}). Free links + home checklist — no paid AI.`
+    : `Extra practice you requested (topic: ${topic}). Free links + home checklist — no paid AI.`;
+
+  const existing = await prisma.goal.findFirst({
+    where: {
+      studentId: session.user.id,
+      source: "STUDENT_HELP",
+      topicTag: topic,
+      status: "ACTIVE",
+    },
+    include: { checklistItems: { select: { id: true, title: true } } },
+  });
+
+  if (existing) {
+    const have = new Set(existing.checklistItems.map((i) => i.title.toLowerCase()));
+    const missing = steps.filter((s) => !have.has(s.toLowerCase()));
+    if (missing.length) {
+      const start = existing.checklistItems.length;
+      await prisma.goalChecklistItem.createMany({
+        data: missing.map((itemTitle, index) => ({
+          goalId: existing.id,
+          title: itemTitle,
+          sortOrder: start + index,
+        })),
+      });
+    }
+    await prisma.goal.update({
+      where: { id: existing.id },
+      data: { description, title },
+    });
+    await syncGoalProgressFromChecklist(existing.id);
+    await prisma.learningProgress.upsert({
+      where: {
+        userId_kind_refId: {
+          userId: session.user.id,
+          kind: "topic-help",
+          refId: topic,
+        },
+      },
+      create: {
+        userId: session.user.id,
+        kind: "topic-help",
+        refId: topic,
+        data: { goalId: existing.id, topic, classId },
+      },
+      update: { data: { goalId: existing.id, topic, classId } },
+    });
+    revalidatePath("/portal/goals");
+    revalidatePath("/portal");
+    if (classId) revalidatePath(`/portal/classrooms/${classId}`);
+    return { ok: true as const, goalId: existing.id, created: false as const };
+  }
+
+  const goal = await prisma.goal.create({
+    data: {
+      studentId: session.user.id,
+      title,
+      description,
+      source: "STUDENT_HELP",
+      topicTag: topic,
+      checklistItems: {
+        create: steps.map((itemTitle, index) => ({
+          title: itemTitle,
+          sortOrder: index,
+        })),
+      },
+    },
+  });
+
+  await prisma.learningProgress.upsert({
+    where: {
+      userId_kind_refId: {
+        userId: session.user.id,
+        kind: "topic-help",
+        refId: topic,
+      },
+    },
+    create: {
+      userId: session.user.id,
+      kind: "topic-help",
+      refId: topic,
+      data: { goalId: goal.id, topic, classId },
+    },
+    update: { data: { goalId: goal.id, topic, classId } },
+  });
+
+  revalidatePath("/portal/goals");
+  revalidatePath("/portal");
+  if (classId) revalidatePath(`/portal/classrooms/${classId}`);
+  return { ok: true as const, goalId: goal.id, created: true as const };
+}
+
+/** Students may tick checklist items only on their own STUDENT_HELP goals. */
+export async function studentToggleSelfHelpChecklistItem(formData: FormData) {
+  const session = await auth();
+  if (!session?.user || session.user.role !== "STUDENT") {
+    return { error: "Unauthorized" };
+  }
+  const itemId = String(formData.get("itemId") || "");
+  if (!itemId) return { error: "Item required." };
+
+  const item = await prisma.goalChecklistItem.findUnique({
+    where: { id: itemId },
+    include: { goal: true },
+  });
+  if (!item || item.goal.studentId !== session.user.id) {
+    return { error: "Checklist item not found." };
+  }
+  if (item.goal.source !== "STUDENT_HELP") {
+    return { error: "Only your teacher can mark official goal steps." };
+  }
+
+  const nextDone = !item.done;
+  await prisma.goalChecklistItem.update({
+    where: { id: itemId },
+    data: {
+      done: nextDone,
+      doneAt: nextDone ? new Date() : null,
+    },
+  });
+  const progressPct = await syncGoalProgressFromChecklist(item.goalId);
+
+  await prisma.learningProgress.upsert({
+    where: {
+      userId_kind_refId: {
+        userId: session.user.id,
+        kind: "goal",
+        refId: item.goalId,
+      },
+    },
+    create: {
+      userId: session.user.id,
+      kind: "goal",
+      refId: item.goalId,
+      data: { progressPct: progressPct ?? 0, source: "STUDENT_HELP" },
+    },
+    update: {
+      data: { progressPct: progressPct ?? 0, source: "STUDENT_HELP" },
+    },
+  });
+
+  revalidatePath("/portal/goals");
+  revalidatePath("/portal");
+  return { ok: true as const };
+}
+
 export async function teacherAddRecommendation(formData: FormData) {
   const session = await requireStaffSession();
   if (!session) return { error: "Unauthorized" };

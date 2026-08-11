@@ -3,7 +3,11 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { assertTeacherOwnsClass, requireStaff } from "@/lib/portal-access";
 import { ClassroomInvitePanel } from "@/components/classroom/ClassroomInvitePanel";
-import { ClassroomStream, type StreamPost } from "@/components/classroom/ClassroomStream";
+import {
+  ClassroomStream,
+  type StreamLesson,
+  type StreamPost,
+} from "@/components/classroom/ClassroomStream";
 import { ClassLessonEditor } from "@/components/classroom/ClassLessonEditor";
 import { ClassFileUpload } from "@/components/classroom/ClassFileUpload";
 import { ClassFilesList } from "@/components/classroom/ClassFilesList";
@@ -12,6 +16,7 @@ import { SessionBasketProvider } from "@/components/portal/SessionBasket";
 import { classroomJoinPath } from "@/lib/invite-code";
 import { getInviteOrigin } from "@/lib/classroom-actions";
 import { generateInviteCode } from "@/lib/invite-code";
+import { buildFreeLessonSummary } from "@/lib/lesson-summary";
 
 function authorLabel(user: {
   email: string;
@@ -117,6 +122,32 @@ export default async function TeacherClassroomPage({
     })),
   }));
 
+  const streamLessons: StreamLesson[] = lessons.map((d) => ({
+    id: d.id,
+    day: d.day.toISOString(),
+    title: d.title,
+    summary: buildFreeLessonSummary({
+      title: d.title,
+      summary: d.summary,
+      subEntries: d.subEntries,
+      tags: d.tags || [],
+    }),
+    tags: d.tags || [],
+    createdAt: d.createdAt.toISOString(),
+    subEntries: d.subEntries.map((s) => ({
+      id: s.id,
+      kind: s.kind,
+      title: s.title,
+      body: s.body,
+    })),
+    attachments: d.attachments.map((a) => ({
+      id: a.id,
+      filename: a.filename,
+      mimeType: a.mimeType,
+      resourceId: a.resourceId,
+    })),
+  }));
+
   return (
     <SessionBasketProvider userId={session.user.id}>
       <div className="space-y-8">
@@ -162,6 +193,7 @@ export default async function TeacherClassroomPage({
           <ClassroomStream
             classId={id}
             posts={posts}
+            lessons={streamLessons}
             canPost
             knownTags={knownTags}
           />
@@ -183,6 +215,7 @@ export default async function TeacherClassroomPage({
                   title: f.title,
                   filename: f.filename,
                   tags: f.tags || [],
+                  mimeType: f.mimeType,
                 }))}
                 knownTags={knownTags}
               />

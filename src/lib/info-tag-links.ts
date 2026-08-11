@@ -4,6 +4,7 @@ export type InfoTagLink = {
   label: string;
   href: string;
   blurb: string;
+  kind: "video" | "explain" | "exercise" | "listen";
 };
 
 export function normalizeTag(tag: string): string {
@@ -15,34 +16,72 @@ export function freeInfoTagLinks(tag: string): InfoTagLink[] {
   const t = normalizeTag(tag);
   if (!t) return [];
   const q = encodeURIComponent(t);
-  const wiki = encodeURIComponent(t.replace(/\s+/g, "_"));
+  const qPlus = encodeURIComponent(`${t} English grammar`);
 
   return [
     {
-      label: "Wikipedia",
-      href: `https://en.wikipedia.org/wiki/Special:Search?search=${q}`,
-      blurb: "Background reading and definitions",
+      label: "YouTube search",
+      href: `https://www.youtube.com/results?search_query=${qPlus}`,
+      blurb: "Free explanation videos (search results — pick a clear teacher video)",
+      kind: "video",
     },
     {
-      label: "Wiktionary",
-      href: `https://en.wiktionary.org/wiki/Special:Search?search=${q}`,
-      blurb: "Word meanings and examples",
-    },
-    {
-      label: "Simple Wikipedia",
-      href: `https://simple.wikipedia.org/w/index.php?search=${q}`,
-      blurb: "Easier English explanation",
+      label: "BBC Learning English",
+      href: `https://www.bbc.co.uk/learningenglish/search?q=${q}`,
+      blurb: "Free explanations and practice from the BBC",
+      kind: "explain",
     },
     {
       label: "British Council LearnEnglish",
       href: `https://learnenglish.britishcouncil.org/search/site?query=${q}`,
       blurb: "Free lessons and practice",
+      kind: "exercise",
+    },
+    {
+      label: "Perfect English Grammar",
+      href: `https://www.perfect-english-grammar.com/?s=${q}`,
+      blurb: "Clear grammar notes and exercises (free pages)",
+      kind: "exercise",
+    },
+    {
+      label: "Simple Wikipedia",
+      href: `https://simple.wikipedia.org/w/index.php?search=${q}`,
+      blurb: "Easier English background reading",
+      kind: "explain",
+    },
+    {
+      label: "Wikipedia",
+      href: `https://en.wikipedia.org/wiki/Special:Search?search=${q}`,
+      blurb: "Background reading and definitions",
+      kind: "explain",
+    },
+    {
+      label: "Wiktionary",
+      href: `https://en.wiktionary.org/wiki/Special:Search?search=${q}`,
+      blurb: "Word meanings and examples",
+      kind: "explain",
     },
     {
       label: "YouGlish",
       href: `https://youglish.com/pronounce/${encodeURIComponent(t)}/english`,
       blurb: "Hear the words in real videos",
+      kind: "listen",
     },
+  ];
+}
+
+/** Home-study checklist steps — templates + curated ESL packs, never LLM-generated. */
+export function freeHelpPracticeSteps(tag: string): string[] {
+  const t = normalizeTag(tag);
+  if (!t) return [];
+
+  // Lazy import avoided — callers that need pack enrichment should use matchTopicPack.
+  return [
+    `Watch one short free video explaining “${t}”`,
+    `Read one free online explanation of “${t}”`,
+    `Do one free practice exercise on “${t}”`,
+    `Write 5 of your own example sentences using “${t}”`,
+    `Review your classroom notes/files about “${t}”`,
   ];
 }
 

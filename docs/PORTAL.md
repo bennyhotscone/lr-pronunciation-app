@@ -42,6 +42,12 @@ Public `/signup` is **STUDENT only**. Seed admin already teaches.
 - Each lesson shows a **Summary** built from the teacher’s summary text (or title + sub-entries). No LLM, **$0**.
 - **Info tags** on a lesson are clickable. Students see matching classroom posts/files/lessons plus free links (Wikipedia, Wiktionary, Simple English, British Council, YouGlish). No API keys.
 
+## Topic suggestor for teachers (free)
+
+- In the lesson editor, typing a topic in title/“what we covered” (e.g. `narrative tenses`) suggests a **checkbox breakdown** of subtopics.
+- Click items (or **Add all**) to create TOPIC sub-entries — builds lesson history with minimal typing.
+- Curated ESL packs + simple text splitting. No LLM, **$0**.
+
 
 ```bash
 node scripts/classroom-golden-path.mjs https://lrmastery.guru

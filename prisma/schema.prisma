@@ -221,6 +221,10 @@ model Goal {
   progressPct   Int        @default(0)
   teacherNotes  String?
   studentNotes  String?
+  /// TEACHER = accountability (teacher ticks). STUDENT_HELP = self-study from “need more help” (student ticks).
+  source        String     @default("TEACHER")
+  /// Optional topic tag that created a STUDENT_HELP goal.
+  topicTag      String?
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
@@ -228,6 +232,7 @@ model Goal {
   checklistItems  GoalChecklistItem[]
 
   @@index([studentId, status])
+  @@index([studentId, source, topicTag])
 }
 
 /// Checklist steps on a student goal. Only teachers/admins can mark items done (accountability).
