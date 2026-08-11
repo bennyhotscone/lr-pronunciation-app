@@ -116,7 +116,10 @@ export function ClassroomStream({
                 {p.tags?.length ? (
                   <p className="mt-1 flex flex-wrap gap-1">
                     {p.tags.map((t) => (
-                      <span key={t} className="rounded bg-surface px-1.5 py-0.5 text-[0.65rem] font-semibold text-muted ring-1 ring-border">
+                      <span
+                        key={t}
+                        className="rounded px-1.5 py-0.5 text-[0.7rem] font-semibold text-foreground ring-1 ring-border"
+                      >
                         {t}
                       </span>
                     ))}
@@ -143,9 +146,9 @@ export function ClassroomStream({
               <p className="text-xs font-bold uppercase text-muted">Comments</p>
               <ul className="mt-2 space-y-2">
                 {p.comments.map((c) => (
-                  <li key={c.id} className="rounded bg-surface/60 px-3 py-2 text-sm">
-                    <span className="text-xs text-muted">{c.authorLabel}</span>
-                    <p>{c.body}</p>
+                  <li key={c.id} className="rounded-lg border border-border bg-background px-3 py-2 text-sm">
+                    <span className="text-xs font-semibold text-muted">{c.authorLabel}</span>
+                    <p className="text-foreground">{c.body}</p>
                   </li>
                 ))}
                 {!p.comments.length ? <li className="text-sm text-muted">No comments yet.</li> : null}

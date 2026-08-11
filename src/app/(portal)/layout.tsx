@@ -27,17 +27,16 @@ export default async function PortalLayout({
     profile?.preferredName || session.user.preferredName || session.user.name || "Student";
 
   return (
-    <div className="theme-desk trapper-keeper min-h-dvh">
-      <div className="trapper-keeper-binder" aria-hidden />
-      <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
-        <header className="flex items-center justify-between gap-3 border-b border-wood/25 py-3">
+    <div className="theme-desk min-h-dvh">
+      <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
+        <header className="flex items-center justify-between gap-3 border-b border-border py-3">
           <Link href="/" className="text-ink">
             <BrandWordmark className="text-inherit" />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link
               href="/portal/profile"
-              className="inline-flex items-center gap-2 rounded-full border border-wood/30 bg-paper/90 px-2.5 py-1.5 text-sm font-semibold text-ink"
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-paper px-2.5 py-1.5 text-sm font-semibold text-ink"
             >
               <span
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full text-lg"
@@ -54,20 +53,20 @@ export default async function PortalLayout({
                 await signOut({ redirectTo: "/" });
               }}
             >
-              <button type="submit" className="text-sm font-semibold text-ink/55 hover:text-ink">
+              <button type="submit" className="text-sm font-semibold text-muted hover:text-ink">
                 Log out
               </button>
             </form>
           </div>
         </header>
-        <main className="flex-1 py-4">{children}</main>
-        <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-wood/30 bg-[#f3e6d4]/95 backdrop-blur">
+        <main className="flex-1 py-6">{children}</main>
+        <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-[#f3f2ee]/97 backdrop-blur-sm">
           <ul className="mx-auto flex max-w-5xl items-stretch justify-around px-1 py-1">
             {studentLinks.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="touch-target flex min-w-[3.5rem] flex-col items-center justify-center px-2 py-2 text-[0.7rem] font-bold text-ink/80"
+                  className="touch-target flex min-w-[3.5rem] flex-col items-center justify-center px-2 py-2 text-xs font-bold text-ink"
                 >
                   {l.label}
                 </Link>

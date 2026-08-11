@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --background: #12141a;
-  --foreground: #e8eef5;
-  --surface: #1a1f28;
-  --accent: #6ea8ff;
-  --accent-2: #3d6db5;
+  --background: #111318;
+  --foreground: #eef1f5;
+  --surface: #1c2129;
+  --accent: #3d8fd1;
+  --accent-2: #2a6fa8;
   --accent-soft: #243044;
-  --coral: #d17a6a;
-  --teal: #5ea88a;
-  --amber: #d4b46a;
-  --danger: #d35a5a;
-  --success: #5ea88a;
-  --border: #2c3544;
-  --muted: #9aabbd;
-  --focus: #8ec0ff;
-  --shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
-  --sand-accent: #6ea8ff;
-  --sand-border: #2c3544;
-  --chalk: #e8efe4;
-  --chalk-accent: #c8e6a8;
-  --ink: #2a2218;
-  --paper: #f7f0e4;
-  --wood: #8b6a45;
-  --desk-accent: #2f6f5e;
+  --coral: #c45c4a;
+  --teal: #2f7a64;
+  --amber: #c9a227;
+  --danger: #c44040;
+  --success: #2f7a64;
+  --border: #323942;
+  --muted: #a8b3c0;
+  --focus: #6eb6ef;
+  --shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  --sand-accent: #3d8fd1;
+  --sand-border: #323942;
+  --chalk: #f2f6ef;
+  --chalk-accent: #d4ecc0;
+  --ink: #161412;
+  --paper: #ffffff;
+  --wood: #6b5a48;
+  --desk-accent: #0d5c4d;
 }
 
 @theme inline {
@@ -53,129 +53,131 @@
 }
 
 body {
-  background:
-    radial-gradient(ellipse 70% 45% at 12% 0%, rgba(110, 168, 255, 0.1), transparent 50%),
-    linear-gradient(180deg, #0e1116 0%, #12141a 50%, #151a22 100%);
+  background: #111318;
   color: var(--foreground);
   font-family: var(--font-source-sans), "Segoe UI", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
   min-height: 100dvh;
 }
 
+/* —— Teacher: readable chalkboard —— */
 .theme-blackboard {
+  --background: #102018;
+  --foreground: #f2f6ef;
+  --surface: #163024;
+  --muted: #c5d4c8;
+  --border: rgba(242, 246, 239, 0.22);
+  --accent: #d4ecc0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(80, 120, 90, 0.18), transparent 55%),
-    linear-gradient(180deg, #0c1611 0%, #14261c 40%, #0f1c16 100%);
-  color: var(--chalk);
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 255, 255, 0.06), transparent 55%),
+    #102018;
+  color: var(--foreground);
   min-height: 100dvh;
 }
 
+.theme-blackboard .card,
+.theme-blackboard .board-panel {
+  background: #163024;
+  border: 1px solid rgba(242, 246, 239, 0.2);
+  color: #f2f6ef;
+  box-shadow: none;
+}
+
+/* —— Student: clean notebook / paper desk (high contrast) —— */
 .theme-desk {
+  --background: #f3f2ee;
+  --foreground: #161412;
+  --surface: #ffffff;
+  --muted: #4a4742;
+  --border: #cdc8be;
+  --accent: #0d5c4d;
+  --accent-2: #0a4a3e;
+  --ink: #161412;
+  --paper: #ffffff;
+  --desk-accent: #0d5c4d;
+  --focus: #0d5c4d;
+  --shadow: 0 1px 2px rgba(22, 20, 18, 0.06);
   background:
-    radial-gradient(ellipse 60% 40% at 20% 0%, rgba(255, 255, 255, 0.35), transparent 50%),
-    linear-gradient(180deg, #e8d7bf 0%, #d9c3a4 45%, #cbb291 100%);
-  color: var(--ink);
+    /* faint notebook rules */
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(22, 20, 18, 0.045) 28px
+    ),
+    #f3f2ee;
+  background-attachment: local;
+  color: var(--foreground);
   min-height: 100dvh;
 }
 
-/* Trapper-keeper vinyl binder behind the student desk */
-.trapper-keeper {
-  position: relative;
-  overflow-x: clip;
+.theme-desk .card,
+.theme-desk .desk-panel {
+  background: #ffffff;
+  border: 1px solid #cdc8be;
+  color: #161412;
+  box-shadow: 0 1px 2px rgba(22, 20, 18, 0.05);
 }
 
-.trapper-keeper-binder {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    /* binder rings */
-    radial-gradient(circle at 1.35rem 18%, #2a3340 0 0.35rem, transparent 0.4rem),
-    radial-gradient(circle at 1.35rem 36%, #2a3340 0 0.35rem, transparent 0.4rem),
-    radial-gradient(circle at 1.35rem 54%, #2a3340 0 0.35rem, transparent 0.4rem),
-    radial-gradient(circle at 1.35rem 72%, #2a3340 0 0.35rem, transparent 0.4rem),
-    /* spine strip */
-    linear-gradient(90deg, #1a3d48 0, #1a3d48 2.75rem, transparent 2.75rem),
-    /* vinyl texture + classic teal cover behind paper area */
-    repeating-linear-gradient(
-      125deg,
-      rgba(255, 255, 255, 0.04) 0 2px,
-      transparent 2px 7px
-    ),
-    radial-gradient(ellipse 90% 70% at 70% 20%, rgba(120, 210, 200, 0.18), transparent 55%),
-    linear-gradient(165deg, #1f5c66 0%, #17474f 42%, #12383e 100%);
-  opacity: 0.92;
+.theme-desk .btn-primary,
+.theme-desk .btn-desk {
+  background: #0d5c4d;
+  color: #ffffff;
+  box-shadow: none;
 }
 
-.trapper-keeper-binder::after {
-  content: "";
-  position: absolute;
-  top: 12%;
-  right: max(1rem, calc(50% - 26rem));
-  width: min(11rem, 28vw);
-  height: min(14rem, 32vh);
-  border-radius: 0.75rem 1.25rem 1.25rem 0.75rem;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%),
-    linear-gradient(145deg, #c45c7a, #9a3d58);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
-  opacity: 0.55;
-  transform: rotate(8deg);
+.theme-desk .btn-primary:hover:not(:disabled),
+.theme-desk .btn-desk:hover:not(:disabled) {
+  background: #0a4a3e;
+  filter: none;
 }
 
-@media (max-width: 640px) {
-  .trapper-keeper-binder::after {
-    opacity: 0.28;
-    width: 7rem;
-    height: 9rem;
-    right: 0.5rem;
-  }
-}
-
-.theme-desk .desk-shell,
-.theme-desk .desk-panel,
-.theme-desk main > * {
-  position: relative;
-  z-index: 1;
+.theme-desk .btn-secondary {
+  background: #ffffff;
+  border: 1px solid #cdc8be;
+  color: #161412;
 }
 
 .theme-desk .progress-bar {
-  background: rgba(47, 111, 94, 0.18);
+  background: rgba(13, 92, 77, 0.15);
 }
 
 .theme-desk .progress-bar > span {
-  background: linear-gradient(90deg, #245646, #2f6f5e);
+  background: #0d5c4d;
+}
+
+.theme-desk input,
+.theme-desk textarea,
+.theme-desk select {
+  color: #161412;
+  background: #ffffff;
 }
 
 .board-panel {
-  background: linear-gradient(160deg, rgba(26, 47, 36, 0.92), rgba(15, 28, 22, 0.96));
-  border: 1px solid rgba(232, 239, 228, 0.12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 12px 28px rgba(0, 0, 0, 0.28);
+  background: #163024;
+  border: 1px solid rgba(242, 246, 239, 0.2);
 }
 
 .desk-panel {
-  background: linear-gradient(180deg, #fbf6ec, #f3e9d8);
-  border: 1px solid rgba(139, 106, 69, 0.28);
-  box-shadow: 0 10px 24px rgba(60, 40, 20, 0.12);
+  background: #ffffff;
+  border: 1px solid #cdc8be;
 }
 
 .btn-chalk {
-  background: linear-gradient(135deg, #c8e6a8, #9fcf78);
-  color: #122016;
+  background: #d4ecc0;
+  color: #102018;
 }
 
 .btn-desk {
-  background: linear-gradient(135deg, #2f6f5e, #245646);
-  color: #f7f0e4;
+  background: #0d5c4d;
+  color: #ffffff;
 }
 
 .chalk-rail {
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #5a4030, #8b6a45 40%, #5a4030);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
-  max-width: 280px;
+  height: 8px;
+  border-radius: 2px;
+  background: #6b5a48;
+  max-width: 220px;
 }
 
 *:focus-visible {
@@ -189,23 +191,24 @@ body {
 }
 
 .card {
-  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-  background: color-mix(in srgb, var(--surface) 94%, #000);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
   box-shadow: var(--shadow);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #6ea8ff 0%, #3d6db5 100%);
-  color: #0e1116;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: none;
 }
 
 .btn-primary:hover:not(:disabled) {
-  filter: brightness(1.05);
+  filter: brightness(1.08);
 }
 
 .btn-secondary {
-  background: rgba(26, 31, 40, 0.9);
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--foreground);
 }
@@ -214,8 +217,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border-radius: 0.4rem;
-  padding: 0.28rem 0.7rem;
+  border-radius: 0.35rem;
+  padding: 0.28rem 0.65rem;
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -224,14 +227,14 @@ body {
   height: 0.55rem;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(110, 168, 255, 0.15);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .progress-bar > span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #3d6db5, #6ea8ff);
+  background: var(--accent);
 }
 
 @keyframes landing-fade-in {
@@ -289,31 +292,26 @@ body {
 }
 
 .gateway-card {
-  background: linear-gradient(155deg, #1a1f28 0%, #12161e 55%, #0e1218 100%);
-}
-
-.gateway-desk {
-  isolation: isolate;
+  background: #1c2129;
+  border: 1px solid #323942;
 }
 
 .gateway-interactive {
   transition:
     transform 220ms ease,
     border-color 220ms ease,
-    box-shadow 220ms ease,
-    filter 220ms ease;
+    box-shadow 220ms ease;
 }
 
 .gateway-interactive:hover {
-  transform: translateY(-6px) scale(1.015);
-  border-color: color-mix(in srgb, var(--accent) 65%, var(--border));
-  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.42);
-  filter: brightness(1.06);
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
 }
 
 .gateway-interactive:focus-visible {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

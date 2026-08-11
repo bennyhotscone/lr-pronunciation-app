@@ -81,13 +81,13 @@ export default async function StudentClassroomPage({
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/portal" className="text-sm font-semibold text-muted hover:text-foreground">
+        <Link href="/portal" className="text-sm font-semibold text-desk-accent hover:underline">
           ← My Desk
         </Link>
-        <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold">
+        <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
           {klass.name}
         </h1>
-        <p className="mt-1 text-sm text-muted">Stream, lessons, and files</p>
+        <p className="mt-1 text-base text-muted">Stream · lessons · files</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
@@ -99,11 +99,11 @@ export default async function StudentClassroomPage({
         />
 
         <div className="space-y-6">
-          <section className="card rounded-xl p-4">
-            <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">
+          <section className="card rounded-xl p-5">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
               Files
             </h2>
-            <p className="mt-1 text-xs text-muted">
+            <p className="mt-1 text-sm text-muted">
               Download again anytime — these stay in your classroom.
             </p>
             <div className="mt-3">
@@ -119,30 +119,30 @@ export default async function StudentClassroomPage({
             </div>
             <Link
               href="/portal/resources"
-              className="mt-3 inline-block text-xs font-bold text-accent underline-offset-2 hover:underline"
+              className="mt-3 inline-block text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
             >
               All my files →
             </Link>
           </section>
 
-          <section className="card rounded-xl p-4">
-            <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">
+          <section className="card rounded-xl p-5">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
               Lessons
             </h2>
-            <ul className="mt-3 space-y-3">
+            <ul className="mt-3 space-y-4">
               {lessons.map((d) => (
-                <li key={d.id} className="border-b border-border pb-3 last:border-0">
-                  <p className="font-semibold">
+                <li key={d.id} className="border-b border-border pb-4 last:border-0 last:pb-0">
+                  <p className="font-semibold text-ink">
                     {d.day.toISOString().slice(0, 10)}
                     {d.title ? ` · ${d.title}` : ""}
                   </p>
-                  {d.summary ? <p className="mt-1 text-sm text-muted">{d.summary}</p> : null}
+                  {d.summary ? <p className="mt-1 text-sm leading-relaxed text-muted">{d.summary}</p> : null}
                   {d.tags?.length ? (
-                    <p className="mt-1 flex flex-wrap gap-1">
+                    <p className="mt-2 flex flex-wrap gap-1">
                       {d.tags.map((t) => (
                         <span
                           key={t}
-                          className="rounded bg-surface px-1.5 py-0.5 text-[0.65rem] font-semibold text-muted ring-1 ring-border"
+                          className="rounded bg-[#f3f2ee] px-1.5 py-0.5 text-[0.7rem] font-semibold text-ink ring-1 ring-border"
                         >
                           {t}
                         </span>
@@ -150,13 +150,13 @@ export default async function StudentClassroomPage({
                     </p>
                   ) : null}
                   {d.subEntries.length ? (
-                    <ul className="mt-2 space-y-1 text-sm text-muted">
+                    <ul className="mt-2 space-y-1.5 text-sm text-muted">
                       {d.subEntries.map((s) => (
                         <li key={s.id}>
-                          <span className="text-xs font-bold uppercase text-accent">
+                          <span className="text-xs font-bold uppercase text-desk-accent">
                             {s.kind}
                           </span>{" "}
-                          {s.title}
+                          <span className="text-ink">{s.title}</span>
                           {s.body ? <span> — {s.body}</span> : null}
                         </li>
                       ))}
@@ -165,18 +165,18 @@ export default async function StudentClassroomPage({
                   {d.attachments.length ? (
                     <ul className="mt-2 text-sm">
                       {d.attachments.map((a) => (
-                        <li key={a.id} className="text-accent">
+                        <li key={a.id}>
                           {a.resourceId ? (
                             <a
                               href={portalResourceDownloadHref(a.resourceId)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="underline-offset-2 hover:underline"
+                              className="font-semibold text-desk-accent underline-offset-2 hover:underline"
                             >
                               {a.filename}
                             </a>
                           ) : (
-                            <span>{a.filename}</span>
+                            <span className="text-ink">{a.filename}</span>
                           )}
                         </li>
                       ))}
