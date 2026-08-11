@@ -1,201 +1,118 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { isAdmin, requireStaff } from "@/lib/portal-access";
-import { AddStudentForm } from "@/components/portal/AddStudentForm";
+import { teacherCreateClassroom } from "@/lib/classroom-actions";
 import { AddTeacherForm } from "@/components/portal/AddTeacherForm";
-import { teacherCreateClass } from "@/lib/portal-actions";
-import { BrandMark } from "@/components/BrandMark";
+import { redirect } from "next/navigation";
 
-async function createClassAction(formData: FormData): Promise<void> {
+async function createClassroomAction(formData: FormData): Promise<void> {
   "use server";
-  await teacherCreateClass(formData);
+  await teacherCreateClassroom(formData);
 }
 
 export default async function TeacherDashboardPage() {
   const session = await requireStaff();
   const admin = isAdmin(session.user.role);
 
-  const [students, classes, teachers] = await Promise.all([
-    prisma.user.findMany({
-      where: { role: "STUDENT", archivedAt: null },
-      include: { profile: true },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.class.findMany({
-      where: admin
-        ? { archivedAt: null }
-        : { teacherId: session.user.id, archivedAt: null },
-      include: {
-        _count: { select: { memberships: { where: { status: "ACTIVE" } } } },
-      },
-      orderBy: { createdAt: "desc" },
-    }),
-    admin
-      ? prisma.user.findMany({
-          where: { role: "TEACHER", archivedAt: null },
-          include: { profile: true },
-          orderBy: { createdAt: "desc" },
-        })
-      : Promise.resolve([]),
-  ]);
+  const classes = await prisma.class.findMany({
+    where: admin
+      ? { archivedAt: null }
+      : { teacherId: session.user.id, archivedAt: null },
+    include: {
+      _count: { select: { memberships: { where: { status: "ACTIVE" } } } },
+    },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  // One classroom → go straight to the board (Google Classroom–like)
+  if (classes.length === 1) {
+    redirect(`/teacher/classes/${classes[0]!.id}`);
+  }
 
   return (
-    <div>
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
-          {admin ? "Admin dashboard" : "Teacher dashboard"}
-        </h1>
+    <div className="blackboard-shell">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-chalk/50">
+            {admin ? "Admin · blackboard" : "Teacher · blackboard"}
+          </p>
+          <h1 className="mt-1 font-[family-name:var(--font-display)] text-4xl font-semibold text-chalk">
+            Your classrooms
+          </h1>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-chalk/70">
+            A classroom is a shared space for one group — stream, lessons, and files. Students join
+            with an invite code (not teacher-created student accounts).
+          </p>
+        </div>
         {admin ? (
-          <span className="chip bg-sand-accent/25 text-sand-accent">Admin</span>
+          <Link href="/english-for-mandarin-speakers/studio" className="text-sm font-bold text-chalk-accent underline-offset-2 hover:underline">
+            Audio Studio →
+          </Link>
         ) : null}
       </div>
-      <p className="mt-2 text-muted">
-        Create a class, add students, then share lessons and files. Students sign up at{" "}
-        <Link href="/signup" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
-          /signup
-        </Link>{" "}
-        (or you create them below), then enroll them into the class.
-      </p>
 
-      {admin ? (
-        <p className="mt-3">
-          <Link
-            href="/english-for-mandarin-speakers/studio"
-            className="text-sm font-bold text-sand-accent underline-offset-2 hover:underline"
-          >
-            Open Mandarin Audio Studio →
-          </Link>
-        </p>
-      ) : null}
-
-      {admin ? (
-        <div className="card mt-6 rounded-2xl border border-sand-accent/30 bg-sand-accent/5 p-4 text-sm leading-relaxed">
-          <p className="font-bold text-foreground">How teacher accounts work</p>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-muted">
-            <li>
-              Your admin login already includes full teaching tools — no second account needed to
-              teach.
-            </li>
-            <li>
-              Public <Link href="/signup" className="font-semibold text-sand-accent underline-offset-2 hover:underline">/signup</Link>{" "}
-              is for students only.
-            </li>
-            <li>
-              To invite staff: scroll to{" "}
-              <a href="#create-teacher" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
-                Invite a teacher
-              </a>{" "}
-              below, create email + password, then they use{" "}
-              <Link href="/login" className="font-semibold text-sand-accent underline-offset-2 hover:underline">
-                /login
-              </Link>
-              .
-            </li>
-          </ul>
-        </div>
-      ) : null}
-
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <div id="create-class" className="card rounded-2xl border border-sand-accent/30 p-5 lg:order-first">
-          <p className="chip bg-sand-accent/20 text-sand-accent">Start here today</p>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-xl font-semibold">
-            Create class
+      {!classes.length ? (
+        <section className="board-panel mt-10 rounded-2xl p-8 text-center sm:p-12">
+          <div className="chalk-rail mx-auto mb-6" aria-hidden />
+          <h2 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-chalk">
+            Create your classroom
           </h2>
-          <p className="mt-1 text-sm text-muted">
-            Example: “Tuesday afternoon”. After creating, enroll students from the class page.
+          <p className="mx-auto mt-3 max-w-md text-sm text-chalk/65">
+            Name the group (e.g. “Year 9 Period 3”). You&apos;ll get an invite code, link, and QR to
+            share — students sign up and join themselves.
           </p>
-          <form action={createClassAction} className="mt-4 grid gap-3">
+          <form action={createClassroomAction} className="mx-auto mt-8 max-w-md space-y-3 text-left">
             <input
               name="name"
               required
-              placeholder="Class name"
-              className="rounded-xl border border-border bg-background/60 px-3 py-2"
+              placeholder="Classroom name"
+              className="w-full rounded-xl border border-chalk/25 bg-black/25 px-4 py-3 text-lg text-chalk placeholder:text-chalk/35"
             />
-            <input
-              name="level"
-              placeholder="Level (optional)"
-              className="rounded-xl border border-border bg-background/60 px-3 py-2"
-            />
-            <textarea
-              name="description"
-              rows={2}
-              placeholder="Description"
-              className="rounded-xl border border-border bg-background/60 px-3 py-2"
-            />
-            <button type="submit" className="btn-primary rounded-xl px-4 py-2.5 text-sm font-bold">
-              Create class
+            <button type="submit" className="btn-chalk w-full rounded-xl px-4 py-3 text-base font-bold">
+              Open classroom board
             </button>
           </form>
+        </section>
+      ) : (
+        <div className="mt-8 space-y-4">
+          <form action={createClassroomAction} className="board-panel flex flex-wrap gap-2 rounded-xl p-4">
+            <input
+              name="name"
+              required
+              placeholder="New classroom name"
+              className="min-w-[200px] flex-1 rounded-lg border border-chalk/20 bg-black/20 px-3 py-2 text-chalk"
+            />
+            <button type="submit" className="btn-chalk rounded-lg px-4 py-2 text-sm font-bold">
+              Create classroom
+            </button>
+          </form>
+          <p className="text-xs font-bold uppercase tracking-wide text-chalk/45">Switcher</p>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {classes.map((c) => (
+              <li key={c.id}>
+                <Link
+                  href={`/teacher/classes/${c.id}`}
+                  className="board-panel flex items-center justify-between rounded-xl p-5 transition hover:brightness-110"
+                >
+                  <div>
+                    <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-chalk">
+                      {c.name}
+                    </p>
+                    <p className="text-xs text-chalk/55">
+                      {c._count.memberships} students · code {c.inviteCode}
+                    </p>
+                  </div>
+                  <span className="text-chalk-accent" aria-hidden>
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
+      )}
 
-        <AddStudentForm />
-      </div>
-
-      {admin ? (
-        <>
-          <AddTeacherForm />
-          {teachers.length ? (
-            <ul className="mt-4 space-y-1 text-sm text-muted">
-              {teachers.map((t) => (
-                <li key={t.id}>
-                  {t.profile?.preferredName || t.profile?.fullName || t.email} — {t.email}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </>
-      ) : null}
-
-      <section className="mt-10">
-        <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold">Classes</h2>
-        <ul className="mt-3 space-y-2">
-          {classes.map((c) => (
-            <li key={c.id}>
-              <Link
-                href={`/teacher/classes/${c.id}`}
-                className="card flex items-center justify-between rounded-2xl p-4 transition hover:-translate-y-0.5"
-              >
-                <div>
-                  <p className="font-semibold">{c.name}</p>
-                  <p className="text-xs text-muted">
-                    {c._count.memberships} enrolled
-                    {c.level ? ` · ${c.level}` : ""}
-                  </p>
-                </div>
-                <span aria-hidden>→</span>
-              </Link>
-            </li>
-          ))}
-          {!classes.length ? <li className="text-sm text-muted">No classes yet.</li> : null}
-        </ul>
-      </section>
-
-      <section className="mt-10">
-        <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold">Students</h2>
-        <ul className="mt-3 space-y-2">
-          {students.map((s) => (
-            <li key={s.id}>
-              <Link
-                href={`/teacher/students/${s.id}`}
-                className="card flex items-center justify-between rounded-2xl p-4"
-              >
-                <div>
-                  <p className="font-semibold">
-                    {s.profile?.preferredName || s.profile?.fullName || s.email}
-                  </p>
-                  <p className="text-xs text-muted">{s.email}</p>
-                </div>
-                <span aria-hidden>→</span>
-              </Link>
-            </li>
-          ))}
-          {!students.length ? <li className="text-sm text-muted">No students yet.</li> : null}
-        </ul>
-      </section>
-
-      <div className="mt-12 opacity-40">
-        <BrandMark size={36} />
-      </div>
+      {admin ? <AddTeacherForm /> : null}
     </div>
   );
 }

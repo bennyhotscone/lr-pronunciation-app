@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { signupStudentAction } from "@/lib/portal-actions";
 
-export function SignupForm() {
+export function SignupForm({ callbackUrl }: { callbackUrl?: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
@@ -19,6 +19,7 @@ export function SignupForm() {
         });
       }}
     >
+      {callbackUrl ? <input type="hidden" name="callbackUrl" value={callbackUrl} /> : null}
       <label className="block">
         <span className="mb-1.5 block text-sm font-semibold">Full name</span>
         <input

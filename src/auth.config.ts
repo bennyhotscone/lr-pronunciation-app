@@ -32,7 +32,9 @@ export const authConfig = {
         isLogin ||
         isSignup ||
         pathname === "/forgot-password" ||
-        pathname === "/reset-password";
+        pathname === "/reset-password" ||
+        pathname === "/join" ||
+        pathname.startsWith("/join/");
 
       if ((isPortal || isTeacher) && !isLoggedIn) return false;
 

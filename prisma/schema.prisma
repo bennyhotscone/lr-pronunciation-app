@@ -75,6 +75,7 @@ model User {
   classPostsAuthored   ClassPost[]          @relation("ClassPostAuthor")
   classPostComments    ClassPostComment[]   @relation("ClassPostCommentAuthor")
   passwordResetTokens  PasswordResetToken[]
+  classDiaryAuthored   ClassLesson[]        @relation("ClassLessonAuthor")
 }
 
 model StudentProfile {
@@ -98,6 +99,8 @@ model Class {
   name        String
   description String?
   level       String?
+  /// Short shareable join code (e.g. K7M2PQ). Unique across classrooms.
+  inviteCode  String    @unique
   teacherId   String
   archivedAt  DateTime?
   createdAt   DateTime  @default(now())
@@ -110,6 +113,10 @@ model Class {
   homework        Homework[]
   recommendations Recommendation[]
   posts           ClassPost[]
+  classLessons    ClassLesson[]
+  classTags       ClassTag[]
+
+  @@index([teacherId, archivedAt])
 }
 
 /// Live membership policy: ACTIVE membership grants current class library access.
@@ -165,6 +172,7 @@ model Resource {
   category    String?
   description String?
   sizeBytes   Int?
+  tags        String[] @default([])
   lessonId    String?
   classId     String?
   studentId   String?
@@ -300,6 +308,7 @@ model ClassPost {
   authorId  String
   title     String
   body      String
+  tags      String[]  @default([])
   pinnedAt  DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -357,4 +366,70 @@ model PasswordResetToken {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, expiresAt])
+}
+
+/// Reusable tags within one classroom (for filter/search).
+model ClassTag {
+  id        String   @id @default(cuid())
+  classId   String
+  name      String
+  createdAt DateTime @default(now())
+
+  class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, name])
+  @@index([classId])
+}
+
+/// One Lesson = one teaching session writeup in a classroom (NOT the classroom itself).
+model ClassLesson {
+  id          String   @id @default(cuid())
+  classId     String
+  /// Session/calendar day (UTC midnight).
+  day         DateTime
+  title       String?
+  summary     String?
+  tags        String[] @default([])
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  class       Class                    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdBy   User                     @relation("ClassLessonAuthor", fields: [createdById], references: [id])
+  subEntries  ClassLessonSubEntry[]
+  attachments ClassLessonAttachment[]
+
+  @@unique([classId, day])
+  @@index([classId, day])
+}
+
+model ClassLessonSubEntry {
+  id        String   @id @default(cuid())
+  lessonId  String
+  kind      String   @default("NOTE") // TOPIC | NOTE | FILE | HOMEWORK | OTHER
+  title     String
+  body      String?
+  tags      String[] @default([])
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  lesson ClassLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@index([lessonId, sortOrder])
+}
+
+model ClassLessonAttachment {
+  id         String   @id @default(cuid())
+  lessonId   String
+  filename   String
+  blobPath   String
+  blobUrl    String
+  mimeType   String
+  sizeBytes  Int?
+  resourceId String?
+  createdAt  DateTime @default(now())
+
+  lesson ClassLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@index([lessonId])
 }

@@ -1,195 +1,39 @@
-# Student / Teacher / Admin Portal
+# Portal model (Google Classroom–like)
 
-## Overview
+## Plain English
 
-Real Auth.js (credentials) + Postgres (Prisma) portal on top of the existing LR Mastery tools.
-
-- Roles: `ADMIN` | `TEACHER` | `STUDENT` — **one account = one role**
-- Access policy: **live membership** — ACTIVE class membership sees current class library; leaving removes class access; individual (`studentId`) items persist
-- Portal files: Vercel Blob prefix `portal-files/…` (never `studio-audio/`)
-- Mandarin studio mutating APIs require an authenticated **ADMIN** session
-
-## Roles & login redirects
-
-| Role | Powers | After login |
-| --- | --- | --- |
-| **ADMIN** | Everything a teacher can do + Mandarin Studio audio file management + create TEACHER accounts | `/teacher` (Admin badge) |
-| **TEACHER** | Classes, students, lessons, files, homework, goals, classroom posts — **not** studio audio overrides | `/teacher` |
-| **STUDENT** | My Desk, profile/avatar, class materials, comment/reply on classroom posts | `/portal` |
-
-Role is set when the account is created (or by admin). There is no dual-role account.
-
-### Studio auth (clean approach)
-
-- `/english-for-mandarin-speakers/studio` and `POST`/`DELETE` `/api/studio/audio` require an **authenticated ADMIN session**
-- Shared `MANDARIN_STUDIO_PASSWORD` is **no longer** the primary gate (optional legacy tooling may still reference it; the live UI and routes use admin session)
-- Teachers and students are redirected away from studio
-
-## How to create a teacher account
-
-Public `/signup` is **STUDENT only**. Teachers never self-register.
-
-### You are the seed admin (usual case)
-
-1. Log in at https://lrmastery.guru/login with `teacher@lrmastery.guru`
-2. You land on https://lrmastery.guru/teacher with an **Admin** badge
-3. You already have full teacher powers (classes, students, posts, etc.) plus Studio — **you do not need a second “teacher” account to teach**
-4. Mandarin Studio stays on this admin login: https://lrmastery.guru/english-for-mandarin-speakers/studio
-
-### Invite another person as TEACHER (staff)
-
-1. Stay logged in as admin → https://lrmastery.guru/teacher
-2. Open **Invite a teacher** (`#create-teacher`) — form: email, full name, optional preferred name, password
-3. Click **Create teacher account** — role in DB is always `TEACHER`
-4. Share the email + password; they log in at https://lrmastery.guru/login and land on `/teacher`
-5. They can teach; they **cannot** open Mandarin Studio (admin-only)
-
-### Students
-
-- Self-signup: https://lrmastery.guru/signup → `/portal`
-- Or admin/teacher creates them from the dashboard → Add Student
-
-## Student accounts
-
-Students may **self-signup** at [`/signup`](/signup) (email + password + name). Public signup always creates `STUDENT` — never `TEACHER` or `ADMIN`.
-
-Teachers/admins can still create student accounts from `/teacher` → **Add Student**.
-
-### Password reset
-
-| Path | Behaviour |
+| Concept | Meaning |
 | --- | --- |
-| `/forgot-password` | Creates a DB-backed one-time token (1 hour). Emails link when `RESEND_API_KEY` (+ optional `EMAIL_FROM`) is set on Vercel. |
-| `/reset-password?token=…` | Sets a new password if the token is valid and unused. |
-| Teacher student page | **Set password** or **Generate reset link** (copyable) when email is not configured. |
+| **Classroom** | One shared space for a teacher + a group of students. Stream (announcements), daily diary, and a Files shelf. |
+| **Invite** | Students join with **code / link / QR**. Teachers do **not** create student emails/passwords. |
+| **Stream post** | Announcement on the classroom board (pinnable; students can comment). |
+| **Day’s diary** | One parent writeup for that calendar day, with optional **sub-entries** (topics, notes, homework bits) + file attachments. |
+| **Files** | Class materials live on the classroom Files shelf and on My Desk so students can reopen downloads at home. |
 
-Without Resend, the forgot-password form does **not** pretend an email was sent — it tells the user to ask their teacher, and tokens are still written to Postgres (also logged in server logs for operators).
+`Lesson` in the old schema is **not** what you open as a “classroom”. Teaching happens inside a **Classroom** board.
 
-## Seed admin
+## Create a teacher account?
 
-| Field | Value |
-| --- | --- |
-| Email | `teacher@lrmastery.guru` |
-| Password | `TeacherTemp2026!` |
-| Role | **ADMIN** |
+Public `/signup` is **STUDENT only**. Seed admin already teaches.
 
-Change this password after first login in production. Teachers created from the admin dashboard stay `TEACHER`.
+1. https://lrmastery.guru/login — `teacher@lrmastery.guru` / `TeacherTemp2026!`
+2. Lands on blackboard `/teacher` (Admin). Invite staff under **Invite a teacher** if needed.
 
-## Classroom posts + pin
+## Teacher click-path (today)
 
-- Model: `ClassPost` (classId, authorId, title, body, `pinnedAt?`, attachments)
-- Comments: `ClassPostComment` (nested reply via `parentId`)
-- Teacher/Admin: create + **Pin / Unpin** (pinned sort first)
-- Students: see posts on My Desk; can comment/reply
-- Server-side membership / class ownership checks on all mutations
+1. Log in → https://lrmastery.guru/login  
+2. https://lrmastery.guru/teacher → **Create your classroom** (name only)  
+3. On the classroom board: copy **invite code**, **link** (`/join/CODE`), or show **QR**  
+4. Post to **Stream** / pin; write **Today’s diary** + sub-entries; upload **Files**  
+5. Students appear under Students after they join  
 
-## Session basket (honest MVP)
+## Student click-path
 
-On the teacher class page:
+1. Open invite link https://lrmastery.guru/join/CODE **or** https://lrmastery.guru/join  
+2. **Sign up** (or log in) as student  
+3. Join completes → https://lrmastery.guru/portal/classrooms/[id]  
+4. Use **Stream**, **Class diary**, and **Files** (also listed on My Desk / All files)
 
-- Toggle **Session basket ON**
-- Drag-drop or browse files → uploaded to `portal-files/session-basket/{userId}/`
-- Select items and attach when saving a **lesson** or **class post**
-- Persists for the current calendar day in `localStorage` + Blob
-
-**Does:** catch files you deliberately drop/pick during a session.  
-**Does not:** intercept all OS downloads from a website alone (that needs a browser extension or desktop helper later).
-
-UI copy: “Drop files here during the session. Auto-catching all computer downloads needs a helper app later.”
-
-## Online file storage (production)
-
-Production portals upload/download **real** Blob objects — not a `public/portal-uploads` sandbox.
-
-| Step | What happens |
-| --- | --- |
-| Teacher upload | `POST /api/portal/resources` or teacher server action → `uploadPortalFile` → Vercel Blob under `portal-files/{classOrStudentId}/…` → Postgres `Resource` row |
-| Student / teacher open | UI links only to `/api/portal/resources/{id}/download` (never raw Blob URLs in the page) |
-| Auth gate | Download route checks session + membership / ownership, then streams bytes |
-| Missing Blob token on Vercel | Upload returns **503** — production **never** writes to the ephemeral filesystem |
-
-Prefixes:
-
-- Portal: `portal-files/…`
-- Session basket: `portal-files/session-basket/{userId}/…`
-- Studio: `studio-audio/…`
-
-### Storage modes
-
-| Environment | `BLOB_READ_WRITE_TOKEN` | Behavior |
-| --- | --- | --- |
-| Vercel Production / Preview | set | Blob only |
-| Vercel | missing | Fail loud (503) — no local fallback |
-| Local `next dev` | set | Blob |
-| Local `next dev` | missing | Writes under `public/portal-uploads/` for convenience only |
-
-## Environment variables
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `DATABASE_URL` | Yes | Postgres connection string |
-| `AUTH_SECRET` | Yes | Auth.js session signing secret |
-| `AUTH_TRUST_HOST` | Recommended (`true`) | Trust host on Vercel |
-| `BLOB_READ_WRITE_TOKEN` | **Required on Production** for portal uploads | Shared Blob store; portal writes only under `portal-files/` |
-| `MANDARIN_STUDIO_PASSWORD` | Optional / legacy | Studio primary auth is now ADMIN session |
-| `RESEND_API_KEY` | For password-reset email | Sends real reset emails via Resend |
-| `EMAIL_FROM` / `RESEND_FROM` | Optional | From address (defaults to Resend onboarding sender) |
-
-## Student accounts (continued)
-
-Staff can still create students from `/teacher` → **Add Student**. Public self-signup is documented above.
-
-## Key routes
-
-| Route | Who |
-| --- | --- |
-| `/login` | Everyone — includes **Sign up** + **Forgot password?** |
-| `/signup` | Public — creates **STUDENT** only |
-| `/forgot-password` | Public — issues DB reset token (+ email when Resend configured) |
-| `/reset-password?token=…` | Public — sets new password when token valid |
-| `/teacher` | ADMIN + TEACHER |
-| `/teacher/classes/[id]` | Enroll, posts, pin, lessons, files, homework, session basket |
-| `/teacher/students/[id]` | Assignments, goals, **set password / reset link** |
-| `/portal` | Student My Desk |
-| `/portal/profile` | Preferred name + curated avatar (persisted in Postgres) |
-| `/english-for-mandarin-speakers/studio` | **ADMIN only** |
-| `POST /api/portal/resources` | Staff multipart upload |
-| `POST /api/portal/session-basket` | Staff session-basket upload |
-| `GET /api/portal/resources/[id]/download` | Authenticated file stream |
-
-## Local setup
-
-```bash
-npm install
-# set DATABASE_URL + AUTH_SECRET in .env.local
-npx prisma db push
-npm run db:seed
-npm run dev
-```
-
-## Prisma Postgres claim
-
-If you used `npx create-db`, **claim the database before it expires**:
+## Prisma claim (if DB expires)
 
 https://create-db.prisma.io/claim?projectID=proj_d6g83y9mw7zy52fxwngbfzhs
-
-(Also check local `.env` / `.env.local` `CLAIM_URL` if present.) After claiming, keep the claimed `DATABASE_URL` on Vercel Production with `AUTH_SECRET`, `AUTH_TRUST_HOST=true`, and `BLOB_READ_WRITE_TOKEN`.
-
-## Smoke tests
-
-```bash
-npm run db:seed
-node scripts/portal-e2e-seed.mjs      # DB path: class + lesson + files
-node scripts/portal-http-e2e.mjs      # HTTP: login + middleware + My Desk
-node scripts/portal-prod-files-e2e.mjs  # Production: Blob upload + auth download
-```
-
-Set `PORTAL_E2E_BASE=https://lrmastery.guru` (default in the prod files script) when verifying the live site.
-
-## Landing gateways
-
-Order (left → right / top → bottom on mobile):
-
-1. **Student Portal** (binder-open animation; labels: Student Portal / My Desk)
-2. **Vocabulary & Grammar Games**
-3. **Pronunciation Practice**

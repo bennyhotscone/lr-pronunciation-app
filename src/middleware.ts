@@ -11,6 +11,8 @@ export const config = {
     "/signup",
     "/forgot-password",
     "/reset-password",
+    "/join",
+    "/join/:path*",
     "/english-for-mandarin-speakers/studio",
     "/english-for-mandarin-speakers/studio/:path*",
   ],

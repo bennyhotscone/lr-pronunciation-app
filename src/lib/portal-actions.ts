@@ -83,6 +83,7 @@ export async function signupStudentAction(formData: FormData) {
   const password = String(formData.get("password") || "");
   const fullName = String(formData.get("fullName") || "").trim();
   const preferredName = String(formData.get("preferredName") || "").trim();
+  const callbackUrl = String(formData.get("callbackUrl") || "");
 
   if (!email || !password || !fullName) {
     return { error: "Email, full name, and password are required." };
@@ -117,11 +118,18 @@ export async function signupStudentAction(formData: FormData) {
     },
   });
 
+  const safeCallback =
+    callbackUrl.startsWith("/") && !callbackUrl.startsWith("//") ? callbackUrl : "";
+  const redirectTo =
+    safeCallback.startsWith("/join") || safeCallback.startsWith("/portal")
+      ? safeCallback
+      : "/portal";
+
   try {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/portal",
+      redirectTo,
     });
   } catch (err) {
     if (err instanceof AuthError) {
@@ -343,12 +351,22 @@ export async function teacherCreateClass(formData: FormData): Promise<void> {
     throw new Error("Class name is required.");
   }
 
+  // Prefer classroom-actions.teacherCreateClassroom for invite codes; keep this path working.
+  const { generateInviteCode } = await import("@/lib/invite-code");
+  let inviteCode = generateInviteCode(6);
+  for (let i = 0; i < 12; i++) {
+    const clash = await prisma.class.findUnique({ where: { inviteCode } });
+    if (!clash) break;
+    inviteCode = generateInviteCode(6);
+  }
+
   const klass = await prisma.class.create({
     data: {
       name,
       description: description || null,
       level: level || null,
       teacherId: session.user.id,
+      inviteCode,
     },
   });
 

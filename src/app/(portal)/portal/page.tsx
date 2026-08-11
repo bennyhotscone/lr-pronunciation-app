@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { getActiveClassIdsForStudent, requireRole } from "@/lib/portal-access";
 import { getAvatar } from "@/lib/avatars";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
-import { ClassPostList, type PostView } from "@/components/portal/ClassPosts";
+import { ClassroomStream, type StreamPost } from "@/components/classroom/ClassroomStream";
 
 function authorLabel(user: {
   email: string;
@@ -21,70 +21,16 @@ export default async function MyDeskPage() {
   const name =
     profile?.preferredName || session.user.preferredName || session.user.name || "there";
 
-  const [
-    latestLesson,
-    homework,
-    newFiles,
-    justForYou,
-    goals,
-    classes,
-    recommendations,
-    rawPosts,
-  ] = await Promise.all([
-    prisma.lesson.findFirst({
-      where: {
-        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-      },
-      orderBy: { date: "desc" },
-      include: { class: { select: { name: true } } },
-    }),
-    prisma.homework.findMany({
-      where: {
-        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-        status: "ASSIGNED",
-      },
-      orderBy: { dueAt: "asc" },
-      take: 8,
-      include: { class: { select: { name: true } } },
-    }),
-    prisma.resource.findMany({
-      where: {
-        OR: [
-          { studentId },
-          ...(classIds.length ? [{ classId: { in: classIds } }] : []),
-        ],
-      },
-      orderBy: { createdAt: "desc" },
-      take: 8,
-    }),
-    prisma.resource.findMany({
-      where: { studentId, classId: null },
-      orderBy: { createdAt: "desc" },
-      take: 6,
-    }),
-    prisma.goal.findMany({
-      where: { studentId, status: "ACTIVE" },
-      orderBy: { updatedAt: "desc" },
-      take: 4,
-    }),
+  const [classes, postsRaw, files, homework] = await Promise.all([
     prisma.class.findMany({
       where: { id: { in: classIds } },
       orderBy: { name: "asc" },
-    }),
-    prisma.recommendation.findMany({
-      where: {
-        approval: "APPROVED",
-        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-      },
-      orderBy: { createdAt: "desc" },
-      take: 5,
     }),
     classIds.length
       ? prisma.classPost.findMany({
           where: { classId: { in: classIds } },
           include: {
             author: { include: { profile: true } },
-            attachments: true,
             comments: {
               include: { author: { include: { profile: true } } },
               orderBy: { createdAt: "asc" },
@@ -95,230 +41,151 @@ export default async function MyDeskPage() {
             { pinnedAt: { sort: "desc", nulls: "last" } },
             { createdAt: "desc" },
           ],
-          take: 8,
+          take: 6,
         })
       : Promise.resolve([]),
+    prisma.resource.findMany({
+      where: {
+        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
+      },
+      orderBy: { createdAt: "desc" },
+      take: 12,
+    }),
+    prisma.homework.findMany({
+      where: {
+        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
+        status: "ASSIGNED",
+      },
+      orderBy: { dueAt: "asc" },
+      take: 6,
+      include: { class: { select: { name: true } } },
+    }),
   ]);
 
-  const justForYouLessons = await prisma.lesson.findMany({
-    where: { studentId },
-    orderBy: { date: "desc" },
-    take: 4,
-  });
-
-  const posts: PostView[] = rawPosts.map((p) => ({
+  const posts: StreamPost[] = postsRaw.map((p) => ({
     id: p.id,
-    title: p.title,
+    title: `${p.title}${"class" in p && p.class ? ` · ${p.class.name}` : ""}`,
     body: p.body,
+    tags: p.tags || [],
     pinnedAt: p.pinnedAt?.toISOString() ?? null,
     createdAt: p.createdAt.toISOString(),
-    authorLabel: `${authorLabel(p.author)}${"class" in p && p.class ? ` · ${p.class.name}` : ""}`,
-    attachments: p.attachments.map((a) => ({
-      id: a.id,
-      filename: a.filename,
-      blobUrl: a.blobUrl,
-    })),
+    authorLabel: authorLabel(p.author),
     comments: p.comments.map((c) => ({
       id: c.id,
       body: c.body,
       createdAt: c.createdAt.toISOString(),
       authorLabel: authorLabel(c.author),
-      parentId: c.parentId,
     })),
   }));
 
   return (
-    <div>
+    <div className="desk-shell">
       <div className="flex items-center gap-4">
         <span
-          className="inline-flex h-16 w-16 items-center justify-center rounded-full text-4xl shadow-sm"
+          className="inline-flex h-16 w-16 items-center justify-center rounded-full text-4xl shadow"
           style={{ background: avatar.bg }}
           aria-hidden
         >
           {avatar.emoji}
         </span>
         <div>
-          <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight">
+          <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
             My Desk
           </h1>
-          <p className="mt-1 text-muted">Welcome back, {name}.</p>
+          <p className="mt-1 text-ink/60">Welcome back, {name}.</p>
         </div>
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
-        <section className="card rounded-2xl p-5 md:col-span-2">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Latest lesson</h2>
-          {latestLesson ? (
-            <div className="mt-2">
-              <p className="font-[family-name:var(--font-display)] text-xl font-semibold">
-                {latestLesson.title}
-              </p>
-              <p className="mt-1 text-sm text-muted">
-                {latestLesson.date.toLocaleDateString()}
-                {latestLesson.class ? ` · ${latestLesson.class.name}` : " · Just for you"}
-              </p>
-              {latestLesson.summary ? (
-                <p className="mt-2 text-sm leading-relaxed">{latestLesson.summary}</p>
-              ) : null}
-            </div>
-          ) : (
-            <p className="mt-2 text-sm text-muted">No lessons yet — check back after class.</p>
-          )}
-        </section>
-
-        <section className="card rounded-2xl p-5 md:col-span-2">
-          <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-muted">
-            Classroom posts
+      <section className="desk-panel mt-8 rounded-2xl p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
+            Your classrooms
           </h2>
-          <ClassPostList posts={posts} mode="student" />
-        </section>
-
-        <section className="card rounded-2xl p-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Homework</h2>
-            <Link href="/portal/lessons" className="text-xs font-bold text-foreground">
-              View all
+          <Link href="/join" className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline">
+            Join with invite code →
+          </Link>
+        </div>
+        {classes.length ? (
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {classes.map((c) => (
+              <li key={c.id}>
+                <Link
+                  href={`/portal/classrooms/${c.id}`}
+                  className="flex items-center justify-between rounded-xl border border-wood/25 bg-paper px-4 py-4 transition hover:-translate-y-0.5"
+                >
+                  <span className="font-semibold text-ink">{c.name}</span>
+                  <span aria-hidden className="text-desk-accent">
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm text-ink/55">
+            You are not in a classroom yet. Ask your teacher for an invite code or link, then{" "}
+            <Link href="/join" className="font-semibold text-desk-accent underline">
+              join here
             </Link>
-          </div>
-          {homework.length ? (
-            <ul className="mt-3 space-y-3">
-              {homework.map((h) => (
-                <li key={h.id} className="border-b border-border/60 pb-2 last:border-0">
-                  <p className="font-semibold">{h.title}</p>
-                  <p className="text-xs text-muted">
-                    {h.dueAt ? `Due ${h.dueAt.toLocaleDateString()}` : "No due date"}
-                    {h.class ? ` · ${h.class.name}` : " · Just for you"}
-                  </p>
-                  <p className="mt-1 text-sm">{h.instructions}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-sm text-muted">No open homework.</p>
-          )}
-        </section>
+            .
+          </p>
+        )}
+      </section>
 
-        <section className="card rounded-2xl p-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-muted">New files</h2>
-            <Link href="/portal/resources" className="text-xs font-bold text-foreground">
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        <section className="desk-panel rounded-2xl p-5">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
+              Files (easy to reopen)
+            </h2>
+            <Link href="/portal/resources" className="text-xs font-bold text-desk-accent">
               All files
             </Link>
           </div>
-          {newFiles.length ? (
-            <ul className="mt-3 space-y-2">
-              {newFiles.map((f) => (
-                <li key={f.id}>
-                  <a
-                    href={portalResourceDownloadHref(f.id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold text-foreground underline-offset-2 hover:underline"
-                  >
-                    {f.title}
-                  </a>
-                  <p className="text-xs text-muted">{f.filename}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-sm text-muted">No files yet.</p>
-          )}
+          <ul className="space-y-2 text-sm">
+            {files.map((f) => (
+              <li key={f.id}>
+                <a
+                  href={portalResourceDownloadHref(f.id)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-ink underline-offset-2 hover:underline"
+                >
+                  {f.title}
+                </a>
+              </li>
+            ))}
+            {!files.length ? <li className="text-ink/45">No files yet.</li> : null}
+          </ul>
         </section>
 
-        <section className="card rounded-2xl p-5">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Just for you</h2>
-          {justForYou.length || justForYouLessons.length ? (
-            <ul className="mt-3 space-y-2">
-              {justForYouLessons.map((l) => (
-                <li key={l.id} className="text-sm">
-                  <span className="chip bg-coral/15">Lesson</span> {l.title}
-                </li>
-              ))}
-              {justForYou.map((f) => (
-                <li key={f.id} className="text-sm">
-                  <span className="chip bg-amber/25">File</span>{" "}
-                  <a
-                    href={portalResourceDownloadHref(f.id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold underline-offset-2 hover:underline"
-                  >
-                    {f.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-sm text-muted">No individual assignments right now.</p>
-          )}
+        <section className="desk-panel rounded-2xl p-5">
+          <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
+            Homework
+          </h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            {homework.map((h) => (
+              <li key={h.id}>
+                <p className="font-semibold text-ink">{h.title}</p>
+                <p className="text-xs text-ink/50">
+                  {h.class?.name || "Just for you"}
+                  {h.dueAt ? ` · due ${h.dueAt.toLocaleDateString()}` : ""}
+                </p>
+              </li>
+            ))}
+            {!homework.length ? <li className="text-ink/45">No open homework.</li> : null}
+          </ul>
         </section>
-
-        <section className="card rounded-2xl p-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Goals</h2>
-            <Link href="/portal/goals" className="text-xs font-bold">
-              Open
-            </Link>
-          </div>
-          {goals.length ? (
-            <ul className="mt-3 space-y-2">
-              {goals.map((g) => (
-                <li key={g.id}>
-                  <p className="font-semibold">{g.title}</p>
-                  <div className="progress-bar mt-1">
-                    <span style={{ width: `${g.progressPct}%` }} />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-sm text-muted">Your teacher can set goals for you.</p>
-          )}
-        </section>
-
-        <section className="card rounded-2xl p-5 md:col-span-2">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-muted">Your classes</h2>
-          {classes.length ? (
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {classes.map((c) => (
-                <li key={c.id} className="chip bg-teal/15">
-                  {c.name}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-sm text-muted">You are not enrolled in a class yet.</p>
-          )}
-        </section>
-
-        {recommendations.length ? (
-          <section className="card rounded-2xl p-5 md:col-span-2">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-muted">
-              Recommended practice
-            </h2>
-            <ul className="mt-3 space-y-2">
-              {recommendations.map((r) => (
-                <li key={r.id}>
-                  {r.url ? (
-                    <a
-                      href={r.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold underline-offset-2 hover:underline"
-                    >
-                      {r.title}
-                    </a>
-                  ) : (
-                    <span className="font-semibold">{r.title}</span>
-                  )}
-                  {r.description ? <p className="text-sm text-muted">{r.description}</p> : null}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
       </div>
+
+      {posts.length ? (
+        <section className="mt-8">
+          <h2 className="mb-3 font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
+            Recent stream
+          </h2>
+          <ClassroomStream classId="" posts={posts} canPost={false} />
+        </section>
+      ) : null}
     </div>
   );
 }
