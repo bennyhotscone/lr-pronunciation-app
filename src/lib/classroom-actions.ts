@@ -306,9 +306,24 @@ export async function teacherSaveClassLesson(formData: FormData) {
   return { ok: true as const, lessonId: lesson.id };
 }
 
-/** @deprecated use teacherSaveClassLesson */
-export async function teacherSaveClassDiaryDay(formData: FormData) {
-  return teacherSaveClassLesson(formData);
+export async function teacherRemoveStudentFromClass(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+  const classId = String(formData.get("classId") || "");
+  const studentId = String(formData.get("studentId") || "");
+  if (!classId || !studentId) return { error: "Class and student required." };
+  await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
+
+  await prisma.classMembership.updateMany({
+    where: { classId, studentId },
+    data: { status: "LEFT", leftAt: new Date() },
+  });
+
+  revalidatePath(`/teacher/classes/${classId}`);
+  revalidatePath(`/portal/classrooms/${classId}`);
+  revalidatePath("/portal");
+  revalidatePath(`/teacher/students/${studentId}`);
+  return { ok: true as const };
 }
 
 export async function teacherUploadClassFile(formData: FormData) {

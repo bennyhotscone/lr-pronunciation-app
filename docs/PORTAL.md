@@ -4,41 +4,46 @@
 
 | Concept | Meaning |
 | --- | --- |
-| **Classroom** | One shared space for a teacher + a group of students. Stream (announcements), daily diary, and a Files shelf. |
+| **Classroom** | One shared space for a teacher + a group of students. Stream, lessons, and a Files shelf. |
 | **Invite** | Students join with **code / link / QR**. Teachers do **not** create student emails/passwords. |
 | **Stream post** | Announcement on the classroom board (pinnable; students can comment). |
-| **Day’s diary** | One parent writeup for that calendar day, with optional **sub-entries** (topics, notes, homework bits) + file attachments. |
+| **Lesson** | One session writeup for that teaching session, with optional **sub-entries** + file attachments. |
 | **Files** | Class materials live on the classroom Files shelf and on My Desk so students can reopen downloads at home. |
 
-`Lesson` in the old schema is **not** what you open as a “classroom”. Teaching happens inside a **Classroom** board.
+Individual “just-for-you lessons” are **not** the classroom product. Teaching happens inside a **Classroom** board.
 
-## Create a teacher account?
+## Teacher / admin login
 
 Public `/signup` is **STUDENT only**. Seed admin already teaches.
 
 1. https://lrmastery.guru/login — `teacher@lrmastery.guru` / `TeacherTemp2026!`
-2. Lands on blackboard `/teacher` (Admin). Invite staff under **Invite a teacher** if needed.
+2. Lands on `/teacher`. Invite staff under **Invite a teacher** if needed.
 
-## Teacher click-path (today)
+## Teacher click-path
 
-1. Log in → https://lrmastery.guru/login  
-2. https://lrmastery.guru/teacher → **Create your classroom** (name only)  
-3. On the classroom board: copy **invite code**, **link** (`/join/CODE`), or show **QR**  
-4. Post to **Stream** / pin; write **Today’s diary** + sub-entries; upload **Files**  
-5. Students appear under Students after they join  
+1. Log in → create **classroom** (name only)  
+2. Copy **invite code** / link / QR  
+3. Post to **Stream** (pin optional); write a **Lesson** + sub-entries; upload **Files**  
+4. Students appear after they join — open a student for **goals/checklists**; remove from class if needed  
 
 ## Student click-path
 
-1. Open invite link https://lrmastery.guru/join/CODE **or** https://lrmastery.guru/join  
-2. **Sign up** (or log in) as student  
-3. Join completes → https://lrmastery.guru/portal/classrooms/[id]  
-4. Use **Stream**, **Class diary**, and **Files** (also listed on My Desk / All files)
+1. Sign up / log in as student  
+2. https://lrmastery.guru/portal/join — enter code (or open `/join/CODE`)  
+3. Classroom: **Stream**, **Lessons**, **Files** (+ My Desk lists the classroom)  
 
-## Goals & checklist accountability
+## Goals
 
-- Teachers add goals on a student page, with optional checklist steps (one per line).
-- Students see goals + checklist on **My Desk → Goals** and can leave notes.
-- **Only teachers/admins can tick checklist items.** Progress % updates from ticks automatically.
+- Teacher adds goals + checklist steps on the student page.  
+- Student sees them on Goals; **only teacher can tick steps**.
+
+## Prove (automated)
+
+```bash
+node scripts/classroom-golden-path.mjs https://lrmastery.guru
+```
+
+Form-POST join + student sees post/lesson/file + teacher sees student.
 
 ## Prisma claim (if DB expires)
 

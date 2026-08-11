@@ -7,6 +7,7 @@ import { ClassroomStream, type StreamPost } from "@/components/classroom/Classro
 import { ClassLessonEditor } from "@/components/classroom/ClassLessonEditor";
 import { ClassFileUpload } from "@/components/classroom/ClassFileUpload";
 import { ClassFilesList } from "@/components/classroom/ClassFilesList";
+import { RemoveStudentButton } from "@/components/classroom/RemoveStudentButton";
 import { SessionBasketProvider } from "@/components/portal/SessionBasket";
 import { classroomJoinPath } from "@/lib/invite-code";
 import { getInviteOrigin } from "@/lib/classroom-actions";
@@ -191,14 +192,28 @@ export default async function TeacherClassroomPage({
               <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">
                 Students
               </h2>
-              <ul className="mt-2 space-y-1 text-sm">
-                {memberships.map((m) => (
-                  <li key={m.id}>
-                    {m.student.profile?.preferredName ||
-                      m.student.profile?.fullName ||
-                      m.student.email}
-                  </li>
-                ))}
+              <ul className="mt-2 space-y-2 text-sm">
+                {memberships.map((m) => {
+                  const label =
+                    m.student.profile?.preferredName ||
+                    m.student.profile?.fullName ||
+                    m.student.email;
+                  return (
+                    <li key={m.id} className="flex items-center justify-between gap-2">
+                      <Link
+                        href={`/teacher/students/${m.studentId}`}
+                        className="font-semibold underline-offset-2 hover:underline"
+                      >
+                        {label}
+                      </Link>
+                      <RemoveStudentButton
+                        classId={id}
+                        studentId={m.studentId}
+                        label={label}
+                      />
+                    </li>
+                  );
+                })}
                 {!memberships.length ? (
                   <li className="text-muted">Waiting for students to join with the invite.</li>
                 ) : null}
