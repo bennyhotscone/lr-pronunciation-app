@@ -15,10 +15,23 @@ export function ClassroomInvitePanel({
   const [code, setCode] = useState(inviteCode);
   const [copied, setCopied] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+
+  const liveJoinUrl = useMemo(() => {
+    try {
+      const u = new URL(joinUrl);
+      u.pathname = `/join/${code}`;
+      u.search = "";
+      u.hash = "";
+      return u.toString();
+    } catch {
+      return `${joinUrl.replace(/\/join\/[^/]+$/, "")}/join/${code}`;
+    }
+  }, [joinUrl, code]);
+
   const qrSrc = useMemo(
     () =>
-      `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(joinUrl)}`,
-    [joinUrl],
+      `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(liveJoinUrl)}`,
+    [liveJoinUrl],
   );
 
   async function copy(text: string, label: string) {
@@ -37,7 +50,8 @@ export function ClassroomInvitePanel({
         Invite students
       </h2>
       <p className="mt-1 text-sm text-chalk/70">
-        Students sign up themselves, then join with this code or link. You do not create their passwords.
+        Students sign up themselves, then join with this code or link. You do not create their
+        passwords.
       </p>
       <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-start">
         <div className="flex-1 space-y-3">
@@ -54,11 +68,11 @@ export function ClassroomInvitePanel({
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-chalk/55">Invite link</p>
-            <p className="mt-1 break-all text-sm text-chalk/90">{joinUrl}</p>
+            <p className="mt-1 break-all text-sm text-chalk/90">{liveJoinUrl}</p>
             <button
               type="button"
               className="mt-2 text-sm font-bold text-chalk-accent underline-offset-2 hover:underline"
-              onClick={() => void copy(joinUrl, "link")}
+              onClick={() => void copy(liveJoinUrl, "link")}
             >
               {copied === "link" ? "Copied!" : "Copy link"}
             </button>
@@ -84,7 +98,9 @@ export function ClassroomInvitePanel({
         <div className="shrink-0 rounded-lg bg-white p-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={qrSrc} alt="QR code to join classroom" width={180} height={180} />
-          <p className="mt-1 text-center text-[0.65rem] font-semibold text-neutral-700">Scan to join</p>
+          <p className="mt-1 text-center text-[0.65rem] font-semibold text-neutral-700">
+            Scan to join
+          </p>
         </div>
       </div>
     </section>

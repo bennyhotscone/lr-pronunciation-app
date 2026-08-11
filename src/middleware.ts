@@ -13,6 +13,7 @@ export const config = {
     "/reset-password",
     "/join",
     "/join/:path*",
+    "/api/portal/join",
     "/english-for-mandarin-speakers/studio",
     "/english-for-mandarin-speakers/studio/:path*",
   ],

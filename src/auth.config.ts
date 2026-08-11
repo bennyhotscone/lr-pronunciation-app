@@ -36,6 +36,9 @@ export const authConfig = {
 
       if ((isPortal || isTeacher) && !isLoggedIn) return false;
 
+      // API join: allow through so route can return JSON 401 (not HTML login redirect)
+      if (pathname === "/api/portal/join") return true;
+
       if (isStudio) {
         if (!isLoggedIn) return false;
         if (role !== "ADMIN") {
