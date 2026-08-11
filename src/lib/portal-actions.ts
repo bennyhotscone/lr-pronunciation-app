@@ -98,15 +98,17 @@ export async function teacherCreateStudent(formData: FormData) {
   };
 }
 
-export async function teacherCreateClass(formData: FormData) {
+export async function teacherCreateClass(formData: FormData): Promise<void> {
   const session = await auth();
   if (!session?.user || session.user.role !== "TEACHER") {
-    return { error: "Unauthorized" };
+    throw new Error("Unauthorized");
   }
   const name = String(formData.get("name") || "").trim();
   const description = String(formData.get("description") || "").trim();
   const level = String(formData.get("level") || "").trim();
-  if (!name) return { error: "Class name is required." };
+  if (!name) {
+    throw new Error("Class name is required.");
+  }
 
   const klass = await prisma.class.create({
     data: {
