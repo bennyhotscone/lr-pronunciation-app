@@ -13,6 +13,7 @@ import {
   BasketAttachFields,
   SessionBasketPanel,
 } from "@/components/portal/SessionBasket";
+import { MaterialKindPicker } from "@/components/classroom/MaterialKindPicker";
 
 type StudentOption = { id: string; label: string };
 type LessonOption = { id: string; title: string };
@@ -175,6 +176,7 @@ export function ClassTools({
               </option>
             ))}
           </select>
+          <MaterialKindPicker defaultValue="INFO" idPrefix="class-tools-upload" />
           <input
             name="file"
             type="file"

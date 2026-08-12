@@ -2,6 +2,12 @@
 
 import { useMemo, useState } from "react";
 import { TagFilterBar } from "@/components/classroom/TagPicker";
+import { MaterialKindBadge } from "@/components/classroom/MaterialKindPicker";
+import {
+  groupByMaterialKind,
+  parseMaterialKind,
+  type MaterialKind,
+} from "@/lib/material-kind";
 
 function fileHref(resourceId: string) {
   return `/api/portal/resources/${resourceId}/download`;
@@ -29,6 +35,7 @@ export type ClassFileItem = {
   filename: string;
   tags: string[];
   mimeType?: string;
+  materialKind?: MaterialKind | string;
 };
 
 function FileThumb({ file }: { file: ClassFileItem }) {
@@ -71,6 +78,7 @@ function FileThumb({ file }: { file: ClassFileItem }) {
         <p className="line-clamp-2 text-sm font-semibold leading-snug text-ink group-hover:text-desk-accent">
           {file.title}
         </p>
+        <MaterialKindBadge kind={file.materialKind} />
         {file.tags?.length ? (
           <p className="mt-auto flex flex-wrap gap-1 pt-1">
             {file.tags.map((t) => (
@@ -103,6 +111,7 @@ export function ClassFilesList({
 }) {
   const [filterTag, setFilterTag] = useState<string | null>(null);
   const [fileType, setFileType] = useState<"all" | "image" | "pdf" | "doc">("all");
+  const [basketFilter, setBasketFilter] = useState<"all" | MaterialKind>("all");
   const allTags = useMemo(() => {
     const s = new Set<string>(knownTags);
     for (const f of files) for (const t of f.tags || []) s.add(t);
@@ -113,6 +122,9 @@ export function ClassFilesList({
     let list = filterTag
       ? files.filter((f) => (f.tags || []).includes(filterTag))
       : files;
+    if (basketFilter !== "all") {
+      list = list.filter((f) => parseMaterialKind(f.materialKind) === basketFilter);
+    }
     if (fileType === "image") {
       list = list.filter((f) => isImageMime(f.mimeType));
     } else if (fileType === "pdf") {
@@ -128,15 +140,41 @@ export function ClassFilesList({
       );
     }
     return list;
-  }, [files, filterTag, fileType]);
+  }, [files, filterTag, fileType, basketFilter]);
+
+  const sections = useMemo(() => groupByMaterialKind(visible), [visible]);
 
   return (
     <div className="space-y-3">
+      <div className="flex flex-wrap gap-1.5">
+        {(
+          [
+            ["all", "All baskets"],
+            ["INFO", "Information"],
+            ["EXERCISE", "Exercises & activities"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => setBasketFilter(id)}
+            className={`rounded-md px-2.5 py-1 text-xs font-bold ring-1 transition ${
+              basketFilter === id
+                ? id === "EXERCISE"
+                  ? "bg-[#1f4e46] text-white ring-[#1f4e46]"
+                  : "bg-desk-accent text-white ring-desk-accent"
+                : "bg-[#f3f2ee] text-ink ring-border hover:ring-desk-accent"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
       {showTypeOrganiser ? (
         <div className="flex flex-wrap gap-1.5">
           {(
             [
-              ["all", "All"],
+              ["all", "All types"],
               ["image", "Images"],
               ["pdf", "PDFs"],
               ["doc", "Docs"],
@@ -160,20 +198,33 @@ export function ClassFilesList({
       {!hideTagFilter ? (
         <TagFilterBar tags={allTags} active={filterTag} onChange={setFilterTag} />
       ) : null}
-      {visible.length ? (
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {visible.map((f) => (
-            <li key={f.id}>
-              <FileThumb file={f} />
-            </li>
+      {sections.length ? (
+        <div className="space-y-6">
+          {sections.map((section) => (
+            <div key={section.kind}>
+              <h4 className="mb-2 flex items-center gap-2 text-sm font-bold text-ink">
+                <MaterialKindBadge kind={section.kind} />
+                <span className="text-muted">({section.items.length})</span>
+              </h4>
+              <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {section.items.map((f) => (
+                  <li key={f.id}>
+                    <FileThumb file={f} />
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p className="text-sm text-muted">
           No files
-          {fileType !== "all" ? ` in ${fileType}` : ""}
+          {basketFilter !== "all"
+            ? ` in ${basketFilter === "EXERCISE" ? "Exercises & activities" : "Information"}`
+            : ""}
+          {fileType !== "all" ? ` (${fileType})` : ""}
           {filterTag ? ` tagged “${filterTag}”` : ""}
-          {!filterTag && fileType === "all" ? " yet" : ""}.
+          {!filterTag && fileType === "all" && basketFilter === "all" ? " yet" : ""}.
         </p>
       )}
     </div>

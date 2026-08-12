@@ -10,6 +10,10 @@ import {
   type ReactNode,
 } from "react";
 
+import type { MaterialKind } from "@/lib/material-kind";
+import { parseMaterialKind } from "@/lib/material-kind";
+import { MaterialKindPicker } from "@/components/classroom/MaterialKindPicker";
+
 export type BasketItem = {
   id: string;
   filename: string;
@@ -18,6 +22,7 @@ export type BasketItem = {
   mimeType: string;
   sizeBytes: number;
   addedAt: string;
+  materialKind: MaterialKind;
 };
 
 type BasketState = {
@@ -36,8 +41,11 @@ type BasketContextValue = {
   clearSelection: () => void;
   uploading: boolean;
   error: string | null;
+  defaultMaterialKind: MaterialKind;
+  setDefaultMaterialKind: (kind: MaterialKind) => void;
   addFiles: (files: FileList | File[]) => Promise<void>;
   removeItem: (id: string) => void;
+  setItemMaterialKind: (id: string, kind: MaterialKind) => void;
   clearBasket: () => void;
   selectedItems: BasketItem[];
 };
@@ -50,7 +58,21 @@ function todayKey() {
 }
 
 function storageKey(userId: string) {
-  return `lr-session-basket-v1:${userId}`;
+  return `lr-session-basket-v2:${userId}`;
+}
+
+function normalizeItem(raw: Partial<BasketItem> & { id: string }): BasketItem | null {
+  if (!raw.id || !raw.blobPath || !raw.blobUrl || !raw.filename) return null;
+  return {
+    id: raw.id,
+    filename: raw.filename,
+    blobPath: raw.blobPath,
+    blobUrl: raw.blobUrl,
+    mimeType: raw.mimeType || "application/octet-stream",
+    sizeBytes: typeof raw.sizeBytes === "number" ? raw.sizeBytes : 0,
+    addedAt: raw.addedAt || new Date().toISOString(),
+    materialKind: parseMaterialKind(raw.materialKind),
+  };
 }
 
 function loadState(userId: string): BasketState {
@@ -59,16 +81,23 @@ function loadState(userId: string): BasketState {
     return { dateKey, enabled: false, items: [] };
   }
   try {
-    const raw = localStorage.getItem(storageKey(userId));
+    const raw =
+      localStorage.getItem(storageKey(userId)) ||
+      localStorage.getItem(`lr-session-basket-v1:${userId}`);
     if (!raw) return { dateKey, enabled: false, items: [] };
     const parsed = JSON.parse(raw) as BasketState;
     if (parsed.dateKey !== dateKey) {
       return { dateKey, enabled: false, items: [] };
     }
+    const items = Array.isArray(parsed.items)
+      ? parsed.items
+          .map((i) => normalizeItem(i as Partial<BasketItem> & { id: string }))
+          .filter((i): i is BasketItem => Boolean(i))
+      : [];
     return {
       dateKey,
       enabled: Boolean(parsed.enabled),
-      items: Array.isArray(parsed.items) ? parsed.items : [],
+      items,
     };
   } catch {
     return { dateKey, enabled: false, items: [] };
@@ -88,6 +117,7 @@ export function SessionBasketProvider({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [defaultMaterialKind, setDefaultMaterialKind] = useState<MaterialKind>("INFO");
 
   useEffect(() => {
     const s = loadState(userId);
@@ -111,36 +141,45 @@ export function SessionBasketProvider({
     setEnabledState(on);
   }, []);
 
-  const addFiles = useCallback(async (files: FileList | File[]) => {
-    const list = Array.from(files);
-    if (!list.length) return;
-    setUploading(true);
-    setError(null);
-    try {
-      for (const file of list) {
-        const fd = new FormData();
-        fd.set("file", file);
-        const res = await fetch("/api/portal/session-basket", {
-          method: "POST",
-          body: fd,
-        });
-        const data = (await res.json().catch(() => ({}))) as {
-          ok?: boolean;
-          error?: string;
-          item?: BasketItem;
-        };
-        if (!res.ok || !data.item) {
-          throw new Error(data.error || "Upload failed");
+  const addFiles = useCallback(
+    async (files: FileList | File[]) => {
+      const list = Array.from(files);
+      if (!list.length) return;
+      setUploading(true);
+      setError(null);
+      try {
+        for (const file of list) {
+          const fd = new FormData();
+          fd.set("file", file);
+          const res = await fetch("/api/portal/session-basket", {
+            method: "POST",
+            body: fd,
+          });
+          const data = (await res.json().catch(() => ({}))) as {
+            ok?: boolean;
+            error?: string;
+            item?: Omit<BasketItem, "materialKind"> & { materialKind?: string };
+          };
+          if (!res.ok || !data.item) {
+            throw new Error(data.error || "Upload failed");
+          }
+          const item: BasketItem = {
+            ...data.item,
+            materialKind: parseMaterialKind(
+              data.item.materialKind ?? defaultMaterialKind,
+            ),
+          };
+          setItems((prev) => [...prev, item]);
+          setSelectedIds((prev) => new Set(prev).add(item.id));
         }
-        setItems((prev) => [...prev, data.item!]);
-        setSelectedIds((prev) => new Set(prev).add(data.item!.id));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Upload failed");
+      } finally {
+        setUploading(false);
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed");
-    } finally {
-      setUploading(false);
-    }
-  }, []);
+    },
+    [defaultMaterialKind],
+  );
 
   const removeItem = useCallback((id: string) => {
     setItems((prev) => prev.filter((i) => i.id !== id));
@@ -149,6 +188,12 @@ export function SessionBasketProvider({
       next.delete(id);
       return next;
     });
+  }, []);
+
+  const setItemMaterialKind = useCallback((id: string, kind: MaterialKind) => {
+    setItems((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, materialKind: kind } : i)),
+    );
   }, []);
 
   const clearBasket = useCallback(() => {
@@ -188,8 +233,11 @@ export function SessionBasketProvider({
     clearSelection,
     uploading,
     error,
+    defaultMaterialKind,
+    setDefaultMaterialKind,
     addFiles,
     removeItem,
+    setItemMaterialKind,
     clearBasket,
     selectedItems,
   };
@@ -216,8 +264,11 @@ export function SessionBasketPanel() {
     clearSelection,
     uploading,
     error,
+    defaultMaterialKind,
+    setDefaultMaterialKind,
     addFiles,
     removeItem,
+    setItemMaterialKind,
     clearBasket,
   } = useSessionBasket();
   const [dragOver, setDragOver] = useState(false);
@@ -230,8 +281,8 @@ export function SessionBasketPanel() {
             Session basket
           </h2>
           <p className="mt-1 max-w-xl text-sm leading-relaxed text-muted">
-            Drop files here during the session. Auto-catching all computer downloads
-            needs a helper app later — this web MVP only stores what you drop or pick.
+            Drop files here during the session. Choose Information or Exercises &amp;
+            activities for each file before you attach them to a lesson or post.
           </p>
         </div>
         <label className="inline-flex items-center gap-2 text-sm font-semibold">
@@ -247,6 +298,18 @@ export function SessionBasketPanel() {
 
       {enabled ? (
         <>
+          <div className="mt-4">
+            <MaterialKindPicker
+              name="basketDefaultMaterialKind"
+              value={defaultMaterialKind}
+              onChange={setDefaultMaterialKind}
+              idPrefix="basket-default"
+            />
+            <p className="mt-1 text-xs text-muted">
+              Default for newly dropped files — you can change each file below.
+            </p>
+          </div>
+
           <div
             className={`mt-4 rounded-xl border-2 border-dashed px-4 py-8 text-center transition ${
               dragOver
@@ -302,18 +365,27 @@ export function SessionBasketPanel() {
               </div>
               <ul className="divide-y divide-border/70">
                 {items.map((item) => (
-                  <li key={item.id} className="flex items-center gap-3 py-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={selectedIds.has(item.id)}
-                      onChange={() => toggleSelect(item.id)}
-                      aria-label={`Select ${item.filename}`}
+                  <li key={item.id} className="flex flex-col gap-2 py-2.5 sm:flex-row sm:items-center sm:gap-3">
+                    <div className="flex min-w-0 flex-1 items-center gap-3 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.has(item.id)}
+                        onChange={() => toggleSelect(item.id)}
+                        aria-label={`Select ${item.filename}`}
+                      />
+                      <span className="min-w-0 flex-1 truncate font-medium">{item.filename}</span>
+                    </div>
+                    <MaterialKindPicker
+                      name={`basket-item-${item.id}`}
+                      value={item.materialKind}
+                      onChange={(kind) => setItemMaterialKind(item.id, kind)}
+                      compact
+                      idPrefix={`basket-item-${item.id}`}
                     />
-                    <span className="min-w-0 flex-1 truncate font-medium">{item.filename}</span>
                     <button
                       type="button"
                       onClick={() => removeItem(item.id)}
-                      className="text-xs font-semibold text-muted hover:text-danger"
+                      className="self-start text-xs font-semibold text-muted hover:text-danger sm:self-center"
                     >
                       Remove
                     </button>
@@ -347,6 +419,7 @@ export function BasketAttachFields() {
           blobUrl: i.blobUrl,
           mimeType: i.mimeType,
           sizeBytes: i.sizeBytes,
+          materialKind: i.materialKind,
         })),
       )}
     />

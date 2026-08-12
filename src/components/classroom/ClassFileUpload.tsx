@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { teacherUploadClassFile } from "@/lib/classroom-actions";
 import { TagPicker } from "@/components/classroom/TagPicker";
+import { MaterialKindPicker } from "@/components/classroom/MaterialKindPicker";
 
 export function ClassFileUpload({
   classId,
@@ -17,7 +18,7 @@ export function ClassFileUpload({
 
   return (
     <form
-      className="space-y-2"
+      className="space-y-3"
       action={(fd) => {
         setMsg(null);
         startTransition(async () => {
@@ -38,6 +39,7 @@ export function ClassFileUpload({
         placeholder="Title (optional)"
         className="w-full rounded border border-border bg-background px-3 py-2 text-sm"
       />
+      <MaterialKindPicker defaultValue="INFO" idPrefix="class-file-upload" />
       <input name="file" type="file" required className="w-full text-sm" />
       <TagPicker classId={classId} knownTags={knownTags} title={title} body="" />
       <button type="submit" disabled={pending} className="btn-primary rounded px-3 py-2 text-sm font-bold disabled:opacity-50">

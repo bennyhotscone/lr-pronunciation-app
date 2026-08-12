@@ -11,6 +11,8 @@ import { TagPicker } from "@/components/classroom/TagPicker";
 import { TagFilterBar } from "@/components/classroom/TagPicker";
 import { InfoTag } from "@/components/classroom/InfoTag";
 import { BasketAttachFields, SessionBasketPanel } from "@/components/portal/SessionBasket";
+import { MaterialKindBadge } from "@/components/classroom/MaterialKindPicker";
+import { groupByMaterialKind } from "@/lib/material-kind";
 
 function resourceHref(resourceId: string) {
   return `/api/portal/resources/${resourceId}/download`;
@@ -21,6 +23,7 @@ export type StreamPostAttachment = {
   filename: string;
   mimeType: string;
   blobUrl: string;
+  materialKind?: string;
 };
 
 export type StreamPost = {
@@ -48,6 +51,7 @@ export type StreamLesson = {
     filename: string;
     mimeType: string;
     resourceId: string | null;
+    materialKind?: string;
   }[];
 };
 
@@ -64,11 +68,13 @@ function AttachmentChip({
   mimeType,
   resourceId,
   href: hrefOverride,
+  materialKind,
 }: {
   filename: string;
   mimeType: string;
   resourceId: string | null;
   href?: string | null;
+  materialKind?: string | null;
 }) {
   const href = hrefOverride || (resourceId ? resourceHref(resourceId) : null);
   const inner = (
@@ -83,8 +89,15 @@ function AttachmentChip({
           </span>
         )}
       </span>
-      <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink group-hover:text-desk-accent">
-        {filename}
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm font-semibold text-ink group-hover:text-desk-accent">
+          {filename}
+        </span>
+        {materialKind ? (
+          <span className="mt-0.5 inline-block">
+            <MaterialKindBadge kind={materialKind} />
+          </span>
+        ) : null}
       </span>
     </>
   );
@@ -106,6 +119,46 @@ function AttachmentChip({
     >
       {inner}
     </a>
+  );
+}
+
+function GroupedAttachments({
+  attachments,
+}: {
+  attachments: {
+    id: string;
+    filename: string;
+    mimeType: string;
+    resourceId?: string | null;
+    blobUrl?: string;
+    materialKind?: string | null;
+  }[];
+}) {
+  const sections = groupByMaterialKind(attachments);
+  if (!sections.length) return null;
+  return (
+    <div className="mt-3 space-y-3">
+      {sections.map((section) => (
+        <div key={section.kind}>
+          <p className="mb-1.5 text-xs font-bold uppercase tracking-wide text-muted">
+            {section.label}
+          </p>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {section.items.map((a) => (
+              <li key={a.id}>
+                <AttachmentChip
+                  filename={a.filename}
+                  mimeType={a.mimeType}
+                  resourceId={a.resourceId ?? null}
+                  href={a.blobUrl || null}
+                  materialKind={a.materialKind}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -389,18 +442,7 @@ export function ClassroomStream({
                 <p className="mt-2 whitespace-pre-wrap text-sm text-ink">{item.post.body}</p>
               )}
               {item.post.attachments?.length ? (
-                <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                  {item.post.attachments.map((a) => (
-                    <li key={a.id}>
-                      <AttachmentChip
-                        filename={a.filename}
-                        mimeType={a.mimeType}
-                        resourceId={null}
-                        href={a.blobUrl || null}
-                      />
-                    </li>
-                  ))}
-                </ul>
+                <GroupedAttachments attachments={item.post.attachments} />
               ) : null}
               <div className="mt-3 border-t border-border pt-3">
                 <p className="text-xs font-bold uppercase text-muted">Comments</p>
@@ -490,17 +532,7 @@ export function ClassroomStream({
               ) : null}
 
               {item.lesson.attachments.length ? (
-                <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                  {item.lesson.attachments.map((a) => (
-                    <li key={a.id}>
-                      <AttachmentChip
-                        filename={a.filename}
-                        mimeType={a.mimeType}
-                        resourceId={a.resourceId}
-                      />
-                    </li>
-                  ))}
-                </ul>
+                <GroupedAttachments attachments={item.lesson.attachments} />
               ) : null}
             </li>
           ),

@@ -9,6 +9,7 @@ import {
 } from "@/lib/portal-access";
 import { generateInviteCode } from "@/lib/invite-code";
 import { enrollStudentWithInviteCode } from "@/lib/enroll-student";
+import { parseMaterialKind } from "@/lib/material-kind";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
@@ -123,6 +124,7 @@ type BasketMeta = {
   blobUrl: string;
   mimeType: string;
   sizeBytes?: number;
+  materialKind?: string;
 };
 
 function parseBasketItems(raw: unknown): BasketMeta[] {
@@ -169,6 +171,7 @@ export async function teacherCreateClassPost(formData: FormData) {
               blobUrl: i.blobUrl,
               mimeType: i.mimeType || "application/octet-stream",
               sizeBytes: i.sizeBytes ?? null,
+              materialKind: parseMaterialKind(i.materialKind),
             })),
           }
         : undefined,
@@ -214,6 +217,7 @@ export async function teacherUpdateClassPost(formData: FormData) {
         blobUrl: item.blobUrl,
         mimeType: item.mimeType || "application/octet-stream",
         sizeBytes: item.sizeBytes ?? null,
+        materialKind: parseMaterialKind(item.materialKind),
       },
     });
   }
@@ -295,22 +299,9 @@ export async function teacherSaveClassLesson(formData: FormData) {
     }
   }
 
-  const basketRaw = String(formData.get("basketItems") || "");
-  type BasketMeta = {
-    filename: string;
-    blobPath: string;
-    blobUrl: string;
-    mimeType: string;
-    sizeBytes?: number;
-  };
-  let basketItems: BasketMeta[] = [];
-  if (basketRaw) {
-    try {
-      basketItems = JSON.parse(basketRaw) as BasketMeta[];
-    } catch {
-      basketItems = [];
-    }
-  }
+  const basketItems = parseBasketItems(formData.get("basketItems")).filter((i) =>
+    i.blobPath?.startsWith("portal-files/"),
+  );
 
   const lesson = await prisma.classLesson.upsert({
     where: { classId_day: { classId, day } },
@@ -349,6 +340,7 @@ export async function teacherSaveClassLesson(formData: FormData) {
 
   for (const item of basketItems) {
     if (!item.blobPath?.startsWith("portal-files/")) continue;
+    const materialKind = parseMaterialKind(item.materialKind);
     const resource = await prisma.resource.create({
       data: {
         title: item.filename || "Class file",
@@ -361,6 +353,7 @@ export async function teacherSaveClassLesson(formData: FormData) {
         tags,
         uploadedById: session.user.id,
         category: "class-lesson",
+        materialKind,
       },
     });
     await prisma.classLessonAttachment.create({
@@ -372,6 +365,7 @@ export async function teacherSaveClassLesson(formData: FormData) {
         mimeType: item.mimeType || "application/octet-stream",
         sizeBytes: item.sizeBytes ?? null,
         resourceId: resource.id,
+        materialKind,
       },
     });
   }
@@ -409,6 +403,7 @@ export async function teacherUploadClassFile(formData: FormData) {
   const classId = String(formData.get("classId") || "");
   const file = formData.get("file");
   const tags = parseTags(formData.get("tags"));
+  const materialKind = parseMaterialKind(formData.get("materialKind"));
   if (!classId) return { error: "Classroom required." };
   if (!(file instanceof File) || file.size === 0) return { error: "Choose a file." };
   await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
@@ -430,6 +425,7 @@ export async function teacherUploadClassFile(formData: FormData) {
         tags,
         uploadedById: session.user.id,
         category: "class",
+        materialKind,
       },
     });
   } catch (err) {

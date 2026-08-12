@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { assertTeacherOwnsClass, isStaff } from "@/lib/portal-access";
+import { parseMaterialKind } from "@/lib/material-kind";
 import {
   blobMissingErrorMessage,
   portalStorageMode,
@@ -13,7 +14,7 @@ export const runtime = "nodejs";
 
 /**
  * Teacher/Admin upload API (FormData).
- * Fields: file, title?, description?, classId?, studentId?, lessonId?
+ * Fields: file, title?, description?, classId?, studentId?, lessonId?, materialKind?
  * Production requires BLOB_READ_WRITE_TOKEN (no local sandbox).
  */
 export async function POST(request: Request) {
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
   const classId = String(formData.get("classId") || "") || null;
   const studentId = String(formData.get("studentId") || "") || null;
   const lessonId = String(formData.get("lessonId") || "") || null;
+  const materialKind = parseMaterialKind(formData.get("materialKind"));
 
   if (!classId && !studentId) {
     return NextResponse.json(
@@ -79,6 +81,7 @@ export async function POST(request: Request) {
         lessonId,
         uploadedById: session.user.id,
         category: studentId && !classId ? "just-for-you" : "class",
+        materialKind,
       },
     });
 

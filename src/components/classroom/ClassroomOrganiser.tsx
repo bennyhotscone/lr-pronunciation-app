@@ -16,6 +16,8 @@ import {
 import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomStream";
 import { TopicHelpButton } from "@/components/classroom/TopicHelpButton";
 import { BasketAttachFields } from "@/components/portal/SessionBasket";
+import { MaterialKindBadge } from "@/components/classroom/MaterialKindPicker";
+import { groupByMaterialKind } from "@/lib/material-kind";
 
 export type OrganiserTab =
   | "stream"
@@ -92,11 +94,13 @@ function AttachmentChip({
   mimeType,
   resourceId,
   href: hrefOverride,
+  materialKind,
 }: {
   filename: string;
   mimeType: string;
   resourceId: string | null;
   href?: string | null;
+  materialKind?: string | null;
 }) {
   const href = hrefOverride || (resourceId ? resourceHref(resourceId) : null);
   const inner = (
@@ -111,8 +115,15 @@ function AttachmentChip({
           </span>
         )}
       </span>
-      <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink group-hover:text-desk-accent">
-        {filename}
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm font-semibold text-ink group-hover:text-desk-accent">
+          {filename}
+        </span>
+        {materialKind ? (
+          <span className="mt-0.5 inline-block">
+            <MaterialKindBadge kind={materialKind} />
+          </span>
+        ) : null}
       </span>
     </>
   );
@@ -132,6 +143,46 @@ function AttachmentChip({
     >
       {inner}
     </a>
+  );
+}
+
+function GroupedAttachments({
+  attachments,
+}: {
+  attachments: {
+    id: string;
+    filename: string;
+    mimeType: string;
+    resourceId?: string | null;
+    blobUrl?: string;
+    materialKind?: string | null;
+  }[];
+}) {
+  const sections = groupByMaterialKind(attachments);
+  if (!sections.length) return null;
+  return (
+    <div className="mt-4 space-y-3">
+      {sections.map((section) => (
+        <div key={section.kind}>
+          <p className="mb-1.5 text-xs font-bold uppercase tracking-wide text-muted">
+            {section.label}
+          </p>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {section.items.map((a) => (
+              <li key={a.id}>
+                <AttachmentChip
+                  filename={a.filename}
+                  mimeType={a.mimeType}
+                  resourceId={a.resourceId ?? null}
+                  href={a.blobUrl || null}
+                  materialKind={a.materialKind}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -269,18 +320,7 @@ function PostCard({
         <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-ink">{post.body}</p>
       )}
       {post.attachments?.length ? (
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-          {post.attachments.map((a) => (
-            <li key={a.id}>
-              <AttachmentChip
-                filename={a.filename}
-                mimeType={a.mimeType}
-                resourceId={null}
-                href={a.blobUrl || null}
-              />
-            </li>
-          ))}
-        </ul>
+        <GroupedAttachments attachments={post.attachments} />
       ) : null}
       <div className="mt-4 border-t border-border pt-3">
         <p className="text-xs font-bold uppercase text-muted">Comments</p>
@@ -397,17 +437,7 @@ function LessonCard({
       ) : null}
 
       {lesson.attachments.length ? (
-        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-          {lesson.attachments.map((a) => (
-            <li key={a.id}>
-              <AttachmentChip
-                filename={a.filename}
-                mimeType={a.mimeType}
-                resourceId={a.resourceId}
-              />
-            </li>
-          ))}
-        </ul>
+        <GroupedAttachments attachments={lesson.attachments} />
       ) : null}
 
       <TopicHelpButton

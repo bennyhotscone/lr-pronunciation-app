@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { getActiveClassIdsForStudent, requireRole } from "@/lib/portal-access";
 import { portalResourceDownloadHref } from "@/lib/portal-files";
+import { materialKindLabel } from "@/lib/material-kind";
 
 export default async function ResourcesPage() {
   const session = await requireRole("STUDENT");
@@ -33,6 +34,8 @@ export default async function ResourcesPage() {
               </a>
               <p className="text-xs text-muted">
                 {f.filename}
+                {" · "}
+                {materialKindLabel(f.materialKind)}
                 {f.studentId && !f.classId ? " · Just for you" : ""}
               </p>
             </div>

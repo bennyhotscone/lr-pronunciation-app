@@ -134,6 +134,7 @@ export default async function TeacherClassroomPage({
       filename: a.filename,
       mimeType: a.mimeType,
       blobUrl: a.blobUrl,
+      materialKind: a.materialKind,
     })),
   }));
 
@@ -160,6 +161,7 @@ export default async function TeacherClassroomPage({
       filename: a.filename,
       mimeType: a.mimeType,
       resourceId: a.resourceId,
+      materialKind: a.materialKind,
     })),
   }));
 
@@ -169,6 +171,7 @@ export default async function TeacherClassroomPage({
     filename: f.filename,
     tags: f.tags || [],
     mimeType: f.mimeType,
+    materialKind: f.materialKind,
   }));
 
   return (

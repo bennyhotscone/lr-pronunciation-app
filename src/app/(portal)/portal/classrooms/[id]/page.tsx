@@ -97,6 +97,7 @@ export default async function StudentClassroomPage({
       filename: a.filename,
       mimeType: a.mimeType,
       blobUrl: a.blobUrl,
+      materialKind: a.materialKind,
     })),
   }));
 
@@ -123,6 +124,7 @@ export default async function StudentClassroomPage({
       filename: a.filename,
       mimeType: a.mimeType,
       resourceId: a.resourceId,
+      materialKind: a.materialKind,
     })),
   }));
 
@@ -178,6 +180,7 @@ export default async function StudentClassroomPage({
           filename: f.filename,
           tags: f.tags || [],
           mimeType: f.mimeType,
+          materialKind: f.materialKind,
         }))}
         knownTags={knownTags}
         initialTab={initialTab}

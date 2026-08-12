@@ -4,6 +4,7 @@ import { auth, signIn } from "@/auth";
 import { prisma } from "@/lib/db";
 import { isValidAvatarId } from "@/lib/avatars";
 import { uploadPortalFile } from "@/lib/portal-files";
+import { parseMaterialKind } from "@/lib/material-kind";
 import {
   assertTeacherOwnsClass,
   homeForRole,
@@ -563,6 +564,7 @@ export async function teacherUploadResource(formData: FormData) {
   const classId = String(formData.get("classId") || "") || null;
   const studentId = String(formData.get("studentId") || "") || null;
   const lessonId = String(formData.get("lessonId") || "") || null;
+  const materialKind = parseMaterialKind(formData.get("materialKind"));
 
   if (!classId && !studentId) {
     return { error: "Assign the file to a class or student." };
@@ -587,6 +589,7 @@ export async function teacherUploadResource(formData: FormData) {
         lessonId,
         uploadedById: session.user.id,
         category: studentId && !classId ? "just-for-you" : "class",
+        materialKind,
       },
     });
   } catch (err) {
@@ -979,6 +982,7 @@ type BasketMeta = {
   filename: string;
   mimeType: string;
   sizeBytes: number;
+  materialKind?: string;
 };
 
 async function attachBasketItemsAsResources(opts: {
@@ -1003,6 +1007,7 @@ async function attachBasketItemsAsResources(opts: {
         lessonId: opts.lessonId || null,
         uploadedById: opts.uploadedById,
         category: "session-basket",
+        materialKind: parseMaterialKind(item.materialKind),
       },
     });
   }
@@ -1048,6 +1053,7 @@ export async function teacherCreateClassPost(formData: FormData) {
                 blobUrl: i.blobUrl,
                 mimeType: i.mimeType || "application/octet-stream",
                 sizeBytes: i.sizeBytes ?? null,
+                materialKind: parseMaterialKind(i.materialKind),
               })),
           }
         : undefined,

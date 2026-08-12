@@ -170,6 +170,8 @@ model Resource {
   blobUrl     String
   mimeType    String
   category    String?
+  /// Classroom material basket: INFO (explanation) | EXERCISE (activities).
+  materialKind String  @default("INFO")
   description String?
   sizeBytes   Int?
   tags        String[] @default([])
@@ -344,14 +346,16 @@ model ClassPost {
 }
 
 model ClassPostAttachment {
-  id        String   @id @default(cuid())
-  postId    String
-  filename  String
-  blobPath  String
-  blobUrl   String
-  mimeType  String
-  sizeBytes Int?
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  postId       String
+  filename     String
+  blobPath     String
+  blobUrl      String
+  mimeType     String
+  sizeBytes    Int?
+  /// INFO | EXERCISE — same baskets as class files / lesson attachments.
+  materialKind String   @default("INFO")
+  createdAt    DateTime @default(now())
 
   post ClassPost @relation(fields: [postId], references: [id], onDelete: Cascade)
 
@@ -441,15 +445,17 @@ model ClassLessonSubEntry {
 }
 
 model ClassLessonAttachment {
-  id         String   @id @default(cuid())
-  lessonId   String
-  filename   String
-  blobPath   String
-  blobUrl    String
-  mimeType   String
-  sizeBytes  Int?
-  resourceId String?
-  createdAt  DateTime @default(now())
+  id           String   @id @default(cuid())
+  lessonId     String
+  filename     String
+  blobPath     String
+  blobUrl      String
+  mimeType     String
+  sizeBytes    Int?
+  resourceId   String?
+  /// INFO | EXERCISE — same baskets as class files / feed attachments.
+  materialKind String   @default("INFO")
+  createdAt    DateTime @default(now())
 
   lesson ClassLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
