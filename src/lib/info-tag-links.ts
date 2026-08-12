@@ -82,6 +82,7 @@ export function freeHelpPracticeSteps(tag: string): string[] {
   ];
 }
 
-export function tagClassroomHref(classId: string, tag: string): string {
-  return `/portal/classrooms/${classId}?tag=${encodeURIComponent(normalizeTag(tag))}`;
+export function tagClassroomHref(_classId: string, tag: string): string {
+  /** Student desk is the single class surface — tag filters live on /portal. */
+  return `/portal?tag=${encodeURIComponent(normalizeTag(tag))}`;
 }

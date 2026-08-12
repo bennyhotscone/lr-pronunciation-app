@@ -61,7 +61,7 @@ export function TagExplorePanel({
           </p>
         </div>
         <Link
-          href={`/portal/classrooms/${classId}`}
+          href="/portal"
           className="text-sm font-semibold text-desk-accent underline-offset-2 hover:underline"
         >
           Clear filter

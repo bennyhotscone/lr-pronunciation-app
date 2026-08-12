@@ -57,8 +57,8 @@ export function JoinCodeForm({
             }
 
             if (data?.ok && data.classId) {
-              // Hard navigation so membership is visible immediately
-              window.location.assign(`/portal/classrooms/${data.classId}`);
+              // Hard navigation so membership is visible immediately on My Desk
+              window.location.assign("/portal");
               return;
             }
 

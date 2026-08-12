@@ -74,8 +74,5 @@ export async function POST(req: Request) {
     });
   }
 
-  return NextResponse.redirect(
-    new URL(`/portal/classrooms/${result.classId}`, origin),
-    303,
-  );
+  return NextResponse.redirect(new URL("/portal", origin), 303);
 }

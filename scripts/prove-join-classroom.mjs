@@ -174,12 +174,16 @@ async function main() {
       location: joinCodeAuthed.headers.get("location"),
     };
 
-    // Accept 200 or redirect into the classroom (invite link auto-join)
+    // Accept 200 or redirect into My Desk (invite link auto-join)
     const loc = joinCodeAuthed.headers.get("location") || "";
     results.joinCodeAuthedOk =
       joinCodeAuthed.status === 200 ||
-      ((joinCodeAuthed.status === 307 || joinCodeAuthed.status === 302) &&
-        loc.includes("/portal/classrooms/"));
+      ((joinCodeAuthed.status === 307 ||
+        joinCodeAuthed.status === 302 ||
+        joinCodeAuthed.status === 303) &&
+        (loc.replace(/\/$/, "").endsWith("/portal") ||
+          loc.includes("/portal?") ||
+          loc.includes("/portal/classrooms/")));
 
     const joinAuthed = await fetch(`${BASE}/join`, {
       headers: { Cookie: cookies },

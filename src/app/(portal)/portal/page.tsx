@@ -6,9 +6,17 @@ import {
   portalResourceDownloadHref,
   portalResourceReadHref,
 } from "@/lib/portal-files";
-import { ClassroomStream, type StreamPost } from "@/components/classroom/ClassroomStream";
+import { groupByMaterialKind } from "@/lib/material-kind";
+import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomStream";
+import {
+  ClassroomOrganiser,
+  type OrganiserTab,
+} from "@/components/classroom/ClassroomOrganiser";
+import { TagExplorePanel } from "@/components/classroom/TagExplorePanel";
 import { DeskVocabRail } from "@/components/portal/DeskVocabRail";
 import { compareVocabEntries } from "@/lib/vocab-sort";
+import { buildFreeLessonSummary } from "@/lib/lesson-summary";
+import { normalizeTag } from "@/lib/info-tag-links";
 
 function authorLabel(user: {
   email: string;
@@ -21,63 +29,97 @@ function isPdf(mime: string | null | undefined, filename: string) {
   return mime === "application/pdf" || /\.pdf$/i.test(filename);
 }
 
-export default async function MyDeskPage() {
+export default async function MyDeskPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tag?: string; tab?: string; day?: string }>;
+}) {
   const session = await requireRole("STUDENT");
   const studentId = session.user.id;
   const classIds = await getActiveClassIdsForStudent(studentId);
+  /** Students are in one class at a time — desk is that classroom. */
+  const classId = classIds[0] ?? null;
   const profile = await prisma.studentProfile.findUnique({ where: { userId: studentId } });
   const avatar = getAvatar(profile?.avatarId || session.user.avatarId);
   const name =
     profile?.preferredName || session.user.preferredName || session.user.name || "there";
 
-  const [classes, postsRaw, files, homework, goalsRaw, vocabRaw] = await Promise.all([
-    prisma.class.findMany({
-      where: { id: { in: classIds } },
-      orderBy: { name: "asc" },
-    }),
-    classIds.length
-      ? prisma.classPost.findMany({
-          where: { classId: { in: classIds } },
-          include: {
-            author: { include: { profile: true } },
-            comments: {
-              include: { author: { include: { profile: true } } },
-              orderBy: { createdAt: "asc" },
+  const sp = await searchParams;
+  const activeTag = sp.tag ? normalizeTag(sp.tag) : null;
+  const initialTab = (
+    ["stream", "timeline", "lessons", "calendar", "files", "tests"] as const
+  ).includes(sp.tab as OrganiserTab)
+    ? (sp.tab as OrganiserTab)
+    : "stream";
+
+  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, goalsRaw, vocabRaw, classTags] =
+    await Promise.all([
+      classId
+        ? prisma.class.findFirst({ where: { id: classId, archivedAt: null } })
+        : Promise.resolve(null),
+      classId
+        ? prisma.classPost.findMany({
+            where: { classId },
+            include: {
+              author: { include: { profile: true } },
+              comments: {
+                include: { author: { include: { profile: true } } },
+                orderBy: { createdAt: "asc" },
+              },
+              attachments: true,
             },
-            class: { select: { name: true } },
-          },
-          orderBy: [
-            { pinnedAt: { sort: "desc", nulls: "last" } },
-            { createdAt: "desc" },
-          ],
-          take: 6,
-        })
-      : Promise.resolve([]),
-    prisma.resource.findMany({
-      where: {
-        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-      },
-      orderBy: { createdAt: "desc" },
-      take: 12,
-    }),
-    prisma.homework.findMany({
-      where: {
-        OR: [{ studentId }, ...(classIds.length ? [{ classId: { in: classIds } }] : [])],
-        status: "ASSIGNED",
-      },
-      orderBy: { dueAt: "asc" },
-      take: 6,
-      include: { class: { select: { name: true } } },
-    }),
-    prisma.goal.findMany({
-      where: { studentId, status: "ACTIVE" },
-      include: { checklistItems: { orderBy: { sortOrder: "asc" } } },
-      orderBy: { updatedAt: "desc" },
-    }),
-    prisma.vocabEntry.findMany({
-      where: { studentId },
-    }),
-  ]);
+            orderBy: [
+              { pinnedAt: { sort: "desc", nulls: "last" } },
+              { createdAt: "desc" },
+            ],
+          })
+        : Promise.resolve([]),
+      classId
+        ? prisma.classLesson.findMany({
+            where: { classId },
+            include: { subEntries: { orderBy: { sortOrder: "asc" } }, attachments: true },
+            orderBy: { day: "desc" },
+            take: 80,
+          })
+        : Promise.resolve([]),
+      classId
+        ? prisma.resource.findMany({
+            where: { classId },
+            orderBy: { createdAt: "desc" },
+          })
+        : Promise.resolve([]),
+      prisma.resource.findMany({
+        where: {
+          OR: [{ studentId }, ...(classId ? [{ classId }] : [])],
+        },
+        orderBy: { createdAt: "desc" },
+        take: 12,
+      }),
+      prisma.homework.findMany({
+        where: {
+          OR: [{ studentId }, ...(classId ? [{ classId }] : [])],
+          status: "ASSIGNED",
+        },
+        orderBy: { dueAt: "asc" },
+        take: 6,
+        include: { class: { select: { name: true } } },
+      }),
+      prisma.goal.findMany({
+        where: { studentId, status: "ACTIVE" },
+        include: { checklistItems: { orderBy: { sortOrder: "asc" } } },
+        orderBy: { updatedAt: "desc" },
+      }),
+      prisma.vocabEntry.findMany({
+        where: { studentId },
+      }),
+      classId
+        ? prisma.classTag.findMany({
+            where: { classId },
+            orderBy: { name: "asc" },
+            select: { name: true },
+          })
+        : Promise.resolve([]),
+    ]);
 
   const vocabEntries = [...vocabRaw].sort(compareVocabEntries);
 
@@ -92,7 +134,7 @@ export default async function MyDeskPage() {
 
   const posts: StreamPost[] = postsRaw.map((p) => ({
     id: p.id,
-    title: `${p.title}${"class" in p && p.class ? ` · ${p.class.name}` : ""}`,
+    title: p.title,
     body: p.body,
     tags: p.tags || [],
     pinnedAt: p.pinnedAt?.toISOString() ?? null,
@@ -104,7 +146,43 @@ export default async function MyDeskPage() {
       createdAt: c.createdAt.toISOString(),
       authorLabel: authorLabel(c.author),
     })),
+    attachments: p.attachments.map((a) => ({
+      id: a.id,
+      filename: a.filename,
+      mimeType: a.mimeType,
+      blobUrl: a.blobUrl,
+      materialKind: a.materialKind,
+    })),
   }));
+
+  const streamLessons: StreamLesson[] = lessons.map((d) => ({
+    id: d.id,
+    day: d.day.toISOString(),
+    title: d.title,
+    summary: buildFreeLessonSummary({
+      title: d.title,
+      summary: d.summary,
+      subEntries: d.subEntries,
+      tags: d.tags || [],
+    }),
+    tags: d.tags || [],
+    createdAt: d.createdAt.toISOString(),
+    subEntries: d.subEntries.map((s) => ({
+      id: s.id,
+      kind: s.kind,
+      title: s.title,
+      body: s.body,
+    })),
+    attachments: d.attachments.map((a) => ({
+      id: a.id,
+      filename: a.filename,
+      mimeType: a.mimeType,
+      resourceId: a.resourceId,
+      materialKind: a.materialKind,
+    })),
+  }));
+
+  const knownTags = classTags.map((t) => t.name);
 
   return (
     <div className="desk-shell">
@@ -120,7 +198,16 @@ export default async function MyDeskPage() {
           <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
             My Desk
           </h1>
-          <p className="mt-1 text-ink/60">Welcome back, {name}.</p>
+          <p className="mt-1 text-ink/60">
+            Welcome back, {name}.
+            {klass ? (
+              <>
+                {" "}
+                <span className="text-ink/45">·</span>{" "}
+                <span className="font-semibold text-ink/70">{klass.name}</span>
+              </>
+            ) : null}
+          </p>
         </div>
       </div>
 
@@ -294,35 +381,66 @@ export default async function MyDeskPage() {
         />
       </div>
 
-      <section className="desk-panel mt-8 rounded-2xl p-5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
+      {classId && klass ? (
+        <section className="mt-8 space-y-6">
+          <div>
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
+              Class board
+            </h2>
+            <p className="mt-1 text-sm text-ink/55">
+              Stream, lessons, calendar, and files for {klass.name}.
+            </p>
+          </div>
+
+          {activeTag ? (
+            <TagExplorePanel
+              classId={classId}
+              tag={activeTag}
+              posts={postsRaw.map((p) => ({ id: p.id, title: p.title, tags: p.tags || [] }))}
+              lessons={lessons.map((l) => ({
+                id: l.id,
+                title: l.title,
+                day: l.day,
+                tags: l.tags || [],
+              }))}
+              files={classFiles.map((f) => ({ id: f.id, title: f.title, tags: f.tags || [] }))}
+            />
+          ) : null}
+
+          <ClassroomOrganiser
+            classId={classId}
+            posts={
+              activeTag
+                ? posts.filter((p) => (p.tags || []).map(normalizeTag).includes(activeTag))
+                : posts
+            }
+            lessons={
+              activeTag
+                ? streamLessons.filter((l) =>
+                    (l.tags || []).map(normalizeTag).includes(activeTag),
+                  )
+                : streamLessons
+            }
+            files={(activeTag
+              ? classFiles.filter((f) => (f.tags || []).map(normalizeTag).includes(activeTag))
+              : classFiles
+            ).map((f) => ({
+              id: f.id,
+              title: f.title,
+              filename: f.filename,
+              tags: f.tags || [],
+              mimeType: f.mimeType,
+              materialKind: f.materialKind,
+            }))}
+            knownTags={knownTags}
+            initialTab={initialTab}
+          />
+        </section>
+      ) : (
+        <section className="desk-panel mt-8 rounded-2xl p-5">
           <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-            Your classrooms
+            Join your class
           </h2>
-          <Link
-            href="/portal/join"
-            className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
-          >
-            Join with invite code →
-          </Link>
-        </div>
-        {classes.length ? (
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-            {classes.map((c) => (
-              <li key={c.id}>
-                <Link
-                  href={`/portal/classrooms/${c.id}`}
-                  className="flex items-center justify-between rounded-xl border border-wood/25 bg-paper px-4 py-4 transition hover:-translate-y-0.5"
-                >
-                  <span className="font-semibold text-ink">{c.name}</span>
-                  <span aria-hidden className="text-desk-accent">
-                    →
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
           <p className="mt-3 text-sm text-ink/55">
             You are not in a classroom yet. Ask your teacher for an invite code or link, then{" "}
             <Link href="/portal/join" className="font-semibold text-desk-accent underline">
@@ -330,8 +448,14 @@ export default async function MyDeskPage() {
             </Link>
             .
           </p>
-        )}
-      </section>
+          <Link
+            href="/portal/join"
+            className="mt-4 inline-flex rounded-xl bg-desk-accent px-4 py-2.5 text-sm font-bold text-paper"
+          >
+            Join with invite code
+          </Link>
+        </section>
+      )}
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <section className="desk-panel rounded-2xl p-5">
@@ -343,46 +467,63 @@ export default async function MyDeskPage() {
               All files
             </Link>
           </div>
-          <ul className="space-y-2 text-sm">
-            {files.map((f) => (
-              <li key={f.id} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                {isPdf(f.mimeType, f.filename) ? (
-                  <>
-                    <Link
-                      href={portalResourceReadHref(f.id, "read")}
-                      className="font-semibold text-ink underline-offset-2 hover:underline"
-                    >
-                      {f.title}
-                    </Link>
-                    <Link
-                      href={portalResourceReadHref(f.id, "read")}
-                      className="text-xs font-bold text-desk-accent"
-                    >
-                      Read
-                    </Link>
-                    <Link
-                      href={portalResourceReadHref(f.id, "write")}
-                      className={`text-xs font-bold ${
-                        f.materialKind === "EXERCISE" ? "text-[#1f4e46]" : "text-ink/45"
-                      }`}
-                    >
-                      Write
-                    </Link>
-                  </>
-                ) : (
-                  <a
-                    href={portalResourceDownloadHref(f.id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold text-ink underline-offset-2 hover:underline"
-                  >
-                    {f.title}
-                  </a>
-                )}
-              </li>
-            ))}
-            {!files.length ? <li className="text-ink/45">No files yet.</li> : null}
-          </ul>
+          {deskFiles.length ? (
+            <div className="space-y-4 text-sm">
+              {groupByMaterialKind(deskFiles).map((section) => (
+                <div key={section.kind}>
+                  <p className="mb-1.5 text-xs font-bold uppercase tracking-wide text-ink/50">
+                    {section.label}
+                  </p>
+                  <ul className="space-y-2">
+                    {section.items.map((f) => (
+                      <li
+                        key={f.id}
+                        className="flex flex-wrap items-baseline gap-x-2 gap-y-1"
+                      >
+                        {isPdf(f.mimeType, f.filename) ? (
+                          <>
+                            <Link
+                              href={portalResourceReadHref(f.id, "read")}
+                              className="font-semibold text-ink underline-offset-2 hover:underline"
+                            >
+                              {f.title}
+                            </Link>
+                            <Link
+                              href={portalResourceReadHref(f.id, "read")}
+                              className="text-xs font-bold text-desk-accent"
+                            >
+                              Read
+                            </Link>
+                            <Link
+                              href={portalResourceReadHref(f.id, "write")}
+                              className={`text-xs font-bold ${
+                                f.materialKind === "EXERCISE"
+                                  ? "text-[#1f4e46]"
+                                  : "text-ink/45"
+                              }`}
+                            >
+                              Write
+                            </Link>
+                          </>
+                        ) : (
+                          <a
+                            href={portalResourceDownloadHref(f.id)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold text-ink underline-offset-2 hover:underline"
+                          >
+                            {f.title}
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-ink/45">No files yet.</p>
+          )}
         </section>
 
         <section className="desk-panel rounded-2xl p-5">
@@ -406,15 +547,6 @@ export default async function MyDeskPage() {
           </ul>
         </section>
       </div>
-
-      {posts.length ? (
-        <section className="mt-8">
-          <h2 className="mb-3 font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-            Recent stream
-          </h2>
-          <ClassroomStream classId="" posts={posts} canPost={false} />
-        </section>
-      ) : null}
     </div>
   );
 }

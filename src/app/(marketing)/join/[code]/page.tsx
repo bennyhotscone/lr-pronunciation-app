@@ -89,7 +89,7 @@ export default async function JoinByCodePage({
 
   const result = await enrollStudentWithInviteCode(session.user.id, code);
   if ("ok" in result && result.ok) {
-    redirect(`/portal/classrooms/${result.classId}`);
+    redirect("/portal");
   }
 
   return (

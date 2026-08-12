@@ -146,7 +146,7 @@ async function main() {
   const joinLoc = joinRes.headers.get("location") || "";
   assert(
     (joinRes.status === 303 || joinRes.status === 302 || joinRes.status === 307) &&
-      joinLoc.includes(`/portal/classrooms/${klass.id}`),
+      (joinLoc.replace(/\/$/, "").endsWith("/portal") || joinLoc.includes("/portal?")),
     `form join failed status=${joinRes.status} loc=${joinLoc}`,
   );
   step("student_form_join", { status: joinRes.status, location: joinLoc });
@@ -235,29 +235,33 @@ async function main() {
   });
   step("student_comment", {});
 
-  // 4) Student pages must contain content
-  const classPage = await fetch(`${BASE}/portal/classrooms/${klass.id}`, {
+  // 4) Student My Desk must contain class board content (classroom URL redirects here)
+  const classRedirect = await fetch(`${BASE}/portal/classrooms/${klass.id}`, {
     headers: { Cookie: studentLogin.cookies },
+    redirect: "manual",
   });
-  const classHtml = await classPage.text();
-  assert(classPage.status === 200, `classroom page ${classPage.status}`);
-  assert(classHtml.includes(klass.name), "classroom name missing");
-  assert(classHtml.includes(post.title), "pinned post title missing for student");
-  assert(classHtml.includes(`Session ${stamp}`) || classHtml.includes(lesson.title), "lesson missing");
-  assert(classHtml.includes("Introductions"), "lesson sub-entry missing");
-  assert(classHtml.includes(`Hello from Goldie ${stamp}`), "student comment missing");
-  if (resource) {
-    assert(classHtml.includes(resource.title), "file title missing on classroom");
-  }
-  step("student_sees_classroom_content", { status: 200 });
+  const classLoc = classRedirect.headers.get("location") || "";
+  assert(
+    (classRedirect.status === 307 || classRedirect.status === 302 || classRedirect.status === 303) &&
+      (classLoc.replace(/\/$/, "").endsWith("/portal") || classLoc.includes("/portal?")),
+    `classroom should redirect to desk status=${classRedirect.status} loc=${classLoc}`,
+  );
+  step("classroom_redirects_to_desk", { status: classRedirect.status, location: classLoc });
 
   const desk = await fetch(`${BASE}/portal`, {
     headers: { Cookie: studentLogin.cookies },
   });
   const deskHtml = await desk.text();
   assert(desk.status === 200, `desk ${desk.status}`);
-  assert(deskHtml.includes(klass.name), "desk missing classroom");
-  step("student_desk_lists_class", {});
+  assert(deskHtml.includes(klass.name), "desk missing classroom name");
+  assert(deskHtml.includes(post.title), "pinned post title missing on desk");
+  assert(deskHtml.includes(`Session ${stamp}`) || deskHtml.includes(lesson.title), "lesson missing on desk");
+  assert(deskHtml.includes("Introductions"), "lesson sub-entry missing on desk");
+  assert(deskHtml.includes(`Hello from Goldie ${stamp}`), "student comment missing on desk");
+  if (resource) {
+    assert(deskHtml.includes(resource.title), "file title missing on desk");
+  }
+  step("student_sees_desk_classroom_content", { status: 200 });
 
   // Teacher board shows student
   const teacherLogin = await login(

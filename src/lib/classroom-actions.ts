@@ -241,6 +241,7 @@ export async function teacherTogglePinPost(formData: FormData) {
   });
   revalidatePath(`/teacher/classes/${post.classId}`);
   revalidatePath(`/portal/classrooms/${post.classId}`);
+  revalidatePath("/portal");
   return { ok: true as const };
 }
 
@@ -433,6 +434,7 @@ export async function teacherUploadClassFile(formData: FormData) {
   }
   revalidatePath(`/teacher/classes/${classId}`);
   revalidatePath(`/portal/classrooms/${classId}`);
+  revalidatePath("/portal");
   revalidatePath("/portal/resources");
   return { ok: true as const };
 }

@@ -112,7 +112,6 @@ async function main() {
     headers: { Cookie: cookies },
     redirect: "manual",
   });
-  const classHtml = await classPage.text();
 
   const desk = await fetch(`${BASE}/portal`, {
     headers: { Cookie: cookies },
@@ -152,12 +151,18 @@ async function main() {
         portalJoin: { status: joinPage.status, hasForm: /Invite code|Join classroom/i.test(joinHtml) },
         classroomPage: {
           status: classPage.status,
-          hasName: classHtml.includes(klass.name),
-          notFound: /not found|404/i.test(classHtml.slice(0, 500)),
+          location: classPage.headers.get("location"),
+          redirectsToDesk:
+            (classPage.status === 307 ||
+              classPage.status === 302 ||
+              classPage.status === 303) &&
+            ((classPage.headers.get("location") || "").replace(/\/$/, "").endsWith("/portal") ||
+              (classPage.headers.get("location") || "").includes("/portal?")),
         },
         desk: {
           status: desk.status,
           listsClass: deskHtml.includes(klass.name),
+          hasClassBoard: /Class board|Stream|Organiser/i.test(deskHtml),
         },
         inviteLinkSecondStudent: {
           status: inviteHit.status,
