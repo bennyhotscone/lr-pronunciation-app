@@ -57,6 +57,15 @@ export function portalResourceDownloadHref(resourceId: string) {
   return `/api/portal/resources/${resourceId}/download`;
 }
 
+/** In-app PDF read / write mode (tap-translate + optional answer boxes). */
+export function portalResourceReadHref(
+  resourceId: string,
+  mode: "read" | "write" = "read",
+) {
+  const q = mode === "write" ? "?mode=write" : "";
+  return `/portal/read/${resourceId}${q}`;
+}
+
 /**
  * Portal files only — prefix `portal-files/`.
  * Never write to `studio-audio/`.

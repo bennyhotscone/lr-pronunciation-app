@@ -6,6 +6,7 @@ import { StudentAssignTools } from "@/components/portal/StudentAssignTools";
 import { StudentPasswordTools } from "@/components/portal/StudentPasswordTools";
 import { TeacherGoalChecklist } from "@/components/portal/TeacherGoalChecklist";
 import { getAvatar } from "@/lib/avatars";
+import { TeacherPdfSubmissions } from "@/components/portal/TeacherPdfSubmissions";
 
 export default async function TeacherStudentPage({
   params,
@@ -96,6 +97,7 @@ export default async function TeacherStudentPage({
         </ul>
       </section>
 
+      <TeacherPdfSubmissions studentId={student.id} />
       <StudentPasswordTools studentId={student.id} />
       <StudentAssignTools studentId={student.id} studentLabel={label} />
     </div>

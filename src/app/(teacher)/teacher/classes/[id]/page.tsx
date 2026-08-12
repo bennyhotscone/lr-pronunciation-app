@@ -17,6 +17,7 @@ import { getInviteOrigin } from "@/lib/classroom-actions";
 import { generateInviteCode } from "@/lib/invite-code";
 import { buildFreeLessonSummary } from "@/lib/lesson-summary";
 import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomStream";
+import { TeacherPdfSubmissions } from "@/components/portal/TeacherPdfSubmissions";
 
 function authorLabel(user: {
   email: string;
@@ -247,6 +248,7 @@ export default async function TeacherClassroomPage({
                   </p>
                   <ClassFileUpload classId={id} knownTags={knownTags} />
                 </section>
+                <TeacherPdfSubmissions classId={id} />
                 <section className="card rounded-xl p-4">
                   <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
                     Students
@@ -278,6 +280,7 @@ export default async function TeacherClassroomPage({
                     ) : null}
                   </ul>
                 </section>
+                <TeacherPdfSubmissions classId={id} />
               </div>
             </div>
           </details>

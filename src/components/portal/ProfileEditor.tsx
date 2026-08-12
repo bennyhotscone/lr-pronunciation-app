@@ -4,17 +4,21 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { AVATARS } from "@/lib/avatars";
 import { updateStudentProfile } from "@/lib/portal-actions";
+import { TARGET_LANG_OPTIONS } from "@/lib/vocab-translate";
 
 export function ProfileEditor({
   preferredName,
   avatarId,
+  targetLang = "zh-CN",
 }: {
   preferredName: string;
   avatarId: string;
+  targetLang?: string;
 }) {
   const router = useRouter();
   const [selected, setSelected] = useState(avatarId);
   const [name, setName] = useState(preferredName);
+  const [lang, setLang] = useState(targetLang);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -44,6 +48,27 @@ export function ProfileEditor({
           required
           className="w-full max-w-md rounded-xl border border-border bg-background/60 px-3 py-2.5"
         />
+      </label>
+
+      <label className="block max-w-md">
+        <span className="mb-1.5 block text-sm font-semibold">
+          Target language (PDF tap-translate)
+        </span>
+        <select
+          name="targetLang"
+          value={lang}
+          onChange={(e) => setLang(e.target.value)}
+          className="w-full rounded-xl border border-border bg-background/60 px-3 py-2.5"
+        >
+          {TARGET_LANG_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <span className="mt-1 block text-xs text-muted">
+          Free translation via MyMemory (+ Free Dictionary gloss). Used in PDF Read and Write mode.
+        </span>
       </label>
 
       <fieldset>

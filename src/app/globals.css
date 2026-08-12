@@ -492,3 +492,12 @@ body {
     transform: none;
   }
 }
+
+/* PDF workspace: transparent text layer words highlight on hover/focus */
+.pdf-tap-word:hover,
+.pdf-tap-word:focus-visible {
+  background: color-mix(in srgb, var(--desk-accent) 28%, transparent) !important;
+  color: transparent !important;
+  border-radius: 2px;
+  outline: none;
+}

@@ -605,6 +605,19 @@ export async function teacherUploadResource(formData: FormData) {
   return { ok: true as const };
 }
 
+const ALLOWED_TARGET_LANGS = new Set([
+  "zh-CN",
+  "zh-TW",
+  "ja",
+  "th",
+  "ko",
+  "vi",
+  "es",
+  "fr",
+  "id",
+  "en",
+]);
+
 export async function updateStudentProfile(formData: FormData) {
   const session = await auth();
   if (!session?.user || session.user.role !== "STUDENT") {
@@ -613,6 +626,8 @@ export async function updateStudentProfile(formData: FormData) {
 
   const preferredName = String(formData.get("preferredName") || "").trim();
   const avatarId = String(formData.get("avatarId") || "fox");
+  const targetLangRaw = String(formData.get("targetLang") || "zh-CN").trim();
+  const targetLang = ALLOWED_TARGET_LANGS.has(targetLangRaw) ? targetLangRaw : "zh-CN";
   if (!preferredName) return { error: "Preferred name is required." };
   if (!isValidAvatarId(avatarId)) return { error: "Invalid avatar." };
 
@@ -622,13 +637,14 @@ export async function updateStudentProfile(formData: FormData) {
       userId: session.user.id,
       preferredName,
       avatarId,
+      targetLang,
     },
-    update: { preferredName, avatarId },
+    update: { preferredName, avatarId, targetLang },
   });
 
   revalidatePath("/portal");
   revalidatePath("/portal/profile");
-  return { ok: true as const, preferredName, avatarId };
+  return { ok: true as const, preferredName, avatarId, targetLang };
 }
 
 export async function saveDiaryEntry(formData: FormData) {

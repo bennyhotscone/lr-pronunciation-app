@@ -48,6 +48,11 @@ enum RecommendationType {
   ACTIVITY
 }
 
+enum PdfSubmissionStatus {
+  SUBMITTED
+  REVIEWED
+}
+
 model User {
   id           String    @id @default(cuid())
   email        String    @unique
@@ -76,6 +81,10 @@ model User {
   classPostComments    ClassPostComment[]   @relation("ClassPostCommentAuthor")
   passwordResetTokens  PasswordResetToken[]
   classDiaryAuthored   ClassLesson[]        @relation("ClassLessonAuthor")
+  vocabEntries         VocabEntry[]
+  pdfWriteDrafts       PdfWriteDraft[]
+  pdfSubmissions       PdfSubmission[]      @relation("PdfSubmissionStudent")
+  pdfSubmissionsReviewed PdfSubmission[]    @relation("PdfSubmissionReviewer")
 }
 
 model StudentProfile {
@@ -86,6 +95,8 @@ model StudentProfile {
   avatarId           String   @default("fox")
   englishLevel       String?
   firstLanguage      String?
+  /// BCP-47-ish target language for PDF tap-translate (e.g. zh-CN, ja, th).
+  targetLang         String   @default("zh-CN")
   courseType         String?
   learningObjectives String?
   createdAt          DateTime @default(now())
@@ -460,4 +471,69 @@ model ClassLessonAttachment {
   lesson ClassLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   @@index([lessonId])
+}
+
+/// Student target vocabulary from PDF read-mode tap-translate.
+model VocabEntry {
+  id              String   @id @default(cuid())
+  studentId       String
+  word            String
+  normalizedWord  String
+  translation     String?
+  targetLang      String
+  lookupCount     Int      @default(1)
+  lastLookupAt    DateTime @default(now())
+  /// 1-based rank in scripts/words-all-5000.json; null if outside the list.
+  frequencyRank   Int?
+  sourceResourceId String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, normalizedWord, targetLang])
+  @@index([studentId, lastLookupAt])
+  @@index([studentId, frequencyRank])
+  @@index([studentId, lookupCount])
+}
+
+/// In-progress PDF write answers (AcroForm fields + overlay text boxes).
+model PdfWriteDraft {
+  id         String   @id @default(cuid())
+  studentId  String
+  resourceId String
+  /// { fields: Record<string,string>, overlays: OverlayBox[] }
+  data       Json     @default("{}")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, resourceId])
+  @@index([resourceId])
+}
+
+/// Student PDF worksheet submitted for teacher review (homework-style).
+model PdfSubmission {
+  id           String             @id @default(cuid())
+  studentId    String
+  resourceId   String
+  classId      String?
+  title        String
+  /// Snapshot of draft data at submit time.
+  data         Json
+  status       PdfSubmissionStatus @default(SUBMITTED)
+  teacherNote  String?
+  submittedAt  DateTime           @default(now())
+  reviewedAt   DateTime?
+  reviewedById String?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  student    User  @relation("PdfSubmissionStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  reviewedBy User? @relation("PdfSubmissionReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@index([classId, submittedAt])
+  @@index([studentId, submittedAt])
+  @@index([resourceId, submittedAt])
 }

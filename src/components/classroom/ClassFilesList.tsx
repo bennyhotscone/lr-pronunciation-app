@@ -42,15 +42,19 @@ function FileThumb({ file }: { file: ClassFileItem }) {
   const href = fileHref(file.id);
   const kind = fileKindLabel(file.mimeType, file.filename);
   const image = isImageMime(file.mimeType);
+  const pdf = isPdfMime(file.mimeType, file.filename);
+  const exercise = parseMaterialKind(file.materialKind) === "EXERCISE";
+  const primaryHref = pdf
+    ? `/portal/read/${file.id}${exercise ? "?mode=write" : ""}`
+    : href;
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex flex-col overflow-hidden rounded-lg border border-border bg-[#faf9f6] transition hover:border-desk-accent/40 hover:bg-white"
-    >
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#ebe8e0]">
+    <div className="group flex flex-col overflow-hidden rounded-lg border border-border bg-[#faf9f6] transition hover:border-desk-accent/40 hover:bg-white">
+      <a
+        href={primaryHref}
+        {...(pdf ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+        className="relative aspect-[4/3] overflow-hidden bg-[#ebe8e0]"
+      >
         {image ? (
           // Auth cookie on same origin — download route serves inline images.
           // eslint-disable-next-line @next/next/no-img-element
@@ -73,12 +77,34 @@ function FileThumb({ file }: { file: ClassFileItem }) {
             </span>
           </div>
         )}
-      </div>
+      </a>
       <div className="flex flex-1 flex-col gap-1 p-2.5">
-        <p className="line-clamp-2 text-sm font-semibold leading-snug text-ink group-hover:text-desk-accent">
+        <a
+          href={primaryHref}
+          {...(pdf ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+          className="line-clamp-2 text-sm font-semibold leading-snug text-ink hover:text-desk-accent"
+        >
           {file.title}
-        </p>
+        </a>
         <MaterialKindBadge kind={file.materialKind} />
+        {pdf ? (
+          <div className="mt-1 flex flex-wrap gap-2">
+            <a
+              href={`/portal/read/${file.id}`}
+              className="text-[0.7rem] font-bold text-desk-accent hover:underline"
+            >
+              Read
+            </a>
+            <a
+              href={`/portal/read/${file.id}?mode=write`}
+              className={`text-[0.7rem] font-bold hover:underline ${
+                exercise ? "text-[#1f4e46]" : "text-ink/50"
+              }`}
+            >
+              {exercise ? "Open in write mode" : "Write"}
+            </a>
+          </div>
+        ) : null}
         {file.tags?.length ? (
           <p className="mt-auto flex flex-wrap gap-1 pt-1">
             {file.tags.map((t) => (
@@ -92,7 +118,7 @@ function FileThumb({ file }: { file: ClassFileItem }) {
           </p>
         ) : null}
       </div>
-    </a>
+    </div>
   );
 }
 
