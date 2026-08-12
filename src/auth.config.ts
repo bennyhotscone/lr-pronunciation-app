@@ -5,6 +5,36 @@ function isStaff(role: Role | string | undefined | null) {
   return role === "ADMIN" || role === "TEACHER";
 }
 
+function isAllowedAppPath(path: string) {
+  return (
+    path.startsWith("/join") ||
+    path.startsWith("/portal") ||
+    path.startsWith("/teacher") ||
+    path.startsWith("/english-for-mandarin-speakers")
+  );
+}
+
+/** Relative path, or absolute URL on this request origin / production hosts. */
+function normalizeCallbackPath(callback: string | null, origin: string): string | null {
+  if (!callback) return null;
+  if (callback.startsWith("/") && !callback.startsWith("//")) {
+    return isAllowedAppPath(callback) ? callback : null;
+  }
+  try {
+    const u = new URL(callback);
+    const allowedOrigins = new Set([
+      origin,
+      "https://lrmastery.guru",
+      "https://www.lrmastery.guru",
+    ]);
+    if (!allowedOrigins.has(u.origin)) return null;
+    const path = `${u.pathname}${u.search}${u.hash}`;
+    return isAllowedAppPath(path) ? path : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Edge-safe Auth.js config (no Prisma / Node APIs).
  * Full credentials provider lives in `src/auth.ts`.
@@ -58,16 +88,9 @@ export const authConfig = {
       // Bounce away from login/signup only — never block /join for students.
       if (isAccountForm && isLoggedIn) {
         const callback = request.nextUrl.searchParams.get("callbackUrl");
-        const safe =
-          callback &&
-          callback.startsWith("/") &&
-          !callback.startsWith("//") &&
-          (callback.startsWith("/join") ||
-            callback.startsWith("/portal") ||
-            callback.startsWith("/teacher") ||
-            callback.startsWith("/english-for-mandarin-speakers"));
-        if (safe) {
-          return Response.redirect(new URL(callback, request.nextUrl.origin));
+        const safePath = normalizeCallbackPath(callback, request.nextUrl.origin);
+        if (safePath) {
+          return Response.redirect(new URL(safePath, request.nextUrl.origin));
         }
         const dest = isStaff(role) ? "/teacher" : "/portal";
         return Response.redirect(new URL(dest, request.nextUrl.origin));

@@ -57,4 +57,4 @@ Form-POST join + student sees post/lesson/file + teacher sees student.
 
 ## Prisma claim (if DB expires)
 
-https://create-db.prisma.io/claim?projectID=proj_d6g83y9mw7zy52fxwngbfzhs
+https://create-db.prisma.io/claim?projectID=proj_xaaigo7rn971kmae9yxdl7tn

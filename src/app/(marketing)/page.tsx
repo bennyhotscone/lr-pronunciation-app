@@ -59,18 +59,18 @@ export default function HomePage() {
             together.
           </p>
           <div
-            className="landing-rise mt-8 flex flex-wrap items-center gap-3"
+            className="landing-rise mt-9 flex flex-wrap items-center gap-3.5"
             style={{ animationDelay: "240ms" }}
           >
             <Link
               href="/login"
-              className="touch-target inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-[#0d5c4d] transition hover:bg-white/90"
+              className="touch-target inline-flex min-h-12 items-center justify-center rounded-xl bg-white px-7 py-3.5 text-base font-bold text-[#0d5c4d] shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition hover:bg-white/92"
             >
               Enter Student Portal
             </Link>
             <Link
               href="/signup"
-              className="touch-target inline-flex items-center justify-center rounded-xl border border-white/45 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/18"
+              className="touch-target inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-white/70 bg-white/15 px-7 py-3.5 text-base font-bold text-white backdrop-blur-sm transition hover:border-white hover:bg-white/25"
             >
               Create account
             </Link>
@@ -91,12 +91,12 @@ export default function HomePage() {
               Pick a path and start where you are today.
             </p>
 
-            <ul className="mt-8 grid list-none grid-cols-1 gap-0 divide-y divide-border border-y border-border p-0 md:grid-cols-3 md:divide-x md:divide-y-0">
+            <ul className="landing-path-grid mt-8 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-3 md:gap-5">
               {practicePaths.map((path, index) => (
                 <li key={path.href} className="min-w-0">
                   <Link
                     href={path.href}
-                    className="landing-rise group flex h-full flex-col justify-between px-1 py-6 transition md:px-6 md:py-8 md:first:pl-0 md:last:pr-0"
+                    className="landing-rise landing-path-card group flex h-full flex-col justify-between"
                     style={{ animationDelay: `${320 + index * 90}ms` }}
                   >
                     <div>
@@ -107,7 +107,7 @@ export default function HomePage() {
                         {path.description}
                       </p>
                     </div>
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-desk-accent transition group-hover:gap-2.5">
+                    <span className="landing-path-cta mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--desk-accent)] px-4 py-3 text-base font-bold text-white transition group-hover:brightness-110">
                       {path.cta}
                       <span aria-hidden="true">→</span>
                     </span>

@@ -263,33 +263,78 @@ body {
   color: var(--desk-accent);
 }
 
-.landing-nav {
+/* Light-on-photo nav only when the brand hero is present (not login/signup). */
+.theme-marketing:has(.landing-hero) .landing-nav {
   color: #f4f7f5;
 }
 
-.landing-nav a,
-.landing-nav button {
+.theme-marketing:has(.landing-hero) .landing-nav a,
+.theme-marketing:has(.landing-hero) .landing-nav button {
   color: inherit;
 }
 
-.landing-nav .border-border {
+.theme-marketing:has(.landing-hero) .landing-nav .border-border {
   border-color: rgba(244, 247, 245, 0.35);
 }
 
-.landing-nav .bg-surface\/80 {
+.theme-marketing:has(.landing-hero) .landing-nav .bg-surface\/80 {
   background: rgba(15, 28, 24, 0.35);
 }
 
-.landing-nav .text-muted {
+.theme-marketing:has(.landing-hero) .landing-nav .text-muted {
   color: rgba(244, 247, 245, 0.72);
 }
 
-.landing-nav .hover\:text-foreground:hover {
+.theme-marketing:has(.landing-hero) .landing-nav .hover\:text-foreground:hover {
   color: #ffffff;
 }
 
-.landing-nav .hover\:border-sand-accent\/50:hover {
+.theme-marketing:has(.landing-hero) .landing-nav .hover\:border-sand-accent\/50:hover {
   border-color: rgba(244, 247, 245, 0.55);
+}
+
+.theme-marketing:not(:has(.landing-hero)) > main {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 5.25rem 1rem 2rem;
+}
+
+@media (min-width: 640px) {
+  .theme-marketing:not(:has(.landing-hero)) > main {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .theme-marketing:not(:has(.landing-hero)) > main {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.landing-path-card {
+  min-height: 14.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 1rem;
+  padding: 1.35rem 1.25rem 1.25rem;
+  box-shadow: 0 10px 28px rgba(22, 20, 18, 0.08);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.landing-path-card:hover {
+  border-color: color-mix(in srgb, var(--desk-accent) 45%, var(--border));
+  box-shadow: 0 14px 34px rgba(13, 92, 77, 0.14);
+  transform: translateY(-2px);
+}
+
+.landing-path-card:focus-visible {
+  outline: 2px solid var(--desk-accent);
+  outline-offset: 3px;
 }
 
 @keyframes landing-rise {

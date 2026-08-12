@@ -39,4 +39,4 @@ Admin already teaches without a second account.
 
 ## Claim DB if needed
 
-https://create-db.prisma.io/claim?projectID=proj_d6g83y9mw7zy52fxwngbfzhs
+https://create-db.prisma.io/claim?projectID=proj_xaaigo7rn971kmae9yxdl7tn

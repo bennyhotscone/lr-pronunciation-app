@@ -27,6 +27,29 @@ function randomTempPassword() {
   return `Temp${n}!`;
 }
 
+/** Accept relative paths or absolute URLs; keep only same-app pathnames. */
+function normalizeAppCallback(callbackUrl: string): string {
+  const raw = callbackUrl.trim();
+  if (!raw) return "";
+  if (raw.startsWith("/") && !raw.startsWith("//")) return raw;
+  try {
+    const u = new URL(raw);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return "";
+    const path = `${u.pathname}${u.search}${u.hash}`;
+    if (
+      path.startsWith("/join") ||
+      path.startsWith("/portal") ||
+      path.startsWith("/teacher") ||
+      path.startsWith("/english-for-mandarin-speakers")
+    ) {
+      return path;
+    }
+  } catch {
+    /* ignore */
+  }
+  return "";
+}
+
 async function requireStaffSession() {
   const session = await auth();
   if (!session?.user?.id || !isStaff(session.user.role)) {
@@ -51,8 +74,7 @@ export async function loginAction(formData: FormData) {
     return { error: "Invalid email or password." };
   }
 
-  const safeCallback =
-    callbackUrl.startsWith("/") && !callbackUrl.startsWith("//") ? callbackUrl : "";
+  const safeCallback = normalizeAppCallback(callbackUrl);
   const defaultDest = homeForRole(user.role);
   let redirectTo = safeCallback || defaultDest;
   if (isStaff(user.role) && redirectTo.startsWith("/portal")) redirectTo = "/teacher";
