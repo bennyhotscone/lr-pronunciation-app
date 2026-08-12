@@ -3,7 +3,7 @@
  * (scripts/words-all-5000.json — COCA-style lemmas used by Mandarin vocab).
  * Rank 1 = most common. Words absent from the list return null.
  */
-import frequencyWords from "../../scripts/words-all-5000.json";
+import frequencyWords from "@/data/english-frequency-5000.json";
 
 const RANK_BY_NORMALIZED = new Map<string, number>();
 
