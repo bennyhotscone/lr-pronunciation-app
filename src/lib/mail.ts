@@ -28,6 +28,8 @@ export type SendMailResult =
   | { ok: true; provider: "resend" | "smtp" | "log" }
   | { ok: false; error: string };
 
+const MAIL_TIMEOUT_MS = 8_000;
+
 /**
  * Send transactional email.
  * Prefers Resend (RESEND_API_KEY). Falls back to SMTP_* if set.
@@ -42,6 +44,8 @@ export async function sendMail(opts: {
 }): Promise<SendMailResult> {
   const resendKey = process.env.RESEND_API_KEY?.trim();
   if (resendKey) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), MAIL_TIMEOUT_MS);
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -56,6 +60,7 @@ export async function sendMail(opts: {
           text: opts.text,
           html: opts.html || opts.text.replace(/\n/g, "<br/>"),
         }),
+        signal: controller.signal,
       });
       if (!res.ok) {
         const body = await res.text().catch(() => "");
@@ -66,10 +71,19 @@ export async function sendMail(opts: {
       }
       return { ok: true, provider: "resend" };
     } catch (err) {
+      const aborted =
+        (err instanceof Error && err.name === "AbortError") ||
+        controller.signal.aborted;
       return {
         ok: false,
-        error: err instanceof Error ? err.message : "Resend send failed",
+        error: aborted
+          ? `Resend timed out after ${MAIL_TIMEOUT_MS}ms`
+          : err instanceof Error
+            ? err.message
+            : "Resend send failed",
       };
+    } finally {
+      clearTimeout(timer);
     }
   }
 
@@ -77,8 +91,6 @@ export async function sendMail(opts: {
   const user = process.env.SMTP_USER?.trim();
   const pass = process.env.SMTP_PASS?.trim();
   if (host && user && pass) {
-    // Avoid hard dependency on nodemailer — use Resend or configure RESEND_API_KEY.
-    // SMTP without a package: document Resend as primary. Log + fail clearly.
     console.warn(
       "[mail] SMTP_* is set but Resend is preferred. Set RESEND_API_KEY for production email.",
     );

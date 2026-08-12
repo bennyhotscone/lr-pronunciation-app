@@ -62,12 +62,16 @@ export const authConfig = {
         pathname === "/forgot-password" || pathname === "/reset-password";
       const isJoin = pathname === "/join" || pathname.startsWith("/join/");
       // Join must stay reachable while logged in (students enter/use invite codes).
-      const isAccountForm = isLogin || isSignup || isPasswordReset;
+      // Password reset must stay reachable even with a stale session cookie —
+      // otherwise reset links "can't load" (redirect to /portal mid-flow).
+      const isAccountForm = isLogin || isSignup;
 
       if ((isPortal || isTeacher) && !isLoggedIn) return false;
 
       // API join: allow through so route can return JSON 401 (not HTML login redirect)
       if (pathname === "/api/portal/join") return true;
+      if (pathname === "/api/portal/forgot-password") return true;
+      if (pathname === "/api/portal/reset-password") return true;
 
       if (isStudio) {
         if (!isLoggedIn) return false;
@@ -84,6 +88,9 @@ export const authConfig = {
       if (isTeacher && role && !isStaff(role)) {
         return Response.redirect(new URL("/portal", request.nextUrl.origin));
       }
+
+      // Always allow forgot/reset password pages (logged in or not).
+      if (isPasswordReset) return true;
 
       // Bounce away from login/signup only — never block /join for students.
       if (isAccountForm && isLoggedIn) {

@@ -1,15 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-import { resetPasswordAction } from "@/lib/portal-actions";
+import { useState } from "react";
+
+const CLIENT_TIMEOUT_MS = 18_000;
 
 export function ResetPasswordForm({ token }: { token: string }) {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [ok, setOk] = useState(false);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   if (!token) {
     return (
@@ -41,19 +40,50 @@ export function ResetPasswordForm({ token }: { token: string }) {
   return (
     <form
       className="mt-8 w-full space-y-4"
-      action={(fd) => {
+      onSubmit={async (e) => {
+        e.preventDefault();
         setError(null);
-        startTransition(async () => {
-          const result = await resetPasswordAction(fd);
-          if (result?.error) setError(result.error);
-          else if (result?.ok) {
-            setOk(true);
-            router.refresh();
+        setPending(true);
+        const fd = new FormData(e.currentTarget);
+        const password = String(fd.get("password") || "");
+        const confirm = String(fd.get("confirm") || "");
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), CLIENT_TIMEOUT_MS);
+        try {
+          const res = await fetch("/api/portal/reset-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ token, password, confirm }),
+            signal: controller.signal,
+          });
+          const data = (await res.json().catch(() => null)) as
+            | { ok?: boolean; error?: string }
+            | null;
+          if (!res.ok || !data?.ok) {
+            setError(
+              data?.error ||
+                (controller.signal.aborted
+                  ? "Request timed out. Please try again."
+                  : "Could not update password. Please try again."),
+            );
+            return;
           }
-        });
+          setOk(true);
+        } catch (err) {
+          const timedOut =
+            (err instanceof Error && err.name === "AbortError") ||
+            controller.signal.aborted;
+          setError(
+            timedOut
+              ? "Request timed out. Please try again."
+              : "Could not update password. Please try again.",
+          );
+        } finally {
+          clearTimeout(timer);
+          setPending(false);
+        }
       }}
     >
-      <input type="hidden" name="token" value={token} />
       <label className="block">
         <span className="mb-1.5 block text-sm font-semibold">New password</span>
         <input

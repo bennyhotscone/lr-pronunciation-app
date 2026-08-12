@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { withPrismaRetry } from "@/lib/db";
 import {
   createRawResetToken,
   hashResetToken,
@@ -12,42 +12,47 @@ export async function issuePasswordResetForEmail(opts: {
   email: string;
   origin: string;
 }): Promise<{
-  /** Always true-ish for enumeration resistance when mail is configured */
   accepted: true;
   mailed: boolean;
   mailConfigured: boolean;
-  /**
-   * Returned when email was not delivered and the account exists, so the UI
-   * can show a copyable one-time link (dev / no-RESEND deployments).
-   * Omitted for unknown emails — presence of a link can reveal account existence
-   * when mail is off; that is intentional so self-service still works.
-   */
   resetUrl?: string;
   error?: string;
 }> {
   const email = opts.email.trim().toLowerCase();
   const mailConfigured = isMailConfigured();
 
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || user.archivedAt) {
+  const result = await withPrismaRetry(async (db) => {
+    const user = await db.user.findUnique({ where: { email } });
+    if (!user || user.archivedAt) {
+      return { accepted: true as const, mailed: false, mailConfigured };
+    }
+
+    await db.passwordResetToken.updateMany({
+      where: { userId: user.id, usedAt: null },
+      data: { usedAt: new Date() },
+    });
+
+    const raw = createRawResetToken();
+    const tokenHash = hashResetToken(raw);
+    const expiresAt = new Date(Date.now() + RESET_TTL_MS);
+    await db.passwordResetToken.create({
+      data: { userId: user.id, tokenHash, expiresAt },
+    });
+
+    return {
+      accepted: true as const,
+      mailed: false,
+      mailConfigured,
+      resetUrl: `${opts.origin.replace(/\/$/, "")}/reset-password?token=${raw}`,
+      userEmail: user.email,
+    };
+  });
+
+  if (!("resetUrl" in result) || !result.resetUrl || !("userEmail" in result)) {
     return { accepted: true, mailed: false, mailConfigured };
   }
 
-  // Invalidate prior unused tokens
-  await prisma.passwordResetToken.updateMany({
-    where: { userId: user.id, usedAt: null },
-    data: { usedAt: new Date() },
-  });
-
-  const raw = createRawResetToken();
-  const tokenHash = hashResetToken(raw);
-  const expiresAt = new Date(Date.now() + RESET_TTL_MS);
-  await prisma.passwordResetToken.create({
-    data: { userId: user.id, tokenHash, expiresAt },
-  });
-
-  const resetUrl = `${opts.origin.replace(/\/$/, "")}/reset-password?token=${raw}`;
-
+  const resetUrl = result.resetUrl;
   const text = [
     "Reset your LR Mastery password",
     "",
@@ -59,7 +64,7 @@ export async function issuePasswordResetForEmail(opts: {
 
   if (mailConfigured) {
     const mail = await sendMail({
-      to: user.email,
+      to: result.userEmail,
       subject: "Reset your LR Mastery password",
       text,
     });
@@ -68,9 +73,8 @@ export async function issuePasswordResetForEmail(opts: {
       return { accepted: true, mailed: true, mailConfigured: true };
     }
 
-    // Send failed — still return copyable URL so the user is not stuck.
     console.info(
-      `[password-reset] mail failed for ${user.email}; showing link. ${mail.ok ? "provider=log" : mail.error}`,
+      `[password-reset] mail failed for ${result.userEmail}; showing link. ${mail.ok ? "provider=log" : mail.error}`,
     );
     return {
       accepted: true,
@@ -81,8 +85,7 @@ export async function issuePasswordResetForEmail(opts: {
     };
   }
 
-  // No outbound email — show the one-time link on the page.
-  console.info(`[password-reset] no mail configured; on-page link for ${user.email}`);
+  console.info(`[password-reset] no mail configured; on-page link for ${result.userEmail}`);
   return { accepted: true, mailed: false, mailConfigured: false, resetUrl };
 }
 
@@ -97,29 +100,37 @@ export async function consumePasswordResetToken(opts: {
   }
 
   const tokenHash = hashResetToken(raw);
-  const row = await prisma.passwordResetToken.findUnique({
-    where: { tokenHash },
-    include: { user: true },
-  });
-  if (!row || row.usedAt || row.expiresAt.getTime() < Date.now()) {
-    return { error: "Invalid or expired reset link." };
-  }
-  if (row.user.archivedAt) {
-    return { error: "This account is not active." };
-  }
 
-  const bcrypt = await import("bcryptjs");
-  const passwordHash = await bcrypt.hash(opts.newPassword, 10);
-  await prisma.$transaction([
-    prisma.user.update({
-      where: { id: row.userId },
-      data: { passwordHash },
-    }),
-    prisma.passwordResetToken.update({
-      where: { id: row.id },
-      data: { usedAt: new Date() },
-    }),
-  ]);
+  try {
+    return await withPrismaRetry(async (db) => {
+      const row = await db.passwordResetToken.findUnique({
+        where: { tokenHash },
+        include: { user: true },
+      });
+      if (!row || row.usedAt || row.expiresAt.getTime() < Date.now()) {
+        return { error: "Invalid or expired reset link." };
+      }
+      if (row.user.archivedAt) {
+        return { error: "This account is not active." };
+      }
 
-  return { ok: true };
+      const bcrypt = await import("bcryptjs");
+      const passwordHash = await bcrypt.hash(opts.newPassword, 10);
+      await db.$transaction([
+        db.user.update({
+          where: { id: row.userId },
+          data: { passwordHash },
+        }),
+        db.passwordResetToken.update({
+          where: { id: row.id },
+          data: { usedAt: new Date() },
+        }),
+      ]);
+
+      return { ok: true as const };
+    });
+  } catch (err) {
+    console.error("[password-reset] consume failed", err);
+    return { error: "Could not update password. Please try again." };
+  }
 }

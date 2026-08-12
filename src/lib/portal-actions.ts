@@ -164,44 +164,54 @@ export async function signupStudentAction(formData: FormData) {
   }
 }
 
+function passwordResetResultMessage(result: {
+  mailed: boolean;
+  mailConfigured: boolean;
+  resetUrl?: string;
+}): string {
+  if (result.mailed) {
+    return "If an account exists for that email, a reset link was emailed. Check your inbox (and spam).";
+  }
+  if (result.resetUrl) {
+    return result.mailConfigured
+      ? "Email sending failed. Use this one-time link to set a new password (valid 1 hour)."
+      : "Email is not configured on this server. Use this one-time link to set a new password (valid 1 hour).";
+  }
+  if (result.mailConfigured) {
+    return "If an account exists for that email, a reset link was emailed. Check your inbox (and spam).";
+  }
+  return "No reset link to show for that email. Check the address, or ask your teacher to set a new password from your student page.";
+}
+
 export async function requestPasswordResetAction(formData: FormData) {
   const email = String(formData.get("email") || "")
     .trim()
     .toLowerCase();
   if (!email) return { error: "Enter your email address." };
 
-  const h = await headers();
-  const host = h.get("x-forwarded-host") || h.get("host") || "localhost:3000";
-  const proto = h.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
-  const origin = `${proto}://${host}`;
+  try {
+    const h = await headers();
+    const host = h.get("x-forwarded-host") || h.get("host") || "localhost:3000";
+    const proto =
+      h.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https");
+    const origin = `${proto}://${host}`;
 
-  const result = await issuePasswordResetForEmail({ email, origin });
+    const result = await issuePasswordResetForEmail({ email, origin });
 
-  let message: string;
-  if (result.mailed) {
-    message =
-      "If an account exists for that email, a reset link was emailed. Check your inbox (and spam).";
-  } else if (result.resetUrl) {
-    message = result.mailConfigured
-      ? "Email sending failed. Use this one-time link to set a new password (valid 1 hour)."
-      : "Email is not configured on this server. Use this one-time link to set a new password (valid 1 hour).";
-  } else if (result.mailConfigured) {
-    message =
-      "If an account exists for that email, a reset link was emailed. Check your inbox (and spam).";
-  } else {
-    // Unknown / archived email while mail is off — no link (avoids inventing one).
-    // Note: when mail is off, a real account gets a visible link; absence can hint non-existence.
-    message =
-      "No reset link to show for that email. Check the address, or ask your teacher to set a new password from your student page.";
+    return {
+      ok: true as const,
+      mailed: result.mailed,
+      mailConfigured: result.mailConfigured,
+      resetUrl: result.resetUrl,
+      message: passwordResetResultMessage(result),
+    };
+  } catch (err) {
+    console.error("[requestPasswordResetAction]", err);
+    return {
+      error:
+        "Could not create a reset link right now. Please try again in a moment.",
+    };
   }
-
-  return {
-    ok: true as const,
-    mailed: result.mailed,
-    mailConfigured: result.mailConfigured,
-    resetUrl: result.resetUrl,
-    message,
-  };
 }
 
 export async function resetPasswordAction(formData: FormData) {
@@ -211,13 +221,17 @@ export async function resetPasswordAction(formData: FormData) {
   if (!token) return { error: "Missing reset token." };
   if (password !== confirm) return { error: "Passwords do not match." };
 
-  const result = await consumePasswordResetToken({
-    rawToken: token,
-    newPassword: password,
-  });
-  if ("error" in result) return { error: result.error };
-
-  return { ok: true as const };
+  try {
+    const result = await consumePasswordResetToken({
+      rawToken: token,
+      newPassword: password,
+    });
+    if ("error" in result) return { error: result.error };
+    return { ok: true as const };
+  } catch (err) {
+    console.error("[resetPasswordAction]", err);
+    return { error: "Could not update password. Please try again." };
+  }
 }
 
 /** Staff: set a student's password directly (always works without email). */

@@ -1,19 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { requestPasswordResetAction } from "@/lib/portal-actions";
+import { useState } from "react";
+
+type DoneState = {
+  message: string;
+  mailed: boolean;
+  mailConfigured: boolean;
+  resetUrl?: string;
+};
+
+const CLIENT_TIMEOUT_MS = 18_000;
 
 export function ForgotPasswordForm({ mailConfigured }: { mailConfigured: boolean }) {
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState<{
-    message: string;
-    mailed: boolean;
-    mailConfigured: boolean;
-    resetUrl?: string;
-  } | null>(null);
+  const [done, setDone] = useState<DoneState | null>(null);
   const [copied, setCopied] = useState(false);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   if (done) {
     return (
@@ -73,21 +76,60 @@ export function ForgotPasswordForm({ mailConfigured }: { mailConfigured: boolean
   return (
     <form
       className="mt-8 w-full space-y-4"
-      action={(fd) => {
+      onSubmit={async (e) => {
+        e.preventDefault();
         setError(null);
         setCopied(false);
-        startTransition(async () => {
-          const result = await requestPasswordResetAction(fd);
-          if ("error" in result && result.error) setError(result.error);
-          else if (result.ok) {
-            setDone({
-              message: result.message,
-              mailed: result.mailed,
-              mailConfigured: result.mailConfigured,
-              resetUrl: result.resetUrl,
-            });
+        setPending(true);
+        const fd = new FormData(e.currentTarget);
+        const email = String(fd.get("email") || "").trim();
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), CLIENT_TIMEOUT_MS);
+        try {
+          const res = await fetch("/api/portal/forgot-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ email }),
+            signal: controller.signal,
+          });
+          const data = (await res.json().catch(() => null)) as
+            | {
+                ok?: boolean;
+                error?: string;
+                message?: string;
+                mailed?: boolean;
+                mailConfigured?: boolean;
+                resetUrl?: string | null;
+              }
+            | null;
+          if (!res.ok || !data || data.error) {
+            setError(
+              data?.error ||
+                (controller.signal.aborted
+                  ? "Request timed out. Please try again."
+                  : "Could not create a reset link. Please try again."),
+            );
+            return;
           }
-        });
+          setDone({
+            message: data.message || "Check your email or use the link below.",
+            mailed: Boolean(data.mailed),
+            mailConfigured: Boolean(data.mailConfigured),
+            resetUrl: data.resetUrl || undefined,
+          });
+        } catch (err) {
+          const timedOut =
+            (err instanceof Error && err.name === "AbortError") ||
+            controller.signal.aborted;
+          setError(
+            timedOut
+              ? "Request timed out. Please try again."
+              : "Could not create a reset link. Please try again.",
+          );
+        } finally {
+          clearTimeout(timer);
+          setPending(false);
+        }
       }}
     >
       <label className="block">
