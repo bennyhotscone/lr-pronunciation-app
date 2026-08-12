@@ -71,9 +71,6 @@ function applyTaStyle(ta: HTMLTextAreaElement, box: OverlayBox) {
   ta.style.fontSize = `${fs}px`;
   ta.style.lineHeight = String(LINE_HEIGHT);
   ta.style.color = normalizeOverlayColor(box.color);
-  ta.style.fontWeight = box.bold ? "700" : "400";
-  ta.style.fontStyle = box.italic ? "italic" : "normal";
-  ta.style.textDecoration = box.underline ? "underline" : "none";
 }
 
 /** Hidden probe measures content width/height so boxes hug typed text. */
@@ -325,8 +322,6 @@ export function PdfWorkspaceViewer({
 
         let totalChars = 0;
         const scale = Math.min(1.35, Math.max(1, (host.clientWidth || 720) / 612));
-        const measureCanvas = document.createElement("canvas");
-        const measureCtx = measureCanvas.getContext("2d");
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
           if (cancelled) return;
@@ -337,10 +332,9 @@ export function PdfWorkspaceViewer({
             height: viewport.height,
           });
 
-          // overflow visible so the format toolbar above a box isn't clipped
           const pageWrap = document.createElement("div");
           pageWrap.className =
-            "pdf-page relative mx-auto mb-4 rounded-lg border border-wood/25 bg-white shadow-sm";
+            "pdf-page relative mx-auto mb-4 overflow-hidden rounded-lg border border-wood/25 bg-white shadow-sm";
           pageWrap.dataset.page = String(pageNum);
           pageWrap.style.width = `${viewport.width}px`;
           pageWrap.style.height = `${viewport.height}px`;
@@ -350,7 +344,7 @@ export function PdfWorkspaceViewer({
           if (!ctx) continue;
           canvas.width = viewport.width;
           canvas.height = viewport.height;
-          canvas.className = "block h-auto w-full rounded-lg";
+          canvas.className = "block h-auto w-full";
           pageWrap.appendChild(canvas);
 
           await page.render({
@@ -387,23 +381,11 @@ export function PdfWorkspaceViewer({
                 ? item.width * advScale
                 : Math.max(fontHeight * 0.5 * str.length, 4);
 
-            if (measureCtx) {
-              measureCtx.font = `${fontHeight}px sans-serif`;
-            }
-            const browserFull =
-              measureCtx && str.length ? measureCtx.measureText(str).width : 0;
-
             const tokens = splitIntoTappableTokens(str);
+            const totalCharsInItem = Math.max(1, str.length);
             let xCursor = 0;
             for (const tok of tokens) {
-              const tokBrowser =
-                measureCtx && tok.text.length
-                  ? measureCtx.measureText(tok.text).width
-                  : tok.text.length * fontHeight * 0.5;
-              const tokW =
-                browserFull > 0
-                  ? (tokBrowser / browserFull) * itemWidth
-                  : (tok.text.length / Math.max(1, str.length)) * itemWidth;
+              const tokW = (tok.text.length / totalCharsInItem) * itemWidth;
               if (tok.tappable && tok.text.trim()) {
                 const btn = document.createElement("button");
                 btn.type = "button";
@@ -682,41 +664,6 @@ export function PdfWorkspaceViewer({
             });
             return b;
           };
-
-          const boldBtn = mkToolBtn("B", "Bold", () => {
-            updateWriteData((prev) => ({
-              ...prev,
-              overlays: prev.overlays.map((o) =>
-                o.id === box.id ? { ...o, bold: !o.bold } : o,
-              ),
-            }));
-          });
-          boldBtn.style.fontWeight = "800";
-          const italicBtn = mkToolBtn("I", "Italic", () => {
-            updateWriteData((prev) => ({
-              ...prev,
-              overlays: prev.overlays.map((o) =>
-                o.id === box.id ? { ...o, italic: !o.italic } : o,
-              ),
-            }));
-          });
-          italicBtn.style.fontStyle = "italic";
-          const underBtn = mkToolBtn("U", "Underline", () => {
-            updateWriteData((prev) => ({
-              ...prev,
-              overlays: prev.overlays.map((o) =>
-                o.id === box.id ? { ...o, underline: !o.underline } : o,
-              ),
-            }));
-          });
-          underBtn.style.textDecoration = "underline";
-          toolbar.appendChild(boldBtn);
-          toolbar.appendChild(italicBtn);
-          toolbar.appendChild(underBtn);
-          const sepFmt = document.createElement("span");
-          sepFmt.style.cssText =
-            "width:1px;height:14px;background:rgba(0,0,0,0.12);margin:0 2px;";
-          toolbar.appendChild(sepFmt);
 
           toolbar.appendChild(
             mkToolBtn("A−", "Smaller text", () => {
@@ -1014,30 +961,12 @@ export function PdfWorkspaceViewer({
         dom.handle.style.display = selected ? "block" : "none";
         dom.toolbar.style.display = selected ? "flex" : "none";
         dom.fontLabel.textContent = String(fs);
-        if (box.y * meta.height < 40) {
-          dom.toolbar.style.bottom = "auto";
-          dom.toolbar.style.top = "100%";
-          dom.toolbar.style.marginBottom = "0";
-          dom.toolbar.style.marginTop = "4px";
-        } else {
-          dom.toolbar.style.bottom = "100%";
-          dom.toolbar.style.top = "auto";
-          dom.toolbar.style.marginBottom = "4px";
-          dom.toolbar.style.marginTop = "0";
-        }
+
         for (const child of Array.from(dom.toolbar.children)) {
-          if (!(child instanceof HTMLButtonElement)) continue;
-          if (child.title === "Bold") {
-            child.style.background = box.bold ? "rgba(13,92,77,0.18)" : "transparent";
-          } else if (child.title === "Italic") {
-            child.style.background = box.italic
-              ? "rgba(13,92,77,0.18)"
-              : "transparent";
-          } else if (child.title === "Underline") {
-            child.style.background = box.underline
-              ? "rgba(13,92,77,0.18)"
-              : "transparent";
-          } else if (child.title.startsWith("Text color")) {
+          if (
+            child instanceof HTMLButtonElement &&
+            child.title.startsWith("Text color")
+          ) {
             const c = child.dataset.color || "";
             child.style.borderColor =
               normalizeOverlayColor(box.color) === normalizeOverlayColor(c)

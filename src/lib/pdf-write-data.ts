@@ -1,4 +1,4 @@
-﻿export type OverlayBox = {
+export type OverlayBox = {
   id: string;
   page: number;
   /** 0-1 relative to page width/height (viewport-independent). */
@@ -9,8 +9,9 @@
   text: string;
   /** CSS px at the rendered page scale (Edge-like). Default 14. */
   fontSize: number;
-  /** CSS color for typed text. Default #1a1a1a. */
-  color: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
   /** When true, auto-grow is disabled (user dragged the resize handle). */
   userSized?: boolean;
 };
@@ -21,32 +22,17 @@ export type PdfWriteData = {
   overlays: OverlayBox[];
 };
 
-export const OVERLAY_TEXT_COLORS = [
-  "#1a1a1a",
-  "#0d5c4d",
-  "#1d4ed8",
-  "#b45309",
-  "#be123c",
-  "#6b21a8",
-] as const;
-
-const DEFAULT_FONT = 14;
-const DEFAULT_COLOR = "#1a1a1a";
-
 export function emptyPdfWriteData(): PdfWriteData {
   return { fields: {}, overlays: [] };
 }
 
-export function normalizeOverlayColor(raw: unknown): string {
-  if (typeof raw !== "string") return DEFAULT_COLOR;
-  const s = raw.trim().toLowerCase();
-  if (/^#[0-9a-f]{6}$/.test(s)) return s;
-  if (/^#[0-9a-f]{3}$/.test(s)) {
-    const [r, g, b] = s.slice(1);
-    return `#${r}${r}${g}${g}${b}${b}`;
-  }
-  const known = OVERLAY_TEXT_COLORS.find((c) => c.toLowerCase() === s);
-  return known || DEFAULT_COLOR;
+const DEFAULT_FONT = 14;
+
+/** Drop abandoned / legacy empty text boxes. */
+export function stripEmptyOverlays(data: PdfWriteData): PdfWriteData {
+  const overlays = data.overlays.filter((o) => o.text.trim());
+  if (overlays.length === data.overlays.length) return data;
+  return { ...data, overlays };
 }
 
 export function parsePdfWriteData(raw: unknown): PdfWriteData {
@@ -64,23 +50,30 @@ export function parsePdfWriteData(raw: unknown): PdfWriteData {
       if (!item || typeof item !== "object") continue;
       const o = item as Record<string, unknown>;
       if (typeof o.id !== "string") continue;
-      const text = typeof o.text === "string" ? o.text : "";
-      // Drop empty leftovers from older drafts / abandoned taps.
-      if (!text.trim()) continue;
       const fontRaw = Number(o.fontSize);
+      const text = typeof o.text === "string" ? o.text : "";
+      if (!text.trim()) continue;
+      const userSized = o.userSized === true;
+      const rawW = Number(o.w);
+      const rawH = Number(o.h);
+      let w = Math.min(1, Math.max(0.03, Number.isFinite(rawW) ? rawW : 0.12));
+      let h = Math.min(1, Math.max(0.008, Number.isFinite(rawH) ? rawH : 0.022));
+      if (!userSized && h > 0.08) h = Math.min(h, 0.035);
       overlays.push({
         id: o.id,
         page: Number(o.page) || 1,
         x: clamp01(Number(o.x) || 0),
         y: clamp01(Number(o.y) || 0),
-        w: Math.min(1, Math.max(0.04, Number(o.w) || 0.2)),
-        h: Math.min(1, Math.max(0.01, Number(o.h) || 0.022)),
+        w,
+        h,
         text,
         fontSize: Number.isFinite(fontRaw)
           ? Math.min(48, Math.max(8, fontRaw))
           : DEFAULT_FONT,
-        color: normalizeOverlayColor(o.color),
-        userSized: o.userSized === true,
+        bold: o.bold === true,
+        italic: o.italic === true,
+        underline: o.underline === true,
+        userSized,
       });
     }
   }

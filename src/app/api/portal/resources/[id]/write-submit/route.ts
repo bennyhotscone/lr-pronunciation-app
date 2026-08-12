@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
+import { allowsPdfWriteMode } from "@/lib/material-kind";
 import { studentCanAccessResource } from "@/lib/portal-access";
 import { parsePdfWriteData } from "@/lib/pdf-write-data";
 
@@ -20,6 +21,15 @@ export async function POST(request: Request, context: Ctx) {
 
   const resource = await prisma.resource.findUnique({ where: { id: resourceId } });
   if (!resource) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (!allowsPdfWriteMode(resource.materialKind)) {
+    return NextResponse.json(
+      {
+        error:
+          "Write mode is only for Exercises/Activities. Explanations/Notes are read-only.",
+      },
+      { status: 403 },
+    );
+  }
 
   let noteTitle: string | null = null;
   try {
@@ -43,7 +53,7 @@ export async function POST(request: Request, context: Ctx) {
     data.overlays.some((o) => o.text.trim());
   if (!hasContent) {
     return NextResponse.json(
-      { error: "Add at least one answer before submitting." },
+      { error: "Add at least one text box with content before submitting." },
       { status: 400 },
     );
   }
