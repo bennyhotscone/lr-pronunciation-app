@@ -10,6 +10,7 @@ export function TagPicker({
   title = "",
   body = "",
   enableAi = false,
+  initialTags = [],
 }: {
   classId: string;
   knownTags: string[];
@@ -17,8 +18,11 @@ export function TagPicker({
   title?: string;
   body?: string;
   enableAi?: boolean;
+  initialTags?: string[];
 }) {
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>(() =>
+    initialTags.map((t) => t.trim().toLowerCase()).filter(Boolean),
+  );
   const [custom, setCustom] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [aiSource, setAiSource] = useState<string | null>(null);

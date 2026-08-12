@@ -45,33 +45,33 @@ export function ClassroomInvitePanel({
   }
 
   return (
-    <section className="board-panel rounded-xl p-5">
-      <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-chalk">
+    <section className="card rounded-xl p-5">
+      <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
         Invite students
       </h2>
-      <p className="mt-1 text-sm text-chalk/70">
+      <p className="mt-1 text-sm text-muted">
         Students sign up themselves, then join with this code or link. You do not create their
         passwords.
       </p>
       <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-start">
         <div className="flex-1 space-y-3">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-chalk/55">Invite code</p>
-            <p className="mt-1 font-mono text-3xl font-bold tracking-[0.2em] text-chalk">{code}</p>
+            <p className="text-xs font-bold uppercase tracking-wide text-muted">Invite code</p>
+            <p className="mt-1 font-mono text-3xl font-bold tracking-[0.2em] text-ink">{code}</p>
             <button
               type="button"
-              className="mt-2 text-sm font-bold text-chalk-accent underline-offset-2 hover:underline"
+              className="mt-2 text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
               onClick={() => void copy(code, "code")}
             >
               {copied === "code" ? "Copied!" : "Copy code"}
             </button>
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-chalk/55">Invite link</p>
-            <p className="mt-1 break-all text-sm text-chalk/90">{liveJoinUrl}</p>
+            <p className="text-xs font-bold uppercase tracking-wide text-muted">Invite link</p>
+            <p className="mt-1 break-all text-sm text-ink">{liveJoinUrl}</p>
             <button
               type="button"
-              className="mt-2 text-sm font-bold text-chalk-accent underline-offset-2 hover:underline"
+              className="mt-2 text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
               onClick={() => void copy(liveJoinUrl, "link")}
             >
               {copied === "link" ? "Copied!" : "Copy link"}
@@ -89,16 +89,16 @@ export function ClassroomInvitePanel({
             <button
               type="submit"
               disabled={pending}
-              className="text-xs font-semibold text-chalk/50 underline-offset-2 hover:underline disabled:opacity-50"
+              className="text-xs font-semibold text-muted underline-offset-2 hover:underline disabled:opacity-50"
             >
               Generate new code
             </button>
           </form>
         </div>
-        <div className="shrink-0 rounded-lg bg-white p-2">
+        <div className="shrink-0 rounded-lg bg-white p-2 ring-1 ring-border">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={qrSrc} alt="QR code to join classroom" width={180} height={180} />
-          <p className="mt-1 text-center text-[0.65rem] font-semibold text-neutral-700">
+          <p className="mt-1 text-center text-[0.65rem] font-semibold text-muted">
             Scan to join
           </p>
         </div>

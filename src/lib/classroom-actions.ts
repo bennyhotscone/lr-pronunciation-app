@@ -117,6 +117,24 @@ export async function studentJoinClassroomByCode(formData: FormData) {
   );
 }
 
+type BasketMeta = {
+  filename: string;
+  blobPath: string;
+  blobUrl: string;
+  mimeType: string;
+  sizeBytes?: number;
+};
+
+function parseBasketItems(raw: unknown): BasketMeta[] {
+  if (typeof raw !== "string" || !raw.trim()) return [];
+  try {
+    const parsed = JSON.parse(raw) as BasketMeta[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 export async function teacherCreateClassPost(formData: FormData) {
   const session = await requireStaffSession();
   if (!session) return { error: "Unauthorized" };
@@ -131,6 +149,10 @@ export async function teacherCreateClassPost(formData: FormData) {
   await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
   await syncClassTags(classId, tags);
 
+  const basketItems = parseBasketItems(formData.get("basketItems")).filter((i) =>
+    i.blobPath?.startsWith("portal-files/"),
+  );
+
   await prisma.classPost.create({
     data: {
       classId,
@@ -139,10 +161,65 @@ export async function teacherCreateClassPost(formData: FormData) {
       body,
       tags,
       pinnedAt: pin ? new Date() : null,
+      attachments: basketItems.length
+        ? {
+            create: basketItems.map((i) => ({
+              filename: i.filename || "file",
+              blobPath: i.blobPath,
+              blobUrl: i.blobUrl,
+              mimeType: i.mimeType || "application/octet-stream",
+              sizeBytes: i.sizeBytes ?? null,
+            })),
+          }
+        : undefined,
     },
   });
   revalidatePath(`/teacher/classes/${classId}`);
   revalidatePath(`/portal/classrooms/${classId}`);
+  revalidatePath("/portal");
+  return { ok: true as const };
+}
+
+export async function teacherUpdateClassPost(formData: FormData) {
+  const session = await requireStaffSession();
+  if (!session) return { error: "Unauthorized" };
+  const postId = String(formData.get("postId") || "");
+  const title = String(formData.get("title") || "").trim();
+  const body = String(formData.get("body") || "").trim();
+  const tags = parseTags(formData.get("tags"));
+  if (!postId || !title || !body) {
+    return { error: "Title and message are required." };
+  }
+
+  const post = await prisma.classPost.findUnique({ where: { id: postId } });
+  if (!post) return { error: "Post not found." };
+  await assertTeacherOwnsClass(session.user.id, post.classId, session.user.role);
+  await syncClassTags(post.classId, tags);
+
+  const basketItems = parseBasketItems(formData.get("basketItems")).filter((i) =>
+    i.blobPath?.startsWith("portal-files/"),
+  );
+
+  await prisma.classPost.update({
+    where: { id: postId },
+    data: { title, body, tags },
+  });
+
+  for (const item of basketItems) {
+    await prisma.classPostAttachment.create({
+      data: {
+        postId,
+        filename: item.filename || "file",
+        blobPath: item.blobPath,
+        blobUrl: item.blobUrl,
+        mimeType: item.mimeType || "application/octet-stream",
+        sizeBytes: item.sizeBytes ?? null,
+      },
+    });
+  }
+
+  revalidatePath(`/teacher/classes/${post.classId}`);
+  revalidatePath(`/portal/classrooms/${post.classId}`);
   revalidatePath("/portal");
   return { ok: true as const };
 }

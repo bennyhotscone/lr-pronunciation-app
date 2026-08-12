@@ -52,6 +52,7 @@ export default async function StudentClassroomPage({
           include: { author: { include: { profile: true } } },
           orderBy: { createdAt: "asc" },
         },
+        attachments: true,
       },
       orderBy: [
         { pinnedAt: { sort: "desc", nulls: "last" } },
@@ -90,6 +91,12 @@ export default async function StudentClassroomPage({
       body: c.body,
       createdAt: c.createdAt.toISOString(),
       authorLabel: authorLabel(c.author),
+    })),
+    attachments: p.attachments.map((a) => ({
+      id: a.id,
+      filename: a.filename,
+      mimeType: a.mimeType,
+      blobUrl: a.blobUrl,
     })),
   }));
 

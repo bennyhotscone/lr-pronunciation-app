@@ -2,8 +2,12 @@
 
 import { useEffect, useMemo, useState, useTransition } from "react";
 import Link from "next/link";
-import { commentOnClassPost } from "@/lib/classroom-actions";
-import { TagFilterBar } from "@/components/classroom/TagPicker";
+import {
+  commentOnClassPost,
+  teacherTogglePinPost,
+  teacherUpdateClassPost,
+} from "@/lib/classroom-actions";
+import { TagFilterBar, TagPicker } from "@/components/classroom/TagPicker";
 import { InfoTag } from "@/components/classroom/InfoTag";
 import {
   ClassFilesList,
@@ -11,6 +15,7 @@ import {
 } from "@/components/classroom/ClassFilesList";
 import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomStream";
 import { TopicHelpButton } from "@/components/classroom/TopicHelpButton";
+import { BasketAttachFields } from "@/components/portal/SessionBasket";
 
 export type OrganiserTab =
   | "stream"
@@ -86,12 +91,14 @@ function AttachmentChip({
   filename,
   mimeType,
   resourceId,
+  href: hrefOverride,
 }: {
   filename: string;
   mimeType: string;
   resourceId: string | null;
+  href?: string | null;
 }) {
-  const href = resourceId ? resourceHref(resourceId) : null;
+  const href = hrefOverride || (resourceId ? resourceHref(resourceId) : null);
   const inner = (
     <>
       <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-[#ebe8e0] ring-1 ring-border">
@@ -132,23 +139,62 @@ function PostCard({
   post,
   classId,
   tagLinks,
+  canManage = false,
+  knownTags = [],
 }: {
   post: StreamPost;
   classId: string;
   tagLinks: boolean;
+  canManage?: boolean;
+  knownTags?: string[];
 }) {
   const [, startTransition] = useTransition();
+  const [editing, setEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(post.title);
+  const [editBody, setEditBody] = useState(post.body);
+  const [msg, setMsg] = useState<string | null>(null);
+
   return (
     <article className="card rounded-xl p-4 sm:p-5">
-      <div className="mb-1 flex flex-wrap gap-1.5">
-        {post.pinnedAt ? (
-          <span className="inline-block rounded bg-accent/20 px-2 py-0.5 text-xs font-bold">
-            Pinned
+      <div className="mb-1 flex flex-wrap items-start justify-between gap-2">
+        <div className="mb-1 flex flex-wrap gap-1.5">
+          {post.pinnedAt ? (
+            <span className="inline-block rounded bg-accent/20 px-2 py-0.5 text-xs font-bold">
+              Pinned
+            </span>
+          ) : null}
+          <span className="inline-block rounded bg-[#f3f2ee] px-2 py-0.5 text-xs font-bold text-muted ring-1 ring-border">
+            Post
           </span>
+        </div>
+        {canManage ? (
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              className="text-xs font-bold text-desk-accent"
+              onClick={() => {
+                setEditing((v) => !v);
+                setEditTitle(post.title);
+                setEditBody(post.body);
+                setMsg(null);
+              }}
+            >
+              {editing ? "Cancel" : "Edit"}
+            </button>
+            <form
+              action={(fd) => {
+                startTransition(async () => {
+                  await teacherTogglePinPost(fd);
+                });
+              }}
+            >
+              <input type="hidden" name="postId" value={post.id} />
+              <button type="submit" className="text-xs font-bold text-desk-accent">
+                {post.pinnedAt ? "Unpin" : "Pin"}
+              </button>
+            </form>
+          </div>
         ) : null}
-        <span className="inline-block rounded bg-[#f3f2ee] px-2 py-0.5 text-xs font-bold text-muted ring-1 ring-border">
-          Post
-        </span>
       </div>
       <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
         {post.title}
@@ -172,7 +218,70 @@ function PostCard({
           )}
         </p>
       ) : null}
-      <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-ink">{post.body}</p>
+      {canManage && editing ? (
+        <form
+          className="mt-3 space-y-2 rounded-lg border border-border bg-[#faf9f6] p-3"
+          action={(fd) => {
+            setMsg(null);
+            startTransition(async () => {
+              const res = await teacherUpdateClassPost(fd);
+              if (res?.error) setMsg(res.error);
+              else {
+                setMsg("Saved.");
+                setEditing(false);
+              }
+            });
+          }}
+        >
+          <input type="hidden" name="postId" value={post.id} />
+          <BasketAttachFields />
+          <input
+            name="title"
+            required
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+            className="w-full rounded border border-border bg-background px-3 py-2 text-sm"
+          />
+          <textarea
+            name="body"
+            required
+            rows={4}
+            value={editBody}
+            onChange={(e) => setEditBody(e.target.value)}
+            className="w-full rounded border border-border bg-background px-3 py-2 text-sm"
+          />
+          <TagPicker
+            classId={classId}
+            knownTags={knownTags}
+            title={editTitle}
+            body={editBody}
+            initialTags={post.tags}
+          />
+          <p className="text-xs text-muted">
+            Select basket files above (Teacher tools) to attach more files to this post.
+          </p>
+          <button type="submit" className="btn-primary rounded px-3 py-1.5 text-xs font-bold">
+            Save changes
+          </button>
+          {msg ? <p className="text-sm text-success">{msg}</p> : null}
+        </form>
+      ) : (
+        <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-ink">{post.body}</p>
+      )}
+      {post.attachments?.length ? (
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          {post.attachments.map((a) => (
+            <li key={a.id}>
+              <AttachmentChip
+                filename={a.filename}
+                mimeType={a.mimeType}
+                resourceId={null}
+                href={a.blobUrl || null}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : null}
       <div className="mt-4 border-t border-border pt-3">
         <p className="text-xs font-bold uppercase text-muted">Comments</p>
         <ul className="mt-2 space-y-2">
@@ -430,6 +539,7 @@ export function ClassroomOrganiser({
   files,
   knownTags = [],
   initialTab = "stream",
+  canManage = false,
 }: {
   classId: string;
   posts: StreamPost[];
@@ -437,6 +547,8 @@ export function ClassroomOrganiser({
   files: ClassFileItem[];
   knownTags?: string[];
   initialTab?: OrganiserTab;
+  /** Teacher/admin: edit, pin, attach files on posts. */
+  canManage?: boolean;
 }) {
   const [tab, setTab] = useState<OrganiserTab>(initialTab);
   const [filterTag, setFilterTag] = useState<string | null>(null);
@@ -570,7 +682,13 @@ export function ClassroomOrganiser({
           {streamFeed.map((item) =>
             item.kind === "post" ? (
               <li key={`post-${item.post.id}`}>
-                <PostCard post={item.post} classId={classId} tagLinks />
+                <PostCard
+                  post={item.post}
+                  classId={classId}
+                  tagLinks={!canManage}
+                  canManage={canManage}
+                  knownTags={knownTags}
+                />
               </li>
             ) : (
               <li key={`lesson-${item.lesson.id}`}>
@@ -632,7 +750,13 @@ export function ClassroomOrganiser({
                 {open ? (
                   <div className="border-t border-border bg-white px-3 py-4">
                     {item.kind === "post" ? (
-                      <PostCard post={item.post} classId={classId} tagLinks />
+                      <PostCard
+                  post={item.post}
+                  classId={classId}
+                  tagLinks={!canManage}
+                  canManage={canManage}
+                  knownTags={knownTags}
+                />
                     ) : (
                       <LessonCard lesson={item.lesson} classId={classId} tagLinks big />
                     )}

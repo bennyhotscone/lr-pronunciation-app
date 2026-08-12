@@ -5,14 +5,23 @@ import {
   commentOnClassPost,
   teacherCreateClassPost,
   teacherTogglePinPost,
+  teacherUpdateClassPost,
 } from "@/lib/classroom-actions";
 import { TagPicker } from "@/components/classroom/TagPicker";
 import { TagFilterBar } from "@/components/classroom/TagPicker";
 import { InfoTag } from "@/components/classroom/InfoTag";
+import { BasketAttachFields, SessionBasketPanel } from "@/components/portal/SessionBasket";
 
 function resourceHref(resourceId: string) {
   return `/api/portal/resources/${resourceId}/download`;
 }
+
+export type StreamPostAttachment = {
+  id: string;
+  filename: string;
+  mimeType: string;
+  blobUrl: string;
+};
 
 export type StreamPost = {
   id: string;
@@ -23,6 +32,7 @@ export type StreamPost = {
   createdAt: string;
   authorLabel: string;
   comments: { id: string; body: string; createdAt: string; authorLabel: string }[];
+  attachments?: StreamPostAttachment[];
 };
 
 export type StreamLesson = {
@@ -53,12 +63,14 @@ function AttachmentChip({
   filename,
   mimeType,
   resourceId,
+  href: hrefOverride,
 }: {
   filename: string;
   mimeType: string;
   resourceId: string | null;
+  href?: string | null;
 }) {
-  const href = resourceId ? resourceHref(resourceId) : null;
+  const href = hrefOverride || (resourceId ? resourceHref(resourceId) : null);
   const inner = (
     <>
       <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-[#ebe8e0] ring-1 ring-border">
@@ -119,6 +131,9 @@ export function ClassroomStream({
   const [filterKind, setFilterKind] = useState<"all" | "posts" | "lessons">("all");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editBody, setEditBody] = useState("");
 
   const allTags = useMemo(() => {
     const s = new Set<string>(knownTags);
@@ -193,52 +208,60 @@ export function ClassroomStream({
       <TagFilterBar tags={allTags} active={filterTag} onChange={setFilterTag} />
 
       {canPost && classId ? (
-        <form
-          className="card space-y-3 rounded-xl p-4"
-          action={(fd) => {
-            setMsg(null);
-            startTransition(async () => {
-              const res = await teacherCreateClassPost(fd);
-              if (res?.error) setMsg(res.error);
-              else {
-                setMsg("Posted.");
-                setTitle("");
-                setBody("");
-              }
-            });
-          }}
-        >
-          <input type="hidden" name="classId" value={classId} />
-          <input
-            name="title"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Announcement title"
-            className="w-full rounded border border-border bg-background px-3 py-2"
-          />
-          <textarea
-            name="body"
-            required
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            rows={3}
-            placeholder="Share with the class…"
-            className="w-full rounded border border-border bg-background px-3 py-2"
-          />
-          <TagPicker classId={classId} knownTags={knownTags} title={title} body={body} />
-          <label className="inline-flex items-center gap-2 text-sm">
-            <input type="checkbox" name="pin" value="1" /> Pin this post
-          </label>
-          <button
-            type="submit"
-            disabled={pending}
-            className="btn-primary rounded px-4 py-2 text-sm font-bold disabled:opacity-50"
+        <div className="space-y-3">
+          <SessionBasketPanel />
+          <form
+            className="card space-y-3 rounded-xl p-4"
+            action={(fd) => {
+              setMsg(null);
+              startTransition(async () => {
+                const res = await teacherCreateClassPost(fd);
+                if (res?.error) setMsg(res.error);
+                else {
+                  setMsg("Posted.");
+                  setTitle("");
+                  setBody("");
+                }
+              });
+            }}
           >
-            Post
-          </button>
-          {msg ? <p className="text-sm text-success">{msg}</p> : null}
-        </form>
+            <input type="hidden" name="classId" value={classId} />
+            <BasketAttachFields />
+            <input
+              name="title"
+              required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Announcement title"
+              className="w-full rounded border border-border bg-background px-3 py-2"
+            />
+            <textarea
+              name="body"
+              required
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              rows={3}
+              placeholder="Share with the class…"
+              className="w-full rounded border border-border bg-background px-3 py-2"
+            />
+            <TagPicker classId={classId} knownTags={knownTags} title={title} body={body} />
+            <p className="text-xs text-muted">
+              Optional: select files in the basket above to attach them to this post. Class Files
+              uploads stay separate in the Files tab.
+            </p>
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input type="checkbox" name="pin" value="1" /> Pin this post
+            </label>
+            <button
+              type="submit"
+              disabled={pending}
+              className="btn-primary rounded px-4 py-2 text-sm font-bold disabled:opacity-50"
+            >
+              Post
+            </button>
+            {msg ? <p className="text-sm text-success">{msg}</p> : null}
+          </form>
+        </div>
       ) : null}
 
       <ul className="space-y-3">
@@ -281,21 +304,104 @@ export function ClassroomStream({
                   ) : null}
                 </div>
                 {canPost ? (
-                  <form
-                    action={(fd) => {
-                      startTransition(async () => {
-                        await teacherTogglePinPost(fd);
-                      });
-                    }}
-                  >
-                    <input type="hidden" name="postId" value={item.post.id} />
-                    <button type="submit" className="text-xs font-bold text-accent">
-                      {item.post.pinnedAt ? "Unpin" : "Pin"}
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      className="text-xs font-bold text-desk-accent"
+                      onClick={() => {
+                        if (editingId === item.post.id) {
+                          setEditingId(null);
+                          return;
+                        }
+                        setEditingId(item.post.id);
+                        setEditTitle(item.post.title);
+                        setEditBody(item.post.body);
+                      }}
+                    >
+                      {editingId === item.post.id ? "Cancel" : "Edit"}
                     </button>
-                  </form>
+                    <form
+                      action={(fd) => {
+                        startTransition(async () => {
+                          await teacherTogglePinPost(fd);
+                        });
+                      }}
+                    >
+                      <input type="hidden" name="postId" value={item.post.id} />
+                      <button type="submit" className="text-xs font-bold text-desk-accent">
+                        {item.post.pinnedAt ? "Unpin" : "Pin"}
+                      </button>
+                    </form>
+                  </div>
                 ) : null}
               </div>
-              <p className="mt-2 whitespace-pre-wrap text-sm text-ink">{item.post.body}</p>
+              {canPost && editingId === item.post.id ? (
+                <form
+                  className="mt-3 space-y-2 rounded-lg border border-border bg-[#faf9f6] p-3"
+                  action={(fd) => {
+                    setMsg(null);
+                    startTransition(async () => {
+                      const res = await teacherUpdateClassPost(fd);
+                      if (res?.error) setMsg(res.error);
+                      else {
+                        setMsg("Post updated.");
+                        setEditingId(null);
+                      }
+                    });
+                  }}
+                >
+                  <input type="hidden" name="postId" value={item.post.id} />
+                  <BasketAttachFields />
+                  <input
+                    name="title"
+                    required
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    className="w-full rounded border border-border bg-background px-3 py-2 text-sm"
+                  />
+                  <textarea
+                    name="body"
+                    required
+                    rows={4}
+                    value={editBody}
+                    onChange={(e) => setEditBody(e.target.value)}
+                    className="w-full rounded border border-border bg-background px-3 py-2 text-sm"
+                  />
+                  <TagPicker
+                    classId={classId}
+                    knownTags={knownTags}
+                    title={editTitle}
+                    body={editBody}
+                    initialTags={item.post.tags}
+                  />
+                  <p className="text-xs text-muted">
+                    Select basket files to add attachments (existing attachments stay).
+                  </p>
+                  <button
+                    type="submit"
+                    disabled={pending}
+                    className="btn-primary rounded px-3 py-1.5 text-xs font-bold disabled:opacity-50"
+                  >
+                    Save changes
+                  </button>
+                </form>
+              ) : (
+                <p className="mt-2 whitespace-pre-wrap text-sm text-ink">{item.post.body}</p>
+              )}
+              {item.post.attachments?.length ? (
+                <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {item.post.attachments.map((a) => (
+                    <li key={a.id}>
+                      <AttachmentChip
+                        filename={a.filename}
+                        mimeType={a.mimeType}
+                        resourceId={null}
+                        href={a.blobUrl || null}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
               <div className="mt-3 border-t border-border pt-3">
                 <p className="text-xs font-bold uppercase text-muted">Comments</p>
                 <ul className="mt-2 space-y-2">
