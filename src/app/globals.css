@@ -496,7 +496,7 @@ body {
 /* PDF workspace: text layer above canvas; overlay host does not steal taps */
 .pdf-text-layer {
   z-index: 2;
-  pointer-events: auto;
+  pointer-events: none; /* only .pdf-tap-word buttons receive hits */
 }
 
 .pdf-overlay-host {
@@ -512,12 +512,23 @@ body {
   pointer-events: auto;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 1px;
 }
 
 .pdf-tap-word:hover,
 .pdf-tap-word:focus-visible {
   background: color-mix(in srgb, var(--desk-accent) 28%, transparent) !important;
   color: transparent !important;
-  border-radius: 2px;
   outline: none;
+}
+
+/* Tight highlight matching the word’s absolute glyph box */
+.pdf-tap-word--active {
+  background: color-mix(in srgb, var(--desk-accent) 40%, transparent) !important;
+  color: transparent !important;
+  outline: none;
+}
+
+.pdf-overlay-toolbar button:hover {
+  background: rgba(13, 92, 77, 0.12) !important;
 }

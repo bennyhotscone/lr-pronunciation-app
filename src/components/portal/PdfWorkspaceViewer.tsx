@@ -5,6 +5,9 @@ import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { allowsPdfWriteMode, materialKindLabel } from "@/lib/material-kind";
 import {
   emptyPdfWriteData,
+  OVERLAY_TEXT_COLORS,
+  normalizeOverlayColor,
+  parsePdfWriteData,
   type OverlayBox,
   type PdfWriteData,
 } from "@/lib/pdf-write-data";
@@ -27,13 +30,23 @@ type PdfjsModule = typeof import("pdfjs-dist");
 type OverlayDom = {
   wrap: HTMLDivElement;
   ta: HTMLTextAreaElement;
+  toolbar: HTMLDivElement;
+  fontLabel: HTMLSpanElement;
   del: HTMLButtonElement;
   handle: HTMLDivElement;
 };
 
 const DEFAULT_FONT = 14;
+const DEFAULT_COLOR = "#1a1a1a";
 const MIN_FONT = 10;
 const MAX_FONT = 36;
+const LINE_HEIGHT = 1.15;
+const BOX_PAD_Y = 2;
+const BOX_PAD_X = 4;
+
+function lineBoxPx(fontSize: number) {
+  return Math.ceil(fontSize * LINE_HEIGHT) + BOX_PAD_Y * 2;
+}
 
 function splitIntoTappableTokens(text: string): { text: string; tappable: boolean }[] {
   const parts: { text: string; tappable: boolean }[] = [];
@@ -51,6 +64,61 @@ function splitIntoTappableTokens(text: string): { text: string; tappable: boolea
 
 function newOverlayId() {
   return `o_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function applyTaStyle(ta: HTMLTextAreaElement, box: OverlayBox) {
+  const fs = box.fontSize || DEFAULT_FONT;
+  ta.style.fontSize = `${fs}px`;
+  ta.style.lineHeight = String(LINE_HEIGHT);
+  ta.style.color = normalizeOverlayColor(box.color);
+  ta.style.fontWeight = box.bold ? "700" : "400";
+  ta.style.fontStyle = box.italic ? "italic" : "normal";
+  ta.style.textDecoration = box.underline ? "underline" : "none";
+}
+
+/** Hidden probe measures content width/height so boxes hug typed text. */
+function measureContentBox(
+  probe: HTMLDivElement,
+  text: string,
+  fontSize: number,
+  color: string,
+  minWidthPx: number,
+): { w: number; h: number } {
+  const fs = fontSize || DEFAULT_FONT;
+  probe.style.cssText = [
+    "position:absolute",
+    "left:-99999px",
+    "top:0",
+    "visibility:hidden",
+    "pointer-events:none",
+    "white-space:pre-wrap",
+    "word-break:break-word",
+    "overflow:hidden",
+    `font-size:${fs}px`,
+    `line-height:${LINE_HEIGHT}`,
+    `padding:${BOX_PAD_Y}px ${BOX_PAD_X}px`,
+    "box-sizing:border-box",
+    "font-family:inherit",
+    `color:${normalizeOverlayColor(color)}`,
+    `min-width:${minWidthPx}px`,
+    "width:max-content",
+    "max-width:90vw",
+  ].join(";");
+  probe.textContent = text || " ";
+  const w = Math.max(minWidthPx, Math.ceil(probe.offsetWidth));
+  // Constrain width then re-measure height for wrapped lines.
+  probe.style.width = `${w}px`;
+  probe.style.maxWidth = `${w}px`;
+  const h = Math.max(lineBoxPx(fs), Math.ceil(probe.offsetHeight));
+  return { w, h };
+}
+
+function withoutEmptyOverlays(data: PdfWriteData, keepId?: string | null): PdfWriteData {
+  const overlays = data.overlays.filter(
+    (o) => o.text.trim() || (keepId != null && o.id === keepId),
+  );
+  if (overlays.length === data.overlays.length) return data;
+  return { ...data, overlays };
 }
 
 export function PdfWorkspaceViewer({
@@ -71,6 +139,8 @@ export function PdfWorkspaceViewer({
   const writeDataRef = useRef<PdfWriteData>(emptyPdfWriteData());
   const pageMetaRef = useRef<Map<number, { width: number; height: number }>>(new Map());
   const overlayDomRef = useRef<Map<string, OverlayDom>>(new Map());
+  const manualSizeRef = useRef<Set<string>>(new Set());
+  const probeRef = useRef<HTMLDivElement | null>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragRef = useRef<{
     id: string;
@@ -110,17 +180,34 @@ export function PdfWorkspaceViewer({
   modeRef.current = mode;
   selectedIdRef.current = selectedId;
 
+  const ensureProbe = useCallback(() => {
+    if (probeRef.current && document.body.contains(probeRef.current)) {
+      return probeRef.current;
+    }
+    const el = document.createElement("div");
+    el.setAttribute("aria-hidden", "true");
+    el.dataset.pdfProbe = "1";
+    document.body.appendChild(el);
+    probeRef.current = el;
+    return el;
+  }, []);
+
   const scheduleSave = useCallback(
     (next: PdfWriteData) => {
       if (!writeAllowed) return;
       if (saveTimer.current) clearTimeout(saveTimer.current);
       setSaveState("saving");
+      // Never persist empty text boxes.
+      const payload: PdfWriteData = {
+        ...next,
+        overlays: next.overlays.filter((o) => o.text.trim()),
+      };
       saveTimer.current = setTimeout(async () => {
         try {
           const res = await fetch(`/api/portal/resources/${resourceId}/write-draft`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: next }),
+            body: JSON.stringify({ data: payload }),
           });
           if (!res.ok) throw new Error("save failed");
           setSaveState("saved");
@@ -141,6 +228,13 @@ export function PdfWorkspaceViewer({
       });
     },
     [scheduleSave],
+  );
+
+  const removeEmptyOverlays = useCallback(
+    (keepId?: string | null) => {
+      updateWriteData((prev) => withoutEmptyOverlays(prev, keepId));
+    },
+    [updateWriteData],
   );
 
   const lookup = useCallback(
@@ -176,7 +270,6 @@ export function PdfWorkspaceViewer({
     [lang, resourceId],
   );
 
-  // Load draft once (Exercises/Activities only)
   useEffect(() => {
     if (!writeAllowed) return;
     let cancelled = false;
@@ -186,7 +279,7 @@ export function PdfWorkspaceViewer({
         if (!res.ok) return;
         const json = await res.json();
         if (!cancelled && json.data) {
-          setWriteData(json.data as PdfWriteData);
+          setWriteData(parsePdfWriteData(json.data));
         }
       } catch {
         /* ignore */
@@ -197,7 +290,6 @@ export function PdfWorkspaceViewer({
     };
   }, [resourceId, writeAllowed]);
 
-  // Render PDF pages
   useEffect(() => {
     let cancelled = false;
     let pdfDoc: { destroy: () => Promise<void> } | null = null;
@@ -206,6 +298,7 @@ export function PdfWorkspaceViewer({
       setStatus("loading");
       setMessage("Loading PDF…");
       overlayDomRef.current.clear();
+      manualSizeRef.current.clear();
       try {
         const pdfjs: PdfjsModule = await import("pdfjs-dist");
         pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -232,6 +325,8 @@ export function PdfWorkspaceViewer({
 
         let totalChars = 0;
         const scale = Math.min(1.35, Math.max(1, (host.clientWidth || 720) / 612));
+        const measureCanvas = document.createElement("canvas");
+        const measureCtx = measureCanvas.getContext("2d");
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
           if (cancelled) return;
@@ -242,18 +337,20 @@ export function PdfWorkspaceViewer({
             height: viewport.height,
           });
 
+          // overflow visible so the format toolbar above a box isn't clipped
           const pageWrap = document.createElement("div");
           pageWrap.className =
-            "pdf-page relative mx-auto mb-4 overflow-hidden rounded-lg border border-wood/25 bg-white shadow-sm";
+            "pdf-page relative mx-auto mb-4 rounded-lg border border-wood/25 bg-white shadow-sm";
           pageWrap.dataset.page = String(pageNum);
           pageWrap.style.width = `${viewport.width}px`;
+          pageWrap.style.height = `${viewport.height}px`;
 
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
           if (!ctx) continue;
           canvas.width = viewport.width;
           canvas.height = viewport.height;
-          canvas.className = "block h-auto w-full";
+          canvas.className = "block h-auto w-full rounded-lg";
           pageWrap.appendChild(canvas);
 
           await page.render({
@@ -261,85 +358,114 @@ export function PdfWorkspaceViewer({
             viewport,
           }).promise;
 
-          // Text layer (tap → translate). Must sit above the canvas and receive
-          // pointer events; write overlay host is pointer-events:none so it does
-          // not swallow taps in read or write mode.
           const textContent = await page.getTextContent();
           const textLayer = document.createElement("div");
           textLayer.className = "pdf-text-layer absolute inset-0 overflow-hidden";
           textLayer.style.width = `${viewport.width}px`;
           textLayer.style.height = `${viewport.height}px`;
           textLayer.style.zIndex = "2";
-          textLayer.style.pointerEvents = "auto";
+          // Layer itself never captures; only word buttons do.
+          textLayer.style.pointerEvents = "none";
 
           for (const item of textContent.items) {
             if (!("str" in item) || !item.str) continue;
             const str = String(item.str);
+            if (!str.trim()) continue;
             totalChars += str.replace(/\s/g, "").length;
-            const tx = pdfjs.Util.transform(viewport.transform, item.transform);
-            const fontHeight = Math.hypot(tx[2], tx[3]);
+
+            const rawTx = item.transform;
+            if (!rawTx || rawTx.length < 6) continue;
+            const tx = pdfjs.Util.transform(viewport.transform, rawTx);
+            const fontHeight = Math.max(6, Math.hypot(tx[2], tx[3]));
             const left = tx[4];
             const top = tx[5] - fontHeight;
+            const rawHyp = Math.hypot(rawTx[0], rawTx[1]);
+            const advScale =
+              rawHyp > 1e-8 ? Math.hypot(tx[0], tx[1]) / rawHyp : scale;
+            const itemWidth =
+              "width" in item && typeof item.width === "number" && item.width > 0
+                ? item.width * advScale
+                : Math.max(fontHeight * 0.5 * str.length, 4);
 
-            const span = document.createElement("span");
-            span.style.position = "absolute";
-            span.style.left = `${left}px`;
-            span.style.top = `${top}px`;
-            span.style.fontSize = `${Math.max(8, fontHeight)}px`;
-            span.style.lineHeight = "1";
-            span.style.whiteSpace = "pre";
-            span.style.color = "transparent";
-            span.style.transformOrigin = "0% 0%";
-            span.style.pointerEvents = "auto";
+            if (measureCtx) {
+              measureCtx.font = `${fontHeight}px sans-serif`;
+            }
+            const browserFull =
+              measureCtx && str.length ? measureCtx.measureText(str).width : 0;
 
-            for (const tok of splitIntoTappableTokens(str)) {
-              if (!tok.tappable) {
-                span.appendChild(document.createTextNode(tok.text));
-                continue;
-              }
-              const btn = document.createElement("button");
-              btn.type = "button";
-              btn.textContent = tok.text;
-              btn.className = "pdf-tap-word";
-              btn.setAttribute("aria-label", `Translate ${tok.text}`);
-              btn.style.cssText =
-                "padding:0;margin:0;border:0;background:transparent;color:transparent;cursor:pointer;font:inherit;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
+            const tokens = splitIntoTappableTokens(str);
+            let xCursor = 0;
+            for (const tok of tokens) {
+              const tokBrowser =
+                measureCtx && tok.text.length
+                  ? measureCtx.measureText(tok.text).width
+                  : tok.text.length * fontHeight * 0.5;
+              const tokW =
+                browserFull > 0
+                  ? (tokBrowser / browserFull) * itemWidth
+                  : (tok.text.length / Math.max(1, str.length)) * itemWidth;
+              if (tok.tappable && tok.text.trim()) {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.textContent = tok.text;
+                btn.className = "pdf-tap-word";
+                btn.setAttribute("aria-label", `Translate ${tok.text}`);
+                btn.style.cssText = [
+                  "position:absolute",
+                  `left:${left + xCursor}px`,
+                  `top:${top}px`,
+                  `width:${Math.max(2, tokW)}px`,
+                  `height:${fontHeight}px`,
+                  "padding:0",
+                  "margin:0",
+                  "border:0",
+                  "background:transparent",
+                  "color:transparent",
+                  "cursor:pointer",
+                  "overflow:hidden",
+                  "white-space:nowrap",
+                  `font-size:${fontHeight}px`,
+                  "line-height:1",
+                  "pointer-events:auto",
+                  "touch-action:manipulation",
+                  "-webkit-tap-highlight-color:transparent",
+                ].join(";");
 
-              // Dedupe click vs touchend (mobile often fires both).
-              let lastActivate = 0;
-              const activateWord = (clientX: number, clientY: number) => {
-                const now = Date.now();
-                if (now - lastActivate < 450) return;
-                lastActivate = now;
-                setSelectedId(null);
-                void lookup(tok.text, clientX, clientY);
-              };
+                let lastActivate = 0;
+                const activateWord = (clientX: number, clientY: number) => {
+                  const now = Date.now();
+                  if (now - lastActivate < 450) return;
+                  lastActivate = now;
+                  document
+                    .querySelectorAll(".pdf-tap-word--active")
+                    .forEach((el) => el.classList.remove("pdf-tap-word--active"));
+                  btn.classList.add("pdf-tap-word--active");
+                  setSelectedId(null);
+                  void lookup(tok.text, clientX, clientY);
+                };
 
-              btn.addEventListener("click", (ev) => {
-                ev.preventDefault();
-                ev.stopPropagation();
-                activateWord(ev.clientX, ev.clientY);
-              });
-              btn.addEventListener(
-                "touchend",
-                (ev) => {
-                  // Prevent delayed ghost click; still activate from the touch.
+                btn.addEventListener("click", (ev) => {
                   ev.preventDefault();
                   ev.stopPropagation();
-                  const t = ev.changedTouches[0];
-                  if (t) activateWord(t.clientX, t.clientY);
-                },
-                { passive: false },
-              );
-              span.appendChild(btn);
+                  activateWord(ev.clientX, ev.clientY);
+                });
+                btn.addEventListener(
+                  "touchend",
+                  (ev) => {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    const t = ev.changedTouches[0];
+                    if (t) activateWord(t.clientX, t.clientY);
+                  },
+                  { passive: false },
+                );
+                textLayer.appendChild(btn);
+              }
+              xCursor += tokW;
             }
-            textLayer.appendChild(span);
           }
           pageWrap.appendChild(textLayer);
 
-          // Overlay host for text boxes (synced via effect below).
-          // pointer-events:none so empty host never blocks text-layer word taps;
-          // each .pdf-overlay-box re-enables pointer-events for writing.
           const overlayHost = document.createElement("div");
           overlayHost.className = "pdf-overlay-host absolute inset-0";
           overlayHost.dataset.page = String(pageNum);
@@ -347,13 +473,11 @@ export function PdfWorkspaceViewer({
           overlayHost.style.pointerEvents = "none";
           pageWrap.appendChild(overlayHost);
 
-          // Write mode: tap empty space → new transparent text box
-          // Read/empty: if no selectable text, toast on tap
           pageWrap.addEventListener("click", (ev) => {
             const t = ev.target as HTMLElement;
             if (t.closest(".pdf-tap-word")) return;
 
-            if (!hasSelectableTextRef.current) {
+            if (!hasSelectableTextRef.current && modeRef.current !== "write") {
               showToast("This PDF has no selectable text");
               return;
             }
@@ -363,29 +487,45 @@ export function PdfWorkspaceViewer({
               ev.stopPropagation();
               return;
             }
-            // Ignore other chrome buttons; word buttons already returned above.
             if (t.closest("button") && !t.closest(".pdf-overlay-box")) {
               return;
             }
             ev.stopPropagation();
             setPopup(null);
+
+            // Drop any abandoned empty boxes before creating a new one.
+            removeEmptyOverlays(null);
+
+            const meta = pageMetaRef.current.get(pageNum);
+            if (!meta) return;
             const rect = pageWrap.getBoundingClientRect();
-            const x = (ev.clientX - rect.left) / rect.width;
-            const y = (ev.clientY - rect.top) / rect.height;
+            const clickX = (ev.clientX - rect.left) / rect.width;
+            const clickY = (ev.clientY - rect.top) / rect.height;
+            const fontSize = DEFAULT_FONT;
+            const hPx = lineBoxPx(fontSize);
+            const h = Math.min(0.2, Math.max(0.01, hPx / meta.height));
+            // Edge-like: offset Y so baseline sits on/near click Y.
+            const baselineOffset = (fontSize + 2) / meta.height;
+            const y = Math.min(1 - h, Math.max(0, clickY - baselineOffset));
+            const wPx = Math.min(meta.width * 0.2, fontSize * 8);
+            const w = Math.min(0.28, Math.max(0.1, wPx / meta.width));
+            const x = Math.min(1 - w, Math.max(0, clickX));
             const id = newOverlayId();
+            manualSizeRef.current.delete(id);
             const box: OverlayBox = {
               id,
               page: pageNum,
-              x: Math.min(0.72, Math.max(0, x)),
-              y: Math.min(0.92, Math.max(0, y)),
-              w: 0.26,
-              h: 0.055,
+              x,
+              y,
+              w,
+              h,
               text: "",
-              fontSize: DEFAULT_FONT,
+              fontSize,
+              color: DEFAULT_COLOR,
             };
             updateWriteData((prev) => ({
               ...prev,
-              overlays: [...prev.overlays, box],
+              overlays: [...prev.overlays.filter((o) => o.text.trim()), box],
             }));
             setSelectedId(id);
             requestAnimationFrame(() => {
@@ -428,12 +568,14 @@ export function PdfWorkspaceViewer({
       overlayDomRef.current.clear();
       void pdfDoc?.destroy();
       if (toastTimer.current) clearTimeout(toastTimer.current);
+      if (probeRef.current) {
+        probeRef.current.remove();
+        probeRef.current = null;
+      }
     };
-    // Re-render PDF only when resource changes — mode/write overlays synced separately
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resourceId, lookup, updateWriteData, showToast]);
+  }, [resourceId, lookup, updateWriteData, showToast, removeEmptyOverlays]);
 
-  // Pointer move/up for drag + resize (document-level)
   useEffect(() => {
     const onMove = (ev: PointerEvent) => {
       const drag = dragRef.current;
@@ -452,12 +594,14 @@ export function PdfWorkspaceViewer({
           ),
         }));
       } else {
-        const w = Math.min(1 - drag.orig.x, Math.max(0.08, drag.orig.w + dx));
-        const h = Math.min(1 - drag.orig.y, Math.max(0.035, drag.orig.h + dy));
+        manualSizeRef.current.add(drag.id);
+        const w = Math.min(1 - drag.orig.x, Math.max(0.06, drag.orig.w + dx));
+        const minH = lineBoxPx(drag.orig.fontSize || DEFAULT_FONT) / meta.height;
+        const h = Math.min(1 - drag.orig.y, Math.max(minH, drag.orig.h + dy));
         updateWriteData((prev) => ({
           ...prev,
           overlays: prev.overlays.map((o) =>
-            o.id === drag.id ? { ...o, w, h } : o,
+            o.id === drag.id ? { ...o, w, h, userSized: true } : o,
           ),
         }));
       }
@@ -475,7 +619,6 @@ export function PdfWorkspaceViewer({
     };
   }, [updateWriteData]);
 
-  // Sync write-mode overlay DOM (create/update/remove without wiping focused text)
   useEffect(() => {
     const host = containerRef.current;
     if (!host) return;
@@ -485,24 +628,26 @@ export function PdfWorkspaceViewer({
       mode === "write" ? writeData.overlays.map((o) => o.id) : [],
     );
 
-    // Remove deleted / leave write mode
     for (const [id, dom] of live) {
       if (!wanted.has(id)) {
         dom.wrap.remove();
         live.delete(id);
+        manualSizeRef.current.delete(id);
       }
     }
 
     if (mode !== "write") return;
 
+    const probe = ensureProbe();
+
     host.querySelectorAll<HTMLElement>(".pdf-overlay-host").forEach((layer) => {
       const page = Number(layer.dataset.page || "1");
       const meta = pageMetaRef.current.get(page);
       if (!meta) return;
-      // Keep host click-through so PDF word taps work under write boxes.
       layer.style.pointerEvents = "none";
 
       for (const box of writeData.overlays.filter((o) => o.page === page)) {
+        if (box.userSized) manualSizeRef.current.add(box.id);
         let dom = live.get(box.id);
         if (!dom) {
           const wrap = document.createElement("div");
@@ -512,29 +657,201 @@ export function PdfWorkspaceViewer({
           wrap.style.boxSizing = "border-box";
           wrap.style.pointerEvents = "auto";
 
+          // Font size + color float ABOVE the selected text box (not page toolbar).
+          const toolbar = document.createElement("div");
+          toolbar.className = "pdf-overlay-toolbar";
+          toolbar.style.cssText =
+            "position:absolute;left:0;bottom:100%;margin-bottom:4px;display:none;align-items:center;gap:2px;padding:3px 4px;border-radius:8px;border:1px solid rgba(13,92,77,0.35);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.12);z-index:8;white-space:nowrap;";
+
+          const mkToolBtn = (label: string, title: string, onClick: () => void) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.title = title;
+            b.textContent = label;
+            b.style.cssText =
+              "min-width:22px;height:22px;padding:0 5px;border:0;border-radius:4px;background:transparent;cursor:pointer;font:600 12px/1 inherit;color:#1a1a1a;";
+            b.addEventListener("pointerdown", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            });
+            b.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectedId(box.id);
+              onClick();
+            });
+            return b;
+          };
+
+          const boldBtn = mkToolBtn("B", "Bold", () => {
+            updateWriteData((prev) => ({
+              ...prev,
+              overlays: prev.overlays.map((o) =>
+                o.id === box.id ? { ...o, bold: !o.bold } : o,
+              ),
+            }));
+          });
+          boldBtn.style.fontWeight = "800";
+          const italicBtn = mkToolBtn("I", "Italic", () => {
+            updateWriteData((prev) => ({
+              ...prev,
+              overlays: prev.overlays.map((o) =>
+                o.id === box.id ? { ...o, italic: !o.italic } : o,
+              ),
+            }));
+          });
+          italicBtn.style.fontStyle = "italic";
+          const underBtn = mkToolBtn("U", "Underline", () => {
+            updateWriteData((prev) => ({
+              ...prev,
+              overlays: prev.overlays.map((o) =>
+                o.id === box.id ? { ...o, underline: !o.underline } : o,
+              ),
+            }));
+          });
+          underBtn.style.textDecoration = "underline";
+          toolbar.appendChild(boldBtn);
+          toolbar.appendChild(italicBtn);
+          toolbar.appendChild(underBtn);
+          const sepFmt = document.createElement("span");
+          sepFmt.style.cssText =
+            "width:1px;height:14px;background:rgba(0,0,0,0.12);margin:0 2px;";
+          toolbar.appendChild(sepFmt);
+
+          toolbar.appendChild(
+            mkToolBtn("A−", "Smaller text", () => {
+              updateWriteData((prev) => ({
+                ...prev,
+                overlays: prev.overlays.map((o) =>
+                  o.id === box.id
+                    ? {
+                        ...o,
+                        fontSize: Math.max(
+                          MIN_FONT,
+                          (o.fontSize || DEFAULT_FONT) - 2,
+                        ),
+                      }
+                    : o,
+                ),
+              }));
+            }),
+          );
+
+          const fontLabel = document.createElement("span");
+          fontLabel.className = "pdf-overlay-font-label";
+          fontLabel.style.cssText =
+            "min-width:1.6em;text-align:center;font:600 11px/1 inherit;color:#1a1a1a;padding:0 2px;";
+          fontLabel.textContent = String(box.fontSize || DEFAULT_FONT);
+          toolbar.appendChild(fontLabel);
+
+          toolbar.appendChild(
+            mkToolBtn("A+", "Larger text", () => {
+              updateWriteData((prev) => ({
+                ...prev,
+                overlays: prev.overlays.map((o) =>
+                  o.id === box.id
+                    ? {
+                        ...o,
+                        fontSize: Math.min(
+                          MAX_FONT,
+                          (o.fontSize || DEFAULT_FONT) + 2,
+                        ),
+                      }
+                    : o,
+                ),
+              }));
+            }),
+          );
+
+          const sep = document.createElement("span");
+          sep.style.cssText =
+            "width:1px;height:14px;background:rgba(0,0,0,0.12);margin:0 2px;";
+          toolbar.appendChild(sep);
+
+          for (const c of OVERLAY_TEXT_COLORS) {
+            const sw = document.createElement("button");
+            sw.type = "button";
+            sw.title = `Text color ${c}`;
+            sw.dataset.color = c;
+            sw.style.cssText = `width:16px;height:16px;border-radius:999px;border:2px solid transparent;background:${c};cursor:pointer;padding:0;`;
+            sw.addEventListener("pointerdown", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            });
+            sw.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectedId(box.id);
+              updateWriteData((prev) => ({
+                ...prev,
+                overlays: prev.overlays.map((o) =>
+                  o.id === box.id ? { ...o, color: c } : o,
+                ),
+              }));
+            });
+            toolbar.appendChild(sw);
+          }
+
           const ta = document.createElement("textarea");
           ta.value = box.text;
           ta.placeholder = "Type…";
           ta.spellcheck = true;
-          ta.style.cssText =
-            "display:block;width:100%;height:100%;margin:0;padding:2px 4px;border:0;outline:none;resize:none;background:transparent;color:#1a1a1a;font-family:inherit;line-height:1.25;overflow:auto;";
+          ta.rows = 1;
+          ta.style.cssText = [
+            "display:block",
+            "width:100%",
+            "height:100%",
+            "margin:0",
+            `padding:${BOX_PAD_Y}px ${BOX_PAD_X}px`,
+            "border:0",
+            "outline:none",
+            "resize:none",
+            "background:transparent",
+            "font-family:inherit",
+            `line-height:${LINE_HEIGHT}`,
+            "overflow:hidden",
+            "vertical-align:top",
+            "box-sizing:border-box",
+          ].join(";");
+          applyTaStyle(ta, box);
 
           const del = document.createElement("button");
           del.type = "button";
           del.textContent = "×";
           del.title = "Delete text box";
           del.style.cssText =
-            "position:absolute;right:-8px;top:-8px;width:20px;height:20px;border:0;border-radius:999px;background:#1a1a1a;color:#fff;font-size:12px;line-height:1;cursor:pointer;display:none;z-index:2;";
+            "position:absolute;right:-8px;top:-8px;width:20px;height:20px;border:0;border-radius:999px;background:#1a1a1a;color:#fff;font-size:12px;line-height:1;cursor:pointer;display:none;z-index:2;align-items:center;justify-content:center;";
 
           const handle = document.createElement("div");
-          handle.title = "Drag to move · corner to resize";
+          handle.title = "Drag corner to resize";
           handle.style.cssText =
             "position:absolute;right:0;bottom:0;width:12px;height:12px;cursor:nwse-resize;background:linear-gradient(135deg,transparent 50%,#0d5c4d 50%);display:none;z-index:2;";
 
+          wrap.appendChild(toolbar);
           wrap.appendChild(ta);
           wrap.appendChild(del);
           wrap.appendChild(handle);
           layer.appendChild(wrap);
+
+          const hugContent = (text: string, current: OverlayBox) => {
+            if (manualSizeRef.current.has(box.id)) return null;
+            const fs = current.fontSize || DEFAULT_FONT;
+            const minW = Math.min(meta.width * 0.2, fs * 8);
+            const measured = measureContentBox(
+              probe,
+              text,
+              fs,
+              current.color || DEFAULT_COLOR,
+              minW,
+            );
+            const maxW = meta.width * 0.92;
+            const wPx = Math.min(maxW, measured.w);
+            const hPx = Math.min(meta.height * 0.45, measured.h);
+            return {
+              w: Math.min(1 - current.x, Math.max(0.06, wPx / meta.width)),
+              h: Math.min(1 - current.y, Math.max(lineBoxPx(fs) / meta.height, hPx / meta.height)),
+            };
+          };
 
           wrap.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -553,16 +870,53 @@ export function PdfWorkspaceViewer({
           });
           ta.addEventListener("focus", () => setSelectedId(box.id));
           ta.addEventListener("input", () => {
-            const id = box.id;
             const text = ta.value;
+            const current =
+              writeDataRef.current.overlays.find((o) => o.id === box.id) || box;
+            const hugged = hugContent(text, current);
             updateWriteData((prev) => ({
               ...prev,
-              overlays: prev.overlays.map((o) => (o.id === id ? { ...o, text } : o)),
+              overlays: prev.overlays.map((o) =>
+                o.id === box.id
+                  ? hugged
+                    ? { ...o, text, w: hugged.w, h: hugged.h }
+                    : { ...o, text }
+                  : o,
+              ),
             }));
+          });
+          ta.addEventListener("blur", () => {
+            // Defer so toolbar clicks still work.
+            window.setTimeout(() => {
+              const still =
+                document.activeElement === ta ||
+                document.activeElement?.closest?.(".pdf-overlay-toolbar") ||
+                document.activeElement?.closest?.(
+                  `[data-overlay-id="${box.id}"]`,
+                );
+              if (still) return;
+              const current = writeDataRef.current.overlays.find(
+                (o) => o.id === box.id,
+              );
+              if (current && !current.text.trim()) {
+                updateWriteData((prev) => ({
+                  ...prev,
+                  overlays: prev.overlays.filter((o) => o.id !== box.id),
+                }));
+                setSelectedId((cur) => (cur === box.id ? null : cur));
+              }
+            }, 120);
           });
 
           wrap.addEventListener("pointerdown", (e) => {
-            if (e.target === ta || e.target === del || e.target === handle) return;
+            if (
+              e.target === ta ||
+              e.target === del ||
+              e.target === handle ||
+              (e.target instanceof Node && toolbar.contains(e.target))
+            ) {
+              return;
+            }
             e.preventDefault();
             e.stopPropagation();
             setPopup(null);
@@ -602,30 +956,95 @@ export function PdfWorkspaceViewer({
             setSelectedId((cur) => (cur === box.id ? null : cur));
           });
 
-          dom = { wrap, ta, del, handle };
+          dom = { wrap, ta, toolbar, fontLabel, del, handle };
           live.set(box.id, dom);
         }
 
         const selected = selectedId === box.id;
+        const fs = box.fontSize || DEFAULT_FONT;
+
+        // Auto-hug unless the user manually resized this box.
+        let displayW = box.w;
+        let displayH = box.h;
+        if (!manualSizeRef.current.has(box.id)) {
+          const minW = Math.min(meta.width * 0.2, fs * 8);
+          const measured = measureContentBox(
+            probe,
+            box.text || " ",
+            fs,
+            box.color || DEFAULT_COLOR,
+            minW,
+          );
+          displayW = Math.min(
+            1 - box.x,
+            Math.max(0.06, Math.min(meta.width * 0.92, measured.w) / meta.width),
+          );
+          displayH = Math.min(
+            1 - box.y,
+            Math.max(
+              lineBoxPx(fs) / meta.height,
+              Math.min(meta.height * 0.45, measured.h) / meta.height,
+            ),
+          );
+        } else {
+          displayH = Math.min(
+            0.45,
+            Math.max(lineBoxPx(fs) / meta.height, box.h || lineBoxPx(fs) / meta.height),
+          );
+        }
+
         dom.wrap.style.left = `${box.x * meta.width}px`;
         dom.wrap.style.top = `${box.y * meta.height}px`;
-        dom.wrap.style.width = `${box.w * meta.width}px`;
-        dom.wrap.style.height = `${box.h * meta.height}px`;
+        dom.wrap.style.width = `${displayW * meta.width}px`;
+        dom.wrap.style.height = `${displayH * meta.height}px`;
         dom.wrap.style.border = selected
           ? "1.5px solid #0d5c4d"
           : box.text.trim()
             ? "1px solid transparent"
             : "1px dashed rgba(13,92,77,0.35)";
         dom.wrap.style.background = selected
-          ? "rgba(255,255,255,0.12)"
+          ? "rgba(255,255,255,0.1)"
           : "transparent";
         dom.wrap.style.cursor = selected ? "move" : "text";
-        dom.ta.style.fontSize = `${box.fontSize || DEFAULT_FONT}px`;
-        dom.ta.style.pointerEvents = "auto";
+        applyTaStyle(dom.ta, box);
+        dom.ta.style.overflow = "hidden";
         dom.del.style.display = selected ? "flex" : "none";
         dom.del.style.alignItems = "center";
         dom.del.style.justifyContent = "center";
         dom.handle.style.display = selected ? "block" : "none";
+        dom.toolbar.style.display = selected ? "flex" : "none";
+        dom.fontLabel.textContent = String(fs);
+        if (box.y * meta.height < 40) {
+          dom.toolbar.style.bottom = "auto";
+          dom.toolbar.style.top = "100%";
+          dom.toolbar.style.marginBottom = "0";
+          dom.toolbar.style.marginTop = "4px";
+        } else {
+          dom.toolbar.style.bottom = "100%";
+          dom.toolbar.style.top = "auto";
+          dom.toolbar.style.marginBottom = "4px";
+          dom.toolbar.style.marginTop = "0";
+        }
+        for (const child of Array.from(dom.toolbar.children)) {
+          if (!(child instanceof HTMLButtonElement)) continue;
+          if (child.title === "Bold") {
+            child.style.background = box.bold ? "rgba(13,92,77,0.18)" : "transparent";
+          } else if (child.title === "Italic") {
+            child.style.background = box.italic
+              ? "rgba(13,92,77,0.18)"
+              : "transparent";
+          } else if (child.title === "Underline") {
+            child.style.background = box.underline
+              ? "rgba(13,92,77,0.18)"
+              : "transparent";
+          } else if (child.title.startsWith("Text color")) {
+            const c = child.dataset.color || "";
+            child.style.borderColor =
+              normalizeOverlayColor(box.color) === normalizeOverlayColor(c)
+                ? "#0d5c4d"
+                : "transparent";
+          }
+        }
 
         if (document.activeElement !== dom.ta && dom.ta.value !== box.text) {
           dom.ta.value = box.text;
@@ -633,18 +1052,16 @@ export function PdfWorkspaceViewer({
       }
     });
 
-    // Focus newly created empty selection
     if (selectedId) {
       const dom = live.get(selectedId);
       if (dom && !dom.ta.value && document.activeElement !== dom.ta) {
-        // only auto-focus if nothing else focused in a box
         const activeIsBox =
           document.activeElement instanceof HTMLTextAreaElement &&
           document.activeElement.closest(".pdf-overlay-box");
         if (!activeIsBox) dom.ta.focus();
       }
     }
-  }, [mode, writeData, selectedId, updateWriteData]);
+  }, [mode, writeData, selectedId, updateWriteData, ensureProbe]);
 
   useEffect(() => {
     if (status !== "ready" && status !== "empty") return;
@@ -656,7 +1073,7 @@ export function PdfWorkspaceViewer({
     }
     setMessage(
       mode === "write"
-        ? "Tap empty space to type · tap a PDF word to translate · select a box to drag, resize, change size, edit, or delete."
+        ? "Tap empty space to type · tap a PDF word to translate · select a box to drag, resize, format, edit, or delete."
         : "Tap a word for a free translation — it also goes on your Target vocabulary list.",
     );
   }, [mode, status, writeAllowed]);
@@ -665,32 +1082,18 @@ export function PdfWorkspaceViewer({
     ? writeData.overlays.find((o) => o.id === selectedId)
     : null;
 
-  const bumpFont = (delta: number) => {
-    if (!selectedId) return;
-    updateWriteData((prev) => ({
-      ...prev,
-      overlays: prev.overlays.map((o) =>
-        o.id === selectedId
-          ? {
-              ...o,
-              fontSize: Math.min(
-                MAX_FONT,
-                Math.max(MIN_FONT, (o.fontSize || DEFAULT_FONT) + delta),
-              ),
-            }
-          : o,
-      ),
-    }));
-  };
-
   const submitHomework = () => {
     setSubmitMsg(null);
     startTransition(async () => {
       try {
+        const payload: PdfWriteData = {
+          ...writeDataRef.current,
+          overlays: writeDataRef.current.overlays.filter((o) => o.text.trim()),
+        };
         await fetch(`/api/portal/resources/${resourceId}/write-draft`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: writeDataRef.current }),
+          body: JSON.stringify({ data: payload }),
         });
       } catch {
         /* continue */
@@ -746,6 +1149,7 @@ export function PdfWorkspaceViewer({
             <button
               type="button"
               onClick={() => {
+                removeEmptyOverlays(null);
                 setMode("read");
                 setSelectedId(null);
               }}
@@ -774,42 +1178,9 @@ export function PdfWorkspaceViewer({
         {mode === "write" && writeAllowed ? (
           <>
             {selectedBox ? (
-              <div className="inline-flex items-center gap-1 rounded-lg border border-wood/30 bg-white px-1.5 py-0.5">
-                <button
-                  type="button"
-                  title="Smaller text"
-                  onClick={() => bumpFont(-2)}
-                  className="rounded px-2 py-1 text-xs font-bold text-ink hover:bg-paper"
-                >
-                  A−
-                </button>
-                <span className="min-w-[2rem] text-center text-[0.7rem] text-ink/50">
-                  {selectedBox.fontSize || DEFAULT_FONT}
-                </span>
-                <button
-                  type="button"
-                  title="Larger text"
-                  onClick={() => bumpFont(2)}
-                  className="rounded px-2 py-1 text-xs font-bold text-ink hover:bg-paper"
-                >
-                  A+
-                </button>
-                <button
-                  type="button"
-                  title="Delete text box"
-                  onClick={() => {
-                    const id = selectedBox.id;
-                    updateWriteData((prev) => ({
-                      ...prev,
-                      overlays: prev.overlays.filter((o) => o.id !== id),
-                    }));
-                    setSelectedId(null);
-                  }}
-                  className="ml-1 rounded px-2 py-1 text-xs font-bold text-danger hover:bg-danger/10"
-                >
-                  Delete
-                </button>
-              </div>
+              <span className="text-xs text-ink/45">
+                Formatting toolbar is above the selected box
+              </span>
             ) : (
               <span className="text-xs text-ink/45">Tap the page to start writing</span>
             )}
@@ -873,7 +1244,22 @@ export function PdfWorkspaceViewer({
         className="pdf-read-host overflow-x-auto"
         onClick={() => {
           setPopup(null);
-          if (mode === "write") setSelectedId(null);
+          document
+            .querySelectorAll(".pdf-tap-word--active")
+            .forEach((el) => el.classList.remove("pdf-tap-word--active"));
+          if (mode === "write") {
+            const sid = selectedIdRef.current;
+            if (sid) {
+              const box = writeDataRef.current.overlays.find((o) => o.id === sid);
+              if (box && !box.text.trim()) {
+                updateWriteData((prev) => ({
+                  ...prev,
+                  overlays: prev.overlays.filter((o) => o.id !== sid),
+                }));
+              }
+            }
+            setSelectedId(null);
+          }
         }}
       />
 
