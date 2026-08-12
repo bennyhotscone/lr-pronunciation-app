@@ -1,12 +1,11 @@
 import { createHash, randomBytes } from "crypto";
 
+/**
+ * True only when a working outbound transporter is available.
+ * Resend is the supported path (RESEND_API_KEY). SMTP_* alone is not wired.
+ */
 export function isMailConfigured(): boolean {
-  return Boolean(
-    process.env.RESEND_API_KEY?.trim() ||
-      (process.env.SMTP_HOST?.trim() &&
-        process.env.SMTP_USER?.trim() &&
-        process.env.SMTP_PASS?.trim()),
-  );
+  return Boolean(process.env.RESEND_API_KEY?.trim());
 }
 
 export function mailFromAddress(): string {

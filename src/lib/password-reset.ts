@@ -12,11 +12,16 @@ export async function issuePasswordResetForEmail(opts: {
   email: string;
   origin: string;
 }): Promise<{
-  /** Always true-ish for enumeration resistance on public form */
+  /** Always true-ish for enumeration resistance when mail is configured */
   accepted: true;
   mailed: boolean;
   mailConfigured: boolean;
-  /** Only returned for staff-initiated resets (copyable link) */
+  /**
+   * Returned when email was not delivered and the account exists, so the UI
+   * can show a copyable one-time link (dev / no-RESEND deployments).
+   * Omitted for unknown emails — presence of a link can reveal account existence
+   * when mail is off; that is intentional so self-service still works.
+   */
   resetUrl?: string;
   error?: string;
 }> {
@@ -52,28 +57,33 @@ export async function issuePasswordResetForEmail(opts: {
     "If you did not request this, ignore this email.",
   ].join("\n");
 
-  const mail = await sendMail({
-    to: user.email,
-    subject: "Reset your LR Mastery password",
-    text,
-  });
+  if (mailConfigured) {
+    const mail = await sendMail({
+      to: user.email,
+      subject: "Reset your LR Mastery password",
+      text,
+    });
 
-  if (mail.ok && mail.provider !== "log") {
-    return { accepted: true, mailed: true, mailConfigured: true };
-  }
+    if (mail.ok && mail.provider !== "log") {
+      return { accepted: true, mailed: true, mailConfigured: true };
+    }
 
-  // Mail not configured or send failed — token still exists in DB.
-  // Log URL for operators (Vercel function logs).
-  console.info(`[password-reset] token issued for ${user.email}: ${resetUrl}`);
-  if (!mail.ok) {
+    // Send failed — still return copyable URL so the user is not stuck.
+    console.info(
+      `[password-reset] mail failed for ${user.email}; showing link. ${mail.ok ? "provider=log" : mail.error}`,
+    );
     return {
       accepted: true,
       mailed: false,
-      mailConfigured,
-      error: mail.error,
+      mailConfigured: true,
+      resetUrl,
+      error: mail.ok ? undefined : mail.error,
     };
   }
-  return { accepted: true, mailed: false, mailConfigured: false };
+
+  // No outbound email — show the one-time link on the page.
+  console.info(`[password-reset] no mail configured; on-page link for ${user.email}`);
+  return { accepted: true, mailed: false, mailConfigured: false, resetUrl };
 }
 
 export async function consumePasswordResetToken(opts: {

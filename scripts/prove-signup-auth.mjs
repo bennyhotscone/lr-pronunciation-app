@@ -31,7 +31,7 @@ async function main() {
   const forgotPageOk =
     forgotRes.status === 200 &&
     /Forgot password/i.test(forgotHtml) &&
-    /Send reset link/i.test(forgotHtml) &&
+    /(Send reset link|Get reset link)/i.test(forgotHtml) &&
     /name=["']email["']/.test(forgotHtml);
 
   const resetBare = await fetch(`${BASE}/reset-password`, { redirect: "manual" });

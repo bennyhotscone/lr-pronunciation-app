@@ -175,15 +175,31 @@ export async function requestPasswordResetAction(formData: FormData) {
   const origin = `${proto}://${host}`;
 
   const result = await issuePasswordResetForEmail({ email, origin });
+
+  let message: string;
+  if (result.mailed) {
+    message =
+      "If an account exists for that email, a reset link was emailed. Check your inbox (and spam).";
+  } else if (result.resetUrl) {
+    message = result.mailConfigured
+      ? "Email sending failed. Use this one-time link to set a new password (valid 1 hour)."
+      : "Email is not configured on this server. Use this one-time link to set a new password (valid 1 hour).";
+  } else if (result.mailConfigured) {
+    message =
+      "If an account exists for that email, a reset link was emailed. Check your inbox (and spam).";
+  } else {
+    // Unknown / archived email while mail is off — no link (avoids inventing one).
+    // Note: when mail is off, a real account gets a visible link; absence can hint non-existence.
+    message =
+      "No reset link to show for that email. Check the address, or ask your teacher to set a new password from your student page.";
+  }
+
   return {
     ok: true as const,
     mailed: result.mailed,
     mailConfigured: result.mailConfigured,
-    message: result.mailed
-      ? "If an account exists for that email, a reset link was sent. Check your inbox."
-      : result.mailConfigured
-        ? "If an account exists, a reset was prepared. Email sending hit an error — ask your teacher to set a new password, or try again later."
-        : "If an account exists, a one-time reset was prepared. Email delivery is not configured on this server yet — ask your teacher or admin to set a new password (or generate a reset link from your student page).",
+    resetUrl: result.resetUrl,
+    message,
   };
 }
 
