@@ -237,10 +237,65 @@ body {
   background: var(--accent);
 }
 
-@keyframes landing-fade-in {
+/* —— Marketing: calm teal-ink surface over photographic hero —— */
+.theme-marketing {
+  --background: #e8eeeb;
+  --foreground: #161412;
+  --surface: #ffffff;
+  --muted: #4f5552;
+  --border: #c5cdc8;
+  --accent: #0d5c4d;
+  --accent-2: #0a4a3e;
+  --accent-soft: #d7e6e1;
+  --sand-accent: #0d5c4d;
+  --sand-border: #c5cdc8;
+  --paper: #ffffff;
+  --desk-accent: #0d5c4d;
+  --focus: #0d5c4d;
+  --shadow: 0 1px 2px rgba(22, 20, 18, 0.06);
+  background: #e8eeeb;
+  color: var(--foreground);
+  min-height: 100dvh;
+}
+
+.theme-marketing .chip {
+  background: color-mix(in srgb, var(--desk-accent) 14%, transparent);
+  color: var(--desk-accent);
+}
+
+.landing-nav {
+  color: #f4f7f5;
+}
+
+.landing-nav a,
+.landing-nav button {
+  color: inherit;
+}
+
+.landing-nav .border-border {
+  border-color: rgba(244, 247, 245, 0.35);
+}
+
+.landing-nav .bg-surface\/80 {
+  background: rgba(15, 28, 24, 0.35);
+}
+
+.landing-nav .text-muted {
+  color: rgba(244, 247, 245, 0.72);
+}
+
+.landing-nav .hover\:text-foreground:hover {
+  color: #ffffff;
+}
+
+.landing-nav .hover\:border-sand-accent\/50:hover {
+  border-color: rgba(244, 247, 245, 0.55);
+}
+
+@keyframes landing-rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -248,7 +303,16 @@ body {
   }
 }
 
-@keyframes landing-fade-up {
+@keyframes landing-photo-drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.2%, -0.6%, 0);
+  }
+}
+
+@keyframes landing-secondary-in {
   from {
     opacity: 0;
     transform: translateY(18px);
@@ -259,68 +323,127 @@ body {
   }
 }
 
-.landing-fade-in {
-  animation: landing-fade-in 0.7s ease-out both;
-}
-
-.landing-fade-up {
-  animation: landing-fade-up 0.65s ease-out both;
+.landing-rise {
+  animation: landing-rise 0.75s cubic-bezier(0.22, 0.8, 0.28, 1) both;
 }
 
 .landing-hero {
-  min-height: min(72dvh, 720px);
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+  background: #1a2420;
 }
 
-.desk-cover {
-  transform: perspective(900px) rotateY(0deg);
-  transform-origin: left center;
-  transition: transform 0.72s cubic-bezier(0.22, 0.8, 0.28, 1);
-  backface-visibility: hidden;
+.landing-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
-.desk-cover-open {
-  transform: perspective(900px) rotateY(-108deg);
+.landing-hero-photo {
+  object-fit: cover;
+  object-position: center 42%;
+  animation: landing-photo-drift 22s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-.desk-flap {
-  transform: perspective(900px) rotateY(0deg);
-  transition: transform 0.55s cubic-bezier(0.22, 0.8, 0.28, 1) 0.08s;
+.landing-hero-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 18, 16, 0.42) 0%, rgba(10, 18, 16, 0.28) 38%, rgba(10, 18, 16, 0.78) 100%),
+    linear-gradient(90deg, rgba(10, 18, 16, 0.55) 0%, rgba(10, 18, 16, 0.18) 55%, rgba(10, 18, 16, 0.35) 100%);
+  pointer-events: none;
 }
 
-.desk-flap-open {
-  transform: perspective(900px) rotateY(-72deg);
+.landing-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 6.5rem 1rem 3.5rem;
 }
 
-.gateway-card {
-  background: #1c2129;
-  border: 1px solid #323942;
+@media (min-width: 640px) {
+  .landing-hero-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 4rem;
+  }
 }
 
-.gateway-interactive {
-  transition:
-    transform 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+@media (min-width: 1024px) {
+  .landing-hero-inner {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
-.gateway-interactive:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+.landing-paths {
+  padding-top: 3.5rem;
+  padding-bottom: 2rem;
 }
 
-.gateway-interactive:focus-visible {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 50%, transparent);
+.landing-paths-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .landing-paths-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-paths-inner {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: end;
+    gap: 3rem;
+  }
+}
+
+.landing-secondary-media {
+  margin: 0;
+  overflow: hidden;
+  animation: landing-secondary-in 0.9s cubic-bezier(0.22, 0.8, 0.28, 1) both;
+  animation-delay: 280ms;
+}
+
+.landing-secondary-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .landing-fade-in,
-  .landing-fade-up,
-  .desk-cover,
-  .desk-flap,
-  .gateway-interactive {
+  .landing-rise,
+  .landing-hero-photo,
+  .landing-secondary-media {
     animation: none;
-    transition: none;
+  }
+
+  .landing-rise,
+  .landing-secondary-media {
+    opacity: 1;
+    transform: none;
+  }
+
+  .landing-hero-photo {
+    transform: none;
   }
 }
