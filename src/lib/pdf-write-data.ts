@@ -7,9 +7,12 @@ export type OverlayBox = {
   w: number;
   h: number;
   text: string;
+  /** CSS px at the rendered page scale (Edge-like). Default 14. */
+  fontSize: number;
 };
 
 export type PdfWriteData = {
+  /** Legacy AcroForm field values — kept for old drafts; new write UX ignores these. */
   fields: Record<string, string>;
   overlays: OverlayBox[];
 };
@@ -17,6 +20,8 @@ export type PdfWriteData = {
 export function emptyPdfWriteData(): PdfWriteData {
   return { fields: {}, overlays: [] };
 }
+
+const DEFAULT_FONT = 14;
 
 export function parsePdfWriteData(raw: unknown): PdfWriteData {
   if (!raw || typeof raw !== "object") return emptyPdfWriteData();
@@ -33,6 +38,7 @@ export function parsePdfWriteData(raw: unknown): PdfWriteData {
       if (!item || typeof item !== "object") continue;
       const o = item as Record<string, unknown>;
       if (typeof o.id !== "string") continue;
+      const fontRaw = Number(o.fontSize);
       overlays.push({
         id: o.id,
         page: Number(o.page) || 1,
@@ -41,6 +47,9 @@ export function parsePdfWriteData(raw: unknown): PdfWriteData {
         w: Math.min(1, Math.max(0.05, Number(o.w) || 0.28)),
         h: Math.min(1, Math.max(0.03, Number(o.h) || 0.05)),
         text: typeof o.text === "string" ? o.text : "",
+        fontSize: Number.isFinite(fontRaw)
+          ? Math.min(48, Math.max(8, fontRaw))
+          : DEFAULT_FONT,
       });
     }
   }

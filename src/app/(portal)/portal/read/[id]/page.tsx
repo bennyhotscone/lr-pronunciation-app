@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { allowsPdfWriteMode } from "@/lib/material-kind";
 import { requireRole, studentCanAccessResource } from "@/lib/portal-access";
 import { PdfWorkspaceViewer } from "@/components/portal/PdfWorkspaceViewer";
 
@@ -14,13 +15,16 @@ export default async function PortalPdfReadPage({
   const session = await requireRole("STUDENT");
   const { id } = await params;
   const sp = await searchParams;
-  const mode = sp.mode === "write" ? "write" : "read";
 
   const allowed = await studentCanAccessResource(session.user.id, id);
   if (!allowed) notFound();
 
   const resource = await prisma.resource.findUnique({ where: { id } });
   if (!resource) notFound();
+
+  const writeAllowed = allowsPdfWriteMode(resource.materialKind);
+  const mode =
+    sp.mode === "write" && writeAllowed ? "write" : "read";
 
   const isPdf =
     resource.mimeType === "application/pdf" || /\.pdf$/i.test(resource.filename);
@@ -31,7 +35,7 @@ export default async function PortalPdfReadPage({
           ← Files
         </Link>
         <p className="rounded-xl border border-wood/30 bg-paper px-4 py-3 text-sm text-ink">
-          Read / Write mode is for PDF files. This file is{" "}
+          PDF viewer is for PDF files. This file is{" "}
           <strong>{resource.mimeType || "unknown type"}</strong>.
         </p>
         <a

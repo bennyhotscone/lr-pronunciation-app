@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { allowsPdfWriteMode, materialKindLabel } from "@/lib/material-kind";
 import {
   emptyPdfWriteData,
   type OverlayBox,
@@ -22,6 +23,17 @@ type PopupState = {
 };
 
 type PdfjsModule = typeof import("pdfjs-dist");
+
+type OverlayDom = {
+  wrap: HTMLDivElement;
+  ta: HTMLTextAreaElement;
+  del: HTMLButtonElement;
+  handle: HTMLDivElement;
+};
+
+const DEFAULT_FONT = 14;
+const MIN_FONT = 10;
+const MAX_FONT = 36;
 
 function splitIntoTappableTokens(text: string): { text: string; tappable: boolean }[] {
   const parts: { text: string; tappable: boolean }[] = [];
@@ -54,27 +66,53 @@ export function PdfWorkspaceViewer({
   initialMode?: Mode;
   materialKind?: string | null;
 }) {
+  const writeAllowed = allowsPdfWriteMode(materialKind);
   const containerRef = useRef<HTMLDivElement>(null);
   const writeDataRef = useRef<PdfWriteData>(emptyPdfWriteData());
   const pageMetaRef = useRef<Map<number, { width: number; height: number }>>(new Map());
+  const overlayDomRef = useRef<Map<string, OverlayDom>>(new Map());
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dragRef = useRef<{
+    id: string;
+    kind: "move" | "resize";
+    startX: number;
+    startY: number;
+    orig: OverlayBox;
+  } | null>(null);
 
-  const [mode, setMode] = useState<Mode>(initialMode);
+  const [mode, setMode] = useState<Mode>(
+    writeAllowed && initialMode === "write" ? "write" : "read",
+  );
   const [status, setStatus] = useState<"loading" | "ready" | "empty" | "error">("loading");
   const [message, setMessage] = useState("Loading PDF…");
   const [pageCount, setPageCount] = useState(0);
   const [popup, setPopup] = useState<PopupState | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
   const [writeData, setWriteData] = useState<PdfWriteData>(emptyPdfWriteData());
-  const [placeBox, setPlaceBox] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [submitMsg, setSubmitMsg] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const lang = targetLang;
+  const hasSelectableTextRef = useRef(true);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = useCallback((msg: string) => {
+    setToast(msg);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 4200);
+  }, []);
 
   writeDataRef.current = writeData;
 
+  const modeRef = useRef(mode);
+  const selectedIdRef = useRef(selectedId);
+  modeRef.current = mode;
+  selectedIdRef.current = selectedId;
+
   const scheduleSave = useCallback(
     (next: PdfWriteData) => {
+      if (!writeAllowed) return;
       if (saveTimer.current) clearTimeout(saveTimer.current);
       setSaveState("saving");
       saveTimer.current = setTimeout(async () => {
@@ -91,7 +129,7 @@ export function PdfWorkspaceViewer({
         }
       }, 600);
     },
-    [resourceId],
+    [resourceId, writeAllowed],
   );
 
   const updateWriteData = useCallback(
@@ -138,8 +176,9 @@ export function PdfWorkspaceViewer({
     [lang, resourceId],
   );
 
-  // Load draft once
+  // Load draft once (Exercises/Activities only)
   useEffect(() => {
+    if (!writeAllowed) return;
     let cancelled = false;
     (async () => {
       try {
@@ -156,7 +195,7 @@ export function PdfWorkspaceViewer({
     return () => {
       cancelled = true;
     };
-  }, [resourceId]);
+  }, [resourceId, writeAllowed]);
 
   // Render PDF pages
   useEffect(() => {
@@ -166,6 +205,7 @@ export function PdfWorkspaceViewer({
     async function run() {
       setStatus("loading");
       setMessage("Loading PDF…");
+      overlayDomRef.current.clear();
       try {
         const pdfjs: PdfjsModule = await import("pdfjs-dist");
         pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -221,12 +261,16 @@ export function PdfWorkspaceViewer({
             viewport,
           }).promise;
 
-          // Text layer (tap → translate)
+          // Text layer (tap → translate). Must sit above the canvas and receive
+          // pointer events; write overlay host is pointer-events:none so it does
+          // not swallow taps in read or write mode.
           const textContent = await page.getTextContent();
           const textLayer = document.createElement("div");
           textLayer.className = "pdf-text-layer absolute inset-0 overflow-hidden";
           textLayer.style.width = `${viewport.width}px`;
           textLayer.style.height = `${viewport.height}px`;
+          textLayer.style.zIndex = "2";
+          textLayer.style.pointerEvents = "auto";
 
           for (const item of textContent.items) {
             if (!("str" in item) || !item.str) continue;
@@ -246,6 +290,7 @@ export function PdfWorkspaceViewer({
             span.style.whiteSpace = "pre";
             span.style.color = "transparent";
             span.style.transformOrigin = "0% 0%";
+            span.style.pointerEvents = "auto";
 
             for (const tok of splitIntoTappableTokens(str)) {
               if (!tok.tappable) {
@@ -256,114 +301,115 @@ export function PdfWorkspaceViewer({
               btn.type = "button";
               btn.textContent = tok.text;
               btn.className = "pdf-tap-word";
+              btn.setAttribute("aria-label", `Translate ${tok.text}`);
               btn.style.cssText =
-                "padding:0;margin:0;border:0;background:transparent;color:transparent;cursor:pointer;font:inherit;";
+                "padding:0;margin:0;border:0;background:transparent;color:transparent;cursor:pointer;font:inherit;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
+
+              // Dedupe click vs touchend (mobile often fires both).
+              let lastActivate = 0;
+              const activateWord = (clientX: number, clientY: number) => {
+                const now = Date.now();
+                if (now - lastActivate < 450) return;
+                lastActivate = now;
+                setSelectedId(null);
+                void lookup(tok.text, clientX, clientY);
+              };
+
               btn.addEventListener("click", (ev) => {
                 ev.preventDefault();
                 ev.stopPropagation();
-                void lookup(tok.text, ev.clientX, ev.clientY);
+                activateWord(ev.clientX, ev.clientY);
               });
+              btn.addEventListener(
+                "touchend",
+                (ev) => {
+                  // Prevent delayed ghost click; still activate from the touch.
+                  ev.preventDefault();
+                  ev.stopPropagation();
+                  const t = ev.changedTouches[0];
+                  if (t) activateWord(t.clientX, t.clientY);
+                },
+                { passive: false },
+              );
               span.appendChild(btn);
             }
             textLayer.appendChild(span);
           }
           pageWrap.appendChild(textLayer);
 
-          // AcroForm widgets (write mode fills these via React overlay list too —
-          // also paint HTML inputs for Widget/Tx annotations)
-          const annotations = await page.getAnnotations();
-          const formLayer = document.createElement("div");
-          formLayer.className = "pdf-form-layer absolute inset-0";
-          formLayer.style.width = `${viewport.width}px`;
-          formLayer.style.height = `${viewport.height}px`;
-          formLayer.dataset.page = String(pageNum);
-
-          for (const ann of annotations) {
-            if (ann.subtype !== "Widget") continue;
-            const fieldType = String(ann.fieldType || "");
-            if (fieldType !== "Tx" && fieldType !== "Ch") continue;
-            const fieldName = String(ann.fieldName || ann.id || "");
-            if (!fieldName) continue;
-            const rect = ann.rect as number[] | undefined;
-            if (!rect || rect.length < 4) continue;
-            let viewRect: number[];
-            try {
-              viewRect = viewport.convertToViewportRectangle(rect);
-            } catch {
-              continue;
-            }
-            const left = Math.min(viewRect[0], viewRect[2]);
-            const top = Math.min(viewRect[1], viewRect[3]);
-            const width = Math.abs(viewRect[2] - viewRect[0]);
-            const height = Math.abs(viewRect[3] - viewRect[1]);
-
-            const input = document.createElement("textarea");
-            input.className = "pdf-acro-field";
-            input.dataset.field = fieldName;
-            input.rows = height > 40 ? 3 : 1;
-            input.style.cssText = `position:absolute;left:${left}px;top:${top}px;width:${Math.max(24, width)}px;height:${Math.max(18, height)}px;font-size:12px;padding:2px 4px;border:1px solid #0d5c4d;border-radius:3px;background:rgba(255,255,255,0.92);resize:none;display:none;z-index:5;`;
-            input.value = writeDataRef.current.fields[fieldName] || String(ann.fieldValue || "");
-            input.addEventListener("click", (e) => e.stopPropagation());
-            input.addEventListener("pointerdown", (e) => e.stopPropagation());
-            input.addEventListener("input", () => {
-              const name = fieldName;
-              const val = input.value;
-              updateWriteData((prev) => ({
-                ...prev,
-                fields: { ...prev.fields, [name]: val },
-              }));
-            });
-            formLayer.appendChild(input);
-          }
-          pageWrap.appendChild(formLayer);
-
-          // Overlay host for answer boxes (React-synced via effect below)
+          // Overlay host for text boxes (synced via effect below).
+          // pointer-events:none so empty host never blocks text-layer word taps;
+          // each .pdf-overlay-box re-enables pointer-events for writing.
           const overlayHost = document.createElement("div");
           overlayHost.className = "pdf-overlay-host absolute inset-0";
           overlayHost.dataset.page = String(pageNum);
           overlayHost.style.zIndex = "4";
+          overlayHost.style.pointerEvents = "none";
           pageWrap.appendChild(overlayHost);
 
-          // Click empty space to place box when placeBox mode on
+          // Write mode: tap empty space → new transparent text box
+          // Read/empty: if no selectable text, toast on tap
           pageWrap.addEventListener("click", (ev) => {
-            if (!placeBoxRef.current || modeRef.current !== "write") return;
             const t = ev.target as HTMLElement;
-            if (t.closest(".pdf-tap-word, .pdf-acro-field, .pdf-overlay-box, textarea, button, a")) {
+            if (t.closest(".pdf-tap-word")) return;
+
+            if (!hasSelectableTextRef.current) {
+              showToast("This PDF has no selectable text");
               return;
             }
+
+            if (modeRef.current !== "write") return;
+            if (t.closest(".pdf-overlay-box, textarea, a")) {
+              ev.stopPropagation();
+              return;
+            }
+            // Ignore other chrome buttons; word buttons already returned above.
+            if (t.closest("button") && !t.closest(".pdf-overlay-box")) {
+              return;
+            }
+            ev.stopPropagation();
+            setPopup(null);
             const rect = pageWrap.getBoundingClientRect();
             const x = (ev.clientX - rect.left) / rect.width;
             const y = (ev.clientY - rect.top) / rect.height;
+            const id = newOverlayId();
             const box: OverlayBox = {
-              id: newOverlayId(),
+              id,
               page: pageNum,
-              x: Math.min(0.7, Math.max(0, x)),
-              y: Math.min(0.9, Math.max(0, y)),
-              w: 0.28,
-              h: 0.06,
+              x: Math.min(0.72, Math.max(0, x)),
+              y: Math.min(0.92, Math.max(0, y)),
+              w: 0.26,
+              h: 0.055,
               text: "",
+              fontSize: DEFAULT_FONT,
             };
             updateWriteData((prev) => ({
               ...prev,
               overlays: [...prev.overlays, box],
             }));
-            setPlaceBox(false);
+            setSelectedId(id);
+            requestAnimationFrame(() => {
+              const dom = overlayDomRef.current.get(id);
+              dom?.ta.focus();
+            });
           });
 
           host.appendChild(pageWrap);
         }
 
         if (cancelled) return;
+        hasSelectableTextRef.current = totalChars >= 24;
         if (totalChars < 24) {
           setStatus("empty");
           setMessage(
-            "This looks like a scan-only PDF (little or no selectable text). Tap-translate needs a text PDF. You can still use Write mode answer boxes on the page.",
+            "This PDF has no selectable text. Tap-translate needs a text PDF (not a scan). In Write mode you can still tap empty space to type.",
           );
+          showToast("This PDF has no selectable text");
         } else {
           setStatus("ready");
           setMessage(
-            mode === "write"
-              ? "Tap words to translate · focus a box to type · use “Add answer box” then click the page."
+            modeRef.current === "write"
+              ? "Tap empty space to type · tap a word to translate · tap a box to move, resize, edit, or delete."
               : "Tap a word for a free translation — it also goes on your Target vocabulary list.",
           );
         }
@@ -379,96 +425,267 @@ export function PdfWorkspaceViewer({
     void run();
     return () => {
       cancelled = true;
+      overlayDomRef.current.clear();
       void pdfDoc?.destroy();
+      if (toastTimer.current) clearTimeout(toastTimer.current);
     };
     // Re-render PDF only when resource changes — mode/write overlays synced separately
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resourceId, lookup, updateWriteData]);
+  }, [resourceId, lookup, updateWriteData, showToast]);
 
-  const placeBoxRef = useRef(placeBox);
-  const modeRef = useRef(mode);
-  placeBoxRef.current = placeBox;
-  modeRef.current = mode;
+  // Pointer move/up for drag + resize (document-level)
+  useEffect(() => {
+    const onMove = (ev: PointerEvent) => {
+      const drag = dragRef.current;
+      if (!drag) return;
+      const meta = pageMetaRef.current.get(drag.orig.page);
+      if (!meta) return;
+      const dx = (ev.clientX - drag.startX) / meta.width;
+      const dy = (ev.clientY - drag.startY) / meta.height;
+      if (drag.kind === "move") {
+        const x = Math.min(1 - drag.orig.w, Math.max(0, drag.orig.x + dx));
+        const y = Math.min(1 - drag.orig.h, Math.max(0, drag.orig.y + dy));
+        updateWriteData((prev) => ({
+          ...prev,
+          overlays: prev.overlays.map((o) =>
+            o.id === drag.id ? { ...o, x, y } : o,
+          ),
+        }));
+      } else {
+        const w = Math.min(1 - drag.orig.x, Math.max(0.08, drag.orig.w + dx));
+        const h = Math.min(1 - drag.orig.y, Math.max(0.035, drag.orig.h + dy));
+        updateWriteData((prev) => ({
+          ...prev,
+          overlays: prev.overlays.map((o) =>
+            o.id === drag.id ? { ...o, w, h } : o,
+          ),
+        }));
+      }
+    };
+    const onUp = () => {
+      dragRef.current = null;
+    };
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+    };
+  }, [updateWriteData]);
 
-  // Sync write-mode visibility + overlay DOM
+  // Sync write-mode overlay DOM (create/update/remove without wiping focused text)
   useEffect(() => {
     const host = containerRef.current;
     if (!host) return;
 
-    host.querySelectorAll<HTMLTextAreaElement>(".pdf-acro-field").forEach((el) => {
-      el.style.display = mode === "write" ? "block" : "none";
-      const name = el.dataset.field;
-      if (name && writeData.fields[name] != null && el.value !== writeData.fields[name]) {
-        el.value = writeData.fields[name];
+    const live = overlayDomRef.current;
+    const wanted = new Set(
+      mode === "write" ? writeData.overlays.map((o) => o.id) : [],
+    );
+
+    // Remove deleted / leave write mode
+    for (const [id, dom] of live) {
+      if (!wanted.has(id)) {
+        dom.wrap.remove();
+        live.delete(id);
       }
-    });
+    }
+
+    if (mode !== "write") return;
 
     host.querySelectorAll<HTMLElement>(".pdf-overlay-host").forEach((layer) => {
       const page = Number(layer.dataset.page || "1");
       const meta = pageMetaRef.current.get(page);
-      layer.innerHTML = "";
-      if (mode !== "write" || !meta) return;
+      if (!meta) return;
+      // Keep host click-through so PDF word taps work under write boxes.
+      layer.style.pointerEvents = "none";
 
       for (const box of writeData.overlays.filter((o) => o.page === page)) {
-        const wrap = document.createElement("div");
-        wrap.className = "pdf-overlay-box absolute";
-        wrap.style.left = `${box.x * meta.width}px`;
-        wrap.style.top = `${box.y * meta.height}px`;
-        wrap.style.width = `${box.w * meta.width}px`;
-        wrap.style.minHeight = `${box.h * meta.height}px`;
-        wrap.style.zIndex = "6";
+        let dom = live.get(box.id);
+        if (!dom) {
+          const wrap = document.createElement("div");
+          wrap.className = "pdf-overlay-box absolute";
+          wrap.dataset.overlayId = box.id;
+          wrap.style.zIndex = "6";
+          wrap.style.boxSizing = "border-box";
+          wrap.style.pointerEvents = "auto";
 
-        const ta = document.createElement("textarea");
-        ta.value = box.text;
-        ta.placeholder = "Type answer…";
-        ta.className =
-          "h-full w-full rounded border border-desk-accent bg-white/95 p-1 text-xs text-ink shadow-sm";
-        ta.style.minHeight = `${Math.max(28, box.h * meta.height)}px`;
-        ta.addEventListener("click", (e) => e.stopPropagation());
-        ta.addEventListener("pointerdown", (e) => e.stopPropagation());
-        ta.addEventListener("input", () => {
-          const id = box.id;
-          const text = ta.value;
-          updateWriteData((prev) => ({
-            ...prev,
-            overlays: prev.overlays.map((o) => (o.id === id ? { ...o, text } : o)),
-          }));
-        });
+          const ta = document.createElement("textarea");
+          ta.value = box.text;
+          ta.placeholder = "Type…";
+          ta.spellcheck = true;
+          ta.style.cssText =
+            "display:block;width:100%;height:100%;margin:0;padding:2px 4px;border:0;outline:none;resize:none;background:transparent;color:#1a1a1a;font-family:inherit;line-height:1.25;overflow:auto;";
 
-        const del = document.createElement("button");
-        del.type = "button";
-        del.textContent = "×";
-        del.title = "Remove box";
-        del.className =
-          "absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-ink text-xs text-white";
-        del.addEventListener("click", (e) => {
-          e.stopPropagation();
-          updateWriteData((prev) => ({
-            ...prev,
-            overlays: prev.overlays.filter((o) => o.id !== box.id),
-          }));
-        });
+          const del = document.createElement("button");
+          del.type = "button";
+          del.textContent = "×";
+          del.title = "Delete text box";
+          del.style.cssText =
+            "position:absolute;right:-8px;top:-8px;width:20px;height:20px;border:0;border-radius:999px;background:#1a1a1a;color:#fff;font-size:12px;line-height:1;cursor:pointer;display:none;z-index:2;";
 
-        wrap.appendChild(ta);
-        wrap.appendChild(del);
-        layer.appendChild(wrap);
+          const handle = document.createElement("div");
+          handle.title = "Drag to move · corner to resize";
+          handle.style.cssText =
+            "position:absolute;right:0;bottom:0;width:12px;height:12px;cursor:nwse-resize;background:linear-gradient(135deg,transparent 50%,#0d5c4d 50%);display:none;z-index:2;";
+
+          wrap.appendChild(ta);
+          wrap.appendChild(del);
+          wrap.appendChild(handle);
+          layer.appendChild(wrap);
+
+          wrap.addEventListener("click", (e) => {
+            e.stopPropagation();
+            setPopup(null);
+            setSelectedId(box.id);
+          });
+
+          ta.addEventListener("click", (e) => {
+            e.stopPropagation();
+            setPopup(null);
+            setSelectedId(box.id);
+          });
+          ta.addEventListener("pointerdown", (e) => {
+            e.stopPropagation();
+            setSelectedId(box.id);
+          });
+          ta.addEventListener("focus", () => setSelectedId(box.id));
+          ta.addEventListener("input", () => {
+            const id = box.id;
+            const text = ta.value;
+            updateWriteData((prev) => ({
+              ...prev,
+              overlays: prev.overlays.map((o) => (o.id === id ? { ...o, text } : o)),
+            }));
+          });
+
+          wrap.addEventListener("pointerdown", (e) => {
+            if (e.target === ta || e.target === del || e.target === handle) return;
+            e.preventDefault();
+            e.stopPropagation();
+            setPopup(null);
+            setSelectedId(box.id);
+            const current =
+              writeDataRef.current.overlays.find((o) => o.id === box.id) || box;
+            dragRef.current = {
+              id: box.id,
+              kind: "move",
+              startX: e.clientX,
+              startY: e.clientY,
+              orig: { ...current },
+            };
+          });
+
+          handle.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSelectedId(box.id);
+            const current =
+              writeDataRef.current.overlays.find((o) => o.id === box.id) || box;
+            dragRef.current = {
+              id: box.id,
+              kind: "resize",
+              startX: e.clientX,
+              startY: e.clientY,
+              orig: { ...current },
+            };
+          });
+
+          del.addEventListener("click", (e) => {
+            e.stopPropagation();
+            updateWriteData((prev) => ({
+              ...prev,
+              overlays: prev.overlays.filter((o) => o.id !== box.id),
+            }));
+            setSelectedId((cur) => (cur === box.id ? null : cur));
+          });
+
+          dom = { wrap, ta, del, handle };
+          live.set(box.id, dom);
+        }
+
+        const selected = selectedId === box.id;
+        dom.wrap.style.left = `${box.x * meta.width}px`;
+        dom.wrap.style.top = `${box.y * meta.height}px`;
+        dom.wrap.style.width = `${box.w * meta.width}px`;
+        dom.wrap.style.height = `${box.h * meta.height}px`;
+        dom.wrap.style.border = selected
+          ? "1.5px solid #0d5c4d"
+          : box.text.trim()
+            ? "1px solid transparent"
+            : "1px dashed rgba(13,92,77,0.35)";
+        dom.wrap.style.background = selected
+          ? "rgba(255,255,255,0.12)"
+          : "transparent";
+        dom.wrap.style.cursor = selected ? "move" : "text";
+        dom.ta.style.fontSize = `${box.fontSize || DEFAULT_FONT}px`;
+        dom.ta.style.pointerEvents = "auto";
+        dom.del.style.display = selected ? "flex" : "none";
+        dom.del.style.alignItems = "center";
+        dom.del.style.justifyContent = "center";
+        dom.handle.style.display = selected ? "block" : "none";
+
+        if (document.activeElement !== dom.ta && dom.ta.value !== box.text) {
+          dom.ta.value = box.text;
+        }
       }
     });
-  }, [mode, writeData, updateWriteData]);
+
+    // Focus newly created empty selection
+    if (selectedId) {
+      const dom = live.get(selectedId);
+      if (dom && !dom.ta.value && document.activeElement !== dom.ta) {
+        // only auto-focus if nothing else focused in a box
+        const activeIsBox =
+          document.activeElement instanceof HTMLTextAreaElement &&
+          document.activeElement.closest(".pdf-overlay-box");
+        if (!activeIsBox) dom.ta.focus();
+      }
+    }
+  }, [mode, writeData, selectedId, updateWriteData]);
 
   useEffect(() => {
     if (status !== "ready" && status !== "empty") return;
+    if (!writeAllowed) {
+      setMessage(
+        "Tap a word for a free translation — it also goes on your Target vocabulary list.",
+      );
+      return;
+    }
     setMessage(
       mode === "write"
-        ? "Rule: tap a PDF word = translate (Target vocab). Focus an answer box / form field = type. “Add answer box” then click empty space to place."
+        ? "Tap empty space to type · tap a PDF word to translate · select a box to drag, resize, change size, edit, or delete."
         : "Tap a word for a free translation — it also goes on your Target vocabulary list.",
     );
-  }, [mode, status]);
+  }, [mode, status, writeAllowed]);
+
+  const selectedBox = selectedId
+    ? writeData.overlays.find((o) => o.id === selectedId)
+    : null;
+
+  const bumpFont = (delta: number) => {
+    if (!selectedId) return;
+    updateWriteData((prev) => ({
+      ...prev,
+      overlays: prev.overlays.map((o) =>
+        o.id === selectedId
+          ? {
+              ...o,
+              fontSize: Math.min(
+                MAX_FONT,
+                Math.max(MIN_FONT, (o.fontSize || DEFAULT_FONT) + delta),
+              ),
+            }
+          : o,
+      ),
+    }));
+  };
 
   const submitHomework = () => {
     setSubmitMsg(null);
     startTransition(async () => {
-      // flush pending save
       try {
         await fetch(`/api/portal/resources/${resourceId}/write-draft`, {
           method: "PUT",
@@ -498,7 +715,7 @@ export function PdfWorkspaceViewer({
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
             PDF workspace
-            {materialKind ? ` · ${materialKind === "EXERCISE" ? "Exercise" : "Information"}` : ""}
+            {materialKind ? ` · ${materialKindLabel(materialKind)}` : ""}
           </p>
           <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-ink">
             {title}
@@ -524,43 +741,78 @@ export function PdfWorkspaceViewer({
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="inline-flex rounded-lg border border-wood/30 bg-paper p-0.5">
-          <button
-            type="button"
-            onClick={() => {
-              setMode("read");
-              setPlaceBox(false);
-            }}
-            className={`rounded-md px-3 py-1.5 text-xs font-bold ${
-              mode === "read" ? "bg-desk-accent text-white" : "text-ink hover:bg-white"
-            }`}
-          >
-            Read
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("write")}
-            className={`rounded-md px-3 py-1.5 text-xs font-bold ${
-              mode === "write" ? "bg-desk-accent text-white" : "text-ink hover:bg-white"
-            }`}
-          >
-            Write
-          </button>
-        </div>
-
-        {mode === "write" ? (
-          <>
+        {writeAllowed ? (
+          <div className="inline-flex rounded-lg border border-wood/30 bg-paper p-0.5">
             <button
               type="button"
-              onClick={() => setPlaceBox((v) => !v)}
-              className={`rounded-md px-3 py-1.5 text-xs font-bold ring-1 ${
-                placeBox
-                  ? "bg-[#1f4e46] text-white ring-[#1f4e46]"
-                  : "bg-white text-ink ring-border"
+              onClick={() => {
+                setMode("read");
+                setSelectedId(null);
+              }}
+              className={`rounded-md px-3 py-1.5 text-xs font-bold ${
+                mode === "read" ? "bg-desk-accent text-white" : "text-ink hover:bg-white"
               }`}
             >
-              {placeBox ? "Click page to place…" : "Add answer box"}
+              Read
             </button>
+            <button
+              type="button"
+              onClick={() => setMode("write")}
+              className={`rounded-md px-3 py-1.5 text-xs font-bold ${
+                mode === "write" ? "bg-desk-accent text-white" : "text-ink hover:bg-white"
+              }`}
+            >
+              Write
+            </button>
+          </div>
+        ) : (
+          <p className="rounded-md bg-paper px-3 py-1.5 text-xs font-semibold text-ink/55 ring-1 ring-wood/25">
+            Read only · tap words to translate
+          </p>
+        )}
+
+        {mode === "write" && writeAllowed ? (
+          <>
+            {selectedBox ? (
+              <div className="inline-flex items-center gap-1 rounded-lg border border-wood/30 bg-white px-1.5 py-0.5">
+                <button
+                  type="button"
+                  title="Smaller text"
+                  onClick={() => bumpFont(-2)}
+                  className="rounded px-2 py-1 text-xs font-bold text-ink hover:bg-paper"
+                >
+                  A−
+                </button>
+                <span className="min-w-[2rem] text-center text-[0.7rem] text-ink/50">
+                  {selectedBox.fontSize || DEFAULT_FONT}
+                </span>
+                <button
+                  type="button"
+                  title="Larger text"
+                  onClick={() => bumpFont(2)}
+                  className="rounded px-2 py-1 text-xs font-bold text-ink hover:bg-paper"
+                >
+                  A+
+                </button>
+                <button
+                  type="button"
+                  title="Delete text box"
+                  onClick={() => {
+                    const id = selectedBox.id;
+                    updateWriteData((prev) => ({
+                      ...prev,
+                      overlays: prev.overlays.filter((o) => o.id !== id),
+                    }));
+                    setSelectedId(null);
+                  }}
+                  className="ml-1 rounded px-2 py-1 text-xs font-bold text-danger hover:bg-danger/10"
+                >
+                  Delete
+                </button>
+              </div>
+            ) : (
+              <span className="text-xs text-ink/45">Tap the page to start writing</span>
+            )}
             <span className="text-xs text-ink/45">
               Draft{" "}
               {saveState === "saving"
@@ -618,9 +870,21 @@ export function PdfWorkspaceViewer({
 
       <div
         ref={containerRef}
-        className={`pdf-read-host overflow-x-auto ${placeBox ? "cursor-crosshair" : ""}`}
-        onClick={() => setPopup(null)}
+        className="pdf-read-host overflow-x-auto"
+        onClick={() => {
+          setPopup(null);
+          if (mode === "write") setSelectedId(null);
+        }}
       />
+
+      {toast ? (
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 z-[60] max-w-sm -translate-x-1/2 rounded-xl border border-wood/30 bg-ink px-4 py-2.5 text-center text-sm font-semibold text-white shadow-lg"
+        >
+          {toast}
+        </div>
+      ) : null}
 
       {popup ? (
         <div

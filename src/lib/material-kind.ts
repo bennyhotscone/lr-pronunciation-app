@@ -3,8 +3,8 @@ export const MATERIAL_KINDS = ["INFO", "EXERCISE"] as const;
 export type MaterialKind = (typeof MATERIAL_KINDS)[number];
 
 export const MATERIAL_KIND_LABELS: Record<MaterialKind, string> = {
-  INFO: "Information",
-  EXERCISE: "Exercises & activities",
+  INFO: "Explanations/Notes",
+  EXERCISE: "Exercises/Activities",
 };
 
 export function parseMaterialKind(raw: unknown): MaterialKind {
@@ -20,6 +20,11 @@ export function parseMaterialKind(raw: unknown): MaterialKind {
 export function materialKindLabel(kind: MaterialKind | string | null | undefined): string {
   const k = parseMaterialKind(kind);
   return MATERIAL_KIND_LABELS[k];
+}
+
+/** Write mode (overlay text boxes / homework submit) is only for Exercises/Activities. */
+export function allowsPdfWriteMode(kind: MaterialKind | string | null | undefined): boolean {
+  return parseMaterialKind(kind) === "EXERCISE";
 }
 
 export function groupByMaterialKind<T extends { materialKind?: string | null }>(

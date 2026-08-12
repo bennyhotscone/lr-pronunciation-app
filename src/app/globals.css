@@ -493,7 +493,27 @@ body {
   }
 }
 
-/* PDF workspace: transparent text layer words highlight on hover/focus */
+/* PDF workspace: text layer above canvas; overlay host does not steal taps */
+.pdf-text-layer {
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.pdf-overlay-host {
+  z-index: 4;
+  pointer-events: none;
+}
+
+.pdf-overlay-box {
+  pointer-events: auto;
+}
+
+.pdf-tap-word {
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .pdf-tap-word:hover,
 .pdf-tap-word:focus-visible {
   background: color-mix(in srgb, var(--desk-accent) 28%, transparent) !important;
