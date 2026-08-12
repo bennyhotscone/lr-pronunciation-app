@@ -55,6 +55,18 @@ node scripts/classroom-golden-path.mjs https://lrmastery.guru
 
 Form-POST join + student sees post/lesson/file + teacher sees student.
 
-## Prisma claim (if DB expires)
+## Database (agent-managed)
 
-https://create-db.prisma.io/claim?projectID=proj_xaaigo7rn971kmae9yxdl7tn
+Production uses Prisma Postgres. Temporary `create-db` instances expire after ~24h.
+
+**Do not use the old create-db “Claim your database” browser link** — it loops / misroutes and is not how we keep the site up.
+
+When the DB dies or is near expiry, an agent (or operator) re-provisions without that claim UI:
+
+```bash
+node scripts/provision-prisma-db.mjs --vercel
+```
+
+That creates a fresh DB, updates `.env` / `.env.local`, runs `db push`, reseeds `teacher@lrmastery.guru`, syncs Vercel `DATABASE_URL`, and redeploys.
+
+Optional later: attach a **permanent** free Prisma Postgres via the Vercel marketplace (`vercel integration add prisma/prisma-postgres --plan free`) after accepting marketplace terms once in the Vercel dashboard. That is separate from create-db claim.

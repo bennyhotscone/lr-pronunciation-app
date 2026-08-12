@@ -11,6 +11,8 @@
     "test:watch": "vitest",
     "db:push": "prisma db push",
     "db:seed": "node prisma/seed.mjs",
+    "db:provision": "node scripts/provision-prisma-db.mjs",
+    "db:provision:vercel": "node scripts/provision-prisma-db.mjs --vercel",
     "portal:e2e": "node scripts/portal-http-e2e.mjs",
     "portal:prod-files": "node scripts/portal-prod-files-e2e.mjs",
     "postinstall": "prisma generate"

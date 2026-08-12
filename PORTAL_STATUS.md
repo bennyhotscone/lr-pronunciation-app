@@ -37,6 +37,8 @@ Admin already teaches without a second account.
 - Student My Desk: https://lrmastery.guru/portal
 - Studio (admin): https://lrmastery.guru/english-for-mandarin-speakers/studio
 
-## Claim DB if needed
+## Database
 
-https://create-db.prisma.io/claim?projectID=proj_xaaigo7rn971kmae9yxdl7tn
+Agent-managed Prisma Postgres. **Ignore any create-db “Claim your database” browser link** — it is broken/misleading.
+
+If the DB expires: `node scripts/provision-prisma-db.mjs --vercel` (fresh DB + seed + Vercel sync + prod deploy). Optional permanent DB later via Vercel marketplace Prisma Postgres (free plan), not via claim URLs.

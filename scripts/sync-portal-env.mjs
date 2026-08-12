@@ -33,9 +33,16 @@ function host(url) {
 console.log(".env DATABASE host:", host(env.DATABASE_URL || ""));
 console.log(".env.local DATABASE host:", host(local.DATABASE_URL || ""));
 console.log(".env CLAIM_URL:", env.CLAIM_URL || "(none)");
+console.log(".env DB_EXPIRES_AT:", env.DB_EXPIRES_AT || "(none)");
 
 // Keep Blob + Mandarin secrets from .env.local; refresh DB/Auth from .env
-const keysFromEnv = ["DATABASE_URL", "AUTH_SECRET", "AUTH_TRUST_HOST"];
+const keysFromEnv = [
+  "DATABASE_URL",
+  "AUTH_SECRET",
+  "AUTH_TRUST_HOST",
+  "CLAIM_URL",
+  "DB_EXPIRES_AT",
+];
 let next = localRaw;
 for (const key of keysFromEnv) {
   if (!env[key]) continue;
