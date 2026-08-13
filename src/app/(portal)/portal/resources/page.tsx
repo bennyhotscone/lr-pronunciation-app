@@ -6,6 +6,7 @@ import {
   type StudentFolderItem,
 } from "@/components/portal/StudentFilesBrowser";
 import Link from "next/link";
+import { MOCKUP_UI } from "@/lib/mockup-ui";
 
 export default async function ResourcesPage() {
   const session = await requireRole("STUDENT");
@@ -50,15 +51,25 @@ export default async function ResourcesPage() {
   }));
 
   return (
-    <div>
+    <div className="desk-shell">
+      <div className="mockup-chrome mb-4 overflow-hidden rounded-2xl">
+        <img
+          src={MOCKUP_UI.filesDrive}
+          alt="Files"
+          className="mockup-img max-h-48 w-full object-cover object-top sm:max-h-56"
+          width={1560}
+          height={1960}
+          decoding="async"
+        />
+      </div>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
             Files
           </h1>
           <p className="mt-2 text-muted">
-            Drive-style grid with folders, search, and stars. PDF thumbnails load through the
-            download proxy. Open PDFs in Read / Write mode to build target vocabulary.
+            Drive-style grid with folders, search, and stars. Open PDFs in Read / Write mode to build
+            target vocabulary.
           </p>
         </div>
         <Link href="/portal" className="text-sm font-bold text-desk-accent hover:underline">

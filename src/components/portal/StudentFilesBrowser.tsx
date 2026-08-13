@@ -11,6 +11,7 @@ import {
   studentMoveResource,
   studentToggleStar,
 } from "@/lib/file-library-actions";
+import { MOCKUP_UI } from "@/lib/mockup-ui";
 
 export type StudentFileItem = {
   id: string;
@@ -110,6 +111,17 @@ export function StudentFilesBrowser({
 
   return (
     <div className="space-y-4">
+      <div className="mockup-chrome overflow-hidden rounded-2xl">
+        <img
+          src={MOCKUP_UI.foldersPanel}
+          alt=""
+          className="mockup-img max-h-36 w-full object-cover object-top sm:max-h-44"
+          width={1600}
+          height={900}
+          decoding="async"
+        />
+      </div>
+
       <div className="flex flex-wrap items-center gap-2">
         <input
           type="search"
@@ -194,17 +206,24 @@ export function StudentFilesBrowser({
 
       {!starsOnly && childFolders.length ? (
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {childFolders.map((folder) => (
+          {childFolders.map((folder, idx) => (
             <li key={folder.id}>
               <button
                 type="button"
                 onClick={() => setFolderId(folder.id)}
-                className="flex w-full flex-col gap-2 rounded-lg border border-border bg-[#faf9f6] p-3 text-left hover:border-desk-accent/40"
+                className="mockup-chrome relative flex w-full flex-col overflow-hidden rounded-xl text-left shadow-sm ring-1 ring-black/5 hover:ring-desk-accent/40"
               >
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-[#ebe8e0] text-2xl" aria-hidden>
-                  {"\u{1F4C1}"}
+                <img
+                  src={MOCKUP_UI.folderTiles[idx % MOCKUP_UI.folderTiles.length]}
+                  alt=""
+                  className="mockup-img aspect-[4/3] w-full object-cover"
+                  width={700}
+                  height={525}
+                  decoding="async"
+                />
+                <span className="absolute inset-x-2 bottom-2 rounded-md bg-[#f7f1df]/92 px-2 py-1 text-sm font-semibold text-ink shadow-sm">
+                  {folder.name}
                 </span>
-                <span className="text-sm font-semibold text-ink">{folder.name}</span>
               </button>
               <button
                 type="button"
@@ -236,8 +255,11 @@ export function StudentFilesBrowser({
             const kind = fileKindLabel(file.mimeType, file.filename);
 
             return (
-              <li key={file.id} className="group flex flex-col overflow-hidden rounded-lg border border-border bg-[#faf9f6]">
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#ebe8e0]">
+              <li
+                key={file.id}
+                className="group flex flex-col overflow-hidden rounded-xl border border-[#d8cbb6] bg-[#faf7f0] shadow-sm"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-[#ebe4d6]">
                   <a
                     href={primaryHref}
                     {...(pdf ? {} : { target: "_blank", rel: "noopener noreferrer" })}

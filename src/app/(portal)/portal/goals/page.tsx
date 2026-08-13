@@ -17,7 +17,7 @@ export default async function GoalsPage() {
   const active = goals.filter((g) => g.status === "ACTIVE");
 
   return (
-    <div>
+    <div className="desk-shell">
       <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
         Learning targets
       </h1>
@@ -26,7 +26,7 @@ export default async function GoalsPage() {
         Only your teacher confirms checklist items; you can leave notes.
       </p>
 
-      <section className="desk-panel mt-6 rounded-2xl p-5">
+      <section className="mt-6 rounded-2xl p-2 sm:p-3">
         <LearningPyramid
           goals={active.map((g) => ({
             id: g.id,

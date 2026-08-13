@@ -270,7 +270,7 @@ export default async function MyDeskPage({
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <section className="desk-panel rounded-2xl border-desk-accent/25 p-5 ring-1 ring-desk-accent/20">
+        <section className="rounded-2xl p-2 sm:p-3">
           <LearningPyramid
             compact
             goals={goals.map((g) => ({

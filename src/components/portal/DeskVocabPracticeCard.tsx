@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { generateDailyVocabPractice } from "@/lib/vocab-practice-actions";
 import { VOCAB_PRACTICE_DAILY_CAP } from "@/lib/vocab-practice";
+import { MOCKUP_UI } from "@/lib/mockup-ui";
 
 export type VocabPackSummary = {
   id: string;
@@ -28,47 +29,61 @@ export function DeskVocabPracticeCard({
   const [err, setErr] = useState<string | null>(null);
   const remaining = Math.max(0, VOCAB_PRACTICE_DAILY_CAP - packsToday);
 
+  function generate() {
+    setErr(null);
+    startTransition(async () => {
+      const res = await generateDailyVocabPractice();
+      if (res && "error" in res && res.error) {
+        setErr(res.error);
+        return;
+      }
+      if (res && "id" in res && res.id) {
+        router.push(`/portal/vocab-practice/${res.id}`);
+        router.refresh();
+      }
+    });
+  }
+
   return (
-    <section className="desk-panel rounded-2xl p-5">
-      <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
-        Generative practice
-      </p>
-      <h2 className="mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
-        Daily vocab story
-      </h2>
-      <p className="mt-1 text-sm text-ink/55">
-        One short story from your target vocabulary, plus comprehension and word activities you can
-        finish in the browser. Separate from Guided Story homework.
-      </p>
-      <p className="mt-2 text-xs text-muted">
-        {remaining} of {VOCAB_PRACTICE_DAILY_CAP} left today
-        {vocabCount ? ` · ${vocabCount} target words available` : " · add words via PDF Read first"}
-      </p>
+    <section className="space-y-3">
+      <div className="mockup-chrome relative mx-auto max-w-md overflow-hidden rounded-2xl shadow-md">
+        <img
+          src={MOCKUP_UI.dailyVocabCard}
+          alt="Daily vocab story"
+          className="mockup-img w-full"
+          width={1560}
+          height={2700}
+          decoding="async"
+        />
+        <div className="pointer-events-none absolute inset-x-[8%] top-[8%] rounded-lg bg-[#f7f3e8]/85 px-3 py-2 text-center shadow-sm">
+          <p className="text-[0.65rem] font-bold uppercase tracking-wide text-desk-accent">
+            Generative practice
+          </p>
+          <p className="text-xs text-ink/70">
+            {remaining} of {VOCAB_PRACTICE_DAILY_CAP} left today
+            {vocabCount ? ` · ${vocabCount} target words` : " · add words via PDF Read first"}
+          </p>
+        </div>
+        <button
+          type="button"
+          disabled={pending || remaining <= 0}
+          onClick={generate}
+          className="absolute bottom-[14%] left-[10%] right-[10%] h-[11%] overflow-hidden rounded-xl disabled:opacity-50"
+          aria-label={pending ? "Generating" : remaining > 0 ? "Make my story" : "Daily limit reached"}
+        >
+          <span
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${MOCKUP_UI.makeStoryBtn})` }}
+            aria-hidden
+          />
+          <span className="relative z-[1] flex h-full items-center justify-center px-3 font-[family-name:var(--font-display)] text-lg font-bold text-white drop-shadow">
+            {pending ? "Generating…" : remaining > 0 ? "Make my story" : "Daily limit reached"}
+          </span>
+        </button>
+      </div>
+      {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
 
-      <button
-        type="button"
-        disabled={pending || remaining <= 0}
-        className="btn-desk mt-4 rounded-xl px-4 py-2.5 text-sm font-bold disabled:opacity-50"
-        onClick={() => {
-          setErr(null);
-          startTransition(async () => {
-            const res = await generateDailyVocabPractice();
-            if (res && "error" in res && res.error) {
-              setErr(res.error);
-              return;
-            }
-            if (res && "id" in res && res.id) {
-              router.push(`/portal/vocab-practice/${res.id}`);
-              router.refresh();
-            }
-          });
-        }}
-      >
-        {pending ? "Generating…" : remaining > 0 ? "Generate practice pack" : "Daily limit reached"}
-      </button>
-      {err ? <p className="mt-2 text-sm font-semibold text-danger">{err}</p> : null}
-
-      <ul className="mt-4 space-y-2 text-sm">
+      <ul className="space-y-2 text-sm">
         {recentPacks.map((p) => (
           <li key={p.id}>
             <Link
@@ -84,10 +99,13 @@ export function DeskVocabPracticeCard({
             </p>
           </li>
         ))}
-        {!recentPacks.length ? (
-          <li className="text-ink/45">No practice packs yet.</li>
-        ) : null}
+        {!recentPacks.length ? <li className="text-ink/45">No practice packs yet.</li> : null}
       </ul>
+      <p className="text-xs text-ink/50">
+        <Link href="/portal/stories/open" className="font-semibold text-desk-accent hover:underline">
+          Guided Story Writer →
+        </Link>
+      </p>
     </section>
   );
 }

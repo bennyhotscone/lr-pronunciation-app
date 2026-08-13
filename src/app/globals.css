@@ -605,3 +605,57 @@ body {
 .pdf-overlay-toolbar button:hover {
   background: rgba(13, 92, 77, 0.12) !important;
 }
+
+/* —— Mockup image chrome (approved mockup slices) —— */
+.mockup-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  image-rendering: auto;
+}
+.mockup-chrome {
+  isolation: isolate;
+}
+.theme-desk .desk-shell {
+  border: none;
+  border-radius: 1.5rem;
+  padding: 1.25rem 1rem 1.75rem;
+  background-color: transparent;
+  background-image:
+    linear-gradient(180deg, rgba(255, 248, 235, 0.72), rgba(255, 248, 235, 0.55)),
+    var(--desk-plate-image);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  box-shadow: 0 10px 36px rgba(40, 30, 18, 0.18);
+}
+.theme-desk[data-desk-theme="slate"] {
+  --desk-plate-image: url("/mockup-ui/desk-plate-slate.png");
+}
+.theme-desk[data-desk-theme="warm"] {
+  --desk-plate-image: url("/mockup-ui/desk-plate-warm.png");
+}
+.theme-desk[data-desk-theme="classic"] {
+  --desk-plate-image: url("/mockup-ui/desk-plate-classic.png");
+}
+.theme-desk[data-desk-theme="studio"] {
+  --desk-plate-image: url("/mockup-ui/desk-plate-trapper.png");
+}
+.theme-desk {
+  --desk-plate-image: url("/mockup-ui/desk-plate-classic.png");
+  background-image:
+    linear-gradient(180deg, rgba(243, 236, 220, 0.55), rgba(220, 200, 170, 0.35)),
+    url("/mockup-ui/texture-wood-desk.png");
+  background-size: auto, 100% auto;
+  background-position: center, bottom;
+  background-repeat: no-repeat, repeat;
+}
+.theme-desk .desk-panel {
+  background: rgba(255, 252, 245, 0.88);
+  border: 1px solid rgba(90, 70, 40, 0.14);
+  backdrop-filter: blur(2px);
+}
+.theme-desk[data-desk-theme="classic"] .desk-shell::before {
+  display: none;
+}
