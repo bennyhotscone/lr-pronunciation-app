@@ -15,7 +15,6 @@ import {
 import { TagExplorePanel } from "@/components/classroom/TagExplorePanel";
 import { DeskVocabRail } from "@/components/portal/DeskVocabRail";
 import { FreeStoryPracticeCard } from "@/components/story/FreeStoryPracticeCard";
-import { LearningPyramid } from "@/components/portal/LearningPyramid";
 import { DeskVocabPracticeCard } from "@/components/portal/DeskVocabPracticeCard";
 import { compareVocabEntries } from "@/lib/vocab-sort";
 import { buildFreeLessonSummary } from "@/lib/lesson-summary";
@@ -72,7 +71,7 @@ export default async function MyDeskPage({
     ? (sp.tab as OrganiserTab)
     : "stream";
 
-  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, goalsRaw, vocabRaw, classTags, storyAttempts, vocabPacks, packsToday] =
+  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, vocabRaw, classTags, storyAttempts, vocabPacks, packsToday] =
     await Promise.all([
       classId
         ? prisma.class.findFirst({ where: { id: classId, archivedAt: null } })
@@ -127,11 +126,6 @@ export default async function MyDeskPage({
           storyAssignment: { select: { id: true } },
         },
       }),
-      prisma.goal.findMany({
-        where: { studentId, status: "ACTIVE" },
-        include: { checklistItems: { orderBy: { sortOrder: "asc" } } },
-        orderBy: { updatedAt: "desc" },
-      }),
       prisma.vocabEntry.findMany({
         where: { studentId },
       }),
@@ -176,13 +170,6 @@ export default async function MyDeskPage({
     ]);
 
   const vocabEntries = [...vocabRaw].sort(compareVocabEntries);
-
-  const goals = [...goalsRaw].sort((a, b) => {
-    const aTeach = a.source === "STUDENT_HELP" ? 1 : 0;
-    const bTeach = b.source === "STUDENT_HELP" ? 1 : 0;
-    if (aTeach !== bTeach) return aTeach - bTeach;
-    return b.updatedAt.getTime() - a.updatedAt.getTime();
-  });
 
   const posts: StreamPost[] = postsRaw.map((p) => ({
     id: p.id,
@@ -265,22 +252,7 @@ export default async function MyDeskPage({
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <section>
-          <LearningPyramid
-            compact
-            goals={goals.map((g) => ({
-              id: g.id,
-              title: g.title,
-              description: g.description,
-              progressPct: g.progressPct,
-              source: g.source,
-              pyramidTier: g.pyramidTier,
-              checklistItems: g.checklistItems,
-            }))}
-          />
-        </section>
-
+      <div className="mt-8">
         <DeskVocabPracticeCard
           packsToday={packsToday}
           vocabCount={vocabEntries.length}
@@ -459,7 +431,7 @@ export default async function MyDeskPage({
             Homework
           </h2>
           <p className="mt-1 text-xs text-ink/50">
-            Homework should line up with the learning targets at the top of your desk.
+            Homework from your teacher — open Guided Story items when they appear.
           </p>
           <ul className="mt-3 space-y-2 text-sm">
             {homework.map((h) => (
