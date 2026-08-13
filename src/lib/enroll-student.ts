@@ -13,9 +13,15 @@ export async function enrollStudentWithInviteCode(
     return { error: "Enter a valid invite code." as const };
   }
 
-  const klass = await prisma.class.findFirst({
+  // Exact match first (codes stored uppercase). Fallback insensitive for mixed-case rows.
+  let klass = await prisma.class.findFirst({
     where: { inviteCode: code, archivedAt: null },
   });
+  if (!klass) {
+    klass = await prisma.class.findFirst({
+      where: { inviteCode: { equals: code, mode: "insensitive" }, archivedAt: null },
+    });
+  }
   if (!klass) {
     return {
       error: "No classroom found for that code. Check it with your teacher." as const,

@@ -1,102 +1,73 @@
 import { prisma } from "@/lib/db";
 import { getActiveClassIdsForStudent, requireRole } from "@/lib/portal-access";
 import {
-  portalResourceDownloadHref,
-  portalResourceReadHref,
-} from "@/lib/portal-files";
-import { materialKindLabel } from "@/lib/material-kind";
+  StudentFilesBrowser,
+  type StudentFileItem,
+  type StudentFolderItem,
+} from "@/components/portal/StudentFilesBrowser";
 import Link from "next/link";
-
-function isPdf(mime: string | null | undefined, filename: string) {
-  return mime === "application/pdf" || /\.pdf$/i.test(filename);
-}
 
 export default async function ResourcesPage() {
   const session = await requireRole("STUDENT");
-  const classIds = await getActiveClassIdsForStudent(session.user.id);
-  const files = await prisma.resource.findMany({
-    where: {
-      OR: [
-        { studentId: session.user.id },
-        ...(classIds.length ? [{ classId: { in: classIds } }] : []),
-      ],
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const studentId = session.user.id;
+  const classIds = await getActiveClassIdsForStudent(studentId);
+
+  const [files, folders, stars] = await Promise.all([
+    prisma.resource.findMany({
+      where: {
+        OR: [
+          { studentId },
+          ...(classIds.length ? [{ classId: { in: classIds } }] : []),
+        ],
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.resourceFolder.findMany({
+      where: { ownerId: studentId },
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+    }),
+    prisma.resourceStar.findMany({
+      where: { studentId },
+      select: { resourceId: true },
+    }),
+  ]);
+
+  const starred = new Set(stars.map((s) => s.resourceId));
+  const fileItems: StudentFileItem[] = files.map((f) => ({
+    id: f.id,
+    title: f.title,
+    filename: f.filename,
+    mimeType: f.mimeType,
+    materialKind: f.materialKind,
+    tags: f.tags || [],
+    folderId: f.folderId,
+    starred: starred.has(f.id),
+  }));
+  const folderItems: StudentFolderItem[] = folders.map((f) => ({
+    id: f.id,
+    name: f.name,
+    parentId: f.parentId,
+  }));
 
   return (
     <div>
-      <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">Files & resources</h1>
-      <p className="mt-2 text-muted">
-        Downloads from your classes. PDFs open in Read / Write mode (tap words to build Target
-        vocabulary).
-      </p>
-      <ul className="mt-6 space-y-3">
-        {files.map((f) => (
-          <li key={f.id} className="card flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4">
-            <div>
-              {isPdf(f.mimeType, f.filename) ? (
-                <Link
-                  href={portalResourceReadHref(
-                    f.id,
-                    f.materialKind === "EXERCISE" ? "write" : "read",
-                  )}
-                  className="font-semibold underline-offset-2 hover:underline"
-                >
-                  {f.title}
-                </Link>
-              ) : (
-                <a
-                  href={portalResourceDownloadHref(f.id)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold underline-offset-2 hover:underline"
-                >
-                  {f.title}
-                </a>
-              )}
-              <p className="text-xs text-muted">
-                {f.filename}
-                {" · "}
-                {materialKindLabel(f.materialKind)}
-                {f.studentId && !f.classId ? " · Just for you" : ""}
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {isPdf(f.mimeType, f.filename) ? (
-                <>
-                  <Link
-                    href={portalResourceReadHref(f.id, "read")}
-                    className="btn-secondary rounded-xl px-3 py-2 text-xs font-bold"
-                  >
-                    Read
-                  </Link>
-                  <Link
-                    href={portalResourceReadHref(f.id, "write")}
-                    className={`rounded-xl px-3 py-2 text-xs font-bold ${
-                      f.materialKind === "EXERCISE"
-                        ? "btn-primary"
-                        : "btn-secondary"
-                    }`}
-                  >
-                    {f.materialKind === "EXERCISE" ? "Open in write mode" : "Write"}
-                  </Link>
-                </>
-              ) : (
-                <a
-                  href={portalResourceDownloadHref(f.id)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary rounded-xl px-3 py-2 text-xs font-bold"
-                >
-                  Open
-                </a>
-              )}
-            </div>
-          </li>
-        ))}
-        {!files.length ? <li className="text-sm text-muted">No files yet.</li> : null}
-      </ul>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
+            Files
+          </h1>
+          <p className="mt-2 text-muted">
+            Drive-style grid with folders, search, and stars. PDF thumbnails load through the
+            download proxy. Open PDFs in Read / Write mode to build target vocabulary.
+          </p>
+        </div>
+        <Link href="/portal" className="text-sm font-bold text-desk-accent hover:underline">
+          ← My Desk
+        </Link>
+      </div>
+      <div className="mt-6">
+        <StudentFilesBrowser files={fileItems} folders={folderItems} />
+      </div>
     </div>
   );
 }

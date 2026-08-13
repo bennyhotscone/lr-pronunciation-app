@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import { teacherUploadClassFile } from "@/lib/classroom-actions";
 import { TagPicker } from "@/components/classroom/TagPicker";
 import { MaterialKindPicker } from "@/components/classroom/MaterialKindPicker";
+import { PdfPagePicker } from "@/components/classroom/PdfPagePicker";
+import { isPdfFile } from "@/lib/pdf-file";
 
 export function ClassFileUpload({
   classId,
@@ -15,18 +17,26 @@ export function ClassFileUpload({
   const [title, setTitle] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [pageSelectionOk, setPageSelectionOk] = useState(true);
 
   return (
     <form
       className="space-y-3"
       action={(fd) => {
         setMsg(null);
+        if (pdfFile && !pageSelectionOk) {
+          setMsg("Select at least one PDF page to upload.");
+          return;
+        }
         startTransition(async () => {
           const res = await teacherUploadClassFile(fd);
           if (res?.error) setMsg(res.error);
           else {
             setMsg("Uploaded.");
             setTitle("");
+            setPdfFile(null);
+            setPageSelectionOk(true);
           }
         });
       }}
@@ -40,9 +50,38 @@ export function ClassFileUpload({
         className="w-full rounded border border-border bg-background px-3 py-2 text-sm"
       />
       <MaterialKindPicker defaultValue="INFO" idPrefix="class-file-upload" />
-      <input name="file" type="file" required className="w-full text-sm" />
+      <input
+        name="file"
+        type="file"
+        required
+        className="w-full text-sm"
+        onChange={(e) => {
+          const f = e.target.files?.[0] ?? null;
+          if (f && isPdfFile(f)) {
+            setPdfFile(f);
+            setPageSelectionOk(true);
+          } else {
+            setPdfFile(null);
+            setPageSelectionOk(true);
+          }
+        }}
+      />
+      <PdfPagePicker
+        file={pdfFile}
+        onChange={(sel) => {
+          if (!sel) {
+            setPageSelectionOk(true);
+            return;
+          }
+          setPageSelectionOk(sel.pages.length > 0);
+        }}
+      />
       <TagPicker classId={classId} knownTags={knownTags} title={title} body="" />
-      <button type="submit" disabled={pending} className="btn-primary rounded px-3 py-2 text-sm font-bold disabled:opacity-50">
+      <button
+        type="submit"
+        disabled={pending || (Boolean(pdfFile) && !pageSelectionOk)}
+        className="btn-primary rounded px-3 py-2 text-sm font-bold disabled:opacity-50"
+      >
         Upload to classroom
       </button>
       {msg ? <p className="text-sm text-success">{msg}</p> : null}

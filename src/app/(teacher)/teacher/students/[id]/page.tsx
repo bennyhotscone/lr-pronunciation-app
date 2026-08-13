@@ -7,6 +7,9 @@ import { StudentPasswordTools } from "@/components/portal/StudentPasswordTools";
 import { TeacherGoalChecklist } from "@/components/portal/TeacherGoalChecklist";
 import { getAvatar } from "@/lib/avatars";
 import { TeacherPdfSubmissions } from "@/components/portal/TeacherPdfSubmissions";
+import { GuidedStoryAssignForm } from "@/components/story/GuidedStoryAssignForm";
+import { TeacherMoneyAward } from "@/components/portal/TeacherMoneyAward";
+import { getOrCreateWalletBalance } from "@/lib/class-money-actions";
 
 export default async function TeacherStudentPage({
   params,
@@ -36,6 +39,7 @@ export default async function TeacherStudentPage({
   const label =
     student.profile?.preferredName || student.profile?.fullName || student.email;
   const avatar = getAvatar(student.profile?.avatarId);
+  const moneyBalance = await getOrCreateWalletBalance(student.id);
 
   return (
     <div>
@@ -98,6 +102,12 @@ export default async function TeacherStudentPage({
       </section>
 
       <TeacherPdfSubmissions studentId={student.id} />
+      <TeacherMoneyAward
+        studentId={student.id}
+        studentLabel={label}
+        balance={moneyBalance}
+      />
+      <GuidedStoryAssignForm studentId={student.id} />
       <StudentPasswordTools studentId={student.id} />
       <StudentAssignTools studentId={student.id} studentLabel={label} />
     </div>

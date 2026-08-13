@@ -586,12 +586,14 @@ export async function teacherUploadResource(formData: FormData) {
   if (classId) await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
 
   try {
+    const { maybeTrimPdfUpload } = await import("@/lib/pdf-trim");
+    const trimmed = await maybeTrimPdfUpload(file, formData.get("selectedPages"));
     const scope = classId || studentId!;
-    const uploaded = await uploadPortalFile({ file, scope });
+    const uploaded = await uploadPortalFile({ file: trimmed.file, scope });
 
     await prisma.resource.create({
       data: {
-        title,
+        title: title === file.name ? uploaded.filename : title,
         description: description || null,
         filename: uploaded.filename,
         blobPath: uploaded.blobPath,
@@ -642,6 +644,9 @@ export async function updateStudentProfile(formData: FormData) {
   const avatarId = String(formData.get("avatarId") || "fox");
   const targetLangRaw = String(formData.get("targetLang") || "zh-CN").trim();
   const targetLang = ALLOWED_TARGET_LANGS.has(targetLangRaw) ? targetLangRaw : "zh-CN";
+  const deskThemeRaw = String(formData.get("deskTheme") || "slate").trim();
+  const deskTheme =
+    deskThemeRaw === "warm" || deskThemeRaw === "classic" ? deskThemeRaw : "slate";
   if (!preferredName) return { error: "Preferred name is required." };
   if (!isValidAvatarId(avatarId)) return { error: "Invalid avatar." };
 
@@ -652,13 +657,14 @@ export async function updateStudentProfile(formData: FormData) {
       preferredName,
       avatarId,
       targetLang,
+      deskTheme,
     },
-    update: { preferredName, avatarId, targetLang },
+    update: { preferredName, avatarId, targetLang, deskTheme },
   });
 
   revalidatePath("/portal");
   revalidatePath("/portal/profile");
-  return { ok: true as const, preferredName, avatarId, targetLang };
+  return { ok: true as const, preferredName, avatarId, targetLang, deskTheme };
 }
 
 export async function saveDiaryEntry(formData: FormData) {
@@ -749,6 +755,8 @@ export async function teacherAddGoal(formData: FormData) {
   const studentId = String(formData.get("studentId") || "");
   const title = String(formData.get("title") || "").trim();
   const description = String(formData.get("description") || "").trim();
+  const tierRaw = Number.parseInt(String(formData.get("pyramidTier") || "2"), 10);
+  const pyramidTier = tierRaw === 1 || tierRaw === 3 ? tierRaw : 2;
   const checklistRaw = String(formData.get("checklistItems") || "");
   const checklistTitles = checklistRaw
     .split(/\r?\n/)
@@ -768,6 +776,7 @@ export async function teacherAddGoal(formData: FormData) {
       studentId,
       title,
       description: description || null,
+      pyramidTier,
       checklistItems: checklistTitles.length
         ? {
             create: checklistTitles.map((itemTitle, index) => ({
@@ -780,6 +789,7 @@ export async function teacherAddGoal(formData: FormData) {
   });
   revalidatePath(`/teacher/students/${studentId}`);
   revalidatePath("/portal/goals");
+  revalidatePath("/portal");
   return { ok: true as const };
 }
 
@@ -939,6 +949,7 @@ export async function studentAddTopicHelpGoal(formData: FormData) {
       description,
       source: "STUDENT_HELP",
       topicTag: topic,
+      pyramidTier: 1,
       checklistItems: {
         create: steps.map((itemTitle, index) => ({
           title: itemTitle,

@@ -85,6 +85,14 @@ model User {
   pdfWriteDrafts       PdfWriteDraft[]
   pdfSubmissions       PdfSubmission[]      @relation("PdfSubmissionStudent")
   pdfSubmissionsReviewed PdfSubmission[]    @relation("PdfSubmissionReviewer")
+  storyAssignmentsCreated StoryAssignment[] @relation("StoryAssignmentCreator")
+  storyAttempts           StoryAttempt[]    @relation("StoryAttemptStudent")
+  storyFeedbackAuthored   StoryTeacherFeedback[] @relation("StoryFeedbackAuthor")
+  resourceFolders         ResourceFolder[]  @relation("ResourceFolderOwner")
+  resourceStars           ResourceStar[]
+  classWallet             ClassWallet?
+  moneyAwardsAuthored     MoneyLedger[]     @relation("MoneyAwardAuthor")
+  vocabPracticePacks      VocabPracticePack[]
 }
 
 model StudentProfile {
@@ -97,6 +105,8 @@ model StudentProfile {
   firstLanguage      String?
   /// BCP-47-ish target language for PDF tap-translate (e.g. zh-CN, ja, th).
   targetLang         String   @default("zh-CN")
+  /// Desk surface theme: slate | warm | classic
+  deskTheme          String   @default("slate")
   courseType         String?
   learningObjectives String?
   createdAt          DateTime @default(now())
@@ -126,6 +136,7 @@ model Class {
   posts           ClassPost[]
   classLessons    ClassLesson[]
   classTags       ClassTag[]
+  storyAssignments StoryAssignment[]
 
   @@index([teacherId, archivedAt])
 }
@@ -189,6 +200,7 @@ model Resource {
   lessonId    String?
   classId     String?
   studentId   String?
+  folderId    String?
   uploadedById String
   createdAt   DateTime @default(now())
 
@@ -196,10 +208,47 @@ model Resource {
   class      Class?  @relation(fields: [classId], references: [id], onDelete: Cascade)
   student    User?   @relation("ResourceStudent", fields: [studentId], references: [id], onDelete: Cascade)
   uploadedBy User    @relation("ResourceUploader", fields: [uploadedById], references: [id])
+  folder     ResourceFolder? @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  stars      ResourceStar[]
 
   @@index([classId, createdAt])
   @@index([studentId, createdAt])
   @@index([lessonId])
+  @@index([folderId])
+}
+
+/// Student-owned Drive-style folders for organizing class/individual files.
+model ResourceFolder {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String
+  classId   String?
+  parentId  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner    User            @relation("ResourceFolderOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  parent   ResourceFolder? @relation("FolderTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children ResourceFolder[] @relation("FolderTree")
+  resources Resource[]
+
+  @@index([ownerId, parentId])
+  @@index([classId])
+}
+
+/// Per-student starred files (Drive-style favorites).
+model ResourceStar {
+  id         String   @id @default(cuid())
+  studentId  String
+  resourceId String
+  createdAt  DateTime @default(now())
+
+  student  User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, resourceId])
+  @@index([studentId, createdAt])
 }
 
 model Homework {
@@ -219,6 +268,7 @@ model Homework {
   class     Class?  @relation(fields: [classId], references: [id], onDelete: Cascade)
   student   User?   @relation("HomeworkStudent", fields: [studentId], references: [id], onDelete: Cascade)
   createdBy User    @relation("HomeworkCreator", fields: [createdById], references: [id])
+  storyAssignment StoryAssignment?
 
   @@index([classId, dueAt])
   @@index([studentId, dueAt])
@@ -238,6 +288,8 @@ model Goal {
   source        String     @default("TEACHER")
   /// Optional topic tag that created a STUDENT_HELP goal.
   topicTag      String?
+  /// Learning pyramid: 1 = base (general), 2 = mid, 3 = tip (specialized).
+  pyramidTier   Int        @default(2)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
@@ -246,6 +298,7 @@ model Goal {
 
   @@index([studentId, status])
   @@index([studentId, source, topicTag])
+  @@index([studentId, pyramidTier])
 }
 
 /// Checklist steps on a student goal. Only teachers/admins can mark items done (accountability).
@@ -536,4 +589,256 @@ model PdfSubmission {
   @@index([classId, submittedAt])
   @@index([studentId, submittedAt])
   @@index([resourceId, submittedAt])
+}
+
+/// Guided Story Writer
+enum StoryAttemptStatus {
+  PLANNING
+  AWAITING_PLAN_APPROVAL
+  DRAFTING
+  REVISING
+  SUBMITTED
+  REVIEWED
+}
+
+enum StoryPlanApproval {
+  NOT_REQUIRED
+  PENDING
+  APPROVED
+  CHANGES_REQUESTED
+}
+
+enum StorySectionKind {
+  BEGINNING
+  MIDDLE
+  CLIMAX
+  ENDING
+}
+
+enum StoryIntegrityKind {
+  PASTE_ATTEMPT
+  PASTE_BLOCKED
+  STEP_ENTERED
+  AUTOSAVE
+  SUBMIT
+  GUIDE_BLOCKED
+}
+
+model StoryAssignment {
+  id            String   @id @default(cuid())
+  homeworkId    String?  @unique
+  classId       String?
+  studentId     String?
+  createdById   String
+  title         String
+  instructions  String
+  dueAt         DateTime?
+  wordTarget    Int      @default(300)
+  wordMin       Int?
+  wordMax       Int?
+  cefrLevel     String?
+  requireCharacter     Boolean @default(true)
+  requireSetting       Boolean @default(true)
+  requireGoal          Boolean @default(true)
+  requireProblem       Boolean @default(true)
+  requireChain         Boolean @default(true)
+  requireComplication  Boolean @default(true)
+  requireClimax        Boolean @default(true)
+  requireResolution    Boolean @default(true)
+  grammarFocus  String[] @default([])
+  vocabList     String[] @default([])
+  vocabMinCount Int?
+  vocabRequireAll Boolean @default(false)
+  planningRequired            Boolean @default(true)
+  storyMapRequired            Boolean @default(true)
+  cannotDraftUntilPlanComplete Boolean @default(true)
+  teacherMustApprovePlan      Boolean @default(false)
+  revisionRequired            Boolean @default(true)
+  restrictLargePaste          Boolean @default(true)
+  trackProcess                Boolean @default(true)
+  logicGrammarChecking        Boolean @default(true)
+  pasteWordThreshold          Int     @default(25)
+  isFreePractice              Boolean @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  homework  Homework? @relation(fields: [homeworkId], references: [id], onDelete: Cascade)
+  class     Class?    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  createdBy User      @relation("StoryAssignmentCreator", fields: [createdById], references: [id])
+  attempts  StoryAttempt[]
+
+  @@index([classId, createdAt])
+  @@index([createdById, createdAt])
+  @@index([isFreePractice, createdAt])
+}
+
+model StoryAttempt {
+  id              String              @id @default(cuid())
+  assignmentId    String
+  studentId       String
+  status          StoryAttemptStatus  @default(PLANNING)
+  planApproval    StoryPlanApproval   @default(NOT_REQUIRED)
+  currentStep     String              @default("ASSIGNMENT")
+  studentTitle    String?
+  studentTopic    String?
+  submittedAt     DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  assignment StoryAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  student    User            @relation("StoryAttemptStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  plan       StoryPlan?
+  sections   StoryDraftSection[]
+  revisions  StoryRevision[]
+  integrity  StoryIntegrityEvent[]
+  feedback   StoryTeacherFeedback?
+
+  @@unique([assignmentId, studentId])
+  @@index([studentId, status, updatedAt])
+  @@index([status, submittedAt])
+}
+
+model StoryPlan {
+  id               String    @id @default(cuid())
+  attemptId        String    @unique
+  characterName    String?
+  characterTraits  String?
+  characterWant    String?
+  settingPlace     String?
+  settingTime      String?
+  settingMood      String?
+  goalType         String?
+  goalText         String?
+  problemType      String?
+  problemText      String?
+  complicationText String?
+  climaxIdea       String?
+  resolutionText   String?
+  mapSnapshot      Json?
+  planComplete     Boolean   @default(false)
+  completedAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  attempt StoryAttempt     @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  events  StoryPlanEvent[]
+}
+
+model StoryPlanEvent {
+  id        String   @id @default(cuid())
+  planId    String
+  sortOrder Int      @default(0)
+  label     String
+  cause     String?
+  effect    String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  plan StoryPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId, sortOrder])
+}
+
+model StoryDraftSection {
+  id        String           @id @default(cuid())
+  attemptId String
+  kind      StorySectionKind
+  body      String           @default("")
+  wordCount Int              @default(0)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  attempt StoryAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, kind])
+  @@index([attemptId])
+}
+
+model StoryRevision {
+  id           String    @id @default(cuid())
+  attemptId    String
+  passKind     String
+  issues       Json      @default("[]")
+  studentNotes String?
+  completed    Boolean   @default(false)
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  attempt StoryAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@index([attemptId, passKind])
+}
+
+model StoryIntegrityEvent {
+  id        String             @id @default(cuid())
+  attemptId String
+  kind      StoryIntegrityKind
+  meta      Json               @default("{}")
+  createdAt DateTime           @default(now())
+
+  attempt StoryAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@index([attemptId, createdAt])
+}
+
+model StoryTeacherFeedback {
+  id          String   @id @default(cuid())
+  attemptId   String   @unique
+  body        String
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  attempt   StoryAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  createdBy User         @relation("StoryFeedbackAuthor", fields: [createdById], references: [id])
+}
+
+/// Class money balance (teacher awards only — no student appeals).
+model ClassWallet {
+  id        String   @id @default(cuid())
+  studentId String   @unique
+  balance   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student User          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  ledger  MoneyLedger[]
+}
+
+model MoneyLedger {
+  id          String   @id @default(cuid())
+  walletId    String
+  amount      Int
+  reason      String
+  awardedById String
+  createdAt   DateTime @default(now())
+
+  wallet    ClassWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  awardedBy User        @relation("MoneyAwardAuthor", fields: [awardedById], references: [id])
+
+  @@index([walletId, createdAt])
+  @@index([awardedById, createdAt])
+}
+
+/// Generative daily vocab practice (separate from Guided Story Writer).
+model VocabPracticePack {
+  id            String    @id @default(cuid())
+  studentId     String
+  title         String
+  story         String
+  vocabUsed     String[]  @default([])
+  /// { comprehension: [...], vocabActivities: [...] }
+  activities    Json      @default("{}")
+  /// Student answers / completion state
+  answers       Json      @default("{}")
+  provider      String?
+  completedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, createdAt])
 }

@@ -61,6 +61,18 @@ export function StudentAssignTools({
             placeholder="What competent looks like for this student"
             className="rounded-xl border border-border bg-white px-3 py-2"
           />
+          <label className="text-xs font-semibold text-muted">
+            Pyramid tier
+            <select
+              name="pyramidTier"
+              defaultValue="2"
+              className="mt-1 w-full rounded-xl border border-border bg-white px-3 py-2 text-sm text-ink"
+            >
+              <option value="1">1 — General foundation (base)</option>
+              <option value="2">2 — Focus area (middle)</option>
+              <option value="3">3 — Specialized target (tip)</option>
+            </select>
+          </label>
           <textarea
             name="checklistItems"
             rows={4}

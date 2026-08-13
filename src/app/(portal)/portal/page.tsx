@@ -14,9 +14,31 @@ import {
 } from "@/components/classroom/ClassroomOrganiser";
 import { TagExplorePanel } from "@/components/classroom/TagExplorePanel";
 import { DeskVocabRail } from "@/components/portal/DeskVocabRail";
+import { FreeStoryPracticeCard } from "@/components/story/FreeStoryPracticeCard";
+import { LearningPyramid } from "@/components/portal/LearningPyramid";
+import { DeskVocabPracticeCard } from "@/components/portal/DeskVocabPracticeCard";
+import { ClassMoneyBadge } from "@/components/portal/ClassMoneyBadge";
 import { compareVocabEntries } from "@/lib/vocab-sort";
 import { buildFreeLessonSummary } from "@/lib/lesson-summary";
 import { normalizeTag } from "@/lib/info-tag-links";
+import { isStoryWizardStep, stepLabel } from "@/lib/story/types";
+import { utcDayBounds } from "@/lib/vocab-practice";
+import { getOrCreateWalletBalance } from "@/lib/class-money-actions";
+
+function storyStatusLabel(status: string): string {
+  switch (status) {
+    case "PLANNING":
+      return "Planning";
+    case "AWAITING_PLAN_APPROVAL":
+      return "Waiting for plan approval";
+    case "DRAFTING":
+      return "Drafting";
+    case "REVISING":
+      return "Revising";
+    default:
+      return status;
+  }
+}
 
 function authorLabel(user: {
   email: string;
@@ -52,7 +74,7 @@ export default async function MyDeskPage({
     ? (sp.tab as OrganiserTab)
     : "stream";
 
-  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, goalsRaw, vocabRaw, classTags] =
+  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, goalsRaw, vocabRaw, classTags, storyAttempts, vocabPacks, packsToday, moneyBalance] =
     await Promise.all([
       classId
         ? prisma.class.findFirst({ where: { id: classId, archivedAt: null } })
@@ -102,7 +124,10 @@ export default async function MyDeskPage({
         },
         orderBy: { dueAt: "asc" },
         take: 6,
-        include: { class: { select: { name: true } } },
+        include: {
+          class: { select: { name: true } },
+          storyAssignment: { select: { id: true } },
+        },
       }),
       prisma.goal.findMany({
         where: { studentId, status: "ACTIVE" },
@@ -119,6 +144,38 @@ export default async function MyDeskPage({
             select: { name: true },
           })
         : Promise.resolve([]),
+      prisma.storyAttempt.findMany({
+        where: {
+          studentId,
+          status: {
+            in: ["PLANNING", "AWAITING_PLAN_APPROVAL", "DRAFTING", "REVISING"],
+          },
+        },
+        include: {
+          assignment: { select: { title: true, isFreePractice: true } },
+        },
+        orderBy: { updatedAt: "desc" },
+        take: 5,
+      }),
+      prisma.vocabPracticePack.findMany({
+        where: { studentId },
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          title: true,
+          createdAt: true,
+          completedAt: true,
+          vocabUsed: true,
+        },
+      }),
+      (() => {
+        const { start, end } = utcDayBounds();
+        return prisma.vocabPracticePack.count({
+          where: { studentId, createdAt: { gte: start, lt: end } },
+        });
+      })(),
+      getOrCreateWalletBalance(studentId),
     ]);
 
   const vocabEntries = [...vocabRaw].sort(compareVocabEntries);
@@ -129,8 +186,6 @@ export default async function MyDeskPage({
     if (aTeach !== bTeach) return aTeach - bTeach;
     return b.updatedAt.getTime() - a.updatedAt.getTime();
   });
-  const focusSkills = goals.filter((g) => g.source !== "STUDENT_HELP");
-  const mySkills = goals.filter((g) => g.source === "STUDENT_HELP");
 
   const posts: StreamPost[] = postsRaw.map((p) => ({
     id: p.id,
@@ -186,199 +241,74 @@ export default async function MyDeskPage({
 
   return (
     <div className="desk-shell">
-      <div className="flex items-center gap-4">
-        <span
-          className="inline-flex h-16 w-16 items-center justify-center rounded-full text-4xl shadow"
-          style={{ background: avatar.bg }}
-          aria-hidden
-        >
-          {avatar.emoji}
-        </span>
-        <div>
-          <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
-            My Desk
-          </h1>
-          <p className="mt-1 text-ink/60">
-            Welcome back, {name}.
-            {klass ? (
-              <>
-                {" "}
-                <span className="text-ink/45">·</span>{" "}
-                <span className="font-semibold text-ink/70">{klass.name}</span>
-              </>
-            ) : null}
-          </p>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <span
+            className="inline-flex h-16 w-16 items-center justify-center rounded-full text-4xl shadow"
+            style={{ background: avatar.bg }}
+            aria-hidden
+          >
+            {avatar.emoji}
+          </span>
+          <div>
+            <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
+              My Desk
+            </h1>
+            <p className="mt-1 text-ink/60">
+              Welcome back, {name}.
+              {klass ? (
+                <>
+                  {" "}
+                  <span className="text-ink/45">·</span>{" "}
+                  <span className="font-semibold text-ink/70">{klass.name}</span>
+                </>
+              ) : null}
+            </p>
+          </div>
         </div>
+        <ClassMoneyBadge balance={moneyBalance} />
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <section className="desk-panel rounded-2xl border-desk-accent/25 p-5 ring-1 ring-desk-accent/20">
-          <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
-                Always on your desk
-              </p>
-              <h2 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-ink">
-                Skills we&apos;re focusing on
-              </h2>
-              <p className="mt-1 text-sm text-ink/60">
-                This is what class and homework are aiming at — competency, not a to-do list.
-              </p>
-            </div>
-            <Link
-              href="/portal/goals"
-              className="text-sm font-bold text-desk-accent underline-offset-2 hover:underline"
-            >
-              Full skills page →
-            </Link>
-          </div>
-
-          {focusSkills.length ? (
-            <div className="mt-4 space-y-4">
-              <p className="text-xs font-bold uppercase tracking-wide text-muted">
-                Teacher focus ({focusSkills.length})
-              </p>
-              <ul className="space-y-4">
-                {focusSkills.map((g) => {
-                  const total = g.checklistItems.length;
-                  const done = g.checklistItems.filter((i) => i.done).length;
-                  return (
-                    <li
-                      key={g.id}
-                      className="rounded-xl border border-desk-accent/25 bg-paper px-4 py-3"
-                    >
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <p className="font-semibold text-ink">{g.title}</p>
-                        <p className="text-xs font-bold text-desk-accent">
-                          {total ? `${done}/${total} checks` : `${g.progressPct}%`}
-                        </p>
-                      </div>
-                      {g.description ? (
-                        <p className="mt-1 text-sm text-ink/55">{g.description}</p>
-                      ) : null}
-                      <div className="progress-bar mt-3">
-                        <span style={{ width: `${g.progressPct}%` }} />
-                      </div>
-                      {total ? (
-                        <ul className="mt-3 space-y-1.5">
-                          {g.checklistItems.map((item) => (
-                            <li
-                              key={item.id}
-                              className="flex items-start gap-2 text-sm text-ink/80"
-                            >
-                              <span
-                                className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
-                                  item.done
-                                    ? "border-desk-accent bg-desk-accent text-paper"
-                                    : "border-wood/40 bg-white text-transparent"
-                                }`}
-                                aria-hidden
-                              >
-                                ✓
-                              </span>
-                              <span className={item.done ? "text-ink/45 line-through" : ""}>
-                                {item.title}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="mt-2 text-xs text-ink/45">
-                          Waiting for competency checks from your teacher.
-                        </p>
-                      )}
-                      <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
-                        Only your teacher can tick these off — they guide class &amp; homework
-                      </p>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ) : (
-            <p className="mt-4 rounded-xl border border-dashed border-wood/30 bg-paper/70 px-4 py-3 text-sm text-ink/60">
-              No teacher focus skills yet. When your teacher sets skills for you, they stay here so
-              you always know what class and homework are building toward.
-            </p>
-          )}
-
-          {mySkills.length ? (
-            <div className="mt-6 space-y-3 border-t border-wood/15 pt-5">
-              <p className="text-xs font-bold uppercase tracking-wide text-muted">
-                Extra help I requested ({mySkills.length})
-              </p>
-              <ul className="space-y-3">
-                {mySkills.map((g) => {
-                  const total = g.checklistItems.length;
-                  const done = g.checklistItems.filter((i) => i.done).length;
-                  return (
-                    <li
-                      key={g.id}
-                      className="rounded-xl border border-wood/20 bg-paper/80 px-4 py-3"
-                    >
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <p className="font-semibold text-ink">{g.title}</p>
-                        <p className="text-xs font-bold text-desk-accent">
-                          {total ? `${done}/${total} checks` : `${g.progressPct}%`}
-                        </p>
-                      </div>
-                      <div className="progress-bar mt-2">
-                        <span style={{ width: `${g.progressPct}%` }} />
-                      </div>
-                      {total ? (
-                        <ul className="mt-2 space-y-1">
-                          {g.checklistItems.slice(0, 4).map((item) => (
-                            <li
-                              key={item.id}
-                              className="flex items-start gap-2 text-sm text-ink/80"
-                            >
-                              <span
-                                className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
-                                  item.done
-                                    ? "border-desk-accent bg-desk-accent text-paper"
-                                    : "border-wood/40 bg-white text-transparent"
-                                }`}
-                                aria-hidden
-                              >
-                                ✓
-                              </span>
-                              <span className={item.done ? "text-ink/45 line-through" : ""}>
-                                {item.title}
-                              </span>
-                            </li>
-                          ))}
-                          {total > 4 ? (
-                            <li className="text-xs text-ink/45">
-                              +{total - 4} more on the{" "}
-                              <Link href="/portal/goals" className="font-semibold text-desk-accent">
-                                Skills page
-                              </Link>
-                            </li>
-                          ) : null}
-                        </ul>
-                      ) : null}
-                      <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
-                        Only your teacher can tick these off
-                      </p>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ) : null}
+          <LearningPyramid
+            compact
+            goals={goals.map((g) => ({
+              id: g.id,
+              title: g.title,
+              description: g.description,
+              progressPct: g.progressPct,
+              source: g.source,
+              pyramidTier: g.pyramidTier,
+              checklistItems: g.checklistItems,
+            }))}
+          />
         </section>
 
-        <DeskVocabRail
-          targetLang={profile?.targetLang || "zh-CN"}
-          entries={vocabEntries.map((e) => ({
-            id: e.id,
-            word: e.word,
-            translation: e.translation,
-            lookupCount: e.lookupCount,
-            frequencyRank: e.frequencyRank,
-            targetLang: e.targetLang,
-          }))}
-        />
+        <div className="space-y-6">
+          <DeskVocabRail
+            targetLang={profile?.targetLang || "zh-CN"}
+            entries={vocabEntries.map((e) => ({
+              id: e.id,
+              word: e.word,
+              translation: e.translation,
+              lookupCount: e.lookupCount,
+              frequencyRank: e.frequencyRank,
+              targetLang: e.targetLang,
+            }))}
+          />
+          <DeskVocabPracticeCard
+            packsToday={packsToday}
+            vocabCount={vocabEntries.length}
+            recentPacks={vocabPacks.map((p) => ({
+              id: p.id,
+              title: p.title,
+              createdAt: p.createdAt.toISOString(),
+              completedAt: p.completedAt?.toISOString() ?? null,
+              vocabUsed: p.vocabUsed,
+            }))}
+          />
+        </div>
       </div>
 
       {classId && klass ? (
@@ -531,12 +461,21 @@ export default async function MyDeskPage({
             Homework
           </h2>
           <p className="mt-1 text-xs text-ink/50">
-            Homework should line up with the skills at the top of your desk.
+            Homework should line up with the learning targets at the top of your desk.
           </p>
           <ul className="mt-3 space-y-2 text-sm">
             {homework.map((h) => (
               <li key={h.id}>
-                <p className="font-semibold text-ink">{h.title}</p>
+                {h.storyAssignment ? (
+                  <Link
+                    href={`/portal/stories/open?homeworkId=${h.id}`}
+                    className="font-semibold text-desk-accent underline-offset-2 hover:underline"
+                  >
+                    Guided Story: {h.title}
+                  </Link>
+                ) : (
+                  <p className="font-semibold text-ink">{h.title}</p>
+                )}
                 <p className="text-xs text-ink/50">
                   {h.class?.name || "Just for you"}
                   {h.dueAt ? ` · due ${h.dueAt.toLocaleDateString()}` : ""}
@@ -546,6 +485,48 @@ export default async function MyDeskPage({
             {!homework.length ? <li className="text-ink/45">No open homework.</li> : null}
           </ul>
         </section>
+
+        <section className="desk-panel rounded-2xl p-5">
+          <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
+            Stories in progress
+          </h2>
+          <p className="mt-1 text-xs text-ink/50">
+            Pick up where you left off — homework stories and free practice.
+          </p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {storyAttempts.map((a) => {
+              const title =
+                a.studentTitle?.trim() ||
+                a.assignment.title ||
+                "Untitled story";
+              const step =
+                a.currentStep && isStoryWizardStep(a.currentStep)
+                  ? stepLabel(a.currentStep)
+                  : null;
+              return (
+                <li key={a.id}>
+                  <Link
+                    href={`/portal/stories/${a.id}`}
+                    className="font-semibold text-desk-accent underline-offset-2 hover:underline"
+                  >
+                    Continue: {title}
+                  </Link>
+                  <p className="text-xs text-ink/50">
+                    {a.assignment.isFreePractice ? "Free practice" : "Guided Story"}
+                    {" · "}
+                    {storyStatusLabel(a.status)}
+                    {step ? ` · ${step}` : ""}
+                  </p>
+                </li>
+              );
+            })}
+            {!storyAttempts.length ? (
+              <li className="text-ink/45">No stories in progress.</li>
+            ) : null}
+          </ul>
+        </section>
+
+        <FreeStoryPracticeCard />
       </div>
     </div>
   );

@@ -14,6 +14,8 @@ import {
   SessionBasketPanel,
 } from "@/components/portal/SessionBasket";
 import { MaterialKindPicker } from "@/components/classroom/MaterialKindPicker";
+import { PdfPagePicker } from "@/components/classroom/PdfPagePicker";
+import { isPdfFile } from "@/lib/pdf-file";
 
 type StudentOption = { id: string; label: string };
 type LessonOption = { id: string; title: string };
@@ -31,6 +33,8 @@ export function ClassTools({
 }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [pageSelectionOk, setPageSelectionOk] = useState(true);
   const enrolled = new Set(enrolledIds);
   const notEnrolled = students.filter((s) => !enrolled.has(s.id));
 
@@ -158,9 +162,15 @@ export function ClassTools({
         <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">Upload file (class)</h2>
         <form
           className="mt-3 grid gap-3"
-          action={(fd) =>
-            run(teacherUploadResource, fd, "File uploaded — students will see it on My Desk.")
-          }
+          action={(fd) => {
+            if (pdfFile && !pageSelectionOk) {
+              setMsg("Select at least one PDF page to upload.");
+              return;
+            }
+            run(teacherUploadResource, fd, "File uploaded — students will see it on My Desk.");
+            setPdfFile(null);
+            setPageSelectionOk(true);
+          }}
         >
           <input type="hidden" name="classId" value={classId} />
           <input
@@ -182,8 +192,32 @@ export function ClassTools({
             type="file"
             required
             className="rounded-xl border border-border bg-background/60 px-3 py-2"
+            onChange={(e) => {
+              const f = e.target.files?.[0] ?? null;
+              if (f && isPdfFile(f)) {
+                setPdfFile(f);
+                setPageSelectionOk(true);
+              } else {
+                setPdfFile(null);
+                setPageSelectionOk(true);
+              }
+            }}
           />
-          <button type="submit" disabled={pending} className="btn-primary rounded-xl px-4 py-2 text-sm font-bold">
+          <PdfPagePicker
+            file={pdfFile}
+            onChange={(sel) => {
+              if (!sel) {
+                setPageSelectionOk(true);
+                return;
+              }
+              setPageSelectionOk(sel.pages.length > 0);
+            }}
+          />
+          <button
+            type="submit"
+            disabled={pending || (Boolean(pdfFile) && !pageSelectionOk)}
+            className="btn-primary rounded-xl px-4 py-2 text-sm font-bold disabled:opacity-50"
+          >
             Upload to class
           </button>
         </form>

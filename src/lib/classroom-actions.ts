@@ -275,58 +275,71 @@ export async function commentOnClassPost(formData: FormData) {
 
 /** Save a classroom Lesson (one session writeup) with optional sub-entries + basket files. */
 export async function teacherSaveClassLesson(formData: FormData) {
-  const session = await requireStaffSession();
-  if (!session) return { error: "Unauthorized" };
+  try {
+    const session = await requireStaffSession();
+    if (!session) return { error: "Unauthorized" };
 
-  const classId = String(formData.get("classId") || "");
-  const dateRaw = String(formData.get("date") || "");
-  const title = String(formData.get("title") || "").trim();
-  const summary = String(formData.get("summary") || "").trim();
-  const tags = parseTags(formData.get("tags"));
-  const subRaw = String(formData.get("subEntries") || "");
-  if (!classId) return { error: "Classroom required." };
-  await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
-  await syncClassTags(classId, tags);
+    const classId = String(formData.get("classId") || "");
+    const dateRaw = String(formData.get("date") || "");
+    const title = String(formData.get("title") || "").trim();
+    const summary = String(formData.get("summary") || "").trim();
+    const tags = parseTags(formData.get("tags"));
+    const subRaw = String(formData.get("subEntries") || "");
+    if (!classId) return { error: "Classroom required." };
 
-  const day = dayStart(dateRaw);
-
-  type Sub = { kind?: string; title: string; body?: string; tags?: string[] };
-  let subs: Sub[] = [];
-  if (subRaw) {
     try {
-      subs = JSON.parse(subRaw) as Sub[];
+      await assertTeacherOwnsClass(session.user.id, classId, session.user.role);
     } catch {
-      subs = [];
+      return { error: "Class not found or access denied." };
     }
-  }
+    await syncClassTags(classId, tags);
 
-  const basketItems = parseBasketItems(formData.get("basketItems")).filter((i) =>
-    i.blobPath?.startsWith("portal-files/"),
-  );
+    const day = dayStart(dateRaw);
 
-  const lesson = await prisma.classLesson.upsert({
-    where: { classId_day: { classId, day } },
-    create: {
-      classId,
-      day,
-      title: title || null,
-      summary: summary || null,
-      tags,
-      createdById: session.user.id,
-    },
-    update: {
-      title: title || null,
-      summary: summary || null,
-      tags,
-    },
-  });
+    type Sub = { kind?: string; title: string; body?: string; tags?: string[] };
+    let subs: Sub[] = [];
+    if (subRaw) {
+      try {
+        subs = JSON.parse(subRaw) as Sub[];
+      } catch {
+        subs = [];
+      }
+    }
+    const cleanedSubs = subs.filter((s) => s.title?.trim());
 
-  await prisma.classLessonSubEntry.deleteMany({ where: { lessonId: lesson.id } });
-  if (subs.length) {
-    await prisma.classLessonSubEntry.createMany({
-      data: subs
-        .filter((s) => s.title?.trim())
-        .map((s, i) => ({
+    // One row per class+day (upsert). Empty saves used to "succeed" while wiping
+    // today's lesson — reject before we touch the DB.
+    if (!title && !summary && cleanedSubs.length === 0) {
+      return {
+        error: "Add a title, summary, or topic before saving.",
+      };
+    }
+
+    const basketItems = parseBasketItems(formData.get("basketItems")).filter((i) =>
+      i.blobPath?.startsWith("portal-files/"),
+    );
+
+    const lesson = await prisma.classLesson.upsert({
+      where: { classId_day: { classId, day } },
+      create: {
+        classId,
+        day,
+        title: title || null,
+        summary: summary || null,
+        tags,
+        createdById: session.user.id,
+      },
+      update: {
+        title: title || null,
+        summary: summary || null,
+        tags,
+      },
+    });
+
+    await prisma.classLessonSubEntry.deleteMany({ where: { lessonId: lesson.id } });
+    if (cleanedSubs.length) {
+      await prisma.classLessonSubEntry.createMany({
+        data: cleanedSubs.map((s, i) => ({
           lessonId: lesson.id,
           kind: s.kind || "NOTE",
           title: s.title.trim(),
@@ -336,46 +349,51 @@ export async function teacherSaveClassLesson(formData: FormData) {
             : [],
           sortOrder: i,
         })),
-    });
-  }
+      });
+    }
 
-  for (const item of basketItems) {
-    if (!item.blobPath?.startsWith("portal-files/")) continue;
-    const materialKind = parseMaterialKind(item.materialKind);
-    const resource = await prisma.resource.create({
-      data: {
-        title: item.filename || "Class file",
-        filename: item.filename || "file",
-        blobPath: item.blobPath,
-        blobUrl: item.blobUrl,
-        mimeType: item.mimeType || "application/octet-stream",
-        sizeBytes: item.sizeBytes ?? null,
-        classId,
-        tags,
-        uploadedById: session.user.id,
-        category: "class-lesson",
-        materialKind,
-      },
-    });
-    await prisma.classLessonAttachment.create({
-      data: {
-        lessonId: lesson.id,
-        filename: item.filename || "file",
-        blobPath: item.blobPath,
-        blobUrl: item.blobUrl,
-        mimeType: item.mimeType || "application/octet-stream",
-        sizeBytes: item.sizeBytes ?? null,
-        resourceId: resource.id,
-        materialKind,
-      },
-    });
-  }
+    for (const item of basketItems) {
+      if (!item.blobPath?.startsWith("portal-files/")) continue;
+      const materialKind = parseMaterialKind(item.materialKind);
+      const resource = await prisma.resource.create({
+        data: {
+          title: item.filename || "Class file",
+          filename: item.filename || "file",
+          blobPath: item.blobPath,
+          blobUrl: item.blobUrl,
+          mimeType: item.mimeType || "application/octet-stream",
+          sizeBytes: item.sizeBytes ?? null,
+          classId,
+          tags,
+          uploadedById: session.user.id,
+          category: "class-lesson",
+          materialKind,
+        },
+      });
+      await prisma.classLessonAttachment.create({
+        data: {
+          lessonId: lesson.id,
+          filename: item.filename || "file",
+          blobPath: item.blobPath,
+          blobUrl: item.blobUrl,
+          mimeType: item.mimeType || "application/octet-stream",
+          sizeBytes: item.sizeBytes ?? null,
+          resourceId: resource.id,
+          materialKind,
+        },
+      });
+    }
 
-  revalidatePath(`/teacher/classes/${classId}`);
-  revalidatePath(`/portal/classrooms/${classId}`);
-  revalidatePath("/portal");
-  revalidatePath("/portal/resources");
-  return { ok: true as const, lessonId: lesson.id };
+    revalidatePath(`/teacher/classes/${classId}`);
+    revalidatePath(`/portal/classrooms/${classId}`);
+    revalidatePath("/portal");
+    revalidatePath("/portal/resources");
+    return { ok: true as const, lessonId: lesson.id, day: day.toISOString() };
+  } catch (err) {
+    return {
+      error: err instanceof Error ? err.message : "Could not save lesson.",
+    };
+  }
 }
 
 export async function teacherRemoveStudentFromClass(formData: FormData) {
@@ -411,8 +429,10 @@ export async function teacherUploadClassFile(formData: FormData) {
   await syncClassTags(classId, tags);
 
   const { uploadPortalFile } = await import("@/lib/portal-files");
+  const { maybeTrimPdfUpload } = await import("@/lib/pdf-trim");
   try {
-    const uploaded = await uploadPortalFile({ file, scope: classId });
+    const trimmed = await maybeTrimPdfUpload(file, formData.get("selectedPages"));
+    const uploaded = await uploadPortalFile({ file: trimmed.file, scope: classId });
     const title = String(formData.get("title") || "").trim() || uploaded.filename;
     await prisma.resource.create({
       data: {

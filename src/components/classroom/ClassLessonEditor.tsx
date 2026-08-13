@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { teacherSaveClassLesson } from "@/lib/classroom-actions";
 import { BasketAttachFields, SessionBasketPanel } from "@/components/portal/SessionBasket";
 import { TagPicker } from "@/components/classroom/TagPicker";
@@ -9,18 +10,81 @@ import { suggestTopicBreakdown } from "@/lib/topic-suggestions";
 
 type Sub = { kind: string; title: string; body: string };
 
+export type ExistingClassLesson = {
+  day: string;
+  title: string | null;
+  summary: string | null;
+  tags?: string[];
+  subEntries: { kind: string; title: string; body: string | null }[];
+};
+
+function localDateInputValue(d = new Date()) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function dayKeyFromIso(iso: string) {
+  return iso.slice(0, 10);
+}
+
+function lessonForDay(
+  lessons: ExistingClassLesson[],
+  dateKey: string,
+): ExistingClassLesson | null {
+  return lessons.find((l) => dayKeyFromIso(l.day) === dateKey) ?? null;
+}
+
+function fromExisting(lesson: ExistingClassLesson | null): {
+  title: string;
+  summary: string;
+  subs: Sub[];
+} {
+  if (!lesson) return { title: "", summary: "", subs: [] };
+  return {
+    title: lesson.title || "",
+    summary: lesson.summary || "",
+    subs: lesson.subEntries.map((s) => ({
+      kind: s.kind || "TOPIC",
+      title: s.title,
+      body: s.body || "",
+    })),
+  };
+}
+
 export function ClassLessonEditor({
   classId,
   knownTags,
+  existingLessons = [],
 }: {
   classId: string;
   knownTags: string[];
+  existingLessons?: ExistingClassLesson[];
 }) {
-  const [subs, setSubs] = useState<Sub[]>([]);
-  const [title, setTitle] = useState("");
-  const [summary, setSummary] = useState("");
+  const router = useRouter();
+  const [date, setDate] = useState(localDateInputValue);
+  const initial = fromExisting(lessonForDay(existingLessons, date));
+  const [subs, setSubs] = useState<Sub[]>(initial.subs);
+  const [title, setTitle] = useState(initial.title);
+  const [summary, setSummary] = useState(initial.summary);
   const [msg, setMsg] = useState<string | null>(null);
+  const [msgIsError, setMsgIsError] = useState(false);
   const [pending, startTransition] = useTransition();
+
+  const editingExisting = Boolean(lessonForDay(existingLessons, date));
+  const lessonFingerprint = useMemo(() => {
+    const lesson = lessonForDay(existingLessons, date);
+    return lesson ? JSON.stringify(lesson) : "";
+  }, [existingLessons, date]);
+
+  // Keep editor in sync when the day changes or server props refresh after save.
+  useEffect(() => {
+    const next = fromExisting(lessonForDay(existingLessons, date));
+    setTitle(next.title);
+    setSummary(next.summary);
+    setSubs(next.subs);
+  }, [date, lessonFingerprint, existingLessons]);
 
   const existingTopicTitles = useMemo(
     () => subs.filter((s) => s.kind === "TOPIC").map((s) => s.title),
@@ -86,8 +150,8 @@ export function ClassLessonEditor({
     <section className="card space-y-4 rounded-xl p-4">
       <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold">Lesson</h2>
       <p className="text-sm text-muted">
-        One Lesson = one session writeup. Type a topic (e.g. “narrative tenses”) and click suggested
-        checkboxes to log what you covered — free, no paid AI.
+        One Lesson = one session writeup for a calendar day. Saving updates that day&apos;s card on
+        the Classroom board below — free, no paid AI.
       </p>
 
       <SessionBasketPanel />
@@ -95,28 +159,51 @@ export function ClassLessonEditor({
       <form
         className="space-y-3"
         action={(fd) => {
+          fd.set("date", date);
           fd.set("subEntries", JSON.stringify(subs));
           setMsg(null);
+          setMsgIsError(false);
           startTransition(async () => {
-            const res = await teacherSaveClassLesson(fd);
-            if (res?.error) setMsg(res.error);
-            else {
-              setMsg("Lesson saved.");
-              setSubs([]);
-              setTitle("");
-              setSummary("");
+            try {
+              const res = await teacherSaveClassLesson(fd);
+              if (res?.error) {
+                setMsgIsError(true);
+                setMsg(res.error);
+                return;
+              }
+              setMsgIsError(false);
+              setMsg(
+                editingExisting
+                  ? "Lesson updated — check the Classroom board below."
+                  : "Lesson saved — check the Classroom board below.",
+              );
+              router.refresh();
+            } catch (err) {
+              setMsgIsError(true);
+              setMsg(err instanceof Error ? err.message : "Could not save lesson.");
             }
           });
         }}
       >
         <input type="hidden" name="classId" value={classId} />
         <BasketAttachFields />
-        <input type="date" name="date" className="rounded border border-border bg-background px-3 py-2" />
+        <input
+          type="date"
+          name="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value || localDateInputValue())}
+          className="rounded border border-border bg-background px-3 py-2"
+        />
+        {editingExisting ? (
+          <p className="text-xs font-semibold text-accent">
+            Editing the existing writeup for this day (one lesson per day).
+          </p>
+        ) : null}
         <input
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Lesson title (optional)"
+          placeholder="Lesson title"
           className="w-full rounded border border-border bg-background px-3 py-2"
         />
         <textarea
@@ -239,10 +326,18 @@ export function ClassLessonEditor({
           </button>
         </div>
 
-        <button type="submit" disabled={pending} className="btn-primary rounded px-4 py-2 text-sm font-bold disabled:opacity-50">
-          Save lesson
+        <button
+          type="submit"
+          disabled={pending}
+          className="btn-primary rounded px-4 py-2 text-sm font-bold disabled:opacity-50"
+        >
+          {pending ? "Saving…" : editingExisting ? "Update lesson" : "Save lesson"}
         </button>
-        {msg ? <p className="text-sm text-success">{msg}</p> : null}
+        {msg ? (
+          <p className={`text-sm font-semibold ${msgIsError ? "text-danger" : "text-success"}`} role="status">
+            {msg}
+          </p>
+        ) : null}
       </form>
     </section>
   );

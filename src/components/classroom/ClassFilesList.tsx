@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { TagFilterBar } from "@/components/classroom/TagPicker";
 import { MaterialKindBadge } from "@/components/classroom/MaterialKindPicker";
+import { FilePreviewThumb } from "@/components/classroom/FilePreviewThumb";
 import {
   groupByMaterialKind,
   parseMaterialKind,
@@ -55,13 +56,13 @@ function FileThumb({ file }: { file: ClassFileItem }) {
         {...(pdf ? {} : { target: "_blank", rel: "noopener noreferrer" })}
         className="relative aspect-[4/3] overflow-hidden bg-[#ebe8e0]"
       >
-        {image ? (
-          // Auth cookie on same origin — download route serves inline images.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+        {image || pdf ? (
+          <FilePreviewThumb
             src={href}
-            alt=""
-            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+            filename={file.filename}
+            mimeType={file.mimeType}
+            className="h-full w-full rounded-none ring-0"
+            imgClassName="h-full w-full object-cover object-top transition duration-300 group-hover:scale-[1.03]"
           />
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-2 px-3 text-center">
@@ -72,7 +73,7 @@ function FileThumb({ file }: { file: ClassFileItem }) {
             >
               {kind}
             </span>
-            <span className="line-clamp-2 text-[0.7rem] leading-snug text-muted">
+            <span className="break-all text-[0.7rem] leading-snug text-muted">
               {file.filename}
             </span>
           </div>
@@ -82,7 +83,7 @@ function FileThumb({ file }: { file: ClassFileItem }) {
         <a
           href={primaryHref}
           {...(pdf ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-          className="line-clamp-2 text-sm font-semibold leading-snug text-ink hover:text-desk-accent"
+          className="break-all text-sm font-semibold leading-snug text-ink hover:text-desk-accent"
         >
           {file.title}
         </a>

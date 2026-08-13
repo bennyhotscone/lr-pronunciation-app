@@ -7,6 +7,16 @@ import type { NextConfig } from "next";
  * workers fail or when browsers warn about missing COOP/COEP.
  */
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Legacy singular path (bookmarks / old screenshots used /teacher/class/:id)
+      {
+        source: "/teacher/class/:id",
+        destination: "/teacher/classes/:id",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

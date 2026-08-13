@@ -30,5 +30,19 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "_hold_story_aside",
+    "src/lib/story",
+    "**/page.tsx.hold",
+    "node_modules",
+    "scripts",
+    "**/_snap_*.ts",
+    "**/*.GOOD.ts",
+    "**/*.GOOD.tsx",
+    "**/*.fixed",
+    "tsc-*.txt",
+    "build-*.txt",
+    "deploy-*.log",
+    "deploy-*.txt"
+  ]
 }

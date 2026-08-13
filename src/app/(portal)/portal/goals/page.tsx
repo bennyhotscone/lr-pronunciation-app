@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { requireRole } from "@/lib/portal-access";
 import { GoalProgressForm } from "@/components/portal/GoalProgressForm";
 import { GoalChecklistReadOnly } from "@/components/portal/GoalChecklistReadOnly";
+import { LearningPyramid } from "@/components/portal/LearningPyramid";
 
 export default async function GoalsPage() {
   const session = await requireRole("STUDENT");
@@ -13,16 +14,36 @@ export default async function GoalsPage() {
     orderBy: { updatedAt: "desc" },
   });
 
+  const active = goals.filter((g) => g.status === "ACTIVE");
+
   return (
     <div>
       <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
-        Skills checklist
+        Learning targets
       </h1>
       <p className="mt-2 text-muted">
-        Competency checks for class and homework. Only your teacher can tick items off — you can
-        leave notes about how it feels.
+        Pyramid view of your goals — general foundation at the base, specialized work at the tip.
+        Only your teacher confirms checklist items; you can leave notes.
       </p>
-      <ul className="mt-6 space-y-4">
+
+      <section className="desk-panel mt-6 rounded-2xl p-5">
+        <LearningPyramid
+          goals={active.map((g) => ({
+            id: g.id,
+            title: g.title,
+            description: g.description,
+            progressPct: g.progressPct,
+            source: g.source,
+            pyramidTier: g.pyramidTier,
+            checklistItems: g.checklistItems,
+          }))}
+        />
+      </section>
+
+      <h2 className="mt-10 font-[family-name:var(--font-display)] text-xl font-semibold">
+        All targets & notes
+      </h2>
+      <ul className="mt-4 space-y-4">
         {goals.map((g) => {
           const selfHelp = g.source === "STUDENT_HELP";
           return (
@@ -36,6 +57,9 @@ export default async function GoalsPage() {
                   }`}
                 >
                   {selfHelp ? "Extra help request" : "Class focus"}
+                </span>
+                <span className="rounded bg-[#f3f2ee] px-2 py-0.5 text-[0.65rem] font-semibold text-muted ring-1 ring-border">
+                  Tier {g.pyramidTier}
                 </span>
                 {g.topicTag ? (
                   <span className="rounded bg-[#f3f2ee] px-2 py-0.5 text-[0.65rem] font-semibold text-muted ring-1 ring-border">
@@ -56,8 +80,8 @@ export default async function GoalsPage() {
         })}
         {!goals.length ? (
           <li className="text-sm text-muted">
-            No skills checklists yet. Ask for more help on a lesson topic, or wait for your
-            teacher to set skills for you.
+            No learning targets yet. Ask for more help on a lesson topic, or wait for your teacher
+            to set targets for you.
           </li>
         ) : null}
       </ul>

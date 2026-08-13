@@ -12,12 +12,13 @@ export default async function ProfilePage() {
     <div>
       <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">Your profile</h1>
       <p className="mt-2 text-muted">
-        Choose a preferred name, avatar, and target language for PDF tap-translate.
+        Choose a preferred name, avatar, desk theme, and target language for PDF tap-translate.
       </p>
       <ProfileEditor
         preferredName={profile?.preferredName || session.user.preferredName || ""}
         avatarId={profile?.avatarId || session.user.avatarId || "fox"}
         targetLang={profile?.targetLang || "zh-CN"}
+        deskTheme={profile?.deskTheme || "slate"}
       />
     </div>
   );

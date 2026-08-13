@@ -13,6 +13,12 @@ import {
 import type { MaterialKind } from "@/lib/material-kind";
 import { parseMaterialKind } from "@/lib/material-kind";
 import { MaterialKindPicker } from "@/components/classroom/MaterialKindPicker";
+import { FilePreviewThumb } from "@/components/classroom/FilePreviewThumb";
+import {
+  PdfPagePicker,
+  type PdfPageSelection,
+} from "@/components/classroom/PdfPagePicker";
+import { isPdfFile } from "@/lib/pdf-file";
 
 export type BasketItem = {
   id: string;
@@ -44,6 +50,10 @@ type BasketContextValue = {
   defaultMaterialKind: MaterialKind;
   setDefaultMaterialKind: (kind: MaterialKind) => void;
   addFiles: (files: FileList | File[]) => Promise<void>;
+  addFileWithPages: (
+    file: File,
+    selectedPages: string,
+  ) => Promise<void>;
   removeItem: (id: string) => void;
   setItemMaterialKind: (id: string, kind: MaterialKind) => void;
   clearBasket: () => void;
@@ -181,6 +191,44 @@ export function SessionBasketProvider({
     [defaultMaterialKind],
   );
 
+  const addFileWithPages = useCallback(
+    async (file: File, selectedPages: string) => {
+      setUploading(true);
+      setError(null);
+      try {
+        const fd = new FormData();
+        fd.set("file", file);
+        fd.set("selectedPages", selectedPages);
+        const res = await fetch("/api/portal/session-basket", {
+          method: "POST",
+          body: fd,
+        });
+        const data = (await res.json().catch(() => ({}))) as {
+          ok?: boolean;
+          error?: string;
+          item?: Omit<BasketItem, "materialKind"> & { materialKind?: string };
+        };
+        if (!res.ok || !data.item) {
+          throw new Error(data.error || "Upload failed");
+        }
+        const item: BasketItem = {
+          ...data.item,
+          materialKind: parseMaterialKind(
+            data.item.materialKind ?? defaultMaterialKind,
+          ),
+        };
+        setItems((prev) => [...prev, item]);
+        setSelectedIds((prev) => new Set(prev).add(item.id));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Upload failed");
+        throw err;
+      } finally {
+        setUploading(false);
+      }
+    },
+    [defaultMaterialKind],
+  );
+
   const removeItem = useCallback((id: string) => {
     setItems((prev) => prev.filter((i) => i.id !== id));
     setSelectedIds((prev) => {
@@ -236,6 +284,7 @@ export function SessionBasketProvider({
     defaultMaterialKind,
     setDefaultMaterialKind,
     addFiles,
+    addFileWithPages,
     removeItem,
     setItemMaterialKind,
     clearBasket,
@@ -267,11 +316,63 @@ export function SessionBasketPanel() {
     defaultMaterialKind,
     setDefaultMaterialKind,
     addFiles,
+    addFileWithPages,
     removeItem,
     setItemMaterialKind,
     clearBasket,
   } = useSessionBasket();
   const [dragOver, setDragOver] = useState(false);
+  const [pdfQueue, setPdfQueue] = useState<File[]>([]);
+  const [pdfSelection, setPdfSelection] = useState<PdfPageSelection | null>(
+    null,
+  );
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  const activePdf = pdfQueue[0] ?? null;
+
+  async function ingestFiles(files: FileList | File[]) {
+    const list = Array.from(files);
+    if (!list.length) return;
+    setLocalError(null);
+    const pdfs: File[] = [];
+    const others: File[] = [];
+    for (const f of list) {
+      if (isPdfFile(f)) pdfs.push(f);
+      else others.push(f);
+    }
+    if (others.length) await addFiles(others);
+    if (pdfs.length) setPdfQueue((prev) => [...prev, ...pdfs]);
+  }
+
+  async function confirmPdfPages() {
+    if (!activePdf) return;
+    if (!pdfSelection || pdfSelection.pages.length === 0) {
+      setLocalError("Select at least one PDF page to upload.");
+      return;
+    }
+    setPdfBusy(true);
+    setLocalError(null);
+    try {
+      const selectedPages =
+        pdfSelection.pages.length === pdfSelection.pageCount
+          ? "all"
+          : JSON.stringify(pdfSelection.pages);
+      await addFileWithPages(activePdf, selectedPages);
+      setPdfQueue((prev) => prev.slice(1));
+      setPdfSelection(null);
+    } catch (err) {
+      setLocalError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setPdfBusy(false);
+    }
+  }
+
+  function skipPdf() {
+    setPdfQueue((prev) => prev.slice(1));
+    setPdfSelection(null);
+    setLocalError(null);
+  }
 
   return (
     <section className="card rounded-2xl border border-sand-border/80 p-5">
@@ -281,8 +382,8 @@ export function SessionBasketPanel() {
             Session basket
           </h2>
           <p className="mt-1 max-w-xl text-sm leading-relaxed text-muted">
-            Drop files here during the session. Choose Information or Exercises &amp;
-            activities for each file before you attach them to a lesson or post.
+            Drop files here during the session. For PDFs, choose which pages to
+            publish (exclude answer keys) before they enter the basket.
           </p>
         </div>
         <label className="inline-flex items-center gap-2 text-sm font-semibold">
@@ -328,11 +429,13 @@ export function SessionBasketPanel() {
             onDrop={(e) => {
               e.preventDefault();
               setDragOver(false);
-              void addFiles(e.dataTransfer.files);
+              void ingestFiles(e.dataTransfer.files);
             }}
           >
             <p className="text-sm font-semibold text-foreground">
-              {uploading ? "Uploading…" : "Drag & drop files into the basket"}
+              {uploading || pdfBusy
+                ? "Uploading…"
+                : "Drag & drop files into the basket"}
             </p>
             <label className="mt-3 inline-flex cursor-pointer text-sm font-bold text-sand-accent underline-offset-2 hover:underline">
               Or browse…
@@ -341,14 +444,55 @@ export function SessionBasketPanel() {
                 multiple
                 className="sr-only"
                 onChange={(e) => {
-                  if (e.target.files) void addFiles(e.target.files);
+                  if (e.target.files) void ingestFiles(e.target.files);
                   e.target.value = "";
                 }}
               />
             </label>
           </div>
 
-          {error ? <p className="mt-2 text-sm text-danger">{error}</p> : null}
+          {activePdf ? (
+            <div className="mt-4 space-y-3 rounded-xl border border-border bg-background/50 p-3">
+              <p className="text-sm font-semibold text-foreground">
+                Choose pages for{" "}
+                <span className="break-all">{activePdf.name}</span>
+                {pdfQueue.length > 1
+                  ? ` (${pdfQueue.length - 1} more PDF${pdfQueue.length > 2 ? "s" : ""} waiting)`
+                  : ""}
+              </p>
+              <PdfPagePicker
+                file={activePdf}
+                onChange={setPdfSelection}
+              />
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  disabled={
+                    pdfBusy ||
+                    uploading ||
+                    !pdfSelection ||
+                    pdfSelection.pages.length === 0
+                  }
+                  onClick={() => void confirmPdfPages()}
+                  className="btn-primary rounded-lg px-3 py-1.5 text-sm font-bold disabled:opacity-50"
+                >
+                  Add to basket
+                </button>
+                <button
+                  type="button"
+                  disabled={pdfBusy || uploading}
+                  onClick={skipPdf}
+                  className="rounded-lg px-3 py-1.5 text-sm font-semibold text-muted underline-offset-2 hover:underline disabled:opacity-50"
+                >
+                  Skip this PDF
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          {error || localError ? (
+            <p className="mt-2 text-sm text-danger">{localError || error}</p>
+          ) : null}
 
           {items.length ? (
             <div className="mt-4">
@@ -373,7 +517,8 @@ export function SessionBasketPanel() {
                         onChange={() => toggleSelect(item.id)}
                         aria-label={`Select ${item.filename}`}
                       />
-                      <span className="min-w-0 flex-1 truncate font-medium">{item.filename}</span>
+                      <FilePreviewThumb src={item.blobUrl} filename={item.filename} mimeType={item.mimeType} className="h-16 w-12" />
+                      <span className="min-w-0 flex-1 break-all text-[0.8125rem] font-medium leading-snug" title={item.filename}>{item.filename}</span>
                     </div>
                     <MaterialKindPicker
                       name={`basket-item-${item.id}`}

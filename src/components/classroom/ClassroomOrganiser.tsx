@@ -17,6 +17,7 @@ import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomS
 import { TopicHelpButton } from "@/components/classroom/TopicHelpButton";
 import { BasketAttachFields } from "@/components/portal/SessionBasket";
 import { MaterialKindBadge } from "@/components/classroom/MaterialKindPicker";
+import { FilePreviewThumb } from "@/components/classroom/FilePreviewThumb";
 import { groupByMaterialKind } from "@/lib/material-kind";
 
 export type OrganiserTab =
@@ -105,18 +106,9 @@ function AttachmentChip({
   const href = hrefOverride || (resourceId ? resourceHref(resourceId) : null);
   const inner = (
     <>
-      <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-[#ebe8e0] ring-1 ring-border">
-        {href && isImageMime(mimeType) ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={href} alt="" className="h-full w-full object-cover" />
-        ) : (
-          <span className="flex h-full items-center justify-center text-[0.65rem] font-bold text-desk-accent">
-            {mimeType === "application/pdf" || /\.pdf$/i.test(filename) ? "PDF" : "FILE"}
-          </span>
-        )}
-      </span>
+      <FilePreviewThumb src={href} filename={filename} mimeType={mimeType} className="h-14 w-11" />
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold text-ink group-hover:text-desk-accent">
+        <span className="block break-all text-sm font-semibold leading-snug text-ink group-hover:text-desk-accent">
           {filename}
         </span>
         {materialKind ? (

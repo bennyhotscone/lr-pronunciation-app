@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { assertTeacherOwnsClass, requireStaff } from "@/lib/portal-access";
 import { ClassroomInvitePanel } from "@/components/classroom/ClassroomInvitePanel";
@@ -18,6 +18,8 @@ import { generateInviteCode } from "@/lib/invite-code";
 import { buildFreeLessonSummary } from "@/lib/lesson-summary";
 import type { StreamLesson, StreamPost } from "@/components/classroom/ClassroomStream";
 import { TeacherPdfSubmissions } from "@/components/portal/TeacherPdfSubmissions";
+import { GuidedStoryAssignForm } from "@/components/story/GuidedStoryAssignForm";
+import { TeacherStoryInbox } from "@/components/story/TeacherStoryInbox";
 
 function authorLabel(user: {
   email: string;
@@ -42,11 +44,21 @@ export default async function TeacherClassroomPage({
     ? (sp.tab as OrganiserTab)
     : "stream";
 
+  // Stale class IDs (e.g. after DB restore) used to hard-404. Send staff back to
+  // the live board instead — /teacher redirects to the current classroom.
+  const exists = await prisma.class.findFirst({
+    where: { id, archivedAt: null },
+    select: { id: true },
+  });
+  if (!exists) {
+    redirect("/teacher?missingClass=1");
+  }
+
   let klass;
   try {
     klass = await assertTeacherOwnsClass(session.user.id, id, session.user.role);
   } catch {
-    notFound();
+    redirect("/teacher?missingClass=1");
   }
 
   if (klass.inviteCode.length > 10) {
@@ -235,10 +247,25 @@ export default async function TeacherClassroomPage({
                 posts={[]}
                 lessons={[]}
                 canPost
+                composeOnly
                 knownTags={knownTags}
               />
               <div className="space-y-6">
-                <ClassLessonEditor classId={id} knownTags={knownTags} />
+                <ClassLessonEditor
+                  classId={id}
+                  knownTags={knownTags}
+                  existingLessons={lessons.map((l) => ({
+                    day: l.day.toISOString(),
+                    title: l.title,
+                    summary: l.summary,
+                    tags: l.tags || [],
+                    subEntries: l.subEntries.map((s) => ({
+                      kind: s.kind,
+                      title: s.title,
+                      body: s.body,
+                    })),
+                  }))}
+                />
                 <section className="card space-y-3 rounded-xl p-4">
                   <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
                     Upload class files
@@ -249,6 +276,17 @@ export default async function TeacherClassroomPage({
                   <ClassFileUpload classId={id} knownTags={knownTags} />
                 </section>
                 <TeacherPdfSubmissions classId={id} />
+                <GuidedStoryAssignForm
+                  classId={id}
+                  students={memberships.map((m) => ({
+                    id: m.studentId,
+                    label:
+                      m.student.profile?.preferredName ||
+                      m.student.profile?.fullName ||
+                      m.student.email,
+                  }))}
+                />
+                <TeacherStoryInbox classId={id} />
                 <section className="card rounded-xl p-4">
                   <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
                     Students
@@ -280,7 +318,6 @@ export default async function TeacherClassroomPage({
                     ) : null}
                   </ul>
                 </section>
-                <TeacherPdfSubmissions classId={id} />
               </div>
             </div>
           </details>

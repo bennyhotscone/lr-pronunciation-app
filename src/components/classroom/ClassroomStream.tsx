@@ -10,8 +10,9 @@ import {
 import { TagPicker } from "@/components/classroom/TagPicker";
 import { TagFilterBar } from "@/components/classroom/TagPicker";
 import { InfoTag } from "@/components/classroom/InfoTag";
-import { BasketAttachFields, SessionBasketPanel } from "@/components/portal/SessionBasket";
+import { BasketAttachFields } from "@/components/portal/SessionBasket";
 import { MaterialKindBadge } from "@/components/classroom/MaterialKindPicker";
+import { FilePreviewThumb } from "@/components/classroom/FilePreviewThumb";
 import { groupByMaterialKind } from "@/lib/material-kind";
 
 function resourceHref(resourceId: string) {
@@ -59,10 +60,6 @@ type TimelineItem =
   | { kind: "post"; sortAt: number; pinned: boolean; post: StreamPost }
   | { kind: "lesson"; sortAt: number; pinned: boolean; lesson: StreamLesson };
 
-function isImageMime(mime: string) {
-  return mime.startsWith("image/");
-}
-
 function AttachmentChip({
   filename,
   mimeType,
@@ -79,18 +76,17 @@ function AttachmentChip({
   const href = hrefOverride || (resourceId ? resourceHref(resourceId) : null);
   const inner = (
     <>
-      <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-[#ebe8e0] ring-1 ring-border">
-        {href && isImageMime(mimeType) ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={href} alt="" className="h-full w-full object-cover" />
-        ) : (
-          <span className="flex h-full items-center justify-center text-[0.65rem] font-bold text-desk-accent">
-            {mimeType === "application/pdf" || /\.pdf$/i.test(filename) ? "PDF" : "FILE"}
-          </span>
-        )}
-      </span>
+      <FilePreviewThumb
+        src={href}
+        filename={filename}
+        mimeType={mimeType}
+        className="h-14 w-11"
+      />
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold text-ink group-hover:text-desk-accent">
+        <span
+          className="block break-all text-sm font-semibold leading-snug text-ink group-hover:text-desk-accent"
+          title={filename}
+        >
           {filename}
         </span>
         {materialKind ? (
@@ -169,6 +165,7 @@ export function ClassroomStream({
   canPost,
   knownTags = [],
   tagLinks = false,
+  composeOnly = false,
 }: {
   classId: string;
   posts: StreamPost[];
@@ -177,6 +174,8 @@ export function ClassroomStream({
   knownTags?: string[];
   /** Student classroom: tags link into find + study links. */
   tagLinks?: boolean;
+  /** Teacher tools: post composer only (board below shows the feed). */
+  composeOnly?: boolean;
 }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -229,51 +228,62 @@ export function ClassroomStream({
 
   return (
     <section className="space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
+      {composeOnly ? (
         <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
-          Stream
+          Class post
         </h2>
-        {showKindFilters ? (
-          <div className="flex flex-wrap gap-1.5">
-            {(
-              [
-                ["all", "All"],
-                ["posts", "Posts"],
-                ["lessons", "Lessons"],
-              ] as const
-            ).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setFilterKind(id)}
-                className={`rounded-md px-2.5 py-1 text-xs font-bold ring-1 transition ${
-                  filterKind === id
-                    ? "bg-desk-accent text-white ring-desk-accent"
-                    : "bg-[#f3f2ee] text-ink ring-border hover:ring-desk-accent"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        ) : null}
-      </div>
-      <TagFilterBar tags={allTags} active={filterTag} onChange={setFilterTag} />
+      ) : (
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
+            Stream
+          </h2>
+          {showKindFilters ? (
+            <div className="flex flex-wrap gap-1.5">
+              {(
+                [
+                  ["all", "All"],
+                  ["posts", "Posts"],
+                  ["lessons", "Lessons"],
+                ] as const
+              ).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setFilterKind(id)}
+                  className={`rounded-md px-2.5 py-1 text-xs font-bold ring-1 transition ${
+                    filterKind === id
+                      ? "bg-desk-accent text-white ring-desk-accent"
+                      : "bg-[#f3f2ee] text-ink ring-border hover:ring-desk-accent"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      )}
+      {composeOnly ? null : (
+        <TagFilterBar tags={allTags} active={filterTag} onChange={setFilterTag} />
+      )}
 
       {canPost && classId ? (
         <div className="space-y-3">
-          <SessionBasketPanel />
           <form
             className="card space-y-3 rounded-xl p-4"
             action={(fd) => {
               setMsg(null);
               startTransition(async () => {
-                const res = await teacherCreateClassPost(fd);
-                if (res?.error) setMsg(res.error);
-                else {
-                  setMsg("Posted.");
-                  setTitle("");
-                  setBody("");
+                try {
+                  const res = await teacherCreateClassPost(fd);
+                  if (res?.error) setMsg(res.error);
+                  else {
+                    setMsg("Posted — see the Classroom board below.");
+                    setTitle("");
+                    setBody("");
+                  }
+                } catch (err) {
+                  setMsg(err instanceof Error ? err.message : "Could not post.");
                 }
               });
             }}
@@ -299,8 +309,8 @@ export function ClassroomStream({
             />
             <TagPicker classId={classId} knownTags={knownTags} title={title} body={body} />
             <p className="text-xs text-muted">
-              Optional: select files in the basket above to attach them to this post. Class Files
-              uploads stay separate in the Files tab.
+              Optional: select files in the lesson Session basket to attach them to this post. Class
+              Files uploads stay separate in the Files tab.
             </p>
             <label className="inline-flex items-center gap-2 text-sm">
               <input type="checkbox" name="pin" value="1" /> Pin this post
@@ -317,6 +327,7 @@ export function ClassroomStream({
         </div>
       ) : null}
 
+      {composeOnly ? null : (
       <ul className="space-y-3">
         {timeline.map((item) =>
           item.kind === "post" ? (
@@ -547,6 +558,7 @@ export function ClassroomStream({
           </li>
         ) : null}
       </ul>
+      )}
     </section>
   );
 }

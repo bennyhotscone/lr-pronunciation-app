@@ -1,16 +1,19 @@
 "use client";
 
+/** EDGE_SIMPLE_WRITE_V1 — tap transparent text boxes only (no AcroForm / pens / colors). */
+
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { allowsPdfWriteMode, materialKindLabel } from "@/lib/material-kind";
 import {
   emptyPdfWriteData,
   OVERLAY_TEXT_COLORS,
   normalizeOverlayColor,
   parsePdfWriteData,
+  stripEmptyOverlays,
   type OverlayBox,
   type PdfWriteData,
 } from "@/lib/pdf-write-data";
+import { allowsPdfWriteMode, materialKindLabel } from "@/lib/material-kind";
 
 type Mode = "read" | "write";
 
@@ -38,14 +41,44 @@ type OverlayDom = {
 
 const DEFAULT_FONT = 14;
 const DEFAULT_COLOR = "#1a1a1a";
+const TEXT_COLOR = "#1a1a1a";
 const MIN_FONT = 10;
 const MAX_FONT = 36;
 const LINE_HEIGHT = 1.15;
-const BOX_PAD_Y = 2;
-const BOX_PAD_X = 4;
+const BOX_PAD_Y = 1;
+const BOX_PAD_X = 3;
 
 function lineBoxPx(fontSize: number) {
   return Math.ceil(fontSize * LINE_HEIGHT) + BOX_PAD_Y * 2;
+}
+
+const BASELINE_EM = 0.78;
+
+function baselineFromBoxTopPx(fontSize: number) {
+  return BOX_PAD_Y + fontSize * BASELINE_EM;
+}
+
+function defaultBlankWidthPx(fontSize: number, pageWidth: number) {
+  return Math.min(pageWidth * 0.14, Math.max(fontSize * 4.5, 56));
+}
+
+/** Map client point into overlay-host normalized coords (avoids page border skew). */
+function clientToPageNorm(
+  clientX: number,
+  clientY: number,
+  pageEl: HTMLElement,
+): { x: number; y: number; widthPx: number; heightPx: number } {
+  const host =
+    pageEl.querySelector<HTMLElement>(".pdf-overlay-host") || pageEl;
+  const rect = host.getBoundingClientRect();
+  const widthPx = Math.max(1, rect.width);
+  const heightPx = Math.max(1, rect.height);
+  return {
+    x: Math.min(1, Math.max(0, (clientX - rect.left) / widthPx)),
+    y: Math.min(1, Math.max(0, (clientY - rect.top) / heightPx)),
+    widthPx,
+    heightPx,
+  };
 }
 
 function splitIntoTappableTokens(text: string): { text: string; tappable: boolean }[] {
@@ -71,6 +104,9 @@ function applyTaStyle(ta: HTMLTextAreaElement, box: OverlayBox) {
   ta.style.fontSize = `${fs}px`;
   ta.style.lineHeight = String(LINE_HEIGHT);
   ta.style.color = normalizeOverlayColor(box.color);
+  ta.style.fontWeight = "400";
+  ta.style.fontStyle = "normal";
+  ta.style.textDecoration = "none";
 }
 
 /** Hidden probe measures content width/height so boxes hug typed text. */
@@ -103,7 +139,6 @@ function measureContentBox(
   ].join(";");
   probe.textContent = text || " ";
   const w = Math.max(minWidthPx, Math.ceil(probe.offsetWidth));
-  // Constrain width then re-measure height for wrapped lines.
   probe.style.width = `${w}px`;
   probe.style.maxWidth = `${w}px`;
   const h = Math.max(lineBoxPx(fs), Math.ceil(probe.offsetHeight));
@@ -151,7 +186,7 @@ export function PdfWorkspaceViewer({
     writeAllowed && initialMode === "write" ? "write" : "read",
   );
   const [status, setStatus] = useState<"loading" | "ready" | "empty" | "error">("loading");
-  const [message, setMessage] = useState("Loading PDF…");
+  const [message, setMessage] = useState("Loading PDFâ€¦");
   const [pageCount, setPageCount] = useState(0);
   const [popup, setPopup] = useState<PopupState | null>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -195,10 +230,7 @@ export function PdfWorkspaceViewer({
       if (saveTimer.current) clearTimeout(saveTimer.current);
       setSaveState("saving");
       // Never persist empty text boxes.
-      const payload: PdfWriteData = {
-        ...next,
-        overlays: next.overlays.filter((o) => o.text.trim()),
-      };
+      const payload = stripEmptyOverlays(next);
       saveTimer.current = setTimeout(async () => {
         try {
           const res = await fetch(`/api/portal/resources/${resourceId}/write-draft`, {
@@ -261,7 +293,7 @@ export function PdfWorkspaceViewer({
           lookupCount: data.entry?.lookupCount,
         });
       } catch {
-        setPopup({ word, x: clientX, y: clientY, error: "Network error — try again." });
+        setPopup({ word, x: clientX, y: clientY, error: "Network error â€” try again." });
       }
     },
     [lang, resourceId],
@@ -293,7 +325,7 @@ export function PdfWorkspaceViewer({
 
     async function run() {
       setStatus("loading");
-      setMessage("Loading PDF…");
+      setMessage("Loading PDFâ€¦");
       overlayDomRef.current.clear();
       manualSizeRef.current.clear();
       try {
@@ -334,7 +366,7 @@ export function PdfWorkspaceViewer({
 
           const pageWrap = document.createElement("div");
           pageWrap.className =
-            "pdf-page relative mx-auto mb-4 overflow-hidden rounded-lg border border-wood/25 bg-white shadow-sm";
+            "pdf-page relative mx-auto mb-4 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-wood/25";
           pageWrap.dataset.page = String(pageNum);
           pageWrap.style.width = `${viewport.width}px`;
           pageWrap.style.height = `${viewport.height}px`;
@@ -342,9 +374,14 @@ export function PdfWorkspaceViewer({
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
           if (!ctx) continue;
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
-          canvas.className = "block h-auto w-full";
+          const dpr = Math.min(2, window.devicePixelRatio || 1);
+          canvas.width = Math.floor(viewport.width * dpr);
+          canvas.height = Math.floor(viewport.height * dpr);
+          canvas.style.width = `${viewport.width}px`;
+          canvas.style.height = `${viewport.height}px`;
+          canvas.style.display = "block";
+          canvas.className = "block";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           pageWrap.appendChild(canvas);
 
           await page.render({
@@ -354,12 +391,17 @@ export function PdfWorkspaceViewer({
 
           const textContent = await page.getTextContent();
           const textLayer = document.createElement("div");
-          textLayer.className = "pdf-text-layer absolute inset-0 overflow-hidden";
-          textLayer.style.width = `${viewport.width}px`;
-          textLayer.style.height = `${viewport.height}px`;
-          textLayer.style.zIndex = "2";
-          // Layer itself never captures; only word buttons do.
-          textLayer.style.pointerEvents = "none";
+          textLayer.className = "pdf-text-layer";
+          textLayer.style.cssText = [
+            "position:absolute",
+            "left:0",
+            "top:0",
+            `width:${viewport.width}px`,
+            `height:${viewport.height}px`,
+            "overflow:hidden",
+            "z-index:2",
+            "pointer-events:none",
+          ].join(";");
 
           for (const item of textContent.items) {
             if (!("str" in item) || !item.str) continue;
@@ -382,10 +424,17 @@ export function PdfWorkspaceViewer({
                 : Math.max(fontHeight * 0.5 * str.length, 4);
 
             const tokens = splitIntoTappableTokens(str);
-            const totalCharsInItem = Math.max(1, str.length);
+            const glyphMeasure = document.createElement("canvas").getContext("2d");
+            if (glyphMeasure) glyphMeasure.font = `${fontHeight}px sans-serif`;
+            const measuredFull = glyphMeasure
+              ? Math.max(1e-6, glyphMeasure.measureText(str).width)
+              : Math.max(1, str.length);
             let xCursor = 0;
             for (const tok of tokens) {
-              const tokW = (tok.text.length / totalCharsInItem) * itemWidth;
+              const tokAdvance = glyphMeasure
+                ? glyphMeasure.measureText(tok.text).width
+                : tok.text.length;
+              const tokW = (tokAdvance / measuredFull) * itemWidth;
               if (tok.tappable && tok.text.trim()) {
                 const btn = document.createElement("button");
                 btn.type = "button";
@@ -449,11 +498,22 @@ export function PdfWorkspaceViewer({
           pageWrap.appendChild(textLayer);
 
           const overlayHost = document.createElement("div");
-          overlayHost.className = "pdf-overlay-host absolute inset-0";
+          overlayHost.className = "pdf-overlay-host";
           overlayHost.dataset.page = String(pageNum);
-          overlayHost.style.zIndex = "4";
-          overlayHost.style.pointerEvents = "none";
+          overlayHost.style.cssText = [
+            "position:absolute",
+            "left:0",
+            "top:0",
+            `width:${viewport.width}px`,
+            `height:${viewport.height}px`,
+            "z-index:4",
+            "pointer-events:none",
+          ].join(";");
           pageWrap.appendChild(overlayHost);
+          pageMetaRef.current.set(pageNum, {
+            width: viewport.width,
+            height: viewport.height,
+          });
 
           pageWrap.addEventListener("click", (ev) => {
             const t = ev.target as HTMLElement;
@@ -478,20 +538,21 @@ export function PdfWorkspaceViewer({
             // Drop any abandoned empty boxes before creating a new one.
             removeEmptyOverlays(null);
 
-            const meta = pageMetaRef.current.get(pageNum);
-            if (!meta) return;
-            const rect = pageWrap.getBoundingClientRect();
-            const clickX = (ev.clientX - rect.left) / rect.width;
-            const clickY = (ev.clientY - rect.top) / rect.height;
+            const norm = clientToPageNorm(ev.clientX, ev.clientY, pageWrap);
+            const meta = {
+              width: norm.widthPx,
+              height: norm.heightPx,
+            };
+            pageMetaRef.current.set(pageNum, meta);
             const fontSize = DEFAULT_FONT;
             const hPx = lineBoxPx(fontSize);
-            const h = Math.min(0.2, Math.max(0.01, hPx / meta.height));
-            // Edge-like: offset Y so baseline sits on/near click Y.
-            const baselineOffset = (fontSize + 2) / meta.height;
-            const y = Math.min(1 - h, Math.max(0, clickY - baselineOffset));
-            const wPx = Math.min(meta.width * 0.2, fontSize * 8);
-            const w = Math.min(0.28, Math.max(0.1, wPx / meta.width));
-            const x = Math.min(1 - w, Math.max(0, clickX));
+            const h = Math.min(0.12, Math.max(0.008, hPx / meta.height));
+            // Place so the text baseline lands on the tapped blank/entry line.
+            const baselineOffset = baselineFromBoxTopPx(fontSize) / meta.height;
+            const y = Math.min(1 - h, Math.max(0, norm.y - baselineOffset));
+            const wPx = defaultBlankWidthPx(fontSize, meta.width);
+            const w = Math.min(0.22, Math.max(0.06, wPx / meta.width));
+            const x = Math.min(1 - w, Math.max(0, norm.x));
             const id = newOverlayId();
             manualSizeRef.current.delete(id);
             const box: OverlayBox = {
@@ -531,7 +592,7 @@ export function PdfWorkspaceViewer({
           setStatus("ready");
           setMessage(
             modeRef.current === "write"
-              ? "Tap empty space to type · tap a word to translate · tap a box to move, resize, edit, or delete."
+              ? "Tap empty space to type Â· tap a word to translate Â· tap a box to move, resize, edit, or delete."
               : "Tap a word for a free translation — it also goes on your Target vocabulary list.",
           );
         }
@@ -562,10 +623,15 @@ export function PdfWorkspaceViewer({
     const onMove = (ev: PointerEvent) => {
       const drag = dragRef.current;
       if (!drag) return;
+      const hostEl = containerRef.current?.querySelector<HTMLElement>(
+        `.pdf-overlay-host[data-page="${drag.orig.page}"]`,
+      );
       const meta = pageMetaRef.current.get(drag.orig.page);
       if (!meta) return;
-      const dx = (ev.clientX - drag.startX) / meta.width;
-      const dy = (ev.clientY - drag.startY) / meta.height;
+      const widthPx = Math.max(1, hostEl?.clientWidth || meta.width);
+      const heightPx = Math.max(1, hostEl?.clientHeight || meta.height);
+      const dx = (ev.clientX - drag.startX) / widthPx;
+      const dy = (ev.clientY - drag.startY) / heightPx;
       if (drag.kind === "move") {
         const x = Math.min(1 - drag.orig.w, Math.max(0, drag.orig.x + dx));
         const y = Math.min(1 - drag.orig.h, Math.max(0, drag.orig.y + dy));
@@ -624,6 +690,12 @@ export function PdfWorkspaceViewer({
 
     host.querySelectorAll<HTMLElement>(".pdf-overlay-host").forEach((layer) => {
       const page = Number(layer.dataset.page || "1");
+      const prev = pageMetaRef.current.get(page);
+      const liveW = layer.clientWidth || prev?.width || 0;
+      const liveH = layer.clientHeight || prev?.height || 0;
+      if (liveW > 0 && liveH > 0) {
+        pageMetaRef.current.set(page, { width: liveW, height: liveH });
+      }
       const meta = pageMetaRef.current.get(page);
       if (!meta) return;
       layer.style.pointerEvents = "none";
@@ -633,8 +705,9 @@ export function PdfWorkspaceViewer({
         let dom = live.get(box.id);
         if (!dom) {
           const wrap = document.createElement("div");
-          wrap.className = "pdf-overlay-box absolute";
+          wrap.className = "pdf-overlay-box";
           wrap.dataset.overlayId = box.id;
+          wrap.style.position = "absolute";
           wrap.style.zIndex = "6";
           wrap.style.boxSizing = "border-box";
           wrap.style.pointerEvents = "auto";
@@ -666,7 +739,7 @@ export function PdfWorkspaceViewer({
           };
 
           toolbar.appendChild(
-            mkToolBtn("A−", "Smaller text", () => {
+            mkToolBtn("Aâˆ’", "Smaller text", () => {
               updateWriteData((prev) => ({
                 ...prev,
                 overlays: prev.overlays.map((o) =>
@@ -714,17 +787,13 @@ export function PdfWorkspaceViewer({
           sep.style.cssText =
             "width:1px;height:14px;background:rgba(0,0,0,0.12);margin:0 2px;";
           toolbar.appendChild(sep);
-
           for (const c of OVERLAY_TEXT_COLORS) {
             const sw = document.createElement("button");
             sw.type = "button";
-            sw.title = `Text color ${c}`;
+            sw.title = "Text color " + c;
             sw.dataset.color = c;
-            sw.style.cssText = `width:16px;height:16px;border-radius:999px;border:2px solid transparent;background:${c};cursor:pointer;padding:0;`;
-            sw.addEventListener("pointerdown", (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            });
+            sw.style.cssText = "width:16px;height:16px;border-radius:999px;border:2px solid transparent;background:" + c + ";cursor:pointer;padding:0;";
+            sw.addEventListener("pointerdown", (e) => { e.preventDefault(); e.stopPropagation(); });
             sw.addEventListener("click", (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -732,16 +801,15 @@ export function PdfWorkspaceViewer({
               updateWriteData((prev) => ({
                 ...prev,
                 overlays: prev.overlays.map((o) =>
-                  o.id === box.id ? { ...o, color: c } : o,
+                  o.id === box.id ? { ...o, color: normalizeOverlayColor(c) } : o,
                 ),
               }));
             });
             toolbar.appendChild(sw);
           }
-
           const ta = document.createElement("textarea");
           ta.value = box.text;
-          ta.placeholder = "Type…";
+          ta.placeholder = "Typeâ€¦";
           ta.spellcheck = true;
           ta.rows = 1;
           ta.style.cssText = [
@@ -764,7 +832,7 @@ export function PdfWorkspaceViewer({
 
           const del = document.createElement("button");
           del.type = "button";
-          del.textContent = "×";
+          del.textContent = "Ã—";
           del.title = "Delete text box";
           del.style.cssText =
             "position:absolute;right:-8px;top:-8px;width:20px;height:20px;border:0;border-radius:999px;background:#1a1a1a;color:#fff;font-size:12px;line-height:1;cursor:pointer;display:none;z-index:2;align-items:center;justify-content:center;";
@@ -783,7 +851,7 @@ export function PdfWorkspaceViewer({
           const hugContent = (text: string, current: OverlayBox) => {
             if (manualSizeRef.current.has(box.id)) return null;
             const fs = current.fontSize || DEFAULT_FONT;
-            const minW = Math.min(meta.width * 0.2, fs * 8);
+            const minW = defaultBlankWidthPx(fs, meta.width);
             const measured = measureContentBox(
               probe,
               text,
@@ -914,7 +982,7 @@ export function PdfWorkspaceViewer({
         let displayW = box.w;
         let displayH = box.h;
         if (!manualSizeRef.current.has(box.id)) {
-          const minW = Math.min(meta.width * 0.2, fs * 8);
+          const minW = defaultBlankWidthPx(fs, meta.width);
           const measured = measureContentBox(
             probe,
             box.text || " ",
@@ -940,10 +1008,11 @@ export function PdfWorkspaceViewer({
           );
         }
 
-        dom.wrap.style.left = `${box.x * meta.width}px`;
-        dom.wrap.style.top = `${box.y * meta.height}px`;
-        dom.wrap.style.width = `${displayW * meta.width}px`;
-        dom.wrap.style.height = `${displayH * meta.height}px`;
+        // Percent of overlay host — immune to border/DPR/scroll skew.
+        dom.wrap.style.left = `${box.x * 100}%`;
+        dom.wrap.style.top = `${box.y * 100}%`;
+        dom.wrap.style.width = `${displayW * 100}%`;
+        dom.wrap.style.height = `${displayH * 100}%`;
         dom.wrap.style.border = selected
           ? "1.5px solid #0d5c4d"
           : box.text.trim()
@@ -969,9 +1038,7 @@ export function PdfWorkspaceViewer({
           ) {
             const c = child.dataset.color || "";
             child.style.borderColor =
-              normalizeOverlayColor(box.color) === normalizeOverlayColor(c)
-                ? "#0d5c4d"
-                : "transparent";
+              normalizeOverlayColor(box.color) === c ? "#0d5c4d" : "transparent";
           }
         }
 
@@ -1002,7 +1069,7 @@ export function PdfWorkspaceViewer({
     }
     setMessage(
       mode === "write"
-        ? "Tap empty space to type · tap a PDF word to translate · select a box to drag, resize, format, edit, or delete."
+        ? "Tap empty space to type Â· tap a PDF word to translate Â· select a box to drag, resize, edit, or delete."
         : "Tap a word for a free translation — it also goes on your Target vocabulary list.",
     );
   }, [mode, status, writeAllowed]);
@@ -1015,10 +1082,7 @@ export function PdfWorkspaceViewer({
     setSubmitMsg(null);
     startTransition(async () => {
       try {
-        const payload: PdfWriteData = {
-          ...writeDataRef.current,
-          overlays: writeDataRef.current.overlays.filter((o) => o.text.trim()),
-        };
+        const payload = stripEmptyOverlays(writeDataRef.current);
         await fetch(`/api/portal/resources/${resourceId}/write-draft`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -1037,7 +1101,7 @@ export function PdfWorkspaceViewer({
         setSubmitMsg(data.error || "Submit failed");
         return;
       }
-      setSubmitMsg("Submitted — your teacher can see this on the class / student page.");
+      setSubmitMsg("Submitted â€” your teacher can see this on the class / student page.");
     });
   };
 
@@ -1047,7 +1111,7 @@ export function PdfWorkspaceViewer({
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
             PDF workspace
-            {materialKind ? ` · ${materialKindLabel(materialKind)}` : ""}
+            {materialKind ? ` Â· ${materialKindLabel(materialKind)}` : ""}
           </p>
           <h1 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-ink">
             {title}
@@ -1067,7 +1131,7 @@ export function PdfWorkspaceViewer({
             href="/portal/profile"
             className="mt-1 inline-block font-semibold text-desk-accent hover:underline"
           >
-            Change language →
+            Change language â†’
           </Link>
         </div>
       </div>
@@ -1100,7 +1164,7 @@ export function PdfWorkspaceViewer({
           </div>
         ) : (
           <p className="rounded-md bg-paper px-3 py-1.5 text-xs font-semibold text-ink/55 ring-1 ring-wood/25">
-            Read only · tap words to translate
+            Read only Â· tap words to translate
           </p>
         )}
 
@@ -1108,7 +1172,7 @@ export function PdfWorkspaceViewer({
           <>
             {selectedBox ? (
               <span className="text-xs text-ink/45">
-                Formatting toolbar is above the selected box
+                A-/A+ and Delete are above the selected box
               </span>
             ) : (
               <span className="text-xs text-ink/45">Tap the page to start writing</span>
@@ -1116,7 +1180,7 @@ export function PdfWorkspaceViewer({
             <span className="text-xs text-ink/45">
               Draft{" "}
               {saveState === "saving"
-                ? "saving…"
+                ? "savingâ€¦"
                 : saveState === "saved"
                   ? "saved"
                   : saveState === "error"
@@ -1129,7 +1193,7 @@ export function PdfWorkspaceViewer({
               onClick={submitHomework}
               className="btn-primary rounded-xl px-3 py-1.5 text-xs font-bold disabled:opacity-60"
             >
-              {pending ? "Submitting…" : "Submit as homework"}
+              {pending ? "Submittingâ€¦" : "Submit as homework"}
             </button>
           </>
         ) : null}
@@ -1152,7 +1216,7 @@ export function PdfWorkspaceViewer({
 
       {status === "loading" ? (
         <p className="rounded-xl border border-dashed border-wood/30 bg-paper/70 px-4 py-8 text-center text-sm text-ink/55">
-          Preparing pages…
+          Preparing pagesâ€¦
         </p>
       ) : null}
 
@@ -1229,7 +1293,7 @@ export function PdfWorkspaceViewer({
             </button>
           </div>
           {popup.loading ? (
-            <p className="mt-2 text-sm text-ink/55">Translating…</p>
+            <p className="mt-2 text-sm text-ink/55">Translatingâ€¦</p>
           ) : popup.error ? (
             <p className="mt-2 text-sm text-danger">{popup.error}</p>
           ) : (
@@ -1241,7 +1305,7 @@ export function PdfWorkspaceViewer({
               <p className="mt-2 text-[0.7rem] font-semibold uppercase tracking-wide text-desk-accent">
                 Added to Target vocabulary
                 {popup.lookupCount && popup.lookupCount > 1
-                  ? ` · looked up ${popup.lookupCount}×`
+                  ? ` Â· looked up ${popup.lookupCount}Ã—`
                   : ""}
               </p>
             </>
@@ -1252,5 +1316,6 @@ export function PdfWorkspaceViewer({
   );
 }
 
-/** @deprecated alias — prefer PdfWorkspaceViewer */
+/** @deprecated alias â€” prefer PdfWorkspaceViewer */
 export { PdfWorkspaceViewer as PdfReadViewer };
+

@@ -5,20 +5,24 @@ import { useState, useTransition } from "react";
 import { AVATARS } from "@/lib/avatars";
 import { updateStudentProfile } from "@/lib/portal-actions";
 import { TARGET_LANG_OPTIONS } from "@/lib/vocab-translate";
+import { DESK_THEMES, normalizeDeskTheme } from "@/lib/desk-themes";
 
 export function ProfileEditor({
   preferredName,
   avatarId,
   targetLang = "zh-CN",
+  deskTheme = "slate",
 }: {
   preferredName: string;
   avatarId: string;
   targetLang?: string;
+  deskTheme?: string;
 }) {
   const router = useRouter();
   const [selected, setSelected] = useState(avatarId);
   const [name, setName] = useState(preferredName);
   const [lang, setLang] = useState(targetLang);
+  const [theme, setTheme] = useState(normalizeDeskTheme(deskTheme));
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -70,6 +74,37 @@ export function ProfileEditor({
           Free translation via MyMemory (+ Free Dictionary gloss). Used in PDF Read and Write mode.
         </span>
       </label>
+
+      <fieldset>
+        <legend className="mb-3 text-sm font-semibold">Desk theme</legend>
+        <input type="hidden" name="deskTheme" value={theme} />
+        <div className="grid gap-3 sm:grid-cols-2">
+          {DESK_THEMES.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              disabled={t.locked}
+              onClick={() => {
+                if (!t.locked && (t.id === "slate" || t.id === "warm" || t.id === "classic")) {
+                  setTheme(t.id);
+                }
+              }}
+              className={`rounded-2xl border-2 p-3 text-left transition ${
+                theme === t.id
+                  ? "border-desk-accent bg-white shadow-sm"
+                  : "border-transparent bg-white/70"
+              } ${t.locked ? "opacity-50" : ""}`}
+              aria-pressed={theme === t.id}
+            >
+              <span className="block text-sm font-bold text-ink">
+                {t.label}
+                {t.locked ? " (locked)" : ""}
+              </span>
+              <span className="mt-1 block text-xs text-muted">{t.blurb}</span>
+            </button>
+          ))}
+        </div>
+      </fieldset>
 
       <fieldset>
         <legend className="mb-3 text-sm font-semibold">Avatar</legend>

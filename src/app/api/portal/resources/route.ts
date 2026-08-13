@@ -43,7 +43,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Choose a file to upload." }, { status: 400 });
   }
 
-  const title = String(formData.get("title") || "").trim() || file.name;
   const description = String(formData.get("description") || "").trim();
   const classId = String(formData.get("classId") || "") || null;
   const studentId = String(formData.get("studentId") || "") || null;
@@ -64,12 +63,14 @@ export async function POST(request: Request) {
   }
 
   try {
+    const { maybeTrimPdfUpload } = await import("@/lib/pdf-trim");
+    const trimmed = await maybeTrimPdfUpload(file, formData.get("selectedPages"));
     const scope = classId || studentId!;
-    const uploaded = await uploadPortalFile({ file, scope });
+    const uploaded = await uploadPortalFile({ file: trimmed.file, scope });
 
     const resource = await prisma.resource.create({
       data: {
-        title,
+        title: String(formData.get("title") || "").trim() || uploaded.filename,
         description: description || null,
         filename: uploaded.filename,
         blobPath: uploaded.blobPath,

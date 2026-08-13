@@ -41,8 +41,10 @@ export async function POST(request: Request) {
   }
 
   try {
+    const { maybeTrimPdfUpload } = await import("@/lib/pdf-trim");
+    const trimmed = await maybeTrimPdfUpload(file, formData.get("selectedPages"));
     const uploaded = await uploadPortalFile({
-      file,
+      file: trimmed.file,
       scope: `session-basket/${session.user.id}`,
       skipMimeCheck: true,
     });

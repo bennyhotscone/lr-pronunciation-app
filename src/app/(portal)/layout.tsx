@@ -4,10 +4,14 @@ import { getAvatar } from "@/lib/avatars";
 import { signOut } from "@/auth";
 import { prisma } from "@/lib/db";
 import { BrandWordmark } from "@/components/BrandMark";
+import { ClassMoneyBadge } from "@/components/portal/ClassMoneyBadge";
+import { normalizeDeskTheme } from "@/lib/desk-themes";
+import { getOrCreateWalletBalance } from "@/lib/class-money-actions";
 
 const studentLinks = [
   { href: "/portal", label: "My Desk" },
   { href: "/portal/resources", label: "Files" },
+  { href: "/portal/vocab-practice", label: "Practice" },
   { href: "/portal/profile", label: "Profile" },
 ];
 
@@ -23,15 +27,18 @@ export default async function PortalLayout({
   const avatar = getAvatar(profile?.avatarId || session.user.avatarId);
   const name =
     profile?.preferredName || session.user.preferredName || session.user.name || "Student";
+  const deskTheme = normalizeDeskTheme(profile?.deskTheme);
+  const balance = await getOrCreateWalletBalance(session.user.id);
 
   return (
-    <div className="theme-desk min-h-dvh">
+    <div className="theme-desk min-h-dvh" data-desk-theme={deskTheme}>
       <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
         <header className="flex items-center justify-between gap-3 border-b border-border py-3">
           <Link href="/" className="text-ink">
             <BrandWordmark className="text-inherit" />
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+            <ClassMoneyBadge balance={balance} />
             <Link
               href="/portal/profile"
               className="inline-flex items-center gap-2 rounded-lg border border-border bg-paper px-2.5 py-1.5 text-sm font-semibold text-ink"
@@ -64,7 +71,9 @@ export default async function PortalLayout({
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="touch-target flex min-w-[3.5rem] flex-col items-center justify-center px-2 py-2 text-xs font-bold text-ink"
+                  className={`touch-target flex min-w-[3.5rem] flex-col items-center justify-center px-2 py-2 text-xs font-bold text-ink ${
+                    l.href === "/portal/resources" ? "text-desk-accent" : ""
+                  }`}
                 >
                   {l.label}
                 </Link>
