@@ -17,11 +17,22 @@ const TIER_META: Record<number, { label: string; hint: string }> = {
   1: { label: "Foundation", hint: "Broader knowledge at the base" },
 };
 
+/** Hit zones mapped to the approved pyramid PNG bands (top → base). */
+const TIER_ZONES: Record<number, string> = {
+  3: "absolute left-[16%] top-[14%] h-[18%] w-[68%]",
+  2: "absolute left-[10%] top-[34%] h-[18%] w-[80%]",
+  1: "absolute left-[4%] top-[56%] h-[28%] w-[92%]",
+};
+
 function tierFor(goal: PyramidGoal) {
   const t = goal.pyramidTier;
   if (t === 1 || t === 3) return t;
   if (goal.source === "STUDENT_HELP") return 1;
   return 2;
+}
+
+function primaryTitle(goals: PyramidGoal[]) {
+  return goals[0]?.title ?? null;
 }
 
 export function LearningPyramid({
@@ -59,97 +70,96 @@ export function LearningPyramid({
       <div className="mockup-chrome relative mx-auto max-w-lg overflow-hidden rounded-2xl">
         <img
           src={MOCKUP_UI.pyramid}
-          alt="Learning pyramid"
+          alt="Learning pyramid: Specialty, Focus areas, Classroom talk"
           className="mockup-img w-full"
           width={1380}
           height={2160}
           decoding="async"
         />
-        <Link
-          href="/portal/goals"
-          className="absolute left-[18%] top-[12%] h-[18%] w-[64%]"
-          aria-label="Specialty targets"
-        />
-        <Link
-          href="/portal/goals"
-          className="absolute left-[12%] top-[32%] h-[16%] w-[76%]"
-          aria-label="Focus area targets"
-        />
-        <Link
-          href="/portal/goals"
-          className="absolute left-[8%] top-[50%] h-[16%] w-[84%]"
-          aria-label="Classroom talk targets"
-        />
-        <Link
-          href="/portal/goals"
-          className="absolute left-[4%] top-[68%] h-[22%] w-[92%]"
-          aria-label="Foundation targets"
-        />
+        {tiers.map((band) => {
+          const title = primaryTitle(band.goals);
+          return (
+            <Link
+              key={band.tier}
+              href="/portal/goals"
+              className={`${TIER_ZONES[band.tier]} flex items-end justify-center px-2 pb-1`}
+              aria-label={`${band.label} targets`}
+            >
+              {title ? (
+                <span className="mockup-solid-label max-w-full truncate rounded-md px-2 py-1 text-center text-[0.7rem] font-bold leading-tight sm:text-xs">
+                  {band.label}: {title}
+                </span>
+              ) : null}
+            </Link>
+          );
+        })}
       </div>
 
-      <div className="space-y-3">
-        {tiers.map((band) => (
-          <div key={band.tier} className="rounded-xl border border-desk-accent/15 bg-white/85 px-3 py-2">
-            <div className="mb-1 flex items-baseline justify-between gap-2">
-              <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
-                {band.label}
-              </p>
-              <p className="text-xs font-bold text-muted">{band.goals.length}</p>
-            </div>
-            {band.goals.length ? (
-              <ul className="space-y-2">
-                {band.goals.map((g) => {
-                  const total = g.checklistItems.length;
-                  const done = g.checklistItems.filter((i) => i.done).length;
-                  const showItems = compact ? g.checklistItems.slice(0, 2) : g.checklistItems;
-                  return (
-                    <li key={g.id}>
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <p className="font-semibold text-ink">{g.title}</p>
-                        <p className="text-xs font-bold text-desk-accent">
-                          {total ? `${done}/${total}` : `${g.progressPct}%`}
-                        </p>
-                      </div>
-                      {!compact && g.description ? (
-                        <p className="mt-0.5 text-sm text-ink/55">{g.description}</p>
-                      ) : null}
-                      <div className="progress-bar mt-1.5">
-                        <span style={{ width: `${g.progressPct}%` }} />
-                      </div>
-                      {showItems.length ? (
-                        <ul className="mt-1.5 space-y-1">
-                          {showItems.map((item) => (
-                            <li key={item.id} className="flex items-start gap-2 text-sm text-ink/80">
-                              <span
-                                className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
-                                  item.done
-                                    ? "border-desk-accent bg-desk-accent text-paper"
-                                    : "border-wood/40 bg-white text-transparent"
-                                }`}
-                                aria-hidden
+      {!compact ? (
+        <div className="space-y-3">
+          {tiers.map((band) => (
+            <div key={band.tier} className="desk-panel rounded-xl px-3 py-2">
+              <div className="mb-1 flex items-baseline justify-between gap-2">
+                <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">
+                  {band.label}
+                </p>
+                <p className="text-xs font-bold text-muted">{band.goals.length}</p>
+              </div>
+              {band.goals.length ? (
+                <ul className="space-y-2">
+                  {band.goals.map((g) => {
+                    const total = g.checklistItems.length;
+                    const done = g.checklistItems.filter((i) => i.done).length;
+                    return (
+                      <li key={g.id}>
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <p className="font-semibold text-ink">{g.title}</p>
+                          <p className="text-xs font-bold text-desk-accent">
+                            {total ? `${done}/${total}` : `${g.progressPct}%`}
+                          </p>
+                        </div>
+                        {g.description ? (
+                          <p className="mt-0.5 text-sm text-ink/55">{g.description}</p>
+                        ) : null}
+                        <div className="progress-bar mt-1.5">
+                          <span style={{ width: `${g.progressPct}%` }} />
+                        </div>
+                        {g.checklistItems.length ? (
+                          <ul className="mt-1.5 space-y-1">
+                            {g.checklistItems.map((item) => (
+                              <li
+                                key={item.id}
+                                className="flex items-start gap-2 text-sm text-ink/80"
                               >
-                                ✓
-                              </span>
-                              <span className={item.done ? "text-ink/45 line-through" : ""}>
-                                {item.title}
-                              </span>
-                            </li>
-                          ))}
-                          {compact && total > 2 ? (
-                            <li className="text-xs text-ink/45">+{total - 2} more on full page</li>
-                          ) : null}
-                        </ul>
-                      ) : null}
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <p className="text-sm text-ink/50">No targets in this band yet.</p>
-            )}
-          </div>
-        ))}
-      </div>
+                                <span
+                                  className={`mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] font-bold ${
+                                    item.done
+                                      ? "border-desk-accent bg-desk-accent text-paper"
+                                      : "border-wood/40 bg-white text-transparent"
+                                  }`}
+                                  aria-hidden
+                                >
+                                  ✓
+                                </span>
+                                <span className={item.done ? "text-ink/45 line-through" : ""}>
+                                  {item.title}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className="text-sm text-ink/50">No targets in this band yet.</p>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : null}
+
       <p className="text-[0.7rem] font-semibold uppercase tracking-wide text-ink/40">
         Only your teacher confirms checklist items
       </p>

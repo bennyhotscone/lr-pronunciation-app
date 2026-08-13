@@ -20,5 +20,6 @@ export const MOCKUP_UI = {
     classic: "/mockup-ui/desk-plate-classic.png",
     trapper: "/mockup-ui/desk-plate-trapper.png",
   },
+  deskBgSoft: "/mockup-ui/desk-bg-soft.png",
   wood: "/mockup-ui/texture-wood-desk.png",
 } as const;

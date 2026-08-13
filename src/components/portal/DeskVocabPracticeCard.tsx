@@ -19,15 +19,18 @@ export function DeskVocabPracticeCard({
   packsToday,
   recentPacks,
   vocabCount,
+  previewWords = [],
 }: {
   packsToday: number;
   recentPacks: VocabPackSummary[];
   vocabCount: number;
+  previewWords?: string[];
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [err, setErr] = useState<string | null>(null);
   const remaining = Math.max(0, VOCAB_PRACTICE_DAILY_CAP - packsToday);
+  const chips = previewWords.slice(0, 3);
 
   function generate() {
     setErr(null);
@@ -46,7 +49,7 @@ export function DeskVocabPracticeCard({
 
   return (
     <section className="space-y-3">
-      <div className="mockup-chrome relative mx-auto max-w-md overflow-hidden rounded-2xl shadow-md">
+      <div className="mockup-chrome relative mx-auto max-w-md overflow-hidden rounded-2xl">
         <img
           src={MOCKUP_UI.dailyVocabCard}
           alt="Daily vocab story"
@@ -55,20 +58,36 @@ export function DeskVocabPracticeCard({
           height={2700}
           decoding="async"
         />
-        <div className="pointer-events-none absolute inset-x-[8%] top-[8%] rounded-lg bg-[#f7f3e8]/85 px-3 py-2 text-center shadow-sm">
-          <p className="text-[0.65rem] font-bold uppercase tracking-wide text-desk-accent">
-            Generative practice
+
+        <div className="pointer-events-none absolute inset-x-[10%] top-[42%] flex flex-col items-center gap-2">
+          <p className="mockup-solid-label rounded-full px-3 py-1.5 text-center text-[0.7rem] font-bold">
+            Today&apos;s list: {vocabCount} {vocabCount === 1 ? "word" : "words"}
+            {remaining ? ` · ${remaining} left today` : " · daily limit reached"}
           </p>
-          <p className="text-xs text-ink/70">
-            {remaining} of {VOCAB_PRACTICE_DAILY_CAP} left today
-            {vocabCount ? ` · ${vocabCount} target words` : " · add words via PDF Read first"}
-          </p>
+          {chips.length ? (
+            <div className="flex max-w-full flex-wrap justify-center gap-1.5">
+              {chips.map((w) => (
+                <span
+                  key={w}
+                  className="mockup-solid-label max-w-[6.5rem] truncate rounded-full px-2.5 py-1 text-[0.7rem] font-semibold"
+                >
+                  {w}
+                </span>
+              ))}
+              {vocabCount > chips.length ? (
+                <span className="mockup-solid-label rounded-full px-2.5 py-1 text-[0.7rem] font-semibold">
+                  …
+                </span>
+              ) : null}
+            </div>
+          ) : null}
         </div>
+
         <button
           type="button"
           disabled={pending || remaining <= 0}
           onClick={generate}
-          className="absolute bottom-[14%] left-[10%] right-[10%] h-[11%] overflow-hidden rounded-xl disabled:opacity-50"
+          className="absolute bottom-[12%] left-[10%] right-[10%] h-[12%] overflow-hidden rounded-xl disabled:opacity-50"
           aria-label={pending ? "Generating" : remaining > 0 ? "Make my story" : "Daily limit reached"}
         >
           <span
@@ -76,7 +95,7 @@ export function DeskVocabPracticeCard({
             style={{ backgroundImage: `url(${MOCKUP_UI.makeStoryBtn})` }}
             aria-hidden
           />
-          <span className="relative z-[1] flex h-full items-center justify-center px-3 font-[family-name:var(--font-display)] text-lg font-bold text-white drop-shadow">
+          <span className="relative z-[1] flex h-full items-center justify-center bg-[#1f4e46]/75 px-3 font-[family-name:var(--font-display)] text-lg font-bold text-white">
             {pending ? "Generating…" : remaining > 0 ? "Make my story" : "Daily limit reached"}
           </span>
         </button>

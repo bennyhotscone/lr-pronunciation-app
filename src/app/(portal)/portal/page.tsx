@@ -17,13 +17,11 @@ import { DeskVocabRail } from "@/components/portal/DeskVocabRail";
 import { FreeStoryPracticeCard } from "@/components/story/FreeStoryPracticeCard";
 import { LearningPyramid } from "@/components/portal/LearningPyramid";
 import { DeskVocabPracticeCard } from "@/components/portal/DeskVocabPracticeCard";
-import { ClassMoneyBadge } from "@/components/portal/ClassMoneyBadge";
 import { compareVocabEntries } from "@/lib/vocab-sort";
 import { buildFreeLessonSummary } from "@/lib/lesson-summary";
 import { normalizeTag } from "@/lib/info-tag-links";
 import { isStoryWizardStep, stepLabel } from "@/lib/story/types";
 import { utcDayBounds } from "@/lib/vocab-practice";
-import { getOrCreateWalletBalance } from "@/lib/class-money-actions";
 
 function storyStatusLabel(status: string): string {
   switch (status) {
@@ -74,7 +72,7 @@ export default async function MyDeskPage({
     ? (sp.tab as OrganiserTab)
     : "stream";
 
-  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, goalsRaw, vocabRaw, classTags, storyAttempts, vocabPacks, packsToday, moneyBalance] =
+  const [klass, postsRaw, lessons, classFiles, deskFiles, homework, goalsRaw, vocabRaw, classTags, storyAttempts, vocabPacks, packsToday] =
     await Promise.all([
       classId
         ? prisma.class.findFirst({ where: { id: classId, archivedAt: null } })
@@ -175,7 +173,6 @@ export default async function MyDeskPage({
           where: { studentId, createdAt: { gte: start, lt: end } },
         });
       })(),
-      getOrCreateWalletBalance(studentId),
     ]);
 
   const vocabEntries = [...vocabRaw].sort(compareVocabEntries);
@@ -266,11 +263,10 @@ export default async function MyDeskPage({
             </p>
           </div>
         </div>
-        <ClassMoneyBadge balance={moneyBalance} />
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <section className="rounded-2xl p-2 sm:p-3">
+        <section>
           <LearningPyramid
             compact
             goals={goals.map((g) => ({
@@ -285,30 +281,32 @@ export default async function MyDeskPage({
           />
         </section>
 
-        <div className="space-y-6">
-          <DeskVocabRail
-            targetLang={profile?.targetLang || "zh-CN"}
-            entries={vocabEntries.map((e) => ({
-              id: e.id,
-              word: e.word,
-              translation: e.translation,
-              lookupCount: e.lookupCount,
-              frequencyRank: e.frequencyRank,
-              targetLang: e.targetLang,
-            }))}
-          />
-          <DeskVocabPracticeCard
-            packsToday={packsToday}
-            vocabCount={vocabEntries.length}
-            recentPacks={vocabPacks.map((p) => ({
-              id: p.id,
-              title: p.title,
-              createdAt: p.createdAt.toISOString(),
-              completedAt: p.completedAt?.toISOString() ?? null,
-              vocabUsed: p.vocabUsed,
-            }))}
-          />
-        </div>
+        <DeskVocabPracticeCard
+          packsToday={packsToday}
+          vocabCount={vocabEntries.length}
+          previewWords={vocabEntries.slice(0, 3).map((e) => e.word)}
+          recentPacks={vocabPacks.map((p) => ({
+            id: p.id,
+            title: p.title,
+            createdAt: p.createdAt.toISOString(),
+            completedAt: p.completedAt?.toISOString() ?? null,
+            vocabUsed: p.vocabUsed,
+          }))}
+        />
+      </div>
+
+      <div className="mt-6">
+        <DeskVocabRail
+          targetLang={profile?.targetLang || "zh-CN"}
+          entries={vocabEntries.map((e) => ({
+            id: e.id,
+            word: e.word,
+            translation: e.translation,
+            lookupCount: e.lookupCount,
+            frequencyRank: e.frequencyRank,
+            targetLang: e.targetLang,
+          }))}
+        />
       </div>
 
       {classId && klass ? (

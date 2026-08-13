@@ -65,7 +65,7 @@ export default async function PortalLayout({
           </div>
         </header>
         <main className="flex-1 py-6">{children}</main>
-        <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-[#f3f2ee]/97 backdrop-blur-sm">
+        <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-[#f3f2ee]">
           <ul className="mx-auto flex max-w-5xl items-stretch justify-around px-1 py-1">
             {studentLinks.map((l) => (
               <li key={l.href}>

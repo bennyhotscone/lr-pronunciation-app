@@ -26,7 +26,7 @@ export function DeskVocabRail({
   const more = entries.length - PREVIEW;
 
   return (
-    <section className="desk-panel rounded-2xl border-desk-accent/25 p-5 ring-1 ring-desk-accent/20">
+    <section className="desk-panel rounded-2xl p-5">
       <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-desk-accent">

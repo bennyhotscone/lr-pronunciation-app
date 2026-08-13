@@ -88,29 +88,17 @@ body {
 .theme-desk {
   --background: #f3f2ee;
   --foreground: #161412;
-  --surface: #ffffff;
+  --surface: #fffdf8;
   --muted: #4a4742;
   --border: #cdc8be;
   --accent: #0d5c4d;
   --accent-2: #0a4a3e;
   --ink: #161412;
-  --paper: #ffffff;
+  --paper: #fffdf8;
   --desk-accent: #0d5c4d;
   --focus: #0d5c4d;
   --shadow: 0 1px 2px rgba(22, 20, 18, 0.06);
   --desk-surface: #d8c3a3;
-  --desk-grain: rgba(60, 42, 24, 0.07);
-  --desk-blur: rgba(90, 110, 90, 0.18);
-  background:
-    radial-gradient(120% 80% at 50% -10%, var(--desk-blur), transparent 55%),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 11px,
-      var(--desk-grain) 12px
-    ),
-    linear-gradient(180deg, color-mix(in srgb, var(--desk-surface) 88%, #fff), var(--desk-surface));
-  background-attachment: local;
   color: var(--foreground);
   min-height: 100dvh;
 }
@@ -118,8 +106,6 @@ body {
 .theme-desk[data-desk-theme="slate"] {
   --background: #ece9e4;
   --desk-surface: #cfc6b8;
-  --desk-grain: rgba(40, 36, 30, 0.08);
-  --desk-blur: rgba(70, 85, 95, 0.16);
   --desk-accent: #2f4f4a;
   --accent: #2f4f4a;
   --accent-2: #243e3a;
@@ -129,8 +115,6 @@ body {
 .theme-desk[data-desk-theme="warm"] {
   --background: #f4eee6;
   --desk-surface: #e2c9a8;
-  --desk-grain: rgba(120, 70, 40, 0.08);
-  --desk-blur: rgba(180, 120, 90, 0.14);
   --desk-accent: #8a4b2f;
   --accent: #8a4b2f;
   --accent-2: #6e3b25;
@@ -140,8 +124,6 @@ body {
 .theme-desk[data-desk-theme="classic"] {
   --background: #efece6;
   --desk-surface: #d7cbb8;
-  --desk-grain: rgba(50, 40, 30, 0.09);
-  --desk-blur: rgba(80, 100, 120, 0.12);
   --desk-accent: #1f4e46;
   --accent: #1f4e46;
   --accent-2: #163832;
@@ -153,9 +135,8 @@ body {
   border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
   border-radius: 1.25rem;
   padding: 1.25rem 1rem 1.5rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.55));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  background: #f7f3e8;
+  box-shadow: 0 8px 28px rgba(40, 30, 18, 0.1);
 }
 
 .theme-desk[data-desk-theme="classic"] .desk-shell::before {
@@ -178,7 +159,7 @@ body {
 
 .theme-desk .card,
 .theme-desk .desk-panel {
-  background: #ffffff;
+  background: #fffdf8;
   border: 1px solid #cdc8be;
   color: #161412;
   box-shadow: 0 1px 2px rgba(22, 20, 18, 0.05);
@@ -616,45 +597,60 @@ body {
 }
 .mockup-chrome {
   isolation: isolate;
+  background: #f7f3e8;
+  box-shadow: 0 8px 28px rgba(40, 30, 18, 0.14);
 }
-.theme-desk .desk-shell {
-  border: none;
-  border-radius: 1.5rem;
-  padding: 1.25rem 1rem 1.75rem;
-  background-color: transparent;
+.mockup-solid-label {
+  background: #f7f1df;
+  color: #1f4e46;
+  border: 1px solid rgba(31, 78, 70, 0.18);
+  box-shadow: 0 1px 2px rgba(22, 20, 18, 0.06);
+}
+
+/* Calm soft-blur desk plate — never busy photo props behind content */
+.theme-desk {
+  --desk-plate-image: none;
+  background-color: #e8e0d2;
   background-image:
-    linear-gradient(180deg, rgba(255, 248, 235, 0.72), rgba(255, 248, 235, 0.55)),
-    var(--desk-plate-image);
-  background-size: cover, cover;
+    linear-gradient(180deg, rgba(247, 243, 232, 0.92), rgba(232, 224, 210, 0.88)),
+    url("/mockup-ui/desk-bg-soft.png");
+  background-size: auto, cover;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
-  box-shadow: 0 10px 36px rgba(40, 30, 18, 0.18);
+  background-attachment: local;
 }
 .theme-desk[data-desk-theme="slate"] {
-  --desk-plate-image: url("/mockup-ui/desk-plate-slate.png");
+  background-color: #ddd8cf;
+  background-image:
+    linear-gradient(180deg, rgba(236, 233, 228, 0.94), rgba(221, 216, 207, 0.9)),
+    url("/mockup-ui/desk-bg-soft.png");
 }
 .theme-desk[data-desk-theme="warm"] {
-  --desk-plate-image: url("/mockup-ui/desk-plate-warm.png");
+  background-color: #eadcc8;
+  background-image:
+    linear-gradient(180deg, rgba(244, 238, 230, 0.94), rgba(234, 220, 200, 0.9)),
+    url("/mockup-ui/desk-bg-soft.png");
 }
 .theme-desk[data-desk-theme="classic"] {
-  --desk-plate-image: url("/mockup-ui/desk-plate-classic.png");
-}
-.theme-desk[data-desk-theme="studio"] {
-  --desk-plate-image: url("/mockup-ui/desk-plate-trapper.png");
-}
-.theme-desk {
-  --desk-plate-image: url("/mockup-ui/desk-plate-classic.png");
+  background-color: #e4dccf;
   background-image:
-    linear-gradient(180deg, rgba(243, 236, 220, 0.55), rgba(220, 200, 170, 0.35)),
-    url("/mockup-ui/texture-wood-desk.png");
-  background-size: auto, 100% auto;
-  background-position: center, bottom;
-  background-repeat: no-repeat, repeat;
+    linear-gradient(180deg, rgba(239, 236, 230, 0.94), rgba(228, 220, 207, 0.9)),
+    url("/mockup-ui/desk-bg-soft.png");
 }
-.theme-desk .desk-panel {
-  background: rgba(255, 252, 245, 0.88);
+
+.theme-desk .desk-shell {
+  border: 1px solid rgba(90, 70, 40, 0.12);
+  border-radius: 1.5rem;
+  padding: 1.25rem 1rem 1.75rem;
+  background: #f7f3e8;
+  box-shadow: 0 10px 32px rgba(40, 30, 18, 0.12);
+}
+.theme-desk .desk-panel,
+.theme-desk .card {
+  background: #fffdf8;
   border: 1px solid rgba(90, 70, 40, 0.14);
-  backdrop-filter: blur(2px);
+  backdrop-filter: none;
+  box-shadow: 0 1px 3px rgba(22, 20, 18, 0.06);
 }
 .theme-desk[data-desk-theme="classic"] .desk-shell::before {
   display: none;
