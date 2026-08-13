@@ -32,8 +32,8 @@ export default async function PortalLayout({
 
   return (
     <div className="theme-desk min-h-dvh" data-desk-theme={deskTheme}>
-      <div className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col px-4 pb-24 pt-3 sm:px-6">
-        <header className="flex items-center justify-between gap-3 border-b border-border py-3">
+      <div className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 pb-24 pt-3 sm:px-6 lg:max-w-7xl lg:px-8">
+        <header className="flex items-center justify-between gap-3 border-b border-border/80 py-3">
           <Link href="/" className="text-ink">
             <BrandWordmark className="text-inherit" />
           </Link>
@@ -65,8 +65,8 @@ export default async function PortalLayout({
           </div>
         </header>
         <main className="flex-1 py-6">{children}</main>
-        <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-[#f3f2ee]">
-          <ul className="mx-auto flex max-w-5xl items-stretch justify-around px-1 py-1">
+        <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-[#f3f2ee]/95 backdrop-blur-sm">
+          <ul className="mx-auto flex max-w-6xl items-stretch justify-around px-1 py-1 lg:max-w-7xl">
             {studentLinks.map((l) => (
               <li key={l.href}>
                 <Link

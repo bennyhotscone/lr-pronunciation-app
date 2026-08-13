@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { generateDailyVocabPractice } from "@/lib/vocab-practice-actions";
 import { VOCAB_PRACTICE_DAILY_CAP } from "@/lib/vocab-practice";
-import { MOCKUP_UI } from "@/lib/mockup-ui";
 
 export type VocabPackSummary = {
   id: string;
@@ -48,61 +47,71 @@ export function DeskVocabPracticeCard({
   }
 
   return (
-    <section className="space-y-3">
-      <div className="mockup-chrome relative mx-auto max-w-md overflow-hidden rounded-2xl">
-        <img
-          src={MOCKUP_UI.dailyVocabCard}
-          alt="Daily vocab story"
-          className="mockup-img w-full"
-          width={1560}
-          height={2700}
-          decoding="async"
-        />
-
-        <div className="pointer-events-none absolute inset-x-[10%] top-[42%] flex flex-col items-center gap-2">
-          <p className="mockup-solid-label rounded-full px-3 py-1.5 text-center text-[0.7rem] font-bold">
-            Today&apos;s list: {vocabCount} {vocabCount === 1 ? "word" : "words"}
-            {remaining ? ` · ${remaining} left today` : " · daily limit reached"}
+    <section className="desk-panel space-y-4 rounded-2xl p-5 sm:p-6">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-desk-accent">
+            Practice
           </p>
-          {chips.length ? (
-            <div className="flex max-w-full flex-wrap justify-center gap-1.5">
-              {chips.map((w) => (
-                <span
-                  key={w}
-                  className="mockup-solid-label max-w-[6.5rem] truncate rounded-full px-2.5 py-1 text-[0.7rem] font-semibold"
-                >
-                  {w}
-                </span>
-              ))}
-              {vocabCount > chips.length ? (
-                <span className="mockup-solid-label rounded-full px-2.5 py-1 text-[0.7rem] font-semibold">
-                  …
-                </span>
-              ) : null}
-            </div>
+          <h2 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold leading-tight text-ink sm:text-3xl">
+            Daily Vocab Story
+          </h2>
+          <p className="mt-1.5 text-sm text-ink/55">
+            Uses your target vocab · about 3 minutes · {VOCAB_PRACTICE_DAILY_CAP} per day
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <span className="rounded-full border border-desk-accent/20 bg-[#eef5f2] px-3 py-1.5 text-xs font-bold text-desk-accent">
+            Today&apos;s list: {vocabCount} {vocabCount === 1 ? "word" : "words"}
+          </span>
+          <span className="rounded-full border border-wood/25 bg-[#f7f1df] px-3 py-1.5 text-xs font-bold text-ink/70">
+            {remaining > 0 ? `${remaining} left today` : "Daily limit reached"}
+          </span>
+        </div>
+      </div>
+
+      {chips.length ? (
+        <div className="flex flex-wrap gap-2">
+          {chips.map((w) => (
+            <span
+              key={w}
+              className="rounded-full border border-wood/25 bg-paper px-3 py-1 text-sm font-semibold text-ink"
+            >
+              {w}
+            </span>
+          ))}
+          {vocabCount > chips.length ? (
+            <span className="rounded-full border border-wood/20 bg-paper/80 px-3 py-1 text-sm font-semibold text-ink/50">
+              +{vocabCount - chips.length} more
+            </span>
           ) : null}
         </div>
+      ) : (
+        <p className="rounded-xl border border-dashed border-wood/30 bg-paper/80 px-3 py-2 text-sm text-ink/55">
+          Add words from PDF Read/Write, then generate a short practice story.
+        </p>
+      )}
 
+      <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
           disabled={pending || remaining <= 0}
           onClick={generate}
-          className="absolute bottom-[12%] left-[10%] right-[10%] h-[12%] overflow-hidden rounded-xl disabled:opacity-50"
-          aria-label={pending ? "Generating" : remaining > 0 ? "Make my story" : "Daily limit reached"}
+          className="btn-desk min-h-11 rounded-xl px-5 py-2.5 font-[family-name:var(--font-display)] text-lg font-bold disabled:opacity-50"
         >
-          <span
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${MOCKUP_UI.makeStoryBtn})` }}
-            aria-hidden
-          />
-          <span className="relative z-[1] flex h-full items-center justify-center bg-[#1f4e46]/75 px-3 font-[family-name:var(--font-display)] text-lg font-bold text-white">
-            {pending ? "Generating…" : remaining > 0 ? "Make my story" : "Daily limit reached"}
-          </span>
+          {pending ? "Generating…" : remaining > 0 ? "Make my story" : "Daily limit reached"}
         </button>
+        <Link
+          href="/portal/stories/open"
+          className="text-sm font-semibold text-desk-accent underline-offset-2 hover:underline"
+        >
+          Guided Story Writer →
+        </Link>
       </div>
+
       {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
 
-      <ul className="space-y-2 text-sm">
+      <ul className="space-y-2 border-t border-wood/15 pt-4 text-sm">
         {recentPacks.map((p) => (
           <li key={p.id}>
             <Link
@@ -120,11 +129,6 @@ export function DeskVocabPracticeCard({
         ))}
         {!recentPacks.length ? <li className="text-ink/45">No practice packs yet.</li> : null}
       </ul>
-      <p className="text-xs text-ink/50">
-        <Link href="/portal/stories/open" className="font-semibold text-desk-accent hover:underline">
-          Guided Story Writer →
-        </Link>
-      </p>
     </section>
   );
 }

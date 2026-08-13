@@ -11,7 +11,6 @@ import {
   studentMoveResource,
   studentToggleStar,
 } from "@/lib/file-library-actions";
-import { MOCKUP_UI } from "@/lib/mockup-ui";
 
 export type StudentFileItem = {
   id: string;
@@ -111,17 +110,6 @@ export function StudentFilesBrowser({
 
   return (
     <div className="space-y-4">
-      <div className="mockup-chrome overflow-hidden rounded-2xl">
-        <img
-          src={MOCKUP_UI.foldersPanel}
-          alt=""
-          className="mockup-img max-h-36 w-full object-cover object-top sm:max-h-44"
-          width={1600}
-          height={900}
-          decoding="async"
-        />
-      </div>
-
       <div className="flex flex-wrap items-center gap-2">
         <input
           type="search"
@@ -206,22 +194,20 @@ export function StudentFilesBrowser({
 
       {!starsOnly && childFolders.length ? (
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {childFolders.map((folder, idx) => (
+          {childFolders.map((folder) => (
             <li key={folder.id}>
               <button
                 type="button"
                 onClick={() => setFolderId(folder.id)}
-                className="mockup-chrome relative flex w-full flex-col overflow-hidden rounded-xl text-left shadow-sm ring-1 ring-black/5 hover:ring-desk-accent/40"
+                className="flex w-full flex-col rounded-xl border border-[#d8cbb6] bg-[#faf7f0] p-3 text-left shadow-sm transition hover:border-desk-accent/40 hover:bg-white"
               >
-                <img
-                  src={MOCKUP_UI.folderTiles[idx % MOCKUP_UI.folderTiles.length]}
-                  alt=""
-                  className="mockup-img aspect-[4/3] w-full object-cover"
-                  width={700}
-                  height={525}
-                  decoding="async"
-                />
-                <span className="absolute inset-x-2 bottom-2 rounded-md bg-[#f7f1df]/92 px-2 py-1 text-sm font-semibold text-ink shadow-sm">
+                <span
+                  className="mb-3 flex h-14 items-end rounded-lg bg-gradient-to-b from-[#e8d9b8] to-[#c9a96a] px-3 pb-2 shadow-inner"
+                  aria-hidden
+                >
+                  <span className="h-2 w-10 rounded-sm bg-[#b8924f]/80" />
+                </span>
+                <span className="break-words text-sm font-semibold leading-snug text-ink">
                   {folder.name}
                 </span>
               </button>

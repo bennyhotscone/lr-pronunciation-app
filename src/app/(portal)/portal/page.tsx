@@ -225,34 +225,32 @@ export default async function MyDeskPage({
 
   return (
     <div className="desk-shell">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <span
-            className="inline-flex h-16 w-16 items-center justify-center rounded-full text-4xl shadow"
-            style={{ background: avatar.bg }}
-            aria-hidden
-          >
-            {avatar.emoji}
-          </span>
-          <div>
-            <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
-              My Desk
-            </h1>
-            <p className="mt-1 text-ink/60">
-              Welcome back, {name}.
-              {klass ? (
-                <>
-                  {" "}
-                  <span className="text-ink/45">·</span>{" "}
-                  <span className="font-semibold text-ink/70">{klass.name}</span>
-                </>
-              ) : null}
-            </p>
-          </div>
+      <header className="flex flex-wrap items-center gap-4 border-b border-wood/15 pb-5">
+        <span
+          className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-3xl shadow-sm sm:h-16 sm:w-16 sm:text-4xl"
+          style={{ background: avatar.bg }}
+          aria-hidden
+        >
+          {avatar.emoji}
+        </span>
+        <div className="min-w-0">
+          <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+            My Desk
+          </h1>
+          <p className="mt-1 text-sm text-ink/60 sm:text-base">
+            Welcome back, {name}.
+            {klass ? (
+              <>
+                {" "}
+                <span className="text-ink/40">·</span>{" "}
+                <span className="font-semibold text-ink/70">{klass.name}</span>
+              </>
+            ) : null}
+          </p>
         </div>
-      </div>
+      </header>
 
-      <div className="mt-8">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-start">
         <DeskVocabPracticeCard
           packsToday={packsToday}
           vocabCount={vocabEntries.length}
@@ -265,9 +263,6 @@ export default async function MyDeskPage({
             vocabUsed: p.vocabUsed,
           }))}
         />
-      </div>
-
-      <div className="mt-6">
         <DeskVocabRail
           targetLang={profile?.targetLang || "zh-CN"}
           entries={vocabEntries.map((e) => ({

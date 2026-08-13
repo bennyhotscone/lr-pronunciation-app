@@ -134,9 +134,17 @@ body {
   position: relative;
   border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
   border-radius: 1.25rem;
-  padding: 1.25rem 1rem 1.5rem;
+  padding: 1.35rem 1.1rem 1.75rem;
   background: #f7f3e8;
   box-shadow: 0 8px 28px rgba(40, 30, 18, 0.1);
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .desk-shell {
+    padding: 1.75rem 1.75rem 2.25rem;
+    border-radius: 1.5rem;
+  }
 }
 
 .theme-desk[data-desk-theme="classic"] .desk-shell::before {
@@ -607,43 +615,45 @@ body {
   box-shadow: 0 1px 2px rgba(22, 20, 18, 0.06);
 }
 
-/* Calm soft-blur desk plate — never busy photo props behind content */
+/* Calm desk surface — soft wash only; no busy photo props behind content */
 .theme-desk {
   --desk-plate-image: none;
-  background-color: #e8e0d2;
+  background-color: #e6e0d6;
   background-image:
-    linear-gradient(180deg, rgba(247, 243, 232, 0.92), rgba(232, 224, 210, 0.88)),
-    url("/mockup-ui/desk-bg-soft.png");
-  background-size: auto, cover;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: local;
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 252, 245, 0.75), transparent 60%),
+    linear-gradient(180deg, #efe9df 0%, #e2dbd0 100%);
 }
 .theme-desk[data-desk-theme="slate"] {
   background-color: #ddd8cf;
   background-image:
-    linear-gradient(180deg, rgba(236, 233, 228, 0.94), rgba(221, 216, 207, 0.9)),
-    url("/mockup-ui/desk-bg-soft.png");
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(248, 246, 242, 0.8), transparent 60%),
+    linear-gradient(180deg, #ece8e1 0%, #d8d3ca 100%);
 }
 .theme-desk[data-desk-theme="warm"] {
   background-color: #eadcc8;
   background-image:
-    linear-gradient(180deg, rgba(244, 238, 230, 0.94), rgba(234, 220, 200, 0.9)),
-    url("/mockup-ui/desk-bg-soft.png");
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 248, 236, 0.85), transparent 60%),
+    linear-gradient(180deg, #f3e8d8 0%, #e5d5bf 100%);
 }
 .theme-desk[data-desk-theme="classic"] {
   background-color: #e4dccf;
   background-image:
-    linear-gradient(180deg, rgba(239, 236, 230, 0.94), rgba(228, 220, 207, 0.9)),
-    url("/mockup-ui/desk-bg-soft.png");
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(250, 246, 238, 0.8), transparent 60%),
+    linear-gradient(180deg, #efeae2 0%, #ddd5c8 100%);
 }
 
 .theme-desk .desk-shell {
   border: 1px solid rgba(90, 70, 40, 0.12);
   border-radius: 1.5rem;
-  padding: 1.25rem 1rem 1.75rem;
+  padding: 1.35rem 1.1rem 1.75rem;
   background: #f7f3e8;
-  box-shadow: 0 10px 32px rgba(40, 30, 18, 0.12);
+  box-shadow: 0 10px 32px rgba(40, 30, 18, 0.1);
+  overflow: visible;
+}
+@media (min-width: 768px) {
+  .theme-desk .desk-shell {
+    padding: 1.85rem 2rem 2.35rem;
+  }
 }
 .theme-desk .desk-panel,
 .theme-desk .card {
@@ -651,6 +661,7 @@ body {
   border: 1px solid rgba(90, 70, 40, 0.14);
   backdrop-filter: none;
   box-shadow: 0 1px 3px rgba(22, 20, 18, 0.06);
+  overflow: visible;
 }
 .theme-desk[data-desk-theme="classic"] .desk-shell::before {
   display: none;
