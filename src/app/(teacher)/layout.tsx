@@ -23,6 +23,9 @@ export default async function TeacherLayout({
               <Link href="/teacher" className="hover:text-chalk-accent">
                 Classrooms
               </Link>
+              <Link href="/teacher/lesson-capture" className="hover:text-chalk-accent">
+                Lesson capture
+              </Link>
               {admin ? (
                 <>
                   <span className="rounded bg-chalk-accent/20 px-2 py-0.5 text-xs text-chalk-accent">

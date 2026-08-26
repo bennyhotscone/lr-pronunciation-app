@@ -16,6 +16,11 @@ export function llmConfigured(): boolean {
   );
 }
 
+/** Optional Lesson Capture screenshot vision (OpenAI only). Free notes path uses callLlm / llmConfigured(). */
+export function visionLlmConfigured(): boolean {
+  return Boolean(process.env.OPENAI_API_KEY?.trim());
+}
+
 export async function callLlm(opts: {
   system: string;
   user: string;
@@ -104,6 +109,85 @@ export async function callLlm(opts: {
     return null;
   }
   return null;
+}
+
+export type LlmVisionImage = {
+  mimeType: string;
+  base64: string;
+};
+
+export type LlmVisionCallResult =
+  | { ok: true; text: string; provider: "openai" }
+  | { ok: false; error: string };
+
+/** Vision LLM — OpenAI gpt-4o-mini (requires OPENAI_API_KEY). */
+export async function callLlmVision(opts: {
+  system: string;
+  userText: string;
+  images: LlmVisionImage[];
+  temperature?: number;
+  maxTokens?: number;
+}): Promise<LlmVisionCallResult> {
+  if (!process.env.OPENAI_API_KEY?.trim()) {
+    return {
+      ok: false,
+      error: "OPENAI_API_KEY is not set. Add it to .env.local and restart the server.",
+    };
+  }
+  if (!opts.images.length) {
+    return { ok: false, error: "No screenshot frames available for vision analysis." };
+  }
+
+  const temperature = opts.temperature ?? 0.3;
+  const maxTokens = opts.maxTokens ?? 2000;
+
+  const imageParts = opts.images.map((img) => ({
+    type: "image_url" as const,
+    image_url: {
+      url: `data:${img.mimeType};base64,${img.base64}`,
+      detail: "low" as const,
+    },
+  }));
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY.trim()}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: process.env.OPENAI_VISION_MODEL?.trim() || "gpt-4o-mini",
+        temperature,
+        max_tokens: maxTokens,
+        messages: [
+          { role: "system", content: opts.system },
+          {
+            role: "user",
+            content: [{ type: "text", text: opts.userText }, ...imageParts],
+          },
+        ],
+      }),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      return {
+        ok: false,
+        error: `OpenAI vision HTTP ${res.status}: ${body.slice(0, 300) || res.statusText}`,
+      };
+    }
+    const data = (await res.json()) as {
+      choices?: { message?: { content?: string } }[];
+    };
+    const text = data.choices?.[0]?.message?.content?.trim();
+    if (text) return { ok: true, text, provider: "openai" };
+    return { ok: false, error: "OpenAI vision returned an empty response." };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "OpenAI vision request failed.",
+    };
+  }
 }
 
 export function extractJsonObject(raw: string): unknown | null {

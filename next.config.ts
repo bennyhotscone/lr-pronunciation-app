@@ -7,6 +7,8 @@ import type { NextConfig } from "next";
  * workers fail or when browsers warn about missing COOP/COEP.
  */
 const nextConfig: NextConfig = {
+  // tesseract.js loads WASM/workers at runtime — keep it external to the bundler.
+  serverExternalPackages: ["tesseract.js"],
   async redirects() {
     return [
       // Legacy singular path (bookmarks / old screenshots used /teacher/class/:id)

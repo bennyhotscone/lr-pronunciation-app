@@ -93,6 +93,8 @@ model User {
   classWallet             ClassWallet?
   moneyAwardsAuthored     MoneyLedger[]     @relation("MoneyAwardAuthor")
   vocabPracticePacks      VocabPracticePack[]
+  lessonCaptureSessionsAsTeacher LessonCaptureSession[] @relation("LessonCaptureTeacher")
+  lessonCaptureSessionsAsStudent LessonCaptureSession[] @relation("LessonCaptureStudent")
 }
 
 model StudentProfile {
@@ -284,7 +286,7 @@ model Goal {
   progressPct   Int        @default(0)
   teacherNotes  String?
   studentNotes  String?
-  /// TEACHER = accountability (teacher ticks). STUDENT_HELP = self-study from “need more help” (student ticks).
+  /// TEACHER = accountability (teacher ticks). STUDENT_HELP = self-study from â€œneed more helpâ€ (student ticks).
   source        String     @default("TEACHER")
   /// Optional topic tag that created a STUDENT_HELP goal.
   topicTag      String?
@@ -417,7 +419,7 @@ model ClassPostAttachment {
   blobUrl      String
   mimeType     String
   sizeBytes    Int?
-  /// INFO | EXERCISE — same baskets as class files / lesson attachments.
+  /// INFO | EXERCISE â€” same baskets as class files / lesson attachments.
   materialKind String   @default("INFO")
   createdAt    DateTime @default(now())
 
@@ -517,7 +519,7 @@ model ClassLessonAttachment {
   mimeType     String
   sizeBytes    Int?
   resourceId   String?
-  /// INFO | EXERCISE — same baskets as class files / feed attachments.
+  /// INFO | EXERCISE â€” same baskets as class files / feed attachments.
   materialKind String   @default("INFO")
   createdAt    DateTime @default(now())
 
@@ -795,7 +797,7 @@ model StoryTeacherFeedback {
   createdBy User         @relation("StoryFeedbackAuthor", fields: [createdById], references: [id])
 }
 
-/// Class money balance (teacher awards only — no student appeals).
+/// Class money balance (teacher awards only â€” no student appeals).
 model ClassWallet {
   id        String   @id @default(cuid())
   studentId String   @unique
@@ -841,4 +843,104 @@ model VocabPracticePack {
   student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@index([studentId, createdAt])
+}
+
+/// Teacher 1:1 lesson capture â€” screen frames, AI summary, notes + worksheets.
+enum LessonCaptureStatus {
+  ACTIVE
+  PROCESSING
+  COMPLETE
+  ENDED
+  FAILED
+}
+
+model LessonCaptureSession {
+  id              String              @id @default(cuid())
+  studentId       String
+  teacherId       String
+  startedAt       DateTime            @default(now())
+  endedAt         DateTime?
+  notes           String?
+  topicsCovered   String[]            @default([])
+  /// Visual content transcript (frames deleted after processing).
+  transcript      String?
+  summary         String?
+  autoNotes       String?
+  timeline        Json?
+  framesCaptured  Int                 @default(0)
+  processingError String?
+  status          LessonCaptureStatus @default(ACTIVE)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  student     User                      @relation("LessonCaptureStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  teacher     User                      @relation("LessonCaptureTeacher", fields: [teacherId], references: [id], onDelete: Cascade)
+  liveNotes   LessonCaptureNote[]
+  attachments LessonCaptureAttachment[]
+  frames      LessonCaptureFrame[]
+  audioChunks LessonCaptureAudioChunk[]
+
+  @@index([teacherId, status])
+  @@index([teacherId, startedAt])
+  @@index([studentId, startedAt])
+}
+
+model LessonCaptureFrame {
+  id         String   @id @default(cuid())
+  sessionId  String
+  frameIndex Int
+  blobPath   String
+  blobUrl    String
+  mimeType   String   @default("image/webp")
+  sizeBytes  Int?
+  capturedAt DateTime @default(now())
+
+  session LessonCaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, frameIndex])
+  @@index([sessionId, frameIndex])
+}
+
+/// Deferred â€” voice recording not in MVP.
+model LessonCaptureAudioChunk {
+  id              String   @id @default(cuid())
+  sessionId       String
+  chunkIndex      Int
+  blobPath        String
+  blobUrl         String
+  mimeType        String
+  sizeBytes       Int?
+  transcribedText String?
+  createdAt       DateTime @default(now())
+
+  session LessonCaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, chunkIndex])
+  @@index([sessionId])
+}
+
+model LessonCaptureNote {
+  id        String   @id @default(cuid())
+  sessionId String
+  body      String
+  createdAt DateTime @default(now())
+
+  session LessonCaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+}
+
+model LessonCaptureAttachment {
+  id        String   @id @default(cuid())
+  sessionId String
+  filename  String
+  blobPath  String
+  blobUrl   String
+  mimeType  String
+  sizeBytes Int?
+  createdAt DateTime @default(now())
+
+  session LessonCaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
 }
