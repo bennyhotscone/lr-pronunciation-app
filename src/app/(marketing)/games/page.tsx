@@ -9,6 +9,16 @@ export const metadata: Metadata = {
 
 const games = [
   {
+    href: "/login?callbackUrl=/portal/learn-japanese",
+    title: "Learn Japanese",
+    subtitle: "日本語 · First 100 words",
+    description:
+      "Five-stage vocabulary training with mnemonics, audio, and typing drills. Progress saves to your student account.",
+    className:
+      "border-[#c41e3a]/35 bg-gradient-to-br from-[#fff5f6] via-white to-[#fde8ec]",
+    mutedClass: "text-muted",
+  },
+  {
     href: "/english-for-mandarin-speakers",
     title: "English for Mandarin Speakers",
     subtitle: "中文母语者英语课程",

@@ -10,6 +10,7 @@ import {
   resolveWord,
   startFormalRound,
   transitionRound1ToRound2,
+  updateMetaAfterRound,
 } from "@/lib/japanese/engine";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { JAPANESE_MASTERY_THRESHOLD } from "@/lib/japanese/config";
@@ -17,7 +18,6 @@ import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { speakJapanese } from "@/lib/japanese/tts";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
 import {
-  completeJapaneseRound,
   loadJapaneseProgress,
   recordJapaneseWordResult,
   resetJapaneseBlockProgress,
@@ -211,11 +211,17 @@ export function JapaneseLearningApp() {
     const nextSession = advanceFormalQuestion(session);
     if (nextSession.qIndex >= nextSession.order.length && meta) {
       const round = Number(session.phase.replace("round", "")) as 2 | 3 | 4 | 5;
-      const scorePct = Math.round((session.score / nextSession.order.length) * 100);
+      const scorePct = Math.round(
+        (session.score / Math.max(nextSession.order.length, 1)) * 100,
+      );
+      const nextMeta = updateMetaAfterRound(meta, round, scorePct);
+      setSession(nextSession);
+      setMeta(nextMeta);
+      if (saveTimer.current) clearTimeout(saveTimer.current);
       startTransition(async () => {
-        const result = await completeJapaneseRound(BLOCK, nextSession, meta, round, scorePct);
-        if ("meta" in result) setMeta(result.meta);
+        await saveJapaneseProgress(BLOCK, nextSession, nextMeta);
       });
+      return;
     }
     setSession(nextSession);
     persist(nextSession, meta);

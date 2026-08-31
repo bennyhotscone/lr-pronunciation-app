@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export default function MarketingLayout({
@@ -14,17 +13,10 @@ export default function MarketingLayout({
         </div>
       </div>
       <main className="relative z-10 w-full">{children}</main>
-      <footer className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 py-10 sm:px-6 lg:px-8">
+      <footer className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-10 sm:px-6 lg:px-8">
         <span className="font-[family-name:var(--font-display)] text-xs tracking-[0.14em] text-muted">
           LR Mastery
         </span>
-        <Link
-          href="/login?callbackUrl=/portal/learn-japanese"
-          className="text-[11px] tracking-wide text-muted/50 transition hover:text-muted/80"
-          title="Learn Japanese"
-        >
-          日本語
-        </Link>
       </footer>
     </div>
   );
