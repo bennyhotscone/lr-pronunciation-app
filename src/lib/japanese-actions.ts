@@ -11,14 +11,16 @@ import {
   updateMetaAfterRound,
 } from "@/lib/japanese/engine";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
+import { isStaff } from "@/lib/portal-access";
 import { revalidatePath } from "next/cache";
 
 const LEARN_PATH = "/portal/learn-japanese";
 
-async function requireStudent() {
+async function requireJapaneseLearner() {
   const session = await auth();
-  if (!session?.user?.id || session.user.role !== "STUDENT") return null;
-  return session;
+  if (!session?.user?.id) return null;
+  if (session.user.role === "STUDENT" || isStaff(session.user.role)) return session;
+  return null;
 }
 
 export type JapaneseProgressPayload = {
@@ -34,7 +36,7 @@ export type JapaneseProgressPayload = {
 export async function loadJapaneseProgress(
   blockNumber = 1,
 ): Promise<{ error: string } | JapaneseProgressPayload> {
-  const session = await requireStudent();
+  const session = await requireJapaneseLearner();
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
@@ -80,7 +82,7 @@ export async function saveJapaneseProgress(
   sessionState: JapaneseSessionState,
   meta: JapaneseBlockMeta,
 ): Promise<{ ok: true } | { error: string }> {
-  const session = await requireStudent();
+  const session = await requireJapaneseLearner();
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
@@ -130,7 +132,7 @@ export async function recordJapaneseWordResult(
   wordIndex: number,
   correct: boolean,
 ): Promise<{ ok: true } | { error: string }> {
-  const session = await requireStudent();
+  const session = await requireJapaneseLearner();
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
@@ -179,7 +181,7 @@ export async function saveJapaneseWordOverride(
   field: "mnemonic" | "pronunciationCue" | "ttsInput",
   value: string | null,
 ): Promise<{ ok: true } | { error: string }> {
-  const session = await requireStudent();
+  const session = await requireJapaneseLearner();
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
@@ -220,7 +222,7 @@ export async function saveJapaneseWordOverride(
 export async function resetJapaneseBlockProgress(
   blockNumber: number,
 ): Promise<{ ok: true } | { error: string }> {
-  const session = await requireStudent();
+  const session = await requireJapaneseLearner();
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;

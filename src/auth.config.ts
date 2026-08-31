@@ -82,7 +82,12 @@ export const authConfig = {
         return true;
       }
 
+      const isLearnJapanese =
+        pathname === "/portal/learn-japanese" ||
+        pathname.startsWith("/portal/learn-japanese/");
+
       if (isPortal && role && role !== "STUDENT") {
+        if (isLearnJapanese && isStaff(role)) return true;
         return Response.redirect(new URL("/teacher", request.nextUrl.origin));
       }
       if (isTeacher && role && !isStaff(role)) {

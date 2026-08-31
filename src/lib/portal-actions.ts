@@ -78,7 +78,13 @@ export async function loginAction(formData: FormData) {
   const safeCallback = normalizeAppCallback(callbackUrl);
   const defaultDest = homeForRole(user.role);
   let redirectTo = safeCallback || defaultDest;
-  if (isStaff(user.role) && redirectTo.startsWith("/portal")) redirectTo = "/teacher";
+  if (
+    isStaff(user.role) &&
+    redirectTo.startsWith("/portal") &&
+    !redirectTo.startsWith("/portal/learn-japanese")
+  ) {
+    redirectTo = "/teacher";
+  }
   if (user.role === "STUDENT" && redirectTo.startsWith("/teacher")) redirectTo = "/portal";
   if (user.role !== "ADMIN" && redirectTo.startsWith("/english-for-mandarin-speakers/studio")) {
     redirectTo = defaultDest;

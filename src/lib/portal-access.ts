@@ -42,6 +42,15 @@ export async function requireStaff() {
   return session;
 }
 
+/** Learn Japanese: students save progress; staff may use it too. */
+export async function requireJapaneseLearner() {
+  const session = await requireSession();
+  if (session.user.role !== "STUDENT" && !isStaff(session.user.role)) {
+    redirect(homeForRole(session.user.role));
+  }
+  return session;
+}
+
 /** Mandarin Studio + admin-only actions. */
 export async function requireAdmin() {
   const session = await requireSession();
