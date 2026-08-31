@@ -95,6 +95,9 @@ model User {
   vocabPracticePacks      VocabPracticePack[]
   lessonCaptureSessionsAsTeacher LessonCaptureSession[] @relation("LessonCaptureTeacher")
   lessonCaptureSessionsAsStudent LessonCaptureSession[] @relation("LessonCaptureStudent")
+  japaneseBlockProgress        JapaneseBlockProgress[]
+  japaneseWordOverrides        JapaneseWordOverride[]
+  japaneseWordStats              JapaneseWordStat[]
 }
 
 model StudentProfile {
@@ -943,4 +946,74 @@ model LessonCaptureAttachment {
   session LessonCaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@index([sessionId])
+}
+
+/// Japanese learning block progress (five-round engine per block).
+model JapaneseBlockProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  blockNumber     Int      @default(1)
+  /// round1 | round2 | round3 | round4 | round5
+  phase           String   @default("round1")
+  introIndex      Int      @default(0)
+  inMini          Boolean  @default(false)
+  miniIndex       Int      @default(0)
+  /// Word indices for mini-review queue
+  miniQueue       Json     @default("[]")
+  qIndex          Int      @default(0)
+  score           Int      @default(0)
+  /// Shuffled word indices for formal rounds 2–5
+  order           Json     @default("[]")
+  /// Word indices missed in current round
+  missed          Json     @default("[]")
+  /// { "2": 85, "3": 90, ... } round completion scores (%)
+  roundScores     Json     @default("{}")
+  bestRound5Score Int      @default(0)
+  blockMastered   Boolean  @default(false)
+  /// Block numbers the student may access (Block 1 always unlocked)
+  unlockedBlocks  Int[]    @default([1])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockNumber])
+  @@index([userId])
+}
+
+/// Per-user word customizations (mnemonic, pronunciation cue, TTS input).
+model JapaneseWordOverride {
+  id               String   @id @default(cuid())
+  userId           String
+  blockNumber      Int
+  wordIndex        Int
+  mnemonic         String?
+  pronunciationCue String?
+  ttsInput         String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockNumber, wordIndex])
+  @@index([userId, blockNumber])
+}
+
+/// Per-word learning stats for a user within a block.
+model JapaneseWordStat {
+  id           String    @id @default(cuid())
+  userId       String
+  blockNumber  Int
+  wordIndex    Int
+  timesSeen    Int       @default(0)
+  timesCorrect Int       @default(0)
+  timesMissed  Int       @default(0)
+  lastSeenAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockNumber, wordIndex])
+  @@index([userId, blockNumber])
 }

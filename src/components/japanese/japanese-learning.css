@@ -1,0 +1,37 @@
+﻿/* Japanese learning — reference mobile UX within LR Mastery desk theme */
+.jp-learn-wrap { max-width: 900px; margin: 0 auto; }
+.jp-learn-header { border-bottom: 1px solid var(--border); padding-bottom: 1.125rem; margin-bottom: 1.25rem; }
+.jp-learn-meta { font-size: 0.86rem; color: var(--muted); font-weight: 700; letter-spacing: 0.03em; }
+.jp-learn-title { font-size: clamp(2rem, 6vw, 3.5rem); line-height: 0.95; letter-spacing: -0.04em; margin: 0; font-family: var(--font-display), serif; font-weight: 600; }
+.jp-learn-sub { color: var(--muted); line-height: 1.5; margin-top: 0.5rem; }
+.jp-learn-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.125rem 0; }
+.jp-learn-btn { font: inherit; border: 1px solid #222; background: var(--paper); padding: 0.7rem 0.875rem; border-radius: 10px; cursor: pointer; font-weight: 600; }
+.jp-learn-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.jp-learn-btn-primary { background: #222; color: #fff; border-color: #222; }
+.jp-learn-card { background: var(--paper); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem; }
+.jp-learn-mnemonic { background: #ece7dd; padding: 1rem; border-radius: 12px; margin: 1rem 0; line-height: 1.55; font-size: 1.05rem; }
+.jp-learn-mnemonic strong { display: block; margin-bottom: 0.3rem; }
+.jp-learn-big { font-size: 2rem; font-weight: 800; margin: 0.75rem 0; }
+.jp-learn-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.625rem; margin-top: 1.125rem; }
+.jp-learn-choice { min-height: 58px; text-align: left; background: var(--paper); }
+.jp-learn-choice-correct { background: #dff3e4; border-color: #4f8a5b; }
+.jp-learn-choice-wrong { background: #f7dddd; border-color: #a95d5d; }
+.jp-learn-reveal { margin-top: 1.125rem; padding: 1rem; border-top: 1px solid var(--border); }
+.jp-learn-jp { font-size: 1.8rem; }
+.jp-learn-romaji { font-size: 1.2rem; font-weight: 750; margin-top: 0.2rem; }
+.jp-learn-english { color: var(--muted); margin-top: 0.15rem; }
+.jp-learn-progress { height: 10px; background: #ddd7cb; border-radius: 99px; overflow: hidden; margin: 0.625rem 0 0.25rem; }
+.jp-learn-progress > div { height: 100%; background: #222; width: 0%; transition: width 0.25s ease; }
+.jp-learn-wordgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 0.625rem; }
+.jp-learn-word { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; padding: 0.9375rem; }
+.jp-learn-word .jp-learn-mnemonic { font-size: 0.9rem; padding: 0.625rem; margin: 0.625rem 0 0; }
+.jp-learn-status { font-weight: 750; margin-top: 0.8125rem; min-height: 1.5rem; }
+.jp-learn-input { width: 100%; font: inherit; font-size: 1.2rem; padding: 0.9375rem; border: 1px solid #555; border-radius: 10px; background: var(--paper); margin-top: 1rem; }
+.jp-learn-prompt-en { font-size: 2rem; font-weight: 800; margin: 1.125rem 0 0.5rem; }
+.jp-learn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+.jp-learn-romaji-lg { font-size: 1.35rem; font-weight: 800; }
+.jp-learn-romaji-xl { font-size: 1.4rem; font-weight: 850; margin-bottom: 0.5rem; }
+.jp-learn-edit-panel { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
+.jp-learn-edit-panel label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 0.25rem; }
+.jp-learn-edit-panel textarea, .jp-learn-edit-panel input { width: 100%; font: inherit; font-size: 0.875rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--paper); margin-bottom: 0.5rem; }
+@media (max-width: 620px) { .jp-learn-choices { grid-template-columns: 1fr; } }

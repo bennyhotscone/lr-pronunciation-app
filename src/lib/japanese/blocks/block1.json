@@ -1,0 +1,702 @@
+[
+  {
+    "jp": "私",
+    "audio": "わたし",
+    "r": "watashi",
+    "en": "I / me",
+    "m": "“What? Ah, SHE?” — “No, ME!” → watashi."
+  },
+  {
+    "jp": "あなた",
+    "audio": "あなた",
+    "r": "anata",
+    "en": "you",
+    "m": "Point at ANOTHER person: “Not me — YOU.” → anata."
+  },
+  {
+    "jp": "人",
+    "audio": "ひと",
+    "r": "hito",
+    "en": "person",
+    "m": "“HE told” that PERSON. → hito."
+  },
+  {
+    "jp": "友達",
+    "audio": "ともだち",
+    "r": "tomodachi",
+    "en": "friend",
+    "m": "TOMO is my buddy, my FRIEND. → tomodachi."
+  },
+  {
+    "jp": "男",
+    "audio": "おとこ",
+    "r": "otoko",
+    "en": "man",
+    "m": "OTTO is a MAN. → otoko."
+  },
+  {
+    "jp": "女",
+    "audio": "おんな",
+    "r": "onna",
+    "en": "woman",
+    "m": "“Oh, Nanna!” Nanna is a WOMAN. → onna."
+  },
+  {
+    "jp": "子供",
+    "audio": "こども",
+    "r": "kodomo",
+    "en": "child",
+    "m": "COCO’s DOpey MOppet is a CHILD. → kodomo."
+  },
+  {
+    "jp": "名前",
+    "audio": "なまえ",
+    "r": "namae",
+    "en": "name",
+    "m": "“NAME, eh?” → namae = name."
+  },
+  {
+    "jp": "行く",
+    "audio": "いく",
+    "r": "iku",
+    "en": "go",
+    "m": "“EEK! Ooh!” Something scary appears, so you GO. → iku."
+  },
+  {
+    "jp": "来る",
+    "audio": "くる",
+    "r": "kuru",
+    "en": "come",
+    "m": "The CREW is COMING. → kuru."
+  },
+  {
+    "jp": "帰る",
+    "audio": "かえる",
+    "r": "kaeru",
+    "en": "return / go home",
+    "m": "“CARE to RETURN home?” → kaeru."
+  },
+  {
+    "jp": "食べる",
+    "audio": "たべる",
+    "r": "taberu",
+    "en": "eat",
+    "m": "Sit at the TABLE to EAT. → taberu."
+  },
+  {
+    "jp": "飲む",
+    "audio": "のむ",
+    "r": "nomu",
+    "en": "drink",
+    "m": "Someone takes your glass: “NO MORE drinks!” → nomu."
+  },
+  {
+    "jp": "見る",
+    "audio": "みる",
+    "r": "miru",
+    "en": "see / watch",
+    "m": "Look in the MIRROR to SEE yourself. → miru."
+  },
+  {
+    "jp": "聞く",
+    "audio": "きく",
+    "r": "kiku",
+    "en": "listen / ask",
+    "m": "“KICK who?” You ASK because you didn’t HEAR. → kiku."
+  },
+  {
+    "jp": "話す",
+    "audio": "はなす",
+    "r": "hanasu",
+    "en": "speak / talk",
+    "m": "HANNAH’S the one who loves to TALK. → hanasu."
+  },
+  {
+    "jp": "言う",
+    "audio": "いう",
+    "r": "iu",
+    "en": "say",
+    "m": "“YOU SAY it.” → iu."
+  },
+  {
+    "jp": "読む",
+    "audio": "よむ",
+    "r": "yomu",
+    "en": "read",
+    "m": "“YO, I’m READing.” → yomu."
+  },
+  {
+    "jp": "書く",
+    "audio": "かく",
+    "r": "kaku",
+    "en": "write",
+    "m": "A cockatoo grabs a pen and WRITES: “KA-KU!” → kaku."
+  },
+  {
+    "jp": "知る",
+    "audio": "しる",
+    "r": "shiru",
+    "en": "know",
+    "m": "“SURE, I KNOW.” → shiru."
+  },
+  {
+    "jp": "分かる",
+    "audio": "わかる",
+    "r": "wakaru",
+    "en": "understand",
+    "m": "When you don’t understand: “WAKA? nah…” Wakaranai. Base wakaru = UNDERSTAND."
+  },
+  {
+    "jp": "する",
+    "audio": "する",
+    "r": "suru",
+    "en": "do",
+    "m": "SUE will DO it. → suru."
+  },
+  {
+    "jp": "できる",
+    "audio": "できる",
+    "r": "dekiru",
+    "en": "can / be able",
+    "m": "The DECK CREW CAN do it. → dekiru."
+  },
+  {
+    "jp": "買う",
+    "audio": "かう",
+    "r": "kau",
+    "en": "buy",
+    "m": "“COW? Fine, I’ll BUY it.” → kau."
+  },
+  {
+    "jp": "使う",
+    "audio": "つかう",
+    "r": "tsukau",
+    "en": "use",
+    "m": "TWO COWS USE the machine. → tsukau."
+  },
+  {
+    "jp": "作る",
+    "audio": "つくる",
+    "r": "tsukuru",
+    "en": "make",
+    "m": "TWO CREW members MAKE it. → tsukuru."
+  },
+  {
+    "jp": "待つ",
+    "audio": "まつ",
+    "r": "matsu",
+    "en": "wait",
+    "m": "MATT waits. → matsu."
+  },
+  {
+    "jp": "取る",
+    "audio": "とる",
+    "r": "toru",
+    "en": "take",
+    "m": "“TORE it off? TAKE it.” → toru."
+  },
+  {
+    "jp": "あげる",
+    "audio": "あげる",
+    "r": "ageru",
+    "en": "give",
+    "m": "A GERbil GIVES you a present. → ageru."
+  },
+  {
+    "jp": "もらう",
+    "audio": "もらう",
+    "r": "morau",
+    "en": "receive / get",
+    "m": "“MORE? Ow!” You RECEIVE more. → morau."
+  },
+  {
+    "jp": "寝る",
+    "audio": "ねる",
+    "r": "neru",
+    "en": "sleep",
+    "m": "NERO goes to SLEEP. → neru."
+  },
+  {
+    "jp": "起きる",
+    "audio": "おきる",
+    "r": "okiru",
+    "en": "wake up",
+    "m": "“OKAY, rise!” WAKE UP. → okiru."
+  },
+  {
+    "jp": "働く",
+    "audio": "はたらく",
+    "r": "hataraku",
+    "en": "work",
+    "m": "Put on your HAT and WORK. → hataraku."
+  },
+  {
+    "jp": "休む",
+    "audio": "やすむ",
+    "r": "yasumu",
+    "en": "rest / take off",
+    "m": "“YAS, I’m RESTING.” → yasumu."
+  },
+  {
+    "jp": "好き",
+    "audio": "すき",
+    "r": "suki",
+    "en": "like",
+    "m": "SOOKIE LIKES it. → suki."
+  },
+  {
+    "jp": "嫌い",
+    "audio": "きらい",
+    "r": "kirai",
+    "en": "dislike",
+    "m": "KIRA really DISLIKES it. → kirai."
+  },
+  {
+    "jp": "欲しい",
+    "audio": "ほしい",
+    "r": "hoshii",
+    "en": "want",
+    "m": "“Oh, SHE really WANTS it.” → hoshii."
+  },
+  {
+    "jp": "いい",
+    "audio": "いい",
+    "r": "ii",
+    "en": "good",
+    "m": "“Eee! That’s GOOD!” → ii."
+  },
+  {
+    "jp": "悪い",
+    "audio": "わるい",
+    "r": "warui",
+    "en": "bad",
+    "m": "WAR is BAD. → warui."
+  },
+  {
+    "jp": "大きい",
+    "audio": "おおきい",
+    "r": "ookii",
+    "en": "big",
+    "m": "“OOH, KEY!” It’s a gigantic key: BIG. → ookii."
+  },
+  {
+    "jp": "小さい",
+    "audio": "ちいさい",
+    "r": "chiisai",
+    "en": "small",
+    "m": "A tiny piece of CHEESE is SMALL. → chiisai."
+  },
+  {
+    "jp": "新しい",
+    "audio": "あたらしい",
+    "r": "atarashii",
+    "en": "new",
+    "m": "At a RUSH, she buys a NEW one. → atarashii."
+  },
+  {
+    "jp": "古い",
+    "audio": "ふるい",
+    "r": "furui",
+    "en": "old",
+    "m": "That OLD coat is covered in FUR. → furui."
+  },
+  {
+    "jp": "暑い",
+    "audio": "あつい",
+    "r": "atsui",
+    "en": "hot (weather)",
+    "m": "“AH, SWEATY!” It’s HOT. → atsui."
+  },
+  {
+    "jp": "寒い",
+    "audio": "さむい",
+    "r": "samui",
+    "en": "cold (weather)",
+    "m": "“SAM, ooh!” It’s COLD. → samui."
+  },
+  {
+    "jp": "高い",
+    "audio": "たかい",
+    "r": "takai",
+    "en": "expensive / high",
+    "m": "That price is so HIGH you say, “TAKE? I can’t!” → takai."
+  },
+  {
+    "jp": "安い",
+    "audio": "やすい",
+    "r": "yasui",
+    "en": "cheap",
+    "m": "“YES, we’ll buy it!” because it’s CHEAP. → yasui."
+  },
+  {
+    "jp": "早い",
+    "audio": "はやい",
+    "r": "hayai",
+    "en": "early / fast",
+    "m": "“HI-YA!” Move FAST! → hayai."
+  },
+  {
+    "jp": "遅い",
+    "audio": "おそい",
+    "r": "osoi",
+    "en": "late / slow",
+    "m": "“OH, SO SLOW.” → osoi."
+  },
+  {
+    "jp": "楽しい",
+    "audio": "たのしい",
+    "r": "tanoshii",
+    "en": "fun / enjoyable",
+    "m": "TANYA, SHE is having FUN. → tanoshii."
+  },
+  {
+    "jp": "難しい",
+    "audio": "むずかしい",
+    "r": "muzukashii",
+    "en": "difficult",
+    "m": "“MUSIC? Gosh!” This is DIFFICULT. → muzukashii."
+  },
+  {
+    "jp": "忙しい",
+    "audio": "いそがしい",
+    "r": "isogashii",
+    "en": "busy",
+    "m": "“It’s SO GOSH…” BUSY! → isogashii."
+  },
+  {
+    "jp": "元気",
+    "audio": "げんき",
+    "r": "genki",
+    "en": "well / energetic",
+    "m": "GENKI sounds like a name for someone bursting with ENERGY. → genki."
+  },
+  {
+    "jp": "今日",
+    "audio": "きょう",
+    "r": "kyou",
+    "en": "today",
+    "m": "“’Kay, YO — do it TODAY.” → kyou."
+  },
+  {
+    "jp": "明日",
+    "audio": "あした",
+    "r": "ashita",
+    "en": "tomorrow",
+    "m": "“ASH, I’ll do that TOMORROW.” → ashita."
+  },
+  {
+    "jp": "昨日",
+    "audio": "きのう",
+    "r": "kinou",
+    "en": "yesterday",
+    "m": "“KEY? NO — I had it YESTERDAY.” → kinou."
+  },
+  {
+    "jp": "今",
+    "audio": "いま",
+    "r": "ima",
+    "en": "now",
+    "m": "“I’MA do it NOW.” → ima."
+  },
+  {
+    "jp": "朝",
+    "audio": "あさ",
+    "r": "asa",
+    "en": "morning",
+    "m": "“AS A morning person…” → asa."
+  },
+  {
+    "jp": "昼",
+    "audio": "ひる",
+    "r": "hiru",
+    "en": "noon / daytime",
+    "m": "“HERE at noon.” → hiru."
+  },
+  {
+    "jp": "夜",
+    "audio": "よる",
+    "r": "yoru",
+    "en": "night",
+    "m": "“YOU’RE up at NIGHT.” → yoru."
+  },
+  {
+    "jp": "毎日",
+    "audio": "まいにち",
+    "r": "mainichi",
+    "en": "every day",
+    "m": "“MY NICHE? I do it EVERY DAY.” → mainichi."
+  },
+  {
+    "jp": "まだ",
+    "audio": "まだ",
+    "r": "mada",
+    "en": "still / not yet",
+    "m": "“MAD? Ah… STILL not ready, NOT YET.” → mada."
+  },
+  {
+    "jp": "もう",
+    "audio": "もう",
+    "r": "mou",
+    "en": "already",
+    "m": "“MO’ food? You ALREADY ate!” → mou."
+  },
+  {
+    "jp": "ここ",
+    "audio": "ここ",
+    "r": "koko",
+    "en": "here",
+    "m": "Call Coco: “COCO! HERE!” → koko."
+  },
+  {
+    "jp": "そこ",
+    "audio": "そこ",
+    "r": "soko",
+    "en": "there",
+    "m": "“Your SOCK-O is over THERE.” → soko."
+  },
+  {
+    "jp": "あそこ",
+    "audio": "あそこ",
+    "r": "asoko",
+    "en": "over there",
+    "m": "“A SOCK-O is way OVER THERE.” → asoko."
+  },
+  {
+    "jp": "どこ",
+    "audio": "どこ",
+    "r": "doko",
+    "en": "where",
+    "m": "“DOCO? WHERE did it go?” → doko."
+  },
+  {
+    "jp": "家",
+    "audio": "いえ",
+    "r": "ie",
+    "en": "house / home",
+    "m": "“YEAH, I’m HOME.” → ie."
+  },
+  {
+    "jp": "店",
+    "audio": "みせ",
+    "r": "mise",
+    "en": "shop / store",
+    "m": "MISSY works at the SHOP. → mise."
+  },
+  {
+    "jp": "駅",
+    "audio": "えき",
+    "r": "eki",
+    "en": "station",
+    "m": "The E-key gets you through the train STATION. → eki."
+  },
+  {
+    "jp": "学校",
+    "audio": "がっこう",
+    "r": "gakkou",
+    "en": "school",
+    "m": "“GACK! Go to SCHOOL.” → gakkou."
+  },
+  {
+    "jp": "トイレ",
+    "audio": "といれ",
+    "r": "toire",
+    "en": "toilet",
+    "m": "TOI-RE sounds close to TOILET. → toire."
+  },
+  {
+    "jp": "電車",
+    "audio": "でんしゃ",
+    "r": "densha",
+    "en": "train",
+    "m": "DEN’s riding the TRAIN. → densha."
+  },
+  {
+    "jp": "車",
+    "audio": "くるま",
+    "r": "kuruma",
+    "en": "car",
+    "m": "The CREW are in my CAR. → kuruma."
+  },
+  {
+    "jp": "水",
+    "audio": "みず",
+    "r": "mizu",
+    "en": "water",
+    "m": "MIZZY always carries WATER. → mizu."
+  },
+  {
+    "jp": "ご飯",
+    "audio": "ごはん",
+    "r": "gohan",
+    "en": "meal / rice",
+    "m": "“GO, HON — the MEAL is ready.” → gohan."
+  },
+  {
+    "jp": "肉",
+    "audio": "にく",
+    "r": "niku",
+    "en": "meat",
+    "m": "NICK eats MEAT. → niku."
+  },
+  {
+    "jp": "魚",
+    "audio": "さかな",
+    "r": "sakana",
+    "en": "fish",
+    "m": "A SACK full of tuna: FISH. → sakana."
+  },
+  {
+    "jp": "野菜",
+    "audio": "やさい",
+    "r": "yasai",
+    "en": "vegetables",
+    "m": "“YES, I eat VEGETABLES.” → yasai."
+  },
+  {
+    "jp": "果物",
+    "audio": "くだもの",
+    "r": "kudamono",
+    "en": "fruit",
+    "m": "“COULD A MONkey eat all that FRUIT?” → kudamono."
+  },
+  {
+    "jp": "コーヒー",
+    "audio": "こーひー",
+    "r": "koohii",
+    "en": "coffee",
+    "m": "KO-OH-HEE sounds like COFFEE — it’s a loanword."
+  },
+  {
+    "jp": "お茶",
+    "audio": "おちゃ",
+    "r": "ocha",
+    "en": "tea",
+    "m": "“OH, CHA!” CHA is TEA. → ocha."
+  },
+  {
+    "jp": "何",
+    "audio": "なに",
+    "r": "nani",
+    "en": "what",
+    "m": "The NANNY asks, “WHAT?” → nani."
+  },
+  {
+    "jp": "誰",
+    "audio": "だれ",
+    "r": "dare",
+    "en": "who",
+    "m": "“DARE I ask WHO?” → dare."
+  },
+  {
+    "jp": "いつ",
+    "audio": "いつ",
+    "r": "itsu",
+    "en": "when",
+    "m": "“IT’S… WHEN?” → itsu."
+  },
+  {
+    "jp": "どうして",
+    "audio": "どうして",
+    "r": "doushite",
+    "en": "why",
+    "m": "“DOES SHE… WHY?” → doushite."
+  },
+  {
+    "jp": "どう",
+    "audio": "どう",
+    "r": "dou",
+    "en": "how",
+    "m": "“DO… HOW do I do it?” → dou."
+  },
+  {
+    "jp": "いくら",
+    "audio": "いくら",
+    "r": "ikura",
+    "en": "how much",
+    "m": "“EEK! Really?” at the price: HOW MUCH? → ikura."
+  },
+  {
+    "jp": "はい",
+    "audio": "はい",
+    "r": "hai",
+    "en": "yes",
+    "m": "Say “HI!” and YES at the same time. → hai."
+  },
+  {
+    "jp": "いいえ",
+    "audio": "いいえ",
+    "r": "iie",
+    "en": "no",
+    "m": "“EEE-EH… NO.” → iie."
+  },
+  {
+    "jp": "ありがとう",
+    "audio": "ありがとう",
+    "r": "arigatou",
+    "en": "thank you",
+    "m": "ARI GOT you a gift — say THANK YOU. → arigatou."
+  },
+  {
+    "jp": "すみません",
+    "audio": "すみません",
+    "r": "sumimasen",
+    "en": "excuse me / sorry",
+    "m": "“SUE, ME? I said EXCUSE ME!” → sumimasen."
+  },
+  {
+    "jp": "ごめん",
+    "audio": "ごめん",
+    "r": "gomen",
+    "en": "sorry (casual)",
+    "m": "“GO, MEN — SORRY!” → gomen."
+  },
+  {
+    "jp": "大丈夫",
+    "audio": "だいじょうぶ",
+    "r": "daijoubu",
+    "en": "okay / all right",
+    "m": "“DIE, JOE? Boo!” No — he’s OKAY. → daijoubu."
+  },
+  {
+    "jp": "ちょっと",
+    "audio": "ちょっと",
+    "r": "chotto",
+    "en": "a little",
+    "m": "A tiny SHOT-O: just A LITTLE. → chotto."
+  },
+  {
+    "jp": "もっと",
+    "audio": "もっと",
+    "r": "motto",
+    "en": "more",
+    "m": "Your MOTTO is “MORE!” → motto."
+  },
+  {
+    "jp": "本当",
+    "audio": "ほんとう",
+    "r": "hontou",
+    "en": "really / true",
+    "m": "“HON, TRUE?” REALLY? → hontou."
+  },
+  {
+    "jp": "多分",
+    "audio": "たぶん",
+    "r": "tabun",
+    "en": "probably / maybe",
+    "m": "“That BUN? PROBABLY.” → tabun."
+  },
+  {
+    "jp": "お願い",
+    "audio": "おねがい",
+    "r": "onegai",
+    "en": "please / request",
+    "m": "ONE GUY keeps saying PLEASE. → onegai."
+  },
+  {
+    "jp": "また",
+    "audio": "また",
+    "r": "mata",
+    "en": "again",
+    "m": "Put the MAT down AGAIN. → mata."
+  }
+]
