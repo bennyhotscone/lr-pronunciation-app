@@ -1,7 +1,7 @@
 import { randomBytes } from "crypto";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
-import { portalStorageMode, blobMissingErrorMessage } from "@/lib/portal-files";
+import { portalStorageMode } from "@/lib/portal-files";
 
 const BLOB_PREFIX = "lesson-capture/frames";
 const MAX_FRAME_BYTES = 5 * 1024 * 1024;
@@ -11,7 +11,12 @@ export function captureFrameStorageReady(): boolean {
 }
 
 export function captureFrameStorageError(): string {
-  return blobMissingErrorMessage();
+  if (portalStorageMode() !== "unavailable") return "";
+  return (
+    "Lesson Capture frame uploads require Vercel Blob. In the Vercel dashboard: Storage → Blob, " +
+    "ensure BLOB_READ_WRITE_TOKEN is set for Production, then redeploy. " +
+    "Production never writes to the ephemeral filesystem."
+  );
 }
 
 export async function uploadCaptureFrame(opts: {

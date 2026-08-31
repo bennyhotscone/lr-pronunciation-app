@@ -51,6 +51,13 @@ Uploads require these **Production** env vars on the Vercel project:
 
 Without `BLOB_READ_WRITE_TOKEN` on Vercel, `POST /api/studio/audio` returns a clear **503** error (it will **not** silently fall back to IndexedDB). Locally (`next dev` without Vercel), uploads write under `public/audio/mandarin-vocab/` plus a local override JSON.
 
+### Lesson Capture (teacher screen memory)
+
+- **Route:** `/teacher/lesson-capture` — live screen capture every ~60s → OCR → Groq summary.
+- **Requires:** `BLOB_READ_WRITE_TOKEN` on Vercel Production (same Blob store as portal files; prefix `lesson-capture/frames/`).
+- **Also requires:** `GROQ_API_KEY` for AI notes after the session ends.
+- Without Blob on Vercel, frame uploads return **503** with a clear message (production never writes to ephemeral disk).
+
 APIs:
 
 - `POST /api/studio/audio` — multipart `audio` + `rank` + `filename`; auth via `password` field or `x-studio-password` header.

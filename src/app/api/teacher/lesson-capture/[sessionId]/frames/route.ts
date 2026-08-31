@@ -10,6 +10,7 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function POST(
   request: Request,
@@ -134,8 +135,11 @@ export async function GET(
   }
 
   const frameCount = await prisma.lessonCaptureFrame.count({ where: { sessionId } });
+  const storageReady = captureFrameStorageReady();
   return NextResponse.json({
     ok: true,
     frameCount: Math.max(frameCount, capture.framesCaptured),
+    storageReady,
+    storageError: storageReady ? null : captureFrameStorageError(),
   });
 }
