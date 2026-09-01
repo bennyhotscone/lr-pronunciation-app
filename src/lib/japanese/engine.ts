@@ -5,6 +5,7 @@ import {
   JAPANESE_MINI_REVIEW_SIZE,
   JAPANESE_TOTAL_BLOCKS,
 } from "./config";
+import { isGateBoundaryBlock } from "./milestone";
 import type {
   JapaneseBlockMeta,
   JapanesePhase,
@@ -451,7 +452,7 @@ export function updateMetaAfterRound(
     if (scorePct >= JAPANESE_MASTERY_THRESHOLD) {
       blockMastered = true;
       const nextBlock = blockNumber + 1;
-      if (nextBlock <= JAPANESE_TOTAL_BLOCKS && !unlockedBlocks.includes(nextBlock)) {
+      if (nextBlock <= JAPANESE_TOTAL_BLOCKS && !unlockedBlocks.includes(nextBlock) && !isGateBoundaryBlock(blockNumber)) {
         unlockedBlocks.push(nextBlock);
       }
     }

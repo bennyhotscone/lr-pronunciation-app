@@ -98,6 +98,8 @@ model User {
   japaneseBlockProgress        JapaneseBlockProgress[]
   japaneseWordOverrides        JapaneseWordOverride[]
   japaneseWordStats              JapaneseWordStat[]
+  japaneseMilestoneStories       JapaneseMilestoneStory[]
+  japaneseMilestoneProgress      JapaneseMilestoneProgress[]
   grammarBlockProgress         GrammarBlockProgress[]
 }
 
@@ -1017,6 +1019,50 @@ model JapaneseWordStat {
 
   @@unique([userId, blockNumber, wordIndex])
   @@index([userId, blockNumber])
+}
+
+/// Cached LLM-generated story for a Japanese milestone gate (every 2 blocks).
+model JapaneseMilestoneStory {
+  id                String   @id @default(cuid())
+  userId            String
+  /// Milestone 1 = after blocks 1–2, milestone 2 = after blocks 3–4, etc.
+  milestoneNumber   Int
+  title             String
+  /// Japanese story split into TTS-friendly paragraphs
+  paragraphs        Json     @default("[]")
+  /// [{ id, prompt, answer }] — typed English comprehension
+  comprehensionQs   Json     @default("[]")
+  /// [{ id, promptEnglish, targetRomaji, targetEnglish, blockNumber, wordIndex }]
+  productionQs      Json     @default("[]")
+  vocabUsed         Json     @default("[]")
+  provider          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, milestoneNumber])
+  @@index([userId])
+}
+
+/// Pass/fail progress for Japanese milestone story gates.
+model JapaneseMilestoneProgress {
+  id                 String    @id @default(cuid())
+  userId             String
+  milestoneNumber    Int
+  passed             Boolean   @default(false)
+  comprehensionScore Int?
+  productionScore    Int?
+  combinedScore      Int?
+  attempts           Int       @default(0)
+  passedAt           DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, milestoneNumber])
+  @@index([userId])
 }
 
 /// Per-user grammar block progress (3-phase model).

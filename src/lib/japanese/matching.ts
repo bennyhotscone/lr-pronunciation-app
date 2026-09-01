@@ -112,3 +112,25 @@ function fuzzyMatch(
   }
   return false;
 }
+
+export function fuzzyMatchEnglishText(input: string, expected: string): boolean {
+  const val = normalizeEnglish(input);
+  if (!val) return false;
+  const aliases = new Set<string>();
+  const raw = expected.toLowerCase().trim();
+  aliases.add(normalizeEnglish(raw));
+  raw.split(/[/,;]/).forEach((part) => {
+    const n = normalizeEnglish(part);
+    if (n) aliases.add(n);
+  });
+  (ENGLISH_EXTRAS[expected] || []).forEach((x) => aliases.add(normalizeEnglish(x)));
+  for (const a of aliases) {
+    if (val === a) return true;
+    const compactVal = val.replace(/\s/g, "");
+    const compactA = a.replace(/\s/g, "");
+    const len = Math.max(compactVal.length, compactA.length);
+    const allowance = len >= 9 ? 2 : len >= 5 ? 1 : 0;
+    if (allowance && editDistance(compactVal, compactA) <= allowance) return true;
+  }
+  return false;
+}

@@ -17,6 +17,9 @@ export const JAPANESE_MINI_REVIEW_SIZE = 5;
 /** Round score (%) required to count as block mastery. */
 export const JAPANESE_MASTERY_THRESHOLD = 90;
 
+/** Combined gate score (%) required to unlock the next block pair. */
+export const JAPANESE_MILESTONE_PASS_THRESHOLD = 75;
+
 /** Multiple-choice options shown per question. */
 export const JAPANESE_CHOICE_COUNT = 6;
 

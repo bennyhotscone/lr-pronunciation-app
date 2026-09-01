@@ -3,7 +3,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
-import { JAPANESE_TOTAL_BLOCKS } from "@/lib/japanese/config";
+import { mergeUnlockedBlocks } from "@/lib/japanese/milestone";
 import {
   createInitialBlockMeta,
   createInitialSessionState,
@@ -16,19 +16,6 @@ import { isStaff } from "@/lib/portal-access";
 import { revalidatePath } from "next/cache";
 
 const LEARN_PATH = "/portal/learn-japanese";
-function mergeUnlockedBlocks(
-  rows: Array<{ blockNumber: number; unlockedBlocks: number[]; blockMastered: boolean }>,
-): number[] {
-  const unlocked = new Set<number>([1]);
-  for (const row of rows) {
-    for (const n of row.unlockedBlocks) unlocked.add(n);
-    if (row.blockMastered && row.blockNumber < JAPANESE_TOTAL_BLOCKS) {
-      unlocked.add(row.blockNumber + 1);
-    }
-  }
-  return [...unlocked].sort((x, y) => x - y);
-}
-
 
 async function requireJapaneseLearner() {
   const session = await auth();
@@ -40,6 +27,7 @@ async function requireJapaneseLearner() {
 export type JapaneseProgressPayload = {
   session: JapaneseSessionState;
   meta: JapaneseBlockMeta;
+  gatesPassed: number[];
   overrides: Record<
     number,
     { mnemonic?: string | null; pronunciationCue?: string | null; ttsInput?: string | null }
@@ -55,13 +43,17 @@ export async function loadJapaneseProgress(
 
   const userId = session.user.id;
 
-  const [progress, allProgress, overrideRows, statRows] = await Promise.all([
+  const [progress, allProgress, gateRows, overrideRows, statRows] = await Promise.all([
     prisma.japaneseBlockProgress.findUnique({
       where: { userId_blockNumber: { userId, blockNumber } },
     }),
     prisma.japaneseBlockProgress.findMany({
       where: { userId },
       select: { blockNumber: true, unlockedBlocks: true, blockMastered: true },
+    }),
+    prisma.japaneseMilestoneProgress.findMany({
+      where: { userId, passed: true },
+      select: { milestoneNumber: true },
     }),
     prisma.japaneseWordOverride.findMany({
       where: { userId, blockNumber },
@@ -71,11 +63,12 @@ export async function loadJapaneseProgress(
     }),
   ]);
 
+  const gatesPassed = gateRows.map((g) => g.milestoneNumber).sort((a, b) => a - b);
   const sessionState = progress ? sessionFromDb(progress) : createInitialSessionState();
   const baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
   const meta: JapaneseBlockMeta = {
     ...baseMeta,
-    unlockedBlocks: mergeUnlockedBlocks(allProgress),
+    unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed),
   };
 
   const overrides: JapaneseProgressPayload["overrides"] = {};
@@ -96,7 +89,7 @@ export async function loadJapaneseProgress(
     };
   }
 
-  return { session: sessionState, meta, overrides, stats };
+  return { session: sessionState, meta, gatesPassed, overrides, stats };
 }
 
 export async function saveJapaneseProgress(

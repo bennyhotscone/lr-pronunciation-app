@@ -29,6 +29,10 @@ import {
   JAPANESE_TOTAL_BLOCKS,
   JAPANESE_WORDS_PER_BLOCK,
 } from "@/lib/japanese/config";
+import {
+  getBlockUnlockedByMilestone,
+  getMilestoneForBlock,
+} from "@/lib/japanese/milestone";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
@@ -41,10 +45,11 @@ import {
   type JapaneseProgressPayload,
 } from "@/lib/japanese-actions";
 import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
+import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseWordList } from "./JapaneseWordList";
 import "./japanese-learning.css";
 
-type Screen = "train" | "list";
+type Screen = "train" | "list" | "gate";
 
 export function JapaneseLearningApp() {
   const [block, setBlock] = useState(1);
@@ -52,6 +57,8 @@ export function JapaneseLearningApp() {
   const [screen, setScreen] = useState<Screen>("train");
   const [session, setSession] = useState<JapaneseSessionState | null>(null);
   const [meta, setMeta] = useState<JapaneseBlockMeta | null>(null);
+  const [gatesPassed, setGatesPassed] = useState<number[]>([]);
+  const [activeGate, setActiveGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
   const [loading, setLoading] = useState(true);
   const [answered, setAnswered] = useState(false);
@@ -76,6 +83,7 @@ export function JapaneseLearningApp() {
       const repaired = repairSessionState(data.session, getJapaneseBlock(block).length);
       setSession(repaired);
       setMeta(data.meta);
+      setGatesPassed(data.gatesPassed);
       setOverrides(data.overrides);
       setLoading(false);
       if (
@@ -90,8 +98,22 @@ export function JapaneseLearningApp() {
 
   const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
 
+  const openMilestoneGate = (milestoneNumber: number) => {
+    setActiveGate(milestoneNumber);
+    setScreen("gate");
+  };
+
   const switchBlock = (next: number) => {
-    if (!meta?.unlockedBlocks.includes(next) || !isPlayableJapaneseBlock(next)) return;
+    if (!meta) return;
+    if (!meta.unlockedBlocks.includes(next) || !isPlayableJapaneseBlock(next)) {
+      for (let m = 1; getBlockUnlockedByMilestone(m) <= next; m += 1) {
+        if (getBlockUnlockedByMilestone(m) === next && !gatesPassed.includes(m)) {
+          openMilestoneGate(m);
+          return;
+        }
+      }
+      return;
+    }
     setBlock(next);
     setScreen("train");
     resetQuestionUi();
@@ -335,6 +357,43 @@ export function JapaneseLearningApp() {
     });
   };
 
+  const pendingGateMilestone = useMemo(() => {
+    const milestone = getMilestoneForBlock(block);
+    if (!milestone || !meta?.blockMastered) return null;
+    if (gatesPassed.includes(milestone)) return null;
+    return milestone;
+  }, [block, meta?.blockMastered, gatesPassed]);
+
+  if (screen === "gate" && activeGate) {
+    return (
+      <JapaneseMilestoneGate
+        milestoneNumber={activeGate}
+        onPassed={(unlocksBlock) => {
+          setGatesPassed((prev) =>
+            prev.includes(activeGate) ? prev : [...prev, activeGate].sort((a, b) => a - b),
+          );
+          void loadJapaneseProgress(block).then((data) => {
+            if ("error" in data) return;
+            setMeta(data.meta);
+            setGatesPassed(data.gatesPassed);
+          });
+          if (isPlayableJapaneseBlock(unlocksBlock)) {
+            setBlock(unlocksBlock);
+            setScreen("train");
+            setActiveGate(null);
+          } else {
+            setScreen("train");
+            setActiveGate(null);
+          }
+        }}
+        onClose={() => {
+          setScreen("train");
+          setActiveGate(null);
+        }}
+      />
+    );
+  }
+
   if (loading || !session || !meta) {
     return <p className="text-muted">Loading your Japanese progress.</p>;
   }
@@ -378,6 +437,21 @@ export function JapaneseLearningApp() {
             Best Round 5: {meta.bestRound5Score}%
             {meta.blockMastered ? " · Block mastered" : ""}
           </p>
+        ) : null}
+        {pendingGateMilestone ? (
+          <div className="jp-learn-gate-banner" role="status">
+            <p>
+              Story checkpoint required to unlock Block{" "}
+              {getBlockUnlockedByMilestone(pendingGateMilestone)}.
+            </p>
+            <button
+              type="button"
+              className="jp-learn-btn jp-learn-btn-gate"
+              onClick={() => openMilestoneGate(pendingGateMilestone)}
+            >
+              Take story checkpoint
+            </button>
+          </div>
         ) : null}
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
@@ -490,6 +564,15 @@ export function JapaneseLearningApp() {
                   </button>
                 ) : view.round === 5 ? (
                   <>
+                    {pendingGateMilestone ? (
+                      <button
+                        type="button"
+                        className="jp-learn-btn jp-learn-btn-primary"
+                        onClick={() => openMilestoneGate(pendingGateMilestone)}
+                      >
+                        Story checkpoint (unlock Block {getBlockUnlockedByMilestone(pendingGateMilestone)})
+                      </button>
+                    ) : null}
                     {highestRoundReached >= 4 ? (
                       <button
                         type="button"
