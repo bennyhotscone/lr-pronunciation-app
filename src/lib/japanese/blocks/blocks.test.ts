@@ -23,10 +23,17 @@ describe("japanese block curriculum", () => {
     expect(getAvailableBlockNumbers().length).toBe(100);
   });
 
-  it("slices frequency ranks for block 1 and 2", () => {
+  it("slices spoken-English frequency ranks for block 1 and 2", () => {
     expect(getFrequencyRankRangeForBlock(1)).toEqual({ start: 1, end: 50 });
     expect(getFrequencyRankRangeForBlock(2)).toEqual({ start: 51, end: 100 });
     expect(getFrequencyWordsForBlock(1).length).toBe(50);
+    expect(getFrequencyWordsForBlock(1).slice(0, 5)).toEqual([
+      "you",
+      "i",
+      "be",
+      "the",
+      "to",
+    ]);
     expect(getBlockCurriculumLabel(1)).toBe("Ranks 1-50");
   });
 
@@ -40,9 +47,16 @@ describe("japanese block curriculum", () => {
     expect(isPlayableJapaneseBlock(4)).toBe(false);
   });
 
-  it("slices frequency ranks for block 3", () => {
+  it("slices spoken-English frequency ranks for block 3", () => {
     expect(getFrequencyRankRangeForBlock(3)).toEqual({ start: 101, end: 150 });
     expect(getFrequencyWordsForBlock(3).length).toBe(50);
+    expect(getFrequencyWordsForBlock(3).slice(0, 5)).toEqual([
+      "too",
+      "never",
+      "by",
+      "person",
+      "over",
+    ]);
     expect(getBlockCurriculumLabel(3)).toBe("Ranks 101-150");
   });
 

@@ -1,4 +1,4 @@
-﻿import frequencyWords from "@/data/english-frequency-5000.json";
+﻿import frequencyWords from "@/data/spoken-english-frequency-5000.json";
 import {
   JAPANESE_CURRICULUM_WORD_COUNT,
   JAPANESE_TOTAL_BLOCKS,
