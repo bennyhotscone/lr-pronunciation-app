@@ -118,3 +118,10 @@
   background: #fff5f5;
 }
 .jp-learn-btn-danger:hover:not(:disabled) { background: #f7dddd; }
+
+.jp-learn-gate-wrap { border-top: 4px solid #22c55e; }
+.jp-learn-gate-header { background: linear-gradient(180deg, #ecfdf5 0%, transparent 100%); padding-top: 0.5rem; }
+.jp-learn-gate-card { border-color: #86efac; box-shadow: 0 0 0 1px #bbf7d0; }
+.jp-learn-gate-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin: 1rem 0; padding: 0.85rem 1rem; background: #ecfdf5; border: 1px solid #86efac; border-radius: 12px; color: #14532d; }
+.jp-learn-btn-gate { background: #16a34a; color: #fff; border-color: #16a34a; }
+.jp-learn-btn-gate:hover:not(:disabled) { background: #15803d; border-color: #15803d; }

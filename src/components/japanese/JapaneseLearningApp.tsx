@@ -353,6 +353,7 @@ export function JapaneseLearningApp() {
       if ("error" in fresh) return;
       setSession(fresh.session);
       setMeta(fresh.meta);
+      setGatesPassed(fresh.gatesPassed);
       resetQuestionUi();
     });
   };

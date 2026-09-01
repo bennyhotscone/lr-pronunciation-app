@@ -159,7 +159,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
           <>
             <p className="jp-learn-sub">Listen to or read the story, then answer comprehension and production questions.</p>
             <div className="jp-learn-row mt-3">
-              <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={playAll}>
+              <button type="button" className="jp-learn-btn jp-learn-btn-gate" onClick={playAll}>
                 Play full story
               </button>
             </div>
@@ -175,7 +175,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
             ))}
             <button
               type="button"
-              className="jp-learn-btn jp-learn-btn-primary mt-3"
+              className="jp-learn-btn jp-learn-btn-gate mt-3"
               onClick={() => {
                 setPhase("comprehension");
                 setCompIndex(0);
@@ -205,7 +205,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
               autoFocus
             />
             <div className="jp-learn-row mt-3">
-              <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={saveCompAnswer} disabled={pending}>
+              <button type="button" className="jp-learn-btn jp-learn-btn-gate" onClick={saveCompAnswer} disabled={pending}>
                 {compIndex + 1 >= payload.story.comprehension.length ? "Continue to production" : "Next question"}
               </button>
             </div>
@@ -228,7 +228,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
               autoFocus
             />
             <div className="jp-learn-row mt-3">
-              <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={saveProdAnswer} disabled={pending}>
+              <button type="button" className="jp-learn-btn jp-learn-btn-gate" onClick={saveProdAnswer} disabled={pending}>
                 {prodIndex + 1 >= payload.story.production.length ? "Submit checkpoint" : "Next word"}
               </button>
             </div>
@@ -251,7 +251,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
               {!result.passed ? (
                 <button
                   type="button"
-                  className="jp-learn-btn jp-learn-btn-primary"
+                  className="jp-learn-btn jp-learn-btn-gate"
                   onClick={() => {
                     setPhase("story");
                     setCompIndex(0);
