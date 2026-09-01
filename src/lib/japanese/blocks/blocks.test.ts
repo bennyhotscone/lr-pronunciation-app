@@ -32,10 +32,18 @@ describe("japanese block curriculum", () => {
 
   it("loads playable blocks with 50 words each", () => {
     const playable = getPlayableBlockNumbers();
-    expect(playable).toEqual([1, 2]);
+    expect(playable).toEqual([1, 2, 3]);
     expect(getJapaneseBlock(1).length).toBe(50);
     expect(getJapaneseBlock(2).length).toBe(50);
-    expect(isPlayableJapaneseBlock(3)).toBe(false);
+    expect(getJapaneseBlock(3).length).toBe(50);
+    expect(isPlayableJapaneseBlock(3)).toBe(true);
+    expect(isPlayableJapaneseBlock(4)).toBe(false);
+  });
+
+  it("slices frequency ranks for block 3", () => {
+    expect(getFrequencyRankRangeForBlock(3)).toEqual({ start: 101, end: 150 });
+    expect(getFrequencyWordsForBlock(3).length).toBe(50);
+    expect(getBlockCurriculumLabel(3)).toBe("Ranks 101-150");
   });
 
   it("unlocks the next block after mastery", () => {

@@ -25,6 +25,7 @@ import {
 } from "@/lib/japanese/blocks";
 import {
   JAPANESE_MASTERY_THRESHOLD,
+  JAPANESE_TOTAL_BLOCKS,
 } from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
@@ -335,10 +336,37 @@ export function JapaneseLearningApp() {
 
   const roundComplete = view?.kind === "round-complete";
 
+  const practiceRoundNav = (
+    <nav className="jp-learn-round-nav" aria-label="Training rounds">
+      {([1, 2, 3, 4, 5] as const).map((r) => {
+        const locked = r > highestRoundReached;
+        const score =
+          r === 1 ? undefined : meta.roundScores[String(r) as "2" | "3" | "4" | "5"];
+        const pillActive = activeRound === r && screen === "train";
+        return (
+          <button
+            key={r}
+            type="button"
+            className={`jp-learn-round-pill ${pillActive ? "jp-learn-round-pill-active" : ""} ${locked ? "jp-learn-round-pill-locked" : ""}`}
+            disabled={locked || pending}
+            onClick={() => selectRound(r)}
+            title={ROUND_SHORT_LABELS[r]}
+          >
+            <span className="jp-learn-round-pill-num">Round {r}</span>
+            <span className="jp-learn-round-pill-label">{ROUND_SHORT_LABELS[r]}</span>
+            {score !== undefined ? (
+              <span className="jp-learn-round-pill-score">{score}%</span>
+            ) : null}
+          </button>
+        );
+      })}
+    </nav>
+  );
+
   return (
     <div className="jp-learn-wrap">
       <header className="jp-learn-header">
-        <div className="jp-learn-meta">CONVERSATIONAL JAPANESE · block {block}</div>
+        <div className="jp-learn-meta">{getBlockCurriculumLabel(block)} · Block {block} of {JAPANESE_TOTAL_BLOCKS} · {JAPANESE_WORDS_PER_BLOCK} words</div>
         <h1 className="jp-learn-title">Top 5,000 Spoken English Words</h1>
         {meta.bestRound5Score > 0 ? (
           <p className="jp-learn-meta mt-2">
@@ -364,6 +392,11 @@ export function JapaneseLearningApp() {
             );
           })}
         </nav>
+        <section className="jp-learn-practice" aria-labelledby="jp-practice-heading">
+          <h2 id="jp-practice-heading" className="jp-learn-practice-title">Practice</h2>
+          <p className="jp-learn-sub">Block {block} — pick any round you have reached (1–5).</p>
+          {practiceRoundNav}
+        </section>
       </header>
 
       <nav className="jp-learn-nav" aria-label="Japanese learning sections">
@@ -381,37 +414,10 @@ export function JapaneseLearningApp() {
         >
           Word list
         </button>
-        <button type="button" className="jp-learn-btn" onClick={handleReset} disabled={pending}>
-          Reset progress
-        </button>
       </nav>
 
       {screen === "train" ? (
         <>
-          <nav className="jp-learn-round-nav" aria-label="Training rounds">
-            {([1, 2, 3, 4, 5] as const).map((r) => {
-              const locked = r > highestRoundReached;
-              const score =
-                r === 1 ? undefined : meta.roundScores[String(r) as "2" | "3" | "4" | "5"];
-              const pillActive = activeRound === r;
-              return (
-                <button
-                  key={r}
-                  type="button"
-                  className={`jp-learn-round-pill ${pillActive ? "jp-learn-round-pill-active" : ""} ${locked ? "jp-learn-round-pill-locked" : ""}`}
-                  disabled={locked || pending}
-                  onClick={() => selectRound(r)}
-                  title={ROUND_SHORT_LABELS[r]}
-                >
-                  <span className="jp-learn-round-pill-num">Round {r}</span>
-                  <span className="jp-learn-round-pill-label">{ROUND_SHORT_LABELS[r]}</span>
-                  {score !== undefined ? (
-                    <span className="jp-learn-round-pill-score">{score}%</span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </nav>
           <section className="jp-learn-card" aria-live="polite">
           {roundComplete ? (
             <>
@@ -460,21 +466,48 @@ export function JapaneseLearningApp() {
                 )}
               </div>
               <div className="jp-learn-row mt-3" style={{ gap: "0.75rem", flexWrap: "wrap" }}>
-                <button type="button" className="jp-learn-btn" onClick={handleRetryRound}>
-                  Retry this round
-                </button>
+                {view.retryRound ? (
+                  <button
+                    type="button"
+                    className="jp-learn-btn jp-learn-btn-primary"
+                    onClick={handleRetryRound}
+                  >
+                    Retry Round {view.retryRound}
+                  </button>
+                ) : null}
                 {view.nextRound ? (
                   <button
                     type="button"
                     className="jp-learn-btn jp-learn-btn-primary"
                     onClick={handleContinue}
                   >
-                    Continue to next round
+                    Continue to Round {view.nextRound}
                   </button>
+                ) : view.round === 5 ? (
+                  <>
+                    {highestRoundReached >= 4 ? (
+                      <button
+                        type="button"
+                        className="jp-learn-btn"
+                        onClick={() => selectRound(4)}
+                        disabled={pending}
+                      >
+                        Practice Round 4
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      className="jp-learn-btn"
+                      onClick={() => selectRound(5)}
+                      disabled={pending}
+                    >
+                      Practice Round 5
+                    </button>
+                  </>
                 ) : (
                   <button
                     type="button"
-                    className="jp-learn-btn jp-learn-btn-primary"
+                    className="jp-learn-btn"
                     onClick={handleViewBlockResults}
                   >
                     View Block Results
@@ -692,6 +725,17 @@ export function JapaneseLearningApp() {
           }}
         />
       )}
+      <footer className="jp-learn-footer">
+        <button
+          type="button"
+          className="jp-learn-btn jp-learn-btn-danger"
+          onClick={handleReset}
+          disabled={pending}
+        >
+          Reset progress
+        </button>
+        <p className="jp-learn-sub">Clears training progress for Block {block}. Word edits are kept.</p>
+      </footer>
     </div>
   );
 }

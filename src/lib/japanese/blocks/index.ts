@@ -6,11 +6,13 @@ import {
 } from "../config";
 import block1 from "./block1.json";
 import block2 from "./block2.json";
+import block3 from "./block3.json";
 
-/** Blocks with full Japanese learning content (JSON). Blocks 3-100 are scaffolded. */
+/** Blocks with full Japanese learning content (JSON). Blocks 4-100 are scaffolded. */
 const BLOCKS: Record<number, JapaneseWord[]> = {
   1: block1 as JapaneseWord[],
   2: block2 as JapaneseWord[],
+  3: block3 as JapaneseWord[],
 };
 
 export function isPlayableJapaneseBlock(blockNumber: number): boolean {

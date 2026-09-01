@@ -79,3 +79,42 @@
 }
 
 .jp-learn-block-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; align-items: center; }
+
+.jp-learn-round-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1rem; align-items: stretch; }
+.jp-learn-round-pill {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem;
+  font: inherit; border: 1px solid var(--border); background: var(--paper);
+  padding: 0.5rem 0.65rem; border-radius: 10px; cursor: pointer; min-width: 4.5rem;
+}
+.jp-learn-round-pill-active { border-color: #222; box-shadow: 0 0 0 1px #222; }
+.jp-learn-round-pill-locked { opacity: 0.45; cursor: not-allowed; }
+.jp-learn-round-pill-num { font-weight: 800; font-size: 0.95rem; }
+.jp-learn-round-pill-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); }
+.jp-learn-round-pill-score { font-size: 0.72rem; font-weight: 700; }
+
+.jp-learn-practice {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #f7f4ee;
+}
+.jp-learn-practice-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.jp-learn-stuck { padding: 0.5rem 0; }
+.jp-learn-footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border);
+}
+.jp-learn-btn-danger {
+  border-color: #a95d5d;
+  color: #8b3a3a;
+  background: #fff5f5;
+}
+.jp-learn-btn-danger:hover:not(:disabled) { background: #f7dddd; }
