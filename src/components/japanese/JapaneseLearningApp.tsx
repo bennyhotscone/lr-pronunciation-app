@@ -366,7 +366,7 @@ export function JapaneseLearningApp() {
   return (
     <div className="jp-learn-wrap">
       <header className="jp-learn-header">
-        <div className="jp-learn-meta">{getBlockCurriculumLabel(block)} · Block {block} of {JAPANESE_TOTAL_BLOCKS} · {JAPANESE_WORDS_PER_BLOCK} words</div>
+        <div className="jp-learn-meta">Block {block} of {JAPANESE_TOTAL_BLOCKS}</div>
         <h1 className="jp-learn-title">Top 5,000 Spoken English Words</h1>
         {meta.bestRound5Score > 0 ? (
           <p className="jp-learn-meta mt-2">
