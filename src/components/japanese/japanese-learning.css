@@ -35,3 +35,45 @@
 .jp-learn-edit-panel label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 0.25rem; }
 .jp-learn-edit-panel textarea, .jp-learn-edit-panel input { width: 100%; font: inherit; font-size: 0.875rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--paper); margin-bottom: 0.5rem; }
 @media (max-width: 620px) { .jp-learn-choices { grid-template-columns: 1fr; } }
+.jp-learn-mnemonic-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.jp-learn-mnemonic-edit {
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.jp-learn-mnemonic-body {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.jp-learn-mnemonic-body:hover {
+  opacity: 0.92;
+}
+
+.jp-learn-mnemonic-panel {
+  margin-top: 0.5rem;
+}

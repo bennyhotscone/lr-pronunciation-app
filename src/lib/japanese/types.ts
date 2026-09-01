@@ -72,6 +72,8 @@ export type JapaneseRoundView =
       instruction: string;
       showMnemonic: boolean;
       mnemonicHtml?: string;
+      showPronunciationCue?: boolean;
+      pronunciationCue?: string;
       choicePool: number[];
       progressPct: number;
       scoreLabel: string;

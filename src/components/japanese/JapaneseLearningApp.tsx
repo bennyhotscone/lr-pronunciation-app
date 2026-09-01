@@ -7,6 +7,7 @@ import {
   buildRoundView,
   recordCorrect,
   recordMiss,
+  repairSessionState,
   resolveWord,
   startFormalRound,
   transitionRound1ToRound2,
@@ -15,7 +16,8 @@ import {
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { JAPANESE_MASTERY_THRESHOLD } from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
-import { speakJapanese } from "@/lib/japanese/tts";
+import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
+import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
 import {
   loadJapaneseProgress,
@@ -24,6 +26,7 @@ import {
   saveJapaneseProgress,
   type JapaneseProgressPayload,
 } from "@/lib/japanese-actions";
+import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseWordList } from "./JapaneseWordList";
 import "./japanese-learning.css";
 
@@ -46,6 +49,7 @@ export function JapaneseLearningApp() {
   const [choiceStates, setChoiceStates] = useState<Record<number, "correct" | "wrong" | null>>({});
   const [pending, startTransition] = useTransition();
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoPlayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -54,10 +58,17 @@ export function JapaneseLearningApp() {
         setLoading(false);
         return;
       }
-      setSession(data.session);
+      const repaired = repairSessionState(data.session, getJapaneseBlock(BLOCK).length);
+      setSession(repaired);
       setMeta(data.meta);
       setOverrides(data.overrides);
       setLoading(false);
+      if (
+        repaired.phase !== data.session.phase ||
+        repaired.order.length !== data.session.order.length
+      ) {
+        void saveJapaneseProgress(BLOCK, repaired, data.meta);
+      }
     });
   }, []);
 
@@ -73,8 +84,8 @@ export function JapaneseLearningApp() {
 
   const view = useMemo(() => {
     if (!session) return null;
-    return buildRoundView(session, words);
-  }, [session, words]);
+    return buildRoundView(session, words, overrides);
+  }, [session, words, overrides]);
 
   const currentWord = useMemo(() => {
     if (!view || view.kind === "round-complete") return null;
@@ -82,25 +93,40 @@ export function JapaneseLearningApp() {
     return resolveWord(words[idx], idx, overrides[idx]);
   }, [view, words, overrides]);
 
+  const playCurrentWordAudio = useCallback(() => {
+    if (!currentWord) return;
+    const debug = buildPlayAudioDebug(words[currentWord.index], currentWord.index, overrides[currentWord.index]);
+    playWordAudio(currentWord.speakText, debug);
+  }, [currentWord, words, overrides]);
+
   useEffect(() => {
     if (!session || !meta) return;
-    if (
-      session.phase === "round1" &&
-      !session.inMini &&
-      session.introIndex >= words.length
-    ) {
+    if (session.phase === "round1" && !session.inMini && session.introIndex >= words.length) {
       const next = transitionRound1ToRound2(session, words.length);
       setSession(next);
       persist(next, meta);
     }
   }, [session, meta, words.length, persist]);
 
+  const activeWordKey =
+    view && view.kind !== "round-complete"
+      ? `${view.kind}-${view.wordIndex}-${session?.phase ?? ""}-${session?.qIndex ?? ""}-${session?.introIndex ?? ""}-${session?.miniIndex ?? ""}`
+      : null;
+
   useEffect(() => {
-    if (!view || view.kind === "round-complete" || !currentWord) return;
-    if (view.kind === "formal" && view.mode === "type-romaji") return;
-    const t = setTimeout(() => speakJapanese(currentWord.speakText), 300);
-    return () => clearTimeout(t);
-  }, [view, currentWord]);
+    if (!activeWordKey || !currentWord) return;
+    if (view?.kind === "formal" && view.mode === "type-romaji") return;
+
+    if (autoPlayTimer.current) clearTimeout(autoPlayTimer.current);
+    autoPlayTimer.current = setTimeout(() => {
+      playCurrentWordAudio();
+    }, 300);
+
+    return () => {
+      if (autoPlayTimer.current) clearTimeout(autoPlayTimer.current);
+      cancelJapaneseSpeech();
+    };
+  }, [activeWordKey, currentWord, playCurrentWordAudio, view]);
 
   useEffect(() => {
     if (!view || view.kind === "round-complete") return;
@@ -116,6 +142,13 @@ export function JapaneseLearningApp() {
     setRevealCorrect(false);
     setTypedAnswer("");
     setChoiceStates({});
+  }, []);
+
+  const handleMnemonicChange = useCallback((wordIndex: number, value: string | null) => {
+    setOverrides((prev) => ({
+      ...prev,
+      [wordIndex]: { ...prev[wordIndex], mnemonic: value },
+    }));
   }, []);
 
   const handleChoice = (choiceIndex: number) => {
@@ -169,9 +202,8 @@ export function JapaneseLearningApp() {
       setStatus("Accepted");
     } else {
       nextSession = recordMiss(session, view.wordIndex);
-      setStatus(
-        view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`,
-      );
+      setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);
+      playCurrentWordAudio();
     }
 
     void recordJapaneseWordResult(BLOCK, view.wordIndex, correct);
@@ -209,11 +241,9 @@ export function JapaneseLearningApp() {
     }
 
     const nextSession = advanceFormalQuestion(session);
-    if (nextSession.qIndex >= nextSession.order.length && meta) {
+    if (nextSession.qIndex >= nextSession.order.length) {
       const round = Number(session.phase.replace("round", "")) as 2 | 3 | 4 | 5;
-      const scorePct = Math.round(
-        (session.score / Math.max(nextSession.order.length, 1)) * 100,
-      );
+      const scorePct = Math.round((session.score / Math.max(nextSession.order.length, 1)) * 100);
       const nextMeta = updateMetaAfterRound(meta, round, scorePct);
       setSession(nextSession);
       setMeta(nextMeta);
@@ -240,7 +270,7 @@ export function JapaneseLearningApp() {
   };
 
   if (loading || !session || !meta) {
-    return <p className="text-muted">Loading your Japanese progress…</p>;
+    return <p className="text-muted">Loading your Japanese progress.</p>;
   }
 
   const roundComplete = view?.kind === "round-complete";
@@ -288,7 +318,7 @@ export function JapaneseLearningApp() {
             <>
               <div className="jp-learn-row" style={{ justifyContent: "space-between" }}>
                 <div>
-                  <div className="jp-learn-meta">ROUND {view.round} COMPLETE</div>
+                  <div className="jp-learn-meta">Round {view.round} complete</div>
                   <div className="jp-learn-meta">Score: {view.scorePct}%</div>
                 </div>
               </div>
@@ -353,37 +383,49 @@ export function JapaneseLearningApp() {
                 <div style={{ width: `${view.progressPct}%` }} />
               </div>
 
-              {view.showMnemonic && "mnemonicHtml" in view ? (
-                <div className="jp-learn-mnemonic">
-                  <strong>Memory hook</strong>
-                  {view.kind === "round1-new" ? (
-                    <>
-                      <div className="jp-learn-romaji-xl">
-                        {currentWord.displayRomaji} = {currentWord.en}
-                      </div>
-                      <div>{currentWord.displayMnemonic}</div>
-                    </>
-                  ) : view.kind === "formal" && view.round === 2 ? (
-                    <div className="jp-learn-romaji-xl">{currentWord.displayRomaji}</div>
-                  ) : (
-                    <div className="jp-learn-romaji-lg">{currentWord.displayRomaji}</div>
-                  )}
-                </div>
+              {view.showMnemonic && view.kind !== "formal" ? (
+                <JapaneseMnemonicHook
+                  blockNumber={BLOCK}
+                  wordIndex={currentWord.index}
+                  canonicalMnemonic={words[currentWord.index].m}
+                  mnemonic={overrides[currentWord.index]?.mnemonic}
+                  showRomajiLine={
+                    view.kind === "round1-new"
+                      ? { romaji: currentWord.displayRomaji, english: currentWord.en }
+                      : undefined
+                  }
+                  romajiMd={view.kind === "round1-mini" ? currentWord.displayRomaji : undefined}
+                  onMnemonicChange={handleMnemonicChange}
+                />
+              ) : null}
+
+              {view.kind === "formal" && view.showPronunciationCue && view.pronunciationCue ? (
+                <div className="jp-learn-romaji-xl">{view.pronunciationCue}</div>
               ) : null}
 
               {view.kind === "formal" && view.mode === "type-romaji" ? (
                 <div className="jp-learn-prompt-en">{currentWord.en}</div>
-              ) : (
+              ) : view.kind === "formal" && (view.mode === "type-english" || view.round === 3) ? (
+                <div className="jp-learn-big">{view.instruction}</div>
+              ) : view.kind === "formal" && view.round === 2 ? (
                 <div className="jp-learn-big">Listen</div>
-              )}
+              ) : view.kind !== "formal" ? (
+                <div className="jp-learn-big">Listen</div>
+              ) : null}
 
-              <p className="jp-learn-sub">{view.instruction}</p>
+              {!(view.kind === "formal" && (view.mode === "type-english" || view.mode === "type-romaji")) ? (
+                <p className="jp-learn-sub">{view.instruction}</p>
+              ) : view.kind === "formal" && view.mode === "type-english" ? (
+                <p className="jp-learn-sub">Case, punctuation, equivalents, and minor typos are accepted.</p>
+              ) : view.kind === "formal" && view.mode === "type-romaji" ? (
+                <p className="jp-learn-sub">{view.instruction}</p>
+              ) : null}
 
               {!(view.kind === "formal" && view.mode === "type-romaji") ? (
                 <button
                   type="button"
                   className="jp-learn-btn jp-learn-btn-primary"
-                  onClick={() => speakJapanese(currentWord.speakText)}
+                  onClick={playCurrentWordAudio}
                 >
                   Play audio
                 </button>
@@ -452,13 +494,25 @@ export function JapaneseLearningApp() {
               {showReveal && currentWord ? (
                 <div className="jp-learn-reveal">
                   <div className="jp-learn-jp">{currentWord.jp}</div>
-                  <div className="jp-learn-romaji">{currentWord.r}</div>
+                  <div className="jp-learn-romaji">{currentWord.displayRomaji}</div>
                   <div className="jp-learn-english">{currentWord.en}</div>
                   {revealCorrect ? (
-                    <div className="jp-learn-mnemonic">
-                      <strong>Memory hook</strong>
-                      {currentWord.displayMnemonic}
-                    </div>
+                    <>
+                      <JapaneseMnemonicHook
+                        blockNumber={BLOCK}
+                        wordIndex={currentWord.index}
+                        canonicalMnemonic={words[currentWord.index].m}
+                        mnemonic={overrides[currentWord.index]?.mnemonic}
+                        onMnemonicChange={handleMnemonicChange}
+                      />
+                      <button
+                        type="button"
+                        className="jp-learn-btn mt-2"
+                        onClick={playCurrentWordAudio}
+                      >
+                        Replay audio
+                      </button>
+                    </>
                   ) : null}
                 </div>
               ) : null}
@@ -470,7 +524,7 @@ export function JapaneseLearningApp() {
               ) : null}
             </>
           ) : (
-            <p className="jp-learn-sub">Loading next question…</p>
+            <p className="jp-learn-sub">Loading next question.</p>
           )}
         </section>
       ) : (

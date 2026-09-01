@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { resolveWord } from "@/lib/japanese/engine";
-import { speakJapanese } from "@/lib/japanese/tts";
+import { playWordAudio } from "@/lib/japanese/tts";
+import { buildPlayAudioDebug, getMnemonic, getPronunciationCue, getAudioText } from "@/lib/japanese/word-helpers";
 import type { JapaneseWord } from "@/lib/japanese/types";
 import {
   resetJapaneseWordOverrideField,
@@ -35,9 +36,9 @@ export function JapaneseWordList({ blockNumber, words, overrides, onOverrideChan
     const w = words[index];
     setEditingIndex(index);
     setDraft({
-      mnemonic: o?.mnemonic ?? w.m,
-      pronunciationCue: o?.pronunciationCue ?? w.r,
-      ttsInput: o?.ttsInput ?? w.audio,
+      mnemonic: getMnemonic(w, o),
+      pronunciationCue: getPronunciationCue(w, o),
+      ttsInput: getAudioText(w, o),
     });
   };
 
@@ -71,7 +72,7 @@ export function JapaneseWordList({ blockNumber, words, overrides, onOverrideChan
     <section>
       <p className="jp-learn-sub">
         Reference list for Block {blockNumber}. Training progressively removes the mnemonic, romaji
-        and multiple-choice support. Tap Edit to customize your memory hooks and audio cues — saved
+        and multiple-choice support. Tap Edit to customize your memory hooks and audio cues - saved
         to your account only.
       </p>
       <div className="jp-learn-wordgrid mt-4">
@@ -92,7 +93,12 @@ export function JapaneseWordList({ blockNumber, words, overrides, onOverrideChan
                 <button
                   type="button"
                   className="jp-learn-btn"
-                  onClick={() => speakJapanese(resolved.speakText)}
+                  onClick={() =>
+                    playWordAudio(
+                      resolved.speakText,
+                      buildPlayAudioDebug(w, i, overrides[i]),
+                    )
+                  }
                 >
                   Play
                 </button>

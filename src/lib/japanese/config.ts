@@ -9,3 +9,9 @@ export const JAPANESE_MASTERY_THRESHOLD = 90;
 
 /** Multiple-choice options shown per question. */
 export const JAPANESE_CHOICE_COUNT = 6;
+
+/** Set to a number to limit block words for QA; null = full block. */
+export const JAPANESE_TEST_WORD_LIMIT: number | null = null;
+
+/** QA subset indices when testing audio (includes shiru=19 + suki=34). */
+export const JAPANESE_TEST_WORD_INDICES: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 19, 34];

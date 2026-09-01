@@ -13,6 +13,11 @@ import type {
   JapaneseWordOverrideFields,
   ResolvedJapaneseWord,
 } from "./types";
+import {
+  getAudioText,
+  getMnemonic,
+  getPronunciationCue,
+} from "./word-helpers";
 
 export function shuffle<T>(items: T[]): T[] {
   const x = [...items];
@@ -54,9 +59,9 @@ export function resolveWord(
   return {
     ...word,
     index,
-    displayMnemonic: override?.mnemonic?.trim() || word.m,
-    displayRomaji: override?.pronunciationCue?.trim() || word.r,
-    speakText: override?.ttsInput?.trim() || word.audio,
+    displayMnemonic: getMnemonic(word, override),
+    displayRomaji: getPronunciationCue(word, override),
+    speakText: getAudioText(word, override),
   };
 }
 
@@ -91,13 +96,24 @@ function progressForFormal(round: number, qIndex: number, wordCount: number): nu
   return (round - 1) * 20 + (qIndex / wordCount) * 20;
 }
 
+const ROUND_LABELS: Record<1 | 2 | 3 | 4 | 5, string> = {
+  1: "Round 1 of 5 — Learn",
+  2: "Round 2 of 5 — Recognise",
+  3: "Round 3 of 5 — Listen",
+  4: "Round 4 of 5 — Understand",
+  5: "Round 5 of 5 — Produce",
+};
+
 /** Build the current training view from persisted session state. */
 export function buildRoundView(
   state: JapaneseSessionState,
   words: JapaneseWord[],
+  overrides: Record<number, JapaneseWordOverrideFields> = {},
 ): JapaneseRoundView | null {
   const wordCount = words.length;
   const allIndices = words.map((_, i) => i);
+  const resolvedAt = (index: number) =>
+    resolveWord(words[index], index, overrides[index]);
 
   if (state.phase === "round1") {
     if (state.inMini) {
@@ -105,14 +121,15 @@ export function buildRoundView(
         return null;
       }
       const wordIndex = state.miniQueue[state.miniIndex];
+      const miniWord = resolvedAt(wordIndex);
       return {
         kind: "round1-mini",
         wordIndex,
-        counter: `Quick mixed review ${state.miniIndex + 1}/${state.miniQueue.length} · ${state.introIndex} learned`,
-        roundLabel: "ROUND 1 · TEACH WITH MNEMONICS",
+        counter: `Review ${state.miniIndex + 1}/${state.miniQueue.length} · ${state.introIndex} learned`,
+        roundLabel: ROUND_LABELS[1],
         instruction:
-          "Quick assisted review: romaji stays visible. Hear it and choose the English meaning.",
-        mnemonicHtml: `<div class="jp-learn-romaji-lg">${words[wordIndex].r}</div>`,
+          "Quick review of words you've learned. Hear the audio and choose the English meaning.",
+        mnemonicHtml: `<div class="jp-learn-romaji-lg">${miniWord.displayRomaji}</div>`,
         showMnemonic: true,
         choicePool: makeChoiceIndices(wordIndex, allIndices.slice(0, state.introIndex), allIndices),
         progressPct: progressForRound1(state.introIndex, wordCount),
@@ -124,15 +141,15 @@ export function buildRoundView(
     }
 
     const wordIndex = state.introIndex;
-    const w = words[wordIndex];
+    const w = resolvedAt(wordIndex);
     return {
       kind: "round1-new",
       wordIndex,
       counter: `New word ${state.introIndex + 1} of ${wordCount}`,
-      roundLabel: "ROUND 1 · TEACH WITH MNEMONICS",
+      roundLabel: ROUND_LABELS[1],
       instruction:
-        "This is teaching, not guessing. Learn the meaning, hear the Japanese, then pick the meaning you were just shown.",
-      mnemonicHtml: `<div class="jp-learn-romaji-xl">${w.r} = ${w.en}</div><div>${w.m}</div>`,
+        "Learn the pronunciation cue, English meaning, and memory hook. Play the audio, then pick the English meaning.",
+      mnemonicHtml: `<div class="jp-learn-romaji-xl">${w.displayRomaji} = ${w.en}</div><div>${w.displayMnemonic}</div>`,
       showMnemonic: true,
       choicePool: makeChoiceIndices(
         wordIndex,
@@ -152,15 +169,17 @@ export function buildRoundView(
   const w = words[wordIndex];
 
   if (round === 2) {
+    const cue = getPronunciationCue(w, overrides[wordIndex]);
     return {
       kind: "formal",
       wordIndex,
       round: 2,
       counter: `Question ${state.qIndex + 1} of ${state.order.length}`,
-      roundLabel: "ROUND 2 · ROMAJI + AUDIO",
-      instruction: "Hear the word and use the romaji cue. Choose its English meaning.",
-      showMnemonic: true,
-      mnemonicHtml: `<div class="jp-learn-romaji-xl">${w.r}</div>`,
+      roundLabel: ROUND_LABELS[2],
+      instruction: "Hear the word and use the pronunciation cue. Choose its English meaning.",
+      showMnemonic: false,
+      showPronunciationCue: true,
+      pronunciationCue: cue,
       choicePool: makeChoiceIndices(wordIndex, allIndices, allIndices),
       progressPct: progressForFormal(2, state.qIndex, wordCount),
       scoreLabel: `${state.score} correct`,
@@ -174,9 +193,8 @@ export function buildRoundView(
       wordIndex,
       round: 3,
       counter: `Question ${state.qIndex + 1} of ${state.order.length}`,
-      roundLabel: "ROUND 3 · AUDIO ONLY",
-      instruction:
-        "No romaji and no mnemonic. Hear the Japanese and choose the English meaning.",
+      roundLabel: ROUND_LABELS[3],
+      instruction: "Listen to the audio only and choose the English meaning.",
       showMnemonic: false,
       choicePool: makeChoiceIndices(wordIndex, allIndices, allIndices),
       progressPct: progressForFormal(3, state.qIndex, wordCount),
@@ -191,9 +209,8 @@ export function buildRoundView(
       wordIndex,
       round: 4,
       counter: `Question ${state.qIndex + 1} of ${state.order.length}`,
-      roundLabel: "ROUND 4 · TYPE THE ENGLISH",
-      instruction:
-        "Hear the Japanese and type its English meaning. Case and punctuation do not matter; close spelling and common equivalent meanings are accepted.",
+      roundLabel: ROUND_LABELS[4],
+      instruction: "LISTEN AND TYPE THE MEANING",
       showMnemonic: false,
       choicePool: [],
       progressPct: progressForFormal(4, state.qIndex, wordCount),
@@ -207,9 +224,8 @@ export function buildRoundView(
     wordIndex,
     round: 5,
     counter: `Question ${state.qIndex + 1} of ${state.order.length}`,
-    roundLabel: "ROUND 5 · PRODUCE THE JAPANESE",
-    instruction:
-      "Type the Japanese word in romaji. Long-vowel shortcuts and small spelling slips are tolerated.",
+    roundLabel: ROUND_LABELS[5],
+    instruction: "TYPE THE JAPANESE WORD",
     showMnemonic: false,
     choicePool: [],
     progressPct: progressForFormal(5, state.qIndex, wordCount),
@@ -254,7 +270,10 @@ function buildRoundCompleteView(
 }
 
 /** After answering correctly in round 1 (choice). */
-export function advanceAfterRound1Correct(state: JapaneseSessionState, wordCount: number): JapaneseSessionState {
+export function advanceAfterRound1Correct(
+  state: JapaneseSessionState,
+  wordCount: number,
+): JapaneseSessionState {
   if (state.inMini) {
     const next = { ...state, miniIndex: state.miniIndex + 1 };
     if (next.miniIndex >= next.miniQueue.length) {
@@ -283,8 +302,12 @@ export function advanceAfterRound1Correct(state: JapaneseSessionState, wordCount
   return { ...state, introIndex: nextIntro };
 }
 
-/** Start formal round n (2–5). */
-export function startFormalRound(state: JapaneseSessionState, n: 2 | 3 | 4 | 5, wordCount: number): JapaneseSessionState {
+/** Start formal round n (2-5). Finite shuffled queue — never refilled. */
+export function startFormalRound(
+  state: JapaneseSessionState,
+  n: 2 | 3 | 4 | 5,
+  wordCount: number,
+): JapaneseSessionState {
   return {
     ...state,
     phase: `round${n}` as JapanesePhase,
@@ -296,11 +319,14 @@ export function startFormalRound(state: JapaneseSessionState, n: 2 | 3 | 4 | 5, 
 }
 
 /** After round 1 completes, transition to round 2. */
-export function transitionRound1ToRound2(state: JapaneseSessionState, wordCount: number): JapaneseSessionState {
+export function transitionRound1ToRound2(
+  state: JapaneseSessionState,
+  wordCount: number,
+): JapaneseSessionState {
   return startFormalRound({ ...state, introIndex: wordCount }, 2, wordCount);
 }
 
-/** Advance after answering in formal rounds 2–5. */
+/** Advance after answering in formal rounds 2-5. */
 export function advanceFormalQuestion(state: JapaneseSessionState): JapaneseSessionState {
   return { ...state, qIndex: state.qIndex + 1 };
 }
@@ -390,4 +416,25 @@ export function metaFromDb(row: {
     blockMastered: row.blockMastered,
     unlockedBlocks: row.unlockedBlocks.length ? row.unlockedBlocks : [1],
   };
+}
+
+/** Recover session stuck at end of round 1 or with empty formal queue. */
+export function repairSessionState(
+  state: JapaneseSessionState,
+  wordCount: number,
+): JapaneseSessionState {
+  if (state.phase === "round1" && !state.inMini && state.introIndex >= wordCount) {
+    return transitionRound1ToRound2(state, wordCount);
+  }
+
+  const round = roundNumber(state.phase);
+  if (round >= 2 && state.order.length === 0) {
+    return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount);
+  }
+
+  if (round >= 2 && state.qIndex > state.order.length) {
+    return { ...state, qIndex: state.order.length };
+  }
+
+  return state;
 }
