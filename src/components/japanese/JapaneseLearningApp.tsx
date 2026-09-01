@@ -107,17 +107,29 @@ export function JapaneseLearningApp() {
     return buildRoundView(session, words, overrides);
   }, [session, words, overrides]);
 
+  const playbackRef = useRef({ words, overrides, view });
+  playbackRef.current = { words, overrides, view };
+
   const currentWord = useMemo(() => {
     if (!view || view.kind === "round-complete") return null;
     const idx = view.wordIndex;
     return resolveWord(words[idx], idx, overrides[idx]);
   }, [view, words, overrides]);
 
+  const playWordAudioAtIndex = useCallback((wordIndex: number) => {
+    const { words: w, overrides: o } = playbackRef.current;
+    const word = w[wordIndex];
+    if (!word) return;
+    const resolved = resolveWord(word, wordIndex, o[wordIndex]);
+    const debug = buildPlayAudioDebug(word, wordIndex, o[wordIndex]);
+    playWordAudio(resolved.speakText, debug);
+  }, []);
+
   const playCurrentWordAudio = useCallback(() => {
-    if (!currentWord) return;
-    const debug = buildPlayAudioDebug(words[currentWord.index], currentWord.index, overrides[currentWord.index]);
-    playWordAudio(currentWord.speakText, debug);
-  }, [currentWord, words, overrides]);
+    const v = playbackRef.current.view;
+    if (!v || v.kind === "round-complete") return;
+    playWordAudioAtIndex(v.wordIndex);
+  }, [playWordAudioAtIndex]);
 
   useEffect(() => {
     if (!session || !meta) return;
@@ -134,19 +146,20 @@ export function JapaneseLearningApp() {
       : null;
 
   useEffect(() => {
-    if (!activeWordKey || !currentWord) return;
-    if (view?.kind === "formal" && view.mode === "type-romaji") return;
+    if (!activeWordKey || !view || view.kind === "round-complete") return;
+    if (view.kind === "formal" && view.mode === "type-romaji") return;
 
+    const wordIndex = view.wordIndex;
     if (autoPlayTimer.current) clearTimeout(autoPlayTimer.current);
     autoPlayTimer.current = setTimeout(() => {
-      playCurrentWordAudio();
+      playWordAudioAtIndex(wordIndex);
     }, 300);
 
     return () => {
       if (autoPlayTimer.current) clearTimeout(autoPlayTimer.current);
       cancelJapaneseSpeech();
     };
-  }, [activeWordKey, currentWord, playCurrentWordAudio, view]);
+  }, [activeWordKey, view, playWordAudioAtIndex]);
 
   useEffect(() => {
     if (!view || view.kind === "round-complete") return;

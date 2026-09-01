@@ -3,6 +3,7 @@ import type { PlayAudioDebugInfo } from "./word-helpers";
 
 let pendingSpeakTimer: ReturnType<typeof setTimeout> | null = null;
 let speakGeneration = 0;
+let pendingUtteranceText = "";
 
 function clearPendingSpeakTimer(): void {
   if (pendingSpeakTimer !== null) {
@@ -25,29 +26,65 @@ function logPlayRequest(debug: PlayAudioDebugInfo): void {
   console.debug("[japanese-tts]", debug);
 }
 
+function pickJapaneseVoice(): SpeechSynthesisVoice | undefined {
+  const vs = window.speechSynthesis.getVoices();
+  return vs.find((v) => v.lang && v.lang.toLowerCase().startsWith("ja"));
+}
+
+function utterNow(text: string, generation: number): void {
+  if (generation !== speakGeneration) return;
+
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "ja-JP";
+  u.rate = 0.72;
+  u.pitch = 1;
+
+  const ja = pickJapaneseVoice();
+  if (ja) u.voice = ja;
+
+  window.speechSynthesis.speak(u);
+}
+
+function scheduleUtterance(text: string, generation: number): void {
+  const vs = window.speechSynthesis.getVoices();
+  if (vs.length > 0) {
+    utterNow(text, generation);
+    return;
+  }
+
+  let spoke = false;
+  const trySpeak = () => {
+    if (spoke || generation !== speakGeneration) return;
+    spoke = true;
+    window.speechSynthesis.removeEventListener("voiceschanged", trySpeak);
+    utterNow(text, generation);
+  };
+
+  window.speechSynthesis.addEventListener("voiceschanged", trySpeak);
+  window.setTimeout(() => {
+    if (!spoke) trySpeak();
+  }, 200);
+}
+
 /**
- * Speak Japanese text. Only the latest request plays — older timers are cleared.
+ * Speak Japanese text. Only the latest request plays - older timers are cleared.
  */
 export function speakJapanese(text: string, debug?: PlayAudioDebugInfo): void {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+  const utteranceText = text.trim();
+  if (!utteranceText) return;
 
   if (debug) logPlayRequest(debug);
 
   cancelJapaneseSpeech();
   const generation = speakGeneration;
+  pendingUtteranceText = utteranceText;
 
   pendingSpeakTimer = setTimeout(() => {
     pendingSpeakTimer = null;
     if (generation !== speakGeneration) return;
-
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ja-JP";
-    u.rate = 0.72;
-    u.pitch = 1;
-    const vs = window.speechSynthesis.getVoices();
-    const ja = vs.find((v) => v.lang && v.lang.toLowerCase().startsWith("ja"));
-    if (ja) u.voice = ja;
-    window.speechSynthesis.speak(u);
+    scheduleUtterance(pendingUtteranceText, generation);
   }, 80);
 }
 
