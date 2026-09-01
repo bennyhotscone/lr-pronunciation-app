@@ -11,7 +11,7 @@ const games = [
   {
     href: "/portal/learn-japanese",
     title: "Learn Japanese",
-    subtitle: "日本語 · 100 blocks × 50 words (5,000)",
+    subtitle: "日本語 · Five-stage vocabulary training",
     description:
       "Five-stage vocabulary training with mnemonics, audio, and typing drills. Progress saves to your account.",
     className:
