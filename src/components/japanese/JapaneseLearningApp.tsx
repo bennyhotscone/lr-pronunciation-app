@@ -252,6 +252,9 @@ export function JapaneseLearningApp() {
     if (correct) {
       nextSession = recordCorrect(session);
       setStatus("Accepted");
+      if (view.mode === "type-romaji" && view.round === 5) {
+        playWordAudioAtIndex(view.wordIndex);
+      }
     } else {
       nextSession = recordMiss(session, view.wordIndex);
       setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);

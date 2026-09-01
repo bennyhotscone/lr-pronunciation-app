@@ -81,7 +81,8 @@ export async function loginAction(formData: FormData) {
   if (
     isStaff(user.role) &&
     redirectTo.startsWith("/portal") &&
-    !redirectTo.startsWith("/portal/learn-japanese")
+    !redirectTo.startsWith("/portal/learn-japanese") &&
+    !redirectTo.startsWith("/portal/learn-grammar")
   ) {
     redirectTo = "/teacher";
   }

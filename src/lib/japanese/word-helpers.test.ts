@@ -24,9 +24,9 @@ const suki: JapaneseWord = {
 };
 
 describe("getAudioText", () => {
-  it("returns distinct katakana TTS for shiru and suki", () => {
-    expect(getAudioText(shiru)).toBe("\u30b7\u30eb");
-    expect(getAudioText(suki)).toBe("\u30b9\u30ad");
+  it("returns distinct kanji TTS hints for shiru and suki", () => {
+    expect(getAudioText(shiru)).toBe("\u77e5\u308b");
+    expect(getAudioText(suki)).toBe("\u597d\u304d");
     expect(getAudioText(shiru)).not.toBe(getAudioText(suki));
   });
 
@@ -34,9 +34,9 @@ describe("getAudioText", () => {
     expect(getAudioText(suki, { ttsInput: "\u3059\u304d\u3060" })).toBe("\u30b9\u30ad\u30c0");
   });
 
-  it("ignores romaji overrides and uses default audio", () => {
-    expect(getAudioText(suki, { ttsInput: "shiru" })).toBe("\u30b9\u30ad");
-    expect(getAudioText(shiru, { ttsInput: "suki" })).toBe("\u30b7\u30eb");
+  it("ignores romaji overrides and uses kanji hints", () => {
+    expect(getAudioText(suki, { ttsInput: "shiru" })).toBe("\u597d\u304d");
+    expect(getAudioText(shiru, { ttsInput: "suki" })).toBe("\u77e5\u308b");
   });
 });
 
@@ -56,7 +56,7 @@ describe("isLikelyRomaji", () => {
 
 describe("buildPlayAudioDebug", () => {
   it("includes correct finalAudio per word", () => {
-    expect(buildPlayAudioDebug(shiru, 19).finalAudio).toBe("\u30b7\u30eb");
-    expect(buildPlayAudioDebug(suki, 34).finalAudio).toBe("\u30b9\u30ad");
+    expect(buildPlayAudioDebug(shiru, 19).finalAudio).toBe("\u77e5\u308b");
+    expect(buildPlayAudioDebug(suki, 34).finalAudio).toBe("\u597d\u304d");
   });
 });

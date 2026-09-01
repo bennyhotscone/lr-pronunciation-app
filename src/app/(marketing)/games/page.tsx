@@ -19,6 +19,16 @@ const games = [
     mutedClass: "text-muted",
   },
   {
+    href: "/portal/learn-grammar",
+    title: "Japanese Grammar",
+    subtitle: "文法 · Three-phase pattern course",
+    description:
+      "Learn one pattern at a time: plain explanation, guided practice, then typing recall. Progress saves to your account.",
+    className:
+      "border-[#1f4e46]/35 bg-gradient-to-br from-[#eef7f4] via-white to-[#d9efe8]",
+    mutedClass: "text-muted",
+  },
+  {
     href: "/english-for-mandarin-speakers",
     title: "English for Mandarin Speakers",
     subtitle: "中文母语者英语课程",

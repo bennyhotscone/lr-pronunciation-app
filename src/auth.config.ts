@@ -84,7 +84,9 @@ export const authConfig = {
 
       const isLearnJapanese =
         pathname === "/portal/learn-japanese" ||
-        pathname.startsWith("/portal/learn-japanese/");
+        pathname.startsWith("/portal/learn-japanese/") ||
+        pathname === "/portal/learn-grammar" ||
+        pathname.startsWith("/portal/learn-grammar/");
 
       if (isPortal && role && role !== "STUDENT") {
         if (isLearnJapanese && isStaff(role)) return true;

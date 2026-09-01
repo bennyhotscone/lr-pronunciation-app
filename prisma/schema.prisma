@@ -98,6 +98,7 @@ model User {
   japaneseBlockProgress        JapaneseBlockProgress[]
   japaneseWordOverrides        JapaneseWordOverride[]
   japaneseWordStats              JapaneseWordStat[]
+  grammarBlockProgress         GrammarBlockProgress[]
 }
 
 model StudentProfile {
@@ -1016,4 +1017,25 @@ model JapaneseWordStat {
 
   @@unique([userId, blockNumber, wordIndex])
   @@index([userId, blockNumber])
+}
+
+/// Per-user grammar block progress (3-phase model).
+model GrammarBlockProgress {
+  id                  String   @id @default(cuid())
+  userId              String
+  blockId             String
+  sessionState        Json     @default("{}")
+  teachCompleted      Boolean  @default(false)
+  guidedCompleted     Boolean  @default(false)
+  recallJtoECompleted Boolean  @default(false)
+  recallEtoJCompleted Boolean  @default(false)
+  mastered            Boolean  @default(false)
+  unlockedBlocks      String[] @default([])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockId])
+  @@index([userId])
 }

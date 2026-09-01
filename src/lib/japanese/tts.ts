@@ -27,8 +27,24 @@ function logPlayRequest(debug: PlayAudioDebugInfo): void {
 }
 
 function pickJapaneseVoice(): SpeechSynthesisVoice | undefined {
-  const vs = window.speechSynthesis.getVoices();
-  return vs.find((v) => v.lang && v.lang.toLowerCase().startsWith("ja"));
+  const vs = window.speechSynthesis.getVoices().filter(
+    (v) => v.lang && v.lang.toLowerCase().startsWith("ja"),
+  );
+  if (vs.length === 0) return undefined;
+
+  const preferred = [
+    /google.*日本語/i,
+    /microsoft.*haruka/i,
+    /microsoft.*ayumi/i,
+    /microsoft.*ichiro/i,
+    /kyoko/i,
+    /otoya/i,
+  ];
+  for (const pattern of preferred) {
+    const match = vs.find((v) => pattern.test(v.name));
+    if (match) return match;
+  }
+  return vs[0];
 }
 
 function utterNow(text: string, generation: number): void {

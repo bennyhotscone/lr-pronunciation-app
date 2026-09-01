@@ -2,6 +2,15 @@ import type { JapaneseWord, JapaneseWordOverrideFields } from "./types";
 
 const HIRAGANA_TO_KATAKANA_OFFSET = 0x60;
 
+/**
+ * Browser TTS often blurs similar kana (e.g. スキ vs シル).
+ * Kanji disambiguates pronunciation for these pairs.
+ */
+const TTS_KANJI_HINTS: Record<string, string> = {
+  suki: "好き",
+  shiru: "知る",
+};
+
 /** Hiragana to katakana so Web Speech voices pronounce distinct syllables. */
 export function hiraganaToKatakana(text: string): string {
   return text.replace(/[\u3041-\u3096]/g, (ch) =>
@@ -46,9 +55,12 @@ export function getAudioText(
   override?: JapaneseWordOverrideFields | null,
 ): string {
   const rawOverride = override?.ttsInput?.trim();
-  const base =
-    rawOverride && !isLikelyRomaji(rawOverride) ? rawOverride : word.audio;
-  return normalizeForJapaneseTts(base);
+  if (rawOverride && !isLikelyRomaji(rawOverride)) {
+    return normalizeForJapaneseTts(rawOverride);
+  }
+  const hinted = TTS_KANJI_HINTS[word.r];
+  if (hinted) return hinted;
+  return normalizeForJapaneseTts(word.audio);
 }
 
 export type PlayAudioDebugInfo = {

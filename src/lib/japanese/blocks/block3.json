@@ -1,10 +1,129 @@
 [
   {
-    "jp": "戻る",
-    "audio": "もどる",
-    "r": "modoru",
-    "en": "back / return",
-    "m": "Go BACK through the same DOOR. → modoru."
+    "jp": "も",
+    "audio": "も",
+    "r": "mo",
+    "en": "too / also",
+    "m": "\"ME TOO!\" — add も after your name. → mo."
+  },
+  {
+    "jp": "決して",
+    "audio": "けっして",
+    "r": "kesshite",
+    "en": "never",
+    "m": "\"KETCHUP? NEVER on sushi!\" → kesshite."
+  },
+  {
+    "jp": "そば",
+    "audio": "そば",
+    "r": "soba",
+    "en": "by / beside",
+    "m": "Stand BY the SOBA shop door. → soba."
+  },
+  {
+    "jp": "人",
+    "audio": "ひと",
+    "r": "hito",
+    "en": "person",
+    "m": "\"HE told\" that PERSON. → hito."
+  },
+  {
+    "jp": "終わる",
+    "audio": "おわる",
+    "r": "owaru",
+    "en": "be over / end",
+    "m": "\"OH, WAR is OVER.\" → owaru."
+  },
+  {
+    "jp": "愛",
+    "audio": "あい",
+    "r": "ai",
+    "en": "love",
+    "m": "\"I\" LOVE you — AI (love). → ai."
+  },
+  {
+    "jp": "さらに",
+    "audio": "さらに",
+    "r": "sarani",
+    "en": "more / furthermore",
+    "m": "\"SIR, ANOTHER one?\" MORE, please. → sarani."
+  },
+  {
+    "jp": "見つける",
+    "audio": "みつける",
+    "r": "mitsukeru",
+    "en": "find",
+    "m": "MEET SUKI and you will FIND her. → mitsukeru."
+  },
+  {
+    "jp": "仕事",
+    "audio": "しごと",
+    "r": "shigoto",
+    "en": "work / job",
+    "m": "SHE GOes TO WORK. → shigoto."
+  },
+  {
+    "jp": "とても",
+    "audio": "とても",
+    "r": "totemo",
+    "en": "very",
+    "m": "\"TOTALLY!\" That is VERY true. → totemo."
+  },
+  {
+    "jp": "去る",
+    "audio": "さる",
+    "r": "saru",
+    "en": "leave / go away",
+    "m": "The monkey (saru) has to LEAVE. → saru."
+  },
+  {
+    "jp": "消す",
+    "audio": "けす",
+    "r": "kesu",
+    "en": "turn off",
+    "m": "CASE closed — TURN OFF the lights. → kesu."
+  },
+  {
+    "jp": "さん",
+    "audio": "さん",
+    "r": "san",
+    "en": "Mr. / Ms. (honorific)",
+    "m": "SUN rises for MR. Tanaka — add さん. → san."
+  },
+  {
+    "jp": "すまない",
+    "audio": "すまない",
+    "r": "sumanai",
+    "en": "sorry",
+    "m": "\"SO MAHNAI\" — I am SORRY. → sumanai."
+  },
+  {
+    "jp": "試す",
+    "audio": "ためす",
+    "r": "tamesu",
+    "en": "try",
+    "m": "TAME this — TRY it first. → tamesu."
+  },
+  {
+    "jp": "日",
+    "audio": "ひ",
+    "r": "hi",
+    "en": "day",
+    "m": "The sun (hi) marks each DAY. → hi."
+  },
+  {
+    "jp": "どうぞ",
+    "audio": "どうぞ",
+    "r": "douzo",
+    "en": "please (offering)",
+    "m": "\"DOUGH, ZO!\" PLEASE, help yourself. → douzo."
+  },
+  {
+    "jp": "もちろん",
+    "audio": "もちろん",
+    "r": "mochiron",
+    "en": "sure / of course",
+    "m": "MOCHI? Of COURSE — SURE! → mochiron."
   },
   {
     "jp": "どれでも",
@@ -14,339 +133,220 @@
     "m": "\"DOOR, eh? DEMO any one works.\" → doredemo."
   },
   {
-    "jp": "いい",
-    "audio": "いい",
-    "r": "ii",
-    "en": "good",
-    "m": "\"EE, that's GOOD.\" → ii."
+    "jp": "だけ",
+    "audio": "だけ",
+    "r": "dake",
+    "en": "only",
+    "m": "DAKE keeps ONLY one cookie. → dake."
   },
   {
-    "jp": "女性",
-    "audio": "じょせい",
-    "r": "josei",
-    "en": "woman",
-    "m": "JOE SEES a WOMAN. → josei."
+    "jp": "待つ",
+    "audio": "まつ",
+    "r": "matsu",
+    "en": "wait",
+    "m": "MATT waits. → matsu."
   },
   {
-    "jp": "通る",
-    "audio": "とおる",
-    "r": "tooru",
-    "en": "through / pass",
-    "m": "Go THROUGH the door: \"TO ORU!\" → tooru."
+    "jp": "から",
+    "audio": "から",
+    "r": "kara",
+    "en": "because",
+    "m": "CAR broke down BECAUSE of rain. → kara."
   },
   {
-    "jp": "私たち",
-    "audio": "わたしたち",
-    "r": "watashitachi",
-    "en": "us / we",
-    "m": "WATASHI plus TACHI = all of US. → watashitachi."
+    "jp": "二",
+    "audio": "に",
+    "r": "ni",
+    "en": "two",
+    "m": "Count to TWO: に. → ni."
   },
   {
-    "jp": "人生",
-    "audio": "じんせい",
-    "r": "jinsei",
-    "en": "life",
-    "m": "A PERSON'S (jin) whole LIFE span (sei). → jinsei."
+    "jp": "べき",
+    "audio": "べき",
+    "r": "beki",
+    "en": "should",
+    "m": "BACKY — you SHOULD do it. → beki."
   },
   {
-    "jp": "子ども",
-    "audio": "こども",
-    "r": "kodomo",
-    "en": "child",
-    "m": "COCO's DOpey MOppet is a CHILD. → kodomo."
+    "jp": "助ける",
+    "audio": "たすける",
+    "r": "tasukeru",
+    "en": "help",
+    "m": "TASK? I will HELP you. → tasukeru."
   },
   {
-    "jp": "仕事",
-    "audio": "しごと",
-    "r": "shigoto",
-    "en": "work / job",
-    "m": "\"SHE GO TO WORK.\" → shigoto."
+    "jp": "でさえ",
+    "audio": "でさえ",
+    "r": "desae",
+    "en": "even",
+    "m": "DAY SAY EH — EVEN I can do it. → desae."
   },
   {
-    "jp": "下",
-    "audio": "した",
-    "r": "shita",
-    "en": "down / below",
-    "m": "Look DOWN — it's SHEET-A (below). → shita."
-  },
-  {
-    "jp": "かもしれない",
-    "audio": "かもしれない",
-    "r": "kamoshirenai",
-    "en": "may / might",
-    "m": "\"KAMO? SHIRENAI — it MAY happen.\" → kamoshirenai."
-  },
-  {
-    "jp": "後",
-    "audio": "あと",
-    "r": "ato",
-    "en": "after / later",
-    "m": "\"AH, TOmorrow\" — AFTER today. → ato."
-  },
-  {
-    "jp": "したほうがいい",
-    "audio": "したほうがいい",
-    "r": "shita hou ga ii",
-    "en": "should / had better",
-    "m": "\"SHE DID, HOU, GA II — you SHOULD.\" → shita hou ga ii."
-  },
-  {
-    "jp": "呼ぶ",
-    "audio": "よぶ",
-    "r": "yobu",
-    "en": "call",
-    "m": "\"YO! BOB!\" — CALL his name. → yobu."
-  },
-  {
-    "jp": "世界",
-    "audio": "せかい",
-    "r": "sekai",
-    "en": "world",
-    "m": "The whole WORLD is SAY-KAI wide. → sekai."
-  },
-  {
-    "jp": "終わり",
-    "audio": "おわり",
-    "r": "owari",
-    "en": "over / end",
-    "m": "\"OH, WARI — it's OVER.\" → owari."
-  },
-  {
-    "jp": "学校",
-    "audio": "がっこう",
-    "r": "gakkou",
-    "en": "school",
-    "m": "GAKKOU sounds like \"ga COOL\" — SCHOOL. → gakkou."
-  },
-  {
-    "jp": "まだ",
-    "audio": "まだ",
-    "r": "mada",
-    "en": "still / not yet",
-    "m": "\"MA, DA — STILL not done.\" → mada."
-  },
-  {
-    "jp": "試す",
-    "audio": "ためす",
-    "r": "tamesu",
-    "en": "try",
-    "m": "\"TAME-SU, let me TRY.\" → tamesu."
-  },
-  {
-    "jp": "最後",
-    "audio": "さいご",
-    "r": "saigo",
-    "en": "last / end",
-    "m": "At the VERY END: \"SAI-GO!\" → saigo."
-  },
-  {
-    "jp": "尋ねる",
-    "audio": "たずねる",
-    "r": "tazuneru",
-    "en": "ask",
-    "m": "\"TAZ, NEAR you?\" — ASK someone nearby. → tazuneru."
-  },
-  {
-    "jp": "必要",
-    "audio": "ひつよう",
-    "r": "hitsuyou",
-    "en": "need / necessary",
-    "m": "\"HITS YOU, OH — you NEED it.\" → hitsuyou."
-  },
-  {
-    "jp": "すぎる",
-    "audio": "すぎる",
-    "r": "sugiru",
-    "en": "too (much)",
-    "m": "\"SUE GIRU ate TOO much.\" → sugiru."
+    "jp": "聞こえる",
+    "audio": "きこえる",
+    "r": "kikoeru",
+    "en": "hear / can hear",
+    "m": "KEY GOES clear — you can HEAR it. → kikoeru."
   },
   {
     "jp": "感じる",
     "audio": "かんじる",
     "r": "kanjiru",
     "en": "feel",
-    "m": "\"CAN GIRU FEEL it?\" → kanjiru."
-  },
-  {
-    "jp": "三",
-    "audio": "さん",
-    "r": "san",
-    "en": "three",
-    "m": "Count to THREE: \"SAN!\" → san."
-  },
-  {
-    "jp": "状態",
-    "audio": "じょうたい",
-    "r": "joutai",
-    "en": "state / condition",
-    "m": "\"JOE, TIE your STATE badge.\" → joutai."
-  },
-  {
-    "jp": "決して",
-    "audio": "けっして",
-    "r": "kesshite",
-    "en": "never",
-    "m": "\"KESS! SHH — NEVER say that.\" → kesshite."
-  },
-  {
-    "jp": "なる",
-    "audio": "なる",
-    "r": "naru",
-    "en": "become",
-    "m": "\"NARU-to\" BECOME a ninja. → naru."
-  },
-  {
-    "jp": "間",
-    "audio": "あいだ",
-    "r": "aida",
-    "en": "between",
-    "m": "In the space BETWEEN: \"AI-DA gap.\" → aida."
-  },
-  {
-    "jp": "高い",
-    "audio": "たかい",
-    "r": "takai",
-    "en": "high / tall",
-    "m": "\"TAKAI mountain\" — so HIGH. → takai."
-  },
-  {
-    "jp": "本当に",
-    "audio": "ほんとうに",
-    "r": "hontou ni",
-    "en": "really",
-    "m": "\"HON, TOO NI-ce?\" REALLY? → hontou ni."
-  },
-  {
-    "jp": "何か",
-    "audio": "なにか",
-    "r": "nanika",
-    "en": "something",
-    "m": "\"NAH, NIKA — SOMETHING's there.\" → nanika."
-  },
-  {
-    "jp": "ほとんど",
-    "audio": "ほとんど",
-    "r": "hotondo",
-    "en": "most / almost",
-    "m": "\"HOT ON DO\" MOST days. → hotondo."
-  },
-  {
-    "jp": "別の",
-    "audio": "べつの",
-    "r": "betsu no",
-    "en": "another / different",
-    "m": "\"BET SOON\" pick ANOTHER one. → betsu no."
+    "m": "CAN YOU FEEL it? → kanjiru."
   },
   {
     "jp": "たくさん",
     "audio": "たくさん",
     "r": "takusan",
     "en": "much / many",
-    "m": "\"TAKU-SAN brought MUCH stuff.\" → takusan."
+    "m": "TUCK SUN away — so MUCH stuff. → takusan."
   },
   {
-    "jp": "家族",
-    "audio": "かぞく",
-    "r": "kazoku",
-    "en": "family",
-    "m": "\"KA-ZOKU clan\" = FAMILY. → kazoku."
+    "jp": "起こる",
+    "audio": "おこる",
+    "r": "okoru",
+    "en": "happen",
+    "m": "OH, COR! What will HAPPEN? → okoru."
   },
   {
-    "jp": "自分",
-    "audio": "じぶん",
-    "r": "jibun",
-    "en": "own / oneself",
-    "m": "\"GYM BUN\" — your OWN self. → jibun."
+    "jp": "様",
+    "audio": "さま",
+    "r": "sama",
+    "en": "sir / lord (polite)",
+    "m": "SAMA bows to SIR. → sama."
   },
   {
-    "jp": "出る",
-    "audio": "でる",
-    "r": "deru",
-    "en": "leave / go out",
-    "m": "\"DAY-RU, time to LEAVE.\" → deru."
+    "jp": "人生",
+    "audio": "じんせい",
+    "r": "jinsei",
+    "en": "life",
+    "m": "JIN (person) + SEI (generation) = LIFE. → jinsei."
   },
   {
-    "jp": "置く",
-    "audio": "おく",
-    "r": "oku",
-    "en": "put / place",
-    "m": "\"OAK — PUT it on the table.\" → oku."
+    "jp": "かもしれない",
+    "audio": "かもしれない",
+    "r": "kamoshirenai",
+    "en": "maybe",
+    "m": "CAMO? She RENAI — MAYBE it is hidden. → kamoshirenai."
   },
   {
-    "jp": "古い",
-    "audio": "ふるい",
-    "r": "furui",
-    "en": "old",
-    "m": "\"FURRY, OLD coat.\" → furui."
+    "jp": "神",
+    "audio": "かみ",
+    "r": "kami",
+    "en": "god",
+    "m": "CAMI sees GOD in the shrine. → kami."
   },
   {
-    "jp": "間に",
-    "audio": "あいだに",
-    "r": "aida ni",
-    "en": "while / during",
-    "m": "\"AI-DA NI-ce\" WHILE you wait. → aida ni."
+    "jp": "何でも",
+    "audio": "なんでも",
+    "r": "nandemo",
+    "en": "anything",
+    "m": "NANI DEMO — ANYTHING goes. → nandemo."
   },
   {
-    "jp": "意味",
-    "audio": "いみ",
-    "r": "imi",
-    "en": "meaning / mean",
-    "m": "\"EASY ME\" — what does it MEAN? → imi."
+    "jp": "これら",
+    "audio": "これら",
+    "r": "korera",
+    "en": "these",
+    "m": "CORE ERA — THESE things here. → korera."
+  },
+  {
+    "jp": "夜",
+    "audio": "よる",
+    "r": "yoru",
+    "en": "night",
+    "m": "\"YOU are up at NIGHT.\" → yoru."
   },
   {
     "jp": "続ける",
     "audio": "つづける",
     "r": "tsuzukeru",
     "en": "keep / continue",
-    "m": "\"TSU-ZU-KE-RU — KEEP going.\" → tsuzukeru."
+    "m": "TWO ZOO KEEPers CONTINUE working. → tsuzukeru."
   },
   {
-    "jp": "学生",
-    "audio": "がくせい",
-    "r": "gakusei",
-    "en": "student",
-    "m": "\"GAK-SEI\" — a STUDENT. → gakusei."
+    "jp": "新しい",
+    "audio": "あたらしい",
+    "r": "atarashii",
+    "en": "new",
+    "m": "At a RUSH, she buys a NEW one. → atarashii."
   },
   {
-    "jp": "なぜ",
-    "audio": "なぜ",
-    "r": "naze",
-    "en": "why",
-    "m": "\"NAH, ZE — WHY?\" → naze."
+    "jp": "何も",
+    "audio": "なにも",
+    "r": "nanimo",
+    "en": "nothing",
+    "m": "NANI MO — there is NOTHING. → nanimo."
   },
   {
-    "jp": "させる",
-    "audio": "させる",
-    "r": "saseru",
-    "en": "let / make (do)",
-    "m": "\"SA-SERU, I'll LET you.\" → saseru."
+    "jp": "置く",
+    "audio": "おく",
+    "r": "oku",
+    "en": "put",
+    "m": "\"OK, PUT it on the table.\" → oku."
   },
   {
-    "jp": "すばらしい",
-    "audio": "すばらしい",
-    "r": "subarashii",
-    "en": "great / wonderful",
-    "m": "\"SOO-BAH-RA-SHII — GREAT!\" → subarashii."
+    "jp": "年",
+    "audio": "とし",
+    "r": "toshi",
+    "en": "year",
+    "m": "TOSH counts another YEAR. → toshi."
   },
   {
-    "jp": "同じ",
-    "audio": "おなじ",
-    "r": "onaji",
-    "en": "same",
-    "m": "\"OH, NAH, G — the SAME.\" → onaji."
+    "jp": "入る",
+    "audio": "はいる",
+    "r": "hairu",
+    "en": "enter / go into",
+    "m": "HIGH! You are going INTO the room. → hairu."
   },
   {
-    "jp": "大きい",
-    "audio": "おおきい",
-    "r": "ookii",
-    "en": "big",
-    "m": "\"OH-OH KII — so BIG.\" → ookii."
+    "jp": "尋ねる",
+    "audio": "たずねる",
+    "r": "tazuneru",
+    "en": "ask",
+    "m": "TAZ NEAR you to ASK. → tazuneru."
   },
   {
-    "jp": "グループ",
-    "audio": "グループ",
-    "r": "gurupu",
-    "en": "group",
-    "m": "A GROUP sounds like GURUPU. → gurupu."
+    "jp": "最初",
+    "audio": "さいしょ",
+    "r": "saisho",
+    "en": "first",
+    "m": "SIGH, SHOW me the FIRST one. → saisho."
+  },
+  {
+    "jp": "殺す",
+    "audio": "ころす",
+    "r": "korosu",
+    "en": "kill",
+    "m": "CROW SUE — dark word for KILL. → korosu."
+  },
+  {
+    "jp": "他",
+    "audio": "ほか",
+    "r": "hoka",
+    "en": "other",
+    "m": "HOOK A different OTHER one. → hoka."
+  },
+  {
+    "jp": "止める",
+    "audio": "とめる",
+    "r": "tomeru",
+    "en": "stop",
+    "m": "TOM, MERcy — STOP the car. → tomeru."
+  },
+  {
+    "jp": "すごい",
+    "audio": "すごい",
+    "r": "sugoi",
+    "en": "great / amazing",
+    "m": "SO GO! That is GREAT! → sugoi."
+  },
+  {
+    "jp": "前",
+    "audio": "まえ",
+    "r": "mae",
+    "en": "before / in front",
+    "m": "MAY I go BEFORE you? → mae."
   }
 ]
