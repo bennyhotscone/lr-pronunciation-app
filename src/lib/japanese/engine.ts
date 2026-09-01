@@ -358,6 +358,10 @@ export function getHighestRoundReached(
     fromMeta = Math.min(5, maxCompleted + 1) as 1 | 2 | 3 | 4 | 5;
   }
 
+  if (meta.bestRound5Score > 0 || typeof meta.roundScores["5"] === "number") {
+    fromMeta = Math.max(fromMeta, 5) as 1 | 2 | 3 | 4 | 5;
+  }
+
   return Math.max(fromState, fromMeta) as 1 | 2 | 3 | 4 | 5;
 }
 
@@ -519,6 +523,10 @@ export function repairSessionState(
   }
 
   const round = roundNumber(state.phase);
+  if (round >= 2 && state.order.length > 0 && state.qIndex >= state.order.length) {
+    return state;
+  }
+
   if (round >= 2 && state.order.length === 0) {
     return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount);
   }
