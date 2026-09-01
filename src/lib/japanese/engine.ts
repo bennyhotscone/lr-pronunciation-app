@@ -138,7 +138,7 @@ export function buildRoundView(
     }
 
     if (state.introIndex >= wordCount && !state.inMini) {
-      return null;
+      return buildRoundCompleteView(state, words, 1);
     }
 
     const wordIndex = state.introIndex;
@@ -246,6 +246,7 @@ function buildRoundCompleteView(
     round === 1 ? 100 : Math.round((state.score / Math.max(orderLen, 1)) * 100);
   const passed = scorePct >= JAPANESE_MASTERY_THRESHOLD;
   const missedIndices = [...new Set(state.missed)];
+  const retryRound = round >= 2 ? (round as 2 | 3 | 4 | 5) : undefined;
 
   if (round < 5) {
     return {
@@ -256,6 +257,7 @@ function buildRoundCompleteView(
       missedIndices,
       progressPct: round * 20,
       nextRound: (round + 1) as 2 | 3 | 4 | 5,
+      retryRound,
     };
   }
 
@@ -267,6 +269,7 @@ function buildRoundCompleteView(
     missedIndices,
     progressPct: 100,
     blockMastered: passed,
+    retryRound,
   };
 }
 
@@ -302,6 +305,83 @@ export function advanceAfterRound1Correct(
 
   return { ...state, introIndex: nextIntro };
 }
+
+/** Retry the current round without advancing phase. */
+export function retryRound(
+  state: JapaneseSessionState,
+  wordCount: number,
+): JapaneseSessionState {
+  if (state.phase === "round1") {
+    return {
+      ...createInitialSessionState(),
+      phase: "round1",
+    };
+  }
+  const round = roundNumber(state.phase);
+  if (round >= 2 && round <= 5) {
+    return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount);
+  }
+  return state;
+}
+
+/** Highest round the learner may jump to (1-5) for this block. */
+export function getHighestRoundReached(
+  state: JapaneseSessionState,
+  meta: JapaneseBlockMeta,
+  wordCount: number,
+): 1 | 2 | 3 | 4 | 5 {
+  let fromState: 1 | 2 | 3 | 4 | 5 = 1;
+  if (state.phase === "round1") {
+    if (!state.inMini && state.introIndex >= wordCount) fromState = 2;
+  } else {
+    const round = roundNumber(state.phase);
+    fromState = round;
+    if (state.order.length > 0 && state.qIndex >= state.order.length) {
+      fromState = Math.min(5, round + 1) as 1 | 2 | 3 | 4 | 5;
+    }
+  }
+
+  let fromMeta: 1 | 2 | 3 | 4 | 5 = 1;
+  const scoreKeys = (["2", "3", "4", "5"] as const).filter(
+    (k) => typeof meta.roundScores[k] === "number",
+  );
+  if (scoreKeys.length > 0) {
+    const maxCompleted = Math.max(...scoreKeys.map((k) => Number(k))) as 2 | 3 | 4 | 5;
+    fromMeta = Math.min(5, maxCompleted + 1) as 1 | 2 | 3 | 4 | 5;
+  }
+
+  return Math.max(fromState, fromMeta) as 1 | 2 | 3 | 4 | 5;
+}
+
+/** Round currently represented by session state (including round-complete screens). */
+export function getActiveRound(
+  state: JapaneseSessionState,
+  wordCount: number,
+): 1 | 2 | 3 | 4 | 5 {
+  if (state.phase === "round1") return 1;
+  return roundNumber(state.phase);
+}
+
+/** Jump to a round at its start (or round 1 complete if learn phase was finished). */
+export function jumpToRound(
+  state: JapaneseSessionState,
+  round: 1 | 2 | 3 | 4 | 5,
+  wordCount: number,
+): JapaneseSessionState {
+  if (round === 1) {
+    if (!state.inMini && state.introIndex >= wordCount) {
+      return { ...createInitialSessionState(), introIndex: wordCount, phase: "round1" };
+    }
+    return createInitialSessionState();
+  }
+  const base: JapaneseSessionState = {
+    ...state,
+    introIndex: Math.max(state.introIndex, wordCount),
+  };
+  return startFormalRound(base, round, wordCount);
+}
+
+
 
 /** Start formal round n (2-5). Finite shuffled queue — never refilled. */
 export function startFormalRound(
@@ -427,7 +507,7 @@ export function repairSessionState(
   wordCount: number,
 ): JapaneseSessionState {
   if (state.phase === "round1" && !state.inMini && state.introIndex >= wordCount) {
-    return transitionRound1ToRound2(state, wordCount);
+    return state;
   }
 
   const round = roundNumber(state.phase);

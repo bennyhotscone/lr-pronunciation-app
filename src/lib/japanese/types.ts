@@ -88,5 +88,6 @@ export type JapaneseRoundView =
       missedIndices: number[];
       progressPct: number;
       nextRound?: 2 | 3 | 4 | 5;
+      retryRound?: 2 | 3 | 4 | 5;
       blockMastered?: boolean;
     };

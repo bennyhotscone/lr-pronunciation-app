@@ -9,6 +9,7 @@ import {
   recordMiss,
   repairSessionState,
   resolveWord,
+  retryRound,
   startFormalRound,
   transitionRound1ToRound2,
   updateMetaAfterRound,
@@ -18,11 +19,8 @@ import {
   getPlayableBlockNumbers,
   isPlayableJapaneseBlock,
 } from "@/lib/japanese/blocks";
-import { getBlockCurriculumLabel } from "@/lib/japanese/blocks/frequency";
 import {
   JAPANESE_MASTERY_THRESHOLD,
-  JAPANESE_TOTAL_BLOCKS,
-  JAPANESE_WORDS_PER_BLOCK,
 } from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
@@ -131,15 +129,6 @@ export function JapaneseLearningApp() {
     playWordAudioAtIndex(v.wordIndex);
   }, [playWordAudioAtIndex]);
 
-  useEffect(() => {
-    if (!session || !meta) return;
-    if (session.phase === "round1" && !session.inMini && session.introIndex >= words.length) {
-      const next = transitionRound1ToRound2(session, words.length);
-      setSession(next);
-      persist(next, meta);
-    }
-  }, [session, meta, words.length, persist]);
-
   const activeWordKey =
     view && view.kind !== "round-complete"
       ? `${view.kind}-${view.wordIndex}-${session?.phase ?? ""}-${session?.qIndex ?? ""}-${session?.introIndex ?? ""}-${session?.miniIndex ?? ""}`
@@ -246,12 +235,24 @@ export function JapaneseLearningApp() {
     persist(nextSession, meta);
   };
 
+  const handleRetryRound = () => {
+    if (!session || !meta || !view || view.kind !== "round-complete" || !view.retryRound) return;
+    const nextSession = retryRound(session, words.length);
+    resetQuestionUi();
+    setSession(nextSession);
+    persist(nextSession, meta);
+  };
+
+
   const handleContinue = () => {
     if (!session || !meta || !view) return;
 
     if (view.kind === "round-complete") {
       if (view.nextRound) {
-        const nextSession = startFormalRound(session, view.nextRound, words.length);
+        const nextSession =
+          view.round === 1
+            ? transitionRound1ToRound2(session, words.length)
+            : startFormalRound(session, view.nextRound, words.length);
         resetQuestionUi();
         setSession(nextSession);
         persist(nextSession, meta);
@@ -262,12 +263,7 @@ export function JapaneseLearningApp() {
     resetQuestionUi();
 
     if (session.phase === "round1") {
-      let nextSession = advanceAfterRound1Correct(session, words.length);
-
-      if (nextSession.introIndex >= words.length && !nextSession.inMini) {
-        nextSession = transitionRound1ToRound2(nextSession, words.length);
-      }
-
+      const nextSession = advanceAfterRound1Correct(session, words.length);
       setSession(nextSession);
       persist(nextSession, meta);
       return;
@@ -291,7 +287,7 @@ export function JapaneseLearningApp() {
   };
 
   const handleReset = () => {
-    if (!confirm("Reset Block 1 progress? Your word customizations will stay.")) return;
+    if (!confirm(`Reset Block ${block} progress? Your word customizations will stay.`)) return;
     startTransition(async () => {
       await resetJapaneseBlockProgress(block);
       const fresh = await loadJapaneseProgress(block);
@@ -311,18 +307,32 @@ export function JapaneseLearningApp() {
   return (
     <div className="jp-learn-wrap">
       <header className="jp-learn-header">
-        <div className="jp-learn-meta">CONVERSATIONAL JAPANESE · block {block}</div>
+        <div className="jp-learn-meta">{getBlockCurriculumLabel(block)} · Block {block} of {JAPANESE_TOTAL_BLOCKS} · {JAPANESE_WORDS_PER_BLOCK} words per block</div></div>
         <h1 className="jp-learn-title">Top 5,000 Spoken English Words</h1>
-        <p className="jp-learn-sub">
-          50 words per block, frequency-ranked. Five-stage learning: teach with mnemonic → romaji-assisted recognition → audio-only
-          recognition → hear Japanese and type English → see English and type Japanese in romaji.
-        </p>
         {meta.bestRound5Score > 0 ? (
           <p className="jp-learn-meta mt-2">
             Best Round 5: {meta.bestRound5Score}%
             {meta.blockMastered ? " · Block mastered" : ""}
           </p>
         ) : null}
+        <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
+          {playableBlocks.map((n) => {
+            const unlocked = meta?.unlockedBlocks.includes(n) ?? n === 1;
+            const active = n === block;
+            return (
+              <button
+                key={n}
+                type="button"
+                className={active ? "jp-learn-btn jp-learn-btn-primary" : "jp-learn-btn"}
+                disabled={!unlocked || pending}
+                onClick={() => switchBlock(n)}
+              >
+                Block {n}
+                {!unlocked ? " (locked)" : null}
+              </button>
+            );
+          })}
+        </nav>
       </header>
 
       <nav className="jp-learn-nav" aria-label="Japanese learning sections">
@@ -369,10 +379,12 @@ export function JapaneseLearningApp() {
               </div>
               <p className="jp-learn-sub">
                 {view.round < 5
-                  ? `Next is Round ${view.nextRound}. The target is ${JAPANESE_MASTERY_THRESHOLD}%, but you can continue regardless.`
+                  ? view.passed
+                    ? `Round target is ${JAPANESE_MASTERY_THRESHOLD}%. Retry Round ${view.round} or continue to Round ${view.nextRound}.`
+                    : `Score below ${JAPANESE_MASTERY_THRESHOLD}%. Retry Round ${view.round} to practice again, or continue to Round ${view.nextRound}.`
                   : view.passed
-                    ? `You completed the hardest production round at ${view.scorePct}%.`
-                    : `Final production score: ${view.scorePct}%. Review missed words and repeat when you want.`}
+                    ? `You completed the hardest production round at ${view.scorePct}%. Retry Round 5 anytime to sharpen recall.`
+                    : `Final production score: ${view.scorePct}%. Retry Round 5 to practice again before moving on.`}
               </p>
               <div className="jp-learn-reveal">
                 {view.missedIndices.length === 0 ? (
@@ -391,15 +403,30 @@ export function JapaneseLearningApp() {
                   </div>
                 )}
               </div>
-              {view.nextRound ? (
-                <button
-                  type="button"
-                  className="jp-learn-btn jp-learn-btn-primary mt-3"
-                  onClick={handleContinue}
-                >
-                  Start Round {view.nextRound}
-                </button>
-              ) : null}
+              <div className="jp-learn-row mt-3" style={{ gap: "0.75rem", flexWrap: "wrap" }}>
+                {view.retryRound ? (
+                  <button type="button" className="jp-learn-btn" onClick={handleRetryRound}>
+                    Retry Round {view.retryRound}
+                  </button>
+                ) : null}
+                {view.nextRound ? (
+                  <button
+                    type="button"
+                    className="jp-learn-btn jp-learn-btn-primary"
+                    onClick={handleContinue}
+                  >
+                    Continue to Round {view.nextRound}
+                  </button>
+                ) : view.retryRound ? (
+                  <button
+                    type="button"
+                    className="jp-learn-btn jp-learn-btn-primary"
+                    onClick={handleRetryRound}
+                  >
+                    Retry Round {view.retryRound}
+                  </button>
+                ) : null}
+              </div>
             </>
           ) : view && currentWord ? (
             <>
