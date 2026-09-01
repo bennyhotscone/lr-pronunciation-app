@@ -97,6 +97,14 @@ function progressForFormal(round: number, qIndex: number, wordCount: number): nu
   return (round - 1) * 20 + (qIndex / wordCount) * 20;
 }
 
+export const ROUND_SHORT_LABELS: Record<1 | 2 | 3 | 4 | 5, string> = {
+  1: "Learn",
+  2: "Recognise",
+  3: "Listen",
+  4: "Understand",
+  5: "Produce",
+};
+
 const ROUND_LABELS: Record<1 | 2 | 3 | 4 | 5, string> = {
   1: "Round 1 of 5 — Learn",
   2: "Round 2 of 5 — Recognise",

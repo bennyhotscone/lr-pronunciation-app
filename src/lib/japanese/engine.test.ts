@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   advanceFormalQuestion,
   buildRoundView,
+  createInitialBlockMeta,
   createInitialSessionState,
+  getActiveRound,
+  getHighestRoundReached,
+  jumpToRound,
   repairSessionState,
   retryRound,
   startFormalRound,
