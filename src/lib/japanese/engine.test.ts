@@ -165,6 +165,27 @@ describe("getHighestRoundReached", () => {
     const meta = { ...createInitialBlockMeta(), roundScores: { "2": 80, "3": 70 } };
     expect(getHighestRoundReached(state, meta, 10)).toBe(4);
   });
+
+  it("keeps all five rounds selectable after round 5 completes below mastery", () => {
+    let state = startFormalRound(createInitialSessionState(), 5, 10);
+    state = { ...state, qIndex: 10, score: 6, missed: [0, 1] };
+    const meta = {
+      ...createInitialBlockMeta(),
+      roundScores: { "2": 90, "3": 85, "4": 70, "5": 64 },
+      bestRound5Score: 64,
+    };
+    expect(getHighestRoundReached(state, meta, 10)).toBe(5);
+  });
+
+  it("keeps round 5 reachable from meta after session reload mid-block", () => {
+    const state = startFormalRound(createInitialSessionState(), 2, 10);
+    const meta = {
+      ...createInitialBlockMeta(),
+      roundScores: { "5": 64 },
+      bestRound5Score: 64,
+    };
+    expect(getHighestRoundReached(state, meta, 10)).toBe(5);
+  });
 });
 
 describe("jumpToRound", () => {
@@ -208,5 +229,17 @@ describe("repairSessionState", () => {
     const fixed = repairSessionState(broken, 10);
     expect(fixed.phase).toBe("round4");
     expect(fixed.order.length).toBe(10);
+  });
+
+  it("preserves completed round 5 for round-complete navigation", () => {
+    let done = startFormalRound(createInitialSessionState(), 5, 10);
+    done = { ...done, qIndex: 10, score: 6 };
+    const fixed = repairSessionState(done, 10);
+    expect(fixed.qIndex).toBe(10);
+    const view = buildRoundView(fixed, words);
+    expect(view?.kind).toBe("round-complete");
+    if (view?.kind === "round-complete") {
+      expect(view.retryRound).toBe(5);
+    }
   });
 });

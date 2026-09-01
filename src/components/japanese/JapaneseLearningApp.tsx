@@ -638,7 +638,44 @@ export function JapaneseLearningApp() {
               ) : null}
             </>
           ) : (
-            <p className="jp-learn-sub">Loading next question.</p>
+            <div className="jp-learn-stuck">
+              <div className="jp-learn-big">Pick a round to continue</div>
+              <p className="jp-learn-sub">
+                Your session is between steps. Choose a round above to retry Block {block}.
+              </p>
+              <div className="jp-learn-row mt-3" style={{ gap: "0.75rem", flexWrap: "wrap" }}>
+                {activeRound >= 2 ? (
+                  <button
+                    type="button"
+                    className="jp-learn-btn jp-learn-btn-primary"
+                    onClick={() => selectRound(activeRound as 1 | 2 | 3 | 4 | 5)}
+                    disabled={pending}
+                  >
+                    Retry Round {activeRound}
+                  </button>
+                ) : null}
+                {highestRoundReached >= 4 ? (
+                  <button
+                    type="button"
+                    className="jp-learn-btn"
+                    onClick={() => selectRound(4)}
+                    disabled={pending}
+                  >
+                    Practice Round 4
+                  </button>
+                ) : null}
+                {highestRoundReached >= 5 ? (
+                  <button
+                    type="button"
+                    className="jp-learn-btn"
+                    onClick={() => selectRound(5)}
+                    disabled={pending}
+                  >
+                    Practice Round 5
+                  </button>
+                ) : null}
+              </div>
+            </div>
           )}
           </section>
         </>
