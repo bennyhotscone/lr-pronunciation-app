@@ -61,6 +61,8 @@ export function JapaneseLearningApp() {
   const [activeGate, setActiveGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const [answered, setAnswered] = useState(false);
   const [status, setStatus] = useState("");
   const [showReveal, setShowReveal] = useState(false);
@@ -73,27 +75,48 @@ export function JapaneseLearningApp() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!isPlayableJapaneseBlock(block)) return;
-    setLoading(true);
-    loadJapaneseProgress(block).then((data) => {
-      if ("error" in data) {
-        setLoading(false);
-        return;
-      }
-      const repaired = repairSessionState(data.session, getJapaneseBlock(block).length);
-      setSession(repaired);
-      setMeta(data.meta);
-      setGatesPassed(data.gatesPassed);
-      setOverrides(data.overrides);
+    if (!isPlayableJapaneseBlock(block)) {
       setLoading(false);
-      if (
-        repaired.phase !== data.session.phase ||
-        repaired.order.length !== data.session.order.length
-      ) {
-        void saveJapaneseProgress(block, repaired, data.meta);
-      }
-    });
-  }, [block]);
+      setLoadError("This block is not available yet.");
+      return;
+    }
+
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(null);
+
+    loadJapaneseProgress(block)
+      .then((data) => {
+        if (cancelled) return;
+        if ("error" in data) {
+          setLoadError(data.error);
+          setLoading(false);
+          return;
+        }
+        const repaired = repairSessionState(data.session, getJapaneseBlock(block).length);
+        setSession(repaired);
+        setMeta(data.meta);
+        setGatesPassed(data.gatesPassed);
+        setOverrides(data.overrides);
+        setLoading(false);
+        if (
+          repaired.phase !== data.session.phase ||
+          repaired.order.length !== data.session.order.length
+        ) {
+          void saveJapaneseProgress(block, repaired, data.meta);
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("[JapaneseLearningApp] loadJapaneseProgress failed", err);
+        setLoadError("Couldn't load progress. Please try again.");
+        setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [block, loadAttempt]);
 
 
   const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
@@ -392,6 +415,21 @@ export function JapaneseLearningApp() {
           setActiveGate(null);
         }}
       />
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="jp-learn-wrap">
+        <p className="text-muted">{loadError}</p>
+        <button
+          type="button"
+          className="jp-learn-btn jp-learn-btn-primary mt-3"
+          onClick={() => setLoadAttempt((n) => n + 1)}
+        >
+          Retry
+        </button>
+      </div>
     );
   }
 

@@ -17,6 +17,7 @@ import {
 import { fuzzyMatchEnglishText, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { isStaff } from "@/lib/portal-access";
+import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
 import { revalidatePath } from "next/cache";
 
 const LEARN_PATH = "/portal/learn-japanese";
@@ -93,34 +94,74 @@ async function cacheStory(userId: string, milestoneNumber: number, pack: Generat
 export async function loadMilestoneGate(
   milestoneNumber: number,
 ): Promise<{ error: string } | MilestoneStoryPayload> {
-  const session = await requireJapaneseLearner();
-  if (!session) return { error: "Unauthorized" };
+  try {
+    const session = await requireJapaneseLearner();
+    if (!session) return { error: "Unauthorized" };
 
-  const userId = session.user.id;
+    const userId = session.user.id;
 
-  const [cached, progress] = await Promise.all([
-    prisma.japaneseMilestoneStory.findUnique({
-      where: { userId_milestoneNumber: { userId, milestoneNumber } },
-    }),
-    prisma.japaneseMilestoneProgress.findUnique({
-      where: { userId_milestoneNumber: { userId, milestoneNumber } },
-    }),
-  ]);
+    let cached = null;
+    let progress = null;
+    try {
+      [cached, progress] = await Promise.all([
+        prisma.japaneseMilestoneStory.findUnique({
+          where: { userId_milestoneNumber: { userId, milestoneNumber } },
+        }),
+        prisma.japaneseMilestoneProgress.findUnique({
+          where: { userId_milestoneNumber: { userId, milestoneNumber } },
+        }),
+      ]);
+    } catch (err) {
+      if (isPrismaSchemaMissingError(err)) {
+        console.warn(
+          "[loadMilestoneGate] milestone tables missing; gate unavailable",
+          err,
+        );
+        return { error: "Story checkpoints are not available yet. Please try again later." };
+      }
+      throw err;
+    }
 
-  let storyRow = cached;
-  if (!storyRow) {
-    const generated = await generateJapaneseMilestoneStory(milestoneNumber);
-    storyRow = await cacheStory(userId, milestoneNumber, generated);
+    let storyRow = cached;
+    if (!storyRow) {
+      const generated = await generateJapaneseMilestoneStory(milestoneNumber);
+      try {
+        storyRow = await cacheStory(userId, milestoneNumber, generated);
+      } catch (err) {
+        if (isPrismaSchemaMissingError(err)) {
+          console.warn("[loadMilestoneGate] cannot cache story; tables missing", err);
+          return {
+            milestoneNumber,
+            label: milestoneLabel(milestoneNumber),
+            unlocksBlock: getBlockUnlockedByMilestone(milestoneNumber),
+            passed: progress?.passed ?? false,
+            attempts: progress?.attempts ?? 0,
+            story: {
+              title: generated.title,
+              paragraphs: generated.paragraphs,
+              comprehension: generated.comprehension,
+              production: generated.production,
+              vocabUsed: generated.vocabUsed,
+              provider: generated.provider,
+            },
+          };
+        }
+        throw err;
+      }
+    }
+
+    return {
+      milestoneNumber,
+      label: milestoneLabel(milestoneNumber),
+      unlocksBlock: getBlockUnlockedByMilestone(milestoneNumber),
+      passed: progress?.passed ?? false,
+      attempts: progress?.attempts ?? 0,
+      story: storyFromRow(storyRow),
+    };
+  } catch (err) {
+    console.error("[loadMilestoneGate] failed", err);
+    return { error: "Couldn't load story checkpoint. Please try again." };
   }
-
-  return {
-    milestoneNumber,
-    label: milestoneLabel(milestoneNumber),
-    unlocksBlock: getBlockUnlockedByMilestone(milestoneNumber),
-    passed: progress?.passed ?? false,
-    attempts: progress?.attempts ?? 0,
-    story: storyFromRow(storyRow),
-  };
 }
 
 export type MilestoneAnswerSubmission = {
@@ -179,27 +220,35 @@ export async function submitMilestoneAnswers(
   );
   const passed = combinedScore >= JAPANESE_MILESTONE_PASS_THRESHOLD;
 
-  await prisma.japaneseMilestoneProgress.upsert({
-    where: { userId_milestoneNumber: { userId, milestoneNumber } },
-    create: {
-      userId,
-      milestoneNumber,
-      passed,
-      comprehensionScore,
-      productionScore,
-      combinedScore,
-      attempts: 1,
-      passedAt: passed ? new Date() : null,
-    },
-    update: {
-      passed: passed || undefined,
-      comprehensionScore,
-      productionScore,
-      combinedScore,
-      attempts: { increment: 1 },
-      passedAt: passed ? new Date() : undefined,
-    },
-  });
+  try {
+    await prisma.japaneseMilestoneProgress.upsert({
+      where: { userId_milestoneNumber: { userId, milestoneNumber } },
+      create: {
+        userId,
+        milestoneNumber,
+        passed,
+        comprehensionScore,
+        productionScore,
+        combinedScore,
+        attempts: 1,
+        passedAt: passed ? new Date() : null,
+      },
+      update: {
+        passed: passed || undefined,
+        comprehensionScore,
+        productionScore,
+        combinedScore,
+        attempts: { increment: 1 },
+        passedAt: passed ? new Date() : undefined,
+      },
+    });
+  } catch (err) {
+    if (isPrismaSchemaMissingError(err)) {
+      console.warn("[submitMilestoneAnswers] milestone tables missing; cannot save progress");
+      return { error: "Story checkpoints are not available yet. Please try again later." };
+    }
+    throw err;
+  }
 
   revalidatePath(LEARN_PATH);
 
@@ -219,11 +268,19 @@ export async function getGatesPassed(): Promise<number[]> {
   const session = await requireJapaneseLearner();
   if (!session) return [];
 
-  const rows = await prisma.japaneseMilestoneProgress.findMany({
-    where: { userId: session.user.id, passed: true },
-    select: { milestoneNumber: true },
-  });
-  return rows.map((r) => r.milestoneNumber).sort((a, b) => a - b);
+  try {
+    const rows = await prisma.japaneseMilestoneProgress.findMany({
+      where: { userId: session.user.id, passed: true },
+      select: { milestoneNumber: true },
+    });
+    return rows.map((r) => r.milestoneNumber).sort((a, b) => a - b);
+  } catch (err) {
+    if (isPrismaSchemaMissingError(err)) {
+      console.warn("[getGatesPassed] milestone tables missing; returning no gates passed");
+      return [];
+    }
+    throw err;
+  }
 }
 
 export async function checkGateUnlock(blockNumber: number): Promise<{

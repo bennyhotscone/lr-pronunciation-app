@@ -13,6 +13,7 @@ import {
 } from "@/lib/japanese/engine";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
 import { isStaff } from "@/lib/portal-access";
+import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
 import { revalidatePath } from "next/cache";
 
 const LEARN_PATH = "/portal/learn-japanese";
@@ -35,61 +36,81 @@ export type JapaneseProgressPayload = {
   stats: Record<number, { timesSeen: number; timesCorrect: number; timesMissed: number }>;
 };
 
+
+async function loadGatesPassed(userId: string): Promise<number[]> {
+  try {
+    const gateRows = await prisma.japaneseMilestoneProgress.findMany({
+      where: { userId, passed: true },
+      select: { milestoneNumber: true },
+    });
+    return gateRows.map((g) => g.milestoneNumber).sort((a, b) => a - b);
+  } catch (err) {
+    if (isPrismaSchemaMissingError(err)) {
+      console.warn(
+        "[loadJapaneseProgress] JapaneseMilestoneProgress table missing; skipping milestone gates",
+      );
+      return [];
+    }
+    throw err;
+  }
+}
+
 export async function loadJapaneseProgress(
   blockNumber = 1,
 ): Promise<{ error: string } | JapaneseProgressPayload> {
-  const session = await requireJapaneseLearner();
-  if (!session) return { error: "Unauthorized" };
+  try {
+    const session = await requireJapaneseLearner();
+    if (!session) return { error: "Unauthorized" };
 
-  const userId = session.user.id;
+    const userId = session.user.id;
 
-  const [progress, allProgress, gateRows, overrideRows, statRows] = await Promise.all([
-    prisma.japaneseBlockProgress.findUnique({
-      where: { userId_blockNumber: { userId, blockNumber } },
-    }),
-    prisma.japaneseBlockProgress.findMany({
-      where: { userId },
-      select: { blockNumber: true, unlockedBlocks: true, blockMastered: true },
-    }),
-    prisma.japaneseMilestoneProgress.findMany({
-      where: { userId, passed: true },
-      select: { milestoneNumber: true },
-    }),
-    prisma.japaneseWordOverride.findMany({
-      where: { userId, blockNumber },
-    }),
-    prisma.japaneseWordStat.findMany({
-      where: { userId, blockNumber },
-    }),
-  ]);
+    const [progress, allProgress, overrideRows, statRows, gatesPassed] = await Promise.all([
+      prisma.japaneseBlockProgress.findUnique({
+        where: { userId_blockNumber: { userId, blockNumber } },
+      }),
+      prisma.japaneseBlockProgress.findMany({
+        where: { userId },
+        select: { blockNumber: true, unlockedBlocks: true, blockMastered: true },
+      }),
+      prisma.japaneseWordOverride.findMany({
+        where: { userId, blockNumber },
+      }),
+      prisma.japaneseWordStat.findMany({
+        where: { userId, blockNumber },
+      }),
+      loadGatesPassed(userId),
+    ]);
 
-  const gatesPassed = gateRows.map((g) => g.milestoneNumber).sort((a, b) => a - b);
-  const sessionState = progress ? sessionFromDb(progress) : createInitialSessionState();
-  const baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
-  const meta: JapaneseBlockMeta = {
-    ...baseMeta,
-    unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed),
-  };
-
-  const overrides: JapaneseProgressPayload["overrides"] = {};
-  for (const o of overrideRows) {
-    overrides[o.wordIndex] = {
-      mnemonic: o.mnemonic,
-      pronunciationCue: o.pronunciationCue,
-      ttsInput: o.ttsInput,
+    const sessionState = progress ? sessionFromDb(progress) : createInitialSessionState();
+    const baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
+    const meta: JapaneseBlockMeta = {
+      ...baseMeta,
+      unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed),
     };
-  }
 
-  const stats: JapaneseProgressPayload["stats"] = {};
-  for (const s of statRows) {
-    stats[s.wordIndex] = {
-      timesSeen: s.timesSeen,
-      timesCorrect: s.timesCorrect,
-      timesMissed: s.timesMissed,
-    };
-  }
+    const overrides: JapaneseProgressPayload["overrides"] = {};
+    for (const o of overrideRows) {
+      overrides[o.wordIndex] = {
+        mnemonic: o.mnemonic,
+        pronunciationCue: o.pronunciationCue,
+        ttsInput: o.ttsInput,
+      };
+    }
 
-  return { session: sessionState, meta, gatesPassed, overrides, stats };
+    const stats: JapaneseProgressPayload["stats"] = {};
+    for (const row of statRows) {
+      stats[row.wordIndex] = {
+        timesSeen: row.timesSeen,
+        timesCorrect: row.timesCorrect,
+        timesMissed: row.timesMissed,
+      };
+    }
+
+    return { session: sessionState, meta, gatesPassed, overrides, stats };
+  } catch (err) {
+    console.error("[loadJapaneseProgress] failed", err);
+    return { error: "Couldn't load progress. Please try again." };
+  }
 }
 
 export async function saveJapaneseProgress(

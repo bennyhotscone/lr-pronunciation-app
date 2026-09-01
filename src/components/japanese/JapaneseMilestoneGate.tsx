@@ -34,28 +34,34 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
 
   useEffect(() => {
     setLoading(true);
-    loadMilestoneGate(milestoneNumber).then((data) => {
-      if ("error" in data) {
-        setStatus(data.error);
+    loadMilestoneGate(milestoneNumber)
+      .then((data) => {
+        if ("error" in data) {
+          setStatus(data.error);
+          setLoading(false);
+          return;
+        }
+        setPayload(data);
+        if (data.passed) {
+          setPhase("results");
+          setResult({
+            passed: true,
+            comprehensionScore: 100,
+            productionScore: 100,
+            combinedScore: 100,
+            threshold: JAPANESE_MILESTONE_PASS_THRESHOLD,
+            unlocksBlock: data.unlocksBlock,
+            comprehensionResults: {},
+            productionResults: {},
+          });
+        }
         setLoading(false);
-        return;
-      }
-      setPayload(data);
-      if (data.passed) {
-        setPhase("results");
-        setResult({
-          passed: true,
-          comprehensionScore: 100,
-          productionScore: 100,
-          combinedScore: 100,
-          threshold: JAPANESE_MILESTONE_PASS_THRESHOLD,
-          unlocksBlock: data.unlocksBlock,
-          comprehensionResults: {},
-          productionResults: {},
-        });
-      }
-      setLoading(false);
-    });
+      })
+      .catch((err) => {
+        console.error("[JapaneseMilestoneGate] loadMilestoneGate failed", err);
+        setStatus("Couldn't load story checkpoint. Please try again.");
+        setLoading(false);
+      });
     return () => cancelJapaneseSpeech();
   }, [milestoneNumber]);
 
