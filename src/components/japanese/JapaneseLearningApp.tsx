@@ -13,8 +13,17 @@ import {
   transitionRound1ToRound2,
   updateMetaAfterRound,
 } from "@/lib/japanese/engine";
-import { getJapaneseBlock } from "@/lib/japanese/blocks";
-import { JAPANESE_MASTERY_THRESHOLD } from "@/lib/japanese/config";
+import {
+  getJapaneseBlock,
+  getPlayableBlockNumbers,
+  isPlayableJapaneseBlock,
+} from "@/lib/japanese/blocks";
+import { getBlockCurriculumLabel } from "@/lib/japanese/blocks/frequency";
+import {
+  JAPANESE_MASTERY_THRESHOLD,
+  JAPANESE_TOTAL_BLOCKS,
+  JAPANESE_WORDS_PER_BLOCK,
+} from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
@@ -32,10 +41,9 @@ import "./japanese-learning.css";
 
 type Screen = "train" | "list";
 
-const BLOCK = 1;
-
 export function JapaneseLearningApp() {
-  const words = useMemo(() => getJapaneseBlock(BLOCK), []);
+  const [block, setBlock] = useState(1);
+  const words = useMemo(() => getJapaneseBlock(block), [block]);
   const [screen, setScreen] = useState<Screen>("train");
   const [session, setSession] = useState<JapaneseSessionState | null>(null);
   const [meta, setMeta] = useState<JapaneseBlockMeta | null>(null);
@@ -53,12 +61,14 @@ export function JapaneseLearningApp() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    loadJapaneseProgress(BLOCK).then((data) => {
+    if (!isPlayableJapaneseBlock(block)) return;
+    setLoading(true);
+    loadJapaneseProgress(block).then((data) => {
       if ("error" in data) {
         setLoading(false);
         return;
       }
-      const repaired = repairSessionState(data.session, getJapaneseBlock(BLOCK).length);
+      const repaired = repairSessionState(data.session, getJapaneseBlock(block).length);
       setSession(repaired);
       setMeta(data.meta);
       setOverrides(data.overrides);
@@ -67,16 +77,26 @@ export function JapaneseLearningApp() {
         repaired.phase !== data.session.phase ||
         repaired.order.length !== data.session.order.length
       ) {
-        void saveJapaneseProgress(BLOCK, repaired, data.meta);
+        void saveJapaneseProgress(block, repaired, data.meta);
       }
     });
-  }, []);
+  }, [block]);
+
+
+  const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
+
+  const switchBlock = (next: number) => {
+    if (!meta?.unlockedBlocks.includes(next) || !isPlayableJapaneseBlock(next)) return;
+    setBlock(next);
+    setScreen("train");
+    resetQuestionUi();
+  };
 
   const persist = useCallback(
     (nextSession: JapaneseSessionState, nextMeta: JapaneseBlockMeta) => {
       if (saveTimer.current) clearTimeout(saveTimer.current);
       saveTimer.current = setTimeout(() => {
-        void saveJapaneseProgress(BLOCK, nextSession, nextMeta);
+        void saveJapaneseProgress(block, nextSession, nextMeta);
       }, 400);
     },
     [],
@@ -173,7 +193,7 @@ export function JapaneseLearningApp() {
       setStatus(`Answer: ${words[correctIndex].en}`);
     }
 
-    void recordJapaneseWordResult(BLOCK, correctIndex, correct);
+    void recordJapaneseWordResult(block, correctIndex, correct);
     setRevealCorrect(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -206,7 +226,7 @@ export function JapaneseLearningApp() {
       playCurrentWordAudio();
     }
 
-    void recordJapaneseWordResult(BLOCK, view.wordIndex, correct);
+    void recordJapaneseWordResult(block, view.wordIndex, correct);
     setRevealCorrect(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -244,12 +264,12 @@ export function JapaneseLearningApp() {
     if (nextSession.qIndex >= nextSession.order.length) {
       const round = Number(session.phase.replace("round", "")) as 2 | 3 | 4 | 5;
       const scorePct = Math.round((session.score / Math.max(nextSession.order.length, 1)) * 100);
-      const nextMeta = updateMetaAfterRound(meta, round, scorePct);
+      const nextMeta = updateMetaAfterRound(meta, block, round, scorePct);
       setSession(nextSession);
       setMeta(nextMeta);
       if (saveTimer.current) clearTimeout(saveTimer.current);
       startTransition(async () => {
-        await saveJapaneseProgress(BLOCK, nextSession, nextMeta);
+        await saveJapaneseProgress(block, nextSession, nextMeta);
       });
       return;
     }
@@ -260,8 +280,8 @@ export function JapaneseLearningApp() {
   const handleReset = () => {
     if (!confirm("Reset Block 1 progress? Your word customizations will stay.")) return;
     startTransition(async () => {
-      await resetJapaneseBlockProgress(BLOCK);
-      const fresh = await loadJapaneseProgress(BLOCK);
+      await resetJapaneseBlockProgress(block);
+      const fresh = await loadJapaneseProgress(block);
       if ("error" in fresh) return;
       setSession(fresh.session);
       setMeta(fresh.meta);
@@ -278,10 +298,10 @@ export function JapaneseLearningApp() {
   return (
     <div className="jp-learn-wrap">
       <header className="jp-learn-header">
-        <div className="jp-learn-meta">CONVERSATIONAL JAPANESE · BLOCK {BLOCK}</div>
-        <h1 className="jp-learn-title">First 100</h1>
+        <div className="jp-learn-meta">CONVERSATIONAL JAPANESE · block {block}</div>
+        <h1 className="jp-learn-title">Top 5,000 Spoken English Words</h1>
         <p className="jp-learn-sub">
-          Five-stage learning: teach with mnemonic → romaji-assisted recognition → audio-only
+          50 words per block, frequency-ranked. Five-stage learning: teach with mnemonic → romaji-assisted recognition → audio-only
           recognition → hear Japanese and type English → see English and type Japanese in romaji.
         </p>
         {meta.bestRound5Score > 0 ? (
@@ -385,7 +405,7 @@ export function JapaneseLearningApp() {
 
               {view.showMnemonic && view.kind !== "formal" ? (
                 <JapaneseMnemonicHook
-                  blockNumber={BLOCK}
+                  blockNumber={block}
                   wordIndex={currentWord.index}
                   canonicalMnemonic={words[currentWord.index].m}
                   mnemonic={overrides[currentWord.index]?.mnemonic}
@@ -499,7 +519,7 @@ export function JapaneseLearningApp() {
                   {revealCorrect ? (
                     <>
                       <JapaneseMnemonicHook
-                        blockNumber={BLOCK}
+                        blockNumber={block}
                         wordIndex={currentWord.index}
                         canonicalMnemonic={words[currentWord.index].m}
                         mnemonic={overrides[currentWord.index]?.mnemonic}
@@ -529,7 +549,7 @@ export function JapaneseLearningApp() {
         </section>
       ) : (
         <JapaneseWordList
-          blockNumber={BLOCK}
+          blockNumber={block}
           words={words}
           overrides={overrides}
           onOverrideChange={(wordIndex, field, value) => {

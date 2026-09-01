@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
+import { JAPANESE_TOTAL_BLOCKS } from "@/lib/japanese/config";
 import {
   createInitialBlockMeta,
   createInitialSessionState,
@@ -15,6 +16,19 @@ import { isStaff } from "@/lib/portal-access";
 import { revalidatePath } from "next/cache";
 
 const LEARN_PATH = "/portal/learn-japanese";
+function mergeUnlockedBlocks(
+  rows: Array<{ blockNumber: number; unlockedBlocks: number[]; blockMastered: boolean }>,
+): number[] {
+  const unlocked = new Set<number>([1]);
+  for (const row of rows) {
+    for (const n of row.unlockedBlocks) unlocked.add(n);
+    if (row.blockMastered && row.blockNumber < JAPANESE_TOTAL_BLOCKS) {
+      unlocked.add(row.blockNumber + 1);
+    }
+  }
+  return [...unlocked].sort((x, y) => x - y);
+}
+
 
 async function requireJapaneseLearner() {
   const session = await auth();
@@ -41,9 +55,13 @@ export async function loadJapaneseProgress(
 
   const userId = session.user.id;
 
-  const [progress, overrideRows, statRows] = await Promise.all([
+  const [progress, allProgress, overrideRows, statRows] = await Promise.all([
     prisma.japaneseBlockProgress.findUnique({
       where: { userId_blockNumber: { userId, blockNumber } },
+    }),
+    prisma.japaneseBlockProgress.findMany({
+      where: { userId },
+      select: { blockNumber: true, unlockedBlocks: true, blockMastered: true },
     }),
     prisma.japaneseWordOverride.findMany({
       where: { userId, blockNumber },
@@ -54,7 +72,11 @@ export async function loadJapaneseProgress(
   ]);
 
   const sessionState = progress ? sessionFromDb(progress) : createInitialSessionState();
-  const meta = progress ? metaFromDb(progress) : createInitialBlockMeta();
+  const baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
+  const meta: JapaneseBlockMeta = {
+    ...baseMeta,
+    unlockedBlocks: mergeUnlockedBlocks(allProgress),
+  };
 
   const overrides: JapaneseProgressPayload["overrides"] = {};
   for (const o of overrideRows) {
@@ -169,7 +191,7 @@ export async function completeJapaneseRound(
   round: 2 | 3 | 4 | 5,
   scorePct: number,
 ): Promise<{ ok: true; meta: JapaneseBlockMeta } | { error: string }> {
-  const nextMeta = updateMetaAfterRound(meta, round, scorePct);
+  const nextMeta = updateMetaAfterRound(meta, blockNumber, round, scorePct);
   const save = await saveJapaneseProgress(blockNumber, sessionState, nextMeta);
   if ("error" in save) return save;
   return { ok: true, meta: nextMeta };

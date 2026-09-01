@@ -1,3 +1,13 @@
+/** Words per curriculum block (frequency-ranked slices). */
+export const JAPANESE_WORDS_PER_BLOCK = 50;
+
+/** Total blocks covering the top spoken-English frequency words. */
+export const JAPANESE_TOTAL_BLOCKS = 100;
+
+/** Target curriculum size: 100 blocks x 50 words. */
+export const JAPANESE_CURRICULUM_WORD_COUNT =
+  JAPANESE_WORDS_PER_BLOCK * JAPANESE_TOTAL_BLOCKS;
+
 /** Words introduced before each mini-review in Round 1. */
 export const JAPANESE_BATCH_SIZE = 5;
 

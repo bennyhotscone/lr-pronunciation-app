@@ -3,6 +3,7 @@ import {
   JAPANESE_MASTERY_THRESHOLD,
   JAPANESE_CHOICE_COUNT,
   JAPANESE_MINI_REVIEW_SIZE,
+  JAPANESE_TOTAL_BLOCKS,
 } from "./config";
 import type {
   JapaneseBlockMeta,
@@ -344,6 +345,7 @@ export function recordMiss(state: JapaneseSessionState, wordIndex: number): Japa
 /** Update block meta after completing a formal round. */
 export function updateMetaAfterRound(
   meta: JapaneseBlockMeta,
+  blockNumber: number,
   round: 2 | 3 | 4 | 5,
   scorePct: number,
 ): JapaneseBlockMeta {
@@ -356,8 +358,9 @@ export function updateMetaAfterRound(
     bestRound5Score = Math.max(bestRound5Score, scorePct);
     if (scorePct >= JAPANESE_MASTERY_THRESHOLD) {
       blockMastered = true;
-      if (!unlockedBlocks.includes(2)) {
-        unlockedBlocks.push(2);
+      const nextBlock = blockNumber + 1;
+      if (nextBlock <= JAPANESE_TOTAL_BLOCKS && !unlockedBlocks.includes(nextBlock)) {
+        unlockedBlocks.push(nextBlock);
       }
     }
   }
