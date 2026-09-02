@@ -32,19 +32,19 @@ describe("milestone gates", () => {
     expect(getBlockUnlockedByMilestone(2)).toBe(5);
   });
 
-  it("does not auto-unlock past an even block without gate pass", () => {
+  it("auto-unlocks block 3 when block 2 is mastered without gate pass", () => {
     const rows = [
       { blockNumber: 1, unlockedBlocks: [1, 2], blockMastered: true },
       { blockNumber: 2, unlockedBlocks: [1, 2], blockMastered: true },
     ];
-    expect(mergeUnlockedBlocks(rows, [])).toEqual([1, 2]);
+    expect(mergeUnlockedBlocks(rows, [])).toEqual([1, 2, 3]);
     expect(mergeUnlockedBlocks(rows, [1])).toEqual([1, 2, 3]);
   });
 
-  it("skips next-block unlock when mastering an even block", () => {
+  it("unlocks next block when mastering an even block", () => {
     let meta = createInitialBlockMeta();
     meta = updateMetaAfterRound(meta, 2, 5, 95);
     expect(meta.blockMastered).toBe(true);
-    expect(meta.unlockedBlocks).toEqual([1]);
+    expect(meta.unlockedBlocks).toContain(3);
   });
 });

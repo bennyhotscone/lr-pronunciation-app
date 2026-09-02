@@ -30,7 +30,6 @@ import {
   JAPANESE_WORDS_PER_BLOCK,
 } from "@/lib/japanese/config";
 import {
-  getBlockUnlockedByMilestone,
   getMilestoneForBlock,
 } from "@/lib/japanese/milestone";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
@@ -129,15 +128,7 @@ export function JapaneseLearningApp() {
 
   const switchBlock = (next: number) => {
     if (!meta) return;
-    if (!meta.unlockedBlocks.includes(next) || !isPlayableJapaneseBlock(next)) {
-      for (let m = 1; getBlockUnlockedByMilestone(m) <= next; m += 1) {
-        if (getBlockUnlockedByMilestone(m) === next && !gatesPassed.includes(m)) {
-          openMilestoneGate(m);
-          return;
-        }
-      }
-      return;
-    }
+    if (!meta.unlockedBlocks.includes(next) || !isPlayableJapaneseBlock(next)) return;
     setBlock(next);
     setScreen("train");
     resetQuestionUi();
@@ -382,7 +373,7 @@ export function JapaneseLearningApp() {
     });
   };
 
-  const pendingGateMilestone = useMemo(() => {
+  const optionalGateMilestone = useMemo(() => {
     const milestone = getMilestoneForBlock(block);
     if (!milestone || !meta?.blockMastered) return null;
     if (gatesPassed.includes(milestone)) return null;

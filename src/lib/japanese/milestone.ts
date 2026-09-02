@@ -1,6 +1,6 @@
 import { JAPANESE_TOTAL_BLOCKS } from "./config";
 
-/** Even block numbers (2, 4, 6…) end a pair and trigger a milestone gate. */
+/** Even block numbers (2, 4, 6…) end a pair and offer optional milestone practice. */
 export function isGateBoundaryBlock(blockNumber: number): boolean {
   return blockNumber > 0 && blockNumber % 2 === 0;
 }
@@ -35,10 +35,7 @@ export function mergeUnlockedBlocks(
   for (const row of rows) {
     for (const n of row.unlockedBlocks) unlocked.add(n);
     if (row.blockMastered && row.blockNumber < JAPANESE_TOTAL_BLOCKS) {
-      const nextBlock = row.blockNumber + 1;
-      if (!isGateBoundaryBlock(row.blockNumber)) {
-        unlocked.add(nextBlock);
-      }
+      unlocked.add(row.blockNumber + 1);
     }
   }
   for (const milestone of gatesPassed) {
