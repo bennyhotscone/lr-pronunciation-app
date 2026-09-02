@@ -2,8 +2,8 @@ import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { getBlocksForMilestone } from "@/lib/japanese/milestone";
 import type { JapaneseWord } from "@/lib/japanese/types";
 
-/** Bump to invalidate cached milestone stories (v5 = easier gate, fewer questions). */
-export const MILESTONE_STORY_CACHE_VERSION = 5;
+/** Bump to invalidate cached milestone stories (v6 = romaji-only vocab drill, purge old LLM stories). */
+export const MILESTONE_STORY_CACHE_VERSION = 6;
 
 /** Stored in DB `vocabOnly` — must match for cache hits. */
 export const MILESTONE_STORY_VOCAB_ONLY = true;

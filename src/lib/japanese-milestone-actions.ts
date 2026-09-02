@@ -179,6 +179,28 @@ function storyNeedsRegeneration(
   return false;
 }
 
+async function deleteStaleMilestoneStoriesForUser(userId: string): Promise<void> {
+  try {
+    const rows = await prisma.japaneseMilestoneStory.findMany({
+      where: { userId },
+      select: { milestoneNumber: true, provider: true },
+    });
+    const staleMilestones = rows
+      .filter(
+        (row) =>
+          parseMilestoneStoryCacheVersion(row.provider) < MILESTONE_STORY_CACHE_VERSION,
+      )
+      .map((row) => row.milestoneNumber);
+    if (!staleMilestones.length) return;
+    await prisma.japaneseMilestoneStory.deleteMany({
+      where: { userId, milestoneNumber: { in: staleMilestones } },
+    });
+  } catch (err) {
+    if (isPrismaSchemaMissingError(err)) return;
+    throw err;
+  }
+}
+
 export async function loadMilestoneGate(
   milestoneNumber: number,
 ): Promise<{ error: string } | MilestoneStoryPayload> {
@@ -208,6 +230,14 @@ export async function loadMilestoneGate(
         return { error: "Vocab checkpoints are not available yet. Please try again later." };
       }
       throw err;
+    }
+
+    await deleteStaleMilestoneStoriesForUser(userId);
+    if (
+      cached &&
+      parseMilestoneStoryCacheVersion(cached.provider ?? null) < MILESTONE_STORY_CACHE_VERSION
+    ) {
+      cached = null;
     }
 
     let storyRow = cached;
@@ -418,7 +448,7 @@ export async function checkGateUnlock(blockNumber: number): Promise<{
   const gates = await getGatesPassed();
   const passed = gates.includes(milestone);
   return {
-    required: true,
+    required: false,
     milestoneNumber: milestone,
     passed,
     unlocksBlock: getBlockUnlockedByMilestone(milestone),
