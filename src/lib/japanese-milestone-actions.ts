@@ -3,19 +3,27 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { JAPANESE_MILESTONE_PASS_THRESHOLD } from "@/lib/japanese/config";
+import { getDefaultGrammarBlockId } from "@/lib/japanese/grammar";
 import {
   generateJapaneseMilestoneStory,
+  MILESTONE_STORY_CACHE_VERSION,
+  MILESTONE_STORY_VOCAB_ONLY,
+  parseMilestoneStoryCacheVersion,
+  storyCacheIsStale,
   type GeneratedMilestoneStory,
   type MilestoneComprehensionQ,
   type MilestoneProductionQ,
+  type MilestoneTtsToken,
 } from "@/lib/japanese/milestone-story";
 import {
   getBlockUnlockedByMilestone,
+  getBlocksForMilestone,
   getMilestoneForBlock,
   milestoneLabel,
 } from "@/lib/japanese/milestone";
-import { fuzzyMatchEnglishText, fuzzyMatchRomaji } from "@/lib/japanese/matching";
+import { fuzzyMatchEnglishText, fuzzyMatchRomaji, formatAcceptedEnglishAnswers, parseComprehensionRomaji } from "@/lib/japanese/matching";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
+import type { JapaneseWord } from "@/lib/japanese/types";
 import { isStaff } from "@/lib/portal-access";
 import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
 import { revalidatePath } from "next/cache";
@@ -38,16 +46,39 @@ export type MilestoneStoryPayload = {
   story: {
     title: string;
     paragraphs: string[];
+    ttsLines: MilestoneTtsToken[][];
     comprehension: MilestoneComprehensionQ[];
     production: MilestoneProductionQ[];
     vocabUsed: string[];
+    vocabOnly: boolean;
     provider: string | null;
   };
 };
 
+function parseTtsLines(raw: unknown): MilestoneTtsToken[][] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((line) => Array.isArray(line))
+    .map((line) =>
+      (line as unknown[])
+        .map((token) => {
+          if (!token || typeof token !== "object") return null;
+          const t = token as Record<string, unknown>;
+          const romaji = String(t.romaji ?? t.r ?? "").trim();
+          const audio = String(t.audio ?? t.romaji ?? t.r ?? "").trim();
+          if (!romaji || !audio) return null;
+          return { romaji, audio };
+        })
+        .filter((t): t is MilestoneTtsToken => t !== null),
+    )
+    .filter((line) => line.length > 0);
+}
+
 function storyFromRow(row: {
   title: string;
   paragraphs: unknown;
+  ttsParagraphs?: unknown;
+  vocabOnly?: boolean;
   comprehensionQs: unknown;
   productionQs: unknown;
   vocabUsed: unknown;
@@ -56,6 +87,7 @@ function storyFromRow(row: {
   return {
     title: row.title,
     paragraphs: Array.isArray(row.paragraphs) ? row.paragraphs.map(String) : [],
+    ttsLines: parseTtsLines(row.ttsParagraphs),
     comprehension: Array.isArray(row.comprehensionQs)
       ? (row.comprehensionQs as MilestoneComprehensionQ[])
       : [],
@@ -63,7 +95,21 @@ function storyFromRow(row: {
       ? (row.productionQs as MilestoneProductionQ[])
       : [],
     vocabUsed: Array.isArray(row.vocabUsed) ? row.vocabUsed.map(String) : [],
+    vocabOnly: row.vocabOnly ?? false,
     provider: row.provider,
+  };
+}
+
+function storyFromGenerated(pack: GeneratedMilestoneStory): MilestoneStoryPayload["story"] {
+  return {
+    title: pack.title,
+    paragraphs: pack.paragraphs,
+    ttsLines: pack.ttsLines,
+    comprehension: pack.comprehension,
+    production: pack.production,
+    vocabUsed: pack.vocabUsed,
+    vocabOnly: pack.vocabOnly,
+    provider: pack.provider,
   };
 }
 
@@ -75,6 +121,8 @@ async function cacheStory(userId: string, milestoneNumber: number, pack: Generat
       milestoneNumber,
       title: pack.title,
       paragraphs: pack.paragraphs,
+      ttsParagraphs: pack.ttsLines,
+      vocabOnly: pack.vocabOnly,
       comprehensionQs: pack.comprehension,
       productionQs: pack.production,
       vocabUsed: pack.vocabUsed,
@@ -83,12 +131,52 @@ async function cacheStory(userId: string, milestoneNumber: number, pack: Generat
     update: {
       title: pack.title,
       paragraphs: pack.paragraphs,
+      ttsParagraphs: pack.ttsLines,
+      vocabOnly: pack.vocabOnly,
       comprehensionQs: pack.comprehension,
       productionQs: pack.production,
       vocabUsed: pack.vocabUsed,
       provider: pack.provider,
     },
   });
+}
+
+async function getGrammarContext(userId: string) {
+  const grammarBlockId = getDefaultGrammarBlockId();
+  try {
+    const row = await prisma.grammarBlockProgress.findUnique({
+      where: { userId_blockId: { userId, blockId: grammarBlockId } },
+      select: { mastered: true, blockId: true },
+    });
+    return {
+      hasCompletedGrammar: Boolean(row?.mastered),
+      masteredGrammarIds: row?.mastered ? [row.blockId] : [],
+    };
+  } catch {
+    return { hasCompletedGrammar: false, masteredGrammarIds: [] as string[] };
+  }
+}
+
+function storyNeedsRegeneration(
+  cached: {
+    vocabOnly?: boolean;
+    paragraphs?: unknown;
+    provider?: string | null;
+    ttsParagraphs?: unknown;
+  } | null,
+): boolean {
+  if (!cached) return true;
+  const paragraphs = Array.isArray(cached.paragraphs) ? cached.paragraphs.map(String) : [];
+  if (
+    storyCacheIsStale(cached.provider ?? null, paragraphs, cached.vocabOnly) ||
+    parseMilestoneStoryCacheVersion(cached.provider ?? null) < MILESTONE_STORY_CACHE_VERSION
+  ) {
+    return true;
+  }
+  if (!cached.vocabOnly || cached.vocabOnly !== MILESTONE_STORY_VOCAB_ONLY) return true;
+  const ttsLines = parseTtsLines(cached.ttsParagraphs);
+  if (!ttsLines.length) return true;
+  return false;
 }
 
 export async function loadMilestoneGate(
@@ -117,14 +205,15 @@ export async function loadMilestoneGate(
           "[loadMilestoneGate] milestone tables missing; gate unavailable",
           err,
         );
-        return { error: "Story checkpoints are not available yet. Please try again later." };
+        return { error: "Vocab checkpoints are not available yet. Please try again later." };
       }
       throw err;
     }
 
     let storyRow = cached;
-    if (!storyRow) {
-      const generated = await generateJapaneseMilestoneStory(milestoneNumber);
+    if (storyNeedsRegeneration(cached)) {
+      const grammarContext = await getGrammarContext(userId);
+      const generated = await generateJapaneseMilestoneStory(milestoneNumber, grammarContext);
       try {
         storyRow = await cacheStory(userId, milestoneNumber, generated);
       } catch (err) {
@@ -136,14 +225,7 @@ export async function loadMilestoneGate(
             unlocksBlock: getBlockUnlockedByMilestone(milestoneNumber),
             passed: progress?.passed ?? false,
             attempts: progress?.attempts ?? 0,
-            story: {
-              title: generated.title,
-              paragraphs: generated.paragraphs,
-              comprehension: generated.comprehension,
-              production: generated.production,
-              vocabUsed: generated.vocabUsed,
-              provider: generated.provider,
-            },
+            story: storyFromGenerated(generated),
           };
         }
         throw err;
@@ -156,17 +238,24 @@ export async function loadMilestoneGate(
       unlocksBlock: getBlockUnlockedByMilestone(milestoneNumber),
       passed: progress?.passed ?? false,
       attempts: progress?.attempts ?? 0,
-      story: storyFromRow(storyRow),
+      story: storyFromRow(storyRow!),
     };
   } catch (err) {
     console.error("[loadMilestoneGate] failed", err);
-    return { error: "Couldn't load story checkpoint. Please try again." };
+    return { error: "Couldn't load vocab checkpoint. Please try again." };
   }
 }
 
 export type MilestoneAnswerSubmission = {
   comprehension: Record<string, string>;
   production: Record<string, string>;
+};
+
+export type MilestoneQuestionFeedback = {
+  userAnswer: string;
+  expected: string;
+  accepted: string;
+  correct: boolean;
 };
 
 export type MilestoneSubmitResult = {
@@ -178,7 +267,21 @@ export type MilestoneSubmitResult = {
   unlocksBlock: number;
   comprehensionResults: Record<string, boolean>;
   productionResults: Record<string, boolean>;
+  comprehensionFeedback: Record<string, MilestoneQuestionFeedback>;
+  productionFeedback: Record<string, MilestoneQuestionFeedback>;
 };
+
+function findMilestoneWordByRomaji(
+  milestoneNumber: number,
+  romaji: string,
+): JapaneseWord | null {
+  for (const blockNumber of getBlocksForMilestone(milestoneNumber)) {
+    const block = getJapaneseBlock(blockNumber);
+    const word = block.find((w) => w.r.toLowerCase() === romaji.toLowerCase());
+    if (word) return word;
+  }
+  return null;
+}
 
 export async function submitMilestoneAnswers(
   milestoneNumber: number,
@@ -192,21 +295,37 @@ export async function submitMilestoneAnswers(
   if ("error" in gate) return gate;
 
   const comprehensionResults: Record<string, boolean> = {};
+  const comprehensionFeedback: Record<string, MilestoneQuestionFeedback> = {};
   let comprehensionCorrect = 0;
   for (const q of gate.story.comprehension) {
     const input = answers.comprehension[q.id] ?? "";
-    const ok = fuzzyMatchEnglishText(input, q.answer);
+    const romaji = parseComprehensionRomaji(q.prompt);
+    const word = romaji ? findMilestoneWordByRomaji(milestoneNumber, romaji) : null;
+    const ok = fuzzyMatchEnglishText(input, q.answer, word ?? undefined);
     comprehensionResults[q.id] = ok;
+    comprehensionFeedback[q.id] = {
+      userAnswer: input,
+      expected: q.answer,
+      accepted: formatAcceptedEnglishAnswers(q.answer, word ?? undefined),
+      correct: ok,
+    };
     if (ok) comprehensionCorrect += 1;
   }
 
   const productionResults: Record<string, boolean> = {};
+  const productionFeedback: Record<string, MilestoneQuestionFeedback> = {};
   let productionCorrect = 0;
   for (const q of gate.story.production) {
     const input = answers.production[q.id] ?? "";
     const word = getJapaneseBlock(q.blockNumber)[q.wordIndex];
     const ok = word ? fuzzyMatchRomaji(input, word) : false;
     productionResults[q.id] = ok;
+    productionFeedback[q.id] = {
+      userAnswer: input,
+      expected: word?.r ?? q.targetRomaji,
+      accepted: word?.r ?? q.targetRomaji,
+      correct: ok,
+    };
     if (ok) productionCorrect += 1;
   }
 
@@ -245,7 +364,7 @@ export async function submitMilestoneAnswers(
   } catch (err) {
     if (isPrismaSchemaMissingError(err)) {
       console.warn("[submitMilestoneAnswers] milestone tables missing; cannot save progress");
-      return { error: "Story checkpoints are not available yet. Please try again later." };
+      return { error: "Vocab checkpoints are not available yet. Please try again later." };
     }
     throw err;
   }
@@ -261,6 +380,8 @@ export async function submitMilestoneAnswers(
     unlocksBlock: getBlockUnlockedByMilestone(milestoneNumber),
     comprehensionResults,
     productionResults,
+    comprehensionFeedback,
+    productionFeedback,
   };
 }
 

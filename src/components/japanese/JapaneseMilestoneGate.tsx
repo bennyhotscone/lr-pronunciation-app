@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { JAPANESE_MILESTONE_PASS_THRESHOLD } from "@/lib/japanese/config";
-import { cancelJapaneseSpeech, speakJapanese } from "@/lib/japanese/tts";
+import type { MilestoneTtsToken } from "@/lib/japanese/milestone-story";
+import { cancelJapaneseSpeech, speakJapaneseWordByWord } from "@/lib/japanese/tts";
 import {
   loadMilestoneGate,
   submitMilestoneAnswers,
@@ -18,6 +19,10 @@ type Props = {
   onPassed: (unlocksBlock: number) => void;
   onClose?: () => void;
 };
+
+function audioTokens(line: MilestoneTtsToken[]): string[] {
+  return line.map((t) => t.audio || t.romaji);
+}
 
 export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Props) {
   const [payload, setPayload] = useState<MilestoneStoryPayload | null>(null);
@@ -53,33 +58,31 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
             unlocksBlock: data.unlocksBlock,
             comprehensionResults: {},
             productionResults: {},
+            comprehensionFeedback: {},
+            productionFeedback: {},
           });
         }
         setLoading(false);
       })
       .catch((err) => {
         console.error("[JapaneseMilestoneGate] loadMilestoneGate failed", err);
-        setStatus("Couldn't load story checkpoint. Please try again.");
+        setStatus("Couldn't load vocab checkpoint. Please try again.");
         setLoading(false);
       });
     return () => cancelJapaneseSpeech();
   }, [milestoneNumber]);
 
-  const playParagraph = useCallback((text: string) => {
-    speakJapanese(text);
-  }, []);
+  const playParagraph = useCallback((paragraphIndex: number) => {
+    if (!payload) return;
+    const line = payload.story.ttsLines[paragraphIndex];
+    if (!line?.length) return;
+    speakJapaneseWordByWord(audioTokens(line), { pauseMs: 800 });
+  }, [payload]);
 
   const playAll = useCallback(() => {
     if (!payload) return;
-    let i = 0;
-    const playNext = () => {
-      if (i >= payload.story.paragraphs.length) return;
-      const text = payload.story.paragraphs[i];
-      i += 1;
-      speakJapanese(text);
-      setTimeout(playNext, Math.max(2500, text.length * 120));
-    };
-    playNext();
+    const allAudio = payload.story.ttsLines.flatMap(audioTokens);
+    speakJapaneseWordByWord(allAudio, { pauseMs: 800 });
   }, [payload]);
 
   const currentComp = payload?.story.comprehension[compIndex];
@@ -136,7 +139,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
   };
 
   if (loading) {
-    return <p className="text-muted">Preparing your story checkpoint…</p>;
+    return <p className="text-muted">Preparing your vocab checkpoint…</p>;
   }
 
   if (!payload) {
@@ -146,12 +149,11 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
   return (
     <div className="jp-learn-wrap jp-learn-gate-wrap">
       <header className="jp-learn-header jp-learn-gate-header">
-        <div className="jp-learn-meta">Story checkpoint</div>
+        <div className="jp-learn-meta">Vocab checkpoint</div>
         <h1 className="jp-learn-title">{payload.story.title}</h1>
         <p className="jp-learn-sub">
           {payload.label} vocabulary · Pass at {JAPANESE_MILESTONE_PASS_THRESHOLD}% to unlock Block{" "}
           {payload.unlocksBlock}
-          {payload.story.provider ? ` · Generated via ${payload.story.provider}` : ""}
         </p>
         {onClose ? (
           <button type="button" className="jp-learn-btn mt-3" onClick={onClose} disabled={pending}>
@@ -163,19 +165,22 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
       <div className="jp-learn-card jp-learn-gate-card">
         {phase === "story" ? (
           <>
-            <p className="jp-learn-sub">Listen to or read the story, then answer comprehension and production questions.</p>
+            <p className="jp-learn-sub">
+              Review the words you practiced (romaji only). Tap play to hear each word spoken slowly,
+              one at a time.
+            </p>
             <div className="jp-learn-row mt-3">
               <button type="button" className="jp-learn-btn jp-learn-btn-gate" onClick={playAll}>
-                Play full story
+                Play all words
               </button>
             </div>
             {payload.story.paragraphs.map((p, i) => (
               <div key={i} style={{ marginTop: "1rem" }}>
-                <p className="jp-learn-jp" style={{ lineHeight: 1.6 }}>
+                <p className="jp-learn-romaji-lg" style={{ lineHeight: 1.8, whiteSpace: "pre-line" }}>
                   {p}
                 </p>
-                <button type="button" className="jp-learn-btn" onClick={() => playParagraph(p)}>
-                  Play paragraph {i + 1}
+                <button type="button" className="jp-learn-btn" onClick={() => playParagraph(i)}>
+                  Play words {i + 1}
                 </button>
               </div>
             ))}
@@ -188,7 +193,7 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
                 setTyped("");
               }}
             >
-              Start comprehension ({payload.story.comprehension.length} questions)
+              Start vocab quiz ({payload.story.comprehension.length} questions)
             </button>
           </>
         ) : null}
@@ -251,7 +256,47 @@ export function JapaneseMilestoneGate({ milestoneNumber, onPassed, onClose }: Pr
             {result.passed ? (
               <p className="jp-learn-status">Block {result.unlocksBlock} is now unlocked.</p>
             ) : (
-              <p className="jp-learn-status">Review the story and try again.</p>
+              <>
+                <p className="jp-learn-status">Review the words and try again.</p>
+                {payload.story.comprehension.some((q) => result.comprehensionFeedback[q.id]?.correct === false) ? (
+                  <div className="mt-3">
+                    <p className="jp-learn-meta">Comprehension misses</p>
+                    <ul className="jp-learn-sub" style={{ marginTop: "0.5rem", paddingLeft: "1.25rem" }}>
+                      {payload.story.comprehension
+                        .filter((q) => result.comprehensionFeedback[q.id]?.correct === false)
+                        .map((q) => {
+                          const fb = result.comprehensionFeedback[q.id];
+                          return (
+                            <li key={q.id} style={{ marginBottom: "0.5rem" }}>
+                              <strong>{q.prompt}</strong>
+                              <br />
+                              You said: {fb?.userAnswer || "(blank)"} · Accepted: {fb?.accepted || q.answer}
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  </div>
+                ) : null}
+                {payload.story.production.some((q) => result.productionFeedback[q.id]?.correct === false) ? (
+                  <div className="mt-3">
+                    <p className="jp-learn-meta">Production misses</p>
+                    <ul className="jp-learn-sub" style={{ marginTop: "0.5rem", paddingLeft: "1.25rem" }}>
+                      {payload.story.production
+                        .filter((q) => result.productionFeedback[q.id]?.correct === false)
+                        .map((q) => {
+                          const fb = result.productionFeedback[q.id];
+                          return (
+                            <li key={q.id} style={{ marginBottom: "0.5rem" }}>
+                              <strong>{q.promptEnglish}</strong>
+                              <br />
+                              You said: {fb?.userAnswer || "(blank)"} · Accepted: {fb?.accepted || q.targetRomaji}
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  </div>
+                ) : null}
+              </>
             )}
             <div className="jp-learn-row mt-3">
               {!result.passed ? (

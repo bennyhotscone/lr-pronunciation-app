@@ -1,7 +1,17 @@
-import { callLlm, extractJsonObject, llmConfigured } from "@/lib/llm";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { getBlocksForMilestone } from "@/lib/japanese/milestone";
 import type { JapaneseWord } from "@/lib/japanese/types";
+
+/** Bump to invalidate cached milestone stories (v4 = deterministic vocab-only). */
+export const MILESTONE_STORY_CACHE_VERSION = 4;
+
+/** Stored in DB `vocabOnly` — must match for cache hits. */
+export const MILESTONE_STORY_VOCAB_ONLY = true;
+
+export type MilestoneTtsToken = {
+  romaji: string;
+  audio: string;
+};
 
 export type MilestoneComprehensionQ = {
   id: string;
@@ -21,14 +31,59 @@ export type MilestoneProductionQ = {
 export type GeneratedMilestoneStory = {
   title: string;
   paragraphs: string[];
+  /** Kana/audio per word, parallel to paragraphs — for word-by-word TTS. */
+  ttsLines: MilestoneTtsToken[][];
   comprehension: MilestoneComprehensionQ[];
   production: MilestoneProductionQ[];
   vocabUsed: string[];
+  vocabOnly: boolean;
   provider: string | null;
 };
 
-function collectMilestoneWords(milestoneNumber: number): Array<JapaneseWord & { blockNumber: number; wordIndex: number }> {
-  const words: Array<JapaneseWord & { blockNumber: number; wordIndex: number }> = [];
+export type MilestoneGrammarContext = {
+  hasCompletedGrammar: boolean;
+  masteredGrammarIds: string[];
+};
+
+type MilestoneWord = JapaneseWord & { blockNumber: number; wordIndex: number };
+
+const JP_SCRIPT_RE = /[\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf]/;
+const ROMAJI_DISPLAY_RE = /[^a-zA-ZāēīōūĀĒĪŌŪ\s\-'()./]/g;
+
+export function containsJapaneseScript(text: string): boolean {
+  return JP_SCRIPT_RE.test(text);
+}
+
+export function stripNonRomajiDisplay(text: string): string {
+  return text.replace(ROMAJI_DISPLAY_RE, "").replace(/\s+/g, " ").trim();
+}
+
+export function parseMilestoneStoryCacheVersion(provider: string | null): number {
+  if (!provider) return 0;
+  const match = provider.match(/^v(\d+)(?::|$)/);
+  return match ? Number.parseInt(match[1], 10) : 0;
+}
+
+export function formatMilestoneStoryProvider(version: number, source: string): string {
+  return `v${version}:${source}`;
+}
+
+export function storyCacheIsStale(
+  provider: string | null,
+  paragraphs: string[],
+  vocabOnly?: boolean,
+): boolean {
+  if (!vocabOnly || vocabOnly !== MILESTONE_STORY_VOCAB_ONLY) return true;
+  if (parseMilestoneStoryCacheVersion(provider) < MILESTONE_STORY_CACHE_VERSION) return true;
+  return paragraphs.some((p) => containsJapaneseScript(p));
+}
+
+function primaryEnglish(word: JapaneseWord): string {
+  return word.en.split("/")[0].replace(/\([^)]*\)/g, "").trim();
+}
+
+function collectMilestoneWords(milestoneNumber: number): MilestoneWord[] {
+  const words: MilestoneWord[] = [];
   for (const blockNumber of getBlocksForMilestone(milestoneNumber)) {
     const block = getJapaneseBlock(blockNumber);
     block.forEach((word, wordIndex) => {
@@ -38,12 +93,10 @@ function collectMilestoneWords(milestoneNumber: number): Array<JapaneseWord & { 
   return words;
 }
 
-function pickProductionWords(
-  allWords: Array<JapaneseWord & { blockNumber: number; wordIndex: number }>,
-  count = 8,
-): Array<JapaneseWord & { blockNumber: number; wordIndex: number }> {
+function pickDrillWords(allWords: MilestoneWord[], count = 10): MilestoneWord[] {
+  if (allWords.length <= count) return [...allWords];
   const step = Math.max(1, Math.floor(allWords.length / count));
-  const picked: Array<JapaneseWord & { blockNumber: number; wordIndex: number }> = [];
+  const picked: MilestoneWord[] = [];
   for (let i = 0; i < allWords.length && picked.length < count; i += step) {
     picked.push(allWords[i]);
   }
@@ -55,141 +108,109 @@ function pickProductionWords(
   return picked;
 }
 
-function fallbackStory(milestoneNumber: number): GeneratedMilestoneStory {
+function pickProductionWords(allWords: MilestoneWord[], count = 6): MilestoneWord[] {
+  const step = Math.max(1, Math.floor(allWords.length / count));
+  const picked: MilestoneWord[] = [];
+  for (let i = 0; i < allWords.length && picked.length < count; i += step) {
+    picked.push(allWords[i]);
+  }
+  while (picked.length < count && picked.length < allWords.length) {
+    const w = allWords[picked.length];
+    if (!picked.includes(w)) picked.push(w);
+    else break;
+  }
+  return picked;
+}
+
+function allowedRomajiSet(allWords: MilestoneWord[]): Set<string> {
+  return new Set(allWords.map((w) => w.r.toLowerCase()));
+}
+
+function romajiTokensFromLine(line: string): string[] {
+  return line
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, " ")
+    .split(/[\n\-]+/)
+    .flatMap((part) => part.split(/[.\s,;:!?]+/))
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+export function assertRomajiWhitelist(paragraphs: string[], allowed: Set<string>): void {
+  for (const line of paragraphs) {
+    if (containsJapaneseScript(line)) {
+      throw new Error("Milestone story contains Japanese script in display text");
+    }
+    for (const token of romajiTokensFromLine(line)) {
+      if (!allowed.has(token)) {
+        throw new Error(`Milestone story romaji "${token}" is not in block vocab whitelist`);
+      }
+    }
+  }
+}
+
+function formatWordLine(word: MilestoneWord): string {
+  return `${word.r} - ${primaryEnglish(word)}`;
+}
+
+function buildTtsLine(words: MilestoneWord[]): MilestoneTtsToken[] {
+  return words.map((w) => ({ romaji: w.r, audio: w.audio || w.r }));
+}
+
+function buildVocabOnlyStory(milestoneNumber: number): GeneratedMilestoneStory {
   const [blockA, blockB] = getBlocksForMilestone(milestoneNumber);
   const allWords = collectMilestoneWords(milestoneNumber);
-  const sample = allWords.slice(0, 12);
-  const jpSample = sample.map((w) => w.jp).join("、");
+  const drillWords = pickDrillWords(allWords, 12);
+
+  const lineA = drillWords.slice(0, 4);
+  const lineB = drillWords.slice(4, 8);
+  const lineC = drillWords.slice(8, 12);
+  const chunks = [lineA, lineB, lineC].filter((g) => g.length > 0);
+
   const paragraphs = [
-    `ある日、${sample[0]?.jp ?? "人"}は朝早く起きました。`,
-    `今日は${sample[1]?.jp ?? "仕事"}があって、${sample[2]?.jp ?? "駅"}へ向かいました。`,
-    `道で${sample[3]?.jp ?? "友達"}に会い、${jpSample}などの言葉を使って話しました。`,
-    `夜になって、${sample[4]?.jp ?? "家"}に帰り、一日を振り返りました。`,
-  ];
-  const comprehension: MilestoneComprehensionQ[] = [
-    {
-      id: "c1",
-      prompt: "What did the person do early in the morning?",
-      answer: "woke up early",
-    },
-    {
-      id: "c2",
-      prompt: "Where did they go?",
-      answer: "to the station",
-    },
-    {
-      id: "c3",
-      prompt: "Who did they meet on the way?",
-      answer: "a friend",
-    },
-    {
-      id: "c4",
-      prompt: "What did they do at night?",
-      answer: "went home and reflected on the day",
-    },
-  ];
+    lineA.map((w) => w.r).join(". ") + (lineA.length ? "." : ""),
+    lineB.map((w) => `${w.r} (${primaryEnglish(w)})`).join(". ") + (lineB.length ? "." : ""),
+    lineC.map((w) => w.r).join(". ") + (lineC.length ? "." : ""),
+  ].filter((p) => p.replace(/\./g, "").trim().length > 0);
+
+  const ttsLines = chunks.map(buildTtsLine);
+
+  const questionWords = drillWords.slice(0, Math.min(8, drillWords.length));
+  const comprehension: MilestoneComprehensionQ[] = questionWords.map((w, i) => ({
+    id: `c${i + 1}`,
+    prompt: `What does "${w.r}" mean?`,
+    answer: primaryEnglish(w),
+  }));
+
   const production = pickProductionWords(allWords, 6).map((w, i) => ({
     id: `p${i + 1}`,
-    promptEnglish: w.en,
+    promptEnglish: primaryEnglish(w),
     targetRomaji: w.r,
     targetEnglish: w.en,
     blockNumber: w.blockNumber,
     wordIndex: w.wordIndex,
   }));
+
+  const allowed = allowedRomajiSet(allWords);
+  assertRomajiWhitelist(paragraphs, allowed);
+
   return {
-    title: `Story checkpoint — Blocks ${blockA}–${blockB}`,
+    title: `Vocab checkpoint — Blocks ${blockA}–${blockB}`,
     paragraphs,
+    ttsLines,
     comprehension,
     production,
-    vocabUsed: sample.map((w) => w.jp),
-    provider: null,
+    vocabUsed: drillWords.map((w) => w.r),
+    vocabOnly: MILESTONE_STORY_VOCAB_ONLY,
+    provider: formatMilestoneStoryProvider(MILESTONE_STORY_CACHE_VERSION, "vocab-drill"),
   };
 }
 
-function normalizeComprehension(raw: unknown): MilestoneComprehensionQ[] {
-  if (!Array.isArray(raw)) return [];
-  const out: MilestoneComprehensionQ[] = [];
-  raw.forEach((item, i) => {
-    if (!item || typeof item !== "object") return;
-    const q = item as Record<string, unknown>;
-    const prompt = String(q.prompt || "").trim();
-    const answer = String(q.answer || q.expected || "").trim();
-    if (!prompt || !answer) return;
-    out.push({ id: String(q.id || `c${i + 1}`), prompt, answer });
-  });
-  return out;
-}
-
+/** Deterministic vocab checkpoint from block JSON — no LLM. */
 export async function generateJapaneseMilestoneStory(
   milestoneNumber: number,
+  _grammarContext?: MilestoneGrammarContext,
 ): Promise<GeneratedMilestoneStory> {
-  const [blockA, blockB] = getBlocksForMilestone(milestoneNumber);
-  const allWords = collectMilestoneWords(milestoneNumber);
-  if (!allWords.length) return fallbackStory(milestoneNumber);
-
-  const vocabList = allWords
-    .slice(0, 30)
-    .map((w) => `${w.jp} (${w.r}) = ${w.en}`)
-    .join("\n");
-
-  if (!llmConfigured()) return fallbackStory(milestoneNumber);
-
-  const system = `You write short Japanese reading practice for adult learners.
-Return ONLY valid JSON with keys: title, paragraphs, comprehension, productionHints, vocabUsed.
-- paragraphs: 3-5 short Japanese paragraphs (hiragana/kanji mix, natural A2-B1 level).
-- Use ONLY vocabulary from the provided list; weave words naturally into a coherent daily-life story.
-- comprehension: 5-6 questions [{id, prompt (English), answer (short acceptable English answer)}].
-- productionHints: 6-8 English glosses from the vocab list for romaji recall (just the English meaning strings).
-- vocabUsed: array of Japanese words (jp form) actually used in the story.
-Tone: respectful adult learner, no childish mascots.`;
-
-  const user = `Milestone ${milestoneNumber} covers Blocks ${blockA} and ${blockB}.
-Vocabulary (use a natural subset):
-${vocabList}
-
-Generate the story checkpoint pack now.`;
-
-  const result = await callLlm({ system, user, temperature: 0.55, maxTokens: 2500 });
-  if (!result) return fallbackStory(milestoneNumber);
-
-  const parsed = extractJsonObject(result.text);
-  if (!parsed || typeof parsed !== "object") return fallbackStory(milestoneNumber);
-  const o = parsed as Record<string, unknown>;
-
-  const paragraphs = Array.isArray(o.paragraphs)
-    ? o.paragraphs.map((p) => String(p).trim()).filter(Boolean)
-    : [];
-  const comprehension = normalizeComprehension(o.comprehension);
-  const vocabUsed = Array.isArray(o.vocabUsed)
-    ? o.vocabUsed.map((w) => String(w)).filter(Boolean)
-    : [];
-
-  const productionHints = Array.isArray(o.productionHints)
-    ? o.productionHints.map((h) => String(h).trim()).filter(Boolean)
-    : [];
-
-  const productionWords = pickProductionWords(allWords, Math.max(6, productionHints.length || 8));
-  const production: MilestoneProductionQ[] = productionWords.map((w, i) => ({
-    id: `p${i + 1}`,
-    promptEnglish: productionHints[i] || w.en,
-    targetRomaji: w.r,
-    targetEnglish: w.en,
-    blockNumber: w.blockNumber,
-    wordIndex: w.wordIndex,
-  }));
-
-  const title = String(o.title || `Story checkpoint — Blocks ${blockA}–${blockB}`).trim();
-
-  if (!paragraphs.length || comprehension.length < 3 || production.length < 4) {
-    return { ...fallbackStory(milestoneNumber), provider: result.provider };
-  }
-
-  return {
-    title,
-    paragraphs,
-    comprehension,
-    production,
-    vocabUsed: vocabUsed.length ? vocabUsed : allWords.slice(0, 10).map((w) => w.jp),
-    provider: result.provider,
-  };
+  void _grammarContext;
+  return buildVocabOnlyStory(milestoneNumber);
 }

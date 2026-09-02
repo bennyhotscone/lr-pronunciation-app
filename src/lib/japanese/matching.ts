@@ -40,12 +40,60 @@ const ENGLISH_EXTRAS: Record<string, string[]> = {
   "okay / all right": ["okay", "ok", "all right", "alright"],
 };
 
+function stripEnglishFluff(s: string): string {
+  return (s || "")
+    .replace(/^(a|an|the)\s+/gi, "")
+    .replace(/\s+(a|an|the)$/gi, "")
+    .replace(/^to\s+/i, "")
+    .trim();
+}
+
+function normalizeEnglishAnswer(s: string): string {
+  return normalizeEnglish(stripEnglishFluff(s));
+}
+
+/** Resolve ENGLISH_EXTRAS even when expected is only the first gloss (e.g. "shop" vs "shop / store"). */
+export function extrasForEnglishGloss(expected: string): string[] {
+  const norm = normalizeEnglish(expected);
+  const out: string[] = [];
+  for (const [key, vals] of Object.entries(ENGLISH_EXTRAS)) {
+    const keyParts = key
+      .split("/")
+      .map((part) => normalizeEnglish(part.replace(/\([^)]*\)/g, "")));
+    if (keyParts.includes(norm) || normalizeEnglish(key) === norm) {
+      key.split("/").forEach((part) => out.push(part.trim()));
+      out.push(...vals);
+    }
+  }
+  (ENGLISH_EXTRAS[expected] || []).forEach((x) => out.push(x));
+  return out;
+}
+
+export function buildEnglishTextAliases(expected: string, word?: JapaneseWord): string[] {
+  const raw = expected.toLowerCase().replace(/\([^)]*\)/g, "").trim();
+  const aliases = new Set<string>();
+  if (raw) aliases.add(normalizeEnglishAnswer(raw));
+  raw.split(/[/,;]/).forEach((part) => {
+    const n = normalizeEnglishAnswer(part);
+    if (n) aliases.add(n);
+  });
+  extrasForEnglishGloss(expected).forEach((x) => {
+    const n = normalizeEnglishAnswer(x);
+    if (n) aliases.add(n);
+  });
+  if (word) {
+    englishAliases(word).forEach((x) => aliases.add(x));
+  }
+  return [...aliases].filter(Boolean);
+}
+
 export function englishAliases(word: JapaneseWord): string[] {
   const raw = word.en.toLowerCase().replace(/\([^)]*\)/g, "").trim();
   const arr: string[] = [raw];
   raw.split("/").forEach((x) => arr.push(x.trim()));
   (ENGLISH_EXTRAS[word.en] || []).forEach((x) => arr.push(x));
-  return [...new Set(arr.map(normalizeEnglish).filter(Boolean))];
+  extrasForEnglishGloss(word.en).forEach((x) => arr.push(x));
+  return [...new Set(arr.map(normalizeEnglishAnswer).filter(Boolean))];
 }
 
 export function normalizeRomaji(s: string): string {
@@ -97,42 +145,64 @@ export function fuzzyMatchRomaji(input: string, word: JapaneseWord): boolean {
   return fuzzyMatch(input, romajiAliases(word), "romaji");
 }
 
+function editDistanceAllowance(len: number): number {
+  if (len >= 9) return 2;
+  if (len >= 4) return 1;
+  return 0;
+}
+
 function fuzzyMatch(
   input: string,
   aliases: string[],
   type: "english" | "romaji",
 ): boolean {
-  const val = type === "romaji" ? normalizeRomaji(input) : normalizeEnglish(input);
+  const val = type === "romaji" ? normalizeRomaji(input) : normalizeEnglishAnswer(input);
   if (!val) return false;
   for (const a of aliases) {
     if (val === a) return true;
+    if (type === "english") {
+      const valTokens = val.split(" ").filter(Boolean);
+      const aliasTokens = a.split(" ").filter(Boolean);
+      if (valTokens.length > 1 && valTokens.includes(a)) return true;
+      if (aliasTokens.length === 1 && valTokens.includes(a)) return true;
+    }
     const compactVal = val.replace(/\s/g, "");
     const compactA = a.replace(/\s/g, "");
     const len = Math.max(compactVal.length, compactA.length);
-    const allowance = len >= 9 ? 2 : len >= 5 ? 1 : 0;
+    const allowance = editDistanceAllowance(len);
     if (allowance && editDistance(compactVal, compactA) <= allowance) return true;
   }
   return false;
 }
 
-export function fuzzyMatchEnglishText(input: string, expected: string): boolean {
-  const val = normalizeEnglish(input);
-  if (!val) return false;
-  const aliases = new Set<string>();
-  const raw = expected.toLowerCase().trim();
-  aliases.add(normalizeEnglish(raw));
-  raw.split(/[/,;]/).forEach((part) => {
-    const n = normalizeEnglish(part);
-    if (n) aliases.add(n);
-  });
-  (ENGLISH_EXTRAS[expected] || []).forEach((x) => aliases.add(normalizeEnglish(x)));
-  for (const a of aliases) {
-    if (val === a) return true;
-    const compactVal = val.replace(/\s/g, "");
-    const compactA = a.replace(/\s/g, "");
-    const len = Math.max(compactVal.length, compactA.length);
-    const allowance = len >= 9 ? 2 : len >= 5 ? 1 : 0;
-    if (allowance && editDistance(compactVal, compactA) <= allowance) return true;
+export function fuzzyMatchEnglishText(
+  input: string,
+  expected: string,
+  word?: JapaneseWord,
+): boolean {
+  const aliases = buildEnglishTextAliases(expected, word);
+  return fuzzyMatch(input, aliases, "english");
+}
+
+/** Romaji token from milestone comprehension prompts: What does "mise" mean? */
+export function parseComprehensionRomaji(prompt: string): string | null {
+  const match = prompt.match(/what does\s+["']([^"']+)["']\s+mean/i);
+  return match?.[1]?.trim().toLowerCase() ?? null;
+}
+
+export function formatAcceptedEnglishAnswers(expected: string, word?: JapaneseWord): string {
+  const aliases = buildEnglishTextAliases(expected, word);
+  const display = new Set<string>();
+  display.add(expected.trim());
+  if (word) {
+    word.en
+      .replace(/\([^)]*\)/g, "")
+      .split("/")
+      .forEach((part) => display.add(part.trim()));
   }
-  return false;
+  extrasForEnglishGloss(expected).forEach((x) => display.add(x.trim()));
+  for (const alias of aliases) {
+    if (alias.split(" ").length <= 3) display.add(alias);
+  }
+  return [...display].filter(Boolean).slice(0, 8).join(", ");
 }
