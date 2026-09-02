@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { resolveWord } from "@/lib/japanese/engine";
 import { playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug, getMnemonic, getPronunciationCue, getAudioText } from "@/lib/japanese/word-helpers";
@@ -9,12 +9,14 @@ import {
   resetJapaneseWordOverrideField,
   saveJapaneseWordOverride,
   type JapaneseProgressPayload,
+  type JapaneseWordStatSnapshot,
 } from "@/lib/japanese-actions";
 
 type Props = {
   blockNumber: number;
   words: JapaneseWord[];
   overrides: JapaneseProgressPayload["overrides"];
+  wordStats?: Record<number, JapaneseWordStatSnapshot>;
   onOverrideChange: (
     wordIndex: number,
     field: "mnemonic" | "pronunciationCue" | "ttsInput",
@@ -22,7 +24,13 @@ type Props = {
   ) => void;
 };
 
-export function JapaneseWordList({ blockNumber, words, overrides, onOverrideChange }: Props) {
+export function JapaneseWordList({
+  blockNumber,
+  words,
+  overrides,
+  wordStats = {},
+  onOverrideChange,
+}: Props) {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [draft, setDraft] = useState({
     mnemonic: "",
@@ -30,6 +38,11 @@ export function JapaneseWordList({ blockNumber, words, overrides, onOverrideChan
     ttsInput: "",
   });
   const [pending, startTransition] = useTransition();
+
+  const knownCount = useMemo(
+    () => Object.values(wordStats).filter((stat) => stat.known).length,
+    [wordStats],
+  );
 
   const openEdit = (index: number) => {
     const o = overrides[index];
@@ -72,7 +85,7 @@ export function JapaneseWordList({ blockNumber, words, overrides, onOverrideChan
     <section>
       <p className="jp-learn-sub">
         Reference list for Block {blockNumber}. Training progressively removes the mnemonic, romaji
-        and multiple-choice support. Tap Edit to customize your memory hooks and audio cues - saved
+        and multiple-choice support. Known words ({knownCount}/{words.length}) are skipped in round retries but still appear in milestone story tests. Tap Edit to customize your memory hooks and audio cues - saved
         to your account only.
       </p>
       <div className="jp-learn-wordgrid mt-4">
