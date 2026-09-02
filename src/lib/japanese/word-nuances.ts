@@ -55,9 +55,9 @@ for (const group of WORD_NUANCE_GROUPS) {
 function fallbackWhen(word: VocabWordRef, siblings: VocabWordRef[]): string {
   const others = siblings
     .filter((s) => s.r !== word.r)
-    .map((s) => `${s.jp} (${s.r}: ${s.en})`)
+    .map((s) => `${s.r} (${s.en})`)
     .join("; ");
-  return `Japanese uses several words for "${word.en.split("/")[0]?.trim()}". This is ${word.jp} (${word.r}): ${word.en}.${others ? ` Compare: ${others}.` : ""}`;
+  return `Japanese uses several words for "${word.en.split("/")[0]?.trim()}". This is ${word.r}: ${word.en}.${others ? ` Compare: ${others}.` : ""}`;
 }
 
 function fallbackGroup(token: string, words: VocabWordRef[]): WordNuanceGroup {

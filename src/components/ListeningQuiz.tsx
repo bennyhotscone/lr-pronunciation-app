@@ -5,7 +5,10 @@ import type { PronunciationPair } from "@/data/pairs";
 import { StatusLiveRegion } from "@/components/StatusLiveRegion";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { shuffleTwo } from "@/lib/pair-utils";
-import { playCorrectAnswerSound } from "@/lib/correct-answer-sound";
+import {
+  playCorrectAnswerSound,
+  playIncorrectAnswerSound,
+} from "@/lib/correct-answer-sound";
 
 type Props = {
   pair: PronunciationPair;
@@ -64,6 +67,7 @@ export function ListeningQuiz({ pair, onAttempt, onContinue }: Props) {
       feedback: message,
     }));
     if (correct) playCorrectAnswerSound();
+    else playIncorrectAnswerSound();
     onAttempt({ pairId: pair.id, correct });
   };
 

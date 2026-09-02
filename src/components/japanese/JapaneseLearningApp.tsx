@@ -42,6 +42,7 @@ import type {
 } from "@/lib/japanese/types";
 import {
   loadJapaneseProgress,
+  loadJapaneseJourneyStats,
   recordJapaneseWordResult,
   resetJapaneseBlockProgress,
   saveJapaneseProgress,
@@ -51,8 +52,13 @@ import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseWordList } from "./JapaneseWordList";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
-import { playCorrectAnswerSound } from "@/lib/correct-answer-sound";
+import { FujiJourneyWidget } from "./FujiJourneyWidget";
+import {
+  playCorrectAnswerSound,
+  playIncorrectAnswerSound,
+} from "@/lib/correct-answer-sound";
 import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
+import type { JapaneseJourneyStats } from "@/lib/japanese/fuji-journey";
 import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "gate";
@@ -83,6 +89,8 @@ export function JapaneseLearningApp() {
   const [gatesPassed, setGatesPassed] = useState<number[]>([]);
   const [activeGate, setActiveGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
+  const [journeyStats, setJourneyStats] = useState<JapaneseJourneyStats | null>(null);
+  const [journeyLoading, setJourneyLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loadAttempt, setLoadAttempt] = useState(0);
@@ -141,6 +149,35 @@ export function JapaneseLearningApp() {
       cancelled = true;
     };
   }, [block, loadAttempt]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setJourneyLoading(true);
+    loadJapaneseJourneyStats()
+      .then((data) => {
+        if (cancelled) return;
+        if (!("error" in data)) setJourneyStats(data);
+        setJourneyLoading(false);
+      })
+      .catch(() => {
+        if (!cancelled) setJourneyLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [loadAttempt]);
+
+  const refreshJourneyStats = useCallback(() => {
+    void loadJapaneseJourneyStats().then((data) => {
+      if (!("error" in data)) setJourneyStats(data);
+    });
+  }, []);
+
+  const bumpJourneyCorrect = useCallback(() => {
+    setJourneyStats((prev) =>
+      prev ? { ...prev, totalCorrect: prev.totalCorrect + 1 } : prev,
+    );
+  }, []);
 
 
   const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
@@ -282,9 +319,11 @@ export function JapaneseLearningApp() {
       nextSession = recordCorrect(session);
       setStatus("Correct");
       playCorrectAnswerSound();
+      bumpJourneyCorrect();
     } else {
       nextSession = recordMiss(session, correctIndex);
       setStatus(`Answer: ${words[correctIndex].en}`);
+      playIncorrectAnswerSound();
     }
 
     void recordJapaneseWordResult(block, correctIndex, correct, getActiveRound(session, words.length));
@@ -315,12 +354,14 @@ export function JapaneseLearningApp() {
       nextSession = recordCorrect(session);
       setStatus("Accepted");
       playCorrectAnswerSound();
+      bumpJourneyCorrect();
       if (view.mode === "type-romaji" && view.round === 5) {
         playWordAudioAtIndex(view.wordIndex);
       }
     } else {
       nextSession = recordMiss(session, view.wordIndex);
       setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);
+      playIncorrectAnswerSound();
       playCurrentWordAudio();
     }
 
@@ -379,6 +420,7 @@ export function JapaneseLearningApp() {
       if (saveTimer.current) clearTimeout(saveTimer.current);
       startTransition(async () => {
         await saveJapaneseProgress(block, nextSession, nextMeta);
+        refreshJourneyStats();
       });
       return;
     }
@@ -418,6 +460,7 @@ export function JapaneseLearningApp() {
             if ("error" in data) return;
             setMeta(data.meta);
             setGatesPassed(data.gatesPassed);
+            refreshJourneyStats();
           });
           if (isPlayableJapaneseBlock(unlocksBlock)) {
             setBlock(unlocksBlock);
@@ -510,6 +553,7 @@ export function JapaneseLearningApp() {
             </button>
           </div>
         ) : null}
+        <FujiJourneyWidget stats={journeyStats} loading={journeyLoading} />
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
             const unlocked = isJapaneseBlockUnlocked(meta, block, n);
@@ -796,12 +840,12 @@ export function JapaneseLearningApp() {
                   <div className="jp-learn-jp">{currentWord.jp}</div>
                   <div className="jp-learn-romaji">{currentWord.displayRomaji}</div>
                   <div className="jp-learn-english">{currentWord.en}</div>
+                  {getTrainingRound(view) >= 4 &&
+                  wordHasNuanceExplanation(words[currentWord.index]) ? (
+                    <JapaneseWordNuance word={words[currentWord.index]} />
+                  ) : null}
                   {wasWrong ? (
                     <>
-                      {getTrainingRound(view) >= 4 &&
-                      wordHasNuanceExplanation(words[currentWord.index]) ? (
-                        <JapaneseWordNuance word={words[currentWord.index]} />
-                      ) : null}
                       <JapaneseMnemonicHook
                         blockNumber={block}
                         wordIndex={currentWord.index}

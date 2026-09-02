@@ -2,76 +2,76 @@
   "groups": [
     {
       "id": "uncertainty-maybe",
-      "title": "Saying \"maybe\" in Japanese",
+      "title": "\"Maybe\" (tabun) vs \"might\" (kamoshirenai)",
       "tokens": ["maybe", "probably", "perhaps", "might"],
       "entries": [
         {
           "romaji": "tabun",
           "jp": "多分",
           "gloss": "probably / maybe",
-          "when": "Your best guess — you think it's likely (~70%+). たぶん雨だ (It's probably rain). Everyday default."
+          "when": "Your best guess — you think it's likely (~70%+). tabun ame da (It's probably rain). Everyday default."
         },
         {
           "romaji": "moshikashite",
           "jp": "もしかして",
           "gloss": "perhaps / could it be",
-          "when": "Opens a question or surprise — \"Could it be that…?\" もしかして彼？ (Could it be him?). You might be wrong."
+          "when": "Opens a question or surprise — \"Could it be that…?\" moshikashite kare? (Could it be him?). You might be wrong."
         },
         {
           "romaji": "kamoshirenai",
           "jp": "かもしれない",
-          "gloss": "might / possibly",
-          "when": "Uncertainty on a statement — 雨かもしれない (It might rain). Attach to verb/adj; not a standalone question word."
+          "gloss": "might",
+          "when": "Uncertainty on a statement — ame kamoshirenai (It might rain). Attach to verb/adj; not a standalone question word. Use for \"might\", not casual \"maybe\" (that's tabun)."
         }
       ]
     },
     {
       "id": "demonstratives-ko",
-      "title": "\"This\" and \"these\" — the こ series (near you)",
+      "title": "\"This\" and \"these\" — the ko series (near you)",
       "tokens": ["this", "these"],
       "entries": [
         {
           "romaji": "kore",
           "jp": "これ",
           "gloss": "this",
-          "when": "Standalone pronoun — one thing near you. これは何？ (What is this?). Never put a noun after it."
+          "when": "Standalone pronoun — one thing near you. kore wa nan? (What is this?). Never put a noun after it."
         },
         {
           "romaji": "kono",
           "jp": "この",
           "gloss": "this (before a noun)",
-          "when": "Must sit before a noun — この本 (this book). For plural: この本たち ≈ \"these books.\""
+          "when": "Must sit before a noun — kono hon (this book). For plural: kono hon-tachi ≈ \"these books.\""
         },
         {
           "romaji": "korera",
           "jp": "これら",
           "gloss": "these",
-          "when": "Standalone plural near you — これらは本 (These are books). Points at several items, not modifying a noun."
+          "when": "Standalone plural near you — korera wa hon (These are books). Points at several items, not modifying a noun."
         }
       ]
     },
     {
       "id": "demonstratives-so",
-      "title": "\"That\" and \"those\" — the そ series (near them)",
+      "title": "\"That\" and \"those\" — the so series (near them)",
       "tokens": ["that", "those"],
       "entries": [
         {
           "romaji": "sore",
           "jp": "それ",
           "gloss": "that",
-          "when": "Standalone — near the listener or just mentioned. それください (Give me that)."
+          "when": "Standalone — near the listener or just mentioned. sore kudasai (Give me that)."
         },
         {
           "romaji": "sono",
           "jp": "その",
           "gloss": "that (before a noun)",
-          "when": "Before a noun — その店 (that shop). Same ソ distance as それ."
+          "when": "Before a noun — sono mise (that shop). Same \"so\" distance as sore."
         },
         {
           "romaji": "sorera",
           "jp": "それら",
           "gloss": "those",
-          "when": "Standalone plural — それらは古い (Those are old)."
+          "when": "Standalone plural — sorera wa furui (Those are old)."
         }
       ]
     },
@@ -102,7 +102,7 @@
           "romaji": "doko",
           "jp": "どこ",
           "gloss": "where",
-          "when": "Question word — どこ？ (Where?). Same こ/そ/あ/ど pattern."
+          "when": "Question word — doko? (Where?). Same ko/so/a/do pattern."
         }
       ]
     },
@@ -115,13 +115,13 @@
           "romaji": "kiku",
           "jp": "聞く",
           "gloss": "listen / ask / hear",
-          "when": "Broad verb — listen, hear, or ask. 音楽を聞く (listen to music), 名前を聞く (ask a name). Default everyday \"ask.\""
+          "when": "Broad verb — listen, hear, or ask. ongaku wo kiku (listen to music), namae wo kiku (ask a name). Default everyday \"ask.\""
         },
         {
           "romaji": "tazuneru",
           "jp": "尋ねる",
           "gloss": "ask / inquire",
-          "when": "Deliberate inquiry — 道を尋ねる (ask for directions). More formal/focused; not for \"listen to music.\""
+          "when": "Deliberate inquiry — michi wo tazuneru (ask for directions). More formal/focused; not for \"listen to music.\""
         }
       ]
     },
@@ -134,25 +134,25 @@
           "romaji": "saru",
           "jp": "去る",
           "gloss": "leave / go away",
-          "when": "Depart a place — ここを去る (leave here). Literary/formal feel; person or thing moves away."
+          "when": "Depart a place — koko wo saru (leave here). Literary/formal feel; person or thing moves away."
         },
         {
           "romaji": "deru",
           "jp": "出る",
           "gloss": "go out / leave",
-          "when": "Exit outward — 家を出る (leave the house), 出かける (go out). Physical \"go out of\" somewhere."
+          "when": "Exit outward — ie wo deru (leave the house), dekakeru (go out). Physical \"go out of\" somewhere."
         },
         {
           "romaji": "nokosu",
           "jp": "残す",
           "gloss": "leave behind",
-          "when": "Leave something for someone — 荷物を残す (leave luggage behind). Object stays; you go."
+          "when": "Leave something for someone — nimotsu wo nokosu (leave luggage behind). Object stays; you go."
         },
         {
           "romaji": "yameru",
           "jp": "辞める",
           "gloss": "leave / quit",
-          "when": "Quit a job, school, or habit — 会社を辞める (quit the company). Not physical departure."
+          "when": "Quit a job, school, or habit — kaisha wo yameru (quit the company). Not physical departure."
         }
       ]
     },
@@ -165,25 +165,25 @@
           "romaji": "hoka",
           "jp": "他",
           "gloss": "other / else / besides",
-          "when": "The rest, apart from what was mentioned — 他に何か？ (Anything else?). 他の人 (other people). Most common \"other.\""
+          "when": "The rest, apart from what was mentioned — hoka ni nanika? (Anything else?). hoka no hito (other people). Most common \"other.\""
         },
         {
           "romaji": "betsu",
           "jp": "別",
           "gloss": "separate / different / other",
-          "when": "Emphasizes separation — 別の方法 (a different method), 別々に (separately). \"Different\" more than \"the rest.\""
+          "when": "Emphasizes separation — betsu no houhou (a different method), betsubetsu ni (separately). \"Different\" more than \"the rest.\""
         },
         {
           "romaji": "sonota",
           "jp": "その他",
           "gloss": "others / etc.",
-          "when": "Catch-all for leftovers in lists — りんご、バナナ、その他 (apples, bananas, and others). Formal \"etc.\""
+          "when": "Catch-all for leftovers in lists — ringo, banana, sonota (apples, bananas, and others). Formal \"etc.\""
         },
         {
           "romaji": "mouhitotsu",
           "jp": "もう一つ",
           "gloss": "another one",
-          "when": "Counting/addition — \"one more.\" もう一つください (One more, please). Specific quantity, not \"other\" in general."
+          "when": "Counting/addition — \"one more.\" mou hitotsu kudasai (One more, please). Specific quantity, not \"other\" in general."
         }
       ]
     },
@@ -196,13 +196,13 @@
           "romaji": "hataraku",
           "jp": "働く",
           "gloss": "work (verb)",
-          "when": "The action — to work. 会社で働く (work at a company). Verb: what you do."
+          "when": "The action — to work. kaisha de hataraku (work at a company). Verb: what you do."
         },
         {
           "romaji": "shigoto",
           "jp": "仕事",
           "gloss": "work / job (noun)",
-          "when": "The job itself — 仕事がある (I have work). Noun: the thing/place/task."
+          "when": "The job itself — shigoto ga aru (I have work). Noun: the thing/place/task."
         }
       ]
     },
@@ -227,7 +227,7 @@
           "romaji": "sumanai",
           "jp": "すまない",
           "gloss": "sorry",
-          "when": "Casual-masculine sorry between close peers. Slightly weightier than ごめん."
+          "when": "Casual-masculine sorry between close peers. Slightly weightier than gomen."
         }
       ]
     },
@@ -240,13 +240,13 @@
           "romaji": "motto",
           "jp": "もっと",
           "gloss": "more",
-          "when": "Quantity or degree — もっと食べたい (want to eat more), もっと大きい (bigger). \"More of\" something."
+          "when": "Quantity or degree — motto tabetai (want to eat more), motto ookii (bigger). \"More of\" something."
         },
         {
           "romaji": "sarani",
           "jp": "さらに",
           "gloss": "more / furthermore",
-          "when": "Adding to a point — さらに問題がある (Furthermore, there's a problem). Formal \"in addition\" in speech/writing."
+          "when": "Adding to a point — sarani mondai ga aru (Furthermore, there's a problem). Formal \"in addition\" in speech/writing."
         }
       ]
     },
@@ -259,13 +259,13 @@
           "romaji": "mata",
           "jp": "また",
           "gloss": "again / also",
-          "when": "\"Again\" — また来て (Come again). Can mean \"also\" in lists, but primary sense is repetition."
+          "when": "\"Again\" — mata kite (Come again). Can mean \"also\" in lists, but primary sense is repetition."
         },
         {
           "romaji": "mo",
           "jp": "も",
           "gloss": "too / also",
-          "when": "Particle on a noun — 私も行く (I'm going too). \"In addition\" attached to the thing."
+          "when": "Particle on a noun — watashi mo iku (I'm going too). \"In addition\" attached to the thing."
         }
       ]
     },
@@ -278,13 +278,13 @@
           "romaji": "mada",
           "jp": "まだ",
           "gloss": "still / not yet",
-          "when": "Hasn't happened yet — まだ食べてない (haven't eaten yet). Or \"still\" continuing."
+          "when": "Hasn't happened yet — mada tabetenai (haven't eaten yet). Or \"still\" continuing."
         },
         {
           "romaji": "mou",
           "jp": "もう",
           "gloss": "already / anymore",
-          "when": "Already done — もう食べた (already ate). With negative: もう行かない (not going anymore)."
+          "when": "Already done — mou tabeta (already ate). With negative: mou ikanai (not going anymore)."
         }
       ]
     }

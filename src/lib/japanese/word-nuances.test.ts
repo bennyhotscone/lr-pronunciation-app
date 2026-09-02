@@ -22,7 +22,7 @@ const kamo: JapaneseWord = {
   jp: "かもしれない",
   audio: "かもしれない",
   r: "kamoshirenai",
-  en: "maybe",
+  en: "might",
   m: "test",
 };
 
@@ -55,7 +55,7 @@ describe("duplicate gloss detection", () => {
     const groups = findDuplicateGlossGroups();
     expect(groups.length).toBeGreaterThanOrEqual(6);
     const tokens = new Set(groups.map((g) => g.token));
-    for (const expected of ["also", "ask", "maybe", "more", "sorry", "work"]) {
+    for (const expected of ["also", "ask", "more", "sorry", "work"]) {
       expect(tokens.has(expected)).toBe(true);
     }
   });
@@ -69,7 +69,7 @@ describe("word nuances", () => {
 
   it("returns nuance for maybe pair", () => {
     expect(getNuanceForWord(tabun)?.when).toMatch(/best guess/i);
-    expect(getNuanceForWord(kamo)?.when).toMatch(/uncertainty|might/i);
+    expect(getNuanceForWord(kamo)?.when).toMatch(/might|uncertainty/i);
     expect(getNuanceGroupForWord(tabun)?.id).toBe("uncertainty-maybe");
     expect(getNuanceGroupForWord(kamo)?.id).toBe("uncertainty-maybe");
   });

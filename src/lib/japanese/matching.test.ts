@@ -38,6 +38,22 @@ const iku: JapaneseWord = {
   m: "test",
 };
 
+const kamoshirenai: JapaneseWord = {
+  jp: "かもしれない",
+  audio: "かもしれない",
+  r: "kamoshirenai",
+  en: "might",
+  m: "test",
+};
+
+const sarani: JapaneseWord = {
+  jp: "さらに",
+  audio: "さらに",
+  r: "sarani",
+  en: "more / furthermore",
+  m: "test",
+};
+
 describe("japanese matching", () => {
   it("accepts english aliases and fuzzy spelling", () => {
     expect(fuzzyMatchEnglish("me", watashi)).toBe(true);
@@ -82,5 +98,22 @@ describe("japanese matching", () => {
     expect(fuzzyMatchEnglishText("the shop", "shop", mise)).toBe(true);
     expect(fuzzyMatchEnglishText("not yet", "still", mada)).toBe(true);
     expect(fuzzyMatchEnglishText("to go", "go", iku)).toBe(true);
+  });
+
+  it("accepts kamoshirenai as might (not maybe)", () => {
+    expect(fuzzyMatchEnglish("might", kamoshirenai)).toBe(true);
+    expect(fuzzyMatchEnglish("possibly", kamoshirenai)).toBe(true);
+    expect(fuzzyMatchEnglish("maybe", kamoshirenai)).toBe(false);
+    expect(fuzzyMatchRomaji("kamoshirenai", kamoshirenai)).toBe(true);
+  });
+
+  it("accepts sarani gloss synonyms and japanese forms", () => {
+    expect(fuzzyMatchEnglish("furthermore", sarani)).toBe(true);
+    expect(fuzzyMatchEnglish("moreover", sarani)).toBe(true);
+    expect(fuzzyMatchEnglish("moreso", sarani)).toBe(true);
+    expect(fuzzyMatchEnglish("more so", sarani)).toBe(true);
+    expect(fuzzyMatchEnglish("sarani", sarani)).toBe(true);
+    expect(fuzzyMatchEnglish("さらに", sarani)).toBe(true);
+    expect(fuzzyMatchRomaji("sarani", sarani)).toBe(true);
   });
 });

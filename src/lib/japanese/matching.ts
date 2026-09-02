@@ -35,9 +35,11 @@ const ENGLISH_EXTRAS: Record<string, string[]> = {
   "noon / daytime": ["noon", "daytime"],
   "really / true": ["really", "true"],
   "probably / maybe": ["probably", "maybe"],
+  might: ["might", "possibly"],
   "please / request": ["please", "request"],
   "excuse me / sorry": ["excuse me", "sorry"],
   "okay / all right": ["okay", "ok", "all right", "alright"],
+  "more / furthermore": ["more", "furthermore", "moreover", "moreso", "more so", "sarani"],
 };
 
 function stripEnglishFluff(s: string): string {
@@ -138,6 +140,8 @@ function editDistance(a: string, b: string): number {
 }
 
 export function fuzzyMatchEnglish(input: string, word: JapaneseWord): boolean {
+  const trimmed = input.trim();
+  if (trimmed === word.jp || trimmed === word.audio) return true;
   return fuzzyMatch(input, englishAliases(word), "english");
 }
 

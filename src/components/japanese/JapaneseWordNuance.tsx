@@ -27,10 +27,7 @@ function GroupComparison({
           key={e.romaji}
           className={e.romaji === current ? "jp-learn-nuance-current" : undefined}
         >
-          <strong>
-            {e.jp} ({e.romaji})
-          </strong>{" "}
-          — {e.when}
+          <strong>{e.romaji}</strong> — {e.when}
         </li>
       ))}
     </ul>
