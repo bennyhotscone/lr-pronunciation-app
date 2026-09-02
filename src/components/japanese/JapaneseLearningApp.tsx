@@ -26,6 +26,7 @@ import {
 } from "@/lib/japanese/blocks";
 import { getBlockCurriculumLabel } from "@/lib/japanese/blocks/frequency";
 import {
+  JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK,
   JAPANESE_MASTERY_THRESHOLD,
   JAPANESE_TOTAL_BLOCKS,
   JAPANESE_WORDS_PER_BLOCK,
