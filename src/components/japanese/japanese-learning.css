@@ -161,22 +161,22 @@
 .jp-learn-nuance-list li { margin: 0.35rem 0; }
 .jp-learn-nuance-current { font-weight: 600; }
 
-/* Mount Fuji climb progress widget */
-.jp-fuji {
+/* Training progress thermometer */
+.jp-journey {
   margin: 1rem 0 0;
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: linear-gradient(180deg, #faf6ef 0%, #f3ece1 100%);
+  background: var(--paper);
 }
-.jp-fuji-head {
+.jp-journey-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.75rem;
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
 }
-.jp-fuji-kicker {
+.jp-journey-kicker {
   margin: 0;
   font-size: 0.72rem;
   font-weight: 800;
@@ -184,80 +184,79 @@
   text-transform: uppercase;
   color: var(--muted);
 }
-.jp-fuji-title {
+.jp-journey-stage {
   margin: 0.15rem 0 0;
-  font-size: 1.35rem;
-  font-weight: 800;
-  line-height: 1.1;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
-.jp-fuji-title-en {
-  display: block;
-  margin-top: 0.15rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--muted);
-}
-.jp-fuji-stats {
+.jp-journey-points {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.1rem;
   flex-shrink: 0;
 }
-.jp-fuji-alt {
+.jp-journey-points-value {
   font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
-.jp-fuji-points {
+.jp-journey-points-label {
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--muted);
 }
-.jp-fuji-scene { margin: 0.25rem 0 0.5rem; }
-.jp-fuji-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+.jp-journey-thermo-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 0.875rem;
 }
-.jp-fuji-bar {
-  height: 6px;
+.jp-journey-thermo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+.jp-journey-thermo-track {
+  position: relative;
+  width: 1.25rem;
+  height: 5.5rem;
+  border: 2px solid #222;
+  border-radius: 99px 99px 4px 4px;
   background: #ddd7cb;
-  border-radius: 99px;
   overflow: hidden;
 }
-.jp-fuji-bar > div {
-  height: 100%;
-  background: linear-gradient(90deg, #5a6b52, #222);
-  transition: width 0.35s ease;
+.jp-journey-thermo-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #222;
+  transition: height 0.35s ease;
+  border-radius: 0 0 2px 2px;
 }
-.jp-fuji-meta {
-  margin: 0.55rem 0 0;
+.jp-journey-thermo-bulb {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: -0.35rem;
+  border: 2px solid #222;
+  border-radius: 50%;
+  background: #222;
+}
+.jp-journey-thermo-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.jp-journey-pct {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.jp-journey-meta {
+  margin: 0.35rem 0 0;
   font-size: 0.82rem;
   color: var(--muted);
   line-height: 1.4;
-}
-.jp-fuji-stages {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin: 0.65rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.jp-fuji-stage {
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 0.2rem 0.45rem;
-  border-radius: 99px;
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--muted);
-  opacity: 0.45;
-}
-.jp-fuji-stage-unlocked {
-  opacity: 1;
-  background: #222;
-  color: #fff;
 }

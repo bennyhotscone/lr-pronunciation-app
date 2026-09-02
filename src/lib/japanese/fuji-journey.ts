@@ -1,4 +1,4 @@
-/** Mount Fuji climb — motivational progress derived from real training stats. */
+/** Journey progress — points derived from real training stats. */
 
 export type JapaneseJourneyStats = {
   totalCorrect: number;

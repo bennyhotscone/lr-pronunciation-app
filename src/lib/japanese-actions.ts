@@ -253,7 +253,26 @@ export async function completeJapaneseRound(
   round: 2 | 3 | 4 | 5,
   scorePct: number,
 ): Promise<{ ok: true; meta: JapaneseBlockMeta } | { error: string }> {
+  const session = await requireJapaneseLearner();
+  if (!session) return { error: "Unauthorized" };
+
+  const userId = session.user.id;
   const nextMeta = updateMetaAfterRound(meta, blockNumber, round, scorePct);
+
+  if (round === 5 && scorePct >= JAPANESE_MASTERY_THRESHOLD) {
+    await prisma.japaneseWordStat.updateMany({
+      where: {
+        userId,
+        blockNumber,
+        missedEarlyRounds: false,
+        round4CorrectCount: { gte: 1 },
+        round5CorrectCount: { gte: 1 },
+        known: false,
+      },
+      data: { known: true },
+    });
+  }
+
   const save = await saveJapaneseProgress(blockNumber, sessionState, nextMeta);
   if ("error" in save) return save;
   return { ok: true, meta: nextMeta };
@@ -370,7 +389,7 @@ export async function loadJapaneseJourneyStats(): Promise<
     };
   } catch (err) {
     console.error("[loadJapaneseJourneyStats] failed", err);
-    return { error: "Couldn't load climb progress." };
+    return { error: "Couldn't load progress." };
   }
 }
 

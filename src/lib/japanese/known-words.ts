@@ -7,6 +7,17 @@ export type KnownWordProgress = {
 
 export type KnownWordsMap = Record<number, { known?: boolean }>;
 
+/** Map persisted word stats into the shape expected by the training engine. */
+export function statsToKnownWordsMap(
+  stats: Record<number, { known?: boolean }>,
+): KnownWordsMap {
+  const map: KnownWordsMap = {};
+  for (const [idx, stat] of Object.entries(stats)) {
+    if (stat.known) map[Number(idx)] = { known: true };
+  }
+  return map;
+}
+
 export const EMPTY_KNOWN_PROGRESS: KnownWordProgress = {
   known: false,
   missedEarlyRounds: false,
@@ -114,7 +125,7 @@ export function applyAnswerToKnownProgress(
   if (round === 5) round5CorrectCount += 1;
 
   const known =
-    !missedEarlyRounds && round4CorrectCount >= 2 && round5CorrectCount >= 2;
+    !missedEarlyRounds && round4CorrectCount >= 1 && round5CorrectCount >= 1;
 
   return {
     known,

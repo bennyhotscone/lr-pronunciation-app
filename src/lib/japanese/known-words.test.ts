@@ -6,15 +6,14 @@ import {
   computeRoundScorePct,
   EMPTY_KNOWN_PROGRESS,
   indicesFromKnownStats,
+  statsToKnownWordsMap,
 } from "./known-words";
 
 describe("known-words", () => {
-  it("promotes after 2 correct in rounds 4 and 5 without early misses", () => {
+  it("promotes after correct answers in rounds 4 and 5 without early misses", () => {
     let p = { ...EMPTY_KNOWN_PROGRESS };
     p = applyAnswerToKnownProgress(p, 4, true);
-    p = applyAnswerToKnownProgress(p, 4, true);
     expect(p.known).toBe(false);
-    p = applyAnswerToKnownProgress(p, 5, true);
     p = applyAnswerToKnownProgress(p, 5, true);
     expect(p.known).toBe(true);
   });
@@ -62,5 +61,15 @@ describe("known-words", () => {
     expect(indicesFromKnownStats({ 1: { known: true }, 3: { known: true } })).toEqual(
       new Set([1, 3]),
     );
+  });
+
+  it("maps word stats into a known-words map for the engine", () => {
+    expect(
+      statsToKnownWordsMap({
+        0: { known: true },
+        1: { known: false },
+        2: { known: true },
+      }),
+    ).toEqual({ 0: { known: true }, 2: { known: true } });
   });
 });

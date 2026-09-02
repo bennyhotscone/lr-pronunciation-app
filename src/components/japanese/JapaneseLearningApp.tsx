@@ -16,7 +16,6 @@ import {
   ROUND_SHORT_LABELS,
   startFormalRound,
   transitionRound1ToRound2,
-  updateMetaAfterRound,
 } from "@/lib/japanese/engine";
 import {
   getJapaneseBlock,
@@ -43,21 +42,24 @@ import type {
 import {
   loadJapaneseProgress,
   loadJapaneseJourneyStats,
+  completeJapaneseRound,
   recordJapaneseWordResult,
   resetJapaneseBlockProgress,
   saveJapaneseProgress,
   type JapaneseProgressPayload,
+  type JapaneseWordStatSnapshot,
 } from "@/lib/japanese-actions";
 import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseWordList } from "./JapaneseWordList";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
-import { FujiJourneyWidget } from "./FujiJourneyWidget";
+import { JourneyThermometerWidget } from "./JourneyThermometerWidget";
 import {
   playCorrectAnswerSound,
   playIncorrectAnswerSound,
 } from "@/lib/correct-answer-sound";
 import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
+import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
 import type { JapaneseJourneyStats } from "@/lib/japanese/fuji-journey";
 import "./japanese-learning.css";
 
@@ -89,6 +91,7 @@ export function JapaneseLearningApp() {
   const [gatesPassed, setGatesPassed] = useState<number[]>([]);
   const [activeGate, setActiveGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
+  const [wordStats, setWordStats] = useState<Record<number, JapaneseWordStatSnapshot>>({});
   const [journeyStats, setJourneyStats] = useState<JapaneseJourneyStats | null>(null);
   const [journeyLoading, setJourneyLoading] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -125,11 +128,19 @@ export function JapaneseLearningApp() {
           setLoading(false);
           return;
         }
-        const repaired = repairSessionState(data.session, getJapaneseBlock(block).length);
+        const blockKnownIndices = [
+          ...getKnownIndices(statsToKnownWordsMap(data.stats)),
+        ];
+        const repaired = repairSessionState(
+          data.session,
+          getJapaneseBlock(block).length,
+          blockKnownIndices,
+        );
         setSession(repaired);
         setMeta(data.meta);
         setGatesPassed(data.gatesPassed);
         setOverrides(data.overrides);
+        setWordStats(data.stats);
         setLoading(false);
         if (
           repaired.phase !== data.session.phase ||
@@ -173,12 +184,28 @@ export function JapaneseLearningApp() {
     });
   }, []);
 
+  const knownWordsMap = useMemo(() => statsToKnownWordsMap(wordStats), [wordStats]);
+  const knownIndices = useMemo(() => [...getKnownIndices(knownWordsMap)], [knownWordsMap]);
+
+  const applyWordStat = useCallback((wordIndex: number, stat: JapaneseWordStatSnapshot) => {
+    setWordStats((prev) => ({ ...prev, [wordIndex]: stat }));
+    if (stat.known) refreshJourneyStats();
+  }, [refreshJourneyStats]);
+
+  const recordWordResult = useCallback(
+    (wordIndex: number, correct: boolean, round: 1 | 2 | 3 | 4 | 5) => {
+      void recordJapaneseWordResult(block, wordIndex, correct, round).then((result) => {
+        if ("ok" in result && result.ok) applyWordStat(wordIndex, result.stat);
+      });
+    },
+    [block, applyWordStat],
+  );
+
   const bumpJourneyCorrect = useCallback(() => {
     setJourneyStats((prev) =>
       prev ? { ...prev, totalCorrect: prev.totalCorrect + 1 } : prev,
     );
   }, []);
-
 
   const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
 
@@ -217,8 +244,8 @@ export function JapaneseLearningApp() {
 
   const view = useMemo(() => {
     if (!session) return null;
-    return buildRoundView(session, words, overrides);
-  }, [session, words, overrides]);
+    return buildRoundView(session, words, overrides, knownWordsMap);
+  }, [session, words, overrides, knownWordsMap]);
 
   const playbackRef = useRef({ words, overrides, view });
   playbackRef.current = { words, overrides, view };
@@ -285,13 +312,13 @@ export function JapaneseLearningApp() {
     (round: 1 | 2 | 3 | 4 | 5) => {
       if (!session || !meta) return;
       if (round > highestRoundReached) return;
-      const nextSession = jumpToRound(session, round, words.length);
+      const nextSession = jumpToRound(session, round, words.length, knownIndices);
       resetQuestionUi();
       setSession(nextSession);
       persist(nextSession, meta);
       setScreen("train");
     },
-    [session, meta, words.length, highestRoundReached, resetQuestionUi, persist],
+    [session, meta, words.length, highestRoundReached, resetQuestionUi, persist, knownIndices],
   );
 
   const handleMnemonicChange = useCallback((wordIndex: number, value: string | null) => {
@@ -326,7 +353,7 @@ export function JapaneseLearningApp() {
       playIncorrectAnswerSound();
     }
 
-    void recordJapaneseWordResult(block, correctIndex, correct, getActiveRound(session, words.length));
+    recordWordResult(correctIndex, correct, getActiveRound(session, words.length));
     setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -365,7 +392,7 @@ export function JapaneseLearningApp() {
       playCurrentWordAudio();
     }
 
-    void recordJapaneseWordResult(block, view.wordIndex, correct, view.round);
+    recordWordResult(view.wordIndex, correct, view.round);
     setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -374,7 +401,7 @@ export function JapaneseLearningApp() {
 
   const handleRetryRound = () => {
     if (!session || !meta || !view || view.kind !== "round-complete") return;
-    const nextSession = retryRound(session, words.length);
+    const nextSession = retryRound(session, words.length, knownIndices);
     resetQuestionUi();
     setSession(nextSession);
     persist(nextSession, meta);
@@ -392,8 +419,10 @@ export function JapaneseLearningApp() {
       if (view.nextRound) {
         const nextSession =
           view.round === 1
-            ? transitionRound1ToRound2(session, words.length)
-            : startFormalRound(session, view.nextRound, words.length);
+            ? transitionRound1ToRound2(session, words.length, knownIndices)
+            : startFormalRound(session, view.nextRound, words.length, {
+                knownIndices,
+              });
         resetQuestionUi();
         setSession(nextSession);
         persist(nextSession, meta);
@@ -414,12 +443,17 @@ export function JapaneseLearningApp() {
     if (nextSession.qIndex >= nextSession.order.length) {
       const round = Number(session.phase.replace("round", "")) as 2 | 3 | 4 | 5;
       const scorePct = Math.round((session.score / Math.max(nextSession.order.length, 1)) * 100);
-      const nextMeta = updateMetaAfterRound(meta, block, round, scorePct);
       setSession(nextSession);
-      setMeta(nextMeta);
       if (saveTimer.current) clearTimeout(saveTimer.current);
       startTransition(async () => {
-        await saveJapaneseProgress(block, nextSession, nextMeta);
+        const result = await completeJapaneseRound(block, nextSession, meta, round, scorePct);
+        if ("ok" in result && result.ok) {
+          setMeta(result.meta);
+        }
+        const fresh = await loadJapaneseProgress(block);
+        if (!("error" in fresh)) {
+          setWordStats(fresh.stats);
+        }
         refreshJourneyStats();
       });
       return;
@@ -437,6 +471,7 @@ export function JapaneseLearningApp() {
       setSession(fresh.session);
       setMeta(fresh.meta);
       setGatesPassed(fresh.gatesPassed);
+      setWordStats(fresh.stats);
       resetQuestionUi();
     });
   };
@@ -553,7 +588,7 @@ export function JapaneseLearningApp() {
             </button>
           </div>
         ) : null}
-        <FujiJourneyWidget stats={journeyStats} loading={journeyLoading} />
+        <JourneyThermometerWidget stats={journeyStats} loading={journeyLoading} />
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
             const unlocked = isJapaneseBlockUnlocked(meta, block, n);
@@ -840,7 +875,8 @@ export function JapaneseLearningApp() {
                   <div className="jp-learn-jp">{currentWord.jp}</div>
                   <div className="jp-learn-romaji">{currentWord.displayRomaji}</div>
                   <div className="jp-learn-english">{currentWord.en}</div>
-                  {getTrainingRound(view) >= 4 &&
+                  {wasWrong &&
+                  getTrainingRound(view) >= 4 &&
                   wordHasNuanceExplanation(words[currentWord.index]) ? (
                     <JapaneseWordNuance word={words[currentWord.index]} />
                   ) : null}
@@ -919,6 +955,7 @@ export function JapaneseLearningApp() {
           blockNumber={block}
           words={words}
           overrides={overrides}
+          wordStats={wordStats}
           onOverrideChange={(wordIndex, field, value) => {
             setOverrides((prev) => ({
               ...prev,
