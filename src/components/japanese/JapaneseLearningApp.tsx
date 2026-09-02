@@ -66,7 +66,8 @@ export function JapaneseLearningApp() {
   const [answered, setAnswered] = useState(false);
   const [status, setStatus] = useState("");
   const [showReveal, setShowReveal] = useState(false);
-  const [revealCorrect, setRevealCorrect] = useState(false);
+  /** True when the learner missed the current word (shows mnemonic editor in feedback). */
+  const [wasWrong, setWasWrong] = useState(false);
   const [typedAnswer, setTypedAnswer] = useState("");
   const [choiceStates, setChoiceStates] = useState<Record<number, "correct" | "wrong" | null>>({});
   const [pending, startTransition] = useTransition();
@@ -223,7 +224,7 @@ export function JapaneseLearningApp() {
     setAnswered(false);
     setStatus("");
     setShowReveal(false);
-    setRevealCorrect(false);
+    setWasWrong(false);
     setTypedAnswer("");
     setChoiceStates({});
   }, []);
@@ -271,7 +272,7 @@ export function JapaneseLearningApp() {
     }
 
     void recordJapaneseWordResult(block, correctIndex, correct);
-    setRevealCorrect(!correct);
+    setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
     persist(nextSession, meta);
@@ -307,7 +308,7 @@ export function JapaneseLearningApp() {
     }
 
     void recordJapaneseWordResult(block, view.wordIndex, correct);
-    setRevealCorrect(!correct);
+    setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
     persist(nextSession, meta);
@@ -657,7 +658,7 @@ export function JapaneseLearningApp() {
                 <div style={{ width: `${view.progressPct}%` }} />
               </div>
 
-              {view.showMnemonic && view.kind !== "formal" ? (
+              {view.showMnemonic && view.kind !== "formal" && !(answered && wasWrong) ? (
                 <JapaneseMnemonicHook
                   blockNumber={block}
                   wordIndex={currentWord.index}
@@ -770,7 +771,7 @@ export function JapaneseLearningApp() {
                   <div className="jp-learn-jp">{currentWord.jp}</div>
                   <div className="jp-learn-romaji">{currentWord.displayRomaji}</div>
                   <div className="jp-learn-english">{currentWord.en}</div>
-                  {revealCorrect ? (
+                  {wasWrong ? (
                     <>
                       <JapaneseMnemonicHook
                         blockNumber={block}
@@ -778,6 +779,7 @@ export function JapaneseLearningApp() {
                         canonicalMnemonic={words[currentWord.index].m}
                         mnemonic={overrides[currentWord.index]?.mnemonic}
                         onMnemonicChange={handleMnemonicChange}
+                        autoEdit
                       />
                       <button
                         type="button"

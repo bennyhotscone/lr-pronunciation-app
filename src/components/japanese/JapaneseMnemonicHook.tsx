@@ -17,6 +17,8 @@ type Props = {
   romajiMd?: string;
   onMnemonicChange: (wordIndex: number, value: string | null) => void;
   className?: string;
+  /** Open the editor immediately (e.g. after a wrong answer). */
+  autoEdit?: boolean;
 };
 
 export function JapaneseMnemonicHook({
@@ -29,12 +31,17 @@ export function JapaneseMnemonicHook({
   romajiMd,
   onMnemonicChange,
   className = "jp-learn-mnemonic",
+  autoEdit = false,
 }: Props) {
   const wordLike = { m: canonicalMnemonic, jp: "", audio: "", r: "", en: "" };
   const display = getMnemonic(wordLike, { mnemonic });
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(autoEdit);
   const [draft, setDraft] = useState(display);
   const [pending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (autoEdit) setEditing(true);
+  }, [autoEdit]);
 
   useEffect(() => {
     if (!editing) setDraft(display);
