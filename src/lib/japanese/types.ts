@@ -21,6 +21,10 @@ export type JapaneseSessionState = {
   score: number;
   missed: number[];
   roundIsRetry: boolean;
+  /** Consecutive correct streak per word index in the current R4/R5 session. */
+  roundStreaks?: Record<number, number>;
+  /** Word indices retired from the active pool this R4/R5 session (3-in-a-row). */
+  sessionRetired?: number[];
 };
 
 export type JapaneseBlockMeta = {

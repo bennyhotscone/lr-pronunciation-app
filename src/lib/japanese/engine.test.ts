@@ -8,6 +8,7 @@ import {
   getHighestRoundReached,
   jumpToRound,
   repairSessionState,
+  recordCorrectWithStreak,
   retryRound,
   startFormalRound,
   transitionRound1ToRound2,
@@ -297,5 +298,17 @@ describe("repairSessionState", () => {
     if (view?.kind === "round-complete") {
       expect(view.retryRound).toBe(5);
     }
+  });
+});
+
+describe("round 4/5 streak retirement", () => {
+  it("retires a word after three consecutive correct answers in round 4", () => {
+    let state = startFormalRound(createInitialSessionState(), 4, 10);
+    state = recordCorrectWithStreak(state, 3);
+    state = recordCorrectWithStreak(state, 3);
+    expect(state.sessionRetired).not.toContain(3);
+    state = recordCorrectWithStreak(state, 3);
+    expect(state.sessionRetired).toContain(3);
+    expect(state.order.filter((i) => i === 3).length).toBeLessThanOrEqual(1);
   });
 });

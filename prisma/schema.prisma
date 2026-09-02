@@ -100,6 +100,7 @@ model User {
   japaneseWordStats              JapaneseWordStat[]
   japaneseMilestoneStories       JapaneseMilestoneStory[]
   japaneseMilestoneProgress      JapaneseMilestoneProgress[]
+  japaneseRevisionProgress       JapaneseRevisionProgress[]
   grammarBlockProgress         GrammarBlockProgress[]
 }
 
@@ -1073,6 +1074,25 @@ model JapaneseMilestoneProgress {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, milestoneNumber])
+  @@index([userId])
+}
+
+/// Pass/fail progress for cumulative revision gates (every 5 blocks).
+model JapaneseRevisionProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  /// Gate 1 = after block 5 (blocks 1–5), gate 2 = after block 10, etc.
+  gateNumber  Int
+  passed      Boolean   @default(false)
+  scorePct    Int?
+  attempts    Int       @default(0)
+  passedAt    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, gateNumber])
   @@index([userId])
 }
 

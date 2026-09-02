@@ -5,10 +5,12 @@ import {
   advanceAfterRound1Correct,
   advanceFormalQuestion,
   buildRoundView,
+  computeSessionRoundScorePct,
   getActiveRound,
   getHighestRoundReached,
   jumpToRound,
   recordCorrect,
+  recordCorrectWithStreak,
   recordMiss,
   repairSessionState,
   resolveWord,
@@ -31,6 +33,7 @@ import {
 import {
   getMilestoneForBlock,
 } from "@/lib/japanese/milestone";
+import { getRevisionGateForCompletedBlock } from "@/lib/japanese/revision-gate";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
@@ -50,6 +53,7 @@ import {
 } from "@/lib/japanese-actions";
 import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
+import { JapaneseRevisionGate } from "./JapaneseRevisionGate";
 import { JapaneseWordList } from "./JapaneseWordList";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
 import {
@@ -60,23 +64,14 @@ import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
 import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
 import "./japanese-learning.css";
 
-type Screen = "train" | "list" | "gate";
+type Screen = "train" | "list" | "gate" | "revision";
 
 function getTrainingRound(view: Exclude<JapaneseRoundView, { kind: "round-complete" }>): number {
   return view.kind === "formal" ? view.round : 1;
 }
 
-function isJapaneseBlockUnlocked(
-  meta: JapaneseBlockMeta,
-  currentBlock: number,
-  targetBlock: number,
-): boolean {
-  if (meta.unlockedBlocks.includes(targetBlock)) return true;
-  return (
-    targetBlock === currentBlock + 1 &&
-    currentBlock < JAPANESE_TOTAL_BLOCKS &&
-    meta.blockMastered
-  );
+function isJapaneseBlockUnlocked(meta: JapaneseBlockMeta, targetBlock: number): boolean {
+  return meta.unlockedBlocks.includes(targetBlock);
 }
 
 export function JapaneseLearningApp() {
@@ -86,7 +81,9 @@ export function JapaneseLearningApp() {
   const [session, setSession] = useState<JapaneseSessionState | null>(null);
   const [meta, setMeta] = useState<JapaneseBlockMeta | null>(null);
   const [gatesPassed, setGatesPassed] = useState<number[]>([]);
+  const [revisionGatesPassed, setRevisionGatesPassed] = useState<number[]>([]);
   const [activeGate, setActiveGate] = useState<number | null>(null);
+  const [activeRevisionGate, setActiveRevisionGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
   const [wordStats, setWordStats] = useState<Record<number, JapaneseWordStatSnapshot>>({});
   const [loading, setLoading] = useState(true);
@@ -134,6 +131,7 @@ export function JapaneseLearningApp() {
         setSession(repaired);
         setMeta(data.meta);
         setGatesPassed(data.gatesPassed);
+        setRevisionGatesPassed(data.revisionGatesPassed);
         setOverrides(data.overrides);
         setWordStats(data.stats);
         setLoading(false);
@@ -179,9 +177,14 @@ export function JapaneseLearningApp() {
     setScreen("gate");
   };
 
+  const openRevisionGate = (gateNumber: number) => {
+    setActiveRevisionGate(gateNumber);
+    setScreen("revision");
+  };
+
   const switchBlock = (next: number) => {
     if (!meta) return;
-    if (!isJapaneseBlockUnlocked(meta, block, next) || !isPlayableJapaneseBlock(next)) return;
+    if (!isJapaneseBlockUnlocked(meta, next) || !isPlayableJapaneseBlock(next)) return;
     setBlock(next);
     setScreen("train");
     resetQuestionUi();
@@ -308,7 +311,9 @@ export function JapaneseLearningApp() {
 
     let nextSession = session;
     if (correct) {
-      nextSession = recordCorrect(session);
+      const round = getActiveRound(session, words.length);
+      nextSession =
+        round >= 4 ? recordCorrectWithStreak(session, correctIndex) : recordCorrect(session);
       setStatus("Correct");
       playCorrectAnswerSound();
     } else {
@@ -342,7 +347,10 @@ export function JapaneseLearningApp() {
 
     let nextSession = session;
     if (correct) {
-      nextSession = recordCorrect(session);
+      nextSession =
+        view.round >= 4
+          ? recordCorrectWithStreak(session, view.wordIndex)
+          : recordCorrect(session);
       setStatus("Accepted");
       playCorrectAnswerSound();
       if (view.mode === "type-romaji" && view.round === 5) {
@@ -405,7 +413,7 @@ export function JapaneseLearningApp() {
     const nextSession = advanceFormalQuestion(session);
     if (nextSession.qIndex >= nextSession.order.length) {
       const round = Number(session.phase.replace("round", "")) as 2 | 3 | 4 | 5;
-      const scorePct = Math.round((session.score / Math.max(nextSession.order.length, 1)) * 100);
+      const scorePct = computeSessionRoundScorePct(session, words.length, knownIndices);
       setSession(nextSession);
       if (saveTimer.current) clearTimeout(saveTimer.current);
       startTransition(async () => {
@@ -415,7 +423,9 @@ export function JapaneseLearningApp() {
         }
         const fresh = await loadJapaneseProgress(block);
         if (!("error" in fresh)) {
+          setMeta(fresh.meta);
           setWordStats(fresh.stats);
+          setRevisionGatesPassed(fresh.revisionGatesPassed);
         }
       });
       return;
@@ -433,6 +443,7 @@ export function JapaneseLearningApp() {
       setSession(fresh.session);
       setMeta(fresh.meta);
       setGatesPassed(fresh.gatesPassed);
+      setRevisionGatesPassed(fresh.revisionGatesPassed);
       setWordStats(fresh.stats);
       resetQuestionUi();
     });
@@ -444,6 +455,45 @@ export function JapaneseLearningApp() {
     if (gatesPassed.includes(milestone)) return null;
     return milestone;
   }, [block, meta?.blockMastered, gatesPassed]);
+
+  const requiredRevisionGate = useMemo(() => {
+    const gate = getRevisionGateForCompletedBlock(block);
+    if (!gate || !meta?.blockMastered) return null;
+    if (revisionGatesPassed.includes(gate)) return null;
+    return gate;
+  }, [block, meta?.blockMastered, revisionGatesPassed]);
+
+  if (screen === "revision" && activeRevisionGate) {
+    return (
+      <JapaneseRevisionGate
+        gateNumber={activeRevisionGate}
+        onPassed={(unlocksBlock) => {
+          setRevisionGatesPassed((prev) =>
+            prev.includes(activeRevisionGate)
+              ? prev
+              : [...prev, activeRevisionGate].sort((a, b) => a - b),
+          );
+          void loadJapaneseProgress(block).then((data) => {
+            if ("error" in data) return;
+            setMeta(data.meta);
+            setRevisionGatesPassed(data.revisionGatesPassed);
+          });
+          if (isPlayableJapaneseBlock(unlocksBlock)) {
+            setBlock(unlocksBlock);
+            setScreen("train");
+            setActiveRevisionGate(null);
+          } else {
+            setScreen("train");
+            setActiveRevisionGate(null);
+          }
+        }}
+        onClose={() => {
+          setScreen("train");
+          setActiveRevisionGate(null);
+        }}
+      />
+    );
+  }
 
   if (screen === "gate" && activeGate) {
     return (
@@ -534,6 +584,22 @@ export function JapaneseLearningApp() {
             {meta.blockMastered ? " · Block mastered" : ""}
           </p>
         ) : null}
+        {requiredRevisionGate ? (
+          <div className="jp-learn-gate-banner jp-learn-gate-banner-required" role="status">
+            <p>
+              Revision required: pass the all-words quiz for blocks{" "}
+              {requiredRevisionGate * 5 - 4}–{requiredRevisionGate * 5} before the next group
+              unlocks.
+            </p>
+            <button
+              type="button"
+              className="jp-learn-btn jp-learn-btn-gate"
+              onClick={() => openRevisionGate(requiredRevisionGate)}
+            >
+              Start revision quiz
+            </button>
+          </div>
+        ) : null}
         {optionalGateMilestone ? (
           <div className="jp-learn-gate-banner" role="status">
             <p>
@@ -551,7 +617,7 @@ export function JapaneseLearningApp() {
         ) : null}
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
-            const unlocked = isJapaneseBlockUnlocked(meta, block, n);
+            const unlocked = isJapaneseBlockUnlocked(meta, n);
             const active = n === block;
             return (
               <button

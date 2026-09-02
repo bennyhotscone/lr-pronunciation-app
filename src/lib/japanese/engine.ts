@@ -1,5 +1,6 @@
 import {
   JAPANESE_BATCH_SIZE,
+  JAPANESE_KNOWN_THRESHOLD,
   JAPANESE_MASTERY_THRESHOLD,
   JAPANESE_CHOICE_COUNT,
   JAPANESE_MINI_REVIEW_SIZE,
@@ -19,9 +20,11 @@ import {
   getMnemonic,
   getPronunciationCue,
 } from "./word-helpers";
+import { isBlockBehindRevisionGate } from "./revision-gate";
 import {
   buildPracticeOrder,
   computeFormalRoundScorePct,
+  computeRoundScorePct,
   getKnownIndices,
 } from "./known-words";
 
@@ -46,6 +49,8 @@ export function createInitialSessionState(): JapaneseSessionState {
     score: 0,
     missed: [],
     roundIsRetry: false,
+    roundStreaks: {},
+    sessionRetired: [],
   };
 }
 
@@ -286,16 +291,20 @@ function buildRoundCompleteView(
   const wordCount = words.length;
   const orderLen =
     round === 1 ? round1TargetCount(state, wordCount) : state.order.length;
+  const known = new Set(knownIndices);
+  const retiredOnly = (state.sessionRetired ?? []).filter((i) => !known.has(i)).length;
   const scorePct =
     round === 1
       ? 100
-      : computeFormalRoundScorePct(
-          state.score,
-          orderLen,
-          wordCount,
-          knownIndices,
-          !!state.roundIsRetry,
-        );
+      : !state.roundIsRetry
+        ? computeRoundScorePct(state.score + retiredOnly, wordCount, 0)
+        : computeFormalRoundScorePct(
+            state.score + retiredOnly,
+            orderLen,
+            wordCount,
+            knownIndices,
+            true,
+          );
   const passed = scorePct >= JAPANESE_MASTERY_THRESHOLD;
   const missedIndices = [...new Set(state.missed)];
   const retryRound = round >= 2 ? (round as 2 | 3 | 4 | 5) : undefined;
@@ -482,6 +491,8 @@ export function startFormalRound(
     missed: [],
     order: pool,
     roundIsRetry: isRetry,
+    roundStreaks: {},
+    sessionRetired: [],
   };
 }
 
@@ -509,7 +520,69 @@ export function recordCorrect(state: JapaneseSessionState): JapaneseSessionState
 
 /** Record a missed word. */
 export function recordMiss(state: JapaneseSessionState, wordIndex: number): JapaneseSessionState {
-  return { ...state, missed: [...state.missed, wordIndex] };
+  const round = roundNumber(state.phase);
+  let roundStreaks = state.roundStreaks;
+  if (round === 4 || round === 5) {
+    roundStreaks = { ...(state.roundStreaks ?? {}), [wordIndex]: 0 };
+  }
+  return {
+    ...state,
+    missed: [...state.missed, wordIndex],
+    roundStreaks,
+  };
+}
+
+/** Remove future occurrences of a word from the current formal round queue. */
+export function retireWordFromFormalOrder(
+  state: JapaneseSessionState,
+  wordIndex: number,
+): JapaneseSessionState {
+  const retired = new Set(state.sessionRetired ?? []);
+  retired.add(wordIndex);
+  const order = state.order.filter(
+    (idx, i) => i <= state.qIndex || idx !== wordIndex,
+  );
+  return { ...state, order, sessionRetired: [...retired] };
+}
+
+/** Record a correct answer; retires the word after 3-in-a-row in R4/R5. */
+export function recordCorrectWithStreak(
+  state: JapaneseSessionState,
+  wordIndex: number,
+): JapaneseSessionState {
+  const round = roundNumber(state.phase);
+  let next = recordCorrect(state);
+  if (round !== 4 && round !== 5) return next;
+
+  const streaks = { ...(next.roundStreaks ?? {}) };
+  streaks[wordIndex] = (streaks[wordIndex] ?? 0) + 1;
+  next = { ...next, roundStreaks: streaks };
+  if (streaks[wordIndex] >= JAPANESE_KNOWN_THRESHOLD) {
+    next = retireWordFromFormalOrder(next, wordIndex);
+  }
+  return next;
+}
+
+export function computeSessionRoundScorePct(
+  state: JapaneseSessionState,
+  wordCount: number,
+  knownIndices: readonly number[],
+): number {
+  const round = roundNumber(state.phase);
+  if (round === 1) return 100;
+  const known = new Set(knownIndices);
+  const retiredOnly = (state.sessionRetired ?? []).filter((i) => !known.has(i)).length;
+  const effectiveScore = state.score + retiredOnly;
+  if (!state.roundIsRetry) {
+    return computeRoundScorePct(effectiveScore, wordCount, 0);
+  }
+  return computeFormalRoundScorePct(
+    effectiveScore,
+    Math.max(state.order.length, 1),
+    wordCount,
+    knownIndices,
+    true,
+  );
 }
 
 /** Update block meta after completing a formal round. */
@@ -518,6 +591,7 @@ export function updateMetaAfterRound(
   blockNumber: number,
   round: 2 | 3 | 4 | 5,
   scorePct: number,
+  revisionGatesPassed: readonly number[] = [],
 ): JapaneseBlockMeta {
   const roundScores = { ...meta.roundScores, [String(round)]: scorePct };
   let bestRound5Score = meta.bestRound5Score;
@@ -529,7 +603,11 @@ export function updateMetaAfterRound(
     if (scorePct >= JAPANESE_MASTERY_THRESHOLD) {
       blockMastered = true;
       const nextBlock = blockNumber + 1;
-      if (nextBlock <= JAPANESE_TOTAL_BLOCKS && !unlockedBlocks.includes(nextBlock)) {
+      if (
+        nextBlock <= JAPANESE_TOTAL_BLOCKS &&
+        !unlockedBlocks.includes(nextBlock) &&
+        !isBlockBehindRevisionGate(nextBlock, revisionGatesPassed)
+      ) {
         unlockedBlocks.push(nextBlock);
       }
     }
@@ -576,6 +654,8 @@ export function sessionFromDb(row: {
     order: parseIndexArray(row.order),
     missed: parseIndexArray(row.missed),
     roundIsRetry: !!row.roundIsRetry,
+    roundStreaks: {},
+    sessionRetired: [],
   };
 }
 

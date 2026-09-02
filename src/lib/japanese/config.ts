@@ -22,6 +22,9 @@ export const JAPANESE_KNOWN_THRESHOLD = 3;
 /** Combined gate score (%) required to unlock the next block pair. */
 export const JAPANESE_MILESTONE_PASS_THRESHOLD = 75;
 
+/** Revision quiz score (%) required to unlock the next block group. */
+export const JAPANESE_REVISION_PASS_THRESHOLD = 80;
+
 /** Multiple-choice options shown per question. */
 export const JAPANESE_CHOICE_COUNT = 6;
 

@@ -1,6 +1,9 @@
+import { JAPANESE_KNOWN_THRESHOLD } from "./config";
+
 export type KnownWordProgress = {
   known: boolean;
   missedEarlyRounds: boolean;
+  consecutiveCorrect: number;
   round4CorrectCount: number;
   round5CorrectCount: number;
 };
@@ -21,6 +24,7 @@ export function statsToKnownWordsMap(
 export const EMPTY_KNOWN_PROGRESS: KnownWordProgress = {
   known: false,
   missedEarlyRounds: false,
+  consecutiveCorrect: 0,
   round4CorrectCount: 0,
   round5CorrectCount: 0,
 };
@@ -95,12 +99,14 @@ export function indicesFromKnownStats(stats: KnownWordsMap): Set<number> {
 export function knownProgressFromDb(row: {
   known?: boolean;
   missedEarlyRounds?: boolean;
+  consecutiveCorrect?: number;
   round4CorrectCount?: number;
   round5CorrectCount?: number;
 }): KnownWordProgress {
   return {
     known: !!row.known,
     missedEarlyRounds: !!row.missedEarlyRounds,
+    consecutiveCorrect: row.consecutiveCorrect ?? 0,
     round4CorrectCount: row.round4CorrectCount ?? 0,
     round5CorrectCount: row.round5CorrectCount ?? 0,
   };
@@ -115,22 +121,42 @@ export function applyAnswerToKnownProgress(
     return {
       known: false,
       missedEarlyRounds: prev.missedEarlyRounds || round <= 3,
+      consecutiveCorrect: 0,
       round4CorrectCount: 0,
       round5CorrectCount: 0,
     };
   }
 
-  let { round4CorrectCount, round5CorrectCount, missedEarlyRounds } = prev;
-  if (round === 4) round4CorrectCount += 1;
-  if (round === 5) round5CorrectCount += 1;
+  let { consecutiveCorrect, round4CorrectCount, round5CorrectCount, missedEarlyRounds } = prev;
+  if (round === 4) {
+    round4CorrectCount += 1;
+    consecutiveCorrect += 1;
+  } else if (round === 5) {
+    round5CorrectCount += 1;
+    consecutiveCorrect += 1;
+  }
 
   const known =
-    !missedEarlyRounds && round4CorrectCount >= 1 && round5CorrectCount >= 1;
+    !missedEarlyRounds &&
+    (consecutiveCorrect >= JAPANESE_KNOWN_THRESHOLD ||
+      (round4CorrectCount >= 1 && round5CorrectCount >= 1));
 
   return {
     known,
     missedEarlyRounds,
+    consecutiveCorrect,
     round4CorrectCount,
     round5CorrectCount,
   };
+}
+
+/** True when a word should leave the active R4/R5 pool after this correct answer. */
+export function shouldRetireWordAfterCorrect(
+  prev: KnownWordProgress,
+  round: 4 | 5,
+  correct: boolean,
+): boolean {
+  if (!correct || (round !== 4 && round !== 5)) return false;
+  const next = applyAnswerToKnownProgress(prev, round, true);
+  return next.consecutiveCorrect >= JAPANESE_KNOWN_THRESHOLD;
 }

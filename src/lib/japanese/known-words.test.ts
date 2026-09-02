@@ -10,6 +10,17 @@ import {
 } from "./known-words";
 
 describe("known-words", () => {
+  it("promotes after three consecutive correct answers in round 4", () => {
+    let p = { ...EMPTY_KNOWN_PROGRESS };
+    p = applyAnswerToKnownProgress(p, 4, true);
+    expect(p.known).toBe(false);
+    p = applyAnswerToKnownProgress(p, 4, true);
+    expect(p.known).toBe(false);
+    p = applyAnswerToKnownProgress(p, 4, true);
+    expect(p.known).toBe(true);
+    expect(p.consecutiveCorrect).toBe(3);
+  });
+
   it("promotes after correct answers in rounds 4 and 5 without early misses", () => {
     let p = { ...EMPTY_KNOWN_PROGRESS };
     p = applyAnswerToKnownProgress(p, 4, true);

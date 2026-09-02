@@ -1,4 +1,8 @@
 import { JAPANESE_TOTAL_BLOCKS } from "./config";
+import {
+  getFirstBlockUnlockedByRevisionGate,
+  isBlockBehindRevisionGate,
+} from "./revision-gate";
 
 /** Even block numbers (2, 4, 6…) end a pair and offer optional milestone practice. */
 export function isGateBoundaryBlock(blockNumber: number): boolean {
@@ -30,17 +34,29 @@ export function milestoneLabel(milestoneNumber: number): string {
 export function mergeUnlockedBlocks(
   rows: Array<{ blockNumber: number; unlockedBlocks: number[]; blockMastered: boolean }>,
   gatesPassed: number[],
+  revisionGatesPassed: number[] = [],
 ): number[] {
   const unlocked = new Set<number>([1]);
   for (const row of rows) {
     for (const n of row.unlockedBlocks) unlocked.add(n);
     if (row.blockMastered && row.blockNumber < JAPANESE_TOTAL_BLOCKS) {
-      unlocked.add(row.blockNumber + 1);
+      const next = row.blockNumber + 1;
+      if (!isBlockBehindRevisionGate(next, revisionGatesPassed)) {
+        unlocked.add(next);
+      }
     }
   }
   for (const milestone of gatesPassed) {
     const block = getBlockUnlockedByMilestone(milestone);
-    if (block <= JAPANESE_TOTAL_BLOCKS) unlocked.add(block);
+    if (block <= JAPANESE_TOTAL_BLOCKS && !isBlockBehindRevisionGate(block, revisionGatesPassed)) {
+      unlocked.add(block);
+    }
   }
-  return [...unlocked].sort((x, y) => x - y);
+  for (const gate of revisionGatesPassed) {
+    const first = getFirstBlockUnlockedByRevisionGate(gate);
+    if (first <= JAPANESE_TOTAL_BLOCKS) unlocked.add(first);
+  }
+  return [...unlocked]
+    .filter((n) => !isBlockBehindRevisionGate(n, revisionGatesPassed))
+    .sort((x, y) => x - y);
 }

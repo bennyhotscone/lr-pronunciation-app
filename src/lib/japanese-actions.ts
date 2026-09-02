@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { JAPANESE_MASTERY_THRESHOLD } from "@/lib/japanese/config";
 import { mergeUnlockedBlocks } from "@/lib/japanese/milestone";
+import { loadRevisionGatesPassed } from "@/lib/japanese-revision-actions";
 import {
   createInitialBlockMeta,
   createInitialSessionState,
@@ -39,12 +40,14 @@ export type JapaneseWordStatSnapshot = {
   missedEarlyRounds?: boolean;
   round4CorrectCount?: number;
   round5CorrectCount?: number;
+  consecutiveCorrect?: number;
 };
 
 export type JapaneseProgressPayload = {
   session: JapaneseSessionState;
   meta: JapaneseBlockMeta;
   gatesPassed: number[];
+  revisionGatesPassed: number[];
   overrides: Record<
     number,
     { mnemonic?: string | null; pronunciationCue?: string | null; ttsInput?: string | null }
@@ -80,7 +83,8 @@ export async function loadJapaneseProgress(
 
     const userId = session.user.id;
 
-    const [progress, allProgress, overrideRows, statRows, gatesPassed] = await Promise.all([
+    const [progress, allProgress, overrideRows, statRows, gatesPassed, revisionGatesPassed] =
+      await Promise.all([
       prisma.japaneseBlockProgress.findUnique({
         where: { userId_blockNumber: { userId, blockNumber } },
       }),
@@ -95,13 +99,14 @@ export async function loadJapaneseProgress(
         where: { userId, blockNumber },
       }),
       loadGatesPassed(userId),
+      loadRevisionGatesPassed(userId),
     ]);
 
     const sessionState = progress ? sessionFromDb(progress) : createInitialSessionState();
     const baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
     const meta: JapaneseBlockMeta = {
       ...baseMeta,
-      unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed),
+      unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed, revisionGatesPassed),
     };
 
     const overrides: JapaneseProgressPayload["overrides"] = {};
@@ -123,7 +128,7 @@ export async function loadJapaneseProgress(
       };
     }
 
-    return { session: sessionState, meta, gatesPassed, overrides, stats };
+    return { session: sessionState, meta, gatesPassed, revisionGatesPassed, overrides, stats };
   } catch (err) {
     console.error("[loadJapaneseProgress] failed", err);
     return { error: "Couldn't load progress. Please try again." };
@@ -218,6 +223,7 @@ export async function recordJapaneseWordResult(
       timesMissed: correct ? 0 : 1,
       known: nextKnown.known,
       missedEarlyRounds: nextKnown.missedEarlyRounds,
+      consecutiveCorrect: nextKnown.consecutiveCorrect,
       round4CorrectCount: nextKnown.round4CorrectCount,
       round5CorrectCount: nextKnown.round5CorrectCount,
       lastSeenAt: new Date(),
@@ -228,6 +234,7 @@ export async function recordJapaneseWordResult(
       timesMissed: correct ? undefined : { increment: 1 },
       known: nextKnown.known,
       missedEarlyRounds: nextKnown.missedEarlyRounds,
+      consecutiveCorrect: nextKnown.consecutiveCorrect,
       round4CorrectCount: nextKnown.round4CorrectCount,
       round5CorrectCount: nextKnown.round5CorrectCount,
       lastSeenAt: new Date(),
@@ -256,7 +263,14 @@ export async function completeJapaneseRound(
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
-  const nextMeta = updateMetaAfterRound(meta, blockNumber, round, scorePct);
+  const revisionGatesPassed = await loadRevisionGatesPassed(userId);
+  const nextMeta = updateMetaAfterRound(
+    meta,
+    blockNumber,
+    round,
+    scorePct,
+    revisionGatesPassed,
+  );
 
   if (round === 5 && scorePct >= JAPANESE_MASTERY_THRESHOLD) {
     await prisma.japaneseWordStat.updateMany({
@@ -264,8 +278,7 @@ export async function completeJapaneseRound(
         userId,
         blockNumber,
         missedEarlyRounds: false,
-        round4CorrectCount: { gte: 1 },
-        round5CorrectCount: { gte: 1 },
+        consecutiveCorrect: { gte: 3 },
         known: false,
       },
       data: { known: true },
