@@ -35,7 +35,11 @@ import {
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
-import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
+import type {
+  JapaneseBlockMeta,
+  JapaneseRoundView,
+  JapaneseSessionState,
+} from "@/lib/japanese/types";
 import {
   loadJapaneseProgress,
   recordJapaneseWordResult,
@@ -52,6 +56,10 @@ import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
 import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "gate";
+
+function getTrainingRound(view: Exclude<JapaneseRoundView, { kind: "round-complete" }>): number {
+  return view.kind === "formal" ? view.round : 1;
+}
 
 function isJapaneseBlockUnlocked(
   meta: JapaneseBlockMeta,
@@ -705,9 +713,13 @@ export function JapaneseLearningApp() {
                 <p className="jp-learn-sub">{view.instruction}</p>
               ) : null}
 
-              {wordHasNuanceExplanation(words[currentWord.index]) ? (
-                <JapaneseWordNuance word={words[currentWord.index]} />
-              ) : null}
+              {(() => {
+                const word = words[currentWord.index];
+                const hasNuance = wordHasNuanceExplanation(word);
+                const trainingRound = getTrainingRound(view);
+                if (!hasNuance || trainingRound >= 4) return null;
+                return <JapaneseWordNuance word={word} />;
+              })()}
 
               {!(view.kind === "formal" && view.mode === "type-romaji") ? (
                 <button
@@ -786,6 +798,10 @@ export function JapaneseLearningApp() {
                   <div className="jp-learn-english">{currentWord.en}</div>
                   {wasWrong ? (
                     <>
+                      {getTrainingRound(view) >= 4 &&
+                      wordHasNuanceExplanation(words[currentWord.index]) ? (
+                        <JapaneseWordNuance word={words[currentWord.index]} />
+                      ) : null}
                       <JapaneseMnemonicHook
                         blockNumber={block}
                         wordIndex={currentWord.index}
