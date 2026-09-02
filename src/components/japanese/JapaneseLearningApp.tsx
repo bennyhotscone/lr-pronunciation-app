@@ -41,7 +41,6 @@ import type {
 } from "@/lib/japanese/types";
 import {
   loadJapaneseProgress,
-  loadJapaneseJourneyStats,
   completeJapaneseRound,
   recordJapaneseWordResult,
   resetJapaneseBlockProgress,
@@ -53,14 +52,12 @@ import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseWordList } from "./JapaneseWordList";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
-import { JourneyThermometerWidget } from "./JourneyThermometerWidget";
 import {
   playCorrectAnswerSound,
   playIncorrectAnswerSound,
 } from "@/lib/correct-answer-sound";
 import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
 import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
-import type { JapaneseJourneyStats } from "@/lib/japanese/fuji-journey";
 import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "gate";
@@ -92,8 +89,6 @@ export function JapaneseLearningApp() {
   const [activeGate, setActiveGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
   const [wordStats, setWordStats] = useState<Record<number, JapaneseWordStatSnapshot>>({});
-  const [journeyStats, setJourneyStats] = useState<JapaneseJourneyStats | null>(null);
-  const [journeyLoading, setJourneyLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loadAttempt, setLoadAttempt] = useState(0);
@@ -161,36 +156,12 @@ export function JapaneseLearningApp() {
     };
   }, [block, loadAttempt]);
 
-  useEffect(() => {
-    let cancelled = false;
-    setJourneyLoading(true);
-    loadJapaneseJourneyStats()
-      .then((data) => {
-        if (cancelled) return;
-        if (!("error" in data)) setJourneyStats(data);
-        setJourneyLoading(false);
-      })
-      .catch(() => {
-        if (!cancelled) setJourneyLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [loadAttempt]);
-
-  const refreshJourneyStats = useCallback(() => {
-    void loadJapaneseJourneyStats().then((data) => {
-      if (!("error" in data)) setJourneyStats(data);
-    });
-  }, []);
-
   const knownWordsMap = useMemo(() => statsToKnownWordsMap(wordStats), [wordStats]);
   const knownIndices = useMemo(() => [...getKnownIndices(knownWordsMap)], [knownWordsMap]);
 
   const applyWordStat = useCallback((wordIndex: number, stat: JapaneseWordStatSnapshot) => {
     setWordStats((prev) => ({ ...prev, [wordIndex]: stat }));
-    if (stat.known) refreshJourneyStats();
-  }, [refreshJourneyStats]);
+  }, []);
 
   const recordWordResult = useCallback(
     (wordIndex: number, correct: boolean, round: 1 | 2 | 3 | 4 | 5) => {
@@ -200,12 +171,6 @@ export function JapaneseLearningApp() {
     },
     [block, applyWordStat],
   );
-
-  const bumpJourneyCorrect = useCallback(() => {
-    setJourneyStats((prev) =>
-      prev ? { ...prev, totalCorrect: prev.totalCorrect + 1 } : prev,
-    );
-  }, []);
 
   const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
 
@@ -346,7 +311,6 @@ export function JapaneseLearningApp() {
       nextSession = recordCorrect(session);
       setStatus("Correct");
       playCorrectAnswerSound();
-      bumpJourneyCorrect();
     } else {
       nextSession = recordMiss(session, correctIndex);
       setStatus(`Answer: ${words[correctIndex].en}`);
@@ -381,7 +345,6 @@ export function JapaneseLearningApp() {
       nextSession = recordCorrect(session);
       setStatus("Accepted");
       playCorrectAnswerSound();
-      bumpJourneyCorrect();
       if (view.mode === "type-romaji" && view.round === 5) {
         playWordAudioAtIndex(view.wordIndex);
       }
@@ -454,7 +417,6 @@ export function JapaneseLearningApp() {
         if (!("error" in fresh)) {
           setWordStats(fresh.stats);
         }
-        refreshJourneyStats();
       });
       return;
     }
@@ -495,7 +457,6 @@ export function JapaneseLearningApp() {
             if ("error" in data) return;
             setMeta(data.meta);
             setGatesPassed(data.gatesPassed);
-            refreshJourneyStats();
           });
           if (isPlayableJapaneseBlock(unlocksBlock)) {
             setBlock(unlocksBlock);
@@ -588,7 +549,6 @@ export function JapaneseLearningApp() {
             </button>
           </div>
         ) : null}
-        <JourneyThermometerWidget stats={journeyStats} loading={journeyLoading} />
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
             const unlocked = isJapaneseBlockUnlocked(meta, block, n);

@@ -39,12 +39,14 @@ describe("japanese block curriculum", () => {
 
   it("loads playable blocks with 50 words each", () => {
     const playable = getPlayableBlockNumbers();
-    expect(playable).toEqual([1, 2, 3]);
+    expect(playable).toEqual([1, 2, 3, 4]);
     expect(getJapaneseBlock(1).length).toBe(50);
     expect(getJapaneseBlock(2).length).toBe(50);
     expect(getJapaneseBlock(3).length).toBe(50);
+    expect(getJapaneseBlock(4).length).toBe(50);
     expect(isPlayableJapaneseBlock(3)).toBe(true);
-    expect(isPlayableJapaneseBlock(4)).toBe(false);
+    expect(isPlayableJapaneseBlock(4)).toBe(true);
+    expect(isPlayableJapaneseBlock(5)).toBe(false);
   });
 
   it("slices spoken-English frequency ranks for block 3", () => {
@@ -80,5 +82,25 @@ describe("japanese block curriculum", () => {
     );
     expect(meta.blockMastered).toBe(true);
     expect(meta.unlockedBlocks).toContain(3);
+  });
+
+  it("slices spoken-English frequency ranks for block 4", () => {
+    expect(getFrequencyRankRangeForBlock(4)).toEqual({ start: 151, end: 200 });
+    expect(getFrequencyWordsForBlock(4).length).toBe(50);
+    expect(getFrequencyWordsForBlock(4).slice(0, 5)).toEqual([
+      "again",
+      "still",
+      "home",
+      "kid",
+      "girl",
+    ]);
+    expect(getFrequencyWordsForBlock(4).slice(-5)).toEqual([
+      "bring",
+      "remember",
+      "live",
+      "father",
+      "hold",
+    ]);
+    expect(getBlockCurriculumLabel(4)).toBe("Ranks 151-200");
   });
 });

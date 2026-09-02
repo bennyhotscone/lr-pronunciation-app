@@ -1,0 +1,352 @@
+[
+  {
+    "jp": "また",
+    "audio": "また",
+    "r": "mata",
+    "en": "again",
+    "m": "\"MAH, TA?\" — AGAIN? → mata."
+  },
+  {
+    "jp": "まだ",
+    "audio": "まだ",
+    "r": "mada",
+    "en": "still",
+    "m": "MADA is STILL not done. → mada."
+  },
+  {
+    "jp": "うち",
+    "audio": "うち",
+    "r": "uchi",
+    "en": "home",
+    "m": "\"OUCH, I'm HOME.\" → uchi."
+  },
+  {
+    "jp": "子",
+    "audio": "こ",
+    "r": "ko",
+    "en": "kid",
+    "m": "KOala KID. → ko."
+  },
+  {
+    "jp": "女の子",
+    "audio": "おんなのこ",
+    "r": "onnanoko",
+    "en": "girl",
+    "m": "ONNA NO KO — that GIRL. → onnanoko."
+  },
+  {
+    "jp": "男の子",
+    "audio": "おとこのこ",
+    "r": "otokonoko",
+    "en": "boy",
+    "m": "OTOKO NO KO — that BOY. → otokonoko."
+  },
+  {
+    "jp": "くそ",
+    "audio": "くそ",
+    "r": "kuso",
+    "en": "fuck / damn",
+    "m": "KUSO! Spoken damn. → kuso."
+  },
+  {
+    "jp": "それら",
+    "audio": "それら",
+    "r": "sorera",
+    "en": "those",
+    "m": "SORE, RA — THOSE over there. → sorera."
+  },
+  {
+    "jp": "より",
+    "audio": "より",
+    "r": "yori",
+    "en": "than",
+    "m": "YOGURT is better THAN milk — より. → yori."
+  },
+  {
+    "jp": "あたり",
+    "audio": "あたり",
+    "r": "atari",
+    "en": "around",
+    "m": "ATARI — AROUND here. → atari."
+  },
+  {
+    "jp": "最後",
+    "audio": "さいご",
+    "r": "saigo",
+    "en": "last",
+    "m": "SIGH, GO — the LAST one. → saigo."
+  },
+  {
+    "jp": "離れる",
+    "audio": "はなれる",
+    "r": "hanareru",
+    "en": "away",
+    "m": "HA, NAH, RETreat — go AWAY. → hanareru."
+  },
+  {
+    "jp": "友達",
+    "audio": "ともだち",
+    "r": "tomodachi",
+    "en": "friend",
+    "m": "TOMO is my FRIEND. → tomodachi."
+  },
+  {
+    "jp": "えー",
+    "audio": "えー",
+    "r": "ee",
+    "en": "uh",
+    "m": "\"EH?\" — UH, let me think. → ee."
+  },
+  {
+    "jp": "今まで",
+    "audio": "いままで",
+    "r": "imamade",
+    "en": "ever",
+    "m": "I MA MADE it EVER this far. → imamade."
+  },
+  {
+    "jp": "悪い",
+    "audio": "わるい",
+    "r": "warui",
+    "en": "bad",
+    "m": "WARUI — that is BAD. → warui."
+  },
+  {
+    "jp": "しなきゃ",
+    "audio": "しなきゃ",
+    "r": "shinakya",
+    "en": "must / have to",
+    "m": "SHE NAH KYA — you MUST do it. → shinakya."
+  },
+  {
+    "jp": "会う",
+    "audio": "あう",
+    "r": "au",
+    "en": "meet",
+    "m": "\"AH, U MEET!\" → au."
+  },
+  {
+    "jp": "大きい",
+    "audio": "おおきい",
+    "r": "ookii",
+    "en": "big",
+    "m": "OH KEY — so BIG. → ookii."
+  },
+  {
+    "jp": "あと",
+    "audio": "あと",
+    "r": "ato",
+    "en": "after",
+    "m": "\"AH, TOO\" — AFTER that. → ato."
+  },
+  {
+    "jp": "長い",
+    "audio": "ながい",
+    "r": "nagai",
+    "en": "long",
+    "m": "NAH, GAI — so LONG. → nagai."
+  },
+  {
+    "jp": "場所",
+    "audio": "ばしょ",
+    "r": "basho",
+    "en": "place",
+    "m": "BA SHOW me the PLACE. → basho."
+  },
+  {
+    "jp": "信じる",
+    "audio": "しんじる",
+    "r": "shinjiru",
+    "en": "believe",
+    "m": "SHIN, JEER? I BELIEVE you. → shinjiru."
+  },
+  {
+    "jp": "彼ら",
+    "audio": "かれら",
+    "r": "karera",
+    "en": "their / they",
+    "m": "KA RARE — THEIR crew. → karera."
+  },
+  {
+    "jp": "いつも",
+    "audio": "いつも",
+    "r": "itsumo",
+    "en": "always",
+    "m": "EAT SO MO — ALWAYS. → itsumo."
+  },
+  {
+    "jp": "全部",
+    "audio": "ぜんぶ",
+    "r": "zenbu",
+    "en": "everything",
+    "m": "ZEN BU — EVERYTHING. → zenbu."
+  },
+  {
+    "jp": "会いたい",
+    "audio": "あいたい",
+    "r": "aitai",
+    "en": "miss (someone)",
+    "m": "I TIE — I MISS you, want to meet. → aitai."
+  },
+  {
+    "jp": "分",
+    "audio": "ふん",
+    "r": "fun",
+    "en": "minute",
+    "m": "One FUN MINUTE on the clock. → fun."
+  },
+  {
+    "jp": "いいね",
+    "audio": "いいね",
+    "r": "iine",
+    "en": "nice",
+    "m": "EE NE — NICE! → iine."
+  },
+  {
+    "jp": "始める",
+    "audio": "はじめる",
+    "r": "hajimeru",
+    "en": "start",
+    "m": "HA, JIMMY — START! → hajimeru."
+  },
+  {
+    "jp": "名前",
+    "audio": "なまえ",
+    "r": "namae",
+    "en": "name",
+    "m": "\"NAME, eh?\" → namae."
+  },
+  {
+    "jp": "お金",
+    "audio": "おかね",
+    "r": "okane",
+    "en": "money",
+    "m": "OKAY, NE? Need MONEY. → okane."
+  },
+  {
+    "jp": "動く",
+    "audio": "うごく",
+    "r": "ugoku",
+    "en": "move",
+    "m": "YOU GO, KU — MOVE! → ugoku."
+  },
+  {
+    "jp": "女",
+    "audio": "おんな",
+    "r": "onna",
+    "en": "woman",
+    "m": "\"Oh, Nanna!\" — a WOMAN. → onna."
+  },
+  {
+    "jp": "いっぱい",
+    "audio": "いっぱい",
+    "r": "ippai",
+    "en": "a lot",
+    "m": "EAT PIE — a LOT. → ippai."
+  },
+  {
+    "jp": "聞く",
+    "audio": "きく",
+    "r": "kiku",
+    "en": "listen",
+    "m": "KEY COOL — LISTEN up. → kiku."
+  },
+  {
+    "jp": "留まる",
+    "audio": "とどまる",
+    "r": "todomaru",
+    "en": "stay",
+    "m": "TO DO, MARU — STAY put. → todomaru."
+  },
+  {
+    "jp": "走る",
+    "audio": "はしる",
+    "r": "hashiru",
+    "en": "run",
+    "m": "HA, SHE RUNS. → hashiru."
+  },
+  {
+    "jp": "優しい",
+    "audio": "やさしい",
+    "r": "yasashii",
+    "en": "kind",
+    "m": "YAS, A SHE — so KIND. → yasashii."
+  },
+  {
+    "jp": "古い",
+    "audio": "ふるい",
+    "r": "furui",
+    "en": "old",
+    "m": "FUR UI — OLD coat. → furui."
+  },
+  {
+    "jp": "見せる",
+    "audio": "みせる",
+    "r": "miseru",
+    "en": "show",
+    "m": "ME, SEE RU — SHOW me. → miseru."
+  },
+  {
+    "jp": "平気",
+    "audio": "へいき",
+    "r": "heiki",
+    "en": "fine / okay",
+    "m": "HEY, KEY — I'm FINE. → heiki."
+  },
+  {
+    "jp": "車",
+    "audio": "くるま",
+    "r": "kuruma",
+    "en": "car",
+    "m": "KURU MA — the CAR. → kuruma."
+  },
+  {
+    "jp": "遊ぶ",
+    "audio": "あそぶ",
+    "r": "asobu",
+    "en": "play",
+    "m": "AH, SO BOO — let's PLAY! → asobu."
+  },
+  {
+    "jp": "やあ",
+    "audio": "やあ",
+    "r": "yaa",
+    "en": "hello",
+    "m": "YAA — casual HELLO! → yaa."
+  },
+  {
+    "jp": "持ってくる",
+    "audio": "もってくる",
+    "r": "mottekuru",
+    "en": "bring",
+    "m": "MO, TAKE, KURU — BRING it here. → mottekuru."
+  },
+  {
+    "jp": "覚える",
+    "audio": "おぼえる",
+    "r": "oboeru",
+    "en": "remember",
+    "m": "OH, BO EH RU — REMEMBER this. → oboeru."
+  },
+  {
+    "jp": "住む",
+    "audio": "すむ",
+    "r": "sumu",
+    "en": "live (reside)",
+    "m": "SOOM — I LIVE here. → sumu."
+  },
+  {
+    "jp": "お父さん",
+    "audio": "おとうさん",
+    "r": "otousan",
+    "en": "father",
+    "m": "OTTO SAN — FATHER. → otousan."
+  },
+  {
+    "jp": "持つ",
+    "audio": "もつ",
+    "r": "motsu",
+    "en": "hold",
+    "m": "MO TSU — HOLD it tight. → motsu."
+  }
+]

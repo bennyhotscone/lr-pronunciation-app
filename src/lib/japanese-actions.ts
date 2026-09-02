@@ -5,7 +5,6 @@ import { prisma } from "@/lib/db";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { JAPANESE_MASTERY_THRESHOLD } from "@/lib/japanese/config";
 import { mergeUnlockedBlocks } from "@/lib/japanese/milestone";
-import type { JapaneseJourneyStats } from "@/lib/japanese/fuji-journey";
 import {
   createInitialBlockMeta,
   createInitialSessionState,
@@ -336,61 +335,6 @@ export async function resetJapaneseBlockProgress(
 
   revalidatePath(LEARN_PATH);
   return { ok: true };
-}
-
-function countRoundsPassed(roundScores: unknown): number {
-  if (!roundScores || typeof roundScores !== "object") return 0;
-  let count = 0;
-  for (const score of Object.values(roundScores as Record<string, number>)) {
-    if (typeof score === "number" && score >= JAPANESE_MASTERY_THRESHOLD) count += 1;
-  }
-  return count;
-}
-
-export async function loadJapaneseJourneyStats(): Promise<
-  { error: string } | JapaneseJourneyStats
-> {
-  try {
-    const session = await requireJapaneseLearner();
-    if (!session) return { error: "Unauthorized" };
-
-    const userId = session.user.id;
-
-    const [wordAgg, blockRows, gateRows] = await Promise.all([
-      prisma.japaneseWordStat.aggregate({
-        where: { userId },
-        _sum: { timesCorrect: true },
-        _count: { _all: true },
-      }),
-      prisma.japaneseBlockProgress.findMany({
-        where: { userId },
-        select: { blockMastered: true, roundScores: true },
-      }),
-      loadGatesPassed(userId),
-    ]);
-
-    const knownWords = await prisma.japaneseWordStat.count({
-      where: { userId, known: true },
-    });
-
-    let blocksMastered = 0;
-    let roundsPassed = 0;
-    for (const row of blockRows) {
-      if (row.blockMastered) blocksMastered += 1;
-      roundsPassed += countRoundsPassed(row.roundScores);
-    }
-
-    return {
-      totalCorrect: wordAgg._sum.timesCorrect ?? 0,
-      knownWords,
-      blocksMastered,
-      roundsPassed,
-      gatesPassed: gateRows.length,
-    };
-  } catch (err) {
-    console.error("[loadJapaneseJourneyStats] failed", err);
-    return { error: "Couldn't load progress." };
-  }
 }
 
 export async function resetJapaneseWordOverrideField(
