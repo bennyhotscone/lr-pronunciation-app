@@ -11,6 +11,8 @@ import {
   revisionGateLabel,
   revisionGateWordCount,
 } from "@/lib/japanese/revision-gate";
+import { matchRevisionSentence } from "@/lib/japanese/revision-sentence-match";
+import { getRevisionSentencesForGate } from "@/lib/japanese/revision-sentences";
 import type { JapaneseWord } from "@/lib/japanese/types";
 import { isStaff } from "@/lib/portal-access";
 import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
@@ -25,13 +27,25 @@ async function requireJapaneseLearner() {
   return null;
 }
 
-export type RevisionQuestion = {
+export type RevisionWordQuestion = {
+  kind: "word";
   id: string;
   blockNumber: number;
   wordIndex: number;
   mode: "type-english" | "type-romaji";
   prompt: string;
 };
+
+export type RevisionSentenceQuestion = {
+  kind: "sentence";
+  id: string;
+  promptEnglish: string;
+  wordBank: string[];
+  canonicalRomaji: string;
+  requiredWords: string[];
+};
+
+export type RevisionQuestion = RevisionWordQuestion | RevisionSentenceQuestion;
 
 export type RevisionGatePayload = {
   gateNumber: number;
@@ -71,11 +85,24 @@ function shuffle<T>(items: T[]): T[] {
   return x;
 }
 
+function buildSentenceQuestions(gateNumber: number): RevisionSentenceQuestion[] {
+  const templates = getRevisionSentencesForGate(gateNumber);
+  return templates.map((sentence) => ({
+    kind: "sentence" as const,
+    id: sentence.id,
+    promptEnglish: sentence.english,
+    wordBank: shuffle([...sentence.words]),
+    canonicalRomaji: sentence.romaji,
+    requiredWords: [...sentence.words],
+  }));
+}
+
 function buildRevisionQuestions(gateNumber: number): RevisionQuestion[] {
   const words = shuffle(collectRevisionWords(gateNumber));
-  return words.map(({ blockNumber, wordIndex, word }, i) => {
-    const mode: RevisionQuestion["mode"] = i % 2 === 0 ? "type-english" : "type-romaji";
+  const wordQuestions: RevisionWordQuestion[] = words.map(({ blockNumber, wordIndex, word }, i) => {
+    const mode: RevisionWordQuestion["mode"] = i % 2 === 0 ? "type-english" : "type-romaji";
     return {
+      kind: "word",
       id: `${blockNumber}-${wordIndex}`,
       blockNumber,
       wordIndex,
@@ -83,6 +110,7 @@ function buildRevisionQuestions(gateNumber: number): RevisionQuestion[] {
       prompt: mode === "type-english" ? word.r : word.en,
     };
   });
+  return [...wordQuestions, ...buildSentenceQuestions(gateNumber)];
 }
 
 export async function loadRevisionGatesPassed(userId: string): Promise<number[]> {
@@ -145,6 +173,7 @@ export async function loadRevisionGate(
 export type RevisionAnswerSubmission = {
   answers: Record<string, string>;
   modes: Record<string, "type-english" | "type-romaji">;
+  sentenceIds?: string[];
 };
 
 export type RevisionSubmitResult = {
@@ -169,8 +198,18 @@ export async function submitRevisionAnswers(
     return { error: "Revision content is not available yet for this gate." };
   }
 
+  const sentenceById = new Map(
+    buildSentenceQuestions(gateNumber).map((q) => [q.id, q] as const),
+  );
+
   let correctCount = 0;
   for (const [id, input] of Object.entries(submission.answers)) {
+    const sentence = sentenceById.get(id);
+    if (sentence) {
+      if (matchRevisionSentence(input, sentence.requiredWords)) correctCount += 1;
+      continue;
+    }
+
     const mode = submission.modes[id];
     if (!mode) continue;
     const [blockPart, indexPart] = id.split("-");

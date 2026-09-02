@@ -645,7 +645,7 @@ export function JapaneseLearningApp() {
         {availableRevisionGates.length > 0 ? (
           <section className="jp-learn-practice" aria-labelledby="jp-revision-heading">
             <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quizzes</h2>
-            <p className="jp-learn-sub">All-words review for each 5-block segment (250 words, 80% to pass).</p>
+            <p className="jp-learn-sub">All-words review plus sentence building for each 5-block segment (80% to pass).</p>
             <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
               {availableRevisionGates.map((gate) => (
                 <button
