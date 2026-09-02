@@ -969,6 +969,8 @@ model JapaneseBlockProgress {
   order           Json     @default("[]")
   /// Word indices missed in current round
   missed          Json     @default("[]")
+  /// True when the learner chose "Retry this round" (skips known words in queue)
+  roundIsRetry    Boolean  @default(false)
   /// { "2": 85, "3": 90, ... } round completion scores (%)
   roundScores     Json     @default("{}")
   bestRound5Score Int      @default(0)
@@ -1008,10 +1010,15 @@ model JapaneseWordStat {
   userId       String
   blockNumber  Int
   wordIndex    Int
-  timesSeen    Int       @default(0)
-  timesCorrect Int       @default(0)
-  timesMissed  Int       @default(0)
-  lastSeenAt   DateTime?
+  timesSeen            Int       @default(0)
+  timesCorrect         Int       @default(0)
+  timesMissed          Int       @default(0)
+  consecutiveCorrect   Int       @default(0)
+  known                Boolean   @default(false)
+  missedEarlyRounds    Boolean   @default(false)
+  round4CorrectCount   Int       @default(0)
+  round5CorrectCount   Int       @default(0)
+  lastSeenAt           DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -1028,8 +1035,12 @@ model JapaneseMilestoneStory {
   /// Milestone 1 = after blocks 1–2, milestone 2 = after blocks 3–4, etc.
   milestoneNumber   Int
   title             String
-  /// Japanese story split into TTS-friendly paragraphs
+  /// Romaji-only paragraphs shown in the UI
   paragraphs        Json     @default("[]")
+  /// Japanese/kana paragraphs for TTS playback
+  ttsParagraphs     Json     @default("[]")
+  /// True when story uses vocab-only simple patterns (invalidates old cached stories)
+  vocabOnly         Boolean  @default(false)
   /// [{ id, prompt, answer }] — typed English comprehension
   comprehensionQs   Json     @default("[]")
   /// [{ id, promptEnglish, targetRomaji, targetEnglish, blockNumber, wordIndex }]

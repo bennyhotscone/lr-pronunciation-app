@@ -2,8 +2,8 @@ import { getJapaneseBlock } from "@/lib/japanese/blocks";
 import { getBlocksForMilestone } from "@/lib/japanese/milestone";
 import type { JapaneseWord } from "@/lib/japanese/types";
 
-/** Bump to invalidate cached milestone stories (v4 = deterministic vocab-only). */
-export const MILESTONE_STORY_CACHE_VERSION = 4;
+/** Bump to invalidate cached milestone stories (v5 = easier gate, fewer questions). */
+export const MILESTONE_STORY_CACHE_VERSION = 5;
 
 /** Stored in DB `vocabOnly` — must match for cache hits. */
 export const MILESTONE_STORY_VOCAB_ONLY = true;
@@ -160,11 +160,11 @@ function buildTtsLine(words: MilestoneWord[]): MilestoneTtsToken[] {
 function buildVocabOnlyStory(milestoneNumber: number): GeneratedMilestoneStory {
   const [blockA, blockB] = getBlocksForMilestone(milestoneNumber);
   const allWords = collectMilestoneWords(milestoneNumber);
-  const drillWords = pickDrillWords(allWords, 12);
+  const drillWords = pickDrillWords(allWords, 8);
 
-  const lineA = drillWords.slice(0, 4);
-  const lineB = drillWords.slice(4, 8);
-  const lineC = drillWords.slice(8, 12);
+  const lineA = drillWords.slice(0, 3);
+  const lineB = drillWords.slice(3, 6);
+  const lineC = drillWords.slice(6, 8);
   const chunks = [lineA, lineB, lineC].filter((g) => g.length > 0);
 
   const paragraphs = [
@@ -175,14 +175,14 @@ function buildVocabOnlyStory(milestoneNumber: number): GeneratedMilestoneStory {
 
   const ttsLines = chunks.map(buildTtsLine);
 
-  const questionWords = drillWords.slice(0, Math.min(8, drillWords.length));
+  const questionWords = drillWords.slice(0, Math.min(4, drillWords.length));
   const comprehension: MilestoneComprehensionQ[] = questionWords.map((w, i) => ({
     id: `c${i + 1}`,
     prompt: `What does "${w.r}" mean?`,
     answer: primaryEnglish(w),
   }));
 
-  const production = pickProductionWords(allWords, 6).map((w, i) => ({
+  const production = pickProductionWords(allWords, 4).map((w, i) => ({
     id: `p${i + 1}`,
     promptEnglish: primaryEnglish(w),
     targetRomaji: w.r,
@@ -195,7 +195,7 @@ function buildVocabOnlyStory(milestoneNumber: number): GeneratedMilestoneStory {
   assertRomajiWhitelist(paragraphs, allowed);
 
   return {
-    title: `Vocab checkpoint — Blocks ${blockA}–${blockB}`,
+    title: `Vocab checkpoint - Blocks ${blockA}-${blockB}`,
     paragraphs,
     ttsLines,
     comprehension,
