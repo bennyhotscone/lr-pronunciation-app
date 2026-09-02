@@ -50,6 +50,19 @@ import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "gate";
 
+function isJapaneseBlockUnlocked(
+  meta: JapaneseBlockMeta,
+  currentBlock: number,
+  targetBlock: number,
+): boolean {
+  if (meta.unlockedBlocks.includes(targetBlock)) return true;
+  return (
+    targetBlock === currentBlock + 1 &&
+    currentBlock < JAPANESE_TOTAL_BLOCKS &&
+    meta.blockMastered
+  );
+}
+
 export function JapaneseLearningApp() {
   const [block, setBlock] = useState(1);
   const words = useMemo(() => getJapaneseBlock(block), [block]);
@@ -128,7 +141,7 @@ export function JapaneseLearningApp() {
 
   const switchBlock = (next: number) => {
     if (!meta) return;
-    if (!meta.unlockedBlocks.includes(next) || !isPlayableJapaneseBlock(next)) return;
+    if (!isJapaneseBlockUnlocked(meta, block, next) || !isPlayableJapaneseBlock(next)) return;
     setBlock(next);
     setScreen("train");
     resetQuestionUi();
@@ -486,7 +499,7 @@ export function JapaneseLearningApp() {
         ) : null}
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
-            const unlocked = meta.unlockedBlocks.includes(n);
+            const unlocked = isJapaneseBlockUnlocked(meta, block, n);
             const active = n === block;
             return (
               <button
