@@ -147,7 +147,7 @@ export function fuzzyMatchRomaji(input: string, word: JapaneseWord): boolean {
 
 function editDistanceAllowance(len: number): number {
   if (len >= 9) return 2;
-  if (len >= 4) return 1;
+  if (len >= 3) return 1;
   return 0;
 }
 

@@ -105,7 +105,19 @@ describe("retryRound", () => {
   it("resets round 1 learn phase from scratch", () => {
     const completed = { ...createInitialSessionState(), introIndex: 10, score: 8, missed: [1] };
     const retried = retryRound(completed, 10);
-    expect(retried).toEqual(createInitialSessionState());
+    expect(retried.phase).toBe("round1");
+    expect(retried.roundIsRetry).toBe(true);
+    expect(retried.order).toHaveLength(10);
+    expect(retried.introIndex).toBe(0);
+  });
+
+  it("skips known words on round 1 retry", () => {
+    const completed = { ...createInitialSessionState(), introIndex: 10 };
+    const retried = retryRound(completed, 10, [0, 2, 4]);
+    expect(retried.order).toHaveLength(7);
+    expect(retried.order).not.toContain(0);
+    expect(retried.order).not.toContain(2);
+    expect(retried.order).not.toContain(4);
   });
 
   it("reshuffles and resets round 2", () => {
@@ -117,6 +129,7 @@ describe("retryRound", () => {
     expect(retried.score).toBe(0);
     expect(retried.missed).toEqual([]);
     expect(retried.order.length).toBe(10);
+    expect(retried.roundIsRetry).toBe(true);
   });
 
   it("reshuffles and resets round 3", () => {
@@ -203,6 +216,49 @@ describe("jumpToRound", () => {
     expect(state.phase).toBe("round3");
     expect(state.order).toHaveLength(10);
     expect(getActiveRound(state, 10)).toBe(3);
+  });
+});
+
+describe("known words in formal rounds", () => {
+  it("auto-passes when all words are known", () => {
+    const knownIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const state = startFormalRound(createInitialSessionState(), 4, 10, {
+      isRetry: true,
+      knownIndices,
+    });
+    expect(state.order).toEqual([]);
+    const knownWords = Object.fromEntries(knownIndices.map((i) => [i, { known: true }]));
+    const view = buildRoundView(state, words, {}, knownWords);
+    expect(view?.kind).toBe("round-complete");
+    if (view?.kind === "round-complete") {
+      expect(view.scorePct).toBe(100);
+      expect(view.passed).toBe(true);
+    }
+  });
+
+  it("counts known words toward round mastery percentage", () => {
+    const knownIndices = [0, 1, 2, 3, 4, 5, 6, 7];
+    let state = startFormalRound(createInitialSessionState(), 4, 10, {
+      isRetry: true,
+      knownIndices,
+    });
+    state = { ...state, qIndex: 2, score: 1, missed: [9] };
+    const knownWords = Object.fromEntries(knownIndices.map((i) => [i, { known: true }]));
+    const view = buildRoundView(state, words, {}, knownWords);
+    expect(view?.kind).toBe("round-complete");
+    if (view?.kind === "round-complete") {
+      expect(view.scorePct).toBe(90);
+      expect(view.passed).toBe(true);
+    }
+  });
+
+  it("includes full queue on a new formal round", () => {
+    const state = startFormalRound(createInitialSessionState(), 3, 10, {
+      isRetry: false,
+      knownIndices: [0, 1, 2],
+    });
+    expect(state.order).toHaveLength(10);
+    expect(state.roundIsRetry).toBe(false);
   });
 });
 

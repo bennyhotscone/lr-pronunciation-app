@@ -20,6 +20,11 @@ import {
   getMnemonic,
   getPronunciationCue,
 } from "./word-helpers";
+import {
+  buildPracticeOrder,
+  computeFormalRoundScorePct,
+  getKnownIndices,
+} from "./known-words";
 
 export function shuffle<T>(items: T[]): T[] {
   const x = [...items];
@@ -41,6 +46,7 @@ export function createInitialSessionState(): JapaneseSessionState {
     qIndex: 0,
     score: 0,
     missed: [],
+    roundIsRetry: false,
   };
 }
 
@@ -86,6 +92,30 @@ export function makeChoiceIndices(
   return shuffle(opts);
 }
 
+
+function isRound1RetryQueue(state: JapaneseSessionState): boolean {
+  return state.phase === "round1" && state.roundIsRetry && state.order.length > 0;
+}
+
+function round1TargetCount(state: JapaneseSessionState, wordCount: number): number {
+  return isRound1RetryQueue(state) ? state.order.length : wordCount;
+}
+
+function round1WordIndex(state: JapaneseSessionState): number {
+  return isRound1RetryQueue(state) ? state.order[state.introIndex] : state.introIndex;
+}
+
+function round1LearnedPool(state: JapaneseSessionState): number[] {
+  if (isRound1RetryQueue(state)) {
+    return state.order.slice(0, state.introIndex);
+  }
+  return Array.from({ length: state.introIndex }, (_, i) => i);
+}
+
+function shufflePracticeOrder(indices: number[]): number[] {
+  return shuffle(indices);
+}
+
 function roundNumber(phase: JapanesePhase): 1 | 2 | 3 | 4 | 5 {
   return Number(phase.replace("round", "")) as 1 | 2 | 3 | 4 | 5;
 }
@@ -119,7 +149,9 @@ export function buildRoundView(
   state: JapaneseSessionState,
   words: JapaneseWord[],
   overrides: Record<number, JapaneseWordOverrideFields> = {},
+  knownWords: import("./known-words").KnownWordsMap = {},
 ): JapaneseRoundView | null {
+  const knownIndices = getKnownIndices(knownWords);
   const wordCount = words.length;
   const allIndices = words.map((_, i) => i);
   const resolvedAt = (index: number) =>
@@ -141,21 +173,22 @@ export function buildRoundView(
           "Quick review of words you've learned. Hear the audio and choose the English meaning.",
         mnemonicHtml: `<div class="jp-learn-romaji-lg">${miniWord.displayRomaji}</div>`,
         showMnemonic: true,
-        choicePool: makeChoiceIndices(wordIndex, allIndices.slice(0, state.introIndex), allIndices),
+        choicePool: makeChoiceIndices(wordIndex, round1LearnedPool(state), allIndices),
         progressPct: progressForRound1(state.introIndex, wordCount),
       };
     }
 
-    if (state.introIndex >= wordCount && !state.inMini) {
-      return buildRoundCompleteView(state, words, 1);
+    const round1Total = round1TargetCount(state, wordCount);
+    if (state.introIndex >= round1Total && !state.inMini) {
+      return buildRoundCompleteView(state, words, 1, knownIndices);
     }
 
-    const wordIndex = state.introIndex;
+    const wordIndex = round1WordIndex(state);
     const w = resolvedAt(wordIndex);
     return {
       kind: "round1-new",
       wordIndex,
-      counter: `New word ${state.introIndex + 1} of ${wordCount}`,
+      counter: `New word ${state.introIndex + 1} of ${round1TargetCount(state, wordCount)}`,
       roundLabel: ROUND_LABELS[1],
       instruction:
         "Learn the pronunciation cue, English meaning, and memory hook. Play the audio, then pick the English meaning.",
@@ -163,7 +196,7 @@ export function buildRoundView(
       showMnemonic: true,
       choicePool: makeChoiceIndices(
         wordIndex,
-        allIndices.slice(0, state.introIndex + 1),
+        [...round1LearnedPool(state), wordIndex],
         allIndices,
       ),
       progressPct: progressForRound1(state.introIndex, wordCount),
@@ -172,7 +205,7 @@ export function buildRoundView(
 
   const round = roundNumber(state.phase);
   if (state.qIndex >= state.order.length) {
-    return buildRoundCompleteView(state, words, round);
+    return buildRoundCompleteView(state, words, round, knownIndices);
   }
 
   const wordIndex = state.order[state.qIndex];
@@ -249,10 +282,21 @@ function buildRoundCompleteView(
   state: JapaneseSessionState,
   words: JapaneseWord[],
   round: 1 | 2 | 3 | 4 | 5,
+  knownIndices: number[] = [],
 ): JapaneseRoundView {
-  const orderLen = round === 1 ? words.length : state.order.length;
+  const wordCount = words.length;
+  const orderLen =
+    round === 1 ? round1TargetCount(state, wordCount) : state.order.length;
   const scorePct =
-    round === 1 ? 100 : Math.round((state.score / Math.max(orderLen, 1)) * 100);
+    round === 1
+      ? 100
+      : computeFormalRoundScorePct(
+          state.score,
+          orderLen,
+          wordCount,
+          knownIndices,
+          !!state.roundIsRetry,
+        );
   const passed = scorePct >= JAPANESE_MASTERY_THRESHOLD;
   const missedIndices = [...new Set(state.missed)];
   const retryRound = round >= 2 ? (round as 2 | 3 | 4 | 5) : undefined;
@@ -267,6 +311,7 @@ function buildRoundCompleteView(
       progressPct: round * 20,
       nextRound: (round + 1) as 2 | 3 | 4 | 5,
       retryRound,
+      knownCount: knownIndices.length,
     };
   }
 
@@ -279,6 +324,7 @@ function buildRoundCompleteView(
     progressPct: 100,
     blockMastered: passed,
     retryRound,
+    knownCount: knownIndices.length,
   };
 }
 
@@ -296,8 +342,9 @@ export function advanceAfterRound1Correct(
   }
 
   const nextIntro = state.introIndex + 1;
-  if (nextIntro > 0 && nextIntro % JAPANESE_BATCH_SIZE === 0 && nextIntro < wordCount) {
-    const pool = Array.from({ length: nextIntro }, (_, i) => i);
+  const target = round1TargetCount(state, wordCount);
+  if (nextIntro > 0 && nextIntro % JAPANESE_BATCH_SIZE === 0 && nextIntro < target) {
+    const pool = round1LearnedPool({ ...state, introIndex: nextIntro });
     const miniQueue = shuffle(pool).slice(0, Math.min(JAPANESE_MINI_REVIEW_SIZE, pool.length));
     return {
       ...state,
@@ -308,7 +355,7 @@ export function advanceAfterRound1Correct(
     };
   }
 
-  if (nextIntro >= wordCount) {
+  if (nextIntro >= target) {
     return { ...state, introIndex: nextIntro };
   }
 
@@ -319,16 +366,17 @@ export function advanceAfterRound1Correct(
 export function retryRound(
   state: JapaneseSessionState,
   wordCount: number,
+  knownIndices: number[] = [],
 ): JapaneseSessionState {
   if (state.phase === "round1") {
-    return {
-      ...createInitialSessionState(),
-      phase: "round1",
-    };
+    return startRound1Retry(wordCount, knownIndices);
   }
   const round = roundNumber(state.phase);
   if (round >= 2 && round <= 5) {
-    return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount);
+    return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount, {
+      isRetry: true,
+      knownIndices,
+    });
   }
   return state;
 }
@@ -380,6 +428,7 @@ export function jumpToRound(
   state: JapaneseSessionState,
   round: 1 | 2 | 3 | 4 | 5,
   wordCount: number,
+  knownIndices: number[] = [],
 ): JapaneseSessionState {
   if (round === 1) {
     if (!state.inMini && state.introIndex >= wordCount) {
@@ -391,24 +440,49 @@ export function jumpToRound(
     ...state,
     introIndex: Math.max(state.introIndex, wordCount),
   };
-  return startFormalRound(base, round, wordCount);
+  return startFormalRound(base, round, wordCount, { knownIndices });
 }
 
 
 
 /** Start formal round n (2-5). Finite shuffled queue — never refilled. */
+export function startRound1Retry(
+  wordCount: number,
+  knownIndices: number[] = [],
+): JapaneseSessionState {
+  const pool = shufflePracticeOrder(buildPracticeOrder(wordCount, knownIndices, true));
+  return {
+    ...createInitialSessionState(),
+    phase: "round1",
+    order: pool,
+    roundIsRetry: true,
+  };
+}
+
 export function startFormalRound(
   state: JapaneseSessionState,
   n: 2 | 3 | 4 | 5,
   wordCount: number,
+  options?: { isRetry?: boolean; knownIndices?: number[] } | ReadonlySet<number>,
 ): JapaneseSessionState {
+  let isRetry = false;
+  let knownIndices: number[] = [];
+  if (options instanceof Set) {
+    knownIndices = [...options];
+  } else if (options) {
+    const opts = options as { isRetry?: boolean; knownIndices?: number[] };
+    isRetry = !!opts.isRetry;
+    knownIndices = opts.knownIndices ?? [];
+  }
+  const pool = shufflePracticeOrder(buildPracticeOrder(wordCount, knownIndices, isRetry));
   return {
     ...state,
     phase: `round${n}` as JapanesePhase,
     qIndex: 0,
     score: 0,
     missed: [],
-    order: shuffle(Array.from({ length: wordCount }, (_, i) => i)),
+    order: pool,
+    roundIsRetry: isRetry,
   };
 }
 
@@ -416,8 +490,12 @@ export function startFormalRound(
 export function transitionRound1ToRound2(
   state: JapaneseSessionState,
   wordCount: number,
+  knownIndices: number[] = [],
 ): JapaneseSessionState {
-  return startFormalRound({ ...state, introIndex: wordCount }, 2, wordCount);
+  return startFormalRound({ ...state, introIndex: wordCount }, 2, wordCount, {
+    isRetry: false,
+    knownIndices,
+  });
 }
 
 /** Advance after answering in formal rounds 2-5. */
@@ -486,6 +564,7 @@ export function sessionFromDb(row: {
   score: number;
   order: unknown;
   missed: unknown;
+  roundIsRetry?: boolean;
 }): JapaneseSessionState {
   return {
     phase: row.phase as JapanesePhase,
@@ -497,6 +576,7 @@ export function sessionFromDb(row: {
     score: row.score,
     order: parseIndexArray(row.order),
     missed: parseIndexArray(row.missed),
+    roundIsRetry: !!row.roundIsRetry,
   };
 }
 
@@ -518,6 +598,7 @@ export function metaFromDb(row: {
 export function repairSessionState(
   state: JapaneseSessionState,
   wordCount: number,
+  knownIndices: number[] = [],
 ): JapaneseSessionState {
   if (state.phase === "round1" && !state.inMini && state.introIndex >= wordCount) {
     return state;
@@ -529,7 +610,7 @@ export function repairSessionState(
   }
 
   if (round >= 2 && state.order.length === 0) {
-    return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount);
+    return startFormalRound(state, round as 2 | 3 | 4 | 5, wordCount, { isRetry: !!state.roundIsRetry, knownIndices: [] });
   }
 
   if (round >= 2 && state.qIndex > state.order.length) {

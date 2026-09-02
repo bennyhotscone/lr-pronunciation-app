@@ -18,6 +18,7 @@ export type JapaneseSessionState = {
   qIndex: number;
   score: number;
   missed: number[];
+  roundIsRetry: boolean;
 };
 
 export type JapaneseBlockMeta = {
@@ -90,4 +91,5 @@ export type JapaneseRoundView =
       nextRound?: 2 | 3 | 4 | 5;
       retryRound?: 2 | 3 | 4 | 5;
       blockMastered?: boolean;
+      knownCount?: number;
     };

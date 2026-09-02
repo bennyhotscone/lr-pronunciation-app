@@ -12,6 +12,11 @@ import {
   updateMetaAfterRound,
 } from "@/lib/japanese/engine";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
+import {
+  applyAnswerToKnownProgress,
+  EMPTY_KNOWN_PROGRESS,
+  knownProgressFromDb,
+} from "@/lib/japanese/known-words";
 import { isStaff } from "@/lib/portal-access";
 import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
 import { revalidatePath } from "next/cache";
@@ -25,6 +30,16 @@ async function requireJapaneseLearner() {
   return null;
 }
 
+export type JapaneseWordStatSnapshot = {
+  timesSeen: number;
+  timesCorrect: number;
+  timesMissed: number;
+  known?: boolean;
+  missedEarlyRounds?: boolean;
+  round4CorrectCount?: number;
+  round5CorrectCount?: number;
+};
+
 export type JapaneseProgressPayload = {
   session: JapaneseSessionState;
   meta: JapaneseBlockMeta;
@@ -33,7 +48,7 @@ export type JapaneseProgressPayload = {
     number,
     { mnemonic?: string | null; pronunciationCue?: string | null; ttsInput?: string | null }
   >;
-  stats: Record<number, { timesSeen: number; timesCorrect: number; timesMissed: number }>;
+  stats: Record<number, JapaneseWordStatSnapshot>;
 };
 
 
@@ -103,6 +118,7 @@ export async function loadJapaneseProgress(
         timesSeen: row.timesSeen,
         timesCorrect: row.timesCorrect,
         timesMissed: row.timesMissed,
+        ...knownProgressFromDb(row),
       };
     }
 
@@ -137,6 +153,7 @@ export async function saveJapaneseProgress(
       score: sessionState.score,
       order: sessionState.order,
       missed: sessionState.missed,
+      roundIsRetry: sessionState.roundIsRetry,
       roundScores: meta.roundScores as object,
       bestRound5Score: meta.bestRound5Score,
       blockMastered: meta.blockMastered,
@@ -152,6 +169,7 @@ export async function saveJapaneseProgress(
       score: sessionState.score,
       order: sessionState.order,
       missed: sessionState.missed,
+      roundIsRetry: sessionState.roundIsRetry,
       roundScores: meta.roundScores as object,
       bestRound5Score: meta.bestRound5Score,
       blockMastered: meta.blockMastered,
@@ -167,14 +185,26 @@ export async function recordJapaneseWordResult(
   blockNumber: number,
   wordIndex: number,
   correct: boolean,
-): Promise<{ ok: true } | { error: string }> {
+  round: 1 | 2 | 3 | 4 | 5,
+): Promise<{ ok: true; stat: JapaneseWordStatSnapshot } | { error: string }> {
   const session = await requireJapaneseLearner();
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
   getJapaneseBlock(blockNumber);
 
-  await prisma.japaneseWordStat.upsert({
+  const existing = await prisma.japaneseWordStat.findUnique({
+    where: {
+      userId_blockNumber_wordIndex: { userId, blockNumber, wordIndex },
+    },
+  });
+
+  const prior = existing
+    ? knownProgressFromDb(existing)
+    : { ...EMPTY_KNOWN_PROGRESS };
+  const nextKnown = applyAnswerToKnownProgress(prior, round, correct);
+
+  const row = await prisma.japaneseWordStat.upsert({
     where: {
       userId_blockNumber_wordIndex: { userId, blockNumber, wordIndex },
     },
@@ -185,17 +215,33 @@ export async function recordJapaneseWordResult(
       timesSeen: 1,
       timesCorrect: correct ? 1 : 0,
       timesMissed: correct ? 0 : 1,
+      known: nextKnown.known,
+      missedEarlyRounds: nextKnown.missedEarlyRounds,
+      round4CorrectCount: nextKnown.round4CorrectCount,
+      round5CorrectCount: nextKnown.round5CorrectCount,
       lastSeenAt: new Date(),
     },
     update: {
       timesSeen: { increment: 1 },
       timesCorrect: correct ? { increment: 1 } : undefined,
       timesMissed: correct ? undefined : { increment: 1 },
+      known: nextKnown.known,
+      missedEarlyRounds: nextKnown.missedEarlyRounds,
+      round4CorrectCount: nextKnown.round4CorrectCount,
+      round5CorrectCount: nextKnown.round5CorrectCount,
       lastSeenAt: new Date(),
     },
   });
 
-  return { ok: true };
+  return {
+    ok: true,
+    stat: {
+      timesSeen: row.timesSeen,
+      timesCorrect: row.timesCorrect,
+      timesMissed: row.timesMissed,
+      ...knownProgressFromDb(row),
+    },
+  };
 }
 
 export async function completeJapaneseRound(

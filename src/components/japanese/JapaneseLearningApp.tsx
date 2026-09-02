@@ -271,7 +271,7 @@ export function JapaneseLearningApp() {
       setStatus(`Answer: ${words[correctIndex].en}`);
     }
 
-    void recordJapaneseWordResult(block, correctIndex, correct);
+    void recordJapaneseWordResult(block, correctIndex, correct, getActiveRound(session, words.length));
     setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -307,7 +307,7 @@ export function JapaneseLearningApp() {
       playCurrentWordAudio();
     }
 
-    void recordJapaneseWordResult(block, view.wordIndex, correct);
+    void recordJapaneseWordResult(block, view.wordIndex, correct, view.round);
     setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
