@@ -191,12 +191,13 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   return (
     <div className="jp-learn-wrap">
       <header className="jp-learn-header">
-        <h1 className="jp-learn-title">Revision required</h1>
+        <h1 className="jp-learn-title">Revision quiz</h1>
         <p className="jp-learn-meta">
-          {payload.label} · {payload.wordCount} words · need {payload.threshold}%
+          {payload.label} · {payload.wordCount} words · {payload.threshold}% to pass
         </p>
         <p className="jp-learn-sub">
-          Pass this all-words revision before Block {payload.unlocksBlock} opens.
+          Review every word from this 5-block segment. Recommended after mastering block{" "}
+          {gateNumber * 5}.
         </p>
       </header>
       <section className="jp-learn-card">

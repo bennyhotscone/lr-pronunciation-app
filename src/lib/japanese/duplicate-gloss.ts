@@ -3,6 +3,12 @@ import block1 from "./blocks/block1.json";
 import block2 from "./blocks/block2.json";
 import block3 from "./blocks/block3.json";
 import block4 from "./blocks/block4.json";
+import block5 from "./blocks/block5.json";
+import block6 from "./blocks/block6.json";
+import block7 from "./blocks/block7.json";
+import block8 from "./blocks/block8.json";
+import block9 from "./blocks/block9.json";
+import block10 from "./blocks/block10.json";
 
 export type VocabWordRef = JapaneseWord & { block: number };
 
@@ -11,6 +17,12 @@ const ALL_BLOCKS: Record<number, JapaneseWord[]> = {
   2: block2 as JapaneseWord[],
   3: block3 as JapaneseWord[],
   4: block4 as JapaneseWord[],
+  5: block5 as JapaneseWord[],
+  6: block6 as JapaneseWord[],
+  7: block7 as JapaneseWord[],
+  8: block8 as JapaneseWord[],
+  9: block9 as JapaneseWord[],
+  10: block10 as JapaneseWord[],
 };
 
 /** Strip fluff so "excuse me / sorry" and "sorry (casual)" share token "sorry". */

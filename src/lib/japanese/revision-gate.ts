@@ -1,4 +1,4 @@
-import { JAPANESE_TOTAL_BLOCKS, JAPANESE_WORDS_PER_BLOCK } from "./config";
+import { JAPANESE_ALWAYS_UNLOCKED_BLOCKS, JAPANESE_TOTAL_BLOCKS, JAPANESE_WORDS_PER_BLOCK } from "./config";
 
 /** Blocks per revision gate (after block 5, 10, 15…). */
 export const JAPANESE_REVISION_GROUP_SIZE = 5;
@@ -14,10 +14,11 @@ export function getFirstBlockUnlockedByRevisionGate(gateNumber: number): number 
   return gateNumber * JAPANESE_REVISION_GROUP_SIZE + 1;
 }
 
-/** Block numbers whose vocab is tested at this revision gate (gate 1 → blocks 1–5). */
+/** Block numbers whose vocab is tested at this revision gate (gate 1 → 1–5, gate 2 → 6–10). */
 export function getBlocksForRevisionGate(gateNumber: number): number[] {
+  const start = (gateNumber - 1) * JAPANESE_REVISION_GROUP_SIZE + 1;
   const end = gateNumber * JAPANESE_REVISION_GROUP_SIZE;
-  return Array.from({ length: end }, (_, i) => i + 1);
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
 export function revisionGateWordCount(gateNumber: number): number {
@@ -40,6 +41,7 @@ export function isBlockBehindRevisionGate(
   blockNumber: number,
   revisionGatesPassed: readonly number[],
 ): boolean {
+  if (blockNumber <= JAPANESE_ALWAYS_UNLOCKED_BLOCKS) return false;
   const required = getRequiredRevisionGate(blockNumber);
   if (required === null) return false;
   return !revisionGatesPassed.includes(required);

@@ -28,8 +28,8 @@ export const JAPANESE_REVISION_PASS_THRESHOLD = 80;
 /** Multiple-choice options shown per question. */
 export const JAPANESE_CHOICE_COUNT = 6;
 
-/** Blocks always accessible (no score/mastery gate). Temporary for practice. */
-export const JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK = 4;
+/** Blocks 1–N are always selectable (no revision lock). */
+export const JAPANESE_ALWAYS_UNLOCKED_BLOCKS = 10;
 
 /** Set to a number to limit block words for QA; null = full block. */
 export const JAPANESE_TEST_WORD_LIMIT: number | null = null;

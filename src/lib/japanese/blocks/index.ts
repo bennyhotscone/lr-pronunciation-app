@@ -8,13 +8,25 @@ import block1 from "./block1.json";
 import block2 from "./block2.json";
 import block3 from "./block3.json";
 import block4 from "./block4.json";
+import block5 from "./block5.json";
+import block6 from "./block6.json";
+import block7 from "./block7.json";
+import block8 from "./block8.json";
+import block9 from "./block9.json";
+import block10 from "./block10.json";
 
-/** Blocks with full Japanese learning content (JSON). Blocks 5-100 are scaffolded. */
+/** Blocks with full Japanese learning content (JSON). */
 const BLOCKS: Record<number, JapaneseWord[]> = {
   1: block1 as JapaneseWord[],
   2: block2 as JapaneseWord[],
   3: block3 as JapaneseWord[],
   4: block4 as JapaneseWord[],
+  5: block5 as JapaneseWord[],
+  6: block6 as JapaneseWord[],
+  7: block7 as JapaneseWord[],
+  8: block8 as JapaneseWord[],
+  9: block9 as JapaneseWord[],
+  10: block10 as JapaneseWord[],
 };
 
 export function isPlayableJapaneseBlock(blockNumber: number): boolean {

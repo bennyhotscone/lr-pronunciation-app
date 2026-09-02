@@ -287,6 +287,202 @@
           "when": "Already done — mou tabeta (already ate). With negative: mou ikanai (not going anymore)."
         }
       ]
+    },
+    {
+      "id": "family-mother",
+      "title": "Saying \"mother\" and \"mom\" in Japanese",
+      "tokens": ["mother", "mom", "ma"],
+      "entries": [
+        {
+          "romaji": "okaasan",
+          "jp": "お母さん",
+          "gloss": "mother",
+          "when": "Polite default — okaasan wa doko? (Where is mother?). Respectful, any age."
+        },
+        {
+          "romaji": "mama",
+          "jp": "ママ",
+          "gloss": "mom",
+          "when": "Casual, affectionate — kids say mama. Also used by adults talking to their own kids about \"mom.\""
+        }
+      ]
+    },
+    {
+      "id": "family-father",
+      "title": "Saying \"dad\" and \"daddy\" in Japanese",
+      "tokens": ["dad", "daddy", "father"],
+      "entries": [
+        {
+          "romaji": "otousan",
+          "jp": "お父さん",
+          "gloss": "dad / father",
+          "when": "Polite default — otousan wa kaisha desu (Dad is at work)."
+        },
+        {
+          "romaji": "papa",
+          "jp": "パパ",
+          "gloss": "daddy",
+          "when": "Casual, childish — papa! Same vibe as English \"daddy.\""
+        }
+      ]
+    },
+    {
+      "id": "work-noun",
+      "title": "\"Job\" vs \"business\"",
+      "tokens": ["job", "business", "work"],
+      "entries": [
+        {
+          "romaji": "shigoto",
+          "jp": "仕事",
+          "gloss": "job / work",
+          "when": "Everyday word for your job — shigoto ga aru (I have work)."
+        },
+        {
+          "romaji": "bijinesu",
+          "jp": "ビジネス",
+          "gloss": "business",
+          "when": "Loanword — business world, deals, commerce. Not \"my shift today\" (that's shigoto)."
+        }
+      ]
+    },
+    {
+      "id": "matter-problem",
+      "title": "\"Matter\" vs \"problem\"",
+      "tokens": ["matter", "problem", "trouble"],
+      "entries": [
+        {
+          "romaji": "mondai",
+          "jp": "問題",
+          "gloss": "matter / problem / question",
+          "when": "Broad — a problem, issue, or test question. mondai nai (no problem)."
+        },
+        {
+          "romaji": "nayami",
+          "jp": "悩み",
+          "gloss": "problem / worry",
+          "when": "Personal trouble weighing on you — nayami ga aru (I have worries). More emotional than mondai."
+        },
+        {
+          "romaji": "komaru",
+          "jp": "困る",
+          "gloss": "trouble / be in trouble",
+          "when": "Verb/adj — you're stuck or troubled. komatta (I'm in trouble). Action/feeling, not a noun issue."
+        }
+      ]
+    },
+    {
+      "id": "someone-anyone",
+      "title": "Someone, somebody, anybody",
+      "tokens": ["someone", "somebody", "anybody", "anyone"],
+      "entries": [
+        {
+          "romaji": "dareka",
+          "jp": "誰か",
+          "gloss": "someone / somebody / anybody",
+          "when": "Same word — dareka iru? (Is someone there?). Context (question vs statement) carries \"any-\" vs \"some-.\""
+        },
+        {
+          "romaji": "daredemo",
+          "jp": "誰でも",
+          "gloss": "anyone",
+          "when": "Emphasis on \"any\" — daredemo dekiru (anyone can do it). Broader than dareka."
+        }
+      ]
+    },
+    {
+      "id": "doctor-titles",
+      "title": "Doctor and Dr.",
+      "tokens": ["doctor", "dr"],
+      "entries": [
+        {
+          "romaji": "isha",
+          "jp": "医者",
+          "gloss": "doctor",
+          "when": "Medical doctor — isha ni iku (go to the doctor)."
+        },
+        {
+          "romaji": "sensei",
+          "jp": "先生",
+          "gloss": "Dr. / teacher",
+          "when": "Honorific title — Tanaka-sensei. Used for doctors, teachers, pros. Not the word \"doctor\" alone."
+        }
+      ]
+    },
+    {
+      "id": "happy-glad",
+      "title": "Happy vs glad",
+      "tokens": ["happy", "glad"],
+      "entries": [
+        {
+          "romaji": "ureshii",
+          "jp": "嬉しい",
+          "gloss": "happy / glad",
+          "when": "Same word in Japanese — ureshii! covers both \"I'm happy\" and \"I'm glad.\" Context decides nuance."
+        }
+      ]
+    },
+    {
+      "id": "fun-funny",
+      "title": "Fun vs funny",
+      "tokens": ["fun", "funny"],
+      "entries": [
+        {
+          "romaji": "tanoshii",
+          "jp": "楽しい",
+          "gloss": "fun",
+          "when": "Enjoyable — tanoshii desu ne (That was fun). Activity feels good."
+        },
+        {
+          "romaji": "omoshiroi",
+          "jp": "面白い",
+          "gloss": "funny / interesting",
+          "when": "Amusing or intriguing — omoshiroi! (That's funny / interesting). Not \"fun activity\" (tanoshii)."
+        }
+      ]
+    },
+    {
+      "id": "finish-end",
+      "title": "Finish vs end",
+      "tokens": ["finish", "end"],
+      "entries": [
+        {
+          "romaji": "owaru",
+          "jp": "終わる",
+          "gloss": "finish / end",
+          "when": "Verb — something finishes. shigoto ga owaru (work finishes)."
+        },
+        {
+          "romaji": "owari",
+          "jp": "終わり",
+          "gloss": "end / the end",
+          "when": "Noun — the end point. owari da (That's the end). Not the action of finishing."
+        }
+      ]
+    },
+    {
+      "id": "real-true",
+      "title": "Real vs true",
+      "tokens": ["real", "true", "truth"],
+      "entries": [
+        {
+          "romaji": "hontou",
+          "jp": "本当",
+          "gloss": "real / really / true",
+          "when": "Truth/reality — hontou? (Really?). Adverb or noun."
+        },
+        {
+          "romaji": "hontouni",
+          "jp": "本当に",
+          "gloss": "truly / really",
+          "when": "Adverb form — hontouni sou da (It's truly so). Emphasizes truth."
+        },
+        {
+          "romaji": "shinjitsu",
+          "jp": "真実",
+          "gloss": "truth",
+          "when": "The truth as a fact — shinjitsu wo shiru (know the truth). Heavier than casual hontou."
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,352 @@
+[
+  {
+    "jp": "血",
+    "audio": "ち",
+    "r": "chi",
+    "en": "blood",
+    "m": "CHI — BLOOD. → chi."
+  },
+  {
+    "jp": "力",
+    "audio": "ちから",
+    "r": "chikara",
+    "en": "power",
+    "m": "CHI-KA-RA — POWER. → chikara."
+  },
+  {
+    "jp": "足",
+    "audio": "あし",
+    "r": "ashi",
+    "en": "foot",
+    "m": "A-SHI — FOOT. → ashi."
+  },
+  {
+    "jp": "パパ",
+    "audio": "パパ",
+    "r": "papa",
+    "en": "daddy",
+    "m": "PAPA — DADDY. → papa."
+  },
+  {
+    "jp": "ママ",
+    "audio": "ママ",
+    "r": "mama",
+    "en": "ma",
+    "m": "MAMA — MA / mom. → mama."
+  },
+  {
+    "jp": "〜しよう",
+    "audio": "〜しよう",
+    "r": "shiyou",
+    "en": "shall",
+    "m": "SHI-YOU — we SHALL. → shiyou."
+  },
+  {
+    "jp": "ようこそ",
+    "audio": "ようこそ",
+    "r": "youkoso",
+    "en": "welcome",
+    "m": "YOU-KO-SO — WELCOME. → youkoso."
+  },
+  {
+    "jp": "戦争",
+    "audio": "せんそう",
+    "r": "sensou",
+    "en": "war",
+    "m": "SEN-SOU — WAR. → sensou."
+  },
+  {
+    "jp": "行動",
+    "audio": "こうどう",
+    "r": "koudou",
+    "en": "act",
+    "m": "KOU-DOU — ACT / action. → koudou."
+  },
+  {
+    "jp": "バカ",
+    "audio": "ばか",
+    "r": "baka",
+    "en": "stupid",
+    "m": "BA-KA — STUPID. → baka."
+  },
+  {
+    "jp": "前",
+    "audio": "まえ",
+    "r": "mae",
+    "en": "front",
+    "m": "MAE — in FRONT. → mae."
+  },
+  {
+    "jp": "クソ女",
+    "audio": "くそおんな",
+    "r": "kusoonna",
+    "en": "bitch",
+    "m": "KUSO-ONNA — crude insult. → kusoonna."
+  },
+  {
+    "jp": "一緒に",
+    "audio": "いっしょに",
+    "r": "isshoni",
+    "en": "along",
+    "m": "ISSHO-NI — go ALONG. → isshoni."
+  },
+  {
+    "jp": "自由",
+    "audio": "じゆう",
+    "r": "jiyuu",
+    "en": "free",
+    "m": "JI-YUU — FREE. → jiyuu."
+  },
+  {
+    "jp": "どちらか",
+    "audio": "どちらか",
+    "r": "dochiraka",
+    "en": "either",
+    "m": "DO-CHI-RA-KA — EITHER one. → dochiraka."
+  },
+  {
+    "jp": "だけど",
+    "audio": "だけど",
+    "r": "dakedo",
+    "en": "though",
+    "m": "DA-KE-DO — THOUGH. → dakedo."
+  },
+  {
+    "jp": "娘",
+    "audio": "むすめ",
+    "r": "musume",
+    "en": "daughter",
+    "m": "MU-SU-ME — DAUGHTER. → musume."
+  },
+  {
+    "jp": "キス",
+    "audio": "キス",
+    "r": "kisu",
+    "en": "kiss",
+    "m": "KISS — same word. → kisu."
+  },
+  {
+    "jp": "バイバイ",
+    "audio": "バイバイ",
+    "r": "baibai",
+    "en": "bye",
+    "m": "BYE-BYE — BYE. → baibai."
+  },
+  {
+    "jp": "通り",
+    "audio": "とおり",
+    "r": "toori",
+    "en": "street",
+    "m": "TO-O-RI — STREET. → toori."
+  },
+  {
+    "jp": "勝つ",
+    "audio": "かつ",
+    "r": "katsu",
+    "en": "win",
+    "m": "KA-TSU — WIN. → katsu."
+  },
+  {
+    "jp": "期待する",
+    "audio": "きたいする",
+    "r": "kitaisuru",
+    "en": "expect",
+    "m": "KI-TAI — EXPECT. → kitaisuru."
+  },
+  {
+    "jp": "都会",
+    "audio": "とかい",
+    "r": "tokai",
+    "en": "city",
+    "m": "TO-KAI — the CITY. → tokai."
+  },
+  {
+    "jp": "急ぐ",
+    "audio": "いそぐ",
+    "r": "isogu",
+    "en": "hurry",
+    "m": "I-SO-GU — HURRY. → isogu."
+  },
+  {
+    "jp": "間",
+    "audio": "あいだ",
+    "r": "aida",
+    "en": "between",
+    "m": "AI-DA — BETWEEN. → aida."
+  },
+  {
+    "jp": "黒",
+    "audio": "くろ",
+    "r": "kuro",
+    "en": "black",
+    "m": "KU-RO — BLACK. → kuro."
+  },
+  {
+    "jp": "警官",
+    "audio": "けいかん",
+    "r": "keikan",
+    "en": "cop",
+    "m": "KEI-KAN — COP. → keikan."
+  },
+  {
+    "jp": "国",
+    "audio": "くに",
+    "r": "kuni",
+    "en": "country",
+    "m": "KU-NI — COUNTRY. → kuni."
+  },
+  {
+    "jp": "嬉しい",
+    "audio": "うれしい",
+    "r": "ureshii",
+    "en": "glad",
+    "m": "U-RE-SHII — GLAD. → ureshii."
+  },
+  {
+    "jp": "その",
+    "audio": "その",
+    "r": "sono",
+    "en": "its",
+    "m": "SO-NO — ITS / that. → sono."
+  },
+  {
+    "jp": "白",
+    "audio": "しろ",
+    "r": "shiro",
+    "en": "white",
+    "m": "SHI-RO — WHITE. → shiro."
+  },
+  {
+    "jp": "外",
+    "audio": "そと",
+    "r": "soto",
+    "en": "outside",
+    "m": "SO-TO — OUTSIDE. → soto."
+  },
+  {
+    "jp": "殺人",
+    "audio": "さつじん",
+    "r": "satsujin",
+    "en": "murder",
+    "m": "SATSU-JIN — MURDER. → satsujin."
+  },
+  {
+    "jp": "殴る",
+    "audio": "なぐる",
+    "r": "naguru",
+    "en": "beat",
+    "m": "NA-GU-RU — BEAT. → naguru."
+  },
+  {
+    "jp": "映画",
+    "audio": "えいが",
+    "r": "eiga",
+    "en": "movie",
+    "m": "EI-GA — MOVIE. → eiga."
+  },
+  {
+    "jp": "〜まで",
+    "audio": "〜まで",
+    "r": "made",
+    "en": "till",
+    "m": "MA-DE — TILL then. → made."
+  },
+  {
+    "jp": "いっぱい",
+    "audio": "いっぱい",
+    "r": "ippai",
+    "en": "full",
+    "m": "IP-PAI — FULL. → ippai."
+  },
+  {
+    "jp": "病気",
+    "audio": "びょうき",
+    "r": "byouki",
+    "en": "sick",
+    "m": "BYOU-KI — SICK. → byouki."
+  },
+  {
+    "jp": "投げる",
+    "audio": "なげる",
+    "r": "nageru",
+    "en": "throw",
+    "m": "NA-GE-RU — THROW. → nageru."
+  },
+  {
+    "jp": "傷",
+    "audio": "きず",
+    "r": "kizu",
+    "en": "scar",
+    "m": "KI-ZU — SCAR / wound. → kizu."
+  },
+  {
+    "jp": "チーム",
+    "audio": "チーム",
+    "r": "chiimu",
+    "en": "team",
+    "m": "TEAM — same word. → chiimu."
+  },
+  {
+    "jp": "きれい",
+    "audio": "きれい",
+    "r": "kirei",
+    "en": "clean",
+    "m": "KI-REI — CLEAN. → kirei."
+  },
+  {
+    "jp": "素晴らしい",
+    "audio": "すばらしい",
+    "r": "subarashii",
+    "en": "wonderful",
+    "m": "SU-BA-RA-SHII — WONDERFUL. → subarashii."
+  },
+  {
+    "jp": "なる",
+    "audio": "なる",
+    "r": "naru",
+    "en": "become",
+    "m": "NA-RU — BECOME. → naru."
+  },
+  {
+    "jp": "救う",
+    "audio": "すくう",
+    "r": "sukuu",
+    "en": "save",
+    "m": "SU-KUU — SAVE. → sukuu."
+  },
+  {
+    "jp": "種類",
+    "audio": "しゅるい",
+    "r": "shurui",
+    "en": "sort",
+    "m": "SHU-RUI — SORT / kind. → shurui."
+  },
+  {
+    "jp": "フランク",
+    "audio": "フランク",
+    "r": "furanku",
+    "en": "Frank",
+    "m": "FRANK — name. → furanku."
+  },
+  {
+    "jp": "ジーザス",
+    "audio": "ジーザス",
+    "r": "jiizasu",
+    "en": "Jesus",
+    "m": "JESUS — name. → jiizasu."
+  },
+  {
+    "jp": "チェン",
+    "audio": "チェン",
+    "r": "chen",
+    "en": "Chang",
+    "m": "CHEN — name. → chen."
+  },
+  {
+    "jp": "完璧",
+    "audio": "かんぺき",
+    "r": "kanpeki",
+    "en": "perfect",
+    "m": "KAN-PEKI — PERFECT. → kanpeki."
+  }
+]

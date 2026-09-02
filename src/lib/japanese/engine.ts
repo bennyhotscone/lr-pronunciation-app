@@ -1,4 +1,5 @@
 import {
+  JAPANESE_ALWAYS_UNLOCKED_BLOCKS,
   JAPANESE_BATCH_SIZE,
   JAPANESE_KNOWN_THRESHOLD,
   JAPANESE_MASTERY_THRESHOLD,
@@ -59,7 +60,10 @@ export function createInitialBlockMeta(): JapaneseBlockMeta {
     roundScores: {},
     bestRound5Score: 0,
     blockMastered: false,
-    unlockedBlocks: [1, 2, 3, 4],
+    unlockedBlocks: Array.from(
+      { length: JAPANESE_ALWAYS_UNLOCKED_BLOCKS },
+      (_, i) => i + 1,
+    ),
   };
 }
 

@@ -1,4 +1,4 @@
-import { JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK, JAPANESE_TOTAL_BLOCKS } from "./config";
+import { JAPANESE_ALWAYS_UNLOCKED_BLOCKS, JAPANESE_TOTAL_BLOCKS } from "./config";
 import {
   getFirstBlockUnlockedByRevisionGate,
   isBlockBehindRevisionGate,
@@ -37,7 +37,7 @@ export function mergeUnlockedBlocks(
   revisionGatesPassed: number[] = [],
 ): number[] {
   const unlocked = new Set<number>(
-    Array.from({ length: JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK }, (_, i) => i + 1),
+    Array.from({ length: JAPANESE_ALWAYS_UNLOCKED_BLOCKS }, (_, i) => i + 1),
   );
   for (const row of rows) {
     for (const n of row.unlockedBlocks) unlocked.add(n);

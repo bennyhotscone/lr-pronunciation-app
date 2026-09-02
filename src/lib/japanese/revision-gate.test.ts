@@ -22,14 +22,18 @@ describe("revision gates", () => {
     expect(getRequiredRevisionGate(5)).toBeNull();
   });
 
-  it("collects all blocks in a revision group", () => {
+  it("collects the five blocks in each revision segment", () => {
     expect(getBlocksForRevisionGate(1)).toEqual([1, 2, 3, 4, 5]);
+    expect(getBlocksForRevisionGate(2)).toEqual([6, 7, 8, 9, 10]);
     expect(revisionGateWordCount(1)).toBe(250);
+    expect(revisionGateWordCount(2)).toBe(250);
   });
 
-  it("blocks the next group until revision is passed", () => {
-    expect(isBlockBehindRevisionGate(6, [])).toBe(true);
-    expect(isBlockBehindRevisionGate(6, [1])).toBe(false);
+  it("does not block blocks 1–10 behind revision gates", () => {
+    expect(isBlockBehindRevisionGate(6, [])).toBe(false);
+    expect(isBlockBehindRevisionGate(10, [])).toBe(false);
+    expect(isBlockBehindRevisionGate(11, [])).toBe(true);
+    expect(isBlockBehindRevisionGate(11, [2])).toBe(false);
   });
 
   it("unlocks block 4 when block 3 is mastered", () => {
@@ -39,25 +43,17 @@ describe("revision gates", () => {
     expect(mergeUnlockedBlocks(rows, [], [])).toContain(4);
   });
 
-  it("does not unlock block 6 after block 5 mastery without revision", () => {
+  it("unlocks block 6 after block 5 mastery (blocks 1–10 always open)", () => {
     const rows = [
       { blockNumber: 5, unlockedBlocks: [1, 2, 3, 4, 5], blockMastered: true },
     ];
-    expect(mergeUnlockedBlocks(rows, [], [])).not.toContain(6);
-    expect(mergeUnlockedBlocks(rows, [], [1])).toContain(6);
+    expect(mergeUnlockedBlocks(rows, [], [])).toContain(6);
   });
 
-  it("respects revision gate when updating meta after block 5", () => {
+  it("unlocks block 6 in meta after block 5 mastery without revision gate", () => {
     let meta = createInitialBlockMeta();
-    meta = {
-      ...meta,
-      unlockedBlocks: [1, 2, 3, 4, 5],
-      blockMastered: false,
-    };
     meta = updateMetaAfterRound(meta, 5, 5, 95, []);
     expect(meta.blockMastered).toBe(true);
-    expect(meta.unlockedBlocks).not.toContain(6);
-    meta = updateMetaAfterRound(meta, 5, 5, 95, [1]);
     expect(meta.unlockedBlocks).toContain(6);
   });
 });

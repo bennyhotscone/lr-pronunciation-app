@@ -37,16 +37,28 @@ describe("japanese block curriculum", () => {
     expect(getBlockCurriculumLabel(1)).toBe("Ranks 1-50");
   });
 
-  it("loads playable blocks with 50 words each", () => {
+  it("loads playable blocks 1–10 with 50 words each", () => {
     const playable = getPlayableBlockNumbers();
-    expect(playable).toEqual([1, 2, 3, 4]);
-    expect(getJapaneseBlock(1).length).toBe(50);
-    expect(getJapaneseBlock(2).length).toBe(50);
-    expect(getJapaneseBlock(3).length).toBe(50);
-    expect(getJapaneseBlock(4).length).toBe(50);
-    expect(isPlayableJapaneseBlock(3)).toBe(true);
-    expect(isPlayableJapaneseBlock(4)).toBe(true);
-    expect(isPlayableJapaneseBlock(5)).toBe(false);
+    expect(playable).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    for (const n of playable) {
+      expect(getJapaneseBlock(n).length).toBe(50);
+      expect(isPlayableJapaneseBlock(n)).toBe(true);
+    }
+    expect(isPlayableJapaneseBlock(11)).toBe(false);
+  });
+
+  it("blocks 5–10 have mnemonics on every word", () => {
+    for (const n of [5, 6, 7, 8, 9, 10]) {
+      const missing = getJapaneseBlock(n).filter((w) => !w.m?.trim());
+      expect(missing.map((w) => w.r)).toEqual([]);
+    }
+  });
+
+  it("slices spoken-English frequency ranks for blocks 5–10", () => {
+    expect(getFrequencyRankRangeForBlock(5)).toEqual({ start: 201, end: 250 });
+    expect(getFrequencyRankRangeForBlock(10)).toEqual({ start: 451, end: 500 });
+    expect(getFrequencyWordsForBlock(5).slice(0, 3)).toEqual(["hi", "through", "every"]);
+    expect(getFrequencyWordsForBlock(10).slice(-3)).toEqual(["jesus", "chang", "perfect"]);
   });
 
   it("slices spoken-English frequency ranks for block 3", () => {

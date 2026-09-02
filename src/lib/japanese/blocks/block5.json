@@ -1,0 +1,352 @@
+[
+  {
+    "jp": "やあ",
+    "audio": "やあ",
+    "r": "yaa",
+    "en": "hi",
+    "m": "\"YAA!\" — casual HI when you spot a friend. → yaa."
+  },
+  {
+    "jp": "通って",
+    "audio": "とおって",
+    "r": "tootte",
+    "en": "through",
+    "m": "TOO LATE — went THROUGH the tunnel. → tootte."
+  },
+  {
+    "jp": "毎",
+    "audio": "まい",
+    "r": "mai",
+    "en": "every",
+    "m": "MY niche — EVERY day. → mai (毎日 mai-nichi)."
+  },
+  {
+    "jp": "分かる",
+    "audio": "わかる",
+    "r": "wakaru",
+    "en": "understand",
+    "m": "When you don't understand: \"WAKA? nah…\" → wakaru."
+  },
+  {
+    "jp": "三",
+    "audio": "さん",
+    "r": "san",
+    "en": "three",
+    "m": "Count to THREE: san. → san."
+  },
+  {
+    "jp": "赤ちゃん",
+    "audio": "あかちゃん",
+    "r": "akachan",
+    "en": "baby",
+    "m": "Aka-CHAN — a BABY. → akachan."
+  },
+  {
+    "jp": "家",
+    "audio": "いえ",
+    "r": "ie",
+    "en": "house",
+    "m": "IE browser at the HOUSE. → ie."
+  },
+  {
+    "jp": "手",
+    "audio": "て",
+    "r": "te",
+    "en": "hand",
+    "m": "TAY — raise your HAND. → te."
+  },
+  {
+    "jp": "間違い",
+    "audio": "まちがい",
+    "r": "machigai",
+    "en": "wrong",
+    "m": "MACHI-GAI — that's WRONG. → machigai."
+  },
+  {
+    "jp": "かもしれない",
+    "audio": "かもしれない",
+    "r": "kamoshirenai",
+    "en": "might",
+    "m": "CAMO? She RENAI — it MIGHT be hidden. → kamoshirenai."
+  },
+  {
+    "jp": "〜てもいい",
+    "audio": "〜てもいい",
+    "r": "temoii",
+    "en": "may (permission)",
+    "m": "TE MO II — you MAY do it. → temoii."
+  },
+  {
+    "jp": "心",
+    "audio": "こころ",
+    "r": "kokoro",
+    "en": "mind / heart",
+    "m": "COCO-RO — your MIND and heart. → kokoro."
+  },
+  {
+    "jp": "お父さん",
+    "audio": "おとうさん",
+    "r": "otousan",
+    "en": "dad",
+    "m": "OTO-SAN — DAD. → otousan."
+  },
+  {
+    "jp": "もう一つ",
+    "audio": "もうひとつ",
+    "r": "mouhitotsu",
+    "en": "another",
+    "m": "MOU HITOTSU — ANOTHER one. → mouhitotsu."
+  },
+  {
+    "jp": "オーケー",
+    "audio": "オーケー",
+    "r": "okee",
+    "en": "ok",
+    "m": "OK — sounds like OKE. → okee."
+  },
+  {
+    "jp": "〜なきゃ",
+    "audio": "〜なきゃ",
+    "r": "nakya",
+    "en": "gotta",
+    "m": "NAKya — I GOTTA go. → nakya."
+  },
+  {
+    "jp": "〜したい",
+    "audio": "〜したい",
+    "r": "shitai",
+    "en": "wanna",
+    "m": "SHI-TAI — I WANNA do it. → shitai."
+  },
+  {
+    "jp": "曲がる",
+    "audio": "まがる",
+    "r": "magaru",
+    "en": "turn",
+    "m": "MAGA-rine truck has to TURN. → magaru."
+  },
+  {
+    "jp": "十分",
+    "audio": "じゅうぶん",
+    "r": "juubun",
+    "en": "enough",
+    "m": "JU-BUN — ENOUGH bread. → juubun."
+  },
+  {
+    "jp": "負ける",
+    "audio": "まける",
+    "r": "makeru",
+    "en": "lose",
+    "m": "MAKE-ru — you LOSE the game. → makeru."
+  },
+  {
+    "jp": "お母さん",
+    "audio": "おかあさん",
+    "r": "okaasan",
+    "en": "mother",
+    "m": "OKA-SAN — MOTHER. → okaasan."
+  },
+  {
+    "jp": "自分の",
+    "audio": "じぶんの",
+    "r": "jibunno",
+    "en": "own",
+    "m": "JI-BUN NO — your OWN thing. → jibunno."
+  },
+  {
+    "jp": "もちろん",
+    "audio": "もちろん",
+    "r": "mochiron",
+    "en": "of course",
+    "m": "MOCHI? Of COURSE! → mochiron."
+  },
+  {
+    "jp": "気にする",
+    "audio": "きにする",
+    "r": "kinisuru",
+    "en": "care",
+    "m": "KEY NEEDS SURE — I CARE. → kinisuru."
+  },
+  {
+    "jp": "くそ",
+    "audio": "くそ",
+    "r": "kuso",
+    "en": "shit / damn",
+    "m": "KUSO! Spoken damn. → kuso."
+  },
+  {
+    "jp": "頭",
+    "audio": "あたま",
+    "r": "atama",
+    "en": "head",
+    "m": "A TAMA — on your HEAD. → atama."
+  },
+  {
+    "jp": "どれ",
+    "audio": "どれ",
+    "r": "dore",
+    "en": "which",
+    "m": "DO RE — WHICH one? → dore."
+  },
+  {
+    "jp": "当てる",
+    "audio": "あてる",
+    "r": "ateru",
+    "en": "guess",
+    "m": "A-TELL — take a GUESS. → ateru."
+  },
+  {
+    "jp": "地獄",
+    "audio": "じごく",
+    "r": "jigoku",
+    "en": "hell",
+    "m": "JI-GOKU — HELL. → jigoku."
+  },
+  {
+    "jp": "部屋",
+    "audio": "へや",
+    "r": "heya",
+    "en": "room",
+    "m": "HEY, YA in the ROOM. → heya."
+  },
+  {
+    "jp": "見る",
+    "audio": "みる",
+    "r": "miru",
+    "en": "watch / see",
+    "m": "ME-RU — WATCH this. → miru."
+  },
+  {
+    "jp": "世界",
+    "audio": "せかい",
+    "r": "sekai",
+    "en": "world",
+    "m": "SAY-KAI — the WORLD. → sekai."
+  },
+  {
+    "jp": "自分自身",
+    "audio": "じぶんじしん",
+    "r": "jibunjishin",
+    "en": "yourself",
+    "m": "JI-BUN JI-SHIN — YOURSELF. → jibunjishin."
+  },
+  {
+    "jp": "壊す",
+    "audio": "こわす",
+    "r": "kowasu",
+    "en": "break",
+    "m": "KO-WASU — BREAK it. → kowasu."
+  },
+  {
+    "jp": "次",
+    "audio": "つぎ",
+    "r": "tsugi",
+    "en": "next",
+    "m": "TSU-GI — NEXT please. → tsugi."
+  },
+  {
+    "jp": "死んだ",
+    "audio": "しんだ",
+    "r": "shinda",
+    "en": "dead",
+    "m": "SHIN-DA — DEAD. → shinda."
+  },
+  {
+    "jp": "他",
+    "audio": "ほか",
+    "r": "hoka",
+    "en": "else / other",
+    "m": "HOOK A different OTHER one. → hoka."
+  },
+  {
+    "jp": "座る",
+    "audio": "すわる",
+    "r": "suwaru",
+    "en": "sit",
+    "m": "SUE-WARU — SIT down. → suwaru."
+  },
+  {
+    "jp": "誰か",
+    "audio": "だれか",
+    "r": "dareka",
+    "en": "someone",
+    "m": "DARE-KA — SOMEONE there? → dareka."
+  },
+  {
+    "jp": "本当",
+    "audio": "ほんとう",
+    "r": "hontou",
+    "en": "real / really",
+    "m": "HON-TOU — REAL talk. → hontou."
+  },
+  {
+    "jp": "仕事",
+    "audio": "しごと",
+    "r": "shigoto",
+    "en": "job",
+    "m": "SHE GOes TO WORK. → shigoto."
+  },
+  {
+    "jp": "朝",
+    "audio": "あさ",
+    "r": "asa",
+    "en": "morning",
+    "m": "AS A morning person… → asa."
+  },
+  {
+    "jp": "え？",
+    "audio": "え",
+    "r": "e",
+    "en": "huh",
+    "m": "EH? — HUH? → e."
+  },
+  {
+    "jp": "ママ",
+    "audio": "ママ",
+    "r": "mama",
+    "en": "mom",
+    "m": "MAMA — MOM. → mama."
+  },
+  {
+    "jp": "今日",
+    "audio": "きょう",
+    "r": "kyou",
+    "en": "today",
+    "m": "\"'Kay, YO — do it TODAY.\" → kyou."
+  },
+  {
+    "jp": "息子",
+    "audio": "むすこ",
+    "r": "musuko",
+    "en": "son",
+    "m": "MUSU-KO — SON. → musuko."
+  },
+  {
+    "jp": "忘れる",
+    "audio": "わすれる",
+    "r": "wasureru",
+    "en": "forget",
+    "m": "WASU-RERU — FORGET it. → wasureru."
+  },
+  {
+    "jp": "飲む",
+    "audio": "のむ",
+    "r": "nomu",
+    "en": "drink",
+    "m": "NOM — take a DRINK. → nomu."
+  },
+  {
+    "jp": "同じ",
+    "audio": "おなじ",
+    "r": "onaji",
+    "en": "same",
+    "m": "O-NA-JI — the SAME. → onaji."
+  },
+  {
+    "jp": "今夜",
+    "audio": "こんや",
+    "r": "konya",
+    "en": "tonight",
+    "m": "KON-YA — TONIGHT. → konya."
+  }
+]

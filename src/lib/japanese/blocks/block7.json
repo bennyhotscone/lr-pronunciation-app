@@ -1,0 +1,352 @@
+[
+  {
+    "jp": "音",
+    "audio": "おと",
+    "r": "oto",
+    "en": "sound",
+    "m": "O-TO — a SOUND. → oto."
+  },
+  {
+    "jp": "希望",
+    "audio": "きぼう",
+    "r": "kibou",
+    "en": "hope",
+    "m": "KI-BOU — HOPE. → kibou."
+  },
+  {
+    "jp": "もの",
+    "audio": "もの",
+    "r": "mono",
+    "en": "stuff",
+    "m": "MO-NO — STUFF / things. → mono."
+  },
+  {
+    "jp": "もう",
+    "audio": "もう",
+    "r": "mou",
+    "en": "already",
+    "m": "MOU — ALREADY done. → mou."
+  },
+  {
+    "jp": "当たる",
+    "audio": "あたる",
+    "r": "ataru",
+    "en": "hit",
+    "m": "A-TA-RU — HIT the target. → ataru."
+  },
+  {
+    "jp": "買う",
+    "audio": "かう",
+    "r": "kau",
+    "en": "buy",
+    "m": "KA-U — BUY it. → kau."
+  },
+  {
+    "jp": "〜以来",
+    "audio": "〜いらい",
+    "r": "irai",
+    "en": "since",
+    "m": "I-RAI — SINCE then. → irai."
+  },
+  {
+    "jp": "場合",
+    "audio": "ばあい",
+    "r": "baai",
+    "en": "case",
+    "m": "BA-AI — in that CASE. → baai."
+  },
+  {
+    "jp": "読む",
+    "audio": "よむ",
+    "r": "yomu",
+    "en": "read",
+    "m": "YO-MU — READ it. → yomu."
+  },
+  {
+    "jp": "奥様",
+    "audio": "おくさま",
+    "r": "okusama",
+    "en": "Mrs.",
+    "m": "OKU-SAMA — MRS. → okusama."
+  },
+  {
+    "jp": "難しい",
+    "audio": "むずかしい",
+    "r": "muzukashii",
+    "en": "hard",
+    "m": "MUSIC? Gosh! HARD. → muzukashii."
+  },
+  {
+    "jp": "原因",
+    "audio": "げんいん",
+    "r": "genin",
+    "en": "cause",
+    "m": "GEN-IN — the CAUSE. → genin."
+  },
+  {
+    "jp": "選ぶ",
+    "audio": "えらぶ",
+    "r": "erabu",
+    "en": "pick",
+    "m": "E-RA-BU — PICK one. → erabu."
+  },
+  {
+    "jp": "一人",
+    "audio": "ひとり",
+    "r": "hitori",
+    "en": "alone",
+    "m": "HI-TO-RI — ALONE. → hitori."
+  },
+  {
+    "jp": "書く",
+    "audio": "かく",
+    "r": "kaku",
+    "en": "write",
+    "m": "KA-KU — WRITE it. → kaku."
+  },
+  {
+    "jp": "傷つける",
+    "audio": "きずつける",
+    "r": "kizutsukeru",
+    "en": "hurt",
+    "m": "KI-ZU — HURT someone. → kizutsukeru."
+  },
+  {
+    "jp": "〜まで",
+    "audio": "〜まで",
+    "r": "made",
+    "en": "until",
+    "m": "MA-DE — UNTIL then. → made."
+  },
+  {
+    "jp": "少し",
+    "audio": "すこし",
+    "r": "sukoshi",
+    "en": "few / a little",
+    "m": "SU-KO-SHI — a FEW / a little. → sukoshi."
+  },
+  {
+    "jp": "畜生",
+    "audio": "ちくしょう",
+    "r": "chikushou",
+    "en": "damn",
+    "m": "CHIKU-SHOU — DAMN it. → chikushou."
+  },
+  {
+    "jp": "ハニー",
+    "audio": "ハニー",
+    "r": "hanii",
+    "en": "honey",
+    "m": "HONEY — pet name. → hanii."
+  },
+  {
+    "jp": "医者",
+    "audio": "いしゃ",
+    "r": "isha",
+    "en": "doctor",
+    "m": "I-SHA — DOCTOR. → isha."
+  },
+  {
+    "jp": "取引",
+    "audio": "とりひき",
+    "r": "torihiki",
+    "en": "deal",
+    "m": "TORI-HIKI — a DEAL. → torihiki."
+  },
+  {
+    "jp": "先生",
+    "audio": "せんせい",
+    "r": "sensei",
+    "en": "Dr. / teacher",
+    "m": "SEN-SEI — DOCTOR / teacher. → sensei."
+  },
+  {
+    "jp": "両方",
+    "audio": "りょうほう",
+    "r": "ryouhou",
+    "en": "both",
+    "m": "RYOU-HOU — BOTH sides. → ryouhou."
+  },
+  {
+    "jp": "部分",
+    "audio": "ぶぶん",
+    "r": "bubun",
+    "en": "part",
+    "m": "BU-BUN — a PART. → bubun."
+  },
+  {
+    "jp": "後で",
+    "audio": "あとで",
+    "r": "atode",
+    "en": "later",
+    "m": "A-TO-DE — LATER. → atode."
+  },
+  {
+    "jp": "そんな",
+    "audio": "そんな",
+    "r": "sonna",
+    "en": "such",
+    "m": "SON-NA — SUCH a thing. → sonna."
+  },
+  {
+    "jp": "顔",
+    "audio": "かお",
+    "r": "kao",
+    "en": "face",
+    "m": "KA-O — FACE. → kao."
+  },
+  {
+    "jp": "計画",
+    "audio": "けいかく",
+    "r": "keikaku",
+    "en": "plan",
+    "m": "KEI-KAKU — PLAN. → keikaku."
+  },
+  {
+    "jp": "前に",
+    "audio": "まえに",
+    "r": "maeni",
+    "en": "ago",
+    "m": "MAE-NI — long AGO. → maeni."
+  },
+  {
+    "jp": "死ぬ",
+    "audio": "しぬ",
+    "r": "shinu",
+    "en": "die",
+    "m": "SHI-NU — DIE. → shinu."
+  },
+  {
+    "jp": "五",
+    "audio": "ご",
+    "r": "go",
+    "en": "five",
+    "m": "GO — count FIVE. → go."
+  },
+  {
+    "jp": "点",
+    "audio": "てん",
+    "r": "ten",
+    "en": "point",
+    "m": "TEN — good POINT. → ten."
+  },
+  {
+    "jp": "戦う",
+    "audio": "たたかう",
+    "r": "tatakau",
+    "en": "fight",
+    "m": "TA-TA-KAU — FIGHT. → tatakau."
+  },
+  {
+    "jp": "数",
+    "audio": "かず",
+    "r": "kazu",
+    "en": "number",
+    "m": "KA-ZU — NUMBER. → kazu."
+  },
+  {
+    "jp": "多分",
+    "audio": "たぶん",
+    "r": "tabun",
+    "en": "probably",
+    "m": "TA-BUN — PROBABLY. → tabun."
+  },
+  {
+    "jp": "運転する",
+    "audio": "うんてんする",
+    "r": "untensuru",
+    "en": "drive",
+    "m": "UN-TEN — DRIVE. → untensuru."
+  },
+  {
+    "jp": "美しい",
+    "audio": "うつくしい",
+    "r": "utsukushii",
+    "en": "beautiful",
+    "m": "UTSUKU-SHII — BEAUTIFUL. → utsukushii."
+  },
+  {
+    "jp": "銃",
+    "audio": "じゅう",
+    "r": "juu",
+    "en": "gun",
+    "m": "JUU — GUN. → juu."
+  },
+  {
+    "jp": "ティム",
+    "audio": "ティム",
+    "r": "timu",
+    "en": "Tim",
+    "m": "TIM — name TIM. → timu."
+  },
+  {
+    "jp": "狂った",
+    "audio": "くるった",
+    "r": "kurutta",
+    "en": "crazy",
+    "m": "KU-RUTTA — CRAZY. → kurutta."
+  },
+  {
+    "jp": "黙る",
+    "audio": "だまる",
+    "r": "damaru",
+    "en": "shut up",
+    "m": "DA-MA-RU — SHUT up. → damaru."
+  },
+  {
+    "jp": "チャンス",
+    "audio": "チャンス",
+    "r": "chansu",
+    "en": "chance",
+    "m": "CHANCE — same word. → chansu."
+  },
+  {
+    "jp": "落ちる",
+    "audio": "おちる",
+    "r": "ochiru",
+    "en": "fall",
+    "m": "O-CHI-RU — FALL down. → ochiru."
+  },
+  {
+    "jp": "遅い",
+    "audio": "おそい",
+    "r": "osoi",
+    "en": "late",
+    "m": "O-SOI — LATE. → osoi."
+  },
+  {
+    "jp": "電話",
+    "audio": "でんわ",
+    "r": "denwa",
+    "en": "phone",
+    "m": "DEN-WA — PHONE. → denwa."
+  },
+  {
+    "jp": "願う",
+    "audio": "ねがう",
+    "r": "negau",
+    "en": "wish",
+    "m": "NE-GA-U — WISH for it. → negau."
+  },
+  {
+    "jp": "セット",
+    "audio": "セット",
+    "r": "setto",
+    "en": "set",
+    "m": "SET — same word. → setto."
+  },
+  {
+    "jp": "ハート",
+    "audio": "ハート",
+    "r": "haato",
+    "en": "heart",
+    "m": "HEART — same word. → haato."
+  },
+  {
+    "jp": "誰も",
+    "audio": "だれも",
+    "r": "daremo",
+    "en": "nobody",
+    "m": "DARE-MO — NOBODY. → daremo."
+  }
+]

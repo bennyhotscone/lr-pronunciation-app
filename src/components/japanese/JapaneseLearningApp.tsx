@@ -26,7 +26,7 @@ import {
 } from "@/lib/japanese/blocks";
 import { getBlockCurriculumLabel } from "@/lib/japanese/blocks/frequency";
 import {
-  JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK,
+  JAPANESE_ALWAYS_UNLOCKED_BLOCKS,
   JAPANESE_MASTERY_THRESHOLD,
   JAPANESE_TOTAL_BLOCKS,
   JAPANESE_WORDS_PER_BLOCK,
@@ -34,7 +34,7 @@ import {
 import {
   getMilestoneForBlock,
 } from "@/lib/japanese/milestone";
-import { getRevisionGateForCompletedBlock } from "@/lib/japanese/revision-gate";
+import { getRevisionGateForCompletedBlock, revisionGateLabel } from "@/lib/japanese/revision-gate";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
@@ -76,7 +76,7 @@ function isJapaneseBlockUnlocked(
   currentBlock: number,
   targetBlock: number,
 ): boolean {
-  if (targetBlock <= JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK) return true;
+  if (targetBlock <= JAPANESE_ALWAYS_UNLOCKED_BLOCKS) return true;
   if (meta.unlockedBlocks.includes(targetBlock)) return true;
   // Mastering block N immediately unlocks block N+1 (matches round-complete UI).
   return (
@@ -492,12 +492,19 @@ export function JapaneseLearningApp() {
     return milestone;
   }, [block, meta?.blockMastered, gatesPassed]);
 
-  const requiredRevisionGate = useMemo(() => {
+  const suggestedRevisionGate = useMemo(() => {
     const gate = getRevisionGateForCompletedBlock(block);
     if (!gate || !meta?.blockMastered) return null;
     if (revisionGatesPassed.includes(gate)) return null;
     return gate;
   }, [block, meta?.blockMastered, revisionGatesPassed]);
+
+  const availableRevisionGates = useMemo(() => {
+    const gates: number[] = [];
+    if (isPlayableJapaneseBlock(5)) gates.push(1);
+    if (isPlayableJapaneseBlock(10)) gates.push(2);
+    return gates;
+  }, []);
 
   if (screen === "revision" && activeRevisionGate) {
     return (
@@ -620,21 +627,40 @@ export function JapaneseLearningApp() {
             {meta.blockMastered ? " · Block mastered" : ""}
           </p>
         ) : null}
-        {requiredRevisionGate ? (
-          <div className="jp-learn-gate-banner jp-learn-gate-banner-required" role="status">
+        {suggestedRevisionGate ? (
+          <div className="jp-learn-gate-banner" role="status">
             <p>
-              Revision required: pass the all-words quiz for blocks{" "}
-              {requiredRevisionGate * 5 - 4}–{requiredRevisionGate * 5} before the next group
-              unlocks.
+              Recommended: revise {revisionGateLabel(suggestedRevisionGate)} while blocks{" "}
+              {suggestedRevisionGate === 1 ? "1–5" : "6–10"} are fresh in memory.
             </p>
             <button
               type="button"
               className="jp-learn-btn jp-learn-btn-gate"
-              onClick={() => openRevisionGate(requiredRevisionGate)}
+              onClick={() => openRevisionGate(suggestedRevisionGate)}
             >
-              Start revision quiz
+              Start revision quiz (250 words)
             </button>
           </div>
+        ) : null}
+        {availableRevisionGates.length > 0 ? (
+          <section className="jp-learn-practice" aria-labelledby="jp-revision-heading">
+            <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quizzes</h2>
+            <p className="jp-learn-sub">All-words review for each 5-block segment (250 words, 80% to pass).</p>
+            <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
+              {availableRevisionGates.map((gate) => (
+                <button
+                  key={gate}
+                  type="button"
+                  className="jp-learn-btn jp-learn-btn-gate"
+                  disabled={pending}
+                  onClick={() => openRevisionGate(gate)}
+                >
+                  {revisionGateLabel(gate)}
+                  {revisionGatesPassed.includes(gate) ? " ✓" : ""}
+                </button>
+              ))}
+            </div>
+          </section>
         ) : null}
         {optionalGateMilestone ? (
           <div className="jp-learn-gate-banner" role="status">

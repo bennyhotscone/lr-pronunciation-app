@@ -1,0 +1,352 @@
+[
+  {
+    "jp": "開ける",
+    "audio": "あける",
+    "r": "akeru",
+    "en": "open",
+    "m": "\"A-KEY\" — OPEN the door. → akeru."
+  },
+  {
+    "jp": "心配",
+    "audio": "しんぱい",
+    "r": "shinpai",
+    "en": "worry",
+    "m": "SHIN-PAI — WORRY. → shinpai."
+  },
+  {
+    "jp": "問題",
+    "audio": "もんだい",
+    "r": "mondai",
+    "en": "matter",
+    "m": "MON-DAY — that's a MATTER. → mondai."
+  },
+  {
+    "jp": "悩み",
+    "audio": "なやみ",
+    "r": "nayami",
+    "en": "problem",
+    "m": "NA-YA-MI — a PROBLEM weighing on you. → nayami."
+  },
+  {
+    "jp": "考え",
+    "audio": "かんがえ",
+    "r": "kangae",
+    "en": "idea",
+    "m": "KAN-GAE — an IDEA. → kangae."
+  },
+  {
+    "jp": "払う",
+    "audio": "はらう",
+    "r": "harau",
+    "en": "pay",
+    "m": "HA-RAU — PAY up. → harau."
+  },
+  {
+    "jp": "かなり",
+    "audio": "かなり",
+    "r": "kanari",
+    "en": "pretty / quite",
+    "m": "CAN-A-RI — PRETTY good. → kanari."
+  },
+  {
+    "jp": "準備",
+    "audio": "じゅんび",
+    "r": "junbi",
+    "en": "ready",
+    "m": "JUN-BI — get READY. → junbi."
+  },
+  {
+    "jp": "全部",
+    "audio": "ぜんぶ",
+    "r": "zenbu",
+    "en": "whole",
+    "m": "ZEN-BU — the WHOLE thing. → zenbu."
+  },
+  {
+    "jp": "一緒に",
+    "audio": "いっしょに",
+    "r": "isshoni",
+    "en": "together",
+    "m": "ISSHO-NI — TOGETHER. → isshoni."
+  },
+  {
+    "jp": "〜だろう",
+    "audio": "〜だろう",
+    "r": "darou",
+    "en": "suppose",
+    "m": "DA-ROU — I SUPPOSE so. → darou."
+  },
+  {
+    "jp": "すみません",
+    "audio": "すみません",
+    "r": "sumimasen",
+    "en": "excuse me",
+    "m": "SOO-ME-MA-SEN — EXCUSE ME. → sumimasen."
+  },
+  {
+    "jp": "食べる",
+    "audio": "たべる",
+    "r": "taberu",
+    "en": "eat",
+    "m": "TA-BE-RU — EAT up. → taberu."
+  },
+  {
+    "jp": "時間",
+    "audio": "じかん",
+    "r": "jikan",
+    "en": "hour / time",
+    "m": "JI-KAN — an HOUR. → jikan."
+  },
+  {
+    "jp": "家族",
+    "audio": "かぞく",
+    "r": "kazoku",
+    "en": "family",
+    "m": "KA-ZOKU — FAMILY. → kazoku."
+  },
+  {
+    "jp": "確認",
+    "audio": "かくにん",
+    "r": "kakunin",
+    "en": "check",
+    "m": "KAKU-NIN — CHECK it. → kakunin."
+  },
+  {
+    "jp": "週",
+    "audio": "しゅう",
+    "r": "shuu",
+    "en": "week",
+    "m": "SHUU — this WEEK. → shuu."
+  },
+  {
+    "jp": "奥さん",
+    "audio": "おくさん",
+    "r": "okusan",
+    "en": "wife",
+    "m": "OKU-SAN — WIFE (polite). → okusan."
+  },
+  {
+    "jp": "送る",
+    "audio": "おくる",
+    "r": "okuru",
+    "en": "send",
+    "m": "O-KU-RU — SEND it. → okuru."
+  },
+  {
+    "jp": "歩く",
+    "audio": "あるく",
+    "r": "aruku",
+    "en": "walk",
+    "m": "A-RU-KU — WALK. → aruku."
+  },
+  {
+    "jp": "〜そう",
+    "audio": "〜そう",
+    "r": "sou",
+    "en": "seem",
+    "m": "SO-U — it SEEMS so. → sou."
+  },
+  {
+    "jp": "結婚する",
+    "audio": "けっこんする",
+    "r": "kekkonsuru",
+    "en": "marry",
+    "m": "KEK-KON — MARRY. → kekkonsuru."
+  },
+  {
+    "jp": "たくさん",
+    "audio": "たくさん",
+    "r": "takusan",
+    "en": "many",
+    "m": "TUCK SUN away — so MANY. → takusan."
+  },
+  {
+    "jp": "使う",
+    "audio": "つかう",
+    "r": "tsukau",
+    "en": "use",
+    "m": "TSU-KAU — USE it. → tsukau."
+  },
+  {
+    "jp": "言葉",
+    "audio": "ことば",
+    "r": "kotoba",
+    "en": "word",
+    "m": "KOTO-BA — a WORD. → kotoba."
+  },
+  {
+    "jp": "秒",
+    "audio": "びょう",
+    "r": "byou",
+    "en": "second",
+    "m": "BYOU — a SECOND. → byou."
+  },
+  {
+    "jp": "女性",
+    "audio": "じょせい",
+    "r": "josei",
+    "en": "lady",
+    "m": "JO-SEI — LADY / woman. → josei."
+  },
+  {
+    "jp": "〜なしで",
+    "audio": "〜なしで",
+    "r": "nashide",
+    "en": "without",
+    "m": "NA-SHI-DE — WITHOUT it. → nashide."
+  },
+  {
+    "jp": "立つ",
+    "audio": "たつ",
+    "r": "tatsu",
+    "en": "stand",
+    "m": "TA-TSU — STAND up. → tatsu."
+  },
+  {
+    "jp": "一番",
+    "audio": "いちばん",
+    "r": "ichiban",
+    "en": "most",
+    "m": "ICHI-BAN — the MOST. → ichiban."
+  },
+  {
+    "jp": "間",
+    "audio": "あいだ",
+    "r": "aida",
+    "en": "while",
+    "m": "AI-DA — in the WHILE. → aida."
+  },
+  {
+    "jp": "学校",
+    "audio": "がっこう",
+    "r": "gakkou",
+    "en": "school",
+    "m": "GAK-KOU — SCHOOL. → gakkou."
+  },
+  {
+    "jp": "一度",
+    "audio": "いちど",
+    "r": "ichido",
+    "en": "once",
+    "m": "ICHI-DO — ONCE. → ichido."
+  },
+  {
+    "jp": "誰か",
+    "audio": "だれか",
+    "r": "dareka",
+    "en": "somebody",
+    "m": "DARE-KA — SOMEBODY. → dareka."
+  },
+  {
+    "jp": "みんな",
+    "audio": "みんな",
+    "r": "minna",
+    "en": "everybody",
+    "m": "MIN-NA — EVERYBODY. → minna."
+  },
+  {
+    "jp": "慣れる",
+    "audio": "なれる",
+    "r": "nareru",
+    "en": "used to",
+    "m": "NA-RERU — get USED to it. → nareru."
+  },
+  {
+    "jp": "自分",
+    "audio": "じぶん",
+    "r": "jibun",
+    "en": "myself",
+    "m": "JI-BUN — MYSELF. → jibun."
+  },
+  {
+    "jp": "終わり",
+    "audio": "おわり",
+    "r": "owari",
+    "en": "end",
+    "m": "O-WA-RI — the END. → owari."
+  },
+  {
+    "jp": "まだ",
+    "audio": "まだ",
+    "r": "mada",
+    "en": "yet / still",
+    "m": "MADA is STILL not done. → mada."
+  },
+  {
+    "jp": "明日",
+    "audio": "あした",
+    "r": "ashita",
+    "en": "tomorrow",
+    "m": "ASH, I'll do that TOMORROW. → ashita."
+  },
+  {
+    "jp": "話す",
+    "audio": "はなす",
+    "r": "hanasu",
+    "en": "speak",
+    "m": "HA-NA-SU — SPEAK up. → hanasu."
+  },
+  {
+    "jp": "目",
+    "audio": "め",
+    "r": "me",
+    "en": "eye",
+    "m": "ME — your EYE. → me."
+  },
+  {
+    "jp": "嬉しい",
+    "audio": "うれしい",
+    "r": "ureshii",
+    "en": "happy",
+    "m": "U-RE-SHII — HAPPY. → ureshii."
+  },
+  {
+    "jp": "子供",
+    "audio": "こども",
+    "r": "kodomo",
+    "en": "child",
+    "m": "COCO's DOpey MOppet is a CHILD. → kodomo."
+  },
+  {
+    "jp": "質問",
+    "audio": "しつもん",
+    "r": "shitsumon",
+    "en": "question",
+    "m": "SHITSU-MON — QUESTION. → shitsumon."
+  },
+  {
+    "jp": "兄弟",
+    "audio": "きょうだい",
+    "r": "kyoudai",
+    "en": "brother / sibling",
+    "m": "KYOU-DAI — BROTHER / sibling. → kyoudai."
+  },
+  {
+    "jp": "寝る",
+    "audio": "ねる",
+    "r": "neru",
+    "en": "sleep",
+    "m": "NE-RU — SLEEP. → neru."
+  },
+  {
+    "jp": "ドア",
+    "audio": "ドア",
+    "r": "doa",
+    "en": "door",
+    "m": "DOOR — same word. → doa."
+  },
+  {
+    "jp": "ビジネス",
+    "audio": "ビジネス",
+    "r": "bijinesu",
+    "en": "business",
+    "m": "BUSINESS — same word. → bijinesu."
+  },
+  {
+    "jp": "実は",
+    "audio": "じつは",
+    "r": "jitsuwa",
+    "en": "actually",
+    "m": "JITSU-WA — ACTUALLY… → jitsuwa."
+  }
+]
