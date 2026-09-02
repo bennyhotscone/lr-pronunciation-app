@@ -8,7 +8,7 @@ const HIRAGANA_TO_KATAKANA_OFFSET = 0x60;
  */
 const TTS_KANJI_HINTS: Record<string, string> = {
   suki: "好き",
-  shiru: "知る",
+  shitteru: "知ってる",
 };
 
 /** Hiragana to katakana so Web Speech voices pronounce distinct syllables. */

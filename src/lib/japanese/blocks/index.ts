@@ -48,7 +48,7 @@ export function getJapaneseBlock(blockNumber: number): JapaneseWord[] {
   return words;
 }
 
-/** QA-only: curated subset including shiru (18) and suki (33) in block 1. */
+/** QA-only: curated subset including shitteru (18) and suki (33) in block 1. */
 export function getJapaneseTestBlock(blockNumber: number): JapaneseWord[] {
   const words = BLOCKS[blockNumber];
   if (!words) throw new Error(`Japanese block ${blockNumber} not loaded`);

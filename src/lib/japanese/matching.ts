@@ -98,6 +98,10 @@ export function englishAliases(word: JapaneseWord): string[] {
   return [...new Set(arr.map(normalizeEnglishAnswer).filter(Boolean))];
 }
 
+const ROMAJI_EXTRAS: Record<string, string[]> = {
+  shitteru: ["shitteiru", "shitte iru", "shiru"],
+};
+
 export function normalizeRomaji(s: string): string {
   return (s || "")
     .toLowerCase()
@@ -119,6 +123,7 @@ export function romajiAliases(word: JapaneseWord): string[] {
   forms.add(base.replace(/uu/g, "u"));
   forms.add(base.replace(/ee/g, "e"));
   forms.add(base.replace(/ii/g, "i"));
+  (ROMAJI_EXTRAS[word.r] || []).forEach((x) => forms.add(normalizeRomaji(x)));
   return [...forms].filter(Boolean);
 }
 

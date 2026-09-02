@@ -116,4 +116,18 @@ describe("japanese matching", () => {
     expect(fuzzyMatchEnglish("さらに", sarani)).toBe(true);
     expect(fuzzyMatchRomaji("sarani", sarani)).toBe(true);
   });
+
+  it("accepts shitteru spoken forms and aliases legacy shiru", () => {
+    const shitteru: JapaneseWord = {
+      jp: "知ってる",
+      audio: "しってる",
+      r: "shitteru",
+      en: "know",
+      m: "x",
+    };
+    expect(fuzzyMatchEnglish("know", shitteru)).toBe(true);
+    expect(fuzzyMatchRomaji("shitteru", shitteru)).toBe(true);
+    expect(fuzzyMatchRomaji("shitteiru", shitteru)).toBe(true);
+    expect(fuzzyMatchRomaji("shiru", shitteru)).toBe(true);
+  });
 });
