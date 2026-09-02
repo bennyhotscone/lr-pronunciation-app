@@ -469,18 +469,18 @@ export function JapaneseLearningApp() {
             {meta.blockMastered ? " · Block mastered" : ""}
           </p>
         ) : null}
-        {pendingGateMilestone ? (
+        {optionalGateMilestone ? (
           <div className="jp-learn-gate-banner" role="status">
             <p>
-              Story checkpoint required to unlock Block{" "}
-              {getBlockUnlockedByMilestone(pendingGateMilestone)}.
+              Optional story practice for Blocks{" "}
+              {optionalGateMilestone * 2 - 1}–{optionalGateMilestone * 2}.
             </p>
             <button
               type="button"
               className="jp-learn-btn jp-learn-btn-gate"
-              onClick={() => openMilestoneGate(pendingGateMilestone)}
+              onClick={() => openMilestoneGate(optionalGateMilestone)}
             >
-              Take story checkpoint
+              Take story checkpoint (optional)
             </button>
           </div>
         ) : null}
@@ -595,13 +595,13 @@ export function JapaneseLearningApp() {
                   </button>
                 ) : view.round === 5 ? (
                   <>
-                    {pendingGateMilestone ? (
+                    {optionalGateMilestone ? (
                       <button
                         type="button"
-                        className="jp-learn-btn jp-learn-btn-primary"
-                        onClick={() => openMilestoneGate(pendingGateMilestone)}
+                        className="jp-learn-btn"
+                        onClick={() => openMilestoneGate(optionalGateMilestone)}
                       >
-                        Story checkpoint (unlock Block {getBlockUnlockedByMilestone(pendingGateMilestone)})
+                        Story checkpoint (optional)
                       </button>
                     ) : null}
                     {highestRoundReached >= 4 ? (
