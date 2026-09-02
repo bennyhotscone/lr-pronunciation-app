@@ -71,7 +71,7 @@ describe("japanese block curriculum", () => {
     expect(meta.unlockedBlocks).toContain(2);
   });
 
-  it("does not auto-unlock block 3 after block 2 mastery without gate", () => {
+  it("unlocks block 3 after block 2 mastery without gate", () => {
     const meta = updateMetaAfterRound(
       { roundScores: {}, bestRound5Score: 0, blockMastered: false, unlockedBlocks: [1, 2] },
       2,
@@ -79,6 +79,6 @@ describe("japanese block curriculum", () => {
       92,
     );
     expect(meta.blockMastered).toBe(true);
-    expect(meta.unlockedBlocks).not.toContain(3);
+    expect(meta.unlockedBlocks).toContain(3);
   });
 });
