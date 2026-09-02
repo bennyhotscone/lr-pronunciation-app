@@ -87,8 +87,8 @@
     "jp": "もう",
     "audio": "もう",
     "r": "mou",
-    "en": "already",
-    "m": "“MO’ food? You ALREADY ate!” → mou."
+    "en": "already / anymore",
+    "m": "“MO’ food? You ALREADY ate — no MORE!” (not mata/again) → mou."
   },
   {
     "jp": "ここ",
@@ -346,7 +346,7 @@
     "jp": "また",
     "audio": "また",
     "r": "mata",
-    "en": "again",
-    "m": "Put the MAT down AGAIN. → mata."
+    "en": "again / also",
+    "m": "Put the MAT down AGAIN (not mou/already). → mata."
   }
 ]

@@ -27,6 +27,8 @@ const ENGLISH_EXTRAS: Record<string, string[]> = {
   "fun / enjoyable": ["fun", "enjoyable"],
   "well / energetic": ["well", "energetic", "healthy"],
   "still / not yet": ["still", "not yet"],
+  "already / anymore": ["already", "anymore"],
+  "again / also": ["again", "also"],
   "house / home": ["house", "home"],
   "shop / store": ["shop", "store"],
   "meal / rice": ["meal", "rice"],

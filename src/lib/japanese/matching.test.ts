@@ -26,4 +26,27 @@ describe("japanese matching", () => {
     expect(fuzzyMatchEnglish("", watashi)).toBe(false);
     expect(fuzzyMatchRomaji("   ", watashi)).toBe(false);
   });
+
+  it("distinguishes mou (already) from mata (again)", () => {
+    const mou: JapaneseWord = {
+      jp: "もう",
+      audio: "もう",
+      r: "mou",
+      en: "already / anymore",
+      m: "x",
+    };
+    const mata: JapaneseWord = {
+      jp: "また",
+      audio: "また",
+      r: "mata",
+      en: "again / also",
+      m: "x",
+    };
+    expect(fuzzyMatchEnglish("already", mou)).toBe(true);
+    expect(fuzzyMatchEnglish("anymore", mou)).toBe(true);
+    expect(fuzzyMatchEnglish("again", mou)).toBe(false);
+    expect(fuzzyMatchEnglish("again", mata)).toBe(true);
+    expect(fuzzyMatchEnglish("also", mata)).toBe(true);
+    expect(fuzzyMatchEnglish("already", mata)).toBe(false);
+  });
 });
