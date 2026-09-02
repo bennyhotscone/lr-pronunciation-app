@@ -11,8 +11,10 @@ import {
   createInitialSessionState,
   metaFromDb,
   sessionFromDb,
+  syncMasteryFromCompletedRound5,
   updateMetaAfterRound,
 } from "@/lib/japanese/engine";
+import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
 import {
   applyAnswerToKnownProgress,
@@ -103,7 +105,55 @@ export async function loadJapaneseProgress(
     ]);
 
     const sessionState = progress ? sessionFromDb(progress) : createInitialSessionState();
-    const baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
+    let baseMeta = progress ? metaFromDb(progress) : createInitialBlockMeta();
+
+    const stats: JapaneseProgressPayload["stats"] = {};
+    for (const row of statRows) {
+      stats[row.wordIndex] = {
+        timesSeen: row.timesSeen,
+        timesCorrect: row.timesCorrect,
+        timesMissed: row.timesMissed,
+        ...knownProgressFromDb(row),
+      };
+    }
+
+    const wordCount = getJapaneseBlock(blockNumber).length;
+    const knownIndices = [...getKnownIndices(statsToKnownWordsMap(stats))];
+    const syncedMeta = syncMasteryFromCompletedRound5(
+      sessionState,
+      baseMeta,
+      blockNumber,
+      wordCount,
+      knownIndices,
+      revisionGatesPassed,
+    );
+
+    if (
+      progress &&
+      (syncedMeta.blockMastered !== baseMeta.blockMastered ||
+        syncedMeta.bestRound5Score !== baseMeta.bestRound5Score ||
+        syncedMeta.unlockedBlocks.length !== baseMeta.unlockedBlocks.length ||
+        syncedMeta.unlockedBlocks.some((n, i) => n !== baseMeta.unlockedBlocks[i]))
+    ) {
+      await prisma.japaneseBlockProgress.update({
+        where: { userId_blockNumber: { userId, blockNumber } },
+        data: {
+          blockMastered: syncedMeta.blockMastered,
+          bestRound5Score: syncedMeta.bestRound5Score,
+          unlockedBlocks: syncedMeta.unlockedBlocks,
+          roundScores: syncedMeta.roundScores as object,
+        },
+      });
+      baseMeta = syncedMeta;
+      const row = allProgress.find((r) => r.blockNumber === blockNumber);
+      if (row) {
+        row.blockMastered = syncedMeta.blockMastered;
+        row.unlockedBlocks = syncedMeta.unlockedBlocks;
+      }
+    } else {
+      baseMeta = syncedMeta;
+    }
+
     const meta: JapaneseBlockMeta = {
       ...baseMeta,
       unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed, revisionGatesPassed),
@@ -115,16 +165,6 @@ export async function loadJapaneseProgress(
         mnemonic: o.mnemonic,
         pronunciationCue: o.pronunciationCue,
         ttsInput: o.ttsInput,
-      };
-    }
-
-    const stats: JapaneseProgressPayload["stats"] = {};
-    for (const row of statRows) {
-      stats[row.wordIndex] = {
-        timesSeen: row.timesSeen,
-        timesCorrect: row.timesCorrect,
-        timesMissed: row.timesMissed,
-        ...knownProgressFromDb(row),
       };
     }
 
@@ -287,7 +327,18 @@ export async function completeJapaneseRound(
 
   const save = await saveJapaneseProgress(blockNumber, sessionState, nextMeta);
   if ("error" in save) return save;
-  return { ok: true, meta: nextMeta };
+
+  const allProgress = await prisma.japaneseBlockProgress.findMany({
+    where: { userId },
+    select: { blockNumber: true, unlockedBlocks: true, blockMastered: true },
+  });
+  const gatesPassed = await loadGatesPassed(userId);
+  const mergedMeta: JapaneseBlockMeta = {
+    ...nextMeta,
+    unlockedBlocks: mergeUnlockedBlocks(allProgress, gatesPassed, revisionGatesPassed),
+  };
+
+  return { ok: true, meta: mergedMeta };
 }
 
 export async function saveJapaneseWordOverride(

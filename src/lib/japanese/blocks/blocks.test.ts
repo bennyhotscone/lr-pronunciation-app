@@ -84,6 +84,17 @@ describe("japanese block curriculum", () => {
     expect(meta.unlockedBlocks).toContain(3);
   });
 
+  it("unlocks block 4 after block 3 mastery without revision gate", () => {
+    const meta = updateMetaAfterRound(
+      { roundScores: {}, bestRound5Score: 0, blockMastered: false, unlockedBlocks: [1, 2, 3] },
+      3,
+      5,
+      92,
+    );
+    expect(meta.blockMastered).toBe(true);
+    expect(meta.unlockedBlocks).toContain(4);
+  });
+
   it("slices spoken-English frequency ranks for block 4", () => {
     expect(getFrequencyRankRangeForBlock(4)).toEqual({ start: 151, end: 200 });
     expect(getFrequencyWordsForBlock(4).length).toBe(50);

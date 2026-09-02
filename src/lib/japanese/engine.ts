@@ -59,7 +59,7 @@ export function createInitialBlockMeta(): JapaneseBlockMeta {
     roundScores: {},
     bestRound5Score: 0,
     blockMastered: false,
-    unlockedBlocks: [1],
+    unlockedBlocks: [1, 2, 3, 4],
   };
 }
 
@@ -585,6 +585,61 @@ export function computeSessionRoundScorePct(
   );
 }
 
+/** True when round 5 formal queue is finished (round-complete interstitial). */
+export function isRound5SessionComplete(
+  state: JapaneseSessionState,
+): boolean {
+  return (
+    state.phase === "round5" &&
+    state.order.length > 0 &&
+    state.qIndex >= state.order.length
+  );
+}
+
+/** Ensure block N+1 is in unlockedBlocks when block N is mastered. */
+export function ensureNextBlockUnlockedAfterMastery(
+  meta: JapaneseBlockMeta,
+  blockNumber: number,
+  revisionGatesPassed: readonly number[] = [],
+): JapaneseBlockMeta {
+  if (!meta.blockMastered || blockNumber >= JAPANESE_TOTAL_BLOCKS) return meta;
+  const nextBlock = blockNumber + 1;
+  if (
+    meta.unlockedBlocks.includes(nextBlock) ||
+    isBlockBehindRevisionGate(nextBlock, revisionGatesPassed)
+  ) {
+    return meta;
+  }
+  return { ...meta, unlockedBlocks: [...meta.unlockedBlocks, nextBlock] };
+}
+
+/**
+ * Apply mastery + next-block unlock when session is stuck at a passed round 5
+ * complete screen but DB meta was never updated (e.g. refresh before save).
+ */
+export function syncMasteryFromCompletedRound5(
+  sessionState: JapaneseSessionState,
+  meta: JapaneseBlockMeta,
+  blockNumber: number,
+  wordCount: number,
+  knownIndices: readonly number[],
+  revisionGatesPassed: readonly number[] = [],
+): JapaneseBlockMeta {
+  if (!isRound5SessionComplete(sessionState)) {
+    return ensureNextBlockUnlockedAfterMastery(meta, blockNumber, revisionGatesPassed);
+  }
+  const scorePct = computeSessionRoundScorePct(sessionState, wordCount, knownIndices);
+  if (scorePct < JAPANESE_MASTERY_THRESHOLD) return meta;
+  const updated = updateMetaAfterRound(
+    meta,
+    blockNumber,
+    5,
+    scorePct,
+    revisionGatesPassed,
+  );
+  return ensureNextBlockUnlockedAfterMastery(updated, blockNumber, revisionGatesPassed);
+}
+
 /** Update block meta after completing a formal round. */
 export function updateMetaAfterRound(
   meta: JapaneseBlockMeta,
@@ -669,7 +724,7 @@ export function metaFromDb(row: {
     roundScores: parseRoundScores(row.roundScores),
     bestRound5Score: row.bestRound5Score,
     blockMastered: row.blockMastered,
-    unlockedBlocks: row.unlockedBlocks.length ? row.unlockedBlocks : [1],
+    unlockedBlocks: row.unlockedBlocks.length ? row.unlockedBlocks : [1, 2, 3, 4],
   };
 }
 

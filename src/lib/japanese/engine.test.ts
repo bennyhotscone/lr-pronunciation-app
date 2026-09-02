@@ -11,7 +11,9 @@ import {
   recordCorrectWithStreak,
   retryRound,
   startFormalRound,
+  syncMasteryFromCompletedRound5,
   transitionRound1ToRound2,
+  updateMetaAfterRound,
 } from "./engine";
 import type { JapaneseWord } from "./types";
 
@@ -298,6 +300,38 @@ describe("repairSessionState", () => {
     if (view?.kind === "round-complete") {
       expect(view.retryRound).toBe(5);
     }
+  });
+});
+
+describe("syncMasteryFromCompletedRound5", () => {
+  it("syncs mastery when session is stuck at passed round 5 complete", () => {
+    let session = startFormalRound(createInitialSessionState(), 5, 10);
+    session = { ...session, qIndex: 10, score: 9 };
+    const meta = syncMasteryFromCompletedRound5(
+      session,
+      createInitialBlockMeta(),
+      3,
+      10,
+      [],
+    );
+    expect(meta.blockMastered).toBe(true);
+    expect(meta.unlockedBlocks).toContain(4);
+  });
+
+  it("unlocks next block when already mastered but unlock list is stale", () => {
+    const meta = syncMasteryFromCompletedRound5(
+      createInitialSessionState(),
+      {
+        roundScores: { "5": 95 },
+        bestRound5Score: 95,
+        blockMastered: true,
+        unlockedBlocks: [1, 2, 3],
+      },
+      3,
+      10,
+      [],
+    );
+    expect(meta.unlockedBlocks).toContain(4);
   });
 });
 

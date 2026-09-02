@@ -70,8 +70,19 @@ function getTrainingRound(view: Exclude<JapaneseRoundView, { kind: "round-comple
   return view.kind === "formal" ? view.round : 1;
 }
 
-function isJapaneseBlockUnlocked(meta: JapaneseBlockMeta, targetBlock: number): boolean {
-  return meta.unlockedBlocks.includes(targetBlock);
+function isJapaneseBlockUnlocked(
+  meta: JapaneseBlockMeta,
+  currentBlock: number,
+  targetBlock: number,
+): boolean {
+  if (targetBlock <= JAPANESE_ALWAYS_UNLOCKED_UNTIL_BLOCK) return true;
+  if (meta.unlockedBlocks.includes(targetBlock)) return true;
+  // Mastering block N immediately unlocks block N+1 (matches round-complete UI).
+  return (
+    targetBlock === currentBlock + 1 &&
+    currentBlock < JAPANESE_TOTAL_BLOCKS &&
+    meta.blockMastered
+  );
 }
 
 export function JapaneseLearningApp() {
@@ -154,6 +165,11 @@ export function JapaneseLearningApp() {
     };
   }, [block, loadAttempt]);
 
+  const masterySyncRef = useRef(false);
+  useEffect(() => {
+    masterySyncRef.current = false;
+  }, [block]);
+
   const knownWordsMap = useMemo(() => statsToKnownWordsMap(wordStats), [wordStats]);
   const knownIndices = useMemo(() => [...getKnownIndices(knownWordsMap)], [knownWordsMap]);
 
@@ -184,7 +200,7 @@ export function JapaneseLearningApp() {
 
   const switchBlock = (next: number) => {
     if (!meta) return;
-    if (!isJapaneseBlockUnlocked(meta, next) || !isPlayableJapaneseBlock(next)) return;
+    if (!isJapaneseBlockUnlocked(meta, block, next) || !isPlayableJapaneseBlock(next)) return;
     setBlock(next);
     setScreen("train");
     resetQuestionUi();
@@ -214,6 +230,25 @@ export function JapaneseLearningApp() {
     if (!session) return null;
     return buildRoundView(session, words, overrides, knownWordsMap);
   }, [session, words, overrides, knownWordsMap]);
+
+  useEffect(() => {
+    if (!session || !meta || !view || view.kind !== "round-complete") return;
+    if (view.round !== 5 || !view.passed) return;
+    const nextBlock = block + 1;
+    if (meta.blockMastered && isJapaneseBlockUnlocked(meta, block, nextBlock)) return;
+    if (masterySyncRef.current) return;
+    masterySyncRef.current = true;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    startTransition(async () => {
+      const result = await completeJapaneseRound(block, session, meta, 5, view.scorePct);
+      if ("ok" in result && result.ok) setMeta(result.meta);
+      const fresh = await loadJapaneseProgress(block);
+      if (!("error" in fresh)) {
+        setMeta(fresh.meta);
+        setRevisionGatesPassed(fresh.revisionGatesPassed);
+      }
+    });
+  }, [session, meta, view, block]);
 
   const playbackRef = useRef({ words, overrides, view });
   playbackRef.current = { words, overrides, view };
@@ -617,7 +652,7 @@ export function JapaneseLearningApp() {
         ) : null}
         <nav className="jp-learn-block-nav" aria-label="Japanese blocks">
           {playableBlocks.map((n) => {
-            const unlocked = isJapaneseBlockUnlocked(meta, n);
+            const unlocked = isJapaneseBlockUnlocked(meta, block, n);
             const active = n === block;
             return (
               <button
