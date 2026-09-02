@@ -128,12 +128,15 @@ function allowedRomajiSet(allWords: MilestoneWord[]): Set<string> {
 
 function romajiTokensFromLine(line: string): string[] {
   return line
-    .toLowerCase()
-    .replace(/\([^)]*\)/g, " ")
-    .split(/[\n\-]+/)
-    .flatMap((part) => part.split(/[.\s,;:!?]+/))
-    .map((t) => t.trim())
-    .filter(Boolean);
+    .split("\n")
+    .map((row) => row.split(" - ")[0]?.trim() ?? "")
+    .flatMap((romajiPart) =>
+      romajiPart
+        .toLowerCase()
+        .split(/[.\s,;:!?]+/)
+        .map((t) => t.trim())
+        .filter(Boolean),
+    );
 }
 
 export function assertRomajiWhitelist(paragraphs: string[], allowed: Set<string>): void {
@@ -160,29 +163,33 @@ function buildTtsLine(words: MilestoneWord[]): MilestoneTtsToken[] {
 function buildVocabOnlyStory(milestoneNumber: number): GeneratedMilestoneStory {
   const [blockA, blockB] = getBlocksForMilestone(milestoneNumber);
   const allWords = collectMilestoneWords(milestoneNumber);
-  const drillWords = pickDrillWords(allWords, 8);
+  const drillWords = pickDrillWords(allWords, 10);
 
-  const lineA = drillWords.slice(0, 3);
-  const lineB = drillWords.slice(3, 6);
-  const lineC = drillWords.slice(6, 8);
-  const chunks = [lineA, lineB, lineC].filter((g) => g.length > 0);
+  const chunkSize = Math.ceil(drillWords.length / 3);
+  const chunks: MilestoneWord[][] = [];
+  for (let i = 0; i < drillWords.length; i += chunkSize) {
+    chunks.push(drillWords.slice(i, i + chunkSize));
+  }
 
-  const paragraphs = [
-    lineA.map((w) => w.r).join(". ") + (lineA.length ? "." : ""),
-    lineB.map((w) => `${w.r} (${primaryEnglish(w)})`).join(". ") + (lineB.length ? "." : ""),
-    lineC.map((w) => w.r).join(". ") + (lineC.length ? "." : ""),
-  ].filter((p) => p.replace(/\./g, "").trim().length > 0);
+  const paragraphs = chunks
+    .map((chunk) =>
+      chunk
+        .map((w) => stripNonRomajiDisplay(formatWordLine(w)))
+        .filter((line) => line.length > 0)
+        .join("\n"),
+    )
+    .filter((p) => p.length > 0);
 
   const ttsLines = chunks.map(buildTtsLine);
 
-  const questionWords = drillWords.slice(0, Math.min(4, drillWords.length));
+  const questionWords = drillWords.slice(0, Math.min(8, drillWords.length));
   const comprehension: MilestoneComprehensionQ[] = questionWords.map((w, i) => ({
     id: `c${i + 1}`,
     prompt: `What does "${w.r}" mean?`,
     answer: primaryEnglish(w),
   }));
 
-  const production = pickProductionWords(allWords, 4).map((w, i) => ({
+  const production = pickProductionWords(allWords, 6).map((w, i) => ({
     id: `p${i + 1}`,
     promptEnglish: primaryEnglish(w),
     targetRomaji: w.r,
