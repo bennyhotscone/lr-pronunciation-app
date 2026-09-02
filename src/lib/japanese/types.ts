@@ -4,6 +4,8 @@ export type JapaneseWord = {
   r: string;
   en: string;
   m: string;
+  /** Optional per-word nuance override (see word-nuances.ts). */
+  nuance?: string;
 };
 
 export type JapanesePhase = "round1" | "round2" | "round3" | "round4" | "round5";

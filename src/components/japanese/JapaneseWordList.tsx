@@ -11,6 +11,7 @@ import {
   type JapaneseProgressPayload,
   type JapaneseWordStatSnapshot,
 } from "@/lib/japanese-actions";
+import { JapaneseWordNuance } from "./JapaneseWordNuance";
 
 type Props = {
   blockNumber: number;
@@ -98,6 +99,7 @@ export function JapaneseWordList({
               <div className="jp-learn-jp">{w.jp}</div>
               <div className="jp-learn-romaji">{resolved.displayRomaji}</div>
               <div className="jp-learn-english">{w.en}</div>
+              <JapaneseWordNuance word={w} showGroup />
               <div className="jp-learn-mnemonic">
                 <strong>Mnemonic</strong>
                 {resolved.displayMnemonic}

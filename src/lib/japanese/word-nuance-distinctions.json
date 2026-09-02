@@ -1,0 +1,292 @@
+{
+  "groups": [
+    {
+      "id": "uncertainty-maybe",
+      "title": "Saying \"maybe\" in Japanese",
+      "tokens": ["maybe", "probably", "perhaps", "might"],
+      "entries": [
+        {
+          "romaji": "tabun",
+          "jp": "多分",
+          "gloss": "probably / maybe",
+          "when": "Your best guess — you think it's likely (~70%+). たぶん雨だ (It's probably rain). Everyday default."
+        },
+        {
+          "romaji": "moshikashite",
+          "jp": "もしかして",
+          "gloss": "perhaps / could it be",
+          "when": "Opens a question or surprise — \"Could it be that…?\" もしかして彼？ (Could it be him?). You might be wrong."
+        },
+        {
+          "romaji": "kamoshirenai",
+          "jp": "かもしれない",
+          "gloss": "might / possibly",
+          "when": "Uncertainty on a statement — 雨かもしれない (It might rain). Attach to verb/adj; not a standalone question word."
+        }
+      ]
+    },
+    {
+      "id": "demonstratives-ko",
+      "title": "\"This\" and \"these\" — the こ series (near you)",
+      "tokens": ["this", "these"],
+      "entries": [
+        {
+          "romaji": "kore",
+          "jp": "これ",
+          "gloss": "this",
+          "when": "Standalone pronoun — one thing near you. これは何？ (What is this?). Never put a noun after it."
+        },
+        {
+          "romaji": "kono",
+          "jp": "この",
+          "gloss": "this (before a noun)",
+          "when": "Must sit before a noun — この本 (this book). For plural: この本たち ≈ \"these books.\""
+        },
+        {
+          "romaji": "korera",
+          "jp": "これら",
+          "gloss": "these",
+          "when": "Standalone plural near you — これらは本 (These are books). Points at several items, not modifying a noun."
+        }
+      ]
+    },
+    {
+      "id": "demonstratives-so",
+      "title": "\"That\" and \"those\" — the そ series (near them)",
+      "tokens": ["that", "those"],
+      "entries": [
+        {
+          "romaji": "sore",
+          "jp": "それ",
+          "gloss": "that",
+          "when": "Standalone — near the listener or just mentioned. それください (Give me that)."
+        },
+        {
+          "romaji": "sono",
+          "jp": "その",
+          "gloss": "that (before a noun)",
+          "when": "Before a noun — その店 (that shop). Same ソ distance as それ."
+        },
+        {
+          "romaji": "sorera",
+          "jp": "それら",
+          "gloss": "those",
+          "when": "Standalone plural — それらは古い (Those are old)."
+        }
+      ]
+    },
+    {
+      "id": "location-deictic",
+      "title": "Here, there, and where",
+      "tokens": ["here", "there", "where"],
+      "entries": [
+        {
+          "romaji": "koko",
+          "jp": "ここ",
+          "gloss": "here",
+          "when": "Near the speaker — where you are standing."
+        },
+        {
+          "romaji": "soko",
+          "jp": "そこ",
+          "gloss": "there",
+          "when": "Near the listener — where they are or what you just pointed at."
+        },
+        {
+          "romaji": "asoko",
+          "jp": "あそこ",
+          "gloss": "over there",
+          "when": "Away from both of you — across the room or down the street."
+        },
+        {
+          "romaji": "doko",
+          "jp": "どこ",
+          "gloss": "where",
+          "when": "Question word — どこ？ (Where?). Same こ/そ/あ/ど pattern."
+        }
+      ]
+    },
+    {
+      "id": "ask-inquire",
+      "title": "Saying \"ask\" in Japanese",
+      "tokens": ["ask", "listen", "hear"],
+      "entries": [
+        {
+          "romaji": "kiku",
+          "jp": "聞く",
+          "gloss": "listen / ask / hear",
+          "when": "Broad verb — listen, hear, or ask. 音楽を聞く (listen to music), 名前を聞く (ask a name). Default everyday \"ask.\""
+        },
+        {
+          "romaji": "tazuneru",
+          "jp": "尋ねる",
+          "gloss": "ask / inquire",
+          "when": "Deliberate inquiry — 道を尋ねる (ask for directions). More formal/focused; not for \"listen to music.\""
+        }
+      ]
+    },
+    {
+      "id": "leave-depart",
+      "title": "Saying \"leave\" in Japanese",
+      "tokens": ["leave", "go away", "depart"],
+      "entries": [
+        {
+          "romaji": "saru",
+          "jp": "去る",
+          "gloss": "leave / go away",
+          "when": "Depart a place — ここを去る (leave here). Literary/formal feel; person or thing moves away."
+        },
+        {
+          "romaji": "deru",
+          "jp": "出る",
+          "gloss": "go out / leave",
+          "when": "Exit outward — 家を出る (leave the house), 出かける (go out). Physical \"go out of\" somewhere."
+        },
+        {
+          "romaji": "nokosu",
+          "jp": "残す",
+          "gloss": "leave behind",
+          "when": "Leave something for someone — 荷物を残す (leave luggage behind). Object stays; you go."
+        },
+        {
+          "romaji": "yameru",
+          "jp": "辞める",
+          "gloss": "leave / quit",
+          "when": "Quit a job, school, or habit — 会社を辞める (quit the company). Not physical departure."
+        }
+      ]
+    },
+    {
+      "id": "other-distinction",
+      "title": "Saying \"other\" in Japanese",
+      "tokens": ["other", "else", "besides", "different", "another"],
+      "entries": [
+        {
+          "romaji": "hoka",
+          "jp": "他",
+          "gloss": "other / else / besides",
+          "when": "The rest, apart from what was mentioned — 他に何か？ (Anything else?). 他の人 (other people). Most common \"other.\""
+        },
+        {
+          "romaji": "betsu",
+          "jp": "別",
+          "gloss": "separate / different / other",
+          "when": "Emphasizes separation — 別の方法 (a different method), 別々に (separately). \"Different\" more than \"the rest.\""
+        },
+        {
+          "romaji": "sonota",
+          "jp": "その他",
+          "gloss": "others / etc.",
+          "when": "Catch-all for leftovers in lists — りんご、バナナ、その他 (apples, bananas, and others). Formal \"etc.\""
+        },
+        {
+          "romaji": "mouhitotsu",
+          "jp": "もう一つ",
+          "gloss": "another one",
+          "when": "Counting/addition — \"one more.\" もう一つください (One more, please). Specific quantity, not \"other\" in general."
+        }
+      ]
+    },
+    {
+      "id": "work-job",
+      "title": "Saying \"work\" in Japanese",
+      "tokens": ["work", "job"],
+      "entries": [
+        {
+          "romaji": "hataraku",
+          "jp": "働く",
+          "gloss": "work (verb)",
+          "when": "The action — to work. 会社で働く (work at a company). Verb: what you do."
+        },
+        {
+          "romaji": "shigoto",
+          "jp": "仕事",
+          "gloss": "work / job (noun)",
+          "when": "The job itself — 仕事がある (I have work). Noun: the thing/place/task."
+        }
+      ]
+    },
+    {
+      "id": "apology",
+      "title": "Saying sorry",
+      "tokens": ["sorry", "excuse me"],
+      "entries": [
+        {
+          "romaji": "sumimasen",
+          "jp": "すみません",
+          "gloss": "excuse me / sorry",
+          "when": "Polite default — bumping someone, getting attention, apologizing, or thanking for a favor."
+        },
+        {
+          "romaji": "gomen",
+          "jp": "ごめん",
+          "gloss": "sorry (casual)",
+          "when": "Friends/family only — quick sorry. Stepped on a toe, late to meet up."
+        },
+        {
+          "romaji": "sumanai",
+          "jp": "すまない",
+          "gloss": "sorry",
+          "when": "Casual-masculine sorry between close peers. Slightly weightier than ごめん."
+        }
+      ]
+    },
+    {
+      "id": "more-quantity",
+      "title": "Saying \"more\" in Japanese",
+      "tokens": ["more", "furthermore"],
+      "entries": [
+        {
+          "romaji": "motto",
+          "jp": "もっと",
+          "gloss": "more",
+          "when": "Quantity or degree — もっと食べたい (want to eat more), もっと大きい (bigger). \"More of\" something."
+        },
+        {
+          "romaji": "sarani",
+          "jp": "さらに",
+          "gloss": "more / furthermore",
+          "when": "Adding to a point — さらに問題がある (Furthermore, there's a problem). Formal \"in addition\" in speech/writing."
+        }
+      ]
+    },
+    {
+      "id": "also-again",
+      "title": "Also vs again",
+      "tokens": ["also", "too", "again"],
+      "entries": [
+        {
+          "romaji": "mata",
+          "jp": "また",
+          "gloss": "again / also",
+          "when": "\"Again\" — また来て (Come again). Can mean \"also\" in lists, but primary sense is repetition."
+        },
+        {
+          "romaji": "mo",
+          "jp": "も",
+          "gloss": "too / also",
+          "when": "Particle on a noun — 私も行く (I'm going too). \"In addition\" attached to the thing."
+        }
+      ]
+    },
+    {
+      "id": "time-still-already",
+      "title": "Still vs already",
+      "tokens": ["still", "already", "not yet", "anymore"],
+      "entries": [
+        {
+          "romaji": "mada",
+          "jp": "まだ",
+          "gloss": "still / not yet",
+          "when": "Hasn't happened yet — まだ食べてない (haven't eaten yet). Or \"still\" continuing."
+        },
+        {
+          "romaji": "mou",
+          "jp": "もう",
+          "gloss": "already / anymore",
+          "when": "Already done — もう食べた (already ate). With negative: もう行かない (not going anymore)."
+        }
+      ]
+    }
+  ]
+}

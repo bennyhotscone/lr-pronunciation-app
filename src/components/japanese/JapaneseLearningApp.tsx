@@ -46,6 +46,9 @@ import {
 import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseWordList } from "./JapaneseWordList";
+import { JapaneseWordNuance } from "./JapaneseWordNuance";
+import { playCorrectAnswerSound } from "@/lib/correct-answer-sound";
+import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
 import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "gate";
@@ -270,6 +273,7 @@ export function JapaneseLearningApp() {
     if (correct) {
       nextSession = recordCorrect(session);
       setStatus("Correct");
+      playCorrectAnswerSound();
     } else {
       nextSession = recordMiss(session, correctIndex);
       setStatus(`Answer: ${words[correctIndex].en}`);
@@ -302,6 +306,7 @@ export function JapaneseLearningApp() {
     if (correct) {
       nextSession = recordCorrect(session);
       setStatus("Accepted");
+      playCorrectAnswerSound();
       if (view.mode === "type-romaji" && view.round === 5) {
         playWordAudioAtIndex(view.wordIndex);
       }
@@ -698,6 +703,10 @@ export function JapaneseLearningApp() {
                 <p className="jp-learn-sub">Case, punctuation, equivalents, and minor typos are accepted.</p>
               ) : view.kind === "formal" && view.mode === "type-romaji" ? (
                 <p className="jp-learn-sub">{view.instruction}</p>
+              ) : null}
+
+              {wordHasNuanceExplanation(words[currentWord.index]) ? (
+                <JapaneseWordNuance word={words[currentWord.index]} />
               ) : null}
 
               {!(view.kind === "formal" && view.mode === "type-romaji") ? (

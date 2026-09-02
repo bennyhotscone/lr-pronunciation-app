@@ -19,6 +19,7 @@ import {
 } from "@/lib/japanese/grammar/matching";
 import type { GrammarBlockMeta, GrammarSessionState } from "@/lib/japanese/grammar/types";
 import { speakJapanese } from "@/lib/japanese/tts";
+import { playCorrectAnswerSound } from "@/lib/correct-answer-sound";
 import {
   loadGrammarProgress,
   resetGrammarBlockProgress,
@@ -124,6 +125,7 @@ export function GrammarLearningApp() {
 
     setAnswered(true);
     setStatus(correct ? "Correct" : "Try again on the next pass");
+    if (correct) playCorrectAnswerSound();
     const next = advanceGuided(session, block.guided.length, correct, String(session.guidedIndex));
     let nextMeta = meta;
     if (next.phase === "recall") {
@@ -151,6 +153,7 @@ export function GrammarLearningApp() {
 
     setAnswered(true);
     setStatus(correct ? "Accepted" : `Answer: ${currentRecall.direction === "j-to-e" ? currentRecall.answers[0] : currentRecall.romajiAnswers?.[0]}`);
+    if (correct) playCorrectAnswerSound();
 
     const jCount = block.recall.filter((q) => q.direction === "j-to-e").length;
     const eCount = block.recall.filter((q) => q.direction === "e-to-j").length;
