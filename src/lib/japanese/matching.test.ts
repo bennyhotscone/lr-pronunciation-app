@@ -61,6 +61,28 @@ describe("japanese matching", () => {
     expect(fuzzyMatchEnglish("  ME  ", watashi)).toBe(true);
   });
 
+  it("accepts dad/father and mum/mom/mother family aliases", () => {
+    const otousan: JapaneseWord = {
+      jp: "お父さん",
+      audio: "おとうさん",
+      r: "otousan",
+      en: "dad",
+      m: "x",
+    };
+    const okaasan: JapaneseWord = {
+      jp: "お母さん",
+      audio: "おかあさん",
+      r: "okaasan",
+      en: "mum",
+      m: "x",
+    };
+    expect(fuzzyMatchEnglish("dad", otousan)).toBe(true);
+    expect(fuzzyMatchEnglish("father", otousan)).toBe(true);
+    expect(fuzzyMatchEnglish("mum", okaasan)).toBe(true);
+    expect(fuzzyMatchEnglish("mom", okaasan)).toBe(true);
+    expect(fuzzyMatchEnglish("mother", okaasan)).toBe(true);
+  });
+
   it("accepts romaji with long-vowel shortcuts", () => {
     expect(fuzzyMatchRomaji("iku", iku)).toBe(true);
   });

@@ -290,14 +290,14 @@
     },
     {
       "id": "family-mother",
-      "title": "Saying \"mother\" and \"mom\" in Japanese",
-      "tokens": ["mother", "mom", "ma"],
+      "title": "Saying \"mum\" and \"mom\" in Japanese",
+      "tokens": ["mum", "mom", "mother", "ma"],
       "entries": [
         {
           "romaji": "okaasan",
           "jp": "お母さん",
-          "gloss": "mother",
-          "when": "Polite default — okaasan wa doko? (Where is mother?). Respectful, any age."
+          "gloss": "mum",
+          "when": "Polite default — okaasan wa doko? (Where is mum?). Respectful, any age. Also accepts mom / mother."
         },
         {
           "romaji": "mama",
@@ -315,8 +315,8 @@
         {
           "romaji": "otousan",
           "jp": "お父さん",
-          "gloss": "dad / father",
-          "when": "Polite default — otousan wa kaisha desu (Dad is at work)."
+          "gloss": "dad",
+          "when": "Polite default — otousan wa kaisha desu (Dad is at work). Also accepts father."
         },
         {
           "romaji": "papa",

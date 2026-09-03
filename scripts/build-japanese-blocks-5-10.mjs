@@ -34,7 +34,7 @@ const WORDS = {
     ["曲がる", "まがる", "magaru", "turn", "MAGA-rine truck has to TURN. → magaru."],
     ["十分", "じゅうぶん", "juubun", "enough", "JU-BUN — ENOUGH bread. → juubun."],
     ["負ける", "まける", "makeru", "lose", "MAKE-ru — you LOSE the game. → makeru."],
-    ["お母さん", "おかあさん", "okaasan", "mother", "OKA-SAN — MOTHER. → okaasan."],
+    ["お母さん", "おかあさん", "okaasan", "mum", "OKA-SAN — MUM. → okaasan."],
     ["自分の", "じぶんの", "jibunno", "own", "JI-BUN NO — your OWN thing. → jibunno."],
     ["もちろん", "もちろん", "mochiron", "of course", "MOCHI? Of COURSE! → mochiron."],
     ["気にする", "きにする", "kinisuru", "care", "KEY NEEDS SURE — I CARE. → kinisuru."],

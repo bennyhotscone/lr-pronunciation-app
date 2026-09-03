@@ -41,6 +41,8 @@ const ENGLISH_EXTRAS: Record<string, string[]> = {
   "okay / all right": ["okay", "ok", "all right", "alright"],
   "more / furthermore": ["more", "furthermore", "moreover", "moreso", "more so", "sarani"],
   "of course": ["of course", "certainly"],
+  "dad / father": ["dad", "father", "daddy"],
+  "mum / mom / mother": ["mum", "mom", "mother", "mummy", "mommy"],
 };
 
 function stripEnglishFluff(s: string): string {
