@@ -73,7 +73,7 @@ describe("japanese matching", () => {
       jp: "お母さん",
       audio: "おかあさん",
       r: "okaasan",
-      en: "mum",
+      en: "mother",
       m: "x",
     };
     expect(fuzzyMatchEnglish("dad", otousan)).toBe(true);
