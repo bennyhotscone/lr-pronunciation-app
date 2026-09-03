@@ -25,8 +25,120 @@
 .jp-learn-wordgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 0.625rem; }
 .jp-learn-word { background: var(--paper); border: 1px solid var(--border); border-radius: 14px; padding: 0.9375rem; }
 .jp-learn-word-known { border-color: #2d8a5e; box-shadow: inset 0 0 0 1px rgba(45, 138, 94, 0.25); }
+.jp-learn-word-known.jp-learn-word-repeat { border-color: #2d8a5e; }
+.jp-learn-word-repeat { border-color: #c48a4a; box-shadow: inset 0 0 0 1px rgba(196, 138, 74, 0.28); }
 .jp-learn-known-badge { margin-left: 0.5rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #2d8a5e; }
+.jp-learn-repeat-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #7a4a1e;
+  background: #f3ddc4;
+  padding: 0.12rem 0.4rem;
+  border-radius: 6px;
+}
+.jp-learn-repeat-tag-block { margin-top: 0.4rem; }
+.jp-learn-catalog-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.85rem 0 0.35rem;
+}
+.jp-learn-catalog-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.jp-learn-catalog-search {
+  font: inherit;
+  min-width: min(100%, 14rem);
+  flex: 1 1 12rem;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+}
+.jp-learn-catalog {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper);
+}
+.jp-learn-catalog-head,
+.jp-learn-catalog-row {
+  display: grid;
+  grid-template-columns: minmax(7rem, 1.15fr) minmax(8rem, 1.45fr) 3.1rem minmax(4rem, 0.9fr) minmax(6rem, 0.9fr);
+  gap: 0.4rem 0.75rem;
+  align-items: baseline;
+  padding: 0.55rem 0.8rem;
+}
+.jp-learn-catalog-head {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #f4efe6;
+}
+.jp-learn-catalog-row { border-top: 1px solid var(--border); }
+.jp-learn-catalog-row-repeat { background: #f8efe4; }
+.jp-learn-catalog-row-known { box-shadow: inset 3px 0 0 #2d8a5e; }
+.jp-learn-catalog-row .jp-learn-romaji { font-size: 1.05rem; margin: 0; }
+.jp-learn-catalog-row .jp-learn-english { margin: 0; }
+.jp-learn-catalog-jp { font-weight: 600; }
+.jp-learn-catalog-block {
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  border-radius: 7px;
+  padding: 0.15rem 0.35rem;
+  cursor: pointer;
+  width: fit-content;
+}
+.jp-learn-catalog-block-current { background: #222; color: #fff; border-color: #222; }
+.jp-learn-repeat-groups { display: grid; gap: 0.65rem; }
+.jp-learn-repeat-group {
+  border: 1px solid #e0b989;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper);
+}
+.jp-learn-repeat-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  background: #f8efe4;
+}
+.jp-learn-repeat-group-head .jp-learn-romaji { font-size: 1.15rem; margin: 0; }
+.jp-learn-repeat-group .jp-learn-catalog-row { border-top: 1px solid #ead3b4; }
+.jp-learn-repeat-group .jp-learn-catalog-row:first-of-type { border-top: 1px solid #ead3b4; }
+@media (max-width: 700px) {
+  .jp-learn-catalog-head { display: none; }
+  .jp-learn-catalog-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "romaji block"
+      "english english"
+      "jp tag";
+  }
+  .jp-learn-catalog-row .jp-learn-romaji { grid-area: romaji; }
+  .jp-learn-catalog-row .jp-learn-english { grid-area: english; }
+  .jp-learn-catalog-block { grid-area: block; }
+  .jp-learn-catalog-jp { grid-area: jp; }
+  .jp-learn-catalog-row .jp-learn-repeat-tag { grid-area: tag; justify-self: end; }
+}
 .jp-learn-known-count { font-weight: 600; color: #2d8a5e; }
+.jp-learn-counts { font-size: 0.92rem; font-weight: 750; margin: 0.65rem 0 0; }
 .jp-learn-word .jp-learn-mnemonic { font-size: 0.9rem; padding: 0.625rem; margin: 0.625rem 0 0; }
 .jp-learn-status { font-weight: 750; margin-top: 0.8125rem; min-height: 1.5rem; }
 .jp-learn-input { width: 100%; font: inherit; font-size: 1.2rem; padding: 0.9375rem; border: 1px solid #555; border-radius: 10px; background: var(--paper); margin-top: 1rem; }

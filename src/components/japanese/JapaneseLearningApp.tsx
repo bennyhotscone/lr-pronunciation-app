@@ -1054,6 +1054,11 @@ export function JapaneseLearningApp() {
           words={words}
           overrides={overrides}
           wordStats={wordStats}
+          onSelectBlock={(n) => {
+            if (!meta) return;
+            if (!isJapaneseBlockUnlocked(meta, block, n) || !isPlayableJapaneseBlock(n)) return;
+            setBlock(n);
+          }}
           onOverrideChange={(wordIndex, field, value) => {
             setOverrides((prev) => ({
               ...prev,
