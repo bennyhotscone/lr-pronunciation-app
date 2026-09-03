@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import {
   advanceAfterRound1Correct,
@@ -695,6 +696,15 @@ export function JapaneseLearningApp() {
             );
           })}
         </nav>
+        <section className="jp-learn-practice" aria-labelledby="jp-sentences-heading">
+          <h2 id="jp-sentences-heading" className="jp-learn-practice-title">Sentence building</h2>
+          <p className="jp-learn-sub">
+            Practice particles and verb forms by building short spoken Japanese sentences.
+          </p>
+          <Link href="/portal/learn-grammar" className="jp-learn-btn jp-learn-btn-gate">
+            Make sentences →
+          </Link>
+        </section>
         <section className="jp-learn-practice" aria-labelledby="jp-practice-heading">
           <h2 id="jp-practice-heading" className="jp-learn-practice-title">Practice</h2>
           <p className="jp-learn-sub">Block {block} — pick any round you have reached (1–5).</p>

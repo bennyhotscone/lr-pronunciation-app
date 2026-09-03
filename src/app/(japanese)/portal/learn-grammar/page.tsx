@@ -1,5 +1,5 @@
-import { GrammarLearningApp } from "@/components/japanese/GrammarLearningApp";
+import { ParticleRoundApp } from "@/components/japanese/ParticleRoundApp";
 
 export default function LearnGrammarPage() {
-  return <GrammarLearningApp />;
+  return <ParticleRoundApp />;
 }

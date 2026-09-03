@@ -45,6 +45,7 @@ describe("known-words", () => {
       {
         known: true,
         missedEarlyRounds: false,
+        consecutiveCorrect: 4,
         round4CorrectCount: 2,
         round5CorrectCount: 2,
       },
