@@ -1130,7 +1130,8 @@ export function JapaneseLearningApp() {
                       }
                     />
                   ) : null}
-                  {wasWrong && view.sourceBlock === block ? (
+                  {view.sourceBlock === block &&
+                  (wasWrong || getTrainingRound(view) >= 4) ? (
                     <>
                       <JapaneseMnemonicHook
                         blockNumber={view.sourceBlock}
@@ -1138,15 +1139,17 @@ export function JapaneseLearningApp() {
                         canonicalMnemonic={words[view.sourceWordIndex].m}
                         mnemonic={overrides[view.sourceWordIndex]?.mnemonic}
                         onMnemonicChange={handleMnemonicChange}
-                        autoEdit
+                        autoEdit={wasWrong}
                       />
-                      <button
-                        type="button"
-                        className="jp-learn-btn mt-2"
-                        onClick={playCurrentWordAudio}
-                      >
-                        Replay audio
-                      </button>
+                      {wasWrong ? (
+                        <button
+                          type="button"
+                          className="jp-learn-btn mt-2"
+                          onClick={playCurrentWordAudio}
+                        >
+                          Replay audio
+                        </button>
+                      ) : null}
                     </>
                   ) : wasWrong ? (
                     <button
