@@ -44,7 +44,7 @@ import {
   isParticleRoundAccessible,
 } from "@/lib/japanese/particles/unlock";
 import { PARTICLE_VERBS } from "@/lib/japanese/particles/verbs";
-import { speakJapanese } from "@/lib/japanese/tts";
+import { playParticleAudio } from "@/lib/japanese/particles/audio";
 import "./japanese-learning.css";
 
 export function ParticleRoundApp() {
@@ -113,7 +113,7 @@ export function ParticleRoundApp() {
   useEffect(() => {
     if (!session || !current) return;
     if (effectiveRound === "formMC" || effectiveRound === "verbMC" || effectiveRound === "listenType") {
-      const t = setTimeout(() => speakJapanese(current.jp), 250);
+      const t = setTimeout(() => playParticleAudio(current), 250);
       return () => clearTimeout(t);
     }
   }, [session?.round, session?.questionIndex, effectiveRound, current]);
@@ -165,7 +165,7 @@ export function ParticleRoundApp() {
 
   const handleCorrect = (question: ParticleQuestion) => {
     playCorrectAnswerSound();
-    setTimeout(() => speakJapanese(question.jp), 120);
+    setTimeout(() => playParticleAudio(question), 120);
   };
 
   const handleChoice = (choiceEn: string, question: ParticleQuestion) => {
@@ -260,7 +260,7 @@ export function ParticleRoundApp() {
                   <span className="jp-particle-ending">{form.ending}</span>
                 </div>
                 <div className="jp-particle-meaning">{form.meaning}</div>
-                <button type="button" className="jp-learn-btn" onClick={() => speakJapanese(form.jp)}>
+                <button type="button" className="jp-learn-btn" onClick={() => playParticleAudio({ jp: form.jp, romaji: form.romaji, en: form.meaning })}>
                   Play
                 </button>
               </div>
@@ -296,7 +296,7 @@ export function ParticleRoundApp() {
           <div key={ex.romaji} className="jp-particle-form-row">
             <div className="jp-particle-form-word">{ex.romaji}</div>
             <div className="jp-particle-meaning">{ex.en}</div>
-            <button type="button" className="jp-learn-btn" onClick={() => speakJapanese(ex.jp)}>
+            <button type="button" className="jp-learn-btn" onClick={() => playParticleAudio({ jp: ex.jp, romaji: ex.romaji, en: ex.en })}>
               Play
             </button>
           </div>
@@ -338,7 +338,7 @@ export function ParticleRoundApp() {
           <div className="jp-learn-meta">
             {effectiveRound === "formMC" ? "ONE VERB - MIXED FORMS" : "MANY VERBS - MIXED FORMS"}
           </div>
-          <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={() => speakJapanese(current.jp)}>
+          <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={() => playParticleAudio(current)}>
             Play Japanese
           </button>
           <div className="jp-learn-prompt-en">What does it mean?</div>
@@ -387,7 +387,7 @@ export function ParticleRoundApp() {
       return (
         <div className="jp-learn-card">
           <div className="jp-learn-meta">{lesson.title}</div>
-          <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={() => speakJapanese(current.jp)}>
+          <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={() => playParticleAudio(current)}>
             Play Japanese
           </button>
           <div className="jp-learn-prompt-en">Type the English meaning</div>

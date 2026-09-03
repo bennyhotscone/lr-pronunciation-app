@@ -50,6 +50,9 @@ function pickJapaneseVoice(): SpeechSynthesisVoice | undefined {
 function utterNow(text: string, generation: number): void {
   if (generation !== speakGeneration) return;
 
+  // Chrome/Electron can leave speechSynthesis paused until resumed.
+  window.speechSynthesis.resume();
+
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "ja-JP";
   u.rate = 0.72;
@@ -115,6 +118,8 @@ function utterNowSlow(text: string, generation: number, rate: number): Promise<v
       resolve();
       return;
     }
+
+    window.speechSynthesis.resume();
 
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "ja-JP";
