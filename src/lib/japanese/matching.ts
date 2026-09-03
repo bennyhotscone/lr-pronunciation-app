@@ -40,6 +40,7 @@ const ENGLISH_EXTRAS: Record<string, string[]> = {
   "excuse me / sorry": ["excuse me", "sorry"],
   "okay / all right": ["okay", "ok", "all right", "alright"],
   "more / furthermore": ["more", "furthermore", "moreover", "moreso", "more so", "sarani"],
+  "of course": ["of course", "certainly"],
 };
 
 function stripEnglishFluff(s: string): string {
