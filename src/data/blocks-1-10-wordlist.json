@@ -2252,132 +2252,6 @@
   {
     "block": 6,
     "index": 0,
-    "romaji": "yaru",
-    "jp": "やる",
-    "audio": "やる",
-    "english": "do / give (casual)",
-    "mnemonic": "YA-RU — DO. → yaru."
-  },
-  {
-    "block": 6,
-    "index": 1,
-    "romaji": "omou",
-    "jp": "思う",
-    "audio": "おもう",
-    "english": "think / feel",
-    "mnemonic": "O-MOU — THINK. → omou."
-  },
-  {
-    "block": 6,
-    "index": 2,
-    "romaji": "aru",
-    "jp": "ある",
-    "audio": "ある",
-    "english": "exist / have (things)",
-    "mnemonic": "A-RU — EXIST. → aru."
-  },
-  {
-    "block": 6,
-    "index": 3,
-    "romaji": "iru",
-    "jp": "いる",
-    "audio": "いる",
-    "english": "exist / be (people/animals)",
-    "mnemonic": "I-RU — EXIST. → iru."
-  },
-  {
-    "block": 6,
-    "index": 4,
-    "romaji": "deru",
-    "jp": "出る",
-    "audio": "でる",
-    "english": "go out / leave / come out",
-    "mnemonic": "DE-RU — GO OUT. → deru."
-  },
-  {
-    "block": 6,
-    "index": 5,
-    "romaji": "ireru",
-    "jp": "入れる",
-    "audio": "いれる",
-    "english": "put in / let in",
-    "mnemonic": "I-RE-RU — PUT IN. → ireru."
-  },
-  {
-    "block": 6,
-    "index": 6,
-    "romaji": "dasu",
-    "jp": "出す",
-    "audio": "だす",
-    "english": "take out / put out",
-    "mnemonic": "DA-SU — TAKE OUT. → dasu."
-  },
-  {
-    "block": 6,
-    "index": 7,
-    "romaji": "kureru",
-    "jp": "くれる",
-    "audio": "くれる",
-    "english": "give (to me/us)",
-    "mnemonic": "KU-RE-RU — GIVE (TO ME. → kureru."
-  },
-  {
-    "block": 6,
-    "index": 8,
-    "romaji": "naru",
-    "jp": "なる",
-    "audio": "なる",
-    "english": "become",
-    "mnemonic": "NA-RU — BECOME. → naru."
-  },
-  {
-    "block": 6,
-    "index": 9,
-    "romaji": "yameru",
-    "jp": "やめる",
-    "audio": "やめる",
-    "english": "stop / quit",
-    "mnemonic": "YA-ME-RU — STOP. → yameru."
-  },
-  {
-    "block": 6,
-    "index": 10,
-    "romaji": "hajimaru",
-    "jp": "始まる",
-    "audio": "はじまる",
-    "english": "start / begin",
-    "mnemonic": "HA-JI-MA-RU — START. → hajimaru."
-  },
-  {
-    "block": 6,
-    "index": 11,
-    "romaji": "tsuku",
-    "jp": "着く",
-    "audio": "つく",
-    "english": "arrive",
-    "mnemonic": "TSU-KU — ARRIVE. → tsuku."
-  },
-  {
-    "block": 6,
-    "index": 12,
-    "romaji": "noru",
-    "jp": "乗る",
-    "audio": "のる",
-    "english": "ride / get on",
-    "mnemonic": "N-O-RU — RIDE. → noru."
-  },
-  {
-    "block": 6,
-    "index": 13,
-    "romaji": "oriru",
-    "jp": "降りる",
-    "audio": "おりる",
-    "english": "get off / go down",
-    "mnemonic": "O-RI-RU — GET OFF. → oriru."
-  },
-  {
-    "block": 6,
-    "index": 14,
     "romaji": "akeru",
     "jp": "開ける",
     "audio": "あける",
@@ -2386,1042 +2260,223 @@
   },
   {
     "block": 6,
-    "index": 15,
-    "romaji": "shimeru",
-    "jp": "閉める",
-    "audio": "しめる",
-    "english": "close",
-    "mnemonic": "SHI-ME-RU — CLOSE the door. → shimeru."
-  },
-  {
-    "block": 6,
-    "index": 16,
-    "romaji": "atsumeru",
-    "jp": "集める",
-    "audio": "あつめる",
-    "english": "collect / gather",
-    "mnemonic": "A-TSU-ME-RU — COLLECT. → atsumeru."
-  },
-  {
-    "block": 6,
-    "index": 17,
-    "romaji": "atsumaru",
-    "jp": "集まる",
-    "audio": "あつまる",
-    "english": "gather / meet up",
-    "mnemonic": "A-TSU-MA-RU — GATHER. → atsumaru."
-  },
-  {
-    "block": 6,
-    "index": 18,
-    "romaji": "kaesu",
-    "jp": "返す",
-    "audio": "かえす",
-    "english": "return / give back",
-    "mnemonic": "KAE-SU — RETURN. → kaesu."
-  },
-  {
-    "block": 6,
-    "index": 19,
-    "romaji": "kawaru",
-    "jp": "変わる",
-    "audio": "かわる",
-    "english": "change",
-    "mnemonic": "KA-WA-RU — CHANGE. → kawaru."
-  },
-  {
-    "block": 6,
-    "index": 20,
-    "romaji": "kaeru",
-    "jp": "変える",
-    "audio": "かえる",
-    "english": "change something",
-    "mnemonic": "“CARE to RETURN home?” → kaeru."
-  },
-  {
-    "block": 6,
-    "index": 21,
-    "romaji": "naosu",
-    "jp": "直す",
-    "audio": "なおす",
-    "english": "fix / correct",
-    "mnemonic": "N-AO-SU — FIX. → naosu."
-  },
-  {
-    "block": 6,
-    "index": 22,
-    "romaji": "naoru",
-    "jp": "直る",
-    "audio": "なおる",
-    "english": "be fixed / get better",
-    "mnemonic": "N-AO-RU — BE FIXED. → naoru."
-  },
-  {
-    "block": 6,
-    "index": 23,
-    "romaji": "wasureru",
-    "jp": "忘れる",
-    "audio": "わすれる",
-    "english": "forget",
-    "mnemonic": "WASU-RERU — FORGET it. → wasureru."
-  },
-  {
-    "block": 6,
-    "index": 24,
-    "romaji": "oboeru",
-    "jp": "覚える",
-    "audio": "おぼえる",
-    "english": "remember / learn",
-    "mnemonic": "OH, BO EH RU — REMEMBER this. → oboeru."
-  },
-  {
-    "block": 6,
-    "index": 25,
-    "romaji": "oshieru",
-    "jp": "教える",
-    "audio": "おしえる",
-    "english": "tell / teach",
-    "mnemonic": "O-SHIE-RU — TELL. → oshieru."
-  },
-  {
-    "block": 6,
-    "index": 26,
-    "romaji": "narau",
-    "jp": "習う",
-    "audio": "ならう",
-    "english": "learn (from someone)",
-    "mnemonic": "N-A-RAU — LEARN (FROM SOMEONE). → narau."
-  },
-  {
-    "block": 6,
-    "index": 27,
-    "romaji": "shiru",
-    "jp": "知る",
-    "audio": "しる",
-    "english": "find out / come to know",
-    "mnemonic": "SHI-RU — FIND OUT. → shiru."
-  },
-  {
-    "block": 6,
-    "index": 28,
-    "romaji": "kangaeru",
-    "jp": "考える",
-    "audio": "かんがえる",
-    "english": "think / consider",
-    "mnemonic": "KANGAERU — THINK → kangaeru."
-  },
-  {
-    "block": 6,
-    "index": 29,
-    "romaji": "kimeru",
-    "jp": "決める",
-    "audio": "きめる",
-    "english": "decide",
-    "mnemonic": "KI-ME-RU — DECIDE. → kimeru."
-  },
-  {
-    "block": 6,
-    "index": 30,
-    "romaji": "kimaru",
-    "jp": "決まる",
-    "audio": "きまる",
-    "english": "be decided",
-    "mnemonic": "KI-MA-RU — BE DECIDED. → kimaru."
-  },
-  {
-    "block": 6,
-    "index": 31,
-    "romaji": "erabu",
-    "jp": "選ぶ",
-    "audio": "えらぶ",
-    "english": "choose",
-    "mnemonic": "ERABU — CHOOSE / pick → erabu."
-  },
-  {
-    "block": 6,
-    "index": 32,
-    "romaji": "sagasu",
-    "jp": "探す",
-    "audio": "さがす",
-    "english": "look for",
-    "mnemonic": "SA-GA-SU — LOOK FOR. → sagasu."
-  },
-  {
-    "block": 6,
-    "index": 33,
-    "romaji": "mitsukaru",
-    "jp": "見つかる",
-    "audio": "みつかる",
-    "english": "be found / find it",
-    "mnemonic": "MI-TSU-KA-RU — BE FOUND. → mitsukaru."
-  },
-  {
-    "block": 6,
-    "index": 34,
-    "romaji": "miseru",
-    "jp": "見せる",
-    "audio": "みせる",
-    "english": "show",
-    "mnemonic": "ME, SEE RU — SHOW me. → miseru."
-  },
-  {
-    "block": 6,
-    "index": 35,
-    "romaji": "tsutaeru",
-    "jp": "伝える",
-    "audio": "つたえる",
-    "english": "tell / convey",
-    "mnemonic": "TSU-TAE-RU — TELL. → tsutaeru."
-  },
-  {
-    "block": 6,
-    "index": 36,
-    "romaji": "yobu",
-    "jp": "呼ぶ",
-    "audio": "よぶ",
-    "english": "call / invite",
-    "mnemonic": "YO-BU — CALL. → yobu."
-  },
-  {
-    "block": 6,
-    "index": 37,
-    "romaji": "yomeru",
-    "jp": "読める",
-    "audio": "よめる",
-    "english": "can read",
-    "mnemonic": "YO-ME-RU — CAN READ. → yomeru."
-  },
-  {
-    "block": 6,
-    "index": 38,
-    "romaji": "warau",
-    "jp": "笑う",
-    "audio": "わらう",
-    "english": "laugh",
-    "mnemonic": "WA-RAU — LAUGH. → warau."
-  },
-  {
-    "block": 6,
-    "index": 39,
-    "romaji": "naku",
-    "jp": "泣く",
-    "audio": "なく",
-    "english": "cry",
-    "mnemonic": "N-A-KU — CRY. → naku."
-  },
-  {
-    "block": 6,
-    "index": 40,
-    "romaji": "okoru",
-    "jp": "怒る",
-    "audio": "おこる",
-    "english": "get angry",
-    "mnemonic": "OH, COR! What will HAPPEN? → okoru."
-  },
-  {
-    "block": 6,
-    "index": 41,
-    "romaji": "odoroku",
-    "jp": "驚く",
-    "audio": "おどろく",
-    "english": "be surprised",
-    "mnemonic": "O-DO-RO-KU — BE SURPRISED. → odoroku."
-  },
-  {
-    "block": 6,
-    "index": 42,
-    "romaji": "komaru",
-    "jp": "困る",
-    "audio": "こまる",
-    "english": "be in trouble / not know what to do",
-    "mnemonic": "KOMARU — be in TROUBLE → komaru."
-  },
-  {
-    "block": 6,
-    "index": 43,
-    "romaji": "ganbaru",
-    "jp": "頑張る",
-    "audio": "がんばる",
-    "english": "try hard / do one's best",
-    "mnemonic": "GAN-BA-RU — TRY HARD. → ganbaru."
-  },
-  {
-    "block": 6,
-    "index": 44,
-    "romaji": "tetsudau",
-    "jp": "手伝う",
-    "audio": "てつだう",
-    "english": "help out",
-    "mnemonic": "TE-TSU-DAU — HELP OUT. → tetsudau."
-  },
-  {
-    "block": 6,
-    "index": 45,
-    "romaji": "tanomu",
-    "jp": "頼む",
-    "audio": "たのむ",
-    "english": "ask / request / order",
-    "mnemonic": "TAN-O-MU — ASK. → tanomu."
-  },
-  {
-    "block": 6,
-    "index": 46,
-    "romaji": "kotaeru",
-    "jp": "答える",
-    "audio": "こたえる",
-    "english": "answer",
-    "mnemonic": "KO-TAE-RU — ANSWER. → kotaeru."
-  },
-  {
-    "block": 6,
-    "index": 47,
-    "romaji": "shitsumon suru",
-    "jp": "質問する",
-    "audio": "しつもんする",
-    "english": "ask a question",
-    "mnemonic": "SHI-TSU-MON SU-RU — ASK A QUESTION. → shitsumon suru."
-  },
-  {
-    "block": 6,
-    "index": 48,
-    "romaji": "renraku suru",
-    "jp": "連絡する",
-    "audio": "れんらくする",
-    "english": "contact",
-    "mnemonic": "REN-RA-KU SU-RU — CONTACT. → renraku suru."
-  },
-  {
-    "block": 6,
-    "index": 49,
-    "romaji": "denwa suru",
-    "jp": "電話する",
-    "audio": "でんわする",
-    "english": "call / phone",
-    "mnemonic": "DEN-WA SU-RU — CALL. → denwa suru."
-  },
-  {
-    "block": 7,
-    "index": 0,
-    "romaji": "hanashi",
-    "jp": "話",
-    "audio": "はなし",
-    "english": "story / talk",
-    "mnemonic": "HA-NA-SHI — STORY. → hanashi."
-  },
-  {
-    "block": 7,
     "index": 1,
-    "romaji": "koto",
-    "jp": "こと",
-    "audio": "こと",
-    "english": "thing / matter (abstract)",
-    "mnemonic": "KO-TO — THING. → koto."
+    "romaji": "shinpai",
+    "jp": "心配",
+    "audio": "しんぱい",
+    "english": "worry",
+    "mnemonic": "SHIN-PAI — WORRY. → shinpai."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 2,
-    "romaji": "tokoro",
-    "jp": "ところ",
-    "audio": "ところ",
-    "english": "place / point / part",
-    "mnemonic": "TO-KO-RO — PLACE. → tokoro."
+    "romaji": "mondai",
+    "jp": "問題",
+    "audio": "もんだい",
+    "english": "problem",
+    "mnemonic": "MONDAI — PROBLEM → mondai."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 3,
-    "romaji": "toki",
-    "jp": "時",
-    "audio": "とき",
-    "english": "time / when",
-    "mnemonic": "TO-KI — TIME. → toki."
+    "romaji": "nayami",
+    "jp": "悩み",
+    "audio": "なやみ",
+    "english": "worry / concern",
+    "mnemonic": "NAYAMI — WORRY / concern → nayami."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 4,
-    "romaji": "hito",
-    "jp": "人",
-    "audio": "ひと",
-    "english": "person",
-    "mnemonic": "\"HE told\" that PERSON. → hito."
+    "romaji": "kangae",
+    "jp": "考え",
+    "audio": "かんがえ",
+    "english": "idea",
+    "mnemonic": "KAN-GAE — an IDEA. → kangae."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 5,
-    "romaji": "minna",
-    "jp": "みんな",
-    "audio": "みんな",
-    "english": "everyone",
-    "mnemonic": "MIN-NA — EVERYBODY. → minna."
+    "romaji": "harau",
+    "jp": "払う",
+    "audio": "はらう",
+    "english": "pay",
+    "mnemonic": "HA-RAU — PAY up. → harau."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 6,
-    "romaji": "dareka",
-    "jp": "誰か",
-    "audio": "だれか",
-    "english": "someone",
-    "mnemonic": "DARE-KA — SOMEONE. → dareka."
+    "romaji": "kanari",
+    "jp": "かなり",
+    "audio": "かなり",
+    "english": "pretty / quite",
+    "mnemonic": "CAN-A-RI — PRETTY good. → kanari."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 7,
-    "romaji": "nanika",
-    "jp": "何か",
-    "audio": "なにか",
-    "english": "something",
-    "mnemonic": "N-AN-I-KA — SOMETHING. → nanika."
+    "romaji": "junbi",
+    "jp": "準備",
+    "audio": "じゅんび",
+    "english": "preparation / ready",
+    "mnemonic": "JUNBI — PREP / ready → junbi."
   },
   {
-    "block": 7,
+    "block": 6,
     "index": 8,
-    "romaji": "dore",
-    "jp": "どれ",
-    "audio": "どれ",
-    "english": "which one",
-    "mnemonic": "DO RE — WHICH one? → dore."
-  },
-  {
-    "block": 7,
-    "index": 9,
-    "romaji": "kore",
-    "jp": "これ",
-    "audio": "これ",
-    "english": "this",
-    "mnemonic": "KO-RE — THIS. → kore."
-  },
-  {
-    "block": 7,
-    "index": 10,
-    "romaji": "sore",
-    "jp": "それ",
-    "audio": "それ",
-    "english": "that",
-    "mnemonic": "SO-RE — THAT. → sore."
-  },
-  {
-    "block": 7,
-    "index": 11,
-    "romaji": "are",
-    "jp": "あれ",
-    "audio": "あれ",
-    "english": "that over there",
-    "mnemonic": "A-RE — THAT OVER THERE. → are."
-  },
-  {
-    "block": 7,
-    "index": 12,
-    "romaji": "kono",
-    "jp": "この",
-    "audio": "この",
-    "english": "this + noun",
-    "mnemonic": "KON-O — THIS + NOUN. → kono."
-  },
-  {
-    "block": 7,
-    "index": 13,
-    "romaji": "sono",
-    "jp": "その",
-    "audio": "その",
-    "english": "that + noun",
-    "mnemonic": "SONO — THAT / its → sono."
-  },
-  {
-    "block": 7,
-    "index": 14,
-    "romaji": "ano",
-    "jp": "あの",
-    "audio": "あの",
-    "english": "that + noun / um",
-    "mnemonic": "AN-O — THAT + NOUN. → ano."
-  },
-  {
-    "block": 7,
-    "index": 15,
-    "romaji": "donna",
-    "jp": "どんな",
-    "audio": "どんな",
-    "english": "what kind of",
-    "mnemonic": "DON-N-A — WHAT KIND OF. → donna."
-  },
-  {
-    "block": 7,
-    "index": 16,
-    "romaji": "konna",
-    "jp": "こんな",
-    "audio": "こんな",
-    "english": "like this / this kind of",
-    "mnemonic": "KON-N-A — LIKE THIS. → konna."
-  },
-  {
-    "block": 7,
-    "index": 17,
-    "romaji": "sonna",
-    "jp": "そんな",
-    "audio": "そんな",
-    "english": "like that / that kind of",
-    "mnemonic": "SON-NA — SUCH a thing. → sonna."
-  },
-  {
-    "block": 7,
-    "index": 18,
-    "romaji": "anna",
-    "jp": "あんな",
-    "audio": "あんな",
-    "english": "like that over there",
-    "mnemonic": "AN-N-A — LIKE THAT OVER THERE. → anna."
-  },
-  {
-    "block": 7,
-    "index": 19,
-    "romaji": "docchi",
-    "jp": "どっち",
-    "audio": "どっち",
-    "english": "which / which way (casual)",
-    "mnemonic": "DO-CCHI — WHICH. → docchi."
-  },
-  {
-    "block": 7,
-    "index": 20,
-    "romaji": "kochira",
-    "jp": "こちら",
-    "audio": "こちら",
-    "english": "this way / this person (polite)",
-    "mnemonic": "KO-CHI-RA — THIS WAY. → kochira."
-  },
-  {
-    "block": 7,
-    "index": 21,
-    "romaji": "sochira",
-    "jp": "そちら",
-    "audio": "そちら",
-    "english": "that way / you (polite)",
-    "mnemonic": "SO-CHI-RA — THAT WAY. → sochira."
-  },
-  {
-    "block": 7,
-    "index": 22,
-    "romaji": "achira",
-    "jp": "あちら",
-    "audio": "あちら",
-    "english": "over there (polite)",
-    "mnemonic": "A-CHI-RA — OVER THERE (POLITE). → achira."
-  },
-  {
-    "block": 7,
-    "index": 23,
-    "romaji": "doko ka",
-    "jp": "どこか",
-    "audio": "どこか",
-    "english": "somewhere",
-    "mnemonic": "DO-KO KA — SOMEWHERE. → doko ka."
-  },
-  {
-    "block": 7,
-    "index": 24,
-    "romaji": "doko demo",
-    "jp": "どこでも",
-    "audio": "どこでも",
-    "english": "anywhere",
-    "mnemonic": "DO-KO DE-MO — ANYWHERE. → doko demo."
-  },
-  {
-    "block": 7,
-    "index": 25,
-    "romaji": "dare demo",
-    "jp": "誰でも",
-    "audio": "だれでも",
-    "english": "anyone",
-    "mnemonic": "DARE-DEMO — ANYONE. → daredemo."
-  },
-  {
-    "block": 7,
-    "index": 26,
-    "romaji": "nan demo",
-    "jp": "何でも",
-    "audio": "なんでも",
-    "english": "anything",
-    "mnemonic": "NAN-DEMO — ANYTHING. → nandemo."
-  },
-  {
-    "block": 7,
-    "index": 27,
-    "romaji": "zenzen",
-    "jp": "全然",
-    "audio": "ぜんぜん",
-    "english": "not at all / totally",
-    "mnemonic": "ZEN-ZEN — NOT AT ALL. → zenzen."
-  },
-  {
-    "block": 7,
-    "index": 28,
-    "romaji": "zettai",
-    "jp": "絶対",
-    "audio": "ぜったい",
-    "english": "definitely / absolutely",
-    "mnemonic": "ZE-TTAI — DEFINITELY. → zettai."
-  },
-  {
-    "block": 7,
-    "index": 29,
-    "romaji": "yappari",
-    "jp": "やっぱり",
-    "audio": "やっぱり",
-    "english": "as expected / after all",
-    "mnemonic": "YA-PPA-RI — AS EXPECTED. → yappari."
-  },
-  {
-    "block": 7,
-    "index": 30,
-    "romaji": "yahari",
-    "jp": "やはり",
-    "audio": "やはり",
-    "english": "as expected / after all",
-    "mnemonic": "YA-HA-RI — AS EXPECTED. → yahari."
-  },
-  {
-    "block": 7,
-    "index": 31,
-    "romaji": "naruhodo",
-    "jp": "なるほど",
-    "audio": "なるほど",
-    "english": "I see / makes sense",
-    "mnemonic": "N-A-RU-HO-DO — I SEE. → naruhodo."
-  },
-  {
-    "block": 7,
-    "index": 32,
-    "romaji": "tashika",
-    "jp": "確か",
-    "audio": "たしか",
-    "english": "if I remember right / certain",
-    "mnemonic": "TA-SHI-KA — IF I REMEMBER RIGHT. → tashika."
-  },
-  {
-    "block": 7,
-    "index": 33,
-    "romaji": "tashikani",
-    "jp": "確かに",
-    "audio": "たしかに",
-    "english": "indeed / true",
-    "mnemonic": "TA-SHI-KAN-I — INDEED. → tashikani."
-  },
-  {
-    "block": 7,
-    "index": 34,
-    "romaji": "kanarazu",
-    "jp": "必ず",
-    "audio": "かならず",
-    "english": "definitely / without fail",
-    "mnemonic": "KAN-A-RA-ZU — DEFINITELY. → kanarazu."
-  },
-  {
-    "block": 7,
-    "index": 35,
-    "romaji": "kitto",
-    "jp": "きっと",
-    "audio": "きっと",
-    "english": "surely / probably",
-    "mnemonic": "KI-TTO — SURELY. → kitto."
-  },
-  {
-    "block": 7,
-    "index": 36,
-    "romaji": "moshikashite",
-    "jp": "もしかして",
-    "audio": "もしかして",
-    "english": "maybe / could it be",
-    "mnemonic": "MO-SHI-KA-SHI-TE — MAYBE. → moshikashite."
-  },
-  {
-    "block": 7,
-    "index": 37,
-    "romaji": "daitai",
-    "jp": "だいたい",
-    "audio": "だいたい",
-    "english": "roughly / generally",
-    "mnemonic": "DAI-TAI — ROUGHLY. → daitai."
-  },
-  {
-    "block": 7,
-    "index": 38,
-    "romaji": "hotondo",
-    "jp": "ほとんど",
-    "audio": "ほとんど",
-    "english": "almost / mostly",
-    "mnemonic": "HO-TON-DO — ALMOST. → hotondo."
-  },
-  {
-    "block": 7,
-    "index": 39,
-    "romaji": "yoku",
-    "jp": "よく",
-    "audio": "よく",
-    "english": "often / well",
-    "mnemonic": "YO-KU — OFTEN. → yoku."
-  },
-  {
-    "block": 7,
-    "index": 40,
-    "romaji": "tama ni",
-    "jp": "たまに",
-    "audio": "たまに",
-    "english": "occasionally",
-    "mnemonic": "TA-MA N-I — OCCASIONALLY. → tama ni."
-  },
-  {
-    "block": 7,
-    "index": 41,
-    "romaji": "amari",
-    "jp": "あまり",
-    "audio": "あまり",
-    "english": "not much / not very",
-    "mnemonic": "A-MA-RI — NOT MUCH. → amari."
-  },
-  {
-    "block": 7,
-    "index": 42,
     "romaji": "zenbu",
     "jp": "全部",
     "audio": "ぜんぶ",
-    "english": "all / everything",
+    "english": "everything",
     "mnemonic": "ZEN BU — EVERYTHING. → zenbu."
   },
   {
-    "block": 7,
-    "index": 43,
-    "romaji": "hanbun",
-    "jp": "半分",
-    "audio": "はんぶん",
-    "english": "half",
-    "mnemonic": "HAN-BUN — HALF. → hanbun."
-  },
-  {
-    "block": 7,
-    "index": 44,
-    "romaji": "hoka",
-    "jp": "他",
-    "audio": "ほか",
-    "english": "other / another",
-    "mnemonic": "HOOK A different OTHER one. → hoka."
-  },
-  {
-    "block": 7,
-    "index": 45,
-    "romaji": "betsu",
-    "jp": "別",
-    "audio": "べつ",
-    "english": "different / separate",
-    "mnemonic": "BE-TSU — DIFFERENT. → betsu."
-  },
-  {
-    "block": 7,
-    "index": 46,
-    "romaji": "onaji",
-    "jp": "同じ",
-    "audio": "おなじ",
-    "english": "same",
-    "mnemonic": "O-NA-JI — the SAME. → onaji."
-  },
-  {
-    "block": 7,
-    "index": 47,
-    "romaji": "chigau",
-    "jp": "違う",
-    "audio": "ちがう",
-    "english": "different / wrong",
-    "mnemonic": "CHI-GA-U — DIFFERENT. → chigau."
-  },
-  {
-    "block": 7,
-    "index": 48,
-    "romaji": "issho",
-    "jp": "一緒",
-    "audio": "いっしょ",
-    "english": "together / same",
-    "mnemonic": "I-SSHO — TOGETHER. → issho."
-  },
-  {
-    "block": 7,
-    "index": 49,
-    "romaji": "hitori",
-    "jp": "一人",
-    "audio": "ひとり",
-    "english": "one person / alone",
-    "mnemonic": "HI-TO-RI — ALONE. → hitori."
-  },
-  {
-    "block": 8,
-    "index": 0,
-    "romaji": "futari",
-    "jp": "二人",
-    "audio": "ふたり",
-    "english": "two people",
-    "mnemonic": "FU-TA-RI — TWO PEOPLE. → futari."
-  },
-  {
-    "block": 8,
-    "index": 1,
-    "romaji": "ooku",
-    "jp": "多く",
-    "audio": "おおく",
-    "english": "many / much",
-    "mnemonic": "OO-KU — MANY. → ooku."
-  },
-  {
-    "block": 8,
-    "index": 2,
-    "romaji": "sukunai",
-    "jp": "少ない",
-    "audio": "すくない",
-    "english": "few / not much",
-    "mnemonic": "SU-KUN-AI — FEW. → sukunai."
-  },
-  {
-    "block": 8,
-    "index": 3,
-    "romaji": "juubun",
-    "jp": "十分",
-    "audio": "じゅうぶん",
-    "english": "enough",
-    "mnemonic": "JU-BUN — ENOUGH bread. → juubun."
-  },
-  {
-    "block": 8,
-    "index": 4,
-    "romaji": "hotondo nai",
-    "jp": "ほとんどない",
-    "audio": "ほとんどない",
-    "english": "hardly any",
-    "mnemonic": "HO-TON-DO N-AI — HARDLY ANY. → hotondo nai."
-  },
-  {
-    "block": 8,
-    "index": 5,
-    "romaji": "choudo",
-    "jp": "ちょうど",
-    "audio": "ちょうど",
-    "english": "exactly / just right",
-    "mnemonic": "CHOU-DO — EXACTLY. → choudo."
-  },
-  {
-    "block": 8,
-    "index": 6,
-    "romaji": "oyoso",
-    "jp": "およそ",
-    "audio": "およそ",
-    "english": "approximately / roughly",
-    "mnemonic": "O-YO-SO — APPROXIMATELY. → oyoso."
-  },
-  {
-    "block": 8,
-    "index": 7,
-    "romaji": "gurai",
-    "jp": "ぐらい",
-    "audio": "ぐらい",
-    "english": "about / approximately",
-    "mnemonic": "GU-RAI — ABOUT. → gurai."
-  },
-  {
-    "block": 8,
-    "index": 8,
-    "romaji": "kurai",
-    "jp": "くらい",
-    "audio": "くらい",
-    "english": "about / approximately",
-    "mnemonic": "KU-RAI — ABOUT. → kurai."
-  },
-  {
-    "block": 8,
+    "block": 6,
     "index": 9,
-    "romaji": "hodo",
-    "jp": "ほど",
-    "audio": "ほど",
-    "english": "about / extent",
-    "mnemonic": "HO-DO — ABOUT. → hodo."
+    "romaji": "isshoni",
+    "jp": "一緒に",
+    "audio": "いっしょに",
+    "english": "together",
+    "mnemonic": "ISSHO-NI — TOGETHER. → isshoni."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 10,
-    "romaji": "sugu",
-    "jp": "すぐ",
-    "audio": "すぐ",
-    "english": "right away / soon",
-    "mnemonic": "SUGU — SOON / right away → sugu."
+    "romaji": "darou",
+    "jp": "〜だろう",
+    "audio": "〜だろう",
+    "english": "probably / I suppose",
+    "mnemonic": "~DAROU — I SUPPOSE / probably → darou."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 11,
-    "romaji": "sakki",
-    "jp": "さっき",
-    "audio": "さっき",
-    "english": "just before / a moment ago",
-    "mnemonic": "SA-KKI — JUST BEFORE. → sakki."
+    "romaji": "sumimasen",
+    "jp": "すみません",
+    "audio": "すみません",
+    "english": "excuse me / sorry",
+    "mnemonic": "SOO-ME-MA-SEN — EXCUSE ME. → sumimasen."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 12,
-    "romaji": "ato de",
-    "jp": "後で",
-    "audio": "あとで",
-    "english": "later",
-    "mnemonic": "A-TO-DE — LATER. → atode."
+    "romaji": "taberu",
+    "jp": "食べる",
+    "audio": "たべる",
+    "english": "eat",
+    "mnemonic": "TA-BE-RU — EAT up. → taberu."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 13,
-    "romaji": "mae ni",
-    "jp": "前に",
-    "audio": "まえに",
-    "english": "before",
-    "mnemonic": "MAE-NI — long AGO. → maeni."
-  },
-  {
-    "block": 8,
-    "index": 14,
-    "romaji": "saikin",
-    "jp": "最近",
-    "audio": "さいきん",
-    "english": "recently / lately",
-    "mnemonic": "SAI-KIN — RECENTLY. → saikin."
-  },
-  {
-    "block": 8,
-    "index": 15,
-    "romaji": "mukashi",
-    "jp": "昔",
-    "audio": "むかし",
-    "english": "long ago / old days",
-    "mnemonic": "MU-KA-SHI — LONG AGO. → mukashi."
-  },
-  {
-    "block": 8,
-    "index": 16,
-    "romaji": "kondo",
-    "jp": "今度",
-    "audio": "こんど",
-    "english": "next time / this time",
-    "mnemonic": "KON-DO — NEXT TIME. → kondo."
-  },
-  {
-    "block": 8,
-    "index": 17,
-    "romaji": "konshuu",
-    "jp": "今週",
-    "audio": "こんしゅう",
-    "english": "this week",
-    "mnemonic": "KON-SHUU — THIS WEEK. → konshuu."
-  },
-  {
-    "block": 8,
-    "index": 18,
-    "romaji": "raishuu",
-    "jp": "来週",
-    "audio": "らいしゅう",
-    "english": "next week",
-    "mnemonic": "RAI-SHUU — NEXT WEEK. → raishuu."
-  },
-  {
-    "block": 8,
-    "index": 19,
-    "romaji": "senshuu",
-    "jp": "先週",
-    "audio": "せんしゅう",
-    "english": "last week",
-    "mnemonic": "SEN-SHUU — LAST WEEK. → senshuu."
-  },
-  {
-    "block": 8,
-    "index": 20,
-    "romaji": "kongetsu",
-    "jp": "今月",
-    "audio": "こんげつ",
-    "english": "this month",
-    "mnemonic": "KON-GE-TSU — THIS MONTH. → kongetsu."
-  },
-  {
-    "block": 8,
-    "index": 21,
-    "romaji": "raigetsu",
-    "jp": "来月",
-    "audio": "らいげつ",
-    "english": "next month",
-    "mnemonic": "RAI-GE-TSU — NEXT MONTH. → raigetsu."
-  },
-  {
-    "block": 8,
-    "index": 22,
-    "romaji": "sengetsu",
-    "jp": "先月",
-    "audio": "せんげつ",
-    "english": "last month",
-    "mnemonic": "SEN-GE-TSU — LAST MONTH. → sengetsu."
-  },
-  {
-    "block": 8,
-    "index": 23,
-    "romaji": "kotoshi",
-    "jp": "今年",
-    "audio": "ことし",
-    "english": "this year",
-    "mnemonic": "KO-TO-SHI — THIS YEAR. → kotoshi."
-  },
-  {
-    "block": 8,
-    "index": 24,
-    "romaji": "rainen",
-    "jp": "来年",
-    "audio": "らいねん",
-    "english": "next year",
-    "mnemonic": "RAIN-EN — NEXT YEAR. → rainen."
-  },
-  {
-    "block": 8,
-    "index": 25,
-    "romaji": "kyonen",
-    "jp": "去年",
-    "audio": "きょねん",
-    "english": "last year",
-    "mnemonic": "KYON-EN — LAST YEAR. → kyonen."
-  },
-  {
-    "block": 8,
-    "index": 26,
-    "romaji": "heijitsu",
-    "jp": "平日",
-    "audio": "へいじつ",
-    "english": "weekday",
-    "mnemonic": "HEI-JI-TSU — WEEKDAY. → heijitsu."
-  },
-  {
-    "block": 8,
-    "index": 27,
-    "romaji": "shuumatsu",
-    "jp": "週末",
-    "audio": "しゅうまつ",
-    "english": "weekend",
-    "mnemonic": "SHUU-MA-TSU — WEEKEND. → shuumatsu."
-  },
-  {
-    "block": 8,
-    "index": 28,
     "romaji": "jikan",
     "jp": "時間",
     "audio": "じかん",
-    "english": "time / hours",
+    "english": "hour / time",
     "mnemonic": "JI-KAN — an HOUR. → jikan."
   },
   {
-    "block": 8,
-    "index": 29,
-    "romaji": "fun",
-    "jp": "分",
-    "audio": "ふん",
-    "english": "minute",
-    "mnemonic": "One FUN MINUTE on the clock. → fun."
+    "block": 6,
+    "index": 14,
+    "romaji": "kazoku",
+    "jp": "家族",
+    "audio": "かぞく",
+    "english": "family",
+    "mnemonic": "KA-ZOKU — FAMILY. → kazoku."
   },
   {
-    "block": 8,
-    "index": 30,
+    "block": 6,
+    "index": 15,
+    "romaji": "kakunin",
+    "jp": "確認",
+    "audio": "かくにん",
+    "english": "check",
+    "mnemonic": "KAKU-NIN — CHECK it. → kakunin."
+  },
+  {
+    "block": 6,
+    "index": 16,
+    "romaji": "shuu",
+    "jp": "週",
+    "audio": "しゅう",
+    "english": "week",
+    "mnemonic": "SHUU — this WEEK. → shuu."
+  },
+  {
+    "block": 6,
+    "index": 17,
+    "romaji": "okusan",
+    "jp": "奥さん",
+    "audio": "おくさん",
+    "english": "wife",
+    "mnemonic": "OKU-SAN — WIFE (polite). → okusan."
+  },
+  {
+    "block": 6,
+    "index": 18,
+    "romaji": "okuru",
+    "jp": "送る",
+    "audio": "おくる",
+    "english": "send",
+    "mnemonic": "O-KU-RU — SEND it. → okuru."
+  },
+  {
+    "block": 6,
+    "index": 19,
+    "romaji": "aruku",
+    "jp": "歩く",
+    "audio": "あるく",
+    "english": "walk",
+    "mnemonic": "A-RU-KU — WALK. → aruku."
+  },
+  {
+    "block": 6,
+    "index": 20,
+    "romaji": "sou",
+    "jp": "〜そう",
+    "audio": "〜そう",
+    "english": "seems / looks like",
+    "mnemonic": "~SOU — SEEMS / looks like → sou."
+  },
+  {
+    "block": 6,
+    "index": 21,
+    "romaji": "kekkonsuru",
+    "jp": "結婚する",
+    "audio": "けっこんする",
+    "english": "marry",
+    "mnemonic": "KEK-KON — MARRY. → kekkonsuru."
+  },
+  {
+    "block": 6,
+    "index": 22,
+    "romaji": "takusan",
+    "jp": "たくさん",
+    "audio": "たくさん",
+    "english": "much / many",
+    "mnemonic": "TUCK SUN away — so MANY. → takusan."
+  },
+  {
+    "block": 6,
+    "index": 23,
+    "romaji": "tsukau",
+    "jp": "使う",
+    "audio": "つかう",
+    "english": "use",
+    "mnemonic": "TSU-KAU — USE it. → tsukau."
+  },
+  {
+    "block": 6,
+    "index": 24,
+    "romaji": "kotoba",
+    "jp": "言葉",
+    "audio": "ことば",
+    "english": "word",
+    "mnemonic": "KOTO-BA — a WORD. → kotoba."
+  },
+  {
+    "block": 6,
+    "index": 25,
     "romaji": "byou",
     "jp": "秒",
     "audio": "びょう",
@@ -3429,152 +2484,1106 @@
     "mnemonic": "BYOU — a SECOND. → byou."
   },
   {
-    "block": 8,
+    "block": 6,
+    "index": 26,
+    "romaji": "josei",
+    "jp": "女性",
+    "audio": "じょせい",
+    "english": "woman",
+    "mnemonic": "JOSEI — WOMAN → josei."
+  },
+  {
+    "block": 6,
+    "index": 27,
+    "romaji": "nashide",
+    "jp": "〜なしで",
+    "audio": "〜なしで",
+    "english": "without",
+    "mnemonic": "NA-SHI-DE — WITHOUT it. → nashide."
+  },
+  {
+    "block": 6,
+    "index": 28,
+    "romaji": "tatsu",
+    "jp": "立つ",
+    "audio": "たつ",
+    "english": "stand",
+    "mnemonic": "TA-TSU — STAND up. → tatsu."
+  },
+  {
+    "block": 6,
+    "index": 29,
+    "romaji": "ichiban",
+    "jp": "一番",
+    "audio": "いちばん",
+    "english": "number one / most",
+    "mnemonic": "ICHIBAN — NUMBER ONE / most → ichiban."
+  },
+  {
+    "block": 6,
+    "index": 30,
+    "romaji": "aida",
+    "jp": "間",
+    "audio": "あいだ",
+    "english": "between / while",
+    "mnemonic": "AIDA — BETWEEN / WHILE → aida."
+  },
+  {
+    "block": 6,
     "index": 31,
-    "romaji": "ji",
-    "jp": "時",
-    "audio": "じ",
-    "english": "o'clock",
-    "mnemonic": "JI — O'CLOCK. → ji."
+    "romaji": "gakkou",
+    "jp": "学校",
+    "audio": "がっこう",
+    "english": "school",
+    "mnemonic": "GAK-KOU — SCHOOL. → gakkou."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 32,
-    "romaji": "han",
-    "jp": "半",
-    "audio": "はん",
-    "english": "half past / half",
-    "mnemonic": "HAN — HALF PAST. → han."
+    "romaji": "ichido",
+    "jp": "一度",
+    "audio": "いちど",
+    "english": "once",
+    "mnemonic": "ICHI-DO — ONCE. → ichido."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 33,
-    "romaji": "ima kara",
-    "jp": "今から",
-    "audio": "いまから",
-    "english": "from now / now",
-    "mnemonic": "I-MA KA-RA — FROM NOW. → ima kara."
+    "romaji": "dareka",
+    "jp": "誰か",
+    "audio": "だれか",
+    "english": "someone",
+    "mnemonic": "DARE-KA — SOMEBODY. → dareka."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 34,
-    "romaji": "mou sugu",
-    "jp": "もうすぐ",
-    "audio": "もうすぐ",
-    "english": "very soon",
-    "mnemonic": "MOU SU-GU — VERY SOON. → mou sugu."
+    "romaji": "minna",
+    "jp": "みんな",
+    "audio": "みんな",
+    "english": "everybody",
+    "mnemonic": "MIN-NA — EVERYBODY. → minna."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 35,
-    "romaji": "itsuka",
-    "jp": "いつか",
-    "audio": "いつか",
-    "english": "someday / sometime",
-    "mnemonic": "I-TSU-KA — SOMEDAY. → itsuka."
+    "romaji": "nareru",
+    "jp": "慣れる",
+    "audio": "なれる",
+    "english": "get used to",
+    "mnemonic": "NARERU — get USED TO → nareru."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 36,
-    "romaji": "shibaraku",
-    "jp": "しばらく",
-    "audio": "しばらく",
-    "english": "for a while",
-    "mnemonic": "SHI-BA-RA-KU — FOR A WHILE. → shibaraku."
+    "romaji": "jibun",
+    "jp": "自分",
+    "audio": "じぶん",
+    "english": "oneself / self",
+    "mnemonic": "JIBUN — ONESELF → jibun."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 37,
-    "romaji": "zutto",
-    "jp": "ずっと",
-    "audio": "ずっと",
-    "english": "all along / much more",
-    "mnemonic": "ZU-TTO — ALL ALONG. → zutto."
+    "romaji": "owari",
+    "jp": "終わり",
+    "audio": "おわり",
+    "english": "end",
+    "mnemonic": "O-WA-RI — the END. → owari."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 38,
-    "romaji": "mae",
-    "jp": "前",
-    "audio": "まえ",
-    "english": "front / before",
-    "mnemonic": "MAE — BEFORE / in front. → mae."
+    "romaji": "mada",
+    "jp": "まだ",
+    "audio": "まだ",
+    "english": "still / not yet",
+    "mnemonic": "MADA is STILL not done. → mada."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 39,
-    "romaji": "ushiro",
-    "jp": "後ろ",
-    "audio": "うしろ",
-    "english": "behind / back",
-    "mnemonic": "U-SHI-RO — BEHIND. → ushiro."
+    "romaji": "ashita",
+    "jp": "明日",
+    "audio": "あした",
+    "english": "tomorrow",
+    "mnemonic": "ASH, I'll do that TOMORROW. → ashita."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 40,
-    "romaji": "naka",
-    "jp": "中",
-    "audio": "なか",
-    "english": "inside",
-    "mnemonic": "NA-KA — INSIDE. → naka."
+    "romaji": "hanasu",
+    "jp": "話す",
+    "audio": "はなす",
+    "english": "speak / talk",
+    "mnemonic": "HA-NA-SU — SPEAK up. → hanasu."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 41,
-    "romaji": "soto",
-    "jp": "外",
-    "audio": "そと",
-    "english": "outside",
-    "mnemonic": "SO-TO — OUTSIDE. → soto."
+    "romaji": "me",
+    "jp": "目",
+    "audio": "め",
+    "english": "eye",
+    "mnemonic": "ME — your EYE. → me."
   },
   {
-    "block": 8,
+    "block": 6,
     "index": 42,
-    "romaji": "ue",
-    "jp": "上",
-    "audio": "うえ",
-    "english": "above / on top",
-    "mnemonic": "UE — ABOVE. → ue."
+    "romaji": "ureshii",
+    "jp": "嬉しい",
+    "audio": "うれしい",
+    "english": "happy / glad",
+    "mnemonic": "U-RE-SHII — HAPPY / glad. → ureshii."
+  },
+  {
+    "block": 6,
+    "index": 43,
+    "romaji": "kodomo",
+    "jp": "子供",
+    "audio": "こども",
+    "english": "child",
+    "mnemonic": "COCO's DOpey MOppet is a CHILD. → kodomo."
+  },
+  {
+    "block": 6,
+    "index": 44,
+    "romaji": "shitsumon",
+    "jp": "質問",
+    "audio": "しつもん",
+    "english": "question",
+    "mnemonic": "SHITSU-MON — QUESTION. → shitsumon."
+  },
+  {
+    "block": 6,
+    "index": 45,
+    "romaji": "kyoudai",
+    "jp": "兄弟",
+    "audio": "きょうだい",
+    "english": "brother / sibling",
+    "mnemonic": "KYOU-DAI — BROTHER / sibling. → kyoudai."
+  },
+  {
+    "block": 6,
+    "index": 46,
+    "romaji": "neru",
+    "jp": "寝る",
+    "audio": "ねる",
+    "english": "sleep",
+    "mnemonic": "NE-RU — SLEEP. → neru."
+  },
+  {
+    "block": 6,
+    "index": 47,
+    "romaji": "doa",
+    "jp": "ドア",
+    "audio": "ドア",
+    "english": "door",
+    "mnemonic": "DOOR — same word. → doa."
+  },
+  {
+    "block": 6,
+    "index": 48,
+    "romaji": "bijinesu",
+    "jp": "ビジネス",
+    "audio": "ビジネス",
+    "english": "business",
+    "mnemonic": "BUSINESS — same word. → bijinesu."
+  },
+  {
+    "block": 6,
+    "index": 49,
+    "romaji": "jitsuwa",
+    "jp": "実は",
+    "audio": "じつは",
+    "english": "actually",
+    "mnemonic": "JITSU-WA — ACTUALLY… → jitsuwa."
+  },
+  {
+    "block": 7,
+    "index": 0,
+    "romaji": "oto",
+    "jp": "音",
+    "audio": "おと",
+    "english": "sound",
+    "mnemonic": "O-TO — a SOUND. → oto."
+  },
+  {
+    "block": 7,
+    "index": 1,
+    "romaji": "kibou",
+    "jp": "希望",
+    "audio": "きぼう",
+    "english": "hope",
+    "mnemonic": "KI-BOU — HOPE. → kibou."
+  },
+  {
+    "block": 7,
+    "index": 2,
+    "romaji": "mono",
+    "jp": "もの",
+    "audio": "もの",
+    "english": "thing / stuff",
+    "mnemonic": "MONO — THING / stuff → mono."
+  },
+  {
+    "block": 7,
+    "index": 3,
+    "romaji": "mou",
+    "jp": "もう",
+    "audio": "もう",
+    "english": "already / anymore",
+    "mnemonic": "MOU — ALREADY done. → mou."
+  },
+  {
+    "block": 7,
+    "index": 4,
+    "romaji": "ataru",
+    "jp": "当たる",
+    "audio": "あたる",
+    "english": "hit",
+    "mnemonic": "A-TA-RU — HIT the target. → ataru."
+  },
+  {
+    "block": 7,
+    "index": 5,
+    "romaji": "kau",
+    "jp": "買う",
+    "audio": "かう",
+    "english": "buy",
+    "mnemonic": "KA-U — BUY it. → kau."
+  },
+  {
+    "block": 7,
+    "index": 6,
+    "romaji": "irai",
+    "jp": "〜以来",
+    "audio": "〜いらい",
+    "english": "since",
+    "mnemonic": "I-RAI — SINCE then. → irai."
+  },
+  {
+    "block": 7,
+    "index": 7,
+    "romaji": "baai",
+    "jp": "場合",
+    "audio": "ばあい",
+    "english": "case",
+    "mnemonic": "BA-AI — in that CASE. → baai."
+  },
+  {
+    "block": 7,
+    "index": 8,
+    "romaji": "yomu",
+    "jp": "読む",
+    "audio": "よむ",
+    "english": "read",
+    "mnemonic": "YO-MU — READ it. → yomu."
+  },
+  {
+    "block": 7,
+    "index": 9,
+    "romaji": "okusama",
+    "jp": "奥様",
+    "audio": "おくさま",
+    "english": "Mrs.",
+    "mnemonic": "OKU-SAMA — MRS. → okusama."
+  },
+  {
+    "block": 7,
+    "index": 10,
+    "romaji": "muzukashii",
+    "jp": "難しい",
+    "audio": "むずかしい",
+    "english": "hard / difficult",
+    "mnemonic": "MUZUKASHII — DIFFICULT. → muzukashii."
+  },
+  {
+    "block": 7,
+    "index": 11,
+    "romaji": "genin",
+    "jp": "原因",
+    "audio": "げんいん",
+    "english": "cause",
+    "mnemonic": "GEN-IN — the CAUSE. → genin."
+  },
+  {
+    "block": 7,
+    "index": 12,
+    "romaji": "erabu",
+    "jp": "選ぶ",
+    "audio": "えらぶ",
+    "english": "choose / pick",
+    "mnemonic": "ERABU — CHOOSE / pick → erabu."
+  },
+  {
+    "block": 7,
+    "index": 13,
+    "romaji": "hitori",
+    "jp": "一人",
+    "audio": "ひとり",
+    "english": "alone",
+    "mnemonic": "HI-TO-RI — ALONE. → hitori."
+  },
+  {
+    "block": 7,
+    "index": 14,
+    "romaji": "kaku",
+    "jp": "書く",
+    "audio": "かく",
+    "english": "write",
+    "mnemonic": "KA-KU — WRITE it. → kaku."
+  },
+  {
+    "block": 7,
+    "index": 15,
+    "romaji": "kizutsukeru",
+    "jp": "傷つける",
+    "audio": "きずつける",
+    "english": "hurt",
+    "mnemonic": "KI-ZU — HURT someone. → kizutsukeru."
+  },
+  {
+    "block": 7,
+    "index": 16,
+    "romaji": "made",
+    "jp": "〜まで",
+    "audio": "〜まで",
+    "english": "until",
+    "mnemonic": "MA-DE — UNTIL then. → made."
+  },
+  {
+    "block": 7,
+    "index": 17,
+    "romaji": "sukoshi",
+    "jp": "少し",
+    "audio": "すこし",
+    "english": "a little / few",
+    "mnemonic": "SU-KO-SHI — a FEW / a little. → sukoshi."
+  },
+  {
+    "block": 7,
+    "index": 18,
+    "romaji": "chikushou",
+    "jp": "畜生",
+    "audio": "ちくしょう",
+    "english": "damn it / fuck",
+    "mnemonic": "CHIKU-SHOU — DAMN IT / fuck. → chikushou."
+  },
+  {
+    "block": 7,
+    "index": 19,
+    "romaji": "hanii",
+    "jp": "ハニー",
+    "audio": "ハニー",
+    "english": "honey",
+    "mnemonic": "HONEY — pet name. → hanii."
+  },
+  {
+    "block": 7,
+    "index": 20,
+    "romaji": "isha",
+    "jp": "医者",
+    "audio": "いしゃ",
+    "english": "doctor",
+    "mnemonic": "I-SHA — DOCTOR. → isha."
+  },
+  {
+    "block": 7,
+    "index": 21,
+    "romaji": "torihiki",
+    "jp": "取引",
+    "audio": "とりひき",
+    "english": "deal",
+    "mnemonic": "TORI-HIKI — a DEAL. → torihiki."
+  },
+  {
+    "block": 7,
+    "index": 22,
+    "romaji": "sensei",
+    "jp": "先生",
+    "audio": "せんせい",
+    "english": "teacher / Dr.",
+    "mnemonic": "SEN-SEI — DOCTOR / teacher. → sensei."
+  },
+  {
+    "block": 7,
+    "index": 23,
+    "romaji": "ryouhou",
+    "jp": "両方",
+    "audio": "りょうほう",
+    "english": "both",
+    "mnemonic": "RYOU-HOU — BOTH sides. → ryouhou."
+  },
+  {
+    "block": 7,
+    "index": 24,
+    "romaji": "bubun",
+    "jp": "部分",
+    "audio": "ぶぶん",
+    "english": "part",
+    "mnemonic": "BU-BUN — a PART. → bubun."
+  },
+  {
+    "block": 7,
+    "index": 25,
+    "romaji": "atode",
+    "jp": "後で",
+    "audio": "あとで",
+    "english": "later",
+    "mnemonic": "A-TO-DE — LATER. → atode."
+  },
+  {
+    "block": 7,
+    "index": 26,
+    "romaji": "sonna",
+    "jp": "そんな",
+    "audio": "そんな",
+    "english": "such",
+    "mnemonic": "SON-NA — SUCH a thing. → sonna."
+  },
+  {
+    "block": 7,
+    "index": 27,
+    "romaji": "kao",
+    "jp": "顔",
+    "audio": "かお",
+    "english": "face",
+    "mnemonic": "KA-O — FACE. → kao."
+  },
+  {
+    "block": 7,
+    "index": 28,
+    "romaji": "keikaku",
+    "jp": "計画",
+    "audio": "けいかく",
+    "english": "plan",
+    "mnemonic": "KEI-KAKU — PLAN. → keikaku."
+  },
+  {
+    "block": 7,
+    "index": 29,
+    "romaji": "maeni",
+    "jp": "前に",
+    "audio": "まえに",
+    "english": "ago",
+    "mnemonic": "MAE-NI — long AGO. → maeni."
+  },
+  {
+    "block": 7,
+    "index": 30,
+    "romaji": "shinu",
+    "jp": "死ぬ",
+    "audio": "しぬ",
+    "english": "die",
+    "mnemonic": "SHI-NU — DIE. → shinu."
+  },
+  {
+    "block": 7,
+    "index": 31,
+    "romaji": "go",
+    "jp": "五",
+    "audio": "ご",
+    "english": "five",
+    "mnemonic": "GO — count FIVE. → go."
+  },
+  {
+    "block": 7,
+    "index": 32,
+    "romaji": "ten",
+    "jp": "点",
+    "audio": "てん",
+    "english": "point",
+    "mnemonic": "TEN — good POINT. → ten."
+  },
+  {
+    "block": 7,
+    "index": 33,
+    "romaji": "tatakau",
+    "jp": "戦う",
+    "audio": "たたかう",
+    "english": "fight",
+    "mnemonic": "TA-TA-KAU — FIGHT. → tatakau."
+  },
+  {
+    "block": 7,
+    "index": 34,
+    "romaji": "kazu",
+    "jp": "数",
+    "audio": "かず",
+    "english": "number",
+    "mnemonic": "KA-ZU — NUMBER. → kazu."
+  },
+  {
+    "block": 7,
+    "index": 35,
+    "romaji": "tabun",
+    "jp": "多分",
+    "audio": "たぶん",
+    "english": "probably / maybe",
+    "mnemonic": "TA-BUN — PROBABLY. → tabun."
+  },
+  {
+    "block": 7,
+    "index": 36,
+    "romaji": "untensuru",
+    "jp": "運転する",
+    "audio": "うんてんする",
+    "english": "drive",
+    "mnemonic": "UN-TEN — DRIVE. → untensuru."
+  },
+  {
+    "block": 7,
+    "index": 37,
+    "romaji": "utsukushii",
+    "jp": "美しい",
+    "audio": "うつくしい",
+    "english": "beautiful",
+    "mnemonic": "UTSUKU-SHII — BEAUTIFUL. → utsukushii."
+  },
+  {
+    "block": 7,
+    "index": 38,
+    "romaji": "juu",
+    "jp": "銃",
+    "audio": "じゅう",
+    "english": "gun",
+    "mnemonic": "JUU — GUN. → juu."
+  },
+  {
+    "block": 7,
+    "index": 39,
+    "romaji": "timu",
+    "jp": "ティム",
+    "audio": "ティム",
+    "english": "Tim",
+    "mnemonic": "TIM — name TIM. → timu."
+  },
+  {
+    "block": 7,
+    "index": 40,
+    "romaji": "kurutta",
+    "jp": "狂った",
+    "audio": "くるった",
+    "english": "crazy",
+    "mnemonic": "KU-RUTTA — CRAZY. → kurutta."
+  },
+  {
+    "block": 7,
+    "index": 41,
+    "romaji": "damaru",
+    "jp": "黙る",
+    "audio": "だまる",
+    "english": "shut up",
+    "mnemonic": "DA-MA-RU — SHUT up. → damaru."
+  },
+  {
+    "block": 7,
+    "index": 42,
+    "romaji": "chansu",
+    "jp": "チャンス",
+    "audio": "チャンス",
+    "english": "chance",
+    "mnemonic": "CHANCE — same word. → chansu."
+  },
+  {
+    "block": 7,
+    "index": 43,
+    "romaji": "ochiru",
+    "jp": "落ちる",
+    "audio": "おちる",
+    "english": "fall",
+    "mnemonic": "O-CHI-RU — FALL down. → ochiru."
+  },
+  {
+    "block": 7,
+    "index": 44,
+    "romaji": "osoi",
+    "jp": "遅い",
+    "audio": "おそい",
+    "english": "late / slow",
+    "mnemonic": "O-SOI — LATE. → osoi."
+  },
+  {
+    "block": 7,
+    "index": 45,
+    "romaji": "denwa",
+    "jp": "電話",
+    "audio": "でんわ",
+    "english": "phone",
+    "mnemonic": "DEN-WA — PHONE. → denwa."
+  },
+  {
+    "block": 7,
+    "index": 46,
+    "romaji": "negau",
+    "jp": "願う",
+    "audio": "ねがう",
+    "english": "wish",
+    "mnemonic": "NE-GA-U — WISH for it. → negau."
+  },
+  {
+    "block": 7,
+    "index": 47,
+    "romaji": "setto",
+    "jp": "セット",
+    "audio": "セット",
+    "english": "set",
+    "mnemonic": "SET — same word. → setto."
+  },
+  {
+    "block": 7,
+    "index": 48,
+    "romaji": "haato",
+    "jp": "ハート",
+    "audio": "ハート",
+    "english": "heart",
+    "mnemonic": "HEART — same word. → haato."
+  },
+  {
+    "block": 7,
+    "index": 49,
+    "romaji": "daremo",
+    "jp": "誰も",
+    "audio": "だれも",
+    "english": "nobody",
+    "mnemonic": "DARE-MO — NOBODY. → daremo."
   },
   {
     "block": 8,
-    "index": 43,
+    "index": 0,
+    "romaji": "kantan",
+    "jp": "簡単",
+    "audio": "かんたん",
+    "english": "easy",
+    "mnemonic": "KAN-TAN — EASY. → kantan."
+  },
+  {
+    "block": 8,
+    "index": 1,
+    "romaji": "hanashi",
+    "jp": "話",
+    "audio": "はなし",
+    "english": "story",
+    "mnemonic": "HA-NA-SHI — STORY. → hanashi."
+  },
+  {
+    "block": 8,
+    "index": 2,
+    "romaji": "kiru",
+    "jp": "切る",
+    "audio": "きる",
+    "english": "cut",
+    "mnemonic": "KI-RU — CUT it. → kiru."
+  },
+  {
+    "block": 8,
+    "index": 3,
+    "romaji": "chuumon",
+    "jp": "注文",
+    "audio": "ちゅうもん",
+    "english": "order",
+    "mnemonic": "CHUU-MON — ORDER food. → chuumon."
+  },
+  {
+    "block": 8,
+    "index": 4,
     "romaji": "shita",
     "jp": "下",
     "audio": "した",
-    "english": "below / under",
+    "english": "under",
     "mnemonic": "SHI-TA — UNDER. → shita."
   },
   {
     "block": 8,
+    "index": 5,
+    "romaji": "paatii",
+    "jp": "パーティー",
+    "audio": "パーティー",
+    "english": "party",
+    "mnemonic": "PARTY — same word. → paatii."
+  },
+  {
+    "block": 8,
+    "index": 6,
+    "romaji": "tsuki",
+    "jp": "月",
+    "audio": "つき",
+    "english": "month",
+    "mnemonic": "TSU-KI — MONTH. → tsuki."
+  },
+  {
+    "block": 8,
+    "index": 7,
+    "romaji": "jakku",
+    "jp": "ジャック",
+    "audio": "ジャック",
+    "english": "Jack",
+    "mnemonic": "JACK — name JACK. → jakku."
+  },
+  {
+    "block": 8,
+    "index": 8,
+    "romaji": "yon",
+    "jp": "四",
+    "audio": "よん",
+    "english": "four",
+    "mnemonic": "YON — count FOUR. → yon."
+  },
+  {
+    "block": 8,
+    "index": 9,
+    "romaji": "sugu",
+    "jp": "すぐ",
+    "audio": "すぐ",
+    "english": "soon / right away",
+    "mnemonic": "SUGU — SOON / right away → sugu."
+  },
+  {
+    "block": 8,
+    "index": 10,
+    "romaji": "hon",
+    "jp": "本",
+    "audio": "ほん",
+    "english": "book",
+    "mnemonic": "HON — BOOK. → hon."
+  },
+  {
+    "block": 8,
+    "index": 11,
+    "romaji": "chotto",
+    "jp": "ちょっと",
+    "audio": "ちょっと",
+    "english": "a little",
+    "mnemonic": "CHOTTO — A LITTLE. → chotto."
+  },
+  {
+    "block": 8,
+    "index": 12,
+    "romaji": "shotto",
+    "jp": "ショット",
+    "audio": "ショット",
+    "english": "shot",
+    "mnemonic": "SHOT — same word. → shotto."
+  },
+  {
+    "block": 8,
+    "index": 13,
+    "romaji": "daredemo",
+    "jp": "誰でも",
+    "audio": "だれでも",
+    "english": "anyone",
+    "mnemonic": "DARE-DEMO — ANYONE. → daredemo."
+  },
+  {
+    "block": 8,
+    "index": 14,
+    "romaji": "machi",
+    "jp": "町",
+    "audio": "まち",
+    "english": "town",
+    "mnemonic": "MA-CHI — TOWN. → machi."
+  },
+  {
+    "block": 8,
+    "index": 15,
+    "romaji": "hontouni",
+    "jp": "本当に",
+    "audio": "ほんとうに",
+    "english": "really",
+    "mnemonic": "HONTOUNI — REALLY → hontouni."
+  },
+  {
+    "block": 8,
+    "index": 16,
+    "romaji": "sorezore",
+    "jp": "それぞれ",
+    "audio": "それぞれ",
+    "english": "each",
+    "mnemonic": "SO-RE-ZO-RE — EACH one. → sorezore."
+  },
+  {
+    "block": 8,
+    "index": 17,
+    "romaji": "watashino",
+    "jp": "私の",
+    "audio": "わたしの",
+    "english": "mine",
+    "mnemonic": "WATASHI NO — MINE. → watashino."
+  },
+  {
+    "block": 8,
+    "index": 18,
+    "romaji": "kowai",
+    "jp": "怖い",
+    "audio": "こわい",
+    "english": "scary / afraid",
+    "mnemonic": "KOWAI — SCARY / afraid → kowai."
+  },
+  {
+    "block": 8,
+    "index": 19,
+    "romaji": "tonikaku",
+    "jp": "とにかく",
+    "audio": "とにかく",
+    "english": "anyway",
+    "mnemonic": "TO-NI-KAKU — ANYWAY. → tonikaku."
+  },
+  {
+    "block": 8,
+    "index": 20,
+    "romaji": "seikakuni",
+    "jp": "正確に",
+    "audio": "せいかくに",
+    "english": "exactly",
+    "mnemonic": "SEI-KAKU-NI — EXACTLY. → seikakuni."
+  },
+  {
+    "block": 8,
+    "index": 21,
+    "romaji": "inu",
+    "jp": "犬",
+    "audio": "いぬ",
+    "english": "dog",
+    "mnemonic": "I-NU — DOG. → inu."
+  },
+  {
+    "block": 8,
+    "index": 22,
+    "romaji": "nandemo",
+    "jp": "何でも",
+    "audio": "なんでも",
+    "english": "anything",
+    "mnemonic": "NAN-DEMO — ANYTHING. → nandemo."
+  },
+  {
+    "block": 8,
+    "index": 23,
+    "romaji": "komaru",
+    "jp": "困る",
+    "audio": "こまる",
+    "english": "be in trouble",
+    "mnemonic": "KOMARU — be in TROUBLE → komaru."
+  },
+  {
+    "block": 8,
+    "index": 24,
+    "romaji": "wakai",
+    "jp": "若い",
+    "audio": "わかい",
+    "english": "young",
+    "mnemonic": "WA-KAI — YOUNG. → wakai."
+  },
+  {
+    "block": 8,
+    "index": 25,
+    "romaji": "mina",
+    "jp": "皆",
+    "audio": "みな",
+    "english": "everyone",
+    "mnemonic": "MI-NA — EVERYONE. → mina."
+  },
+  {
+    "block": 8,
+    "index": 26,
+    "romaji": "kawaru",
+    "jp": "変わる",
+    "audio": "かわる",
+    "english": "change",
+    "mnemonic": "KA-WA-RU — CHANGE. → kawaru."
+  },
+  {
+    "block": 8,
+    "index": 27,
+    "romaji": "haoru",
+    "jp": "羽織る",
+    "audio": "はおる",
+    "english": "wear",
+    "mnemonic": "HA-O-RU — WEAR a jacket. → haoru."
+  },
+  {
+    "block": 8,
+    "index": 28,
+    "romaji": "mizu",
+    "jp": "水",
+    "audio": "みず",
+    "english": "water",
+    "mnemonic": "MI-ZU — WATER. → mizu."
+  },
+  {
+    "block": 8,
+    "index": 29,
+    "romaji": "shiri",
+    "jp": "尻",
+    "audio": "しり",
+    "english": "ass",
+    "mnemonic": "SHI-RI — crude for ASS. → shiri."
+  },
+  {
+    "block": 8,
+    "index": 30,
+    "romaji": "keisatsu",
+    "jp": "警察",
+    "audio": "けいさつ",
+    "english": "police",
+    "mnemonic": "KEI-SATSU — POLICE. → keisatsu."
+  },
+  {
+    "block": 8,
+    "index": 31,
+    "romaji": "kyoumi",
+    "jp": "興味",
+    "audio": "きょうみ",
+    "english": "interest",
+    "mnemonic": "KYOU-MI — INTEREST. → kyoumi."
+  },
+  {
+    "block": 8,
+    "index": 32,
+    "romaji": "tanoshii",
+    "jp": "楽しい",
+    "audio": "たのしい",
+    "english": "fun / enjoyable",
+    "mnemonic": "TA-NO-SHII — FUN. → tanoshii."
+  },
+  {
+    "block": 8,
+    "index": 33,
+    "romaji": "kotae",
+    "jp": "答え",
+    "audio": "こたえ",
+    "english": "answer",
+    "mnemonic": "KO-TAE — ANSWER. → kotae."
+  },
+  {
+    "block": 8,
+    "index": 34,
+    "romaji": "geemu",
+    "jp": "ゲーム",
+    "audio": "ゲーム",
+    "english": "game",
+    "mnemonic": "GAME — same word. → geemu."
+  },
+  {
+    "block": 8,
+    "index": 35,
+    "romaji": "yakusoku",
+    "jp": "約束",
+    "audio": "やくそく",
+    "english": "promise",
+    "mnemonic": "YAKU-SOKU — PROMISE. → yakusoku."
+  },
+  {
+    "block": 8,
+    "index": 36,
+    "romaji": "kappuru",
+    "jp": "カップル",
+    "audio": "カップル",
+    "english": "couple",
+    "mnemonic": "COUPLE — same word. → kappuru."
+  },
+  {
+    "block": 8,
+    "index": 37,
+    "romaji": "yume",
+    "jp": "夢",
+    "audio": "ゆめ",
+    "english": "dream",
+    "mnemonic": "YU-ME — DREAM. → yume."
+  },
+  {
+    "block": 8,
+    "index": 38,
+    "romaji": "kangaeru",
+    "jp": "考える",
+    "audio": "かんがえる",
+    "english": "think",
+    "mnemonic": "KANGAERU — THINK → kangaeru."
+  },
+  {
+    "block": 8,
+    "index": 39,
+    "romaji": "hiku",
+    "jp": "引く",
+    "audio": "ひく",
+    "english": "pull",
+    "mnemonic": "HI-KU — PULL. → hiku."
+  },
+  {
+    "block": 8,
+    "index": 40,
+    "romaji": "hikari",
+    "jp": "光",
+    "audio": "ひかり",
+    "english": "light",
+    "mnemonic": "HI-KA-RI — LIGHT. → hikari."
+  },
+  {
+    "block": 8,
+    "index": 41,
+    "romaji": "karada",
+    "jp": "体",
+    "audio": "からだ",
+    "english": "body",
+    "mnemonic": "KA-RA-DA — BODY. → karada."
+  },
+  {
+    "block": 8,
+    "index": 42,
+    "romaji": "utsu",
+    "jp": "撃つ",
+    "audio": "うつ",
+    "english": "shoot",
+    "mnemonic": "U-TSU — SHOOT. → utsu."
+  },
+  {
+    "block": 8,
+    "index": 43,
+    "romaji": "riyuu",
+    "jp": "理由",
+    "audio": "りゆう",
+    "english": "reason",
+    "mnemonic": "RI-YUU — REASON. → riyuu."
+  },
+  {
+    "block": 8,
     "index": 44,
-    "romaji": "yoko",
-    "jp": "横",
-    "audio": "よこ",
-    "english": "beside / side",
-    "mnemonic": "YO-KO — BESIDE. → yoko."
+    "romaji": "dareka",
+    "jp": "誰か",
+    "audio": "だれか",
+    "english": "someone",
+    "mnemonic": "DARE-KA — SOMEONE. → dareka."
   },
   {
     "block": 8,
     "index": 45,
-    "romaji": "tonari",
-    "jp": "隣",
-    "audio": "となり",
-    "english": "next to / neighbouring",
-    "mnemonic": "TON-A-RI — NEXT TO. → tonari."
+    "romaji": "shinainaru",
+    "jp": "親愛なる",
+    "audio": "しんあいなる",
+    "english": "dear",
+    "mnemonic": "SHIN-AI-NARU — DEAR. → shinainaru."
   },
   {
     "block": 8,
     "index": 46,
-    "romaji": "chikaku",
-    "jp": "近く",
-    "audio": "ちかく",
-    "english": "nearby",
-    "mnemonic": "CHI-KA-KU — NEARBY. → chikaku."
+    "romaji": "yasumu",
+    "jp": "休む",
+    "audio": "やすむ",
+    "english": "rest / take off",
+    "mnemonic": "YA-SU-MU — REST. → yasumu."
   },
   {
     "block": 8,
     "index": 47,
+    "romaji": "shi",
+    "jp": "死",
+    "audio": "し",
+    "english": "death",
+    "mnemonic": "SHI — DEATH. → shi."
+  },
+  {
+    "block": 8,
+    "index": 48,
     "romaji": "tooi",
     "jp": "遠い",
     "audio": "とおい",
@@ -3583,304 +3592,772 @@
   },
   {
     "block": 8,
-    "index": 48,
-    "romaji": "chikai",
-    "jp": "近い",
-    "audio": "ちかい",
-    "english": "near / close",
-    "mnemonic": "CHI-KAI — NEAR. → chikai."
-  },
-  {
-    "block": 8,
     "index": 49,
-    "romaji": "migi",
-    "jp": "右",
-    "audio": "みぎ",
-    "english": "right",
-    "mnemonic": "MI-GI — RIGHT. → migi."
+    "romaji": "eeto",
+    "jp": "えーと",
+    "audio": "えーと",
+    "english": "um",
+    "mnemonic": "E-TO — UM, let me think. → eeto."
   },
   {
     "block": 9,
     "index": 0,
-    "romaji": "hidari",
-    "jp": "左",
-    "audio": "ひだり",
-    "english": "left",
-    "mnemonic": "HI-DA-RI — LEFT. → hidari."
+    "romaji": "shimeru",
+    "jp": "閉める",
+    "audio": "しめる",
+    "english": "close",
+    "mnemonic": "SHI-ME-RU — CLOSE the door. → shimeru."
   },
   {
     "block": 9,
     "index": 1,
-    "romaji": "massugu",
-    "jp": "まっすぐ",
-    "audio": "まっすぐ",
-    "english": "straight ahead",
-    "mnemonic": "MA-SSU-GU — STRAIGHT AHEAD. → massugu."
+    "romaji": "gawa",
+    "jp": "側",
+    "audio": "がわ",
+    "english": "side",
+    "mnemonic": "GA-WA — SIDE of the road. → gawa."
   },
   {
     "block": 9,
     "index": 2,
-    "romaji": "mukou",
-    "jp": "向こう",
-    "audio": "むこう",
-    "english": "over there / other side",
-    "mnemonic": "MU-KOU — OVER THERE. → mukou."
+    "romaji": "omoshiroi",
+    "jp": "面白い",
+    "audio": "おもしろい",
+    "english": "interesting / funny",
+    "mnemonic": "OMOSHIROI — INTERESTING / funny → omoshiroi."
   },
   {
     "block": 9,
     "index": 3,
-    "romaji": "hou",
-    "jp": "方",
-    "audio": "ほう",
-    "english": "direction / side / one",
-    "mnemonic": "HOU — DIRECTION. → hou."
+    "romaji": "odoru",
+    "jp": "踊る",
+    "audio": "おどる",
+    "english": "dance",
+    "mnemonic": "O-DO-RU — DANCE. → odoru."
   },
   {
     "block": 9,
     "index": 4,
-    "romaji": "michi",
-    "jp": "道",
-    "audio": "みち",
-    "english": "road / way",
-    "mnemonic": "MI-CHI — ROAD. → michi."
+    "romaji": "honoo",
+    "jp": "炎",
+    "audio": "ほのお",
+    "english": "fire",
+    "mnemonic": "HO-NO-O — FIRE. → honoo."
   },
   {
     "block": 9,
     "index": 5,
-    "romaji": "kado",
-    "jp": "角",
-    "audio": "かど",
-    "english": "corner",
-    "mnemonic": "KA-DO — CORNER. → kado."
+    "romaji": "kirai",
+    "jp": "嫌い",
+    "audio": "きらい",
+    "english": "dislike",
+    "mnemonic": "KIRAI — DISLIKE. → kirai."
   },
   {
     "block": 9,
     "index": 6,
-    "romaji": "iriguchi",
-    "jp": "入口",
-    "audio": "いりぐち",
-    "english": "entrance",
-    "mnemonic": "I-RI-GU-CHI — ENTRANCE. → iriguchi."
+    "romaji": "naka",
+    "jp": "中",
+    "audio": "なか",
+    "english": "inside",
+    "mnemonic": "NA-KA — INSIDE. → naka."
   },
   {
     "block": 9,
     "index": 7,
-    "romaji": "deguchi",
-    "jp": "出口",
-    "audio": "でぐち",
-    "english": "exit",
-    "mnemonic": "DE-GU-CHI — EXIT. → deguchi."
+    "romaji": "tsuru",
+    "jp": "吊る",
+    "audio": "つる",
+    "english": "hang",
+    "mnemonic": "TSU-RU — HANG up. → tsuru."
   },
   {
     "block": 9,
     "index": 8,
-    "romaji": "kaidan",
-    "jp": "階段",
-    "audio": "かいだん",
-    "english": "stairs",
-    "mnemonic": "KAI-DAN — STAIRS. → kaidan."
+    "romaji": "tokidoki",
+    "jp": "時々",
+    "audio": "ときどき",
+    "english": "sometimes",
+    "mnemonic": "TO-KI-DO-KI — SOMETIMES. → tokidoki."
   },
   {
     "block": 9,
     "index": 9,
-    "romaji": "erebeetaa",
-    "jp": "エレベーター",
-    "audio": "えれべーたー",
-    "english": "elevator",
-    "mnemonic": "E-RE-BEE-TAA — ELEVATOR. → erebeetaa."
+    "romaji": "kyaputen",
+    "jp": "キャプテン",
+    "audio": "キャプテン",
+    "english": "captain",
+    "mnemonic": "CAPTAIN — same word. → kyaputen."
   },
   {
     "block": 9,
     "index": 10,
-    "romaji": "heya",
-    "jp": "部屋",
-    "audio": "へや",
-    "english": "room",
-    "mnemonic": "HEY, YA in the ROOM. → heya."
+    "romaji": "shashin",
+    "jp": "写真",
+    "audio": "しゃしん",
+    "english": "picture",
+    "mnemonic": "SHA-SHIN — PICTURE. → shashin."
   },
   {
     "block": 9,
     "index": 11,
-    "romaji": "daidokoro",
-    "jp": "台所",
-    "audio": "だいどころ",
-    "english": "kitchen",
-    "mnemonic": "DAI-DO-KO-RO — KITCHEN. → daidokoro."
+    "romaji": "shitagau",
+    "jp": "従う",
+    "audio": "したがう",
+    "english": "follow",
+    "mnemonic": "SHI-TA-GA-U — FOLLOW. → shitagau."
   },
   {
     "block": 9,
     "index": 12,
-    "romaji": "ofuro",
-    "jp": "お風呂",
-    "audio": "おふろ",
-    "english": "bath",
-    "mnemonic": "O-FU-RO — BATH. → ofuro."
+    "romaji": "chigau",
+    "jp": "違う",
+    "audio": "ちがう",
+    "english": "different",
+    "mnemonic": "CHI-GA-U — DIFFERENT. → chigau."
   },
   {
     "block": 9,
     "index": 13,
-    "romaji": "shawaa",
-    "jp": "シャワー",
-    "audio": "しゃわー",
-    "english": "shower",
-    "mnemonic": "SHA-WAA — SHOWER. → shawaa."
+    "romaji": "shunkan",
+    "jp": "瞬間",
+    "audio": "しゅんかん",
+    "english": "moment",
+    "mnemonic": "SHUN-KAN — MOMENT. → shunkan."
   },
   {
     "block": 9,
     "index": 14,
-    "romaji": "toire",
-    "jp": "トイレ",
-    "audio": "といれ",
-    "english": "toilet",
-    "mnemonic": "TOI-RE sounds close to TOILET. → toire."
+    "romaji": "shimai",
+    "jp": "姉妹",
+    "audio": "しまい",
+    "english": "sister",
+    "mnemonic": "SHI-MAI — SISTER. → shimai."
   },
   {
     "block": 9,
     "index": 15,
-    "romaji": "mado",
-    "jp": "窓",
-    "audio": "まど",
-    "english": "window",
-    "mnemonic": "MA-DO — WINDOW. → mado."
+    "romaji": "sukunakutomo",
+    "jp": "少なくとも",
+    "audio": "すくなくとも",
+    "english": "at least",
+    "mnemonic": "SUKUNAKUTOMO — AT LEAST → sukunakutomo."
   },
   {
     "block": 9,
     "index": 16,
-    "romaji": "kagi",
-    "jp": "鍵",
-    "audio": "かぎ",
-    "english": "key",
-    "mnemonic": "KA-GI — KEY. → kagi."
+    "romaji": "juuyou",
+    "jp": "重要",
+    "audio": "じゅうよう",
+    "english": "important",
+    "mnemonic": "JUU-YOU — IMPORTANT. → juuyou."
   },
   {
     "block": 9,
     "index": 17,
-    "romaji": "tsukue",
-    "jp": "机",
-    "audio": "つくえ",
-    "english": "desk",
-    "mnemonic": "TSU-KUE — DESK. → tsukue."
+    "romaji": "yuushoku",
+    "jp": "夕食",
+    "audio": "ゆうしょく",
+    "english": "dinner",
+    "mnemonic": "YUU-SHOKU — DINNER. → yuushoku."
   },
   {
     "block": 9,
     "index": 18,
-    "romaji": "isu",
-    "jp": "椅子",
-    "audio": "いす",
-    "english": "chair",
-    "mnemonic": "I-SU — CHAIR. → isu."
+    "romaji": "a",
+    "jp": "あ",
+    "audio": "あ",
+    "english": "ah",
+    "mnemonic": "AH — spoken gasp. → a."
   },
   {
     "block": 9,
     "index": 19,
+    "romaji": "mo",
+    "jp": "も",
+    "audio": "も",
+    "english": "too / also",
+    "mnemonic": "\"ME TOO!\" — ALSO. → mo."
+  },
+  {
+    "block": 9,
+    "index": 20,
+    "romaji": "retsu",
+    "jp": "列",
+    "audio": "れつ",
+    "english": "line",
+    "mnemonic": "RE-TSU — LINE / queue. → retsu."
+  },
+  {
+    "block": 9,
+    "index": 21,
+    "romaji": "otosu",
+    "jp": "落とす",
+    "audio": "おとす",
+    "english": "drop",
+    "mnemonic": "O-TO-SU — DROP it. → otosu."
+  },
+  {
+    "block": 9,
+    "index": 22,
+    "romaji": "shinjiru",
+    "jp": "信じる",
+    "audio": "しんじる",
+    "english": "believe",
+    "mnemonic": "SHIN-JI-RU — BELIEVE. → shinjiru."
+  },
+  {
+    "block": 9,
+    "index": 23,
+    "romaji": "kaisha",
+    "jp": "会社",
+    "audio": "かいしゃ",
+    "english": "company",
+    "mnemonic": "KAISHA — COMPANY → kaisha."
+  },
+  {
+    "block": 9,
+    "index": 24,
+    "romaji": "kanari",
+    "jp": "かなり",
+    "audio": "かなり",
+    "english": "pretty / quite",
+    "mnemonic": "KA-NA-RI — QUITE. → kanari."
+  },
+  {
+    "block": 9,
+    "index": 25,
+    "romaji": "otto",
+    "jp": "夫",
+    "audio": "おっと",
+    "english": "husband",
+    "mnemonic": "OT-TO — HUSBAND. → otto."
+  },
+  {
+    "block": 9,
+    "index": 26,
+    "romaji": "hakkiri",
+    "jp": "はっきり",
+    "audio": "はっきり",
+    "english": "clearly",
+    "mnemonic": "HAKKIRI — CLEARLY → hakkiri."
+  },
+  {
+    "block": 9,
+    "index": 27,
+    "romaji": "nitaishite",
+    "jp": "〜に対して",
+    "audio": "〜にたいして",
+    "english": "against",
+    "mnemonic": "NI-TAI-SHITE — AGAINST. → nitaishite."
+  },
+  {
+    "block": 9,
+    "index": 28,
+    "romaji": "sawaru",
+    "jp": "触る",
+    "audio": "さわる",
+    "english": "touch",
+    "mnemonic": "SA-WA-RU — TOUCH. → sawaru."
+  },
+  {
+    "block": 9,
+    "index": 29,
+    "romaji": "sain",
+    "jp": "サイン",
+    "audio": "サイン",
+    "english": "sign",
+    "mnemonic": "SIGN — same word. → sain."
+  },
+  {
+    "block": 9,
+    "index": 30,
+    "romaji": "fushigi",
+    "jp": "不思議",
+    "audio": "ふしぎ",
+    "english": "mysterious / strange",
+    "mnemonic": "FUSHIGI — MYSTERIOUS / strange → fushigi."
+  },
+  {
+    "block": 9,
+    "index": 31,
+    "romaji": "roku",
+    "jp": "六",
+    "audio": "ろく",
+    "english": "six",
+    "mnemonic": "RO-KU — SIX. → roku."
+  },
+  {
+    "block": 9,
+    "index": 32,
+    "romaji": "hanbun",
+    "jp": "半分",
+    "audio": "はんぶん",
+    "english": "half",
+    "mnemonic": "HAN-BUN — HALF. → hanbun."
+  },
+  {
+    "block": 9,
+    "index": 33,
+    "romaji": "kuuru",
+    "jp": "クール",
+    "audio": "クール",
+    "english": "cool",
+    "mnemonic": "COOL — same word. → kuuru."
+  },
+  {
+    "block": 9,
+    "index": 34,
+    "romaji": "manabu",
+    "jp": "学ぶ",
+    "audio": "まなぶ",
+    "english": "learn",
+    "mnemonic": "MA-NA-BU — LEARN. → manabu."
+  },
+  {
+    "block": 9,
+    "index": 35,
+    "romaji": "jijitsu",
+    "jp": "事実",
+    "audio": "じじつ",
+    "english": "fact",
+    "mnemonic": "JI-JI-TSU — FACT. → jijitsu."
+  },
+  {
+    "block": 9,
+    "index": 36,
+    "romaji": "sakini",
+    "jp": "先に",
+    "audio": "さきに",
+    "english": "ahead / first",
+    "mnemonic": "SAKINI — AHEAD / first → sakini."
+  },
+  {
+    "block": 9,
+    "index": 37,
+    "romaji": "maikeru",
+    "jp": "マイケル",
+    "audio": "マイケル",
+    "english": "Michael",
+    "mnemonic": "MICHAEL — name. → maikeru."
+  },
+  {
+    "block": 9,
+    "index": 38,
+    "romaji": "tooru",
+    "jp": "通る",
+    "audio": "とおる",
+    "english": "pass",
+    "mnemonic": "TO-O-RU — PASS through. → tooru."
+  },
+  {
+    "block": 9,
+    "index": 39,
     "romaji": "beddo",
     "jp": "ベッド",
-    "audio": "べっど",
+    "audio": "ベッド",
     "english": "bed",
     "mnemonic": "BED — same word. → beddo."
   },
   {
     "block": 9,
+    "index": 40,
+    "romaji": "takai",
+    "jp": "高い",
+    "audio": "たかい",
+    "english": "expensive / high",
+    "mnemonic": "TA-KAI — HIGH. → takai."
+  },
+  {
+    "block": 9,
+    "index": 41,
+    "romaji": "jon",
+    "jp": "ジョン",
+    "audio": "ジョン",
+    "english": "John",
+    "mnemonic": "JOHN — name. → jon."
+  },
+  {
+    "block": 9,
+    "index": 42,
+    "romaji": "owaru",
+    "jp": "終わる",
+    "audio": "おわる",
+    "english": "end / finish",
+    "mnemonic": "OWARU — END / finish → owaru."
+  },
+  {
+    "block": 9,
+    "index": 43,
+    "romaji": "shinjitsu",
+    "jp": "真実",
+    "audio": "しんじつ",
+    "english": "truth",
+    "mnemonic": "SHIN-JI-TSU — TRUTH. → shinjitsu."
+  },
+  {
+    "block": 9,
+    "index": 44,
+    "romaji": "hotondo",
+    "jp": "ほとんど",
+    "audio": "ほとんど",
+    "english": "almost",
+    "mnemonic": "HO-TON-DO — ALMOST. → hotondo."
+  },
+  {
+    "block": 9,
+    "index": 45,
+    "romaji": "tateru",
+    "jp": "建てる",
+    "audio": "たてる",
+    "english": "build",
+    "mnemonic": "TA-TE-RU — BUILD. → tateru."
+  },
+  {
+    "block": 9,
+    "index": 46,
+    "romaji": "atsui",
+    "jp": "暑い",
+    "audio": "あつい",
+    "english": "hot (weather)",
+    "mnemonic": "A-TSU-I — HOT. → atsui."
+  },
+  {
+    "block": 9,
+    "index": 47,
+    "romaji": "kakeru",
+    "jp": "賭ける",
+    "audio": "かける",
+    "english": "bet",
+    "mnemonic": "KA-KE-RU — BET on it. → kakeru."
+  },
+  {
+    "block": 9,
+    "index": 48,
+    "romaji": "ushiro",
+    "jp": "後ろ",
+    "audio": "うしろ",
+    "english": "behind",
+    "mnemonic": "U-SHI-RO — BEHIND. → ushiro."
+  },
+  {
+    "block": 9,
+    "index": 49,
+    "romaji": "mou",
+    "jp": "もう",
+    "audio": "もう",
+    "english": "already / anymore",
+    "mnemonic": "MOU — not ANYMORE. → mou."
+  },
+  {
+    "block": 10,
+    "index": 0,
+    "romaji": "chi",
+    "jp": "血",
+    "audio": "ち",
+    "english": "blood",
+    "mnemonic": "CHI — BLOOD. → chi."
+  },
+  {
+    "block": 10,
+    "index": 1,
+    "romaji": "chikara",
+    "jp": "力",
+    "audio": "ちから",
+    "english": "power",
+    "mnemonic": "CHI-KA-RA — POWER. → chikara."
+  },
+  {
+    "block": 10,
+    "index": 2,
+    "romaji": "ashi",
+    "jp": "足",
+    "audio": "あし",
+    "english": "foot / leg",
+    "mnemonic": "ASHI — FOOT / leg → ashi."
+  },
+  {
+    "block": 10,
+    "index": 3,
+    "romaji": "papa",
+    "jp": "パパ",
+    "audio": "パパ",
+    "english": "daddy",
+    "mnemonic": "PAPA — DADDY. → papa."
+  },
+  {
+    "block": 10,
+    "index": 4,
+    "romaji": "mama",
+    "jp": "ママ",
+    "audio": "ママ",
+    "english": "mom",
+    "mnemonic": "MAMA — MOM. → mama."
+  },
+  {
+    "block": 10,
+    "index": 5,
+    "romaji": "shiyou",
+    "jp": "〜しよう",
+    "audio": "〜しよう",
+    "english": "let's / shall we",
+    "mnemonic": "~SHIYOU — LET'S / shall we → shiyou."
+  },
+  {
+    "block": 10,
+    "index": 6,
+    "romaji": "youkoso",
+    "jp": "ようこそ",
+    "audio": "ようこそ",
+    "english": "welcome",
+    "mnemonic": "YOU-KO-SO — WELCOME. → youkoso."
+  },
+  {
+    "block": 10,
+    "index": 7,
+    "romaji": "sensou",
+    "jp": "戦争",
+    "audio": "せんそう",
+    "english": "war",
+    "mnemonic": "SEN-SOU — WAR. → sensou."
+  },
+  {
+    "block": 10,
+    "index": 8,
+    "romaji": "koudou",
+    "jp": "行動",
+    "audio": "こうどう",
+    "english": "action / behavior",
+    "mnemonic": "KOUDOU — ACTION / behavior → koudou."
+  },
+  {
+    "block": 10,
+    "index": 9,
+    "romaji": "baka",
+    "jp": "バカ",
+    "audio": "ばか",
+    "english": "stupid",
+    "mnemonic": "BA-KA — STUPID. → baka."
+  },
+  {
+    "block": 10,
+    "index": 10,
+    "romaji": "mae",
+    "jp": "前",
+    "audio": "まえ",
+    "english": "before / in front",
+    "mnemonic": "MAE — BEFORE / in front. → mae."
+  },
+  {
+    "block": 10,
+    "index": 11,
+    "romaji": "kusoonna",
+    "jp": "クソ女",
+    "audio": "くそおんな",
+    "english": "bitch",
+    "mnemonic": "KUSO-ONNA — crude insult. → kusoonna."
+  },
+  {
+    "block": 10,
+    "index": 12,
+    "romaji": "isshoni",
+    "jp": "一緒に",
+    "audio": "いっしょに",
+    "english": "together",
+    "mnemonic": "ISSHO-NI — TOGETHER. → isshoni."
+  },
+  {
+    "block": 10,
+    "index": 13,
+    "romaji": "jiyuu",
+    "jp": "自由",
+    "audio": "じゆう",
+    "english": "freedom / free",
+    "mnemonic": "JIYUU — FREEDOM / free → jiyuu."
+  },
+  {
+    "block": 10,
+    "index": 14,
+    "romaji": "dochiraka",
+    "jp": "どちらか",
+    "audio": "どちらか",
+    "english": "either",
+    "mnemonic": "DO-CHI-RA-KA — EITHER one. → dochiraka."
+  },
+  {
+    "block": 10,
+    "index": 15,
+    "romaji": "dakedo",
+    "jp": "だけど",
+    "audio": "だけど",
+    "english": "though",
+    "mnemonic": "DA-KE-DO — THOUGH. → dakedo."
+  },
+  {
+    "block": 10,
+    "index": 16,
+    "romaji": "musume",
+    "jp": "娘",
+    "audio": "むすめ",
+    "english": "daughter",
+    "mnemonic": "MU-SU-ME — DAUGHTER. → musume."
+  },
+  {
+    "block": 10,
+    "index": 17,
+    "romaji": "kisu",
+    "jp": "キス",
+    "audio": "キス",
+    "english": "kiss",
+    "mnemonic": "KISS — same word. → kisu."
+  },
+  {
+    "block": 10,
+    "index": 18,
+    "romaji": "baibai",
+    "jp": "バイバイ",
+    "audio": "バイバイ",
+    "english": "bye",
+    "mnemonic": "BYE-BYE — BYE. → baibai."
+  },
+  {
+    "block": 10,
+    "index": 19,
+    "romaji": "toori",
+    "jp": "通り",
+    "audio": "とおり",
+    "english": "street",
+    "mnemonic": "TO-O-RI — STREET. → toori."
+  },
+  {
+    "block": 10,
     "index": 20,
-    "romaji": "terebi",
-    "jp": "テレビ",
-    "audio": "てれび",
-    "english": "TV",
-    "mnemonic": "TE-RE-BI — TV. → terebi."
+    "romaji": "katsu",
+    "jp": "勝つ",
+    "audio": "かつ",
+    "english": "win",
+    "mnemonic": "KA-TSU — WIN. → katsu."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 21,
-    "romaji": "keitai",
-    "jp": "携帯",
-    "audio": "けいたい",
-    "english": "mobile phone",
-    "mnemonic": "KEI-TAI — MOBILE PHONE. → keitai."
+    "romaji": "kitaisuru",
+    "jp": "期待する",
+    "audio": "きたいする",
+    "english": "expect",
+    "mnemonic": "KI-TAI — EXPECT. → kitaisuru."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 22,
-    "romaji": "sumaho",
-    "jp": "スマホ",
-    "audio": "すまほ",
-    "english": "smartphone",
-    "mnemonic": "SU-MA-HO — SMARTPHONE. → sumaho."
+    "romaji": "tokai",
+    "jp": "都会",
+    "audio": "とかい",
+    "english": "city",
+    "mnemonic": "TO-KAI — the CITY. → tokai."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 23,
-    "romaji": "pasokon",
-    "jp": "パソコン",
-    "audio": "ぱそこん",
-    "english": "computer",
-    "mnemonic": "PA-SO-KON — COMPUTER. → pasokon."
+    "romaji": "isogu",
+    "jp": "急ぐ",
+    "audio": "いそぐ",
+    "english": "hurry",
+    "mnemonic": "I-SO-GU — HURRY. → isogu."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 24,
-    "romaji": "internetto",
-    "jp": "インターネット",
-    "audio": "いんたーねっと",
-    "english": "internet",
-    "mnemonic": "IN-TE-rN-E-TTO — INTERNET. → internetto."
+    "romaji": "aida",
+    "jp": "間",
+    "audio": "あいだ",
+    "english": "between / while",
+    "mnemonic": "AI-DA — BETWEEN. → aida."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 25,
-    "romaji": "meeru",
-    "jp": "メール",
-    "audio": "めーる",
-    "english": "email / message",
-    "mnemonic": "MEE-RU — EMAIL. → meeru."
+    "romaji": "kuro",
+    "jp": "黒",
+    "audio": "くろ",
+    "english": "black",
+    "mnemonic": "KU-RO — BLACK. → kuro."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 26,
-    "romaji": "messeeji",
-    "jp": "メッセージ",
-    "audio": "めっせーじ",
-    "english": "message",
-    "mnemonic": "ME-SSEE-JI — MESSAGE. → messeeji."
+    "romaji": "keikan",
+    "jp": "警官",
+    "audio": "けいかん",
+    "english": "cop",
+    "mnemonic": "KEI-KAN — COP. → keikan."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 27,
-    "romaji": "shashin",
-    "jp": "写真",
-    "audio": "しゃしん",
-    "english": "photo",
-    "mnemonic": "SHA-SHIN — PICTURE. → shashin."
+    "romaji": "kuni",
+    "jp": "国",
+    "audio": "くに",
+    "english": "country",
+    "mnemonic": "KU-NI — COUNTRY. → kuni."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 28,
-    "romaji": "douga",
-    "jp": "動画",
-    "audio": "どうが",
-    "english": "video",
-    "mnemonic": "DOU-GA — VIDEO. → douga."
+    "romaji": "ureshii",
+    "jp": "嬉しい",
+    "audio": "うれしい",
+    "english": "happy / glad",
+    "mnemonic": "URESHII — HAPPY / glad → ureshii."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 29,
-    "romaji": "ongaku",
-    "jp": "音楽",
-    "audio": "おんがく",
-    "english": "music",
-    "mnemonic": "ON-GA-KU — MUSIC. → ongaku."
+    "romaji": "sono",
+    "jp": "その",
+    "audio": "その",
+    "english": "that / its",
+    "mnemonic": "SONO — THAT / its → sono."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 30,
-    "romaji": "uta",
-    "jp": "歌",
-    "audio": "うた",
-    "english": "song",
-    "mnemonic": "U-TA — SONG. → uta."
+    "romaji": "shiro",
+    "jp": "白",
+    "audio": "しろ",
+    "english": "white",
+    "mnemonic": "SHI-RO — WHITE. → shiro."
   },
   {
-    "block": 9,
+    "block": 10,
     "index": 31,
+    "romaji": "soto",
+    "jp": "外",
+    "audio": "そと",
+    "english": "outside",
+    "mnemonic": "SO-TO — OUTSIDE. → soto."
+  },
+  {
+    "block": 10,
+    "index": 32,
+    "romaji": "satsujin",
+    "jp": "殺人",
+    "audio": "さつじん",
+    "english": "murder",
+    "mnemonic": "SATSU-JIN — MURDER. → satsujin."
+  },
+  {
+    "block": 10,
+    "index": 33,
+    "romaji": "naguru",
+    "jp": "殴る",
+    "audio": "なぐる",
+    "english": "beat",
+    "mnemonic": "NA-GU-RU — BEAT. → naguru."
+  },
+  {
+    "block": 10,
+    "index": 34,
     "romaji": "eiga",
     "jp": "映画",
     "audio": "えいが",
@@ -3888,615 +4365,138 @@
     "mnemonic": "EI-GA — MOVIE. → eiga."
   },
   {
-    "block": 9,
-    "index": 32,
-    "romaji": "terebi bangumi",
-    "jp": "テレビ番組",
-    "audio": "てれびばんぐみ",
-    "english": "TV show",
-    "mnemonic": "TE-RE-BI BAN-GU-MI — TV SHOW. → terebi bangumi."
-  },
-  {
-    "block": 9,
-    "index": 33,
-    "romaji": "geemu",
-    "jp": "ゲーム",
-    "audio": "げーむ",
-    "english": "game",
-    "mnemonic": "GAME — same word. → geemu."
-  },
-  {
-    "block": 9,
-    "index": 34,
-    "romaji": "manga",
-    "jp": "漫画",
-    "audio": "まんが",
-    "english": "manga / comic",
-    "mnemonic": "MAN-GA — MANGA. → manga."
-  },
-  {
-    "block": 9,
-    "index": 35,
-    "romaji": "zasshi",
-    "jp": "雑誌",
-    "audio": "ざっし",
-    "english": "magazine",
-    "mnemonic": "ZA-SSHI — MAGAZINE. → zasshi."
-  },
-  {
-    "block": 9,
-    "index": 36,
-    "romaji": "shinbun",
-    "jp": "新聞",
-    "audio": "しんぶん",
-    "english": "newspaper",
-    "mnemonic": "SHIN-BUN — NEWSPAPER. → shinbun."
-  },
-  {
-    "block": 9,
-    "index": 37,
-    "romaji": "pen",
-    "jp": "ペン",
-    "audio": "ぺん",
-    "english": "pen",
-    "mnemonic": "PEN — PEN. → pen."
-  },
-  {
-    "block": 9,
-    "index": 38,
-    "romaji": "kami",
-    "jp": "紙",
-    "audio": "かみ",
-    "english": "paper",
-    "mnemonic": "CAMI sees GOD in the shrine. → kami."
-  },
-  {
-    "block": 9,
-    "index": 39,
-    "romaji": "kaban",
-    "jp": "鞄",
-    "audio": "かばん",
-    "english": "bag",
-    "mnemonic": "KA-BAN — BAG. → kaban."
-  },
-  {
-    "block": 9,
-    "index": 40,
-    "romaji": "saifu",
-    "jp": "財布",
-    "audio": "さいふ",
-    "english": "wallet",
-    "mnemonic": "SAI-FU — WALLET. → saifu."
-  },
-  {
-    "block": 9,
-    "index": 41,
-    "romaji": "megane",
-    "jp": "眼鏡",
-    "audio": "めがね",
-    "english": "glasses",
-    "mnemonic": "ME-GAN-E — GLASSES. → megane."
-  },
-  {
-    "block": 9,
-    "index": 42,
-    "romaji": "tokei",
-    "jp": "時計",
-    "audio": "とけい",
-    "english": "clock / watch",
-    "mnemonic": "TO-KEI — CLOCK. → tokei."
-  },
-  {
-    "block": 9,
-    "index": 43,
-    "romaji": "fuku",
-    "jp": "服",
-    "audio": "ふく",
-    "english": "clothes",
-    "mnemonic": "FU-KU — CLOTHES. → fuku."
-  },
-  {
-    "block": 9,
-    "index": 44,
-    "romaji": "kutsu",
-    "jp": "靴",
-    "audio": "くつ",
-    "english": "shoes",
-    "mnemonic": "KU-TSU — SHOES. → kutsu."
-  },
-  {
-    "block": 9,
-    "index": 45,
-    "romaji": "shatsu",
-    "jp": "シャツ",
-    "audio": "しゃつ",
-    "english": "shirt",
-    "mnemonic": "SHA-TSU — SHIRT. → shatsu."
-  },
-  {
-    "block": 9,
-    "index": 46,
-    "romaji": "zubon",
-    "jp": "ズボン",
-    "audio": "ずぼん",
-    "english": "trousers / pants",
-    "mnemonic": "ZU-BON — TROUSERS. → zubon."
-  },
-  {
-    "block": 9,
-    "index": 47,
-    "romaji": "uwagi",
-    "jp": "上着",
-    "audio": "うわぎ",
-    "english": "jacket / outerwear",
-    "mnemonic": "U-WA-GI — JACKET. → uwagi."
-  },
-  {
-    "block": 9,
-    "index": 48,
-    "romaji": "boushi",
-    "jp": "帽子",
-    "audio": "ぼうし",
-    "english": "hat",
-    "mnemonic": "BOU-SHI — HAT. → boushi."
-  },
-  {
-    "block": 9,
-    "index": 49,
-    "romaji": "kasa",
-    "jp": "傘",
-    "audio": "かさ",
-    "english": "umbrella",
-    "mnemonic": "KA-SA — UMBRELLA. → kasa."
-  },
-  {
-    "block": 10,
-    "index": 0,
-    "romaji": "kaisha",
-    "jp": "会社",
-    "audio": "かいしゃ",
-    "english": "company / workplace",
-    "mnemonic": "KAISHA — COMPANY → kaisha."
-  },
-  {
-    "block": 10,
-    "index": 1,
-    "romaji": "shigoto",
-    "jp": "仕事",
-    "audio": "しごと",
-    "english": "work / job",
-    "mnemonic": "SHE GOes TO WORK. → shigoto."
-  },
-  {
-    "block": 10,
-    "index": 2,
-    "romaji": "kyoushitsu",
-    "jp": "教室",
-    "audio": "きょうしつ",
-    "english": "classroom",
-    "mnemonic": "KYOU-SHI-TSU — CLASSROOM. → kyoushitsu."
-  },
-  {
-    "block": 10,
-    "index": 3,
-    "romaji": "daigaku",
-    "jp": "大学",
-    "audio": "だいがく",
-    "english": "university",
-    "mnemonic": "DAI-GA-KU — UNIVERSITY. → daigaku."
-  },
-  {
-    "block": 10,
-    "index": 4,
-    "romaji": "byouin",
-    "jp": "病院",
-    "audio": "びょういん",
-    "english": "hospital",
-    "mnemonic": "BYOUIN — HOSPITAL. → byouin."
-  },
-  {
-    "block": 10,
-    "index": 5,
-    "romaji": "konbini",
-    "jp": "コンビニ",
-    "audio": "こんびに",
-    "english": "convenience store",
-    "mnemonic": "KON-BIN-I — CONVENIENCE STORE. → konbini."
-  },
-  {
-    "block": 10,
-    "index": 6,
-    "romaji": "suupaa",
-    "jp": "スーパー",
-    "audio": "すーぱー",
-    "english": "supermarket",
-    "mnemonic": "SUU-PAA — SUPERMARKET. → suupaa."
-  },
-  {
-    "block": 10,
-    "index": 7,
-    "romaji": "resutoran",
-    "jp": "レストラン",
-    "audio": "れすとらん",
-    "english": "restaurant",
-    "mnemonic": "RE-SU-TO-RAN — RESTAURANT. → resutoran."
-  },
-  {
-    "block": 10,
-    "index": 8,
-    "romaji": "kissa",
-    "jp": "喫茶店",
-    "audio": "きっさてん",
-    "english": "cafe / coffee shop",
-    "mnemonic": "KI-SSA — CAFE. → kissa."
-  },
-  {
-    "block": 10,
-    "index": 9,
-    "romaji": "hoteru",
-    "jp": "ホテル",
-    "audio": "ほてる",
-    "english": "hotel",
-    "mnemonic": "HO-TE-RU — HOTEL. → hoteru."
-  },
-  {
-    "block": 10,
-    "index": 10,
-    "romaji": "kuukou",
-    "jp": "空港",
-    "audio": "くうこう",
-    "english": "airport",
-    "mnemonic": "KUU-KOU — AIRPORT. → kuukou."
-  },
-  {
-    "block": 10,
-    "index": 11,
-    "romaji": "basu",
-    "jp": "バス",
-    "audio": "ばす",
-    "english": "bus",
-    "mnemonic": "BA-SU — BUS. → basu."
-  },
-  {
-    "block": 10,
-    "index": 12,
-    "romaji": "takushii",
-    "jp": "タクシー",
-    "audio": "たくしー",
-    "english": "taxi",
-    "mnemonic": "TA-KU-SHII — TAXI. → takushii."
-  },
-  {
-    "block": 10,
-    "index": 13,
-    "romaji": "jitensha",
-    "jp": "自転車",
-    "audio": "じてんしゃ",
-    "english": "bicycle",
-    "mnemonic": "JI-TEN-SHA — BICYCLE. → jitensha."
-  },
-  {
-    "block": 10,
-    "index": 14,
-    "romaji": "hikouki",
-    "jp": "飛行機",
-    "audio": "ひこうき",
-    "english": "airplane",
-    "mnemonic": "HI-KOU-KI — AIRPLANE. → hikouki."
-  },
-  {
-    "block": 10,
-    "index": 15,
-    "romaji": "chikatetsu",
-    "jp": "地下鉄",
-    "audio": "ちかてつ",
-    "english": "subway",
-    "mnemonic": "CHI-KA-TE-TSU — SUBWAY. → chikatetsu."
-  },
-  {
-    "block": 10,
-    "index": 16,
-    "romaji": "noriba",
-    "jp": "乗り場",
-    "audio": "のりば",
-    "english": "boarding place / stop",
-    "mnemonic": "N-O-RI-BA — BOARDING PLACE. → noriba."
-  },
-  {
-    "block": 10,
-    "index": 17,
-    "romaji": "kippu",
-    "jp": "切符",
-    "audio": "きっぷ",
-    "english": "ticket",
-    "mnemonic": "KI-PPU — TICKET. → kippu."
-  },
-  {
-    "block": 10,
-    "index": 18,
-    "romaji": "ryoukin",
-    "jp": "料金",
-    "audio": "りょうきん",
-    "english": "fee / fare",
-    "mnemonic": "RYOU-KIN — FEE. → ryoukin."
-  },
-  {
-    "block": 10,
-    "index": 19,
-    "romaji": "okane",
-    "jp": "お金",
-    "audio": "おかね",
-    "english": "money",
-    "mnemonic": "OKAY, NE? Need MONEY. → okane."
-  },
-  {
-    "block": 10,
-    "index": 20,
-    "romaji": "genkin",
-    "jp": "現金",
-    "audio": "げんきん",
-    "english": "cash",
-    "mnemonic": "GEN-KIN — CASH. → genkin."
-  },
-  {
-    "block": 10,
-    "index": 21,
-    "romaji": "kaado",
-    "jp": "カード",
-    "audio": "かーど",
-    "english": "card",
-    "mnemonic": "KAA-DO — CARD. → kaado."
-  },
-  {
-    "block": 10,
-    "index": 22,
-    "romaji": "kurejitto kaado",
-    "jp": "クレジットカード",
-    "audio": "くれじっとかーど",
-    "english": "credit card",
-    "mnemonic": "KU-RE-JI-TTO KAA-DO — CREDIT CARD. → kurejitto kaado."
-  },
-  {
-    "block": 10,
-    "index": 23,
-    "romaji": "ryoushuusho",
-    "jp": "領収書",
-    "audio": "りょうしゅうしょ",
-    "english": "receipt",
-    "mnemonic": "RYOU-SHUU-SHO — RECEIPT. → ryoushuusho."
-  },
-  {
-    "block": 10,
-    "index": 24,
-    "romaji": "nedan",
-    "jp": "値段",
-    "audio": "ねだん",
-    "english": "price",
-    "mnemonic": "N-E-DAN — PRICE. → nedan."
-  },
-  {
-    "block": 10,
-    "index": 25,
-    "romaji": "waribiki",
-    "jp": "割引",
-    "audio": "わりびき",
-    "english": "discount",
-    "mnemonic": "WA-RI-BI-KI — DISCOUNT. → waribiki."
-  },
-  {
-    "block": 10,
-    "index": 26,
-    "romaji": "goukei",
-    "jp": "合計",
-    "audio": "ごうけい",
-    "english": "total / sum",
-    "mnemonic": "GOU-KEI — TOTAL. → goukei."
-  },
-  {
-    "block": 10,
-    "index": 27,
-    "romaji": "otsuri",
-    "jp": "お釣り",
-    "audio": "おつり",
-    "english": "change (money)",
-    "mnemonic": "O-TSU-RI — CHANGE (MONEY). → otsuri."
-  },
-  {
-    "block": 10,
-    "index": 28,
-    "romaji": "tada",
-    "jp": "ただ",
-    "audio": "ただ",
-    "english": "free / just",
-    "mnemonic": "TA-DA — FREE. → tada."
-  },
-  {
-    "block": 10,
-    "index": 29,
-    "romaji": "muryou",
-    "jp": "無料",
-    "audio": "むりょう",
-    "english": "free of charge",
-    "mnemonic": "MU-RYOU — FREE OF CHARGE. → muryou."
-  },
-  {
-    "block": 10,
-    "index": 30,
-    "romaji": "ryouri",
-    "jp": "料理",
-    "audio": "りょうり",
-    "english": "cooking / cuisine",
-    "mnemonic": "RYOU-RI — COOKING. → ryouri."
-  },
-  {
-    "block": 10,
-    "index": 31,
-    "romaji": "tabemono",
-    "jp": "食べ物",
-    "audio": "たべもの",
-    "english": "food",
-    "mnemonic": "TA-BE-MON-O — FOOD. → tabemono."
-  },
-  {
-    "block": 10,
-    "index": 32,
-    "romaji": "nomimono",
-    "jp": "飲み物",
-    "audio": "のみもの",
-    "english": "drink / beverage",
-    "mnemonic": "N-O-MI-MON-O — DRINK. → nomimono."
-  },
-  {
-    "block": 10,
-    "index": 33,
-    "romaji": "asa gohan",
-    "jp": "朝ご飯",
-    "audio": "あさごはん",
-    "english": "breakfast",
-    "mnemonic": "A-SA GO-HAN — BREAKFAST. → asa gohan."
-  },
-  {
-    "block": 10,
-    "index": 34,
-    "romaji": "hiru gohan",
-    "jp": "昼ご飯",
-    "audio": "ひるごはん",
-    "english": "lunch",
-    "mnemonic": "HI-RU GO-HAN — LUNCH. → hiru gohan."
-  },
-  {
     "block": 10,
     "index": 35,
-    "romaji": "ban gohan",
-    "jp": "晩ご飯",
-    "audio": "ばんごはん",
-    "english": "dinner",
-    "mnemonic": "BAN GO-HAN — DINNER. → ban gohan."
+    "romaji": "made",
+    "jp": "〜まで",
+    "audio": "〜まで",
+    "english": "until",
+    "mnemonic": "MADE — UNTIL. → made."
   },
   {
     "block": 10,
     "index": 36,
-    "romaji": "pan",
-    "jp": "パン",
-    "audio": "ぱん",
-    "english": "bread",
-    "mnemonic": "PAN — BREAD. → pan."
+    "romaji": "ippai",
+    "jp": "いっぱい",
+    "audio": "いっぱい",
+    "english": "a lot / full",
+    "mnemonic": "IPPAI — A LOT / full → ippai."
   },
   {
     "block": 10,
     "index": 37,
-    "romaji": "tamago",
-    "jp": "卵",
-    "audio": "たまご",
-    "english": "egg",
-    "mnemonic": "TA-MA-GO — EGG. → tamago."
+    "romaji": "byouki",
+    "jp": "病気",
+    "audio": "びょうき",
+    "english": "sick",
+    "mnemonic": "BYOU-KI — SICK. → byouki."
   },
   {
     "block": 10,
     "index": 38,
-    "romaji": "tori niku",
-    "jp": "鶏肉",
-    "audio": "とりにく",
-    "english": "chicken",
-    "mnemonic": "TO-RI N-I-KU — CHICKEN. → tori niku."
+    "romaji": "nageru",
+    "jp": "投げる",
+    "audio": "なげる",
+    "english": "throw",
+    "mnemonic": "NA-GE-RU — THROW. → nageru."
   },
   {
     "block": 10,
     "index": 39,
-    "romaji": "buta niku",
-    "jp": "豚肉",
-    "audio": "ぶたにく",
-    "english": "pork",
-    "mnemonic": "BU-TA N-I-KU — PORK. → buta niku."
+    "romaji": "kizu",
+    "jp": "傷",
+    "audio": "きず",
+    "english": "scar",
+    "mnemonic": "KI-ZU — SCAR / wound. → kizu."
   },
   {
     "block": 10,
     "index": 40,
-    "romaji": "gyuu niku",
-    "jp": "牛肉",
-    "audio": "ぎゅうにく",
-    "english": "beef",
-    "mnemonic": "GYUU N-I-KU — BEEF. → gyuu niku."
+    "romaji": "chiimu",
+    "jp": "チーム",
+    "audio": "チーム",
+    "english": "team",
+    "mnemonic": "TEAM — same word. → chiimu."
   },
   {
     "block": 10,
     "index": 41,
-    "romaji": "shio",
-    "jp": "塩",
-    "audio": "しお",
-    "english": "salt",
-    "mnemonic": "SHIO — SALT. → shio."
+    "romaji": "kirei",
+    "jp": "きれい",
+    "audio": "きれい",
+    "english": "pretty / clean",
+    "mnemonic": "KIREI — PRETTY / clean → kirei."
   },
   {
     "block": 10,
     "index": 42,
-    "romaji": "satou",
-    "jp": "砂糖",
-    "audio": "さとう",
-    "english": "sugar",
-    "mnemonic": "SA-TOU — SUGAR. → satou."
+    "romaji": "subarashii",
+    "jp": "素晴らしい",
+    "audio": "すばらしい",
+    "english": "wonderful",
+    "mnemonic": "SU-BA-RA-SHII — WONDERFUL. → subarashii."
   },
   {
     "block": 10,
     "index": 43,
-    "romaji": "abura",
-    "jp": "油",
-    "audio": "あぶら",
-    "english": "oil",
-    "mnemonic": "A-BU-RA — OIL. → abura."
+    "romaji": "naru",
+    "jp": "なる",
+    "audio": "なる",
+    "english": "become",
+    "mnemonic": "NA-RU — BECOME. → naru."
   },
   {
     "block": 10,
     "index": 44,
-    "romaji": "gyuunyuu",
-    "jp": "牛乳",
-    "audio": "ぎゅうにゅう",
-    "english": "milk",
-    "mnemonic": "GYUUN-YUU — MILK. → gyuunyuu."
+    "romaji": "sukuu",
+    "jp": "救う",
+    "audio": "すくう",
+    "english": "save",
+    "mnemonic": "SU-KUU — SAVE. → sukuu."
   },
   {
     "block": 10,
     "index": 45,
-    "romaji": "biiru",
-    "jp": "ビール",
-    "audio": "びーる",
-    "english": "beer",
-    "mnemonic": "BII-RU — BEER. → biiru."
+    "romaji": "shurui",
+    "jp": "種類",
+    "audio": "しゅるい",
+    "english": "kind / type",
+    "mnemonic": "SHURUI — KIND / type → shurui."
   },
   {
     "block": 10,
     "index": 46,
-    "romaji": "osake",
-    "jp": "お酒",
-    "audio": "おさけ",
-    "english": "alcohol / sake",
-    "mnemonic": "O-SA-KE — ALCOHOL. → osake."
+    "romaji": "furanku",
+    "jp": "フランク",
+    "audio": "フランク",
+    "english": "Frank",
+    "mnemonic": "FRANK — name. → furanku."
   },
   {
     "block": 10,
     "index": 47,
-    "romaji": "oishii",
-    "jp": "美味しい",
-    "audio": "おいしい",
-    "english": "delicious",
-    "mnemonic": "OI-SHII — DELICIOUS. → oishii."
+    "romaji": "jiizasu",
+    "jp": "ジーザス",
+    "audio": "ジーザス",
+    "english": "Jesus",
+    "mnemonic": "JESUS — name. → jiizasu."
   },
   {
     "block": 10,
     "index": 48,
-    "romaji": "mazui",
-    "jp": "まずい",
-    "audio": "まずい",
-    "english": "bad-tasting / bad",
-    "mnemonic": "MA-ZUI — BAD-TASTING. → mazui."
+    "romaji": "chen",
+    "jp": "チェン",
+    "audio": "チェン",
+    "english": "Chang",
+    "mnemonic": "CHEN — name. → chen."
   },
   {
     "block": 10,
     "index": 49,
-    "romaji": "onaka",
-    "jp": "お腹",
-    "audio": "おなか",
-    "english": "stomach / belly",
-    "mnemonic": "ON-A-KA — STOMACH. → onaka."
+    "romaji": "kanpeki",
+    "jp": "完璧",
+    "audio": "かんぺき",
+    "english": "perfect",
+    "mnemonic": "KAN-PEKI — PERFECT. → kanpeki."
   }
 ]

@@ -1,352 +1,352 @@
 [
   {
-    "jp": "左",
-    "audio": "ひだり",
-    "r": "hidari",
-    "en": "left",
-    "m": "HI-DA-RI — LEFT. → hidari."
+    "jp": "閉める",
+    "audio": "しめる",
+    "r": "shimeru",
+    "en": "close",
+    "m": "SHI-ME-RU — CLOSE the door. → shimeru."
   },
   {
-    "jp": "まっすぐ",
-    "audio": "まっすぐ",
-    "r": "massugu",
-    "en": "straight ahead",
-    "m": "MA-SSU-GU — STRAIGHT AHEAD. → massugu."
+    "jp": "側",
+    "audio": "がわ",
+    "r": "gawa",
+    "en": "side",
+    "m": "GA-WA — SIDE of the road. → gawa."
   },
   {
-    "jp": "向こう",
-    "audio": "むこう",
-    "r": "mukou",
-    "en": "over there / other side",
-    "m": "MU-KOU — OVER THERE. → mukou."
+    "jp": "面白い",
+    "audio": "おもしろい",
+    "r": "omoshiroi",
+    "en": "interesting / funny",
+    "m": "OMOSHIROI — INTERESTING / funny → omoshiroi."
   },
   {
-    "jp": "方",
-    "audio": "ほう",
-    "r": "hou",
-    "en": "direction / side / one",
-    "m": "HOU — DIRECTION. → hou."
+    "jp": "踊る",
+    "audio": "おどる",
+    "r": "odoru",
+    "en": "dance",
+    "m": "O-DO-RU — DANCE. → odoru."
   },
   {
-    "jp": "道",
-    "audio": "みち",
-    "r": "michi",
-    "en": "road / way",
-    "m": "MI-CHI — ROAD. → michi."
+    "jp": "炎",
+    "audio": "ほのお",
+    "r": "honoo",
+    "en": "fire",
+    "m": "HO-NO-O — FIRE. → honoo."
   },
   {
-    "jp": "角",
-    "audio": "かど",
-    "r": "kado",
-    "en": "corner",
-    "m": "KA-DO — CORNER. → kado."
+    "jp": "嫌い",
+    "audio": "きらい",
+    "r": "kirai",
+    "en": "dislike",
+    "m": "KIRAI — DISLIKE. → kirai."
   },
   {
-    "jp": "入口",
-    "audio": "いりぐち",
-    "r": "iriguchi",
-    "en": "entrance",
-    "m": "I-RI-GU-CHI — ENTRANCE. → iriguchi."
+    "jp": "中",
+    "audio": "なか",
+    "r": "naka",
+    "en": "inside",
+    "m": "NA-KA — INSIDE. → naka."
   },
   {
-    "jp": "出口",
-    "audio": "でぐち",
-    "r": "deguchi",
-    "en": "exit",
-    "m": "DE-GU-CHI — EXIT. → deguchi."
+    "jp": "吊る",
+    "audio": "つる",
+    "r": "tsuru",
+    "en": "hang",
+    "m": "TSU-RU — HANG up. → tsuru."
   },
   {
-    "jp": "階段",
-    "audio": "かいだん",
-    "r": "kaidan",
-    "en": "stairs",
-    "m": "KAI-DAN — STAIRS. → kaidan."
+    "jp": "時々",
+    "audio": "ときどき",
+    "r": "tokidoki",
+    "en": "sometimes",
+    "m": "TO-KI-DO-KI — SOMETIMES. → tokidoki."
   },
   {
-    "jp": "エレベーター",
-    "audio": "えれべーたー",
-    "r": "erebeetaa",
-    "en": "elevator",
-    "m": "E-RE-BEE-TAA — ELEVATOR. → erebeetaa."
-  },
-  {
-    "jp": "部屋",
-    "audio": "へや",
-    "r": "heya",
-    "en": "room",
-    "m": "HEY, YA in the ROOM. → heya."
-  },
-  {
-    "jp": "台所",
-    "audio": "だいどころ",
-    "r": "daidokoro",
-    "en": "kitchen",
-    "m": "DAI-DO-KO-RO — KITCHEN. → daidokoro."
-  },
-  {
-    "jp": "お風呂",
-    "audio": "おふろ",
-    "r": "ofuro",
-    "en": "bath",
-    "m": "O-FU-RO — BATH. → ofuro."
-  },
-  {
-    "jp": "シャワー",
-    "audio": "しゃわー",
-    "r": "shawaa",
-    "en": "shower",
-    "m": "SHA-WAA — SHOWER. → shawaa."
-  },
-  {
-    "jp": "トイレ",
-    "audio": "といれ",
-    "r": "toire",
-    "en": "toilet",
-    "m": "TOI-RE sounds close to TOILET. → toire."
-  },
-  {
-    "jp": "窓",
-    "audio": "まど",
-    "r": "mado",
-    "en": "window",
-    "m": "MA-DO — WINDOW. → mado."
-  },
-  {
-    "jp": "鍵",
-    "audio": "かぎ",
-    "r": "kagi",
-    "en": "key",
-    "m": "KA-GI — KEY. → kagi."
-  },
-  {
-    "jp": "机",
-    "audio": "つくえ",
-    "r": "tsukue",
-    "en": "desk",
-    "m": "TSU-KUE — DESK. → tsukue."
-  },
-  {
-    "jp": "椅子",
-    "audio": "いす",
-    "r": "isu",
-    "en": "chair",
-    "m": "I-SU — CHAIR. → isu."
-  },
-  {
-    "jp": "ベッド",
-    "audio": "べっど",
-    "r": "beddo",
-    "en": "bed",
-    "m": "BED — same word. → beddo."
-  },
-  {
-    "jp": "テレビ",
-    "audio": "てれび",
-    "r": "terebi",
-    "en": "TV",
-    "m": "TE-RE-BI — TV. → terebi."
-  },
-  {
-    "jp": "携帯",
-    "audio": "けいたい",
-    "r": "keitai",
-    "en": "mobile phone",
-    "m": "KEI-TAI — MOBILE PHONE. → keitai."
-  },
-  {
-    "jp": "スマホ",
-    "audio": "すまほ",
-    "r": "sumaho",
-    "en": "smartphone",
-    "m": "SU-MA-HO — SMARTPHONE. → sumaho."
-  },
-  {
-    "jp": "パソコン",
-    "audio": "ぱそこん",
-    "r": "pasokon",
-    "en": "computer",
-    "m": "PA-SO-KON — COMPUTER. → pasokon."
-  },
-  {
-    "jp": "インターネット",
-    "audio": "いんたーねっと",
-    "r": "internetto",
-    "en": "internet",
-    "m": "IN-TE-rN-E-TTO — INTERNET. → internetto."
-  },
-  {
-    "jp": "メール",
-    "audio": "めーる",
-    "r": "meeru",
-    "en": "email / message",
-    "m": "MEE-RU — EMAIL. → meeru."
-  },
-  {
-    "jp": "メッセージ",
-    "audio": "めっせーじ",
-    "r": "messeeji",
-    "en": "message",
-    "m": "ME-SSEE-JI — MESSAGE. → messeeji."
+    "jp": "キャプテン",
+    "audio": "キャプテン",
+    "r": "kyaputen",
+    "en": "captain",
+    "m": "CAPTAIN — same word. → kyaputen."
   },
   {
     "jp": "写真",
     "audio": "しゃしん",
     "r": "shashin",
-    "en": "photo",
+    "en": "picture",
     "m": "SHA-SHIN — PICTURE. → shashin."
   },
   {
-    "jp": "動画",
-    "audio": "どうが",
-    "r": "douga",
-    "en": "video",
-    "m": "DOU-GA — VIDEO. → douga."
+    "jp": "従う",
+    "audio": "したがう",
+    "r": "shitagau",
+    "en": "follow",
+    "m": "SHI-TA-GA-U — FOLLOW. → shitagau."
   },
   {
-    "jp": "音楽",
-    "audio": "おんがく",
-    "r": "ongaku",
-    "en": "music",
-    "m": "ON-GA-KU — MUSIC. → ongaku."
+    "jp": "違う",
+    "audio": "ちがう",
+    "r": "chigau",
+    "en": "different",
+    "m": "CHI-GA-U — DIFFERENT. → chigau."
   },
   {
-    "jp": "歌",
-    "audio": "うた",
-    "r": "uta",
-    "en": "song",
-    "m": "U-TA — SONG. → uta."
+    "jp": "瞬間",
+    "audio": "しゅんかん",
+    "r": "shunkan",
+    "en": "moment",
+    "m": "SHUN-KAN — MOMENT. → shunkan."
   },
   {
-    "jp": "映画",
-    "audio": "えいが",
-    "r": "eiga",
-    "en": "movie",
-    "m": "EI-GA — MOVIE. → eiga."
+    "jp": "姉妹",
+    "audio": "しまい",
+    "r": "shimai",
+    "en": "sister",
+    "m": "SHI-MAI — SISTER. → shimai."
   },
   {
-    "jp": "テレビ番組",
-    "audio": "てれびばんぐみ",
-    "r": "terebi bangumi",
-    "en": "TV show",
-    "m": "TE-RE-BI BAN-GU-MI — TV SHOW. → terebi bangumi."
+    "jp": "少なくとも",
+    "audio": "すくなくとも",
+    "r": "sukunakutomo",
+    "en": "at least",
+    "m": "SUKUNAKUTOMO — AT LEAST → sukunakutomo."
   },
   {
-    "jp": "ゲーム",
-    "audio": "げーむ",
-    "r": "geemu",
-    "en": "game",
-    "m": "GAME — same word. → geemu."
+    "jp": "重要",
+    "audio": "じゅうよう",
+    "r": "juuyou",
+    "en": "important",
+    "m": "JUU-YOU — IMPORTANT. → juuyou."
   },
   {
-    "jp": "漫画",
-    "audio": "まんが",
-    "r": "manga",
-    "en": "manga / comic",
-    "m": "MAN-GA — MANGA. → manga."
+    "jp": "夕食",
+    "audio": "ゆうしょく",
+    "r": "yuushoku",
+    "en": "dinner",
+    "m": "YUU-SHOKU — DINNER. → yuushoku."
   },
   {
-    "jp": "雑誌",
-    "audio": "ざっし",
-    "r": "zasshi",
-    "en": "magazine",
-    "m": "ZA-SSHI — MAGAZINE. → zasshi."
+    "jp": "あ",
+    "audio": "あ",
+    "r": "a",
+    "en": "ah",
+    "m": "AH — spoken gasp. → a."
   },
   {
-    "jp": "新聞",
-    "audio": "しんぶん",
-    "r": "shinbun",
-    "en": "newspaper",
-    "m": "SHIN-BUN — NEWSPAPER. → shinbun."
+    "jp": "も",
+    "audio": "も",
+    "r": "mo",
+    "en": "too / also",
+    "m": "\"ME TOO!\" — ALSO. → mo."
   },
   {
-    "jp": "ペン",
-    "audio": "ぺん",
-    "r": "pen",
-    "en": "pen",
-    "m": "PEN — PEN. → pen."
+    "jp": "列",
+    "audio": "れつ",
+    "r": "retsu",
+    "en": "line",
+    "m": "RE-TSU — LINE / queue. → retsu."
   },
   {
-    "jp": "紙",
-    "audio": "かみ",
-    "r": "kami",
-    "en": "paper",
-    "m": "CAMI sees GOD in the shrine. → kami."
+    "jp": "落とす",
+    "audio": "おとす",
+    "r": "otosu",
+    "en": "drop",
+    "m": "O-TO-SU — DROP it. → otosu."
   },
   {
-    "jp": "鞄",
-    "audio": "かばん",
-    "r": "kaban",
-    "en": "bag",
-    "m": "KA-BAN — BAG. → kaban."
+    "jp": "信じる",
+    "audio": "しんじる",
+    "r": "shinjiru",
+    "en": "believe",
+    "m": "SHIN-JI-RU — BELIEVE. → shinjiru."
   },
   {
-    "jp": "財布",
-    "audio": "さいふ",
-    "r": "saifu",
-    "en": "wallet",
-    "m": "SAI-FU — WALLET. → saifu."
+    "jp": "会社",
+    "audio": "かいしゃ",
+    "r": "kaisha",
+    "en": "company",
+    "m": "KAISHA — COMPANY → kaisha."
   },
   {
-    "jp": "眼鏡",
-    "audio": "めがね",
-    "r": "megane",
-    "en": "glasses",
-    "m": "ME-GAN-E — GLASSES. → megane."
+    "jp": "かなり",
+    "audio": "かなり",
+    "r": "kanari",
+    "en": "pretty / quite",
+    "m": "KA-NA-RI — QUITE. → kanari."
   },
   {
-    "jp": "時計",
-    "audio": "とけい",
-    "r": "tokei",
-    "en": "clock / watch",
-    "m": "TO-KEI — CLOCK. → tokei."
+    "jp": "夫",
+    "audio": "おっと",
+    "r": "otto",
+    "en": "husband",
+    "m": "OT-TO — HUSBAND. → otto."
   },
   {
-    "jp": "服",
-    "audio": "ふく",
-    "r": "fuku",
-    "en": "clothes",
-    "m": "FU-KU — CLOTHES. → fuku."
+    "jp": "はっきり",
+    "audio": "はっきり",
+    "r": "hakkiri",
+    "en": "clearly",
+    "m": "HAKKIRI — CLEARLY → hakkiri."
   },
   {
-    "jp": "靴",
-    "audio": "くつ",
-    "r": "kutsu",
-    "en": "shoes",
-    "m": "KU-TSU — SHOES. → kutsu."
+    "jp": "〜に対して",
+    "audio": "〜にたいして",
+    "r": "nitaishite",
+    "en": "against",
+    "m": "NI-TAI-SHITE — AGAINST. → nitaishite."
   },
   {
-    "jp": "シャツ",
-    "audio": "しゃつ",
-    "r": "shatsu",
-    "en": "shirt",
-    "m": "SHA-TSU — SHIRT. → shatsu."
+    "jp": "触る",
+    "audio": "さわる",
+    "r": "sawaru",
+    "en": "touch",
+    "m": "SA-WA-RU — TOUCH. → sawaru."
   },
   {
-    "jp": "ズボン",
-    "audio": "ずぼん",
-    "r": "zubon",
-    "en": "trousers / pants",
-    "m": "ZU-BON — TROUSERS. → zubon."
+    "jp": "サイン",
+    "audio": "サイン",
+    "r": "sain",
+    "en": "sign",
+    "m": "SIGN — same word. → sain."
   },
   {
-    "jp": "上着",
-    "audio": "うわぎ",
-    "r": "uwagi",
-    "en": "jacket / outerwear",
-    "m": "U-WA-GI — JACKET. → uwagi."
+    "jp": "不思議",
+    "audio": "ふしぎ",
+    "r": "fushigi",
+    "en": "mysterious / strange",
+    "m": "FUSHIGI — MYSTERIOUS / strange → fushigi."
   },
   {
-    "jp": "帽子",
-    "audio": "ぼうし",
-    "r": "boushi",
-    "en": "hat",
-    "m": "BOU-SHI — HAT. → boushi."
+    "jp": "六",
+    "audio": "ろく",
+    "r": "roku",
+    "en": "six",
+    "m": "RO-KU — SIX. → roku."
   },
   {
-    "jp": "傘",
-    "audio": "かさ",
-    "r": "kasa",
-    "en": "umbrella",
-    "m": "KA-SA — UMBRELLA. → kasa."
+    "jp": "半分",
+    "audio": "はんぶん",
+    "r": "hanbun",
+    "en": "half",
+    "m": "HAN-BUN — HALF. → hanbun."
+  },
+  {
+    "jp": "クール",
+    "audio": "クール",
+    "r": "kuuru",
+    "en": "cool",
+    "m": "COOL — same word. → kuuru."
+  },
+  {
+    "jp": "学ぶ",
+    "audio": "まなぶ",
+    "r": "manabu",
+    "en": "learn",
+    "m": "MA-NA-BU — LEARN. → manabu."
+  },
+  {
+    "jp": "事実",
+    "audio": "じじつ",
+    "r": "jijitsu",
+    "en": "fact",
+    "m": "JI-JI-TSU — FACT. → jijitsu."
+  },
+  {
+    "jp": "先に",
+    "audio": "さきに",
+    "r": "sakini",
+    "en": "ahead / first",
+    "m": "SAKINI — AHEAD / first → sakini."
+  },
+  {
+    "jp": "マイケル",
+    "audio": "マイケル",
+    "r": "maikeru",
+    "en": "Michael",
+    "m": "MICHAEL — name. → maikeru."
+  },
+  {
+    "jp": "通る",
+    "audio": "とおる",
+    "r": "tooru",
+    "en": "pass",
+    "m": "TO-O-RU — PASS through. → tooru."
+  },
+  {
+    "jp": "ベッド",
+    "audio": "ベッド",
+    "r": "beddo",
+    "en": "bed",
+    "m": "BED — same word. → beddo."
+  },
+  {
+    "jp": "高い",
+    "audio": "たかい",
+    "r": "takai",
+    "en": "expensive / high",
+    "m": "TA-KAI — HIGH. → takai."
+  },
+  {
+    "jp": "ジョン",
+    "audio": "ジョン",
+    "r": "jon",
+    "en": "John",
+    "m": "JOHN — name. → jon."
+  },
+  {
+    "jp": "終わる",
+    "audio": "おわる",
+    "r": "owaru",
+    "en": "end / finish",
+    "m": "OWARU — END / finish → owaru."
+  },
+  {
+    "jp": "真実",
+    "audio": "しんじつ",
+    "r": "shinjitsu",
+    "en": "truth",
+    "m": "SHIN-JI-TSU — TRUTH. → shinjitsu."
+  },
+  {
+    "jp": "ほとんど",
+    "audio": "ほとんど",
+    "r": "hotondo",
+    "en": "almost",
+    "m": "HO-TON-DO — ALMOST. → hotondo."
+  },
+  {
+    "jp": "建てる",
+    "audio": "たてる",
+    "r": "tateru",
+    "en": "build",
+    "m": "TA-TE-RU — BUILD. → tateru."
+  },
+  {
+    "jp": "暑い",
+    "audio": "あつい",
+    "r": "atsui",
+    "en": "hot (weather)",
+    "m": "A-TSU-I — HOT. → atsui."
+  },
+  {
+    "jp": "賭ける",
+    "audio": "かける",
+    "r": "kakeru",
+    "en": "bet",
+    "m": "KA-KE-RU — BET on it. → kakeru."
+  },
+  {
+    "jp": "後ろ",
+    "audio": "うしろ",
+    "r": "ushiro",
+    "en": "behind",
+    "m": "U-SHI-RO — BEHIND. → ushiro."
+  },
+  {
+    "jp": "もう",
+    "audio": "もう",
+    "r": "mou",
+    "en": "already / anymore",
+    "m": "MOU — not ANYMORE. → mou."
   }
 ]

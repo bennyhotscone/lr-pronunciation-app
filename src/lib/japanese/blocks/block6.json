@@ -1,103 +1,5 @@
 [
   {
-    "jp": "やる",
-    "audio": "やる",
-    "r": "yaru",
-    "en": "do / give (casual)",
-    "m": "YA-RU — DO. → yaru."
-  },
-  {
-    "jp": "思う",
-    "audio": "おもう",
-    "r": "omou",
-    "en": "think / feel",
-    "m": "O-MOU — THINK. → omou."
-  },
-  {
-    "jp": "ある",
-    "audio": "ある",
-    "r": "aru",
-    "en": "exist / have (things)",
-    "m": "A-RU — EXIST. → aru."
-  },
-  {
-    "jp": "いる",
-    "audio": "いる",
-    "r": "iru",
-    "en": "exist / be (people/animals)",
-    "m": "I-RU — EXIST. → iru."
-  },
-  {
-    "jp": "出る",
-    "audio": "でる",
-    "r": "deru",
-    "en": "go out / leave / come out",
-    "m": "DE-RU — GO OUT. → deru."
-  },
-  {
-    "jp": "入れる",
-    "audio": "いれる",
-    "r": "ireru",
-    "en": "put in / let in",
-    "m": "I-RE-RU — PUT IN. → ireru."
-  },
-  {
-    "jp": "出す",
-    "audio": "だす",
-    "r": "dasu",
-    "en": "take out / put out",
-    "m": "DA-SU — TAKE OUT. → dasu."
-  },
-  {
-    "jp": "くれる",
-    "audio": "くれる",
-    "r": "kureru",
-    "en": "give (to me/us)",
-    "m": "KU-RE-RU — GIVE (TO ME. → kureru."
-  },
-  {
-    "jp": "なる",
-    "audio": "なる",
-    "r": "naru",
-    "en": "become",
-    "m": "NA-RU — BECOME. → naru."
-  },
-  {
-    "jp": "やめる",
-    "audio": "やめる",
-    "r": "yameru",
-    "en": "stop / quit",
-    "m": "YA-ME-RU — STOP. → yameru."
-  },
-  {
-    "jp": "始まる",
-    "audio": "はじまる",
-    "r": "hajimaru",
-    "en": "start / begin",
-    "m": "HA-JI-MA-RU — START. → hajimaru."
-  },
-  {
-    "jp": "着く",
-    "audio": "つく",
-    "r": "tsuku",
-    "en": "arrive",
-    "m": "TSU-KU — ARRIVE. → tsuku."
-  },
-  {
-    "jp": "乗る",
-    "audio": "のる",
-    "r": "noru",
-    "en": "ride / get on",
-    "m": "N-O-RU — RIDE. → noru."
-  },
-  {
-    "jp": "降りる",
-    "audio": "おりる",
-    "r": "oriru",
-    "en": "get off / go down",
-    "m": "O-RI-RU — GET OFF. → oriru."
-  },
-  {
     "jp": "開ける",
     "audio": "あける",
     "r": "akeru",
@@ -105,248 +7,346 @@
     "m": "\"A-KEY\" — OPEN the door. → akeru."
   },
   {
-    "jp": "閉める",
-    "audio": "しめる",
-    "r": "shimeru",
-    "en": "close",
-    "m": "SHI-ME-RU — CLOSE the door. → shimeru."
+    "jp": "心配",
+    "audio": "しんぱい",
+    "r": "shinpai",
+    "en": "worry",
+    "m": "SHIN-PAI — WORRY. → shinpai."
   },
   {
-    "jp": "集める",
-    "audio": "あつめる",
-    "r": "atsumeru",
-    "en": "collect / gather",
-    "m": "A-TSU-ME-RU — COLLECT. → atsumeru."
+    "jp": "問題",
+    "audio": "もんだい",
+    "r": "mondai",
+    "en": "problem",
+    "m": "MONDAI — PROBLEM → mondai."
   },
   {
-    "jp": "集まる",
-    "audio": "あつまる",
-    "r": "atsumaru",
-    "en": "gather / meet up",
-    "m": "A-TSU-MA-RU — GATHER. → atsumaru."
+    "jp": "悩み",
+    "audio": "なやみ",
+    "r": "nayami",
+    "en": "worry / concern",
+    "m": "NAYAMI — WORRY / concern → nayami."
   },
   {
-    "jp": "返す",
-    "audio": "かえす",
-    "r": "kaesu",
-    "en": "return / give back",
-    "m": "KAE-SU — RETURN. → kaesu."
+    "jp": "考え",
+    "audio": "かんがえ",
+    "r": "kangae",
+    "en": "idea",
+    "m": "KAN-GAE — an IDEA. → kangae."
   },
   {
-    "jp": "変わる",
-    "audio": "かわる",
-    "r": "kawaru",
-    "en": "change",
-    "m": "KA-WA-RU — CHANGE. → kawaru."
+    "jp": "払う",
+    "audio": "はらう",
+    "r": "harau",
+    "en": "pay",
+    "m": "HA-RAU — PAY up. → harau."
   },
   {
-    "jp": "変える",
-    "audio": "かえる",
-    "r": "kaeru",
-    "en": "change something",
-    "m": "“CARE to RETURN home?” → kaeru."
+    "jp": "かなり",
+    "audio": "かなり",
+    "r": "kanari",
+    "en": "pretty / quite",
+    "m": "CAN-A-RI — PRETTY good. → kanari."
   },
   {
-    "jp": "直す",
-    "audio": "なおす",
-    "r": "naosu",
-    "en": "fix / correct",
-    "m": "N-AO-SU — FIX. → naosu."
+    "jp": "準備",
+    "audio": "じゅんび",
+    "r": "junbi",
+    "en": "preparation / ready",
+    "m": "JUNBI — PREP / ready → junbi."
   },
   {
-    "jp": "直る",
-    "audio": "なおる",
-    "r": "naoru",
-    "en": "be fixed / get better",
-    "m": "N-AO-RU — BE FIXED. → naoru."
+    "jp": "全部",
+    "audio": "ぜんぶ",
+    "r": "zenbu",
+    "en": "everything",
+    "m": "ZEN BU — EVERYTHING. → zenbu."
   },
   {
-    "jp": "忘れる",
-    "audio": "わすれる",
-    "r": "wasureru",
-    "en": "forget",
-    "m": "WASU-RERU — FORGET it. → wasureru."
+    "jp": "一緒に",
+    "audio": "いっしょに",
+    "r": "isshoni",
+    "en": "together",
+    "m": "ISSHO-NI — TOGETHER. → isshoni."
   },
   {
-    "jp": "覚える",
-    "audio": "おぼえる",
-    "r": "oboeru",
-    "en": "remember / learn",
-    "m": "OH, BO EH RU — REMEMBER this. → oboeru."
+    "jp": "〜だろう",
+    "audio": "〜だろう",
+    "r": "darou",
+    "en": "probably / I suppose",
+    "m": "~DAROU — I SUPPOSE / probably → darou."
   },
   {
-    "jp": "教える",
-    "audio": "おしえる",
-    "r": "oshieru",
-    "en": "tell / teach",
-    "m": "O-SHIE-RU — TELL. → oshieru."
+    "jp": "すみません",
+    "audio": "すみません",
+    "r": "sumimasen",
+    "en": "excuse me / sorry",
+    "m": "SOO-ME-MA-SEN — EXCUSE ME. → sumimasen."
   },
   {
-    "jp": "習う",
-    "audio": "ならう",
-    "r": "narau",
-    "en": "learn (from someone)",
-    "m": "N-A-RAU — LEARN (FROM SOMEONE). → narau."
+    "jp": "食べる",
+    "audio": "たべる",
+    "r": "taberu",
+    "en": "eat",
+    "m": "TA-BE-RU — EAT up. → taberu."
   },
   {
-    "jp": "知る",
-    "audio": "しる",
-    "r": "shiru",
-    "en": "find out / come to know",
-    "m": "SHI-RU — FIND OUT. → shiru."
+    "jp": "時間",
+    "audio": "じかん",
+    "r": "jikan",
+    "en": "hour / time",
+    "m": "JI-KAN — an HOUR. → jikan."
   },
   {
-    "jp": "考える",
-    "audio": "かんがえる",
-    "r": "kangaeru",
-    "en": "think / consider",
-    "m": "KANGAERU — THINK → kangaeru."
+    "jp": "家族",
+    "audio": "かぞく",
+    "r": "kazoku",
+    "en": "family",
+    "m": "KA-ZOKU — FAMILY. → kazoku."
   },
   {
-    "jp": "決める",
-    "audio": "きめる",
-    "r": "kimeru",
-    "en": "decide",
-    "m": "KI-ME-RU — DECIDE. → kimeru."
+    "jp": "確認",
+    "audio": "かくにん",
+    "r": "kakunin",
+    "en": "check",
+    "m": "KAKU-NIN — CHECK it. → kakunin."
   },
   {
-    "jp": "決まる",
-    "audio": "きまる",
-    "r": "kimaru",
-    "en": "be decided",
-    "m": "KI-MA-RU — BE DECIDED. → kimaru."
+    "jp": "週",
+    "audio": "しゅう",
+    "r": "shuu",
+    "en": "week",
+    "m": "SHUU — this WEEK. → shuu."
   },
   {
-    "jp": "選ぶ",
-    "audio": "えらぶ",
-    "r": "erabu",
-    "en": "choose",
-    "m": "ERABU — CHOOSE / pick → erabu."
+    "jp": "奥さん",
+    "audio": "おくさん",
+    "r": "okusan",
+    "en": "wife",
+    "m": "OKU-SAN — WIFE (polite). → okusan."
   },
   {
-    "jp": "探す",
-    "audio": "さがす",
-    "r": "sagasu",
-    "en": "look for",
-    "m": "SA-GA-SU — LOOK FOR. → sagasu."
+    "jp": "送る",
+    "audio": "おくる",
+    "r": "okuru",
+    "en": "send",
+    "m": "O-KU-RU — SEND it. → okuru."
   },
   {
-    "jp": "見つかる",
-    "audio": "みつかる",
-    "r": "mitsukaru",
-    "en": "be found / find it",
-    "m": "MI-TSU-KA-RU — BE FOUND. → mitsukaru."
+    "jp": "歩く",
+    "audio": "あるく",
+    "r": "aruku",
+    "en": "walk",
+    "m": "A-RU-KU — WALK. → aruku."
   },
   {
-    "jp": "見せる",
-    "audio": "みせる",
-    "r": "miseru",
-    "en": "show",
-    "m": "ME, SEE RU — SHOW me. → miseru."
+    "jp": "〜そう",
+    "audio": "〜そう",
+    "r": "sou",
+    "en": "seems / looks like",
+    "m": "~SOU — SEEMS / looks like → sou."
   },
   {
-    "jp": "伝える",
-    "audio": "つたえる",
-    "r": "tsutaeru",
-    "en": "tell / convey",
-    "m": "TSU-TAE-RU — TELL. → tsutaeru."
+    "jp": "結婚する",
+    "audio": "けっこんする",
+    "r": "kekkonsuru",
+    "en": "marry",
+    "m": "KEK-KON — MARRY. → kekkonsuru."
   },
   {
-    "jp": "呼ぶ",
-    "audio": "よぶ",
-    "r": "yobu",
-    "en": "call / invite",
-    "m": "YO-BU — CALL. → yobu."
+    "jp": "たくさん",
+    "audio": "たくさん",
+    "r": "takusan",
+    "en": "much / many",
+    "m": "TUCK SUN away — so MANY. → takusan."
   },
   {
-    "jp": "読める",
-    "audio": "よめる",
-    "r": "yomeru",
-    "en": "can read",
-    "m": "YO-ME-RU — CAN READ. → yomeru."
+    "jp": "使う",
+    "audio": "つかう",
+    "r": "tsukau",
+    "en": "use",
+    "m": "TSU-KAU — USE it. → tsukau."
   },
   {
-    "jp": "笑う",
-    "audio": "わらう",
-    "r": "warau",
-    "en": "laugh",
-    "m": "WA-RAU — LAUGH. → warau."
+    "jp": "言葉",
+    "audio": "ことば",
+    "r": "kotoba",
+    "en": "word",
+    "m": "KOTO-BA — a WORD. → kotoba."
   },
   {
-    "jp": "泣く",
-    "audio": "なく",
-    "r": "naku",
-    "en": "cry",
-    "m": "N-A-KU — CRY. → naku."
+    "jp": "秒",
+    "audio": "びょう",
+    "r": "byou",
+    "en": "second",
+    "m": "BYOU — a SECOND. → byou."
   },
   {
-    "jp": "怒る",
-    "audio": "おこる",
-    "r": "okoru",
-    "en": "get angry",
-    "m": "OH, COR! What will HAPPEN? → okoru."
+    "jp": "女性",
+    "audio": "じょせい",
+    "r": "josei",
+    "en": "woman",
+    "m": "JOSEI — WOMAN → josei."
   },
   {
-    "jp": "驚く",
-    "audio": "おどろく",
-    "r": "odoroku",
-    "en": "be surprised",
-    "m": "O-DO-RO-KU — BE SURPRISED. → odoroku."
+    "jp": "〜なしで",
+    "audio": "〜なしで",
+    "r": "nashide",
+    "en": "without",
+    "m": "NA-SHI-DE — WITHOUT it. → nashide."
   },
   {
-    "jp": "困る",
-    "audio": "こまる",
-    "r": "komaru",
-    "en": "be in trouble / not know what to do",
-    "m": "KOMARU — be in TROUBLE → komaru."
+    "jp": "立つ",
+    "audio": "たつ",
+    "r": "tatsu",
+    "en": "stand",
+    "m": "TA-TSU — STAND up. → tatsu."
   },
   {
-    "jp": "頑張る",
-    "audio": "がんばる",
-    "r": "ganbaru",
-    "en": "try hard / do one's best",
-    "m": "GAN-BA-RU — TRY HARD. → ganbaru."
+    "jp": "一番",
+    "audio": "いちばん",
+    "r": "ichiban",
+    "en": "number one / most",
+    "m": "ICHIBAN — NUMBER ONE / most → ichiban."
   },
   {
-    "jp": "手伝う",
-    "audio": "てつだう",
-    "r": "tetsudau",
-    "en": "help out",
-    "m": "TE-TSU-DAU — HELP OUT. → tetsudau."
+    "jp": "間",
+    "audio": "あいだ",
+    "r": "aida",
+    "en": "between / while",
+    "m": "AIDA — BETWEEN / WHILE → aida."
   },
   {
-    "jp": "頼む",
-    "audio": "たのむ",
-    "r": "tanomu",
-    "en": "ask / request / order",
-    "m": "TAN-O-MU — ASK. → tanomu."
+    "jp": "学校",
+    "audio": "がっこう",
+    "r": "gakkou",
+    "en": "school",
+    "m": "GAK-KOU — SCHOOL. → gakkou."
   },
   {
-    "jp": "答える",
-    "audio": "こたえる",
-    "r": "kotaeru",
-    "en": "answer",
-    "m": "KO-TAE-RU — ANSWER. → kotaeru."
+    "jp": "一度",
+    "audio": "いちど",
+    "r": "ichido",
+    "en": "once",
+    "m": "ICHI-DO — ONCE. → ichido."
   },
   {
-    "jp": "質問する",
-    "audio": "しつもんする",
-    "r": "shitsumon suru",
-    "en": "ask a question",
-    "m": "SHI-TSU-MON SU-RU — ASK A QUESTION. → shitsumon suru."
+    "jp": "誰か",
+    "audio": "だれか",
+    "r": "dareka",
+    "en": "someone",
+    "m": "DARE-KA — SOMEBODY. → dareka."
   },
   {
-    "jp": "連絡する",
-    "audio": "れんらくする",
-    "r": "renraku suru",
-    "en": "contact",
-    "m": "REN-RA-KU SU-RU — CONTACT. → renraku suru."
+    "jp": "みんな",
+    "audio": "みんな",
+    "r": "minna",
+    "en": "everybody",
+    "m": "MIN-NA — EVERYBODY. → minna."
   },
   {
-    "jp": "電話する",
-    "audio": "でんわする",
-    "r": "denwa suru",
-    "en": "call / phone",
-    "m": "DEN-WA SU-RU — CALL. → denwa suru."
+    "jp": "慣れる",
+    "audio": "なれる",
+    "r": "nareru",
+    "en": "get used to",
+    "m": "NARERU — get USED TO → nareru."
+  },
+  {
+    "jp": "自分",
+    "audio": "じぶん",
+    "r": "jibun",
+    "en": "oneself / self",
+    "m": "JIBUN — ONESELF → jibun."
+  },
+  {
+    "jp": "終わり",
+    "audio": "おわり",
+    "r": "owari",
+    "en": "end",
+    "m": "O-WA-RI — the END. → owari."
+  },
+  {
+    "jp": "まだ",
+    "audio": "まだ",
+    "r": "mada",
+    "en": "still / not yet",
+    "m": "MADA is STILL not done. → mada."
+  },
+  {
+    "jp": "明日",
+    "audio": "あした",
+    "r": "ashita",
+    "en": "tomorrow",
+    "m": "ASH, I'll do that TOMORROW. → ashita."
+  },
+  {
+    "jp": "話す",
+    "audio": "はなす",
+    "r": "hanasu",
+    "en": "speak / talk",
+    "m": "HA-NA-SU — SPEAK up. → hanasu."
+  },
+  {
+    "jp": "目",
+    "audio": "め",
+    "r": "me",
+    "en": "eye",
+    "m": "ME — your EYE. → me."
+  },
+  {
+    "jp": "嬉しい",
+    "audio": "うれしい",
+    "r": "ureshii",
+    "en": "happy / glad",
+    "m": "U-RE-SHII — HAPPY / glad. → ureshii."
+  },
+  {
+    "jp": "子供",
+    "audio": "こども",
+    "r": "kodomo",
+    "en": "child",
+    "m": "COCO's DOpey MOppet is a CHILD. → kodomo."
+  },
+  {
+    "jp": "質問",
+    "audio": "しつもん",
+    "r": "shitsumon",
+    "en": "question",
+    "m": "SHITSU-MON — QUESTION. → shitsumon."
+  },
+  {
+    "jp": "兄弟",
+    "audio": "きょうだい",
+    "r": "kyoudai",
+    "en": "brother / sibling",
+    "m": "KYOU-DAI — BROTHER / sibling. → kyoudai."
+  },
+  {
+    "jp": "寝る",
+    "audio": "ねる",
+    "r": "neru",
+    "en": "sleep",
+    "m": "NE-RU — SLEEP. → neru."
+  },
+  {
+    "jp": "ドア",
+    "audio": "ドア",
+    "r": "doa",
+    "en": "door",
+    "m": "DOOR — same word. → doa."
+  },
+  {
+    "jp": "ビジネス",
+    "audio": "ビジネス",
+    "r": "bijinesu",
+    "en": "business",
+    "m": "BUSINESS — same word. → bijinesu."
+  },
+  {
+    "jp": "実は",
+    "audio": "じつは",
+    "r": "jitsuwa",
+    "en": "actually",
+    "m": "JITSU-WA — ACTUALLY… → jitsuwa."
   }
 ]

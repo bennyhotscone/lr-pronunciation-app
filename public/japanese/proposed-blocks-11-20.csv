@@ -1,501 +1,501 @@
-block,wordIndex,spokenRank,englishLemma,english,jp,romaji,audio,confidence,flag,mnemonic
-11,0,75,gonna,gonna,〜するつもり,suru tsumori,するつもり,medium,spoken contraction,
-11,1,83,some,some,少し,sukoshi,すこし,high,,
-11,2,89,need,need,必要,hitsuyou,ひつよう,high,,
-11,3,92,mean,mean,意味する,imi suru,いみする,high,,
-11,4,93,down,down,下へ,shita e,したへ,medium,adverb-like,
-11,5,94,then,then,それから,sorekara,それから,high,,
-11,6,100,guy,guy,やつ,yatsu,やつ,high,,
-11,7,112,off,off,オフ,ofu,オフ,medium,multi-sense,
-11,8,118,sure,sure,確かに,tashika ni,たしかに,high,,
-11,9,162,away,away,離れて,hanarete,はなれて,high,,
-11,10,165,ever,ever,かつて,katsute,かつて,high,,
-11,11,175,alway,alway,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,12,177,miss,miss,恋しい / 逃す,koishii / nogasu,こいしい,medium,multi-sense,
-11,13,217,wanna,wanna,〜したい,-tai,たい,medium,spoken contraction,
-11,14,237,else,else,他に,hoka ni,ほかに,high,,
-11,15,240,real,real,本当の,hontou no,ほんとうの,high,,
-11,16,252,worry,worry,心配する,shinpai suru,しんぱいする,high,,
-11,17,254,problem,problem,問題,mondai,もんだい,high,,
-11,18,255,idea,idea,考え,kangae,かんがえ,high,,
-11,19,256,pay,pay,払う,harau,はらう,high,,
-11,20,257,pretty,pretty,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,21,258,ready,ready,用意できた,youi dekita,よういできた,high,,
-11,22,265,family,family,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,23,266,check,check,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,24,267,week,week,週,shuu,しゅう,high,,
-11,25,268,wife,wife,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,26,269,send,send,送る,okuru,おくる,high,,
-11,27,270,walk,walk,歩く,aruku,あるく,high,,
-11,28,271,seem,seem,ようだ,you da,ようだ,medium,grammar-ish,
-11,29,272,marry,marry,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,30,275,word,word,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,31,277,lady,lady,女性,josei,じょせい,high,,
-11,32,279,stand,stand,立つ,tatsu,たつ,high,,
-11,33,280,most,most,一番,ichiban,いちばん,high,,
-11,34,281,while,while,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,35,283,once,once,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,36,285,everybody,everybody,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,37,286,used,used to,慣れている,nareteiru,なれている,medium,used to,
-11,38,292,eye,eye,目,me,め,high,,
-11,39,293,happy,happy,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,40,295,question,question,質問,shitsumon,しつもん,high,,
-11,41,296,brother,brother,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,42,298,door,door,ドア,doa,ドア,high,,
-11,43,299,business,business,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,44,300,actually,actually,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,45,301,sound,sound,音,oto,おと,high,,
-11,46,302,hope,hope,希望,kibou,きぼう,high,,
-11,47,303,stuff,stuff,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-11,48,305,hit,hit,打つ,utsu,うつ,high,,
-11,49,307,since,since,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,0,308,case,case,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,1,312,cause,cause,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,2,316,hurt,hurt,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,3,319,damn,damn,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,4,320,honey,honey,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,5,321,doctor,doctor,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,6,322,deal,deal,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,7,324,both,both,両方,ryouhou,りょうほう,high,,
-12,8,327,such,such,そのような,sono you na,そのような,high,,
-12,9,328,face,face,顔,kao,かお,high,,
-12,10,329,plan,plan,計画,keikaku,けいかく,high,,
-12,11,330,ago,ago,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,12,331,die,die,死ぬ,shinu,しぬ,high,,
-12,13,332,five,five,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,14,334,fight,fight,戦う,tatakau,たたかう,high,,
-12,15,335,number,number,数字,suuji,すうじ,high,,
-12,16,337,drive,drive,運転する,unten suru,うんてんする,high,,
-12,17,338,beautiful,beautiful,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,18,339,gun,gun,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,19,340,tim,tim,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,20,341,crazy,crazy,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,21,342,shut,shut,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,22,343,chance,chance,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,23,344,fall,fall,落ちる,ochiru,おちる,medium,also autumn,
-12,24,347,wish,wish,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,25,348,set,set,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,26,350,nobody,nobody,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,27,351,easy,easy,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,28,353,cut,cut,切る,kiru,きる,high,,
-12,29,356,party,party,パーティー,paatii,パーティー,high,,
-12,30,357,month,month,月,tsuki,つき,medium,also moon,
-12,31,358,jack,jack,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,32,359,four,four,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,33,361,book,book,本,hon,ほん,high,,
-12,34,363,shot,shot,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,35,365,town,town,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,36,367,each,each,それぞれ,sorezore,それぞれ,high,,
-12,37,369,afraid,afraid,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,38,370,anyway,anyway,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,39,372,dog,dog,犬,inu,いぬ,high,,
-12,40,374,trouble,trouble,面倒,mendou,めんどう,high,,
-12,41,375,young,young,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,42,380,ass,ass,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,43,381,police,police,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,44,382,interest,interest,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,45,386,promise,promise,約束,yakusoku,やくそく,high,,
-12,46,387,couple,couple,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-12,47,388,dream,dream,夢,yume,ゆめ,high,,
-12,48,389,figure,figure out,理解する,rikai suru,りかいする,medium,figure out,
-12,49,390,pull,pull,引く,hiku,ひく,high,,
-13,0,391,light,light,光,hikari,ひかり,high,,
-13,1,392,body,body,体,karada,からだ,high,,
-13,2,393,shoot,shoot,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,3,394,reason,reason,理由,riyuu,りゆう,high,,
-13,4,396,dear,dear,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,5,398,death,death,死,shi,し,high,,
-13,6,403,funny,funny,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,7,404,dance,dance,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,8,406,hate,hate,憎む,nikumu,にくむ,high,,
-13,9,408,hang,hang,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,10,410,captain,captain,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,11,411,picture,picture,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,12,412,follow,follow,従う,shitagau,したがう,high,,
-13,13,414,moment,moment,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,14,415,sister,sister,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,15,416,least,at least,少なくとも,sukunakutomo,すくなくとも,high,,
-13,16,417,important,important,大切,taisetsu,たいせつ,high,,
-13,17,421,line,line,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,18,422,drop,drop,落とす,otosu,おとす,high,,
-13,19,424,office,office,事務所,jimusho,じむしょ,high,,
-13,20,425,quite,quite,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,21,426,husband,husband,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,22,427,clear,clear,はっきり,hakkiri,はっきり,high,,
-13,23,428,against,against,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,24,429,touch,touch,触る,sawaru,さわる,high,,
-13,25,430,sign,sign,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,26,432,six,six,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,27,434,cool,cool,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,28,436,fact,fact,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,29,437,ahead,ahead,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,30,438,michael,michael,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,31,439,pass,pass,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,32,442,john,john,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,33,444,truth,truth,真実,shinjitsu,しんじつ,high,,
-13,34,446,build,build,建てる,tateru,たてる,high,,
-13,35,448,bet,bet,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,36,451,blood,blood,血,chi,ち,high,,
-13,37,452,power,power,力,chikara,ちから,high,,
-13,38,453,foot,foot / leg,足,ashi,あし,high,,
-13,39,454,daddy,daddy,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,40,457,welcome,welcome,ようこそ,youkoso,ようこそ,high,,
-13,41,458,war,war,戦争,sensou,せんそう,high,,
-13,42,459,act,act,行動する,koudou suru,こうどうする,high,,
-13,43,460,stupid,stupid,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,44,462,bitch,bitch,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,45,463,along,along,一緒に,issho ni,いっしょに,high,,
-13,46,465,either,either,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,47,466,though,though,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,48,467,daughter,daughter,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-13,49,468,kiss,kiss,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,0,469,bye,bye,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,1,470,street,street,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,2,471,win,win,勝つ,katsu,かつ,high,,
-14,3,472,expect,expect,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,4,473,city,city,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,5,474,hurry,hurry,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,6,475,between,between,間,aida,あいだ,high,,
-14,7,476,black,black,黒い,kuroi,くろい,high,,
-14,8,477,cop,cop,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,9,478,country,country,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,10,479,glad,glad,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,11,481,white,white,白い,shiroi,しろい,high,,
-14,12,483,murder,murder,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,13,484,beat,beat,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,14,488,sick,sick,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,15,489,throw,throw,投げる,nageru,なげる,high,,
-14,16,490,scar,scar,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,17,491,team,team,チーム,chiimu,チーム,high,,
-14,18,492,clean,clean / pretty,きれい,kirei,きれい,high,,
-14,19,493,wonderful,wonderful,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,20,495,save,save,救う,sukuu,すくう,high,,
-14,21,496,sort,sort,種類,shurui,しゅるい,high,,
-14,22,497,frank,frank,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,23,498,jesus,jesus,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-14,24,500,perfect,perfect,完璧,kanpeki,かんぺき,high,,
-14,25,502,piece,piece / fragment,かけら,kakera,かけら,medium,also 一切れ hitokire,
-14,26,503,report,report,報告する,houkoku suru,ほうこくする,high,,
-14,27,506,dress,dress (noun),ドレス,doresu,ドレス,medium,verb sense = kiru,
-14,28,513,lie,lie (falsehood),嘘,uso,うそ,medium,not lie-down,
-14,29,514,parent,parent,親,oya,おや,high,,
-14,30,516,catch,catch,捕まえる,tsukamaeru,つかまえる,high,,
-14,31,517,luck,luck,運,un,うん,high,,
-14,32,518,star,star,星,hoshi,ほし,high,,
-14,33,520,alive,alive,生きている,ikiteiru,いきている,high,,
-14,34,521,grow,grow,育つ,sodatsu,そだつ,high,,
-14,35,522,sex,sex,セックス,sekkusu,セックス,medium,optional for curriculum,
-14,36,524,special,special,特別,tokubetsu,とくべつ,high,,
-14,37,525,sing,sing,歌う,utau,うたう,high,,
-14,38,526,red,red,赤い,akai,あかい,high,,
-14,39,530,control,control,制御する,seigyo suru,せいぎょする,high,,
-14,40,531,fly,fly,飛ぶ,tobu,とぶ,high,,
-14,41,532,record,record,記録する,kiroku suru,きろくする,high,,
-14,42,533,arm,arm,腕,ude,うで,high,,
-14,43,534,safe,safe,安全,anzen,あんぜん,high,,
-14,44,535,serious,serious,真面目,majime,まじめ,high,,
-14,45,536,cover,cover,覆う,oou,おおう,high,,
-14,46,537,sweet,sweet,甘い,amai,あまい,high,,
-14,47,538,ten,ten,十,juu,じゅう,high,,
-14,48,541,ball,ball,ボール,booru,ボール,high,,
-14,49,542,sense,sense,感覚,kankaku,かんかく,high,,
-15,0,543,lucky,lucky,運がいい,un ga ii,うんがいい,high,,
-15,1,544,president,president,大統領,daitouryou,だいとうりょう,medium,or shachou for company,
-15,2,545,step,step,一歩,ippo,いっぽ,high,,
-15,3,546,million,million,百万,hyakuman,ひゃくまん,high,,
-15,4,547,bill,bill (invoice),請求書,seikyuusho,せいきゅうしょ,medium,multi-sense,
-15,5,550,date,date (romantic),デート,deeto,デート,medium,or hizuke for calendar,
-15,6,551,air,air,空気,kuuki,くうき,high,,
-15,7,552,human,human,人間,ningen,にんげん,high,,
-15,8,554,ring,ring (jewelry),指輪,yubiwa,ゆびわ,medium,verb sense separate,
-15,9,555,charge,charge (battery),充電する,juuden suru,じゅうでんする,medium,multi-sense,
-15,10,556,explain,explain,説明する,setsumei suru,せつめいする,high,,
-15,11,560,king,king,王,ou,おう,high,,
-15,12,562,burn,burn,燃える,moeru,もえる,high,,
-15,13,563,sell,sell,売る,uru,うる,high,,
-15,14,564,handle,handle,扱う,atsukau,あつかう,high,,
-15,15,568,tire,tire / get tired,疲れる,tsukareru,つかれる,medium,noun tire = taiya,
-15,16,570,secret,secret,秘密,himitsu,ひみつ,high,,
-15,17,572,class,class,授業,jugyou,じゅぎょう,high,,
-15,18,573,test,test,テスト,tesuto,テスト,high,,
-15,19,574,law,law,法律,houritsu,ほうりつ,high,,
-15,20,577,officer,officer,警官,keikan,けいかん,high,,
-15,21,578,count,count,数える,kazoeru,かぞえる,high,,
-15,22,583,boss,boss,上司,joushi,じょうし,high,,
-15,23,585,poor,poor,貧乏,binbou,びんぼう,high,,
-15,24,586,ship,ship,船,fune,ふね,high,,
-15,25,588,kick,kick,蹴る,keru,ける,high,,
-15,26,591,uncle,uncle,おじさん,ojisan,おじさん,high,,
-15,27,594,stick,stick,棒,bou,ぼう,high,,
-15,28,595,fool,fool,馬鹿,baka,ばか,high,,
-15,29,596,rule,rule,規則,kisoku,きそく,high,,
-15,30,598,past,past,過去,kako,かこ,high,,
-15,31,599,lead,lead,導く,michibiku,みちびく,high,,
-15,32,600,land,land,土地,tochi,とち,high,,
-15,33,601,spend,spend,過ごす,sugosu,すごす,high,,
-15,34,602,agent,agent,代理人,dairinin,だいりにん,high,,
-15,35,603,offer,offer,申し出る,moushideru,もうしでる,high,,
-15,36,604,force,force,強制する,kyousei suru,きょうせいする,high,,
-15,37,605,smell,smell,匂い,nioi,におい,high,,
-15,38,606,angel,angel,天使,tenshi,てんし,high,,
-15,39,608,christmas,Christmas,クリスマス,kurisumasu,クリスマス,high,,
-15,40,612,carry,carry,運ぶ,hakobu,はこぶ,high,,
-15,41,614,enjoy,enjoy,楽しむ,tanoshimu,たのしむ,high,,
-15,42,615,letter,letter,手紙,tegami,てがみ,high,,
-15,43,616,realize,realize,気づく,kizuku,きづく,high,,
-15,44,617,lock,lock,鍵をかける,kagi o kakeru,かぎをかける,high,,
-15,45,618,general,general,一般的,ippanteki,いっぱんてき,high,,
-15,46,619,cloth,cloth,布,nuno,ぬの,high,,
-15,47,622,attack,attack,攻撃する,kougeki suru,こうげきする,high,,
-15,48,623,quiet,quiet,静か,shizuka,しずか,high,,
-15,49,624,present,present,プレゼント,purezento,プレゼント,medium,gift sense,
-16,0,625,table,table,テーブル,teeburu,テーブル,high,,
-16,1,626,finally,finally,やっと,yatto,やっと,high,,
-16,2,627,goodbye,goodbye,さようなら,sayounara,さようなら,high,,
-16,3,628,mark,mark,印,shirushi,しるし,high,,
-16,4,629,rock,rock,岩,iwa,いわ,high,,
-16,5,632,possible,possible,可能,kanou,かのう,high,,
-16,6,633,rather,rather,むしろ,mushiro,むしろ,high,,
-16,7,634,box,box,箱,hako,はこ,high,,
-16,8,635,unless,unless,〜ない限り,-nai kagiri,ないかぎり,high,,
-16,9,636,join,join,参加する,sanka suru,さんかする,high,,
-16,10,637,mad,mad,怒っている,okotteiru,おこっている,high,,
-16,11,638,park,park,公園,kouen,こうえん,high,,
-16,12,640,push,push,押す,osu,おす,high,,
-16,13,641,honor,honor,名誉,meiyo,めいよ,high,,
-16,14,643,blue,blue,青い,aoi,あおい,high,,
-16,15,645,joke,joke,丁寧,joudan,じょうだん,high,,
-16,16,646,except,except,除いて,nozoite,のぞいて,high,,
-16,17,647,leg,leg,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-16,18,648,seat,seat,席,seki,せき,high,,
-16,19,650,mouth,mouth,口,kuchi,くち,high,,
-16,20,653,none,none,誰も〜ない,daremo nai,だれも,high,,
-16,21,654,worth,worth,価値がある,kachi ga aru,かちがある,high,,
-16,22,657,mess,mess,散らかっている,chirakatteiru,ちらかっている,high,,
-16,23,659,club,club,クラブ,kurabu,クラブ,high,,
-16,24,660,choice,choice,選択,sentaku,せんたく,high,,
-16,25,661,floor,floor,床,yuka,ゆか,high,,
-16,26,663,major,major,主要な,shuyou na,しゅような,high,,
-16,27,664,court,court,裁判所,saibansho,さいばんしょ,high,,
-16,28,665,careful,careful,気をつけて,ki o tsukete,きをつけて,high,,
-16,29,667,boat,boat,ボート,booto,ボート,high,,
-16,30,668,knock,knock,ノックする,nokku suru,ノックする,high,,
-16,31,670,system,system,システム,shisutemu,システム,high,,
-16,32,671,relax,relax,リラックスする,rirakkusu suru,リラックスする,high,,
-16,33,673,state,state,状態,joutai,じょうたい,high,,
-16,34,678,agree,agree,同意する,doui suru,どういする,high,,
-16,35,680,fault,fault,せい,sei,せい,high,,
-16,36,681,dollar,dollar,ドル,doru,ドル,high,,
-16,37,682,seven,seven,七,nana,なな,high,,
-16,38,685,future,future,未来,mirai,みらい,high,,
-16,39,686,bar,bar,バー,baa,バー,high,,
-16,40,687,brain,brain,脳,nou,のう,high,,
-16,41,689,bank,bank,銀行,ginkou,ぎんこう,high,,
-16,42,693,smoke,smoke,吸う,suu,すう,high,,
-16,43,694,pain,pain,痛み,itami,いたみ,high,,
-16,44,695,bother,bother,邪魔する,jama suru,じゃまする,high,,
-16,45,696,voice,voice,声,koe,こえ,high,,
-16,46,700,service,service,サービス,saabisu,サービス,high,,
-16,47,703,weird,weird,変な,hen na,へんな,high,,
-16,48,704,arrest,arrest,逮捕する,taiho suru,たいほする,high,,
-16,49,705,hundred,hundred,百,hyaku,ひゃく,high,,
-17,0,706,birthday,birthday,誕生日,tanjoubi,たんじょうび,high,,
-17,1,707,judge,judge,裁判官,saibankan,さいばんかん,high,,
-17,2,709,protect,protect,守る,mamoru,まもる,high,,
-17,3,710,partner,partner,パートナー,paatonaa,パートナー,high,,
-17,4,712,earth,earth,地球,chikyuu,ちきゅう,high,,
-17,5,713,allow,allow,許可する,kyoka suru,きょかする,high,,
-17,6,715,eight,eight,八,hachi,はち,high,,
-17,7,717,attention,attention,注意,chuui,ちゅうい,high,,
-17,8,719,lawyer,lawyer,弁護士,bengoshi,べんごし,high,,
-17,9,720,share,share,分け合う,wakeau,わけあう,high,,
-17,10,724,smart,smart,賢い,kashikoi,かしこい,high,,
-17,11,725,trip,trip,旅行,ryokou,りょこう,high,,
-17,12,726,drug,drug,薬,kusuri,くすり,high,,
-17,13,729,thousand,thousand,千,sen,せん,high,,
-17,14,733,wall,wall,壁,kabe,かべ,high,,
-17,15,734,imagine,imagine,想像する,souzou suru,そうぞうする,high,,
-17,16,735,short,short,短い,mijikai,みじかい,high,,
-17,17,736,tree,tree,木,ki,き,high,,
-17,18,737,security,security,セキュリティ,sekyuriti,セキュリティ,high,,
-17,19,740,appreciate,appreciate,感謝する,kansha suru,かんしゃする,high,,
-17,20,741,fair,fair,公平,kouhei,こうへい,high,,
-17,21,744,reach,reach,届く,todoku,とどく,high,,
-17,22,746,mention,mention,言及する,genkyuu suru,げんきゅうする,high,,
-17,23,751,terrible,terrible,ひどい,hidoi,ひどい,high,,
-17,24,754,glass,glass,ガラス,garasu,ガラス,high,,
-17,25,756,afternoon,afternoon,午後,gogo,ごご,high,,
-17,26,757,patient,patient,患者,kanja,かんじゃ,high,,
-17,27,758,calm,calm,落ち着く,ochitsuku,おちつく,high,,
-17,28,759,swear,swear,誓う,chikau,ちかう,high,,
-17,29,760,horse,horse,馬,uma,うま,high,,
-17,30,763,personal,personal,個人的,kojinteki,こじんてき,high,,
-17,31,764,list,list,リスト,risuto,リスト,high,,
-17,32,765,grab,grab,掴む,tsukamu,つかむ,high,,
-17,33,766,soul,soul,魂,tamashii,たましい,high,,
-17,34,770,ground,ground,地面,jimen,じめん,high,,
-17,35,771,suit,suit,スーツ,suutsu,スーツ,high,,
-17,36,773,age,age,年齢,nenrei,ねんれい,high,,
-17,37,774,tough,tough,厳しい,kibishii,きびしい,high,,
-17,38,778,situation,situation,状況,joukyou,じょうきょう,high,,
-17,39,780,middle,middle,真ん中,mannaka,まんなか,high,,
-17,40,781,forgive,forgive,許す,yurusu,ゆるす,high,,
-17,41,782,information,information,情報,jouhou,じょうほう,high,,
-17,42,783,simple,simple,簡単,kantan,かんたん,high,,
-17,43,786,army,army,軍隊,guntai,ぐんたい,high,,
-17,44,788,study,study,勉強する,benkyou suru,べんきょうする,high,,
-17,45,789,forever,forever,永遠に,eien ni,えいえんに,high,,
-17,46,793,accident,accident,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-17,47,794,cute,cute,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-17,48,795,lying,lying,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-17,49,796,college,college,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,0,797,apartment,apartment,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,1,798,clos,clos,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,2,799,weapon,weapon,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,3,800,strong,strong,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,4,801,johnny,johnny,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,5,802,excite,excite,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,6,803,cat,cat,猫,neko,ねこ,high,,
-18,7,804,strange,strange,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,8,805,smile,smile,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,9,806,scream,scream,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,10,808,film,film,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,11,810,respect,respect,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,12,811,difference,difference,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,13,812,concern,concern,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,14,813,evidence,evidence,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,15,814,visit,visit,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,16,816,history,history,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,17,817,fear,fear,恐れ,osore,おそれ,high,,
-18,18,818,cross,cross,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,19,819,animal,animal,動物,doubutsu,どうぶつ,high,,
-18,20,820,cook,cook,料理する,ryouri suru,りょうりする,high,,
-18,21,822,completely,completely,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,22,823,belong,belong,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,23,824,field,field,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,24,825,girlfriend,girlfriend,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,25,826,bastard,bastard,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,26,827,b,b,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,27,828,pleasure,pleasure,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,28,829,file,file,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,29,830,area,area,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,30,831,truck,truck,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,31,832,rich,rich,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,32,833,born,born,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,33,834,proud,proud,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,34,835,group,group,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,35,836,owe,owe,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,36,837,fill,fill,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,37,838,involve,involve,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,38,839,gift,gift,贈り物,okurimono,おくりもの,high,,
-18,39,840,folk,folk,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,40,841,position,position,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,41,842,scene,scene,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,42,843,spot,spot,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,43,844,chief,chief,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,44,845,paint,paint,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,45,847,steal,steal,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,46,848,fat,fat,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,47,849,harry,harry,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,48,851,race,race,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-18,49,853,experience,experience,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,0,854,yo,yo,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,1,855,doc,doc,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,2,856,board,board,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,3,858,summer,summer,夏,natsu,なつ,high,,
-19,4,859,danny,danny,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,5,860,il,il,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,6,861,marriage,marriage,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,7,862,round,round,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,8,863,ought,ought,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,9,864,screw,screw,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,10,865,jimmy,jimmy,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,11,866,upset,upset,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,12,867,radio,radio,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,13,868,art,art,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,14,869,entire,entire,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,15,870,pack,pack,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,16,871,ice,ice,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,17,872,relationship,relationship,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,18,873,favor,favor,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,19,875,alright,alright,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,20,876,bomb,bomb,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,21,877,instead,instead,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,22,878,prepare,prepare,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,23,879,gold,gold,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,24,880,breath,breath,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,25,881,j,j,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,26,882,america,america,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,27,884,bear,bear,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,28,885,idiot,idiot,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,29,886,witness,witness,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,30,887,fit,fit,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,31,888,boyfriend,boyfriend,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,32,889,hungry,hungry,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,33,890,private,private,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,34,891,suck,suck,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,35,892,henry,henry,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,36,893,deep,deep,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,37,894,dur,dur,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,38,896,single,single,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,39,898,forward,forward,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,40,899,ed,ed,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,41,901,sho,sho,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,42,902,third,third,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,43,903,type,type,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,44,904,camera,camera,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,45,905,dangerous,dangerous,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,46,906,green,green,緑,midori,みどり,high,,
-19,47,907,beg,beg,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,48,908,accept,accept,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-19,49,909,evil,evil,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,0,910,search,search,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,1,911,client,client,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,2,912,killer,killer,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,3,913,english,english,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,4,914,robert,robert,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,5,916,richard,richard,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,6,917,student,student,学生,gakusei,がくせい,high,,
-20,7,918,ln,ln,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,8,919,doubt,doubt,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,9,920,admit,admit,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,10,921,warn,warn,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,11,922,press,press,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,12,924,action,action,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,13,925,cost,cost,費用,hiyou,ひよう,high,,
-20,14,926,joey,joey,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,15,927,asshole,asshole,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,16,928,church,church,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,17,929,e,e,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,18,930,honest,honest,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,19,931,lay,lay,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,20,932,jail,jail,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,21,933,fella,fella,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,22,934,trick,trick,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,23,935,mommy,mommy,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,24,936,fellow,fellow,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,25,937,max,max,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,26,938,rain,rain,雨,ame,あめ,high,,
-20,27,939,professor,professor,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,28,940,congratulation,congratulation,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,29,941,bird,bird,鳥,tori,とり,high,,
-20,30,942,bullshit,bullshit,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,31,943,crime,crime,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,32,944,victim,victim,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,33,945,public,public,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,34,946,finger,finger,指,yubi,ゆび,high,,
-20,35,947,flower,flower,花,hana,はな,high,,
-20,36,948,match,match,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,37,949,taste,taste,味,aji,あじ,high,,
-20,38,950,upstair,upstair,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,39,951,memory,memory,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,40,952,sun,sun,太陽,taiyou,たいよう,high,,
-20,41,953,deserve,deserve,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,42,954,normal,normal,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,43,955,prove,prove,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,44,956,decision,decision,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,45,957,machine,machine,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,46,958,freak,freak,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,47,959,r,r,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,48,960,double,double,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
-20,49,961,space,space,TBD,TBD,TBD,low,Japanese gloss TBD — do not invent,
+﻿block,index,spokenRank,englishLemma,sourceLemma,jp,romaji,audio,english,note,flags,questionable
+11,0,31,just,just,ちょうど / ただ,choudo / tada,choudo,just,,GAP_FROM_FIRST_500,false
+11,1,59,look,look,見る / 探す,miru / sagasu,miru,look,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,2,61,tell,tell,教える / 言う,oshieru / iu,oshieru,tell,,GAP_FROM_FIRST_500,false
+11,3,62,let,let,〜させる / 貸す,saseru / kasu,saseru,let,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,4,72,back,back,戻る / 後ろ / 背中,modoru / ushiro / senaka,modoru,back,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,5,83,some,some,いくつかの / ある,ikutsuka no / aru,ikutsuka no,some,,GAP_FROM_FIRST_500,false
+11,6,89,need,need,必要だ / 要る,hitsuyou da / iru,hitsuyou da,need,,GAP_FROM_FIRST_500,false
+11,7,91,something,something,何か,nanika,nanika,something,,GAP_FROM_FIRST_500,false
+11,8,92,mean,mean,意味する,imi suru,imi suru,mean,,GAP_FROM_FIRST_500,false
+11,9,93,down,down,下 / 下りる,shita / oriru,shita,down,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,10,96,way,way,道 / 方法,michi / houhou,michi,way,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,11,99,call,call,電話する / 呼ぶ,denwa suru / yobu,denwa suru,call,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,12,100,guy,guy,男の人 / やつ,otoko no hito / yatsu,otoko no hito,guy,casual,GAP_FROM_FIRST_500,false
+11,13,118,sure,sure,確かに / 大丈夫,tashika ni / daijoubu,tashika ni,sure,,GAP_FROM_FIRST_500,false
+11,14,165,ever,ever,今まで / かつて,ima made / katsute,ima made,ever,,GAP_FROM_FIRST_500,false
+11,15,177,miss,miss,会いたい / 逃す,aitai / nogasu,aitai,miss,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,16,237,else,else,他に,hoka ni,hoka ni,else,,GAP_FROM_FIRST_500,false
+11,17,240,real,real,本当の / 本物の,hontou no / honmono no,hontou no,real,,GAP_FROM_FIRST_500,false
+11,18,253,matter,matter,問題 / 大事,mondai / daiji,mondai,matter,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,19,259,whole,whole,全体の / 全部,zentai no / zenbu,zentai no,whole,,GAP_FROM_FIRST_500,false
+11,20,271,seem,seem,〜そうだ / 見える,sou da / mieru,sou da,seem,,GAP_FROM_FIRST_500,false
+11,21,277,lady,lady,女性,josei,josei,lady,,GAP_FROM_FIRST_500,false
+11,22,284,somebody,somebody,誰か,dareka,dareka,somebody,,GAP_FROM_FIRST_500,false
+11,23,362,bit,bit,少し / ちょっと,sukoshi / chotto,sukoshi,bit,,GAP_FROM_FIRST_500,false
+11,24,373,whatever,whatever,何でも / どうでもいい,nandemo / dou demo ii,nandemo,whatever,,GAP_FROM_FIRST_500,false
+11,25,389,figure,figure,分かる / 考える,wakaru / kangaeru,wakaru,figure,figure out,GAP_FROM_FIRST_500,false
+11,26,395,anybody,anybody,誰でも / 誰か,daredemo / dareka,daredemo,anybody,,GAP_FROM_FIRST_500,false
+11,27,406,hate,hate,嫌いだ,kirai da,kirai da,hate,,GAP_FROM_FIRST_500,false
+11,28,423,trust,trust,信じる / 信頼,shinjiru / shinrai,shinjiru,trust,,GAP_FROM_FIRST_500,false
+11,29,424,office,office,事務所 / 会社,jimusho / kaisha,jimusho,office,,GAP_FROM_FIRST_500,false
+11,30,427,clear,clear,はっきりした / 晴れた,hakkiri shita / hareta,hakkiri shita,clear,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,31,431,wonder,wonder,〜かなと思う,kana to omou,kana to omou,wonder,,GAP_FROM_FIRST_500,false
+11,32,459,act,act,行動する / 演技する,koudou suru / engi suru,koudou suru,act,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,33,463,along,along,一緒に / 沿って,issho ni / sotte,issho ni,along,,GAP_FROM_FIRST_500,false
+11,34,486,till,till,〜まで,made,made,till,,GAP_FROM_FIRST_500,false
+11,35,496,sort,sort,種類 / 整理する,shurui / seiri suru,shurui,sort,multi-sense,MULTI_SENSE|GAP_FROM_FIRST_500,true
+11,36,502,piece,piece,一切れ / 一片,hitokire / ippen,hitokire,piece,,,false
+11,37,503,report,report,報告する / レポート,houkoku suru / repooto,houkoku suru,report,,,false
+11,38,505,surprise,surprise,驚く / 驚き,odoroku / odoroki,odoroku,surprise,,,false
+11,39,506,dress,dress,ドレス / 服を着る,doresu / fuku o kiru,doresu,dress,multi-sense,MULTI_SENSE,true
+11,40,507,hair,hair,髪,kami,kami,hair,,,false
+11,41,509,food,food,食べ物,tabemono,tabemono,food,,,false
+11,42,513,lie,lie,嘘 / 横になる,uso / yoko ni naru,uso,lie,multi-sense,MULTI_SENSE,true
+11,43,514,parent,parent,親,oya,oya,parent,,,false
+11,44,515,paper,paper,紙,kami,kami,paper,,,false
+11,45,516,catch,catch,捕まえる / 乗る,tsukamaeru / noru,tsukamaeru,catch,multi-sense,MULTI_SENSE,true
+11,46,517,luck,luck,運,un,un,luck,,,false
+11,47,518,star,star,星 / スター,hoshi / sutaa,hoshi,star,multi-sense,MULTI_SENSE,true
+11,48,520,alive,alive,生きている,ikite iru,ikite iru,alive,,,false
+11,49,521,grow,grow,育つ / 増える,sodatsu / fueru,sodatsu,grow,,,false
+12,0,523,music,music,音楽,ongaku,ongaku,music,,,false
+12,1,524,special,special,特別な,tokubetsu na,tokubetsu na,special,,,false
+12,2,525,sing,sing,歌う,utau,utau,sing,,,false
+12,3,526,red,red,赤い / 赤,akai / aka,akai,red,,,false
+12,4,528,decide,decide,決める,kimeru,kimeru,decide,,,false
+12,5,529,laugh,laugh,笑う,warau,warau,laugh,,,false
+12,6,530,control,control,制御する / コントロール,seigyo suru / kontorooru,seigyo suru,control,,,false
+12,7,531,fly,fly,飛ぶ,tobu,tobu,fly,,,false
+12,8,532,record,record,記録する / レコード,kiroku suru / rekoodo,kiroku suru,record,multi-sense,MULTI_SENSE,true
+12,9,533,arm,arm,腕,ude,ude,arm,,,false
+12,10,534,safe,safe,安全な,anzen na,anzen na,safe,,,false
+12,11,535,serious,serious,深刻な / 真剣な,shinkoku na / shinken na,shinkoku na,serious,,,false
+12,12,536,cover,cover,覆う / カバーする,oou / kabaa suru,oou,cover,,,false
+12,13,537,sweet,sweet,甘い / 優しい,amai / yasashii,amai,sweet,multi-sense,MULTI_SENSE,true
+12,14,538,ten,ten,十,juu,juu,ten,,,false
+12,15,541,ball,ball,ボール,booru,booru,ball,,,false
+12,16,542,sense,sense,感覚 / 意味が分かる,kankaku / imi ga wakaru,kankaku,sense,multi-sense,MULTI_SENSE,true
+12,17,543,lucky,lucky,運がいい,un ga ii,un ga ii,lucky,,,false
+12,18,545,step,step,一歩 / ステップ,ippo / suteppu,ippo,step,,,false
+12,19,547,bill,bill,勘定 / 請求書,kanjou / seikyuusho,kanjou,bill,multi-sense,MULTI_SENSE,true
+12,20,548,top,top,上 / トップ,ue / toppu,ue,top,,,false
+12,21,550,date,date,日付 / デート,hizuke / deeto,hizuke,date,multi-sense,MULTI_SENSE,true
+12,22,551,air,air,空気,kuuki,kuuki,air,,,false
+12,23,552,human,human,人間,ningen,ningen,human,,,false
+12,24,554,ring,ring,指輪 / 鳴る,yubiwa / naru,yubiwa,ring,multi-sense,MULTI_SENSE,true
+12,25,555,charge,charge,充電する / 担当 / 料金,juuden suru / tantou / ryoukin,juuden suru,charge,multi-sense,MULTI_SENSE,true
+12,26,556,explain,explain,説明する,setsumei suru,setsumei suru,explain,,,false
+12,27,557,key,key,鍵 / キー,kagi / kii,kagi,key,,,false
+12,28,558,cry,cry,泣く,naku,naku,cry,,,false
+12,29,562,burn,burn,燃える / 焼く,moeru / yaku,moeru,burn,,,false
+12,30,563,sell,sell,売る,uru,uru,sell,,,false
+12,31,564,handle,handle,扱う / 取っ手,atsukau / totte,atsukau,handle,multi-sense,MULTI_SENSE,true
+12,32,566,begin,begin,始まる / 始める,hajimaru / hajimeru,hajimaru,begin,,,false
+12,33,567,perhaps,perhaps,たぶん / もしかしたら,tabun / moshikashitara,tabun,perhaps,,,false
+12,34,569,ride,ride,乗る,noru,noru,ride,,,false
+12,35,570,secret,secret,秘密,himitsu,himitsu,secret,,,false
+12,36,571,card,card,カード,kaado,kaado,card,,,false
+12,37,572,class,class,授業 / クラス,jugyou / kurasu,jugyou,class,,,false
+12,38,573,test,test,テスト / 試す,tesuto / tamesu,tesuto,test,,,false
+12,39,574,law,law,法律,houritsu,houritsu,law,,,false
+12,40,575,hat,hat,帽子,boushi,boushi,hat,,,false
+12,41,577,officer,officer,警官 / 役員,keikan / yakuin,keikan,officer,,,false
+12,42,578,count,count,数える,kazoeru,kazoeru,count,,,false
+12,43,579,blow,blow,吹く / 殴る,fuku / naguru,fuku,blow,multi-sense,MULTI_SENSE,true
+12,44,580,fix,fix,直す,naosu,naosu,fix,,,false
+12,45,582,hospital,hospital,病院,byouin,byouin,hospital,,,false
+12,46,583,boss,boss,上司 / ボス,joushi / bosu,joushi,boss,,,false
+12,47,585,poor,poor,貧しい / かわいそうな,mazushii / kawaisou na,mazushii,poor,multi-sense,MULTI_SENSE,true
+12,48,586,ship,ship,船,fune,fune,ship,,,false
+12,49,588,kick,kick,蹴る,keru,keru,kick,,,false
+13,0,591,uncle,uncle,おじさん / 叔父・伯父,ojisan / oji,ojisan,uncle,,,false
+13,1,593,bag,bag,かばん / バッグ,kaban / baggu,kaban,bag,,,false
+13,2,594,stick,stick,棒 / 貼る / くっつく,bou / haru / kuttsuku,bou,stick,multi-sense,MULTI_SENSE,true
+13,3,595,fool,fool,馬鹿 / 騙す,baka / damasu,baka,fool,multi-sense,MULTI_SENSE,true
+13,4,596,rule,rule,規則 / ルール,kisoku / ruuru,kisoku,rule,,,false
+13,5,597,mistake,mistake,間違い,machigai,machigai,mistake,,,false
+13,6,598,past,past,過去,kako,kako,past,,,false
+13,7,599,lead,lead,導く / リードする,michibiku / riido suru,michibiku,lead,,,false
+13,8,600,land,land,土地 / 着陸する,tochi / chakuriku suru,tochi,land,multi-sense,MULTI_SENSE,true
+13,9,601,spend,spend,使う（お金・時間）,tsukau,tsukau,spend,,,false
+13,10,602,agent,agent,代理人 / エージェント,dairinin / eejento,dairinin,agent,,,false
+13,11,603,offer,offer,申し出る / 提供する,moushideru / teikyou suru,moushideru,offer,,,false
+13,12,604,force,force,力 / 強制する,chikara / kyousei suru,chikara,force,multi-sense,MULTI_SENSE,true
+13,13,605,smell,smell,におい / 嗅ぐ,nioi / kagu,nioi,smell,,,false
+13,14,609,straight,straight,まっすぐ / ストレート,massugu / sutoreeto,massugu,straight,,,false
+13,15,612,carry,carry,運ぶ,hakobu,hakobu,carry,,,false
+13,16,613,road,road,道 / 道路,michi / douro,michi,road,,,false
+13,17,614,enjoy,enjoy,楽しむ,tanoshimu,tanoshimu,enjoy,,,false
+13,18,615,letter,letter,手紙 / 文字,tegami / moji,tegami,letter,multi-sense,MULTI_SENSE,true
+13,19,616,realize,realize,気づく / 実感する,kizuku / jikkan suru,kizuku,realize,,,false
+13,20,617,lock,lock,鍵をかける / 錠,kagi o kakeru / jou,kagi o kakeru,lock,,,false
+13,21,618,general,general,一般的な / 将軍,ippanteki na / shougun,ippanteki na,general,multi-sense,MULTI_SENSE,true
+13,22,619,clothes,cloth,服,fuku,fuku,clothes,,TRUNCATED_LEMMA,false
+13,23,620,certainly,certainly,確かに,tashika ni,tashika ni,certainly,,,false
+13,24,622,attack,attack,攻撃する,kougeki suru,kougeki suru,attack,,,false
+13,25,623,quiet,quiet,静かな,shizuka na,shizuka na,quiet,,,false
+13,26,624,present,present,プレゼント / 現在の,purezento / genzai no,purezento,present,multi-sense,MULTI_SENSE,true
+13,27,625,table,table,テーブル / 机,teeburu / tsukue,teeburu,table,,,false
+13,28,626,finally,finally,やっと / 最終的に,yatto / saishuuteki ni,yatto,finally,,,false
+13,29,627,goodbye,goodbye,さよなら,sayonara,sayonara,goodbye,,,false
+13,30,629,rock,rock,岩 / ロック,iwa / rokku,iwa,rock,multi-sense,MULTI_SENSE,true
+13,31,630,song,song,歌,uta,uta,song,,,false
+13,32,632,possible,possible,可能な,kanou na,kanou na,possible,,,false
+13,33,634,box,box,箱,hako,hako,box,,,false
+13,34,636,join,join,参加する / 加わる,sanka suru / kuwawaru,sanka suru,join,,,false
+13,35,637,mad,mad,怒った / 狂った,okotta / kurutta,okotta,mad,multi-sense,MULTI_SENSE,true
+13,36,638,park,park,公園 / 駐車する,kouen / chuusha suru,kouen,park,multi-sense,MULTI_SENSE,true
+13,37,639,absolutely,absolutely,絶対に,zettai ni,zettai ni,absolutely,,,false
+13,38,640,push,push,押す,osu,osu,push,,,false
+13,39,641,honor,honor,名誉 / 敬う,meiyo / uyamau,meiyo,honor,,,false
+13,40,643,blue,blue,青い / 青,aoi / ao,aoi,blue,,,false
+13,41,645,joke,joke,冗談,joudan,joudan,joke,,,false
+13,42,648,seat,seat,席,seki,seki,seat,,,false
+13,43,650,mouth,mouth,口,kuchi,kuchi,mouth,,,false
+13,44,654,worth,worth,価値がある,kachi ga aru,kachi ga aru,worth,,,false
+13,45,655,message,message,メッセージ,messeiji,messeiji,message,,,false
+13,46,656,jump,jump,跳ぶ,tobu,tobu,jump,,,false
+13,47,657,mess,mess,散らかった状態 / めちゃくちゃ,chirakatta joutai / mechakucha,chirakatta joutai,mess,,,false
+13,48,659,club,club,クラブ / クラブ活動,kurabu,kurabu,club,,,false
+13,49,660,choice,choice,選択 / 選択肢,sentaku / sentakushi,sentaku,choice,,,false
+14,0,661,floor,floor,床 / 階,yuka / kai,yuka,floor,multi-sense,MULTI_SENSE,true
+14,1,662,window,window,窓,mado,mado,window,,,false
+14,2,663,major,major,主要な / 専攻,shuyou na / senkou,shuyou na,major,multi-sense,MULTI_SENSE,true
+14,3,664,court,court,裁判所 / コート,saibansho / kooto,saibansho,court,multi-sense,MULTI_SENSE,true
+14,4,665,careful,careful,注意深い / 気をつけて,chuui bukai / ki o tsukete,chuui bukai,careful,,,false
+14,5,666,quick,quick,速い / 素早い,hayai / subayai,hayai,quick,,,false
+14,6,667,boat,boat,ボート / 船,booto / fune,booto,boat,,,false
+14,7,668,knock,knock,ノックする / 叩く,nokku suru / tataku,nokku suru,knock,,,false
+14,8,669,hotel,hotel,ホテル,hoteru,hoteru,hotel,,,false
+14,9,670,system,system,システム / 制度,shisutemu / seido,shisutemu,system,,,false
+14,10,671,relax,relax,リラックスする / くつろぐ,rirakkusu suru / kutsurogu,rirakkusu suru,relax,,,false
+14,11,673,state,state,州 / 状態,shuu / joutai,shuu,state,multi-sense,MULTI_SENSE,true
+14,12,674,notice,notice,気づく / 知らせ,kizuku / shirase,kizuku,notice,,,false
+14,13,675,unit,unit,単位 / 部隊,tani / butai,tani,unit,multi-sense,MULTI_SENSE,true
+14,14,676,lunch,lunch,昼食 / ランチ,chuushoku / ranchi,chuushoku,lunch,,,false
+14,15,678,agree,agree,同意する,doui suru,doui suru,agree,,,false
+14,16,680,fault,fault,欠点 / せい（責任）,ketten / sei,ketten,fault,,,false
+14,17,681,dollar,dollar,ドル,doru,doru,dollar,,,false
+14,18,682,seven,seven,七,nana / shichi,nana,seven,,,false
+14,19,685,future,future,未来 / 将来,mirai / shourai,mirai,future,,,false
+14,20,686,bar,bar,バー / 棒,baa / bou,baa,bar,multi-sense,MULTI_SENSE,true
+14,21,687,brain,brain,脳,nou,nou,brain,,,false
+14,22,689,bank,bank,銀行,ginkou,ginkou,bank,,,false
+14,23,693,smoke,smoke,煙 / タバコを吸う,kemuri / tabako o suu,kemuri,smoke,,,false
+14,24,694,pain,pain,痛み,itami,itami,pain,,,false
+14,25,695,bother,bother,迷惑をかける / 気にする,meiwaku o kakeru / ki ni suru,meiwaku o kakeru,bother,,,false
+14,26,696,voice,voice,声,koe,koe,voice,,,false
+14,27,697,roll,roll,転がる / 巻く,korogaru / maku,korogaru,roll,multi-sense,MULTI_SENSE,true
+14,28,698,tv,tv,テレビ,terebi,terebi,tv,,,false
+14,29,700,service,service,サービス / 勤務,saabisu / kinmu,saabisu,service,,,false
+14,30,702,quit,quit,やめる,yameru,yameru,quit,,,false
+14,31,703,weird,weird,変な / 奇妙な,hen na / kimyou na,hen na,weird,,,false
+14,32,704,arrest,arrest,逮捕する,taiho suru,taiho suru,arrest,,,false
+14,33,705,hundred,hundred,百,hyaku,hyaku,hundred,,,false
+14,34,706,birthday,birthday,誕生日,tanjoubi,tanjoubi,birthday,,,false
+14,35,707,judge,judge,判断する / 裁判官,handan suru / saibankan,handan suru,judge,multi-sense,MULTI_SENSE,true
+14,36,709,protect,protect,守る,mamoru,mamoru,protect,,,false
+14,37,710,partner,partner,パートナー / 相棒,paatonaa / aibou,paatonaa,partner,,,false
+14,38,712,earth,earth,地球 / 土,chikyuu / tsuchi,chikyuu,earth,multi-sense,MULTI_SENSE,true
+14,39,713,allow,allow,許可する,kyoka suru,kyoka suru,allow,,,false
+14,40,715,eight,eight,八,hachi,hachi,eight,,,false
+14,41,716,rid,rid,取り除く,torinozoku,torinozoku,rid,get rid of,,false
+14,42,717,attention,attention,注意 / 注目,chuui / chuumoku,chuui,attention,,,false
+14,43,719,lawyer,lawyer,弁護士,bengoshi,bengoshi,lawyer,,,false
+14,44,720,share,share,分け合う / 共有する,wakeau / kyouyuu suru,wakeau,share,,,false
+14,45,722,teach,teach,教える,oshieru,oshieru,teach,,,false
+14,46,724,smart,smart,賢い / 利口な,kashikoi / rikou na,kashikoi,smart,,,false
+14,47,725,trip,trip,旅行 / つまずく,ryokou / tsumazuku,ryokou,trip,multi-sense,MULTI_SENSE,true
+14,48,726,drug,drug,薬 / 麻薬,kusuri / mayaku,kusuri,drug,multi-sense,MULTI_SENSE,true
+14,49,729,thousand,thousand,千,sen,sen,thousand,,,false
+15,0,731,consider,consider,検討する / みなす,kentou suru / minasu,kentou suru,consider,,,false
+15,1,732,master,master,マスター / 主人 / 習得する,masutaa / shujin / shutoku suru,masutaa,master,multi-sense,MULTI_SENSE,true
+15,2,733,wall,wall,壁,kabe,kabe,wall,,,false
+15,3,734,imagine,imagine,想像する,souzou suru,souzou suru,imagine,,,false
+15,4,735,short,short,短い,mijikai,mijikai,short,,,false
+15,5,736,tree,tree,木,ki,ki,tree,,,false
+15,6,737,security,security,安全 / 警備,anzen / keibi,anzen,security,,,false
+15,7,738,plane,plane,飛行機,hikouki,hikouki,plane,,,false
+15,8,739,lovely,lovely,素敵な / 愛らしい,suteki na / airashii,suteki na,lovely,,,false
+15,9,740,appreciate,appreciate,感謝する / 理解する,kansha suru / rikai suru,kansha suru,appreciate,,,false
+15,10,741,fair,fair,公平な / まあまあ,kouhei na / maa maa,kouhei na,fair,multi-sense,MULTI_SENSE,true
+15,11,744,reach,reach,届く / 着く,todoku / tsuku,todoku,reach,,,false
+15,12,746,mention,mention,言及する,genkyuu suru,genkyuu suru,mention,,,false
+15,13,748,across,across,横切って / 向こうに,yokogitte / mukou ni,yokogitte,across,,,false
+15,14,750,raise,raise,上げる / 育てる,ageru / sodateru,ageru,raise,multi-sense,MULTI_SENSE,true
+15,15,751,terrible,terrible,ひどい / 恐ろしい,hidoi / osoroshii,hidoi,terrible,,,false
+15,16,752,caught,caught,捕まえる（過去）,tsukamaeru,tsukamaeru,caught,catch past,,false
+15,17,753,treat,treat,扱う / ごちそう,atsukau / gochisou,atsukau,treat,multi-sense,MULTI_SENSE,true
+15,18,754,glass,glass,ガラス / グラス,garasu / gurasu,garasu,glass,,,false
+15,19,756,afternoon,afternoon,午後,gogo,gogo,afternoon,,,false
+15,20,757,patient,patient,患者 / 忍耐強い,kanja / nintai zuyoi,kanja,patient,multi-sense,MULTI_SENSE,true
+15,21,758,calm,calm,落ち着いた,ochitsuita,ochitsuita,calm,,,false
+15,22,759,swear,swear,誓う / 悪態をつく,chikau / akutai o tsuku,chikau,swear,multi-sense,MULTI_SENSE,true
+15,23,760,horse,horse,馬,uma,uma,horse,,,false
+15,24,761,pop,pop,ポップ / 破裂する,poppu / haretsu suru,poppu,pop,multi-sense,MULTI_SENSE,true
+15,25,763,personal,personal,個人的な,kojinteki na,kojinteki na,personal,,,false
+15,26,764,list,list,リスト / 一覧,risuto / ichiran,risuto,list,,,false
+15,27,765,grab,grab,掴む,tsukamu,tsukamu,grab,,,false
+15,28,766,soul,soul,魂 / 心,tamashii / kokoro,tamashii,soul,,,false
+15,29,768,buck,buck,ドル（俗）,doru,doru,buck,slang,,false
+15,30,770,ground,ground,地面,jimen,jimen,ground,,,false
+15,31,771,suit,suit,スーツ / 合う,suutsu / au,suutsu,suit,multi-sense,MULTI_SENSE,true
+15,32,773,age,age,年齢 / 時代,nenrei / jidai,nenrei,age,multi-sense,MULTI_SENSE,true
+15,33,774,tough,tough,タフな / 厳しい,tafu na / kibishii,tafu na,tough,,,false
+15,34,775,track,track,追跡する / トラック,tsuiseki suru / torakku,tsuiseki suru,track,multi-sense,MULTI_SENSE,true
+15,35,777,jam,jam,渋滞 / ジャム,juutai / jamu,juutai,jam,multi-sense,MULTI_SENSE,true
+15,36,778,situation,situation,状況,joukyou,joukyou,situation,,,false
+15,37,779,guard,guard,警備する / 守衛,keibi suru / shuei,keibi suru,guard,,,false
+15,38,780,middle,middle,真ん中,mannaka,mannaka,middle,,,false
+15,39,781,forgive,forgive,許す,yurusu,yurusu,forgive,,,false
+15,40,782,information,information,情報,jouhou,jouhou,information,,,false
+15,41,783,simple,simple,簡単な / 単純な,kantan na / tanjun na,kantan na,simple,,,false
+15,42,784,amaze,amaze,驚かせる,odorokaseru,odorokaseru,amaze,,,false
+15,43,786,army,army,軍隊,guntai,guntai,army,,,false
+15,44,787,ticket,ticket,切符 / チケット,kippu / chiketto,kippu,ticket,,,false
+15,45,788,study,study,勉強する,benkyou suru,benkyou suru,study,,,false
+15,46,789,forever,forever,永遠に,eien ni,eien ni,forever,,,false
+15,47,790,dark,dark,暗い,kurai,kurai,dark,,,false
+15,48,792,destroy,destroy,破壊する,hakai suru,hakai suru,destroy,,,false
+15,49,793,accident,accident,事故,jiko,jiko,accident,,,false
+16,0,794,cute,cute,かわいい,kawaii,kawaii,cute,,,false
+16,1,795,lying,lying,嘘をついている / 横になっている,uso o tsuite iru / yoko ni natte iru,uso o tsuite iru,lying,multi-sense,MULTI_SENSE,true
+16,2,796,college,college,大学,daigaku,daigaku,college,,,false
+16,3,797,apartment,apartment,アパート,apaato,apaato,apartment,,,false
+16,4,799,weapon,weapon,武器,buki,buki,weapon,,,false
+16,5,800,strong,strong,強い,tsuyoi,tsuyoi,strong,,,false
+16,6,802,excite,excite,興奮させる,koufun saseru,koufun saseru,excite,,,false
+16,7,803,cat,cat,猫,neko,neko,cat,,,false
+16,8,805,smile,smile,笑顔 / 笑う,egao / warau,egao,smile,,,false
+16,9,806,scream,scream,叫ぶ,sakebu,sakebu,scream,,,false
+16,10,807,beer,beer,ビール,biiru,biiru,beer,,,false
+16,11,808,film,film,映画 / フィルム,eiga / firumu,eiga,film,,,false
+16,12,809,totally,totally,完全に / まったく,kanzen ni / mattaku,kanzen ni,totally,,,false
+16,13,810,respect,respect,尊敬する / 尊重,sonkei suru / sonchou,sonkei suru,respect,,,false
+16,14,811,difference,difference,違い,chigai,chigai,difference,,,false
+16,15,813,evidence,evidence,証拠,shouko,shouko,evidence,,,false
+16,16,814,visit,visit,訪れる / 訪問,otozureru / houmon,otozureru,visit,,,false
+16,17,815,certain,certain,確かな / ある（特定の）,tashika na / aru,tashika na,certain,,,false
+16,18,816,history,history,歴史,rekishi,rekishi,history,,,false
+16,19,817,fear,fear,恐れ / 恐れる,osore / osoreru,osore,fear,,,false
+16,20,818,cross,cross,渡る / 十字,wataru / juuji,wataru,cross,multi-sense,MULTI_SENSE,true
+16,21,819,animal,animal,動物,doubutsu,doubutsu,animal,,,false
+16,22,820,cook,cook,料理する,ryouri suru,ryouri suru,cook,,,false
+16,23,821,near,near,近い / 近く,chikai / chikaku,chikai,near,,,false
+16,24,822,completely,completely,完全に,kanzen ni,kanzen ni,completely,,,false
+16,25,823,belong,belong,属する,zokusuru,zokusuru,belong,,,false
+16,26,824,field,field,畑 / 分野 / フィールド,hatake / bunya / fiirudo,hatake,field,multi-sense,MULTI_SENSE,true
+16,27,825,girlfriend,girlfriend,彼女,kanojo,kanojo,girlfriend,,,false
+16,28,828,pleasure,pleasure,喜び / 快楽,yorokobi / kairaku,yorokobi,pleasure,,,false
+16,29,829,file,file,ファイル / 書類,fairu / shorui,fairu,file,,,false
+16,30,830,area,area,地域 / エリア,chiiki / eria,chiiki,area,,,false
+16,31,831,truck,truck,トラック,torakku,torakku,truck,,,false
+16,32,832,rich,rich,お金持ちの,okanemochi no,okanemochi no,rich,,,false
+16,33,833,born,born,生まれた,umareta,umareta,born,,,false
+16,34,834,proud,proud,誇りに思う,hokori ni omou,hokori ni omou,proud,,,false
+16,35,835,group,group,グループ / 集団,guruupu / shuudan,guruupu,group,,,false
+16,36,836,owe,owe,借りがある,kari ga aru,kari ga aru,owe,,,false
+16,37,837,fill,fill,満たす / いっぱいにする,mitasu / ippai ni suru,mitasu,fill,,,false
+16,38,838,involve,involve,巻き込む / 含む,makikomu / fukumu,makikomu,involve,,,false
+16,39,839,gift,gift,贈り物,okurimono,okurimono,gift,,,false
+16,40,840,folk,folk,人々 / フォーク,hitobito / fooku,hitobito,folk,,,false
+16,41,841,position,position,位置 / 立場,ichi / tachiba,ichi,position,,,false
+16,42,842,scene,scene,場面 / 現場,bamen / genba,bamen,scene,,,false
+16,43,843,spot,spot,場所 / 染み,basho / shimi,basho,spot,multi-sense,MULTI_SENSE,true
+16,44,844,chief,chief,長 / チーフ,chou / chiifu,chou,chief,,,false
+16,45,845,paint,paint,塗る / 絵の具,nuru / enogu,nuru,paint,,,false
+16,46,847,steal,steal,盗む,nusumu,nusumu,steal,,,false
+16,47,848,fat,fat,太った / 脂肪,futotta / shibou,futotta,fat,,,false
+16,48,851,race,race,競争 / 人種,kyousou / jinshu,kyousou,race,multi-sense,MULTI_SENSE,true
+16,49,853,experience,experience,経験,keiken,keiken,experience,,,false
+17,0,856,board,board,板 / 乗り込む / 委員会,ita / norikomu / iinkai,ita,board,multi-sense,MULTI_SENSE,true
+17,1,857,contact,contact,連絡する / 接触,renraku suru / sesshoku,renraku suru,contact,,,false
+17,2,858,summer,summer,夏,natsu,natsu,summer,,,false
+17,3,861,marriage,marriage,結婚,kekkon,kekkon,marriage,,,false
+17,4,862,round,round,丸い / 回,marui / kai,marui,round,multi-sense,MULTI_SENSE,true
+17,5,864,screw,screw,ネジ / 台無しにする,neji / dainashi ni suru,neji,screw,multi-sense,MULTI_SENSE,true
+17,6,866,upset,upset,動揺した / 怒った,douyou shita / okotta,douyou shita,upset,,,false
+17,7,867,radio,radio,ラジオ,rajio,rajio,radio,,,false
+17,8,868,art,art,芸術 / アート,geijutsu / aato,geijutsu,art,,,false
+17,9,869,entire,entire,全体の,zentai no,zentai no,entire,,,false
+17,10,870,pack,pack,詰める / パック,tsumeru / pakku,tsumeru,pack,,,false
+17,11,871,ice,ice,氷,koori,koori,ice,,,false
+17,12,872,relationship,relationship,関係,kankei,kankei,relationship,,,false
+17,13,873,favor,favor,お願い / 好意,onegai / koui,onegai,favor,,,false
+17,14,874,invite,invite,招待する,shoutai suru,shoutai suru,invite,,,false
+17,15,876,bomb,bomb,爆弾,bakudan,bakudan,bomb,,,false
+17,16,877,instead,instead,代わりに,kawari ni,kawari ni,instead,,,false
+17,17,878,prepare,prepare,準備する,junbi suru,junbi suru,prepare,,,false
+17,18,879,gold,gold,金 / ゴールド,kin / goorudo,kin,gold,,,false
+17,19,880,breath,breath,息,iki,iki,breath,,,false
+17,20,883,bus,bus,バス,basu,basu,bus,,,false
+17,21,884,bear,bear,熊 / 耐える,kuma / taeru,kuma,bear,multi-sense,MULTI_SENSE,true
+17,22,885,idiot,idiot,馬鹿,baka,baka,idiot,,,false
+17,23,886,witness,witness,目撃者 / 目撃する,mokugekisha / mokugeki suru,mokugekisha,witness,,,false
+17,24,887,fit,fit,合う / フィットする,au / fitto suru,au,fit,,,false
+17,25,888,boyfriend,boyfriend,彼氏,kareshi,kareshi,boyfriend,,,false
+17,26,889,hungry,hungry,お腹が空いた,onaka ga suita,onaka ga suita,hungry,,,false
+17,27,890,private,private,私的な / 私立の,shiteki na / shiritsu no,shiteki na,private,,,false
+17,28,893,deep,deep,深い,fukai,fukai,deep,,,false
+17,29,895,sake,sake,〜のために / 酒,tame ni / sake,tame ni,sake,multi-sense,MULTI_SENSE,true
+17,30,896,single,single,独身の / 一つの,dokushin no / hitotsu no,dokushin no,single,multi-sense,MULTI_SENSE,true
+17,31,897,cash,cash,現金,genkin,genkin,cash,,,false
+17,32,898,forward,forward,前へ / 転送する,mae e / tensou suru,mae e,forward,multi-sense,MULTI_SENSE,true
+17,33,900,definitely,definitely,間違いなく / 絶対に,machigai naku / zettai ni,machigai naku,definitely,,,false
+17,34,902,third,third,三番目,sanbanme,sanbanme,third,,,false
+17,35,904,camera,camera,カメラ,kamera,kamera,camera,,,false
+17,36,905,dangerous,dangerous,危険な,kiken na,kiken na,dangerous,,,false
+17,37,906,green,green,緑 / 緑色,midori / midori-iro,midori,green,,,false
+17,38,907,beg,beg,頼む / 乞う,tanomu / kou,tanomu,beg,,,false
+17,39,908,accept,accept,受け入れる,ukeireru,ukeireru,accept,,,false
+17,40,909,evil,evil,悪い / 悪,warui / aku,warui,evil,,,false
+17,41,910,search,search,探す / 検索,sagasu / kensaku,sagasu,search,,,false
+17,42,911,client,client,顧客 / クライアント,kokyaku / kuraianto,kokyaku,client,,,false
+17,43,915,arrive,arrive,到着する,touchaku suru,touchaku suru,arrive,,,false
+17,44,917,student,student,学生 / 生徒,gakusei / seito,gakusei,student,,,false
+17,45,919,doubt,doubt,疑う / 疑い,utagau / utagai,utagau,doubt,,,false
+17,46,920,admit,admit,認める,mitomeru,mitomeru,admit,,,false
+17,47,921,warn,warn,警告する,keikoku suru,keikoku suru,warn,,,false
+17,48,922,press,press,押す / 報道機関,osu / houdou kikan,osu,press,multi-sense,MULTI_SENSE,true
+17,49,923,chicken,chicken,鶏肉 / 鶏,toriniku / niwatori,toriniku,chicken,,,false
+18,0,925,cost,cost,費用がかかる / 費用,hiyou ga kakaru / hiyou,hiyou ga kakaru,cost,,,false
+18,1,928,church,church,教会,kyoukai,kyoukai,church,,,false
+18,2,930,honest,honest,正直な,shoujiki na,shoujiki na,honest,,,false
+18,3,931,lay,lay,横たえる / 置く,yokotaeru / oku,yokotaeru,lay,,,false
+18,4,932,jail,jail,刑務所 / 拘置所,keimusho / kouchisho,keimusho,jail,,,false
+18,5,934,trick,trick,手品 / だます,tejina / damasu,tejina,trick,,,false
+18,6,936,fellow,fellow,仲間 / 男,nakama / otoko,nakama,fellow,,,false
+18,7,938,rain,rain,雨,ame,ame,rain,,,false
+18,8,939,professor,professor,教授,kyouju,kyouju,professor,,,false
+18,9,940,congratulations,congratulation,おめでとう,omedetou,omedetou,congratulations,,TRUNCATED_LEMMA,false
+18,10,941,bird,bird,鳥,tori,tori,bird,,,false
+18,11,943,crime,crime,犯罪,hanzai,hanzai,crime,,,false
+18,12,944,victim,victim,被害者,higaisha,higaisha,victim,,,false
+18,13,945,public,public,公共の / 公の,koukyou no / ooyake no,koukyou no,public,,,false
+18,14,946,finger,finger,指,yubi,yubi,finger,,,false
+18,15,947,flower,flower,花,hana,hana,flower,,,false
+18,16,948,match,match,試合 / 合う / マッチ,shiai / au / matchi,shiai,match,multi-sense,MULTI_SENSE,true
+18,17,949,taste,taste,味 / 味がする,aji / aji ga suru,aji,taste,,,false
+18,18,950,upstairs,upstair,二階 / 上の階,nikai / ue no kai,nikai,upstairs,,TRUNCATED_LEMMA,false
+18,19,951,memory,memory,記憶 / 思い出,kioku / omoide,kioku,memory,,,false
+18,20,952,sun,sun,太陽 / 日,taiyou / hi,taiyou,sun,,,false
+18,21,953,deserve,deserve,〜に値する,ni atai suru,ni atai suru,deserve,,,false
+18,22,954,normal,normal,普通の,futsuu no,futsuu no,normal,,,false
+18,23,955,prove,prove,証明する,shoumei suru,shoumei suru,prove,,,false
+18,24,956,decision,decision,決定 / 決断,kettei / ketsudan,kettei,decision,,,false
+18,25,957,machine,machine,機械,kikai,kikai,machine,,,false
+18,26,960,double,double,二倍 / ダブル,nibai / daburu,nibai,double,,,false
+18,27,961,space,space,空間 / 宇宙,kuukan / uchuu,kuukan,space,multi-sense,MULTI_SENSE,true
+18,28,963,heaven,heaven,天国,tengoku,tengoku,heaven,,,false
+18,29,964,computer,computer,コンピューター,konpyuutaa,konpyuutaa,computer,,,false
+18,30,965,nose,nose,鼻,hana,hana,nose,,,false
+18,31,966,hide,hide,隠す / 隠れる,kakusu / kakureru,kakusu,hide,,,false
+18,32,968,peace,peace,平和,heiwa,heiwa,peace,,,false
+18,33,969,escape,escape,逃げる / 脱出,nigeru / dasshutsu,nigeru,escape,,,false
+18,34,971,gas,gas,ガソリン / ガス,gasorin / gasu,gasorin,gas,multi-sense,MULTI_SENSE,true
+18,35,976,wind,wind,風,kaze,kaze,wind,,,false
+18,36,980,tape,tape,テープ,teepu,teepu,tape,,,false
+18,37,982,settle,settle,解決する / 落ち着く,kaiketsu suru / ochitsuku,kaiketsu suru,settle,multi-sense,MULTI_SENSE,true
+18,38,983,nine,nine,九,kyuu / ku,kyuu,nine,,,false
+18,39,984,weekend,weekend,週末,shuumatsu,shuumatsu,weekend,,,false
+18,40,985,government,government,政府,seifu,seifu,government,,,false
+18,41,986,holy,holy,聖なる,sei naru,sei naru,holy,,,false
+18,42,987,ear,ear,耳,mimi,mimi,ear,,,false
+18,43,988,prison,prison,刑務所,keimusho,keimusho,prison,,,false
+18,44,989,block,block,ブロック / 妨げる,burokku / samatageru,burokku,block,multi-sense,MULTI_SENSE,true
+18,45,990,enemy,enemy,敵,teki,teki,enemy,,,false
+18,46,992,neither,neither,どちらも〜ない,dochira mo nai,dochira mo nai,neither,,,false
+18,47,993,bottle,bottle,瓶 / ボトル,bin / botoru,bin,bottle,,,false
+18,48,994,suspect,suspect,疑う / 容疑者,utagau / yougisha,utagau,suspect,multi-sense,MULTI_SENSE,true
+18,49,995,especially,especially,特に,toku ni,toku ni,especially,,,false
+19,0,996,nervous,nervous,緊張した,kinchou shita,kinchou shita,nervous,,,false
+19,1,997,whether,whether,〜かどうか,ka dou ka,ka dou ka,whether,,,false
+19,2,1001,dirty,dirty,汚い,kitanai,kitanai,dirty,,,false
+19,3,1002,breakfast,breakfast,朝食,choushoku,choushoku,breakfast,,,false
+19,4,1003,spirit,spirit,精神 / 精霊,seishin / seirei,seishin,spirit,multi-sense,MULTI_SENSE,true
+19,5,1004,stuck,stuck,動かない / 行き詰まっている,ugokanai / ikizumatte iru,ugokanai,stuck,,,false
+19,6,1005,remind,remind,思い出させる,omoidasaseru,omoidasaseru,remind,,,false
+19,7,1007,cell,cell,細胞 / 独房 / 携帯,saibou / dokubou / keitai,saibou,cell,multi-sense,MULTI_SENSE,true
+19,8,1008,pardon,pardon,ごめんなさい / 恩赦,gomen nasai / onsha,gomen nasai,pardon,multi-sense,MULTI_SENSE,true
+19,9,1010,ruin,ruin,台無しにする / 廃墟,dainashi ni suru / haikyo,dainashi ni suru,ruin,,,false
+19,10,1011,discuss,discuss,議論する / 話し合う,giron suru / hanashiau,giron suru,discuss,,,false
+19,11,1012,copy,copy,コピー / 写す,kopii / utsusu,kopii,copy,,,false
+19,12,1013,travel,travel,旅行する,ryokou suru,ryokou suru,travel,,,false
+19,13,1014,wash,wash,洗う,arau,arau,wash,,,false
+19,14,1015,guest,guest,客 / ゲスト,kyaku / gesuto,kyaku,guest,,,false
+19,15,1017,department,department,部門 / 課,bumon / ka,bumon,department,,,false
+19,16,1018,nurse,nurse,看護師,kangoshi,kangoshi,nurse,,,false
+19,17,1019,suggest,suggest,提案する,teian suru,teian suru,suggest,,,false
+19,18,1020,egg,egg,卵,tamago,tamago,egg,,,false
+19,19,1021,south,south,南,minami,minami,south,,,false
+19,20,1023,bathroom,bathroom,お風呂 / トイレ,ofuro / toire,ofuro,bathroom,,,false
+19,21,1025,flight,flight,フライト / 飛行,furaito / hikou,furaito,flight,,,false
+19,22,1027,sea,sea,海,umi,umi,sea,,,false
+19,23,1028,brown,brown,茶色,chairo,chairo,brown,,,false
+19,24,1029,seriously,seriously,真剣に / マジで,shinken ni / maji de,shinken ni,seriously,,,false
+19,25,1030,north,north,北,kita,kita,north,,,false
+19,26,1031,fail,fail,失敗する,shippai suru,shippai suru,fail,,,false
+19,27,1036,level,level,レベル / 水準,reberu / suijun,reberu,level,,,false
+19,28,1037,awful,awful,ひどい / 最悪な,hidoi / saiaku na,hidoi,awful,,,false
+19,29,1038,risk,risk,リスク / 危険,risuku / kiken,risuku,risk,,,false
+19,30,1039,favorite,favorite,好きな / お気に入り,suki na / okiniiri,suki na,favorite,,,false
+19,31,1040,sad,sad,悲しい,kanashii,kanashii,sad,,,false
+19,32,1042,neck,neck,首,kubi,kubi,neck,,,false
+19,33,1043,clock,clock,時計,tokei,tokei,clock,,,false
+19,34,1044,grand,grand,壮大な / グランド,soudai na / gurando,soudai na,grand,,,false
+19,35,1045,usually,usually,普通は / いつもは,futsuu wa / itsumo wa,futsuu wa,usually,,,false
+19,36,1046,hero,hero,英雄 / ヒーロー,eiyuu / hiiroo,eiyuu,hero,,,false
+19,37,1047,upon,upon,〜の上に / 〜すると,no ue ni,no ue ni,upon,,,false
+19,38,1048,account,account,口座 / 説明,kouza / setsumei,kouza,account,multi-sense,MULTI_SENSE,true
+19,39,1049,pretend,pretend,ふりをする,furi o suru,furi o suru,pretend,,,false
+19,40,1051,twice,twice,二度,nido,nido,twice,,,false
+19,41,1052,dig,dig,掘る,horu,horu,dig,,,false
+19,42,1055,camp,camp,キャンプ,kyanpu,kyanpu,camp,,,false
+19,43,1056,plenty,plenty,たくさん,takusan,takusan,plenty,,,false
+19,44,1057,guilty,guilty,有罪の / 罪悪感がある,yuuzai no / zaiakukan ga aru,yuuzai no,guilty,,,false
+19,45,1059,sheriff,sheriff,保安官,hoankan,hoankan,sheriff,,,false
+19,46,1060,remain,remain,残る,nokoru,nokoru,remain,,,false
+19,47,1061,price,price,値段,nedan,nedan,price,,,false
+19,48,1062,form,form,形 / 用紙 / 形式,katachi / youshi / keishiki,katachi,form,multi-sense,MULTI_SENSE,true
+19,49,1063,tooth,tooth,歯,ha,ha,tooth,,,false
+20,0,1064,address,address,住所 / 話しかける,juusho / hanashikakeru,juusho,address,multi-sense,MULTI_SENSE,true
+20,1,1065,beach,beach,海岸 / ビーチ,kaigan / biichi,kaigan,beach,,,false
+20,2,1066,extra,extra,追加の / 余分な,tsuika no / yobun na,tsuika no,extra,,,false
+20,3,1067,complete,complete,完成する / 完全な,kansei suru / kanzen na,kansei suru,complete,,,false
+20,4,1068,support,support,支える / 支援,sasaeru / shien,sasaeru,support,,,false
+20,5,1069,chase,chase,追う,ou,ou,chase,,,false
+20,6,1070,river,river,川,kawa,kawa,river,,,false
+20,7,1072,west,west,西,nishi,nishi,west,,,false
+20,8,1073,obviously,obviously,明らかに,akiraka ni,akiraka ni,obviously,,,false
+20,9,1074,corner,corner,角 / コーナー,kado / koonaa,kado,corner,,,false
+20,10,1075,wound,wound,傷,kizu,kizu,wound,,,false
+20,11,1076,wine,wine,ワイン,wain,wain,wine,,,false
+20,12,1077,draw,draw,描く / 引く,egaku / hiku,egaku,draw,multi-sense,MULTI_SENSE,true
+20,13,1080,bunch,bunch,たくさん / 束,takusan / taba,takusan,bunch,,,false
+20,14,1081,low,low,低い,hikui,hikui,low,,,false
+20,15,1083,strike,strike,打つ / ストライキ,utsu / sutoraiki,utsu,strike,multi-sense,MULTI_SENSE,true
+20,16,1084,chair,chair,椅子,isu,isu,chair,,,false
+20,17,1085,issue,issue,問題 / 発行する,mondai / hakkou suru,mondai,issue,multi-sense,MULTI_SENSE,true
+20,18,1086,warm,warm,暖かい / 温かい,atatakai,atatakai,warm,,,false
+20,19,1087,within,within,〜以内に / 〜の中に,inai ni / no naka ni,inai ni,within,,,false
+20,20,1089,impossible,impossible,不可能な,fukanou na,fukanou na,impossible,,,false
+20,21,1090,band,band,バンド / 帯,bando / obi,bando,band,multi-sense,MULTI_SENSE,true
+20,22,1091,kitchen,kitchen,台所 / キッチン,daidokoro / kitchin,daidokoro,kitchen,,,false
+20,23,1092,angry,angry,怒っている,okotte iru,okotte iru,angry,,,false
+20,24,1093,color,color,色,iro,iro,color,,,false
+20,25,1095,duty,duty,義務 / 勤務,gimu / kinmu,gimu,duty,,,false
+20,26,1096,blame,blame,責めている / 責任をなすりつける,semete iru / sekinin o nasuritsukeru,semete iru,blame,,,false
+20,27,1098,disappear,disappear,消える,kieru,kieru,disappear,,,false
+20,28,1100,cup,cup,カップ / 杯,kappu / hai,kappu,cup,,,false
+20,29,1101,suffer,suffer,苦しむ,kurushimu,kurushimu,suffer,,,false
+20,30,1102,hole,hole,穴,ana,ana,hole,,,false
+20,31,1103,release,release,解放する / 発売する,kaihou suru / hatsubai suru,kaihou suru,release,multi-sense,MULTI_SENSE,true
+20,32,1105,feed,feed,餌をやる / 養う,esa o yaru / yashinau,esa o yaru,feed,,,false
+20,33,1109,hill,hill,丘,oka,oka,hill,,,false
+20,34,1111,feeling,feeling,気持ち / 感覚,kimochi / kankaku,kimochi,feeling,,,false
+20,35,1113,shake,shake,振る / 震える,furu / furueru,furu,shake,multi-sense,MULTI_SENSE,true
+20,36,1114,often,often,よく / しばしば,yoku / shibashiba,yoku,often,,,false
+20,37,1115,silly,silly,馬鹿な / くだらない,baka na / kudaranai,baka na,silly,,,false
+20,38,1116,stone,stone,石,ishi,ishi,stone,,,false
+20,39,1117,assume,assume,想定する / 思い込む,soutei suru / omoikomu,soutei suru,assume,,,false
+20,40,1121,aunt,aunt,おばさん / 叔母・伯母,obasan / oba,obasan,aunt,,,false
+20,41,1123,pressure,pressure,圧力 / プレッシャー,atsuryoku / puresshaa,atsuryoku,pressure,,,false
+20,42,1125,appear,appear,現れる / 〜のように見える,arawareru / you ni mieru,arawareru,appear,multi-sense,MULTI_SENSE,true
+20,43,1126,emergency,emergency,緊急事態,kinkyuu jitai,kinkyuu jitai,emergency,,,false
+20,44,1127,quickly,quickly,速く / すぐに,hayaku / sugu ni,hayaku,quickly,,,false
+20,45,1129,final,final,最終の / 決勝,saishuu no / kesshou,saishuu no,final,multi-sense,MULTI_SENSE,true
+20,46,1130,wood,wood,木 / 木材,ki / mokuzai,ki,wood,,,false
+20,47,1131,load,load,積み荷 / 積み込む,tsumini / tsumikomu,tsumini,load,,,false
+20,48,1132,cousin,cousin,いとこ,itoko,itoko,cousin,,,false
+20,49,1133,bore,bore,退屈させる / 退屈な,taikutsu saseru / taikutsu na,taikutsu saseru,bore,multi-sense,MULTI_SENSE,true

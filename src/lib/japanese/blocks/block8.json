@@ -1,332 +1,339 @@
 [
   {
-    "jp": "二人",
-    "audio": "ふたり",
-    "r": "futari",
-    "en": "two people",
-    "m": "FU-TA-RI — TWO PEOPLE. → futari."
+    "jp": "簡単",
+    "audio": "かんたん",
+    "r": "kantan",
+    "en": "easy",
+    "m": "KAN-TAN — EASY. → kantan."
   },
   {
-    "jp": "多く",
-    "audio": "おおく",
-    "r": "ooku",
-    "en": "many / much",
-    "m": "OO-KU — MANY. → ooku."
+    "jp": "話",
+    "audio": "はなし",
+    "r": "hanashi",
+    "en": "story",
+    "m": "HA-NA-SHI — STORY. → hanashi."
   },
   {
-    "jp": "少ない",
-    "audio": "すくない",
-    "r": "sukunai",
-    "en": "few / not much",
-    "m": "SU-KUN-AI — FEW. → sukunai."
+    "jp": "切る",
+    "audio": "きる",
+    "r": "kiru",
+    "en": "cut",
+    "m": "KI-RU — CUT it. → kiru."
   },
   {
-    "jp": "十分",
-    "audio": "じゅうぶん",
-    "r": "juubun",
-    "en": "enough",
-    "m": "JU-BUN — ENOUGH bread. → juubun."
-  },
-  {
-    "jp": "ほとんどない",
-    "audio": "ほとんどない",
-    "r": "hotondo nai",
-    "en": "hardly any",
-    "m": "HO-TON-DO N-AI — HARDLY ANY. → hotondo nai."
-  },
-  {
-    "jp": "ちょうど",
-    "audio": "ちょうど",
-    "r": "choudo",
-    "en": "exactly / just right",
-    "m": "CHOU-DO — EXACTLY. → choudo."
-  },
-  {
-    "jp": "およそ",
-    "audio": "およそ",
-    "r": "oyoso",
-    "en": "approximately / roughly",
-    "m": "O-YO-SO — APPROXIMATELY. → oyoso."
-  },
-  {
-    "jp": "ぐらい",
-    "audio": "ぐらい",
-    "r": "gurai",
-    "en": "about / approximately",
-    "m": "GU-RAI — ABOUT. → gurai."
-  },
-  {
-    "jp": "くらい",
-    "audio": "くらい",
-    "r": "kurai",
-    "en": "about / approximately",
-    "m": "KU-RAI — ABOUT. → kurai."
-  },
-  {
-    "jp": "ほど",
-    "audio": "ほど",
-    "r": "hodo",
-    "en": "about / extent",
-    "m": "HO-DO — ABOUT. → hodo."
-  },
-  {
-    "jp": "すぐ",
-    "audio": "すぐ",
-    "r": "sugu",
-    "en": "right away / soon",
-    "m": "SUGU — SOON / right away → sugu."
-  },
-  {
-    "jp": "さっき",
-    "audio": "さっき",
-    "r": "sakki",
-    "en": "just before / a moment ago",
-    "m": "SA-KKI — JUST BEFORE. → sakki."
-  },
-  {
-    "jp": "後で",
-    "audio": "あとで",
-    "r": "ato de",
-    "en": "later",
-    "m": "A-TO-DE — LATER. → atode."
-  },
-  {
-    "jp": "前に",
-    "audio": "まえに",
-    "r": "mae ni",
-    "en": "before",
-    "m": "MAE-NI — long AGO. → maeni."
-  },
-  {
-    "jp": "最近",
-    "audio": "さいきん",
-    "r": "saikin",
-    "en": "recently / lately",
-    "m": "SAI-KIN — RECENTLY. → saikin."
-  },
-  {
-    "jp": "昔",
-    "audio": "むかし",
-    "r": "mukashi",
-    "en": "long ago / old days",
-    "m": "MU-KA-SHI — LONG AGO. → mukashi."
-  },
-  {
-    "jp": "今度",
-    "audio": "こんど",
-    "r": "kondo",
-    "en": "next time / this time",
-    "m": "KON-DO — NEXT TIME. → kondo."
-  },
-  {
-    "jp": "今週",
-    "audio": "こんしゅう",
-    "r": "konshuu",
-    "en": "this week",
-    "m": "KON-SHUU — THIS WEEK. → konshuu."
-  },
-  {
-    "jp": "来週",
-    "audio": "らいしゅう",
-    "r": "raishuu",
-    "en": "next week",
-    "m": "RAI-SHUU — NEXT WEEK. → raishuu."
-  },
-  {
-    "jp": "先週",
-    "audio": "せんしゅう",
-    "r": "senshuu",
-    "en": "last week",
-    "m": "SEN-SHUU — LAST WEEK. → senshuu."
-  },
-  {
-    "jp": "今月",
-    "audio": "こんげつ",
-    "r": "kongetsu",
-    "en": "this month",
-    "m": "KON-GE-TSU — THIS MONTH. → kongetsu."
-  },
-  {
-    "jp": "来月",
-    "audio": "らいげつ",
-    "r": "raigetsu",
-    "en": "next month",
-    "m": "RAI-GE-TSU — NEXT MONTH. → raigetsu."
-  },
-  {
-    "jp": "先月",
-    "audio": "せんげつ",
-    "r": "sengetsu",
-    "en": "last month",
-    "m": "SEN-GE-TSU — LAST MONTH. → sengetsu."
-  },
-  {
-    "jp": "今年",
-    "audio": "ことし",
-    "r": "kotoshi",
-    "en": "this year",
-    "m": "KO-TO-SHI — THIS YEAR. → kotoshi."
-  },
-  {
-    "jp": "来年",
-    "audio": "らいねん",
-    "r": "rainen",
-    "en": "next year",
-    "m": "RAIN-EN — NEXT YEAR. → rainen."
-  },
-  {
-    "jp": "去年",
-    "audio": "きょねん",
-    "r": "kyonen",
-    "en": "last year",
-    "m": "KYON-EN — LAST YEAR. → kyonen."
-  },
-  {
-    "jp": "平日",
-    "audio": "へいじつ",
-    "r": "heijitsu",
-    "en": "weekday",
-    "m": "HEI-JI-TSU — WEEKDAY. → heijitsu."
-  },
-  {
-    "jp": "週末",
-    "audio": "しゅうまつ",
-    "r": "shuumatsu",
-    "en": "weekend",
-    "m": "SHUU-MA-TSU — WEEKEND. → shuumatsu."
-  },
-  {
-    "jp": "時間",
-    "audio": "じかん",
-    "r": "jikan",
-    "en": "time / hours",
-    "m": "JI-KAN — an HOUR. → jikan."
-  },
-  {
-    "jp": "分",
-    "audio": "ふん",
-    "r": "fun",
-    "en": "minute",
-    "m": "One FUN MINUTE on the clock. → fun."
-  },
-  {
-    "jp": "秒",
-    "audio": "びょう",
-    "r": "byou",
-    "en": "second",
-    "m": "BYOU — a SECOND. → byou."
-  },
-  {
-    "jp": "時",
-    "audio": "じ",
-    "r": "ji",
-    "en": "o'clock",
-    "m": "JI — O'CLOCK. → ji."
-  },
-  {
-    "jp": "半",
-    "audio": "はん",
-    "r": "han",
-    "en": "half past / half",
-    "m": "HAN — HALF PAST. → han."
-  },
-  {
-    "jp": "今から",
-    "audio": "いまから",
-    "r": "ima kara",
-    "en": "from now / now",
-    "m": "I-MA KA-RA — FROM NOW. → ima kara."
-  },
-  {
-    "jp": "もうすぐ",
-    "audio": "もうすぐ",
-    "r": "mou sugu",
-    "en": "very soon",
-    "m": "MOU SU-GU — VERY SOON. → mou sugu."
-  },
-  {
-    "jp": "いつか",
-    "audio": "いつか",
-    "r": "itsuka",
-    "en": "someday / sometime",
-    "m": "I-TSU-KA — SOMEDAY. → itsuka."
-  },
-  {
-    "jp": "しばらく",
-    "audio": "しばらく",
-    "r": "shibaraku",
-    "en": "for a while",
-    "m": "SHI-BA-RA-KU — FOR A WHILE. → shibaraku."
-  },
-  {
-    "jp": "ずっと",
-    "audio": "ずっと",
-    "r": "zutto",
-    "en": "all along / much more",
-    "m": "ZU-TTO — ALL ALONG. → zutto."
-  },
-  {
-    "jp": "前",
-    "audio": "まえ",
-    "r": "mae",
-    "en": "front / before",
-    "m": "MAE — BEFORE / in front. → mae."
-  },
-  {
-    "jp": "後ろ",
-    "audio": "うしろ",
-    "r": "ushiro",
-    "en": "behind / back",
-    "m": "U-SHI-RO — BEHIND. → ushiro."
-  },
-  {
-    "jp": "中",
-    "audio": "なか",
-    "r": "naka",
-    "en": "inside",
-    "m": "NA-KA — INSIDE. → naka."
-  },
-  {
-    "jp": "外",
-    "audio": "そと",
-    "r": "soto",
-    "en": "outside",
-    "m": "SO-TO — OUTSIDE. → soto."
-  },
-  {
-    "jp": "上",
-    "audio": "うえ",
-    "r": "ue",
-    "en": "above / on top",
-    "m": "UE — ABOVE. → ue."
+    "jp": "注文",
+    "audio": "ちゅうもん",
+    "r": "chuumon",
+    "en": "order",
+    "m": "CHUU-MON — ORDER food. → chuumon."
   },
   {
     "jp": "下",
     "audio": "した",
     "r": "shita",
-    "en": "below / under",
+    "en": "under",
     "m": "SHI-TA — UNDER. → shita."
   },
   {
-    "jp": "横",
-    "audio": "よこ",
-    "r": "yoko",
-    "en": "beside / side",
-    "m": "YO-KO — BESIDE. → yoko."
+    "jp": "パーティー",
+    "audio": "パーティー",
+    "r": "paatii",
+    "en": "party",
+    "m": "PARTY — same word. → paatii."
   },
   {
-    "jp": "隣",
-    "audio": "となり",
-    "r": "tonari",
-    "en": "next to / neighbouring",
-    "m": "TON-A-RI — NEXT TO. → tonari."
+    "jp": "月",
+    "audio": "つき",
+    "r": "tsuki",
+    "en": "month",
+    "m": "TSU-KI — MONTH. → tsuki."
   },
   {
-    "jp": "近く",
-    "audio": "ちかく",
-    "r": "chikaku",
-    "en": "nearby",
-    "m": "CHI-KA-KU — NEARBY. → chikaku."
+    "jp": "ジャック",
+    "audio": "ジャック",
+    "r": "jakku",
+    "en": "Jack",
+    "m": "JACK — name JACK. → jakku."
+  },
+  {
+    "jp": "四",
+    "audio": "よん",
+    "r": "yon",
+    "en": "four",
+    "m": "YON — count FOUR. → yon."
+  },
+  {
+    "jp": "すぐ",
+    "audio": "すぐ",
+    "r": "sugu",
+    "en": "soon / right away",
+    "m": "SUGU — SOON / right away → sugu."
+  },
+  {
+    "jp": "本",
+    "audio": "ほん",
+    "r": "hon",
+    "en": "book",
+    "m": "HON — BOOK. → hon."
+  },
+  {
+    "jp": "ちょっと",
+    "audio": "ちょっと",
+    "r": "chotto",
+    "en": "a little",
+    "m": "CHOTTO — A LITTLE. → chotto."
+  },
+  {
+    "jp": "ショット",
+    "audio": "ショット",
+    "r": "shotto",
+    "en": "shot",
+    "m": "SHOT — same word. → shotto."
+  },
+  {
+    "jp": "誰でも",
+    "audio": "だれでも",
+    "r": "daredemo",
+    "en": "anyone",
+    "m": "DARE-DEMO — ANYONE. → daredemo."
+  },
+  {
+    "jp": "町",
+    "audio": "まち",
+    "r": "machi",
+    "en": "town",
+    "m": "MA-CHI — TOWN. → machi."
+  },
+  {
+    "jp": "本当に",
+    "audio": "ほんとうに",
+    "r": "hontouni",
+    "en": "really",
+    "m": "HONTOUNI — REALLY → hontouni."
+  },
+  {
+    "jp": "それぞれ",
+    "audio": "それぞれ",
+    "r": "sorezore",
+    "en": "each",
+    "m": "SO-RE-ZO-RE — EACH one. → sorezore."
+  },
+  {
+    "jp": "私の",
+    "audio": "わたしの",
+    "r": "watashino",
+    "en": "mine",
+    "m": "WATASHI NO — MINE. → watashino."
+  },
+  {
+    "jp": "怖い",
+    "audio": "こわい",
+    "r": "kowai",
+    "en": "scary / afraid",
+    "m": "KOWAI — SCARY / afraid → kowai."
+  },
+  {
+    "jp": "とにかく",
+    "audio": "とにかく",
+    "r": "tonikaku",
+    "en": "anyway",
+    "m": "TO-NI-KAKU — ANYWAY. → tonikaku."
+  },
+  {
+    "jp": "正確に",
+    "audio": "せいかくに",
+    "r": "seikakuni",
+    "en": "exactly",
+    "m": "SEI-KAKU-NI — EXACTLY. → seikakuni."
+  },
+  {
+    "jp": "犬",
+    "audio": "いぬ",
+    "r": "inu",
+    "en": "dog",
+    "m": "I-NU — DOG. → inu."
+  },
+  {
+    "jp": "何でも",
+    "audio": "なんでも",
+    "r": "nandemo",
+    "en": "anything",
+    "m": "NAN-DEMO — ANYTHING. → nandemo."
+  },
+  {
+    "jp": "困る",
+    "audio": "こまる",
+    "r": "komaru",
+    "en": "be in trouble",
+    "m": "KOMARU — be in TROUBLE → komaru."
+  },
+  {
+    "jp": "若い",
+    "audio": "わかい",
+    "r": "wakai",
+    "en": "young",
+    "m": "WA-KAI — YOUNG. → wakai."
+  },
+  {
+    "jp": "皆",
+    "audio": "みな",
+    "r": "mina",
+    "en": "everyone",
+    "m": "MI-NA — EVERYONE. → mina."
+  },
+  {
+    "jp": "変わる",
+    "audio": "かわる",
+    "r": "kawaru",
+    "en": "change",
+    "m": "KA-WA-RU — CHANGE. → kawaru."
+  },
+  {
+    "jp": "羽織る",
+    "audio": "はおる",
+    "r": "haoru",
+    "en": "wear",
+    "m": "HA-O-RU — WEAR a jacket. → haoru."
+  },
+  {
+    "jp": "水",
+    "audio": "みず",
+    "r": "mizu",
+    "en": "water",
+    "m": "MI-ZU — WATER. → mizu."
+  },
+  {
+    "jp": "尻",
+    "audio": "しり",
+    "r": "shiri",
+    "en": "ass",
+    "m": "SHI-RI — crude for ASS. → shiri."
+  },
+  {
+    "jp": "警察",
+    "audio": "けいさつ",
+    "r": "keisatsu",
+    "en": "police",
+    "m": "KEI-SATSU — POLICE. → keisatsu."
+  },
+  {
+    "jp": "興味",
+    "audio": "きょうみ",
+    "r": "kyoumi",
+    "en": "interest",
+    "m": "KYOU-MI — INTEREST. → kyoumi."
+  },
+  {
+    "jp": "楽しい",
+    "audio": "たのしい",
+    "r": "tanoshii",
+    "en": "fun / enjoyable",
+    "m": "TA-NO-SHII — FUN. → tanoshii."
+  },
+  {
+    "jp": "答え",
+    "audio": "こたえ",
+    "r": "kotae",
+    "en": "answer",
+    "m": "KO-TAE — ANSWER. → kotae."
+  },
+  {
+    "jp": "ゲーム",
+    "audio": "ゲーム",
+    "r": "geemu",
+    "en": "game",
+    "m": "GAME — same word. → geemu."
+  },
+  {
+    "jp": "約束",
+    "audio": "やくそく",
+    "r": "yakusoku",
+    "en": "promise",
+    "m": "YAKU-SOKU — PROMISE. → yakusoku."
+  },
+  {
+    "jp": "カップル",
+    "audio": "カップル",
+    "r": "kappuru",
+    "en": "couple",
+    "m": "COUPLE — same word. → kappuru."
+  },
+  {
+    "jp": "夢",
+    "audio": "ゆめ",
+    "r": "yume",
+    "en": "dream",
+    "m": "YU-ME — DREAM. → yume."
+  },
+  {
+    "jp": "考える",
+    "audio": "かんがえる",
+    "r": "kangaeru",
+    "en": "think",
+    "m": "KANGAERU — THINK → kangaeru."
+  },
+  {
+    "jp": "引く",
+    "audio": "ひく",
+    "r": "hiku",
+    "en": "pull",
+    "m": "HI-KU — PULL. → hiku."
+  },
+  {
+    "jp": "光",
+    "audio": "ひかり",
+    "r": "hikari",
+    "en": "light",
+    "m": "HI-KA-RI — LIGHT. → hikari."
+  },
+  {
+    "jp": "体",
+    "audio": "からだ",
+    "r": "karada",
+    "en": "body",
+    "m": "KA-RA-DA — BODY. → karada."
+  },
+  {
+    "jp": "撃つ",
+    "audio": "うつ",
+    "r": "utsu",
+    "en": "shoot",
+    "m": "U-TSU — SHOOT. → utsu."
+  },
+  {
+    "jp": "理由",
+    "audio": "りゆう",
+    "r": "riyuu",
+    "en": "reason",
+    "m": "RI-YUU — REASON. → riyuu."
+  },
+  {
+    "jp": "誰か",
+    "audio": "だれか",
+    "r": "dareka",
+    "en": "someone",
+    "m": "DARE-KA — SOMEONE. → dareka."
+  },
+  {
+    "jp": "親愛なる",
+    "audio": "しんあいなる",
+    "r": "shinainaru",
+    "en": "dear",
+    "m": "SHIN-AI-NARU — DEAR. → shinainaru."
+  },
+  {
+    "jp": "休む",
+    "audio": "やすむ",
+    "r": "yasumu",
+    "en": "rest / take off",
+    "m": "YA-SU-MU — REST. → yasumu."
+  },
+  {
+    "jp": "死",
+    "audio": "し",
+    "r": "shi",
+    "en": "death",
+    "m": "SHI — DEATH. → shi."
   },
   {
     "jp": "遠い",
@@ -336,17 +343,10 @@
     "m": "TO-O-I — FAR. → tooi."
   },
   {
-    "jp": "近い",
-    "audio": "ちかい",
-    "r": "chikai",
-    "en": "near / close",
-    "m": "CHI-KAI — NEAR. → chikai."
-  },
-  {
-    "jp": "右",
-    "audio": "みぎ",
-    "r": "migi",
-    "en": "right",
-    "m": "MI-GI — RIGHT. → migi."
+    "jp": "えーと",
+    "audio": "えーと",
+    "r": "eeto",
+    "en": "um",
+    "m": "E-TO — UM, let me think. → eeto."
   }
 ]

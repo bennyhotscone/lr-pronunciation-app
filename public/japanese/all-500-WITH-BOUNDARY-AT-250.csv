@@ -251,253 +251,253 @@ globalIndex,block,wordInBlock,romaji,jp,english,mnemonic
 249,5,49,onaji,同じ,same,O-NA-JI — the SAME. → onaji.
 250,5,50,konya,今夜,tonight,KON-YA — TONIGHT. → konya.
 ---,END OF FIRST 250 / DO NOT CHANGE ABOVE,---,,,,
-251,6,1,yaru,やる,do / give (casual),YA-RU — DO. → yaru.
-252,6,2,omou,思う,think / feel,O-MOU — THINK. → omou.
-253,6,3,aru,ある,exist / have (things),A-RU — EXIST. → aru.
-254,6,4,iru,いる,exist / be (people/animals),I-RU — EXIST. → iru.
-255,6,5,deru,出る,go out / leave / come out,DE-RU — GO OUT. → deru.
-256,6,6,ireru,入れる,put in / let in,I-RE-RU — PUT IN. → ireru.
-257,6,7,dasu,出す,take out / put out,DA-SU — TAKE OUT. → dasu.
-258,6,8,kureru,くれる,give (to me/us),KU-RE-RU — GIVE (TO ME. → kureru.
-259,6,9,naru,なる,become,NA-RU — BECOME. → naru.
-260,6,10,yameru,やめる,stop / quit,YA-ME-RU — STOP. → yameru.
-261,6,11,hajimaru,始まる,start / begin,HA-JI-MA-RU — START. → hajimaru.
-262,6,12,tsuku,着く,arrive,TSU-KU — ARRIVE. → tsuku.
-263,6,13,noru,乗る,ride / get on,N-O-RU — RIDE. → noru.
-264,6,14,oriru,降りる,get off / go down,O-RI-RU — GET OFF. → oriru.
-265,6,15,akeru,開ける,open,"""A-KEY"" — OPEN the door. → akeru."
-266,6,16,shimeru,閉める,close,SHI-ME-RU — CLOSE the door. → shimeru.
-267,6,17,atsumeru,集める,collect / gather,A-TSU-ME-RU — COLLECT. → atsumeru.
-268,6,18,atsumaru,集まる,gather / meet up,A-TSU-MA-RU — GATHER. → atsumaru.
-269,6,19,kaesu,返す,return / give back,KAE-SU — RETURN. → kaesu.
-270,6,20,kawaru,変わる,change,KA-WA-RU — CHANGE. → kawaru.
-271,6,21,kaeru,変える,change something,“CARE to RETURN home?” → kaeru.
-272,6,22,naosu,直す,fix / correct,N-AO-SU — FIX. → naosu.
-273,6,23,naoru,直る,be fixed / get better,N-AO-RU — BE FIXED. → naoru.
-274,6,24,wasureru,忘れる,forget,WASU-RERU — FORGET it. → wasureru.
-275,6,25,oboeru,覚える,remember / learn,"OH, BO EH RU — REMEMBER this. → oboeru."
-276,6,26,oshieru,教える,tell / teach,O-SHIE-RU — TELL. → oshieru.
-277,6,27,narau,習う,learn (from someone),N-A-RAU — LEARN (FROM SOMEONE). → narau.
-278,6,28,shiru,知る,find out / come to know,SHI-RU — FIND OUT. → shiru.
-279,6,29,kangaeru,考える,think / consider,KANGAERU — THINK → kangaeru.
-280,6,30,kimeru,決める,decide,KI-ME-RU — DECIDE. → kimeru.
-281,6,31,kimaru,決まる,be decided,KI-MA-RU — BE DECIDED. → kimaru.
-282,6,32,erabu,選ぶ,choose,ERABU — CHOOSE / pick → erabu.
-283,6,33,sagasu,探す,look for,SA-GA-SU — LOOK FOR. → sagasu.
-284,6,34,mitsukaru,見つかる,be found / find it,MI-TSU-KA-RU — BE FOUND. → mitsukaru.
-285,6,35,miseru,見せる,show,"ME, SEE RU — SHOW me. → miseru."
-286,6,36,tsutaeru,伝える,tell / convey,TSU-TAE-RU — TELL. → tsutaeru.
-287,6,37,yobu,呼ぶ,call / invite,YO-BU — CALL. → yobu.
-288,6,38,yomeru,読める,can read,YO-ME-RU — CAN READ. → yomeru.
-289,6,39,warau,笑う,laugh,WA-RAU — LAUGH. → warau.
-290,6,40,naku,泣く,cry,N-A-KU — CRY. → naku.
-291,6,41,okoru,怒る,get angry,"OH, COR! What will HAPPEN? → okoru."
-292,6,42,odoroku,驚く,be surprised,O-DO-RO-KU — BE SURPRISED. → odoroku.
-293,6,43,komaru,困る,be in trouble / not know what to do,KOMARU — be in TROUBLE → komaru.
-294,6,44,ganbaru,頑張る,try hard / do one's best,GAN-BA-RU — TRY HARD. → ganbaru.
-295,6,45,tetsudau,手伝う,help out,TE-TSU-DAU — HELP OUT. → tetsudau.
-296,6,46,tanomu,頼む,ask / request / order,TAN-O-MU — ASK. → tanomu.
-297,6,47,kotaeru,答える,answer,KO-TAE-RU — ANSWER. → kotaeru.
-298,6,48,shitsumon suru,質問する,ask a question,SHI-TSU-MON SU-RU — ASK A QUESTION. → shitsumon suru.
-299,6,49,renraku suru,連絡する,contact,REN-RA-KU SU-RU — CONTACT. → renraku suru.
-300,6,50,denwa suru,電話する,call / phone,DEN-WA SU-RU — CALL. → denwa suru.
-301,7,1,hanashi,話,story / talk,HA-NA-SHI — STORY. → hanashi.
-302,7,2,koto,こと,thing / matter (abstract),KO-TO — THING. → koto.
-303,7,3,tokoro,ところ,place / point / part,TO-KO-RO — PLACE. → tokoro.
-304,7,4,toki,時,time / when,TO-KI — TIME. → toki.
-305,7,5,hito,人,person,"""HE told"" that PERSON. → hito."
-306,7,6,minna,みんな,everyone,MIN-NA — EVERYBODY. → minna.
-307,7,7,dareka,誰か,someone,DARE-KA — SOMEONE. → dareka.
-308,7,8,nanika,何か,something,N-AN-I-KA — SOMETHING. → nanika.
-309,7,9,dore,どれ,which one,DO RE — WHICH one? → dore.
-310,7,10,kore,これ,this,KO-RE — THIS. → kore.
-311,7,11,sore,それ,that,SO-RE — THAT. → sore.
-312,7,12,are,あれ,that over there,A-RE — THAT OVER THERE. → are.
-313,7,13,kono,この,this + noun,KON-O — THIS + NOUN. → kono.
-314,7,14,sono,その,that + noun,SONO — THAT / its → sono.
-315,7,15,ano,あの,that + noun / um,AN-O — THAT + NOUN. → ano.
-316,7,16,donna,どんな,what kind of,DON-N-A — WHAT KIND OF. → donna.
-317,7,17,konna,こんな,like this / this kind of,KON-N-A — LIKE THIS. → konna.
-318,7,18,sonna,そんな,like that / that kind of,SON-NA — SUCH a thing. → sonna.
-319,7,19,anna,あんな,like that over there,AN-N-A — LIKE THAT OVER THERE. → anna.
-320,7,20,docchi,どっち,which / which way (casual),DO-CCHI — WHICH. → docchi.
-321,7,21,kochira,こちら,this way / this person (polite),KO-CHI-RA — THIS WAY. → kochira.
-322,7,22,sochira,そちら,that way / you (polite),SO-CHI-RA — THAT WAY. → sochira.
-323,7,23,achira,あちら,over there (polite),A-CHI-RA — OVER THERE (POLITE). → achira.
-324,7,24,doko ka,どこか,somewhere,DO-KO KA — SOMEWHERE. → doko ka.
-325,7,25,doko demo,どこでも,anywhere,DO-KO DE-MO — ANYWHERE. → doko demo.
-326,7,26,dare demo,誰でも,anyone,DARE-DEMO — ANYONE. → daredemo.
-327,7,27,nan demo,何でも,anything,NAN-DEMO — ANYTHING. → nandemo.
-328,7,28,zenzen,全然,not at all / totally,ZEN-ZEN — NOT AT ALL. → zenzen.
-329,7,29,zettai,絶対,definitely / absolutely,ZE-TTAI — DEFINITELY. → zettai.
-330,7,30,yappari,やっぱり,as expected / after all,YA-PPA-RI — AS EXPECTED. → yappari.
-331,7,31,yahari,やはり,as expected / after all,YA-HA-RI — AS EXPECTED. → yahari.
-332,7,32,naruhodo,なるほど,I see / makes sense,N-A-RU-HO-DO — I SEE. → naruhodo.
-333,7,33,tashika,確か,if I remember right / certain,TA-SHI-KA — IF I REMEMBER RIGHT. → tashika.
-334,7,34,tashikani,確かに,indeed / true,TA-SHI-KAN-I — INDEED. → tashikani.
-335,7,35,kanarazu,必ず,definitely / without fail,KAN-A-RA-ZU — DEFINITELY. → kanarazu.
-336,7,36,kitto,きっと,surely / probably,KI-TTO — SURELY. → kitto.
-337,7,37,moshikashite,もしかして,maybe / could it be,MO-SHI-KA-SHI-TE — MAYBE. → moshikashite.
-338,7,38,daitai,だいたい,roughly / generally,DAI-TAI — ROUGHLY. → daitai.
-339,7,39,hotondo,ほとんど,almost / mostly,HO-TON-DO — ALMOST. → hotondo.
-340,7,40,yoku,よく,often / well,YO-KU — OFTEN. → yoku.
-341,7,41,tama ni,たまに,occasionally,TA-MA N-I — OCCASIONALLY. → tama ni.
-342,7,42,amari,あまり,not much / not very,A-MA-RI — NOT MUCH. → amari.
-343,7,43,zenbu,全部,all / everything,ZEN BU — EVERYTHING. → zenbu.
-344,7,44,hanbun,半分,half,HAN-BUN — HALF. → hanbun.
-345,7,45,hoka,他,other / another,HOOK A different OTHER one. → hoka.
-346,7,46,betsu,別,different / separate,BE-TSU — DIFFERENT. → betsu.
-347,7,47,onaji,同じ,same,O-NA-JI — the SAME. → onaji.
-348,7,48,chigau,違う,different / wrong,CHI-GA-U — DIFFERENT. → chigau.
-349,7,49,issho,一緒,together / same,I-SSHO — TOGETHER. → issho.
-350,7,50,hitori,一人,one person / alone,HI-TO-RI — ALONE. → hitori.
-351,8,1,futari,二人,two people,FU-TA-RI — TWO PEOPLE. → futari.
-352,8,2,ooku,多く,many / much,OO-KU — MANY. → ooku.
-353,8,3,sukunai,少ない,few / not much,SU-KUN-AI — FEW. → sukunai.
-354,8,4,juubun,十分,enough,JU-BUN — ENOUGH bread. → juubun.
-355,8,5,hotondo nai,ほとんどない,hardly any,HO-TON-DO N-AI — HARDLY ANY. → hotondo nai.
-356,8,6,choudo,ちょうど,exactly / just right,CHOU-DO — EXACTLY. → choudo.
-357,8,7,oyoso,およそ,approximately / roughly,O-YO-SO — APPROXIMATELY. → oyoso.
-358,8,8,gurai,ぐらい,about / approximately,GU-RAI — ABOUT. → gurai.
-359,8,9,kurai,くらい,about / approximately,KU-RAI — ABOUT. → kurai.
-360,8,10,hodo,ほど,about / extent,HO-DO — ABOUT. → hodo.
-361,8,11,sugu,すぐ,right away / soon,SUGU — SOON / right away → sugu.
-362,8,12,sakki,さっき,just before / a moment ago,SA-KKI — JUST BEFORE. → sakki.
-363,8,13,ato de,後で,later,A-TO-DE — LATER. → atode.
-364,8,14,mae ni,前に,before,MAE-NI — long AGO. → maeni.
-365,8,15,saikin,最近,recently / lately,SAI-KIN — RECENTLY. → saikin.
-366,8,16,mukashi,昔,long ago / old days,MU-KA-SHI — LONG AGO. → mukashi.
-367,8,17,kondo,今度,next time / this time,KON-DO — NEXT TIME. → kondo.
-368,8,18,konshuu,今週,this week,KON-SHUU — THIS WEEK. → konshuu.
-369,8,19,raishuu,来週,next week,RAI-SHUU — NEXT WEEK. → raishuu.
-370,8,20,senshuu,先週,last week,SEN-SHUU — LAST WEEK. → senshuu.
-371,8,21,kongetsu,今月,this month,KON-GE-TSU — THIS MONTH. → kongetsu.
-372,8,22,raigetsu,来月,next month,RAI-GE-TSU — NEXT MONTH. → raigetsu.
-373,8,23,sengetsu,先月,last month,SEN-GE-TSU — LAST MONTH. → sengetsu.
-374,8,24,kotoshi,今年,this year,KO-TO-SHI — THIS YEAR. → kotoshi.
-375,8,25,rainen,来年,next year,RAIN-EN — NEXT YEAR. → rainen.
-376,8,26,kyonen,去年,last year,KYON-EN — LAST YEAR. → kyonen.
-377,8,27,heijitsu,平日,weekday,HEI-JI-TSU — WEEKDAY. → heijitsu.
-378,8,28,shuumatsu,週末,weekend,SHUU-MA-TSU — WEEKEND. → shuumatsu.
-379,8,29,jikan,時間,time / hours,JI-KAN — an HOUR. → jikan.
-380,8,30,fun,分,minute,One FUN MINUTE on the clock. → fun.
-381,8,31,byou,秒,second,BYOU — a SECOND. → byou.
-382,8,32,ji,時,o'clock,JI — O'CLOCK. → ji.
-383,8,33,han,半,half past / half,HAN — HALF PAST. → han.
-384,8,34,ima kara,今から,from now / now,I-MA KA-RA — FROM NOW. → ima kara.
-385,8,35,mou sugu,もうすぐ,very soon,MOU SU-GU — VERY SOON. → mou sugu.
-386,8,36,itsuka,いつか,someday / sometime,I-TSU-KA — SOMEDAY. → itsuka.
-387,8,37,shibaraku,しばらく,for a while,SHI-BA-RA-KU — FOR A WHILE. → shibaraku.
-388,8,38,zutto,ずっと,all along / much more,ZU-TTO — ALL ALONG. → zutto.
-389,8,39,mae,前,front / before,MAE — BEFORE / in front. → mae.
-390,8,40,ushiro,後ろ,behind / back,U-SHI-RO — BEHIND. → ushiro.
-391,8,41,naka,中,inside,NA-KA — INSIDE. → naka.
-392,8,42,soto,外,outside,SO-TO — OUTSIDE. → soto.
-393,8,43,ue,上,above / on top,UE — ABOVE. → ue.
-394,8,44,shita,下,below / under,SHI-TA — UNDER. → shita.
-395,8,45,yoko,横,beside / side,YO-KO — BESIDE. → yoko.
-396,8,46,tonari,隣,next to / neighbouring,TON-A-RI — NEXT TO. → tonari.
-397,8,47,chikaku,近く,nearby,CHI-KA-KU — NEARBY. → chikaku.
-398,8,48,tooi,遠い,far,TO-O-I — FAR. → tooi.
-399,8,49,chikai,近い,near / close,CHI-KAI — NEAR. → chikai.
-400,8,50,migi,右,right,MI-GI — RIGHT. → migi.
-401,9,1,hidari,左,left,HI-DA-RI — LEFT. → hidari.
-402,9,2,massugu,まっすぐ,straight ahead,MA-SSU-GU — STRAIGHT AHEAD. → massugu.
-403,9,3,mukou,向こう,over there / other side,MU-KOU — OVER THERE. → mukou.
-404,9,4,hou,方,direction / side / one,HOU — DIRECTION. → hou.
-405,9,5,michi,道,road / way,MI-CHI — ROAD. → michi.
-406,9,6,kado,角,corner,KA-DO — CORNER. → kado.
-407,9,7,iriguchi,入口,entrance,I-RI-GU-CHI — ENTRANCE. → iriguchi.
-408,9,8,deguchi,出口,exit,DE-GU-CHI — EXIT. → deguchi.
-409,9,9,kaidan,階段,stairs,KAI-DAN — STAIRS. → kaidan.
-410,9,10,erebeetaa,エレベーター,elevator,E-RE-BEE-TAA — ELEVATOR. → erebeetaa.
-411,9,11,heya,部屋,room,"HEY, YA in the ROOM. → heya."
-412,9,12,daidokoro,台所,kitchen,DAI-DO-KO-RO — KITCHEN. → daidokoro.
-413,9,13,ofuro,お風呂,bath,O-FU-RO — BATH. → ofuro.
-414,9,14,shawaa,シャワー,shower,SHA-WAA — SHOWER. → shawaa.
-415,9,15,toire,トイレ,toilet,TOI-RE sounds close to TOILET. → toire.
-416,9,16,mado,窓,window,MA-DO — WINDOW. → mado.
-417,9,17,kagi,鍵,key,KA-GI — KEY. → kagi.
-418,9,18,tsukue,机,desk,TSU-KUE — DESK. → tsukue.
-419,9,19,isu,椅子,chair,I-SU — CHAIR. → isu.
-420,9,20,beddo,ベッド,bed,BED — same word. → beddo.
-421,9,21,terebi,テレビ,TV,TE-RE-BI — TV. → terebi.
-422,9,22,keitai,携帯,mobile phone,KEI-TAI — MOBILE PHONE. → keitai.
-423,9,23,sumaho,スマホ,smartphone,SU-MA-HO — SMARTPHONE. → sumaho.
-424,9,24,pasokon,パソコン,computer,PA-SO-KON — COMPUTER. → pasokon.
-425,9,25,internetto,インターネット,internet,IN-TE-rN-E-TTO — INTERNET. → internetto.
-426,9,26,meeru,メール,email / message,MEE-RU — EMAIL. → meeru.
-427,9,27,messeeji,メッセージ,message,ME-SSEE-JI — MESSAGE. → messeeji.
-428,9,28,shashin,写真,photo,SHA-SHIN — PICTURE. → shashin.
-429,9,29,douga,動画,video,DOU-GA — VIDEO. → douga.
-430,9,30,ongaku,音楽,music,ON-GA-KU — MUSIC. → ongaku.
-431,9,31,uta,歌,song,U-TA — SONG. → uta.
-432,9,32,eiga,映画,movie,EI-GA — MOVIE. → eiga.
-433,9,33,terebi bangumi,テレビ番組,TV show,TE-RE-BI BAN-GU-MI — TV SHOW. → terebi bangumi.
-434,9,34,geemu,ゲーム,game,GAME — same word. → geemu.
-435,9,35,manga,漫画,manga / comic,MAN-GA — MANGA. → manga.
-436,9,36,zasshi,雑誌,magazine,ZA-SSHI — MAGAZINE. → zasshi.
-437,9,37,shinbun,新聞,newspaper,SHIN-BUN — NEWSPAPER. → shinbun.
-438,9,38,pen,ペン,pen,PEN — PEN. → pen.
-439,9,39,kami,紙,paper,CAMI sees GOD in the shrine. → kami.
-440,9,40,kaban,鞄,bag,KA-BAN — BAG. → kaban.
-441,9,41,saifu,財布,wallet,SAI-FU — WALLET. → saifu.
-442,9,42,megane,眼鏡,glasses,ME-GAN-E — GLASSES. → megane.
-443,9,43,tokei,時計,clock / watch,TO-KEI — CLOCK. → tokei.
-444,9,44,fuku,服,clothes,FU-KU — CLOTHES. → fuku.
-445,9,45,kutsu,靴,shoes,KU-TSU — SHOES. → kutsu.
-446,9,46,shatsu,シャツ,shirt,SHA-TSU — SHIRT. → shatsu.
-447,9,47,zubon,ズボン,trousers / pants,ZU-BON — TROUSERS. → zubon.
-448,9,48,uwagi,上着,jacket / outerwear,U-WA-GI — JACKET. → uwagi.
-449,9,49,boushi,帽子,hat,BOU-SHI — HAT. → boushi.
-450,9,50,kasa,傘,umbrella,KA-SA — UMBRELLA. → kasa.
-451,10,1,kaisha,会社,company / workplace,KAISHA — COMPANY → kaisha.
-452,10,2,shigoto,仕事,work / job,SHE GOes TO WORK. → shigoto.
-453,10,3,kyoushitsu,教室,classroom,KYOU-SHI-TSU — CLASSROOM. → kyoushitsu.
-454,10,4,daigaku,大学,university,DAI-GA-KU — UNIVERSITY. → daigaku.
-455,10,5,byouin,病院,hospital,BYOUIN — HOSPITAL. → byouin.
-456,10,6,konbini,コンビニ,convenience store,KON-BIN-I — CONVENIENCE STORE. → konbini.
-457,10,7,suupaa,スーパー,supermarket,SUU-PAA — SUPERMARKET. → suupaa.
-458,10,8,resutoran,レストラン,restaurant,RE-SU-TO-RAN — RESTAURANT. → resutoran.
-459,10,9,kissa,喫茶店,cafe / coffee shop,KI-SSA — CAFE. → kissa.
-460,10,10,hotera,ホテル,hotel,HOTERA — HOTEL. → hotera.
-461,10,11,kuukou,空港,airport,KUU-KOU — AIRPORT. → kuukou.
-462,10,12,basu,バス,bus,BA-SU — BUS. → basu.
-463,10,13,takushii,タクシー,taxi,TA-KU-SHII — TAXI. → takushii.
-464,10,14,jitensha,自転車,bicycle,JI-TEN-SHA — BICYCLE. → jitensha.
-465,10,15,hikouki,飛行機,airplane,HI-KOU-KI — AIRPLANE. → hikouki.
-466,10,16,chikatetsu,地下鉄,subway,CHI-KA-TE-TSU — SUBWAY. → chikatetsu.
-467,10,17,noriba,乗り場,boarding place / stop,N-O-RI-BA — BOARDING PLACE. → noriba.
-468,10,18,kippu,切符,ticket,KI-PPU — TICKET. → kippu.
-469,10,19,ryoukin,料金,fee / fare,RYOU-KIN — FEE. → ryoukin.
-470,10,20,okane,お金,money,"OKAY, NE? Need MONEY. → okane."
-471,10,21,genkin,現金,cash,GEN-KIN — CASH. → genkin.
-472,10,22,kaado,カード,card,KAA-DO — CARD. → kaado.
-473,10,23,kurejitto kaado,クレジットカード,credit card,KU-RE-JI-TTO KAA-DO — CREDIT CARD. → kurejitto kaado.
-474,10,24,ryoushuusho,領収書,receipt,RYOU-SHUU-SHO — RECEIPT. → ryoushuusho.
-475,10,25,nedan,値段,price,N-E-DAN — PRICE. → nedan.
-476,10,26,waribiki,割引,discount,WA-RI-BI-KI — DISCOUNT. → waribiki.
-477,10,27,goukei,合計,total / sum,GOU-KEI — TOTAL. → goukei.
-478,10,28,otsuri,お釣り,change (money),O-TSU-RI — CHANGE (MONEY). → otsuri.
-479,10,29,tada,ただ,free / just,TA-DA — FREE. → tada.
-480,10,30,muryou,無料,free of charge,MU-RYOU — FREE OF CHARGE. → muryou.
-481,10,31,ryouri,料理,cooking / cuisine,RYOU-RI — COOKING. → ryouri.
-482,10,32,tabemono,食べ物,food,TA-BE-MON-O — FOOD. → tabemono.
-483,10,33,nomimono,飲み物,drink / beverage,N-O-MI-MON-O — DRINK. → nomimono.
-484,10,34,asa gohan,朝ご飯,breakfast,A-SA GO-HAN — BREAKFAST. → asa gohan.
-485,10,35,hiru gohan,昼ご飯,lunch,HI-RU GO-HAN — LUNCH. → hiru gohan.
-486,10,36,ban gohan,晩ご飯,dinner,BAN GO-HAN — DINNER. → ban gohan.
-487,10,37,pan,パン,bread,PAN — BREAD. → pan.
-488,10,38,tamago,卵,egg,TA-MA-GO — EGG. → tamago.
-489,10,39,tori niku,鶏肉,chicken,TO-RI N-I-KU — CHICKEN. → tori niku.
-490,10,40,buta niku,豚肉,pork,BU-TA N-I-KU — PORK. → buta niku.
-491,10,41,gyuu niku,牛肉,beef,GYUU N-I-KU — BEEF. → gyuu niku.
-492,10,42,shio,塩,salt,SHIO — SALT. → shio.
-493,10,43,satou,砂糖,sugar,SA-TOU — SUGAR. → satou.
-494,10,44,abura,油,oil,A-BU-RA — OIL. → abura.
-495,10,45,gyuunyuu,牛乳,milk,GYUUN-YUU — MILK. → gyuunyuu.
-496,10,46,biiru,ビール,beer,BII-RU — BEER. → biiru.
-497,10,47,osake,お酒,alcohol / sake,O-SA-KE — ALCOHOL. → osake.
-498,10,48,oishii,美味しい,delicious,OI-SHII — DELICIOUS. → oishii.
-499,10,49,mazui,まずい,bad-tasting / bad,MA-ZUI — BAD-TASTING. → mazui.
-500,10,50,onaka,お腹,stomach / belly,ON-A-KA — STOMACH. → onaka.
+251,6,1,akeru,開ける,open,"""A-KEY"" — OPEN the door. → akeru."
+252,6,2,shinpai,心配,worry,SHIN-PAI — WORRY. → shinpai.
+253,6,3,mondai,問題,problem,MONDAI — PROBLEM → mondai.
+254,6,4,nayami,悩み,worry / concern,NAYAMI — WORRY / concern → nayami.
+255,6,5,kangae,考え,idea,KAN-GAE — an IDEA. → kangae.
+256,6,6,harau,払う,pay,HA-RAU — PAY up. → harau.
+257,6,7,kanari,かなり,pretty / quite,CAN-A-RI — PRETTY good. → kanari.
+258,6,8,junbi,準備,preparation / ready,JUNBI — PREP / ready → junbi.
+259,6,9,zenbu,全部,everything,ZEN BU — EVERYTHING. → zenbu.
+260,6,10,isshoni,一緒に,together,ISSHO-NI — TOGETHER. → isshoni.
+261,6,11,darou,〜だろう,probably / I suppose,~DAROU — I SUPPOSE / probably → darou.
+262,6,12,sumimasen,すみません,excuse me / sorry,SOO-ME-MA-SEN — EXCUSE ME. → sumimasen.
+263,6,13,taberu,食べる,eat,TA-BE-RU — EAT up. → taberu.
+264,6,14,jikan,時間,hour / time,JI-KAN — an HOUR. → jikan.
+265,6,15,kazoku,家族,family,KA-ZOKU — FAMILY. → kazoku.
+266,6,16,kakunin,確認,check,KAKU-NIN — CHECK it. → kakunin.
+267,6,17,shuu,週,week,SHUU — this WEEK. → shuu.
+268,6,18,okusan,奥さん,wife,OKU-SAN — WIFE (polite). → okusan.
+269,6,19,okuru,送る,send,O-KU-RU — SEND it. → okuru.
+270,6,20,aruku,歩く,walk,A-RU-KU — WALK. → aruku.
+271,6,21,sou,〜そう,seems / looks like,~SOU — SEEMS / looks like → sou.
+272,6,22,kekkonsuru,結婚する,marry,KEK-KON — MARRY. → kekkonsuru.
+273,6,23,takusan,たくさん,much / many,TUCK SUN away — so MANY. → takusan.
+274,6,24,tsukau,使う,use,TSU-KAU — USE it. → tsukau.
+275,6,25,kotoba,言葉,word,KOTO-BA — a WORD. → kotoba.
+276,6,26,byou,秒,second,BYOU — a SECOND. → byou.
+277,6,27,josei,女性,woman,JOSEI — WOMAN → josei.
+278,6,28,nashide,〜なしで,without,NA-SHI-DE — WITHOUT it. → nashide.
+279,6,29,tatsu,立つ,stand,TA-TSU — STAND up. → tatsu.
+280,6,30,ichiban,一番,number one / most,ICHIBAN — NUMBER ONE / most → ichiban.
+281,6,31,aida,間,between / while,AIDA — BETWEEN / WHILE → aida.
+282,6,32,gakkou,学校,school,GAK-KOU — SCHOOL. → gakkou.
+283,6,33,ichido,一度,once,ICHI-DO — ONCE. → ichido.
+284,6,34,dareka,誰か,someone,DARE-KA — SOMEBODY. → dareka.
+285,6,35,minna,みんな,everybody,MIN-NA — EVERYBODY. → minna.
+286,6,36,nareru,慣れる,get used to,NARERU — get USED TO → nareru.
+287,6,37,jibun,自分,oneself / self,JIBUN — ONESELF → jibun.
+288,6,38,owari,終わり,end,O-WA-RI — the END. → owari.
+289,6,39,mada,まだ,still / not yet,MADA is STILL not done. → mada.
+290,6,40,ashita,明日,tomorrow,"ASH, I'll do that TOMORROW. → ashita."
+291,6,41,hanasu,話す,speak / talk,HA-NA-SU — SPEAK up. → hanasu.
+292,6,42,me,目,eye,ME — your EYE. → me.
+293,6,43,ureshii,嬉しい,happy / glad,U-RE-SHII — HAPPY / glad. → ureshii.
+294,6,44,kodomo,子供,child,COCO's DOpey MOppet is a CHILD. → kodomo.
+295,6,45,shitsumon,質問,question,SHITSU-MON — QUESTION. → shitsumon.
+296,6,46,kyoudai,兄弟,brother / sibling,KYOU-DAI — BROTHER / sibling. → kyoudai.
+297,6,47,neru,寝る,sleep,NE-RU — SLEEP. → neru.
+298,6,48,doa,ドア,door,DOOR — same word. → doa.
+299,6,49,bijinesu,ビジネス,business,BUSINESS — same word. → bijinesu.
+300,6,50,jitsuwa,実は,actually,JITSU-WA — ACTUALLY… → jitsuwa.
+301,7,1,oto,音,sound,O-TO — a SOUND. → oto.
+302,7,2,kibou,希望,hope,KI-BOU — HOPE. → kibou.
+303,7,3,mono,もの,thing / stuff,MONO — THING / stuff → mono.
+304,7,4,mou,もう,already / anymore,MOU — ALREADY done. → mou.
+305,7,5,ataru,当たる,hit,A-TA-RU — HIT the target. → ataru.
+306,7,6,kau,買う,buy,KA-U — BUY it. → kau.
+307,7,7,irai,〜以来,since,I-RAI — SINCE then. → irai.
+308,7,8,baai,場合,case,BA-AI — in that CASE. → baai.
+309,7,9,yomu,読む,read,YO-MU — READ it. → yomu.
+310,7,10,okusama,奥様,Mrs.,OKU-SAMA — MRS. → okusama.
+311,7,11,muzukashii,難しい,hard / difficult,MUZUKASHII — DIFFICULT. → muzukashii.
+312,7,12,genin,原因,cause,GEN-IN — the CAUSE. → genin.
+313,7,13,erabu,選ぶ,choose / pick,ERABU — CHOOSE / pick → erabu.
+314,7,14,hitori,一人,alone,HI-TO-RI — ALONE. → hitori.
+315,7,15,kaku,書く,write,KA-KU — WRITE it. → kaku.
+316,7,16,kizutsukeru,傷つける,hurt,KI-ZU — HURT someone. → kizutsukeru.
+317,7,17,made,〜まで,until,MA-DE — UNTIL then. → made.
+318,7,18,sukoshi,少し,a little / few,SU-KO-SHI — a FEW / a little. → sukoshi.
+319,7,19,chikushou,畜生,damn it / fuck,CHIKU-SHOU — DAMN IT / fuck. → chikushou.
+320,7,20,hanii,ハニー,honey,HONEY — pet name. → hanii.
+321,7,21,isha,医者,doctor,I-SHA — DOCTOR. → isha.
+322,7,22,torihiki,取引,deal,TORI-HIKI — a DEAL. → torihiki.
+323,7,23,sensei,先生,teacher / Dr.,SEN-SEI — DOCTOR / teacher. → sensei.
+324,7,24,ryouhou,両方,both,RYOU-HOU — BOTH sides. → ryouhou.
+325,7,25,bubun,部分,part,BU-BUN — a PART. → bubun.
+326,7,26,atode,後で,later,A-TO-DE — LATER. → atode.
+327,7,27,sonna,そんな,such,SON-NA — SUCH a thing. → sonna.
+328,7,28,kao,顔,face,KA-O — FACE. → kao.
+329,7,29,keikaku,計画,plan,KEI-KAKU — PLAN. → keikaku.
+330,7,30,maeni,前に,ago,MAE-NI — long AGO. → maeni.
+331,7,31,shinu,死ぬ,die,SHI-NU — DIE. → shinu.
+332,7,32,go,五,five,GO — count FIVE. → go.
+333,7,33,ten,点,point,TEN — good POINT. → ten.
+334,7,34,tatakau,戦う,fight,TA-TA-KAU — FIGHT. → tatakau.
+335,7,35,kazu,数,number,KA-ZU — NUMBER. → kazu.
+336,7,36,tabun,多分,probably / maybe,TA-BUN — PROBABLY. → tabun.
+337,7,37,untensuru,運転する,drive,UN-TEN — DRIVE. → untensuru.
+338,7,38,utsukushii,美しい,beautiful,UTSUKU-SHII — BEAUTIFUL. → utsukushii.
+339,7,39,juu,銃,gun,JUU — GUN. → juu.
+340,7,40,timu,ティム,Tim,TIM — name TIM. → timu.
+341,7,41,kurutta,狂った,crazy,KU-RUTTA — CRAZY. → kurutta.
+342,7,42,damaru,黙る,shut up,DA-MA-RU — SHUT up. → damaru.
+343,7,43,chansu,チャンス,chance,CHANCE — same word. → chansu.
+344,7,44,ochiru,落ちる,fall,O-CHI-RU — FALL down. → ochiru.
+345,7,45,osoi,遅い,late / slow,O-SOI — LATE. → osoi.
+346,7,46,denwa,電話,phone,DEN-WA — PHONE. → denwa.
+347,7,47,negau,願う,wish,NE-GA-U — WISH for it. → negau.
+348,7,48,setto,セット,set,SET — same word. → setto.
+349,7,49,haato,ハート,heart,HEART — same word. → haato.
+350,7,50,daremo,誰も,nobody,DARE-MO — NOBODY. → daremo.
+351,8,1,kantan,簡単,easy,KAN-TAN — EASY. → kantan.
+352,8,2,hanashi,話,story,HA-NA-SHI — STORY. → hanashi.
+353,8,3,kiru,切る,cut,KI-RU — CUT it. → kiru.
+354,8,4,chuumon,注文,order,CHUU-MON — ORDER food. → chuumon.
+355,8,5,shita,下,under,SHI-TA — UNDER. → shita.
+356,8,6,paatii,パーティー,party,PARTY — same word. → paatii.
+357,8,7,tsuki,月,month,TSU-KI — MONTH. → tsuki.
+358,8,8,jakku,ジャック,Jack,JACK — name JACK. → jakku.
+359,8,9,yon,四,four,YON — count FOUR. → yon.
+360,8,10,sugu,すぐ,soon / right away,SUGU — SOON / right away → sugu.
+361,8,11,hon,本,book,HON — BOOK. → hon.
+362,8,12,chotto,ちょっと,a little,CHOTTO — A LITTLE. → chotto.
+363,8,13,shotto,ショット,shot,SHOT — same word. → shotto.
+364,8,14,daredemo,誰でも,anyone,DARE-DEMO — ANYONE. → daredemo.
+365,8,15,machi,町,town,MA-CHI — TOWN. → machi.
+366,8,16,hontouni,本当に,really,HONTOUNI — REALLY → hontouni.
+367,8,17,sorezore,それぞれ,each,SO-RE-ZO-RE — EACH one. → sorezore.
+368,8,18,watashino,私の,mine,WATASHI NO — MINE. → watashino.
+369,8,19,kowai,怖い,scary / afraid,KOWAI — SCARY / afraid → kowai.
+370,8,20,tonikaku,とにかく,anyway,TO-NI-KAKU — ANYWAY. → tonikaku.
+371,8,21,seikakuni,正確に,exactly,SEI-KAKU-NI — EXACTLY. → seikakuni.
+372,8,22,inu,犬,dog,I-NU — DOG. → inu.
+373,8,23,nandemo,何でも,anything,NAN-DEMO — ANYTHING. → nandemo.
+374,8,24,komaru,困る,be in trouble,KOMARU — be in TROUBLE → komaru.
+375,8,25,wakai,若い,young,WA-KAI — YOUNG. → wakai.
+376,8,26,mina,皆,everyone,MI-NA — EVERYONE. → mina.
+377,8,27,kawaru,変わる,change,KA-WA-RU — CHANGE. → kawaru.
+378,8,28,haoru,羽織る,wear,HA-O-RU — WEAR a jacket. → haoru.
+379,8,29,mizu,水,water,MI-ZU — WATER. → mizu.
+380,8,30,shiri,尻,ass,SHI-RI — crude for ASS. → shiri.
+381,8,31,keisatsu,警察,police,KEI-SATSU — POLICE. → keisatsu.
+382,8,32,kyoumi,興味,interest,KYOU-MI — INTEREST. → kyoumi.
+383,8,33,tanoshii,楽しい,fun / enjoyable,TA-NO-SHII — FUN. → tanoshii.
+384,8,34,kotae,答え,answer,KO-TAE — ANSWER. → kotae.
+385,8,35,geemu,ゲーム,game,GAME — same word. → geemu.
+386,8,36,yakusoku,約束,promise,YAKU-SOKU — PROMISE. → yakusoku.
+387,8,37,kappuru,カップル,couple,COUPLE — same word. → kappuru.
+388,8,38,yume,夢,dream,YU-ME — DREAM. → yume.
+389,8,39,kangaeru,考える,think,KANGAERU — THINK → kangaeru.
+390,8,40,hiku,引く,pull,HI-KU — PULL. → hiku.
+391,8,41,hikari,光,light,HI-KA-RI — LIGHT. → hikari.
+392,8,42,karada,体,body,KA-RA-DA — BODY. → karada.
+393,8,43,utsu,撃つ,shoot,U-TSU — SHOOT. → utsu.
+394,8,44,riyuu,理由,reason,RI-YUU — REASON. → riyuu.
+395,8,45,dareka,誰か,someone,DARE-KA — SOMEONE. → dareka.
+396,8,46,shinainaru,親愛なる,dear,SHIN-AI-NARU — DEAR. → shinainaru.
+397,8,47,yasumu,休む,rest / take off,YA-SU-MU — REST. → yasumu.
+398,8,48,shi,死,death,SHI — DEATH. → shi.
+399,8,49,tooi,遠い,far,TO-O-I — FAR. → tooi.
+400,8,50,eeto,えーと,um,"E-TO — UM, let me think. → eeto."
+401,9,1,shimeru,閉める,close,SHI-ME-RU — CLOSE the door. → shimeru.
+402,9,2,gawa,側,side,GA-WA — SIDE of the road. → gawa.
+403,9,3,omoshiroi,面白い,interesting / funny,OMOSHIROI — INTERESTING / funny → omoshiroi.
+404,9,4,odoru,踊る,dance,O-DO-RU — DANCE. → odoru.
+405,9,5,honoo,炎,fire,HO-NO-O — FIRE. → honoo.
+406,9,6,kirai,嫌い,dislike,KIRAI — DISLIKE. → kirai.
+407,9,7,naka,中,inside,NA-KA — INSIDE. → naka.
+408,9,8,tsuru,吊る,hang,TSU-RU — HANG up. → tsuru.
+409,9,9,tokidoki,時々,sometimes,TO-KI-DO-KI — SOMETIMES. → tokidoki.
+410,9,10,kyaputen,キャプテン,captain,CAPTAIN — same word. → kyaputen.
+411,9,11,shashin,写真,picture,SHA-SHIN — PICTURE. → shashin.
+412,9,12,shitagau,従う,follow,SHI-TA-GA-U — FOLLOW. → shitagau.
+413,9,13,chigau,違う,different,CHI-GA-U — DIFFERENT. → chigau.
+414,9,14,shunkan,瞬間,moment,SHUN-KAN — MOMENT. → shunkan.
+415,9,15,shimai,姉妹,sister,SHI-MAI — SISTER. → shimai.
+416,9,16,sukunakutomo,少なくとも,at least,SUKUNAKUTOMO — AT LEAST → sukunakutomo.
+417,9,17,juuyou,重要,important,JUU-YOU — IMPORTANT. → juuyou.
+418,9,18,yuushoku,夕食,dinner,YUU-SHOKU — DINNER. → yuushoku.
+419,9,19,a,あ,ah,AH — spoken gasp. → a.
+420,9,20,mo,も,too / also,"""ME TOO!"" — ALSO. → mo."
+421,9,21,retsu,列,line,RE-TSU — LINE / queue. → retsu.
+422,9,22,otosu,落とす,drop,O-TO-SU — DROP it. → otosu.
+423,9,23,shinjiru,信じる,believe,SHIN-JI-RU — BELIEVE. → shinjiru.
+424,9,24,kaisha,会社,company,KAISHA — COMPANY → kaisha.
+425,9,25,kanari,かなり,pretty / quite,KA-NA-RI — QUITE. → kanari.
+426,9,26,otto,夫,husband,OT-TO — HUSBAND. → otto.
+427,9,27,hakkiri,はっきり,clearly,HAKKIRI — CLEARLY → hakkiri.
+428,9,28,nitaishite,〜に対して,against,NI-TAI-SHITE — AGAINST. → nitaishite.
+429,9,29,sawaru,触る,touch,SA-WA-RU — TOUCH. → sawaru.
+430,9,30,sain,サイン,sign,SIGN — same word. → sain.
+431,9,31,fushigi,不思議,mysterious / strange,FUSHIGI — MYSTERIOUS / strange → fushigi.
+432,9,32,roku,六,six,RO-KU — SIX. → roku.
+433,9,33,hanbun,半分,half,HAN-BUN — HALF. → hanbun.
+434,9,34,kuuru,クール,cool,COOL — same word. → kuuru.
+435,9,35,manabu,学ぶ,learn,MA-NA-BU — LEARN. → manabu.
+436,9,36,jijitsu,事実,fact,JI-JI-TSU — FACT. → jijitsu.
+437,9,37,sakini,先に,ahead / first,SAKINI — AHEAD / first → sakini.
+438,9,38,maikeru,マイケル,Michael,MICHAEL — name. → maikeru.
+439,9,39,tooru,通る,pass,TO-O-RU — PASS through. → tooru.
+440,9,40,beddo,ベッド,bed,BED — same word. → beddo.
+441,9,41,takai,高い,expensive / high,TA-KAI — HIGH. → takai.
+442,9,42,jon,ジョン,John,JOHN — name. → jon.
+443,9,43,owaru,終わる,end / finish,OWARU — END / finish → owaru.
+444,9,44,shinjitsu,真実,truth,SHIN-JI-TSU — TRUTH. → shinjitsu.
+445,9,45,hotondo,ほとんど,almost,HO-TON-DO — ALMOST. → hotondo.
+446,9,46,tateru,建てる,build,TA-TE-RU — BUILD. → tateru.
+447,9,47,atsui,暑い,hot (weather),A-TSU-I — HOT. → atsui.
+448,9,48,kakeru,賭ける,bet,KA-KE-RU — BET on it. → kakeru.
+449,9,49,ushiro,後ろ,behind,U-SHI-RO — BEHIND. → ushiro.
+450,9,50,mou,もう,already / anymore,MOU — not ANYMORE. → mou.
+451,10,1,chi,血,blood,CHI — BLOOD. → chi.
+452,10,2,chikara,力,power,CHI-KA-RA — POWER. → chikara.
+453,10,3,ashi,足,foot / leg,ASHI — FOOT / leg → ashi.
+454,10,4,papa,パパ,daddy,PAPA — DADDY. → papa.
+455,10,5,mama,ママ,mom,MAMA — MOM. → mama.
+456,10,6,shiyou,〜しよう,let's / shall we,~SHIYOU — LET'S / shall we → shiyou.
+457,10,7,youkoso,ようこそ,welcome,YOU-KO-SO — WELCOME. → youkoso.
+458,10,8,sensou,戦争,war,SEN-SOU — WAR. → sensou.
+459,10,9,koudou,行動,action / behavior,KOUDOU — ACTION / behavior → koudou.
+460,10,10,baka,バカ,stupid,BA-KA — STUPID. → baka.
+461,10,11,mae,前,before / in front,MAE — BEFORE / in front. → mae.
+462,10,12,kusoonna,クソ女,bitch,KUSO-ONNA — crude insult. → kusoonna.
+463,10,13,isshoni,一緒に,together,ISSHO-NI — TOGETHER. → isshoni.
+464,10,14,jiyuu,自由,freedom / free,JIYUU — FREEDOM / free → jiyuu.
+465,10,15,dochiraka,どちらか,either,DO-CHI-RA-KA — EITHER one. → dochiraka.
+466,10,16,dakedo,だけど,though,DA-KE-DO — THOUGH. → dakedo.
+467,10,17,musume,娘,daughter,MU-SU-ME — DAUGHTER. → musume.
+468,10,18,kisu,キス,kiss,KISS — same word. → kisu.
+469,10,19,baibai,バイバイ,bye,BYE-BYE — BYE. → baibai.
+470,10,20,toori,通り,street,TO-O-RI — STREET. → toori.
+471,10,21,katsu,勝つ,win,KA-TSU — WIN. → katsu.
+472,10,22,kitaisuru,期待する,expect,KI-TAI — EXPECT. → kitaisuru.
+473,10,23,tokai,都会,city,TO-KAI — the CITY. → tokai.
+474,10,24,isogu,急ぐ,hurry,I-SO-GU — HURRY. → isogu.
+475,10,25,aida,間,between / while,AI-DA — BETWEEN. → aida.
+476,10,26,kuro,黒,black,KU-RO — BLACK. → kuro.
+477,10,27,keikan,警官,cop,KEI-KAN — COP. → keikan.
+478,10,28,kuni,国,country,KU-NI — COUNTRY. → kuni.
+479,10,29,ureshii,嬉しい,happy / glad,URESHII — HAPPY / glad → ureshii.
+480,10,30,sono,その,that / its,SONO — THAT / its → sono.
+481,10,31,shiro,白,white,SHI-RO — WHITE. → shiro.
+482,10,32,soto,外,outside,SO-TO — OUTSIDE. → soto.
+483,10,33,satsujin,殺人,murder,SATSU-JIN — MURDER. → satsujin.
+484,10,34,naguru,殴る,beat,NA-GU-RU — BEAT. → naguru.
+485,10,35,eiga,映画,movie,EI-GA — MOVIE. → eiga.
+486,10,36,made,〜まで,until,MADE — UNTIL. → made.
+487,10,37,ippai,いっぱい,a lot / full,IPPAI — A LOT / full → ippai.
+488,10,38,byouki,病気,sick,BYOU-KI — SICK. → byouki.
+489,10,39,nageru,投げる,throw,NA-GE-RU — THROW. → nageru.
+490,10,40,kizu,傷,scar,KI-ZU — SCAR / wound. → kizu.
+491,10,41,chiimu,チーム,team,TEAM — same word. → chiimu.
+492,10,42,kirei,きれい,pretty / clean,KIREI — PRETTY / clean → kirei.
+493,10,43,subarashii,素晴らしい,wonderful,SU-BA-RA-SHII — WONDERFUL. → subarashii.
+494,10,44,naru,なる,become,NA-RU — BECOME. → naru.
+495,10,45,sukuu,救う,save,SU-KUU — SAVE. → sukuu.
+496,10,46,shurui,種類,kind / type,SHURUI — KIND / type → shurui.
+497,10,47,furanku,フランク,Frank,FRANK — name. → furanku.
+498,10,48,jiizasu,ジーザス,Jesus,JESUS — name. → jiizasu.
+499,10,49,chen,チェン,Chang,CHEN — name. → chen.
+500,10,50,kanpeki,完璧,perfect,KAN-PEKI — PERFECT. → kanpeki.
