@@ -19,6 +19,11 @@ export type JapaneseSessionState = {
   order: number[];
   qIndex: number;
   score: number;
+  /**
+   * Correct answers on Review · Block N side-point items (R4/R5).
+   * Does not count toward block mastery %.
+   */
+  bonusScore?: number;
   missed: number[];
   roundIsRetry: boolean;
   /** Consecutive correct streak per word index in the current R4/R5 session. */
@@ -107,4 +112,6 @@ export type JapaneseRoundView =
       retryRound?: 2 | 3 | 4 | 5;
       blockMastered?: boolean;
       knownCount?: number;
+      /** Side-point corrects from Review · Block N items (not in scorePct). */
+      bonusCorrect?: number;
     };

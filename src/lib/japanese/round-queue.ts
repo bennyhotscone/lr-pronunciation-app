@@ -306,3 +306,7 @@ export function resolveQueueItem(
     isExternalReview: false,
   };
 }
+/** True when this queue item is prior-block review side-points (not mastery). */
+export function isBonusReviewItem(item: ResolvedQueueItem): boolean {
+  return item.isExternalReview || item.reviewFromBlock != null;
+}

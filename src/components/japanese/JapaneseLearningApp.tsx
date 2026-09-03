@@ -12,6 +12,7 @@ import {
   jumpToRound,
   recordCorrect,
   recordCorrectWithStreak,
+  recordBonusCorrect,
   recordMiss,
   repairSessionState,
   resolveWord,
@@ -68,9 +69,10 @@ import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-word
 import {
   decodeExternalReview,
   emptyPriorLearning,
-  isExternalReviewOrderId,
+  isBonusReviewItem,
   learnSkipIndices,
   priorLearningFromArrays,
+  resolveQueueItem,
   type PriorLearning,
 } from "@/lib/japanese/round-queue";
 import "./japanese-learning.css";
@@ -413,25 +415,28 @@ export function JapaneseLearningApp() {
     if (!correct) nextChoices[correctIndex] = "correct";
     setChoiceStates(nextChoices);
 
-    const external = isExternalReviewOrderId(view.wordIndex);
+    const bonus = isBonusReviewItem(
+      resolveQueueItem(view.wordIndex, block, words.length, priorLearning),
+    );
     let nextSession = session;
-    if (!external) {
+    if (bonus) {
       if (correct) {
-        const round = getActiveRound(session, words.length);
-        nextSession =
-          round >= 4 ? recordCorrectWithStreak(session, correctIndex) : recordCorrect(session);
-        setStatus("Correct");
+        nextSession = recordBonusCorrect(session);
+        setStatus("Correct - side point");
         playCorrectAnswerSound();
       } else {
-        nextSession = recordMiss(session, correctIndex);
         setStatus(`Answer: ${currentWord?.en ?? words[correctIndex]?.en ?? ""}`);
         playIncorrectAnswerSound();
       }
     } else if (correct) {
+      const round = getActiveRound(session, words.length);
+      nextSession =
+        round >= 4 ? recordCorrectWithStreak(session, correctIndex) : recordCorrect(session);
       setStatus("Correct");
       playCorrectAnswerSound();
     } else {
-      setStatus(`Answer: ${currentWord?.en ?? ""}`);
+      nextSession = recordMiss(session, correctIndex);
+      setStatus(`Answer: ${currentWord?.en ?? words[correctIndex]?.en ?? ""}`);
       playIncorrectAnswerSound();
     }
 
@@ -466,32 +471,35 @@ export function JapaneseLearningApp() {
       correct = fuzzyMatchRomaji(typedAnswer, word);
     }
 
-    const external = isExternalReviewOrderId(view.wordIndex);
+    const bonus = isBonusReviewItem(
+      resolveQueueItem(view.wordIndex, block, words.length, priorLearning),
+    );
     let nextSession = session;
-    if (!external) {
+    if (bonus) {
       if (correct) {
-        nextSession =
-          view.round >= 4
-            ? recordCorrectWithStreak(session, view.wordIndex)
-            : recordCorrect(session);
-        setStatus("Accepted");
+        nextSession = recordBonusCorrect(session);
+        setStatus("Accepted - side point");
         playCorrectAnswerSound();
         if (view.mode === "type-romaji" && view.round === 5) {
           playWordAudioAtIndex(view.sourceWordIndex, view.sourceBlock);
         }
       } else {
-        nextSession = recordMiss(session, view.wordIndex);
         setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);
         playIncorrectAnswerSound();
         playCurrentWordAudio();
       }
     } else if (correct) {
+      nextSession =
+        view.round >= 4
+          ? recordCorrectWithStreak(session, view.wordIndex)
+          : recordCorrect(session);
       setStatus("Accepted");
       playCorrectAnswerSound();
       if (view.mode === "type-romaji" && view.round === 5) {
         playWordAudioAtIndex(view.sourceWordIndex, view.sourceBlock);
       }
     } else {
+      nextSession = recordMiss(session, view.wordIndex);
       setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);
       playIncorrectAnswerSound();
       playCurrentWordAudio();
@@ -739,14 +747,14 @@ export function JapaneseLearningApp() {
               className="jp-learn-btn jp-learn-btn-gate"
               onClick={() => openRevisionGate(suggestedRevisionGate)}
             >
-              Start revision quiz (250 words)
+              Start revision quiz (from 250 words)
             </button>
           </div>
         ) : null}
         {availableRevisionGates.length > 0 ? (
           <section className="jp-learn-practice" aria-labelledby="jp-revision-heading">
             <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quizzes</h2>
-            <p className="jp-learn-sub">All-words review plus sentence building for each 5-block segment (80% to pass).</p>
+            <p className="jp-learn-sub">Practice anytime - 50 word questions sampled from each 5-block pool (250 words), plus sentence building. 80% to pass.</p>
             <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
               {availableRevisionGates.map((gate) => (
                 <button
@@ -854,6 +862,11 @@ export function JapaneseLearningApp() {
                 <div>
                   <div className="jp-learn-meta">Round {view.round} complete</div>
                   <div className="jp-learn-meta">Score: {view.scorePct}%</div>
+                  {view.bonusCorrect && view.bonusCorrect > 0 ? (
+                    <div className="jp-learn-meta">
+                      Side points: {view.bonusCorrect} review correct
+                    </div>
+                  ) : null}
                 </div>
               </div>
               <div className="jp-learn-progress">

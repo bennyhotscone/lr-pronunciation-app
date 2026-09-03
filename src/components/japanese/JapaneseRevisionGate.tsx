@@ -50,10 +50,20 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
 
   useEffect(() => {
     setLoading(true);
+    setStatus("");
+    setPhase("quiz");
+    setQIndex(0);
+    setAnswers({});
+    setTyped("");
+    setResult(null);
+    setSentencePassed(false);
+    setRevealedRomaji(null);
+    setPendingAnswers(null);
     loadRevisionGate(gateNumber)
       .then((data) => {
         if ("error" in data) {
           setStatus(data.error);
+          setPayload(null);
           setLoading(false);
           return;
         }
@@ -63,25 +73,50 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           if (isWordQuestion(q)) modeMap[q.id] = q.mode;
         }
         setModes(modeMap);
-        if (data.passed) {
-          setPhase("results");
-          setResult({
-            passed: true,
-            scorePct: 100,
-            threshold: data.threshold,
-            correctCount: data.questions.length,
-            total: data.questions.length,
-            unlocksBlock: data.unlocksBlock,
-          });
-        }
         setLoading(false);
       })
       .catch((err) => {
         console.error("[JapaneseRevisionGate] loadRevisionGate failed", err);
         setStatus("Couldn't load revision checkpoint. Please try again.");
+        setPayload(null);
         setLoading(false);
       });
   }, [gateNumber]);
+
+  const restartQuiz = () => {
+    setLoading(true);
+    setStatus("");
+    setPhase("quiz");
+    setQIndex(0);
+    setAnswers({});
+    setTyped("");
+    setResult(null);
+    setSentencePassed(false);
+    setRevealedRomaji(null);
+    setPendingAnswers(null);
+    loadRevisionGate(gateNumber)
+      .then((data) => {
+        if ("error" in data) {
+          setStatus(data.error);
+          setPayload(null);
+          setLoading(false);
+          return;
+        }
+        setPayload(data);
+        const modeMap: Record<string, "type-english" | "type-romaji"> = {};
+        for (const q of data.questions) {
+          if (isWordQuestion(q)) modeMap[q.id] = q.mode;
+        }
+        setModes(modeMap);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("[JapaneseRevisionGate] reload failed", err);
+        setStatus("Couldn't load revision checkpoint. Please try again.");
+        setPayload(null);
+        setLoading(false);
+      });
+  };
 
   const current = payload?.questions[qIndex];
   const isSentence = current?.kind === "sentence";
@@ -210,24 +245,18 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           </p>
           {result.passed ? (
             <p className="jp-learn-sub">Block {result.unlocksBlock} is now unlocked.</p>
-          ) : (
-            <button
-              type="button"
-              className="jp-learn-btn jp-learn-btn-primary mt-3"
-              onClick={() => {
-                setPhase("quiz");
-                setQIndex(0);
-                setAnswers({});
-                setTyped("");
-                setResult(null);
-                setSentencePassed(false);
-                setRevealedRomaji(null);
-              }}
-              disabled={pending}
-            >
-              Try again
-            </button>
-          )}
+          ) : null}
+          <button
+            type="button"
+            className="jp-learn-btn jp-learn-btn-primary mt-3"
+            onClick={restartQuiz}
+            disabled={pending}
+          >
+            {result.passed ? "Practice again" : "Try again"}
+          </button>
+          {payload.passed && result.passed ? (
+            <p className="jp-learn-sub mt-2">You already passed this checkpoint — practice anytime.</p>
+          ) : null}
           {onClose ? (
             <button type="button" className="jp-learn-btn mt-3" onClick={onClose}>
               Back to training
@@ -248,12 +277,13 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
       <header className="jp-learn-header">
         <h1 className="jp-learn-title">Revision quiz</h1>
         <p className="jp-learn-meta">
-          {payload.label} · {payload.wordCount} words + {sentenceCount} sentences ·{" "}
-          {payload.threshold}% to pass
+          {payload.label} · {payload.sampleSize} word questions from the{" "}
+          {payload.wordCount}-word pool + {sentenceCount} sentences · {payload.threshold}% to
+          pass
         </p>
         <p className="jp-learn-sub">
-          Review every word from this 5-block segment, then build sentences from the same
-          vocabulary. Recommended after mastering block {gateNumber * 5}.
+          Romaji-first drill drawn from blocks {(gateNumber - 1) * 5 + 1}–{gateNumber * 5}. Mix of
+          type-the-Japanese and type-the-meaning, then sentence building.
         </p>
       </header>
       <section className="jp-learn-card">

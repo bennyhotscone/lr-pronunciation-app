@@ -2,12 +2,15 @@ import { describe, expect, it } from "vitest";
 import {
   advanceFormalQuestion,
   buildRoundView,
+  computeSessionRoundScorePct,
   createInitialBlockMeta,
   createInitialSessionState,
   getActiveRound,
   getHighestRoundReached,
   jumpToRound,
   repairSessionState,
+  recordBonusCorrect,
+  recordCorrect,
   recordCorrectWithStreak,
   retryRound,
   startFormalRound,
@@ -16,6 +19,7 @@ import {
   updateMetaAfterRound,
 } from "./engine";
 import type { JapaneseWord } from "./types";
+import { encodeExternalReview } from "./round-queue";
 
 const words: JapaneseWord[] = Array.from({ length: 10 }, (_, i) => ({
   jp: `w${i}`,
@@ -277,6 +281,51 @@ describe("known words in formal rounds", () => {
     expect(state.order).toHaveLength(8);
     expect(state.order).not.toContain(0);
     expect(state.order).not.toContain(1);
+  });
+
+  it("does not let review/side-point corrects inflate mastery above 100%", () => {
+    const skipIndices = [0, 1, 2, 3, 4, 5, 6, 7];
+    let state = startFormalRound(createInitialSessionState(), 5, 10, {
+      isRetry: true,
+      knownIndices: skipIndices,
+      skipIndices,
+      blockNumber: 2,
+    });
+    // Simulate old bug: mastery score also counted in-block review answers already
+    // credited via skipIndices, plus external review corrects.
+    state = {
+      ...state,
+      order: [8, 9, 0, 1, encodeExternalReview(1, 3), encodeExternalReview(1, 4)],
+      qIndex: 6,
+      score: 4, // would be 140% uncapped with known=8 on wordCount=10
+      bonusScore: 2,
+    };
+    const pct = computeSessionRoundScorePct(state, 10, skipIndices);
+    expect(pct).toBe(100);
+    expect(pct).toBeLessThanOrEqual(100);
+
+    // Correct path: mastery score only counts current-block non-review answers.
+    let clean = startFormalRound(createInitialSessionState(), 5, 10, {
+      isRetry: true,
+      knownIndices: skipIndices,
+      skipIndices,
+    });
+    clean = recordCorrect(clean);
+    clean = recordCorrect(clean);
+    clean = recordBonusCorrect(clean);
+    clean = recordBonusCorrect(clean);
+    clean = { ...clean, qIndex: clean.order.length };
+    expect(computeSessionRoundScorePct(clean, 10, skipIndices)).toBe(100);
+    expect(clean.bonusScore).toBe(2);
+    expect(clean.score).toBe(2);
+
+    const knownWords = Object.fromEntries(skipIndices.map((i) => [i, { known: true }]));
+    const view = buildRoundView(clean, words, {}, knownWords);
+    expect(view?.kind).toBe("round-complete");
+    if (view?.kind === "round-complete") {
+      expect(view.scorePct).toBe(100);
+      expect(view.bonusCorrect).toBe(2);
+    }
   });
 });
 

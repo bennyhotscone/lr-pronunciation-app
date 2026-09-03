@@ -3,7 +3,10 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getJapaneseBlock, isPlayableJapaneseBlock } from "@/lib/japanese/blocks";
-import { JAPANESE_REVISION_PASS_THRESHOLD } from "@/lib/japanese/config";
+import {
+  JAPANESE_REVISION_PASS_THRESHOLD,
+  JAPANESE_REVISION_WORD_SAMPLE,
+} from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import {
   getBlocksForRevisionGate,
@@ -50,7 +53,10 @@ export type RevisionQuestion = RevisionWordQuestion | RevisionSentenceQuestion;
 export type RevisionGatePayload = {
   gateNumber: number;
   label: string;
+  /** Full vocabulary pool for this gate (e.g. 250). */
   wordCount: number;
+  /** How many word questions were sampled into this quiz. */
+  sampleSize: number;
   unlocksBlock: number;
   passed: boolean;
   attempts: number;
@@ -97,10 +103,15 @@ function buildSentenceQuestions(gateNumber: number): RevisionSentenceQuestion[] 
   }));
 }
 
-function buildRevisionQuestions(gateNumber: number): RevisionQuestion[] {
-  const words = shuffle(collectRevisionWords(gateNumber));
-  const wordQuestions: RevisionWordQuestion[] = words.map(({ blockNumber, wordIndex, word }, i) => {
-    const mode: RevisionWordQuestion["mode"] = i % 2 === 0 ? "type-english" : "type-romaji";
+function buildRevisionQuestions(gateNumber: number): {
+  questions: RevisionQuestion[];
+  sampleSize: number;
+} {
+  const pool = collectRevisionWords(gateNumber);
+  const sampled = shuffle(pool).slice(0, Math.min(JAPANESE_REVISION_WORD_SAMPLE, pool.length));
+  const wordQuestions: RevisionWordQuestion[] = sampled.map(({ blockNumber, wordIndex, word }, i) => {
+    // Alternate produce (EN→romaji) and understand (romaji→EN) for a mixed drill.
+    const mode: RevisionWordQuestion["mode"] = i % 2 === 0 ? "type-romaji" : "type-english";
     return {
       kind: "word",
       id: `${blockNumber}-${wordIndex}`,
@@ -110,7 +121,10 @@ function buildRevisionQuestions(gateNumber: number): RevisionQuestion[] {
       prompt: mode === "type-english" ? word.r : word.en,
     };
   });
-  return [...wordQuestions, ...buildSentenceQuestions(gateNumber)];
+  return {
+    questions: [...wordQuestions, ...buildSentenceQuestions(gateNumber)],
+    sampleSize: wordQuestions.length,
+  };
 }
 
 export async function loadRevisionGatesPassed(userId: string): Promise<number[]> {
@@ -137,27 +151,33 @@ export async function loadRevisionGate(
     if (!session) return { error: "Unauthorized" };
 
     const userId = session.user.id;
-    const questions = buildRevisionQuestions(gateNumber);
+    const { questions, sampleSize } = buildRevisionQuestions(gateNumber);
     if (!questions.length) {
-      return { error: "Revision content is not available yet for this gate." };
+      return { error: "No vocabulary loaded for this revision gate yet." };
     }
 
-    let progress = null;
+    let progress: { passed: boolean; attempts: number } | null = null;
     try {
       progress = await prisma.japaneseRevisionProgress.findUnique({
         where: { userId_gateNumber: { userId, gateNumber } },
+        select: { passed: true, attempts: true },
       });
     } catch (err) {
+      // Quiz still runs if progress table isn't migrated yet — don't block learners.
       if (isPrismaSchemaMissingError(err)) {
-        return { error: "Revision checkpoints are not available yet. Please try again later." };
+        console.warn(
+          "[loadRevisionGate] JapaneseRevisionProgress missing; running quiz without saved progress",
+        );
+      } else {
+        throw err;
       }
-      throw err;
     }
 
     return {
       gateNumber,
       label: revisionGateLabel(gateNumber),
       wordCount: revisionGateWordCount(gateNumber),
+      sampleSize,
       unlocksBlock: getFirstBlockUnlockedByRevisionGate(gateNumber),
       passed: progress?.passed ?? false,
       attempts: progress?.attempts ?? 0,
@@ -195,7 +215,7 @@ export async function submitRevisionAnswers(
   const userId = session.user.id;
   const playable = collectRevisionWords(gateNumber);
   if (!playable.length) {
-    return { error: "Revision content is not available yet for this gate." };
+    return { error: "No vocabulary loaded for this revision gate yet." };
   }
 
   const sentenceById = new Map(
@@ -247,10 +267,14 @@ export async function submitRevisionAnswers(
       },
     });
   } catch (err) {
+    // Still return the scored result so the quiz is usable without persistence.
     if (isPrismaSchemaMissingError(err)) {
-      return { error: "Revision checkpoints are not available yet. Please try again later." };
+      console.warn(
+        "[submitRevisionAnswers] JapaneseRevisionProgress missing; returning score without save",
+      );
+    } else {
+      throw err;
     }
-    throw err;
   }
 
   revalidatePath(LEARN_PATH);

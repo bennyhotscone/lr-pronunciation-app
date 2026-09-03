@@ -57,11 +57,20 @@ export function createInitialSessionState(): JapaneseSessionState {
     order: [],
     qIndex: 0,
     score: 0,
+    bonusScore: 0,
     missed: [],
     roundIsRetry: false,
     roundStreaks: {},
     sessionRetired: [],
   };
+}
+
+function formalScoreLabel(state: JapaneseSessionState): string {
+  const bonus = state.bonusScore ?? 0;
+  if (bonus > 0) {
+    return `${state.score} correct · ${bonus} side point${bonus === 1 ? "" : "s"}`;
+  }
+  return `${state.score} correct`;
 }
 
 export function createInitialBlockMeta(): JapaneseBlockMeta {
@@ -285,7 +294,7 @@ export function buildRoundView(
       pronunciationCue: cue,
       choicePool: makeChoiceIndices(wordIndex, allIndices, allIndices),
       progressPct: progressForFormal(2, state.qIndex, wordCount),
-      scoreLabel: `${state.score} correct`,
+      scoreLabel: formalScoreLabel(state),
       mode: "choices",
       reviewLabel: prompt.reviewLabel,
     };
@@ -304,7 +313,7 @@ export function buildRoundView(
       showMnemonic: false,
       choicePool: makeChoiceIndices(wordIndex, allIndices, allIndices),
       progressPct: progressForFormal(3, state.qIndex, wordCount),
-      scoreLabel: `${state.score} correct`,
+      scoreLabel: formalScoreLabel(state),
       mode: "choices",
       reviewLabel: prompt.reviewLabel,
     };
@@ -323,7 +332,7 @@ export function buildRoundView(
       showMnemonic: false,
       choicePool: [],
       progressPct: progressForFormal(4, state.qIndex, wordCount),
-      scoreLabel: `${state.score} correct`,
+      scoreLabel: formalScoreLabel(state),
       mode: "type-english",
       reviewLabel: prompt.reviewLabel,
     };
@@ -341,7 +350,7 @@ export function buildRoundView(
     showMnemonic: false,
     choicePool: [],
     progressPct: progressForFormal(5, state.qIndex, wordCount),
-    scoreLabel: `${state.score} correct`,
+    scoreLabel: formalScoreLabel(state),
     mode: "type-romaji",
     promptEnglish: w.en,
     reviewLabel: prompt.reviewLabel,
@@ -355,25 +364,12 @@ function buildRoundCompleteView(
   knownIndices: number[] = [],
 ): JapaneseRoundView {
   const wordCount = words.length;
-  const known = new Set(knownIndices);
-  const retiredOnly = (state.sessionRetired ?? []).filter((i) => !known.has(i)).length;
   const scorePct =
-    round === 1
-      ? 100
-      : computeFormalRoundScorePct(
-          state.score + retiredOnly,
-          Math.max(
-            state.order.filter((id) => typeof id === "number" && id >= 0 && id < wordCount)
-              .length,
-            state.roundIsRetry ? 1 : wordCount,
-          ),
-          wordCount,
-          knownIndices,
-          true,
-        );
+    round === 1 ? 100 : computeSessionRoundScorePct(state, wordCount, knownIndices);
   const passed = scorePct >= JAPANESE_MASTERY_THRESHOLD;
   const missedIndices = [...new Set(state.missed)];
   const retryRound = round >= 2 ? (round as 2 | 3 | 4 | 5) : undefined;
+  const bonusCorrect = state.bonusScore ?? 0;
 
   if (round < 5) {
     return {
@@ -386,6 +382,7 @@ function buildRoundCompleteView(
       nextRound: (round + 1) as 2 | 3 | 4 | 5,
       retryRound,
       knownCount: knownIndices.length,
+      bonusCorrect,
     };
   }
 
@@ -399,6 +396,7 @@ function buildRoundCompleteView(
     blockMastered: passed,
     retryRound,
     knownCount: knownIndices.length,
+    bonusCorrect,
   };
 }
 
@@ -600,6 +598,7 @@ export function startFormalRound(
     phase: `round${n}` as JapanesePhase,
     qIndex: 0,
     score: 0,
+    bonusScore: 0,
     missed: [],
     order: pool,
     // Always credit skipped/known words toward mastery once they are filtered out.
@@ -630,9 +629,14 @@ export function advanceFormalQuestion(state: JapaneseSessionState): JapaneseSess
   return { ...state, qIndex: state.qIndex + 1 };
 }
 
-/** Record a correct answer. */
+/** Record a correct answer toward current-block mastery. */
 export function recordCorrect(state: JapaneseSessionState): JapaneseSessionState {
   return { ...state, score: state.score + 1 };
+}
+
+/** Record a correct Review · Block N side-point (does not affect mastery %). */
+export function recordBonusCorrect(state: JapaneseSessionState): JapaneseSessionState {
+  return { ...state, bonusScore: (state.bonusScore ?? 0) + 1 };
 }
 
 /** Record a missed word. */
