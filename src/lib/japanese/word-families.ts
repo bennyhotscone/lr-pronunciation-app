@@ -141,7 +141,6 @@ const CURATED_SEEDS: readonly FamilySeed[] = [
 /** Extra clear prefixes scanned automatically if not already claimed. */
 const AUTO_STEMS: readonly { stem: string; label: string; blurb: string }[] = [
   { stem: "donna", label: "What kind (donna…)", blurb: "donna and related what-kind forms." },
-  { stem: "don", label: "Don- question words", blurb: "Clear don- stems that share a question pattern." },
   { stem: "naze", label: "Why (naze…)", blurb: "naze and related why forms." },
 ];
 
@@ -252,6 +251,7 @@ function buildFamilyFromSeed(
 ): WordFamily | null {
   const keys: string[] = [];
   for (const key of byRomaji.keys()) {
+    if (claimed.has(key)) continue;
     if (!seedMatches(seed, key)) continue;
     keys.push(key);
   }
