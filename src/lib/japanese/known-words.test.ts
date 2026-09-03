@@ -70,6 +70,14 @@ describe("known-words", () => {
     expect(computeRoundScorePct(1, 10, 8)).toBe(90);
   });
 
+  it("caps mastery at 100% when review/side points inflate the raw score", () => {
+    // 8 credited skips + 10 answered (including 8 review side-points) would be 180% uncapped.
+    expect(computeRoundScorePct(10, 10, 8)).toBe(100);
+    expect(computeFormalRoundScorePct(18, 18, 25, new Set([0, 1, 2, 3, 4, 5, 6, 7, 8]), true)).toBe(
+      100,
+    );
+  });
+
   it("reads known indices from stats", () => {
     expect(indicesFromKnownStats({ 1: { known: true }, 3: { known: true } })).toEqual(
       new Set([1, 3]),

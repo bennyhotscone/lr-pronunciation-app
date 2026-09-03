@@ -66,7 +66,12 @@ export function computeRoundScorePct(
   knownCount: number,
 ): number {
   if (wordCount <= 0) return 100;
-  return Math.round(((knownCount + roundScore) / wordCount) * 100);
+  // Mastery is current-block coverage only; never credit more than the remaining slots
+  // (review/side-point corrects must not inflate past 100%).
+  const creditedKnown = Math.min(Math.max(0, knownCount), wordCount);
+  const remaining = wordCount - creditedKnown;
+  const masteryCorrect = Math.min(Math.max(0, roundScore), remaining);
+  return Math.min(100, Math.round(((creditedKnown + masteryCorrect) / wordCount) * 100));
 }
 
 export function computeFormalRoundScorePct(
