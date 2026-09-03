@@ -1,0 +1,399 @@
+{
+  "generatedAt": "2026-09-03T04:30:43.125Z",
+  "sourcesFound": {
+    "spokenEnglishXlsx": "C:/Users/Administrator/Downloads/top_5000_spoken_english_lemmatised.xlsx",
+    "spokenEnglishJson": "src/data/spoken-english-frequency-5000.json",
+    "spokenEnglishCount": 5000,
+    "cocaStyleJson": "src/data/english-frequency-5000.json",
+    "cocaStyleCount": 4333,
+    "japaneseFrequencyListInRepo": false,
+    "japaneseFrequencyListInDownloads": false,
+    "note": "No Japanese frequency dictionary/spreadsheet found in repo or Downloads. American English Frequency Dictionary PDFs exist but were not used for JP block content."
+  },
+  "historicalUsage": {
+    "frequencyTsUsesSpokenListForLabels": true,
+    "blocks1to10BuiltAs1to1SpokenSlice": false,
+    "blocks1to10AreHandCuratedConversationalJapanese": true,
+    "honestVerdict": "Spoken English list was imported and wired for curriculum scaffolding (rank labels / 100-block plan). Blocks 1-10 content was NOT built as a faithful mapping of spoken ranks 1-500 to Japanese. No Japanese frequency list was referenced."
+  },
+  "first500Stats": {
+    "totalWords": 500,
+    "englishGlossInSpokenTop500": 471,
+    "englishGlossInSpokenTop5000": 493,
+    "notInSpokenTop5000": 7,
+    "notInSpokenSample": [
+      {
+        "block": 1,
+        "romaji": "kirai",
+        "english": "dislike"
+      },
+      {
+        "block": 2,
+        "romaji": "asa",
+        "english": "morning"
+      },
+      {
+        "block": 2,
+        "romaji": "yasai",
+        "english": "vegetables"
+      },
+      {
+        "block": 4,
+        "romaji": "itsumo",
+        "english": "always"
+      },
+      {
+        "block": 5,
+        "romaji": "asa",
+        "english": "morning"
+      },
+      {
+        "block": 9,
+        "romaji": "kirai",
+        "english": "dislike"
+      },
+      {
+        "block": 9,
+        "romaji": "tokidoki",
+        "english": "sometimes"
+      }
+    ],
+    "slicePositionEnContainsLemma": 374,
+    "exactFirstLemmaEqualsSlice": 328,
+    "spokenTop500LemmasCoveredByBlockEnglish": 427,
+    "spokenTop500LemmasMissing": 73,
+    "spokenTop500MissingSample": [
+      {
+        "rank": 4,
+        "lemma": "the"
+      },
+      {
+        "rank": 9,
+        "lemma": "and"
+      },
+      {
+        "rank": 18,
+        "lemma": "this"
+      },
+      {
+        "rank": 19,
+        "lemma": "he"
+      },
+      {
+        "rank": 20,
+        "lemma": "on"
+      },
+      {
+        "rank": 21,
+        "lemma": "for"
+      },
+      {
+        "rank": 23,
+        "lemma": "my"
+      },
+      {
+        "rank": 24,
+        "lemma": "your"
+      },
+      {
+        "rank": 30,
+        "lemma": "with"
+      },
+      {
+        "rank": 31,
+        "lemma": "just"
+      },
+      {
+        "rank": 33,
+        "lemma": "but"
+      },
+      {
+        "rank": 41,
+        "lemma": "out"
+      },
+      {
+        "rank": 43,
+        "lemma": "she"
+      },
+      {
+        "rank": 45,
+        "lemma": "about"
+      },
+      {
+        "rank": 47,
+        "lemma": "if"
+      },
+      {
+        "rank": 49,
+        "lemma": "him"
+      },
+      {
+        "rank": 51,
+        "lemma": "oh"
+      },
+      {
+        "rank": 57,
+        "lemma": "yeah"
+      },
+      {
+        "rank": 58,
+        "lemma": "her"
+      },
+      {
+        "rank": 59,
+        "lemma": "look"
+      },
+      {
+        "rank": 61,
+        "lemma": "tell"
+      },
+      {
+        "rank": 62,
+        "lemma": "let"
+      },
+      {
+        "rank": 67,
+        "lemma": "as"
+      },
+      {
+        "rank": 68,
+        "lemma": "will"
+      },
+      {
+        "rank": 69,
+        "lemma": "his"
+      },
+      {
+        "rank": 72,
+        "lemma": "back"
+      },
+      {
+        "rank": 75,
+        "lemma": "gonna"
+      },
+      {
+        "rank": 77,
+        "lemma": "an"
+      },
+      {
+        "rank": 81,
+        "lemma": "would"
+      },
+      {
+        "rank": 83,
+        "lemma": "some"
+      },
+      {
+        "rank": 84,
+        "lemma": "hey"
+      },
+      {
+        "rank": 85,
+        "lemma": "or"
+      },
+      {
+        "rank": 86,
+        "lemma": "us"
+      },
+      {
+        "rank": 88,
+        "lemma": "could"
+      },
+      {
+        "rank": 89,
+        "lemma": "need"
+      },
+      {
+        "rank": 91,
+        "lemma": "something"
+      },
+      {
+        "rank": 92,
+        "lemma": "mean"
+      },
+      {
+        "rank": 93,
+        "lemma": "down"
+      },
+      {
+        "rank": 94,
+        "lemma": "then"
+      },
+      {
+        "rank": 96,
+        "lemma": "way"
+      },
+      {
+        "rank": 98,
+        "lemma": "our"
+      },
+      {
+        "rank": 99,
+        "lemma": "call"
+      },
+      {
+        "rank": 100,
+        "lemma": "guy"
+      },
+      {
+        "rank": 118,
+        "lemma": "sure"
+      },
+      {
+        "rank": 165,
+        "lemma": "ever"
+      },
+      {
+        "rank": 174,
+        "lemma": "their"
+      },
+      {
+        "rank": 175,
+        "lemma": "alway"
+      },
+      {
+        "rank": 177,
+        "lemma": "miss"
+      },
+      {
+        "rank": 217,
+        "lemma": "wanna"
+      },
+      {
+        "rank": 237,
+        "lemma": "else"
+      },
+      {
+        "rank": 240,
+        "lemma": "real"
+      },
+      {
+        "rank": 242,
+        "lemma": "morn"
+      },
+      {
+        "rank": 253,
+        "lemma": "matter"
+      },
+      {
+        "rank": 259,
+        "lemma": "whole"
+      },
+      {
+        "rank": 271,
+        "lemma": "seem"
+      },
+      {
+        "rank": 277,
+        "lemma": "lady"
+      },
+      {
+        "rank": 284,
+        "lemma": "somebody"
+      },
+      {
+        "rank": 287,
+        "lemma": "myself"
+      },
+      {
+        "rank": 362,
+        "lemma": "bit"
+      },
+      {
+        "rank": 373,
+        "lemma": "whatever"
+      },
+      {
+        "rank": 389,
+        "lemma": "figure"
+      },
+      {
+        "rank": 395,
+        "lemma": "anybody"
+      },
+      {
+        "rank": 406,
+        "lemma": "hate"
+      },
+      {
+        "rank": 409,
+        "lemma": "sometime"
+      },
+      {
+        "rank": 423,
+        "lemma": "trust"
+      },
+      {
+        "rank": 424,
+        "lemma": "office"
+      },
+      {
+        "rank": 427,
+        "lemma": "clear"
+      },
+      {
+        "rank": 431,
+        "lemma": "wonder"
+      },
+      {
+        "rank": 455,
+        "lemma": "ma"
+      },
+      {
+        "rank": 459,
+        "lemma": "act"
+      },
+      {
+        "rank": 463,
+        "lemma": "along"
+      },
+      {
+        "rank": 486,
+        "lemma": "till"
+      },
+      {
+        "rank": 496,
+        "lemma": "sort"
+      }
+    ],
+    "junkProperInSpokenRanks1to500": [
+      "sir",
+      "god",
+      "fuck",
+      "shit",
+      "hell",
+      "damn",
+      "ass",
+      "captain",
+      "daddy",
+      "ma",
+      "bitch",
+      "cop",
+      "murder",
+      "scar",
+      "frank",
+      "jesus",
+      "chang"
+    ]
+  },
+  "proposedNext500": {
+    "count": 500,
+    "tbdGlossCount": 500,
+    "gapFromFirst500Included": 37,
+    "skippedCount": 522,
+    "selectionMethod": "Walk spoken-english-frequency-5000 in rank order; skip lemmas already covered by blocks 1-10 English glosses, function/filler words, proper nouns/junk; take next 500 teachable candidates for blocks 11-20."
+  },
+  "downloads": {
+    "first500": [
+      "/japanese/blocks-1-10.csv",
+      "/japanese/blocks-1-10.json"
+    ],
+    "next500": [
+      "/japanese/proposed-blocks-11-20.csv",
+      "/japanese/proposed-blocks-11-20.json"
+    ],
+    "audit": [
+      "/japanese/frequency-audit.json"
+    ]
+  }
+}

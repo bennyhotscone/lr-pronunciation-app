@@ -61,6 +61,18 @@
   align-items: center;
   margin: 0.85rem 0 0.35rem;
 }
+.jp-learn-downloads {
+  margin: 0.75rem 0 0.35rem;
+}
+.jp-learn-downloads-row {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+.jp-learn-downloads a.jp-learn-btn {
+  text-decoration: none;
+  display: inline-block;
+}
 .jp-learn-catalog-search-label {
   position: absolute;
   width: 1px;
