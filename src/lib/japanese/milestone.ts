@@ -40,7 +40,7 @@ export function mergeUnlockedBlocks(
     Array.from({ length: JAPANESE_ALWAYS_UNLOCKED_BLOCKS }, (_, i) => i + 1),
   );
   for (const row of rows) {
-    for (const n of row.unlockedBlocks) unlocked.add(n);
+    for (const n of row.unlockedBlocks ?? []) unlocked.add(n);
     if (row.blockMastered && row.blockNumber < JAPANESE_TOTAL_BLOCKS) {
       const next = row.blockNumber + 1;
       if (!isBlockBehindRevisionGate(next, revisionGatesPassed)) {

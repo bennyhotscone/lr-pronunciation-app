@@ -14,6 +14,12 @@ import {
 import { catalogEntriesForBlock } from "./blocks/catalog";
 
 describe("round-queue skip / review", () => {
+  it("tolerates missing priorLearning payload from older server actions", () => {
+    expect(priorLearningFromArrays(undefined).knownKeys.size).toBe(0);
+    expect(priorLearningFromArrays(null).seenKeys.size).toBe(0);
+    expect(priorLearningFromArrays({}).masteredBlocks.size).toBe(0);
+  });
+
   it("finds earlier mada headwords for later blocks", () => {
     const block4 = catalogEntriesForBlock(4);
     const mada = block4.find((e) => e.romajiKey === "mada");

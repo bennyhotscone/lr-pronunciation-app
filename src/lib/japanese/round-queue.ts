@@ -33,11 +33,12 @@ export function emptyPriorLearning(): PriorLearning {
   };
 }
 
-export function priorLearningFromArrays(input: {
+export function priorLearningFromArrays(input?: {
   knownKeys?: readonly string[];
   seenKeys?: readonly string[];
   masteredBlocks?: readonly number[];
-}): PriorLearning {
+} | null): PriorLearning {
+  if (!input) return emptyPriorLearning();
   return {
     knownKeys: new Set(input.knownKeys ?? []),
     seenKeys: new Set(input.seenKeys ?? []),

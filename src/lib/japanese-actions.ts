@@ -138,7 +138,12 @@ export async function loadJapaneseProgress(
     const masteredBlocks = allProgress
       .filter((row) => row.blockMastered)
       .map((row) => row.blockNumber);
-    const priorLearning = { knownKeys, seenKeys, masteredBlocks };
+    // Always include priorLearning so older/newer clients never crash on missing field.
+    const priorLearning: JapaneseProgressPayload["priorLearning"] = {
+      knownKeys,
+      seenKeys,
+      masteredBlocks,
+    };
 
     const wordCount = getJapaneseBlock(blockNumber).length;
     const knownIndices = [...getKnownIndices(statsToKnownWordsMap(stats))];

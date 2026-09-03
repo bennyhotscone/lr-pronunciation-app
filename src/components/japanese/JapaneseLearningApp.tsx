@@ -140,6 +140,11 @@ export function JapaneseLearningApp() {
     loadJapaneseProgress(block)
       .then((data) => {
         if (cancelled) return;
+        if (!data || typeof data !== "object") {
+          setLoadError("Couldn't load progress. Please try again.");
+          setLoading(false);
+          return;
+        }
         if ("error" in data) {
           setLoadError(data.error);
           setLoading(false);
