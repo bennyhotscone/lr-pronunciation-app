@@ -11,6 +11,7 @@ import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import {
   getBlocksForRevisionGate,
   getFirstBlockUnlockedByRevisionGate,
+  isLiveRevisionGate,
   revisionGateLabel,
   revisionGateWordCount,
 } from "@/lib/japanese/revision-gate";
@@ -110,8 +111,8 @@ function buildRevisionQuestions(gateNumber: number): {
   const pool = collectRevisionWords(gateNumber);
   const sampled = shuffle(pool).slice(0, Math.min(JAPANESE_REVISION_WORD_SAMPLE, pool.length));
   const wordQuestions: RevisionWordQuestion[] = sampled.map(({ blockNumber, wordIndex, word }, i) => {
-    // Alternate produce (EN→romaji) and understand (romaji→EN) for a mixed drill.
-    const mode: RevisionWordQuestion["mode"] = i % 2 === 0 ? "type-romaji" : "type-english";
+    // Romaji-first: mostly EN→romaji produce; every 3rd is romaji→EN understand.
+    const mode: RevisionWordQuestion["mode"] = i % 3 === 0 ? "type-english" : "type-romaji";
     return {
       kind: "word",
       id: `${blockNumber}-${wordIndex}`,
@@ -151,9 +152,12 @@ export async function loadRevisionGate(
     if (!session) return { error: "Unauthorized" };
 
     const userId = session.user.id;
+    if (!isLiveRevisionGate(gateNumber)) {
+      return { error: "This revision gate is not enabled." };
+    }
     const { questions, sampleSize } = buildRevisionQuestions(gateNumber);
     if (!questions.length) {
-      return { error: "No vocabulary loaded for this revision gate yet." };
+      return { error: "No vocabulary loaded for this revision gate." };
     }
 
     let progress: { passed: boolean; attempts: number } | null = null;
@@ -213,9 +217,12 @@ export async function submitRevisionAnswers(
   if (!session) return { error: "Unauthorized" };
 
   const userId = session.user.id;
+  if (!isLiveRevisionGate(gateNumber)) {
+    return { error: "This revision gate is not enabled." };
+  }
   const playable = collectRevisionWords(gateNumber);
   if (!playable.length) {
-    return { error: "No vocabulary loaded for this revision gate yet." };
+    return { error: "No vocabulary loaded for this revision gate." };
   }
 
   const sentenceById = new Map(

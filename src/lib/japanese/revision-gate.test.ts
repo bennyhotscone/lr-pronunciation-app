@@ -5,6 +5,7 @@ import {
   getRequiredRevisionGate,
   getRevisionGateForCompletedBlock,
   isBlockBehindRevisionGate,
+  isLiveRevisionGate,
   revisionGateWordCount,
 } from "./revision-gate";
 import { updateMetaAfterRound, createInitialBlockMeta } from "./engine";
@@ -55,5 +56,10 @@ describe("revision gates", () => {
     meta = updateMetaAfterRound(meta, 5, 5, 95, []);
     expect(meta.blockMastered).toBe(true);
     expect(meta.unlockedBlocks).toContain(6);
+  });
+
+  it("marks only gate 1 as live", () => {
+    expect(isLiveRevisionGate(1)).toBe(true);
+    expect(isLiveRevisionGate(2)).toBe(false);
   });
 });

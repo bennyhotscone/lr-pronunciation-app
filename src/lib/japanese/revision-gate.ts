@@ -3,6 +3,16 @@ import { JAPANESE_ALWAYS_UNLOCKED_BLOCKS, JAPANESE_TOTAL_BLOCKS, JAPANESE_WORDS_
 /** Blocks per revision gate (after block 5, 10, 15…). */
 export const JAPANESE_REVISION_GROUP_SIZE = 5;
 
+/**
+ * Gates with a fully working quiz end-to-end.
+ * Never surface CTAs / unlocks / links for gates outside this list.
+ */
+export const LIVE_REVISION_GATES: readonly number[] = [1];
+
+export function isLiveRevisionGate(gateNumber: number): boolean {
+  return LIVE_REVISION_GATES.includes(gateNumber);
+}
+
 /** Revision gate index for a completed block (block 5 → gate 1). */
 export function getRevisionGateForCompletedBlock(blockNumber: number): number | null {
   if (blockNumber <= 0 || blockNumber % JAPANESE_REVISION_GROUP_SIZE !== 0) return null;

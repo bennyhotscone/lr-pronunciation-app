@@ -36,7 +36,13 @@ import {
 import {
   getMilestoneForBlock,
 } from "@/lib/japanese/milestone";
-import { getRevisionGateForCompletedBlock, revisionGateLabel } from "@/lib/japanese/revision-gate";
+import {
+  getBlocksForRevisionGate,
+  getRevisionGateForCompletedBlock,
+  isLiveRevisionGate,
+  LIVE_REVISION_GATES,
+  revisionGateLabel,
+} from "@/lib/japanese/revision-gate";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import { cancelJapaneseSpeech, playWordAudio } from "@/lib/japanese/tts";
 import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
@@ -608,16 +614,16 @@ export function JapaneseLearningApp() {
 
   const suggestedRevisionGate = useMemo(() => {
     const gate = getRevisionGateForCompletedBlock(block);
-    if (!gate || !meta?.blockMastered) return null;
+    if (!gate || !isLiveRevisionGate(gate) || !meta?.blockMastered) return null;
     if (revisionGatesPassed.includes(gate)) return null;
     return gate;
   }, [block, meta?.blockMastered, revisionGatesPassed]);
 
+  /** Only live gates with playable vocab — never list unfinished/placeholder quizzes. */
   const availableRevisionGates = useMemo(() => {
-    const gates: number[] = [];
-    if (isPlayableJapaneseBlock(5)) gates.push(1);
-    if (isPlayableJapaneseBlock(10)) gates.push(2);
-    return gates;
+    return LIVE_REVISION_GATES.filter((gate) =>
+      getBlocksForRevisionGate(gate).every((n) => isPlayableJapaneseBlock(n)),
+    );
   }, []);
 
   if (screen === "revision" && activeRevisionGate) {
@@ -744,22 +750,26 @@ export function JapaneseLearningApp() {
         {suggestedRevisionGate ? (
           <div className="jp-learn-gate-banner" role="status">
             <p>
-              Recommended: revise {revisionGateLabel(suggestedRevisionGate)} while blocks{" "}
-              {suggestedRevisionGate === 1 ? "1–5" : "6–10"} are fresh in memory.
+              Recommended: revise {revisionGateLabel(suggestedRevisionGate)} while blocks 1–5 are
+              fresh in memory.
             </p>
             <button
               type="button"
               className="jp-learn-btn jp-learn-btn-gate"
               onClick={() => openRevisionGate(suggestedRevisionGate)}
             >
-              Start revision quiz (from 250 words)
+              Start revision quiz
             </button>
           </div>
         ) : null}
-        {availableRevisionGates.length > 0 ? (
+        {availableRevisionGates.length > 0 &&
+        (suggestedRevisionGate || revisionGatesPassed.some((g) => isLiveRevisionGate(g))) ? (
           <section className="jp-learn-practice" aria-labelledby="jp-revision-heading">
-            <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quizzes</h2>
-            <p className="jp-learn-sub">Practice anytime - 50 word questions sampled from each 5-block pool (250 words), plus sentence building. 80% to pass.</p>
+            <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quiz</h2>
+            <p className="jp-learn-sub">
+              75 romaji-first questions sampled from the 250-word pool (blocks 1–5), plus sentence
+              building. 80% to pass.
+            </p>
             <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
               {availableRevisionGates.map((gate) => (
                 <button
