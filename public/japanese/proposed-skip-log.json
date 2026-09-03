@@ -3120,8 +3120,48 @@
     "reason": "proper-noun/junk/offensive"
   },
   {
+    "rank": 1108,
+    "lemma": "wild",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1110,
+    "lemma": "bust",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1112,
+    "lemma": "roger",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1118,
+    "lemma": "dick",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1119,
+    "lemma": "ow",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
     "rank": 1120,
     "lemma": "receive",
     "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 1122,
+    "lemma": "piss",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1124,
+    "lemma": "larry",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1128,
+    "lemma": "kelly",
+    "reason": "proper-noun/junk/offensive"
   }
 ]

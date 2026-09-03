@@ -1,0 +1,2507 @@
+{
+  "just": {
+    "jp": "ちょうど / ただ",
+    "romaji": "choudo / tada",
+    "note": ""
+  },
+  "look": {
+    "jp": "見る / 探す",
+    "romaji": "miru / sagasu",
+    "note": "multi-sense"
+  },
+  "tell": {
+    "jp": "教える / 言う",
+    "romaji": "oshieru / iu",
+    "note": ""
+  },
+  "let": {
+    "jp": "〜させる / 貸す",
+    "romaji": "saseru / kasu",
+    "note": "multi-sense"
+  },
+  "back": {
+    "jp": "戻る / 後ろ / 背中",
+    "romaji": "modoru / ushiro / senaka",
+    "note": "multi-sense"
+  },
+  "some": {
+    "jp": "いくつかの / ある",
+    "romaji": "ikutsuka no / aru",
+    "note": ""
+  },
+  "need": {
+    "jp": "必要だ / 要る",
+    "romaji": "hitsuyou da / iru",
+    "note": ""
+  },
+  "something": {
+    "jp": "何か",
+    "romaji": "nanika",
+    "note": ""
+  },
+  "mean": {
+    "jp": "意味する",
+    "romaji": "imi suru",
+    "note": ""
+  },
+  "down": {
+    "jp": "下 / 下りる",
+    "romaji": "shita / oriru",
+    "note": "multi-sense"
+  },
+  "way": {
+    "jp": "道 / 方法",
+    "romaji": "michi / houhou",
+    "note": "multi-sense"
+  },
+  "call": {
+    "jp": "電話する / 呼ぶ",
+    "romaji": "denwa suru / yobu",
+    "note": "multi-sense"
+  },
+  "guy": {
+    "jp": "男の人 / やつ",
+    "romaji": "otoko no hito / yatsu",
+    "note": "casual"
+  },
+  "sure": {
+    "jp": "確かに / 大丈夫",
+    "romaji": "tashika ni / daijoubu",
+    "note": ""
+  },
+  "ever": {
+    "jp": "今まで / かつて",
+    "romaji": "ima made / katsute",
+    "note": ""
+  },
+  "miss": {
+    "jp": "会いたい / 逃す",
+    "romaji": "aitai / nogasu",
+    "note": "multi-sense"
+  },
+  "else": {
+    "jp": "他に",
+    "romaji": "hoka ni",
+    "note": ""
+  },
+  "real": {
+    "jp": "本当の / 本物の",
+    "romaji": "hontou no / honmono no",
+    "note": ""
+  },
+  "matter": {
+    "jp": "問題 / 大事",
+    "romaji": "mondai / daiji",
+    "note": "multi-sense"
+  },
+  "whole": {
+    "jp": "全体の / 全部",
+    "romaji": "zentai no / zenbu",
+    "note": ""
+  },
+  "seem": {
+    "jp": "〜そうだ / 見える",
+    "romaji": "sou da / mieru",
+    "note": ""
+  },
+  "lady": {
+    "jp": "女性",
+    "romaji": "josei",
+    "note": ""
+  },
+  "somebody": {
+    "jp": "誰か",
+    "romaji": "dareka",
+    "note": ""
+  },
+  "bit": {
+    "jp": "少し / ちょっと",
+    "romaji": "sukoshi / chotto",
+    "note": ""
+  },
+  "whatever": {
+    "jp": "何でも / どうでもいい",
+    "romaji": "nandemo / dou demo ii",
+    "note": ""
+  },
+  "figure": {
+    "jp": "分かる / 考える",
+    "romaji": "wakaru / kangaeru",
+    "note": "figure out"
+  },
+  "anybody": {
+    "jp": "誰でも / 誰か",
+    "romaji": "daredemo / dareka",
+    "note": ""
+  },
+  "hate": {
+    "jp": "嫌いだ",
+    "romaji": "kirai da",
+    "note": ""
+  },
+  "trust": {
+    "jp": "信じる / 信頼",
+    "romaji": "shinjiru / shinrai",
+    "note": ""
+  },
+  "office": {
+    "jp": "事務所 / 会社",
+    "romaji": "jimusho / kaisha",
+    "note": ""
+  },
+  "clear": {
+    "jp": "はっきりした / 晴れた",
+    "romaji": "hakkiri shita / hareta",
+    "note": "multi-sense"
+  },
+  "wonder": {
+    "jp": "〜かなと思う",
+    "romaji": "kana to omou",
+    "note": ""
+  },
+  "act": {
+    "jp": "行動する / 演技する",
+    "romaji": "koudou suru / engi suru",
+    "note": "multi-sense"
+  },
+  "along": {
+    "jp": "一緒に / 沿って",
+    "romaji": "issho ni / sotte",
+    "note": ""
+  },
+  "till": {
+    "jp": "〜まで",
+    "romaji": "made",
+    "note": ""
+  },
+  "sort": {
+    "jp": "種類 / 整理する",
+    "romaji": "shurui / seiri suru",
+    "note": "multi-sense"
+  },
+  "piece": {
+    "jp": "一切れ / 一片",
+    "romaji": "hitokire / ippen",
+    "note": ""
+  },
+  "report": {
+    "jp": "報告する / レポート",
+    "romaji": "houkoku suru / repooto",
+    "note": ""
+  },
+  "surprise": {
+    "jp": "驚く / 驚き",
+    "romaji": "odoroku / odoroki",
+    "note": ""
+  },
+  "dress": {
+    "jp": "ドレス / 服を着る",
+    "romaji": "doresu / fuku o kiru",
+    "note": "multi-sense"
+  },
+  "hair": {
+    "jp": "髪",
+    "romaji": "kami",
+    "note": ""
+  },
+  "food": {
+    "jp": "食べ物",
+    "romaji": "tabemono",
+    "note": ""
+  },
+  "lie": {
+    "jp": "嘘 / 横になる",
+    "romaji": "uso / yoko ni naru",
+    "note": "multi-sense"
+  },
+  "parent": {
+    "jp": "親",
+    "romaji": "oya",
+    "note": ""
+  },
+  "paper": {
+    "jp": "紙",
+    "romaji": "kami",
+    "note": ""
+  },
+  "catch": {
+    "jp": "捕まえる / 乗る",
+    "romaji": "tsukamaeru / noru",
+    "note": "multi-sense"
+  },
+  "luck": {
+    "jp": "運",
+    "romaji": "un",
+    "note": ""
+  },
+  "star": {
+    "jp": "星 / スター",
+    "romaji": "hoshi / sutaa",
+    "note": "multi-sense"
+  },
+  "alive": {
+    "jp": "生きている",
+    "romaji": "ikite iru",
+    "note": ""
+  },
+  "grow": {
+    "jp": "育つ / 増える",
+    "romaji": "sodatsu / fueru",
+    "note": ""
+  },
+  "music": {
+    "jp": "音楽",
+    "romaji": "ongaku",
+    "note": ""
+  },
+  "special": {
+    "jp": "特別な",
+    "romaji": "tokubetsu na",
+    "note": ""
+  },
+  "sing": {
+    "jp": "歌う",
+    "romaji": "utau",
+    "note": ""
+  },
+  "red": {
+    "jp": "赤い / 赤",
+    "romaji": "akai / aka",
+    "note": ""
+  },
+  "decide": {
+    "jp": "決める",
+    "romaji": "kimeru",
+    "note": ""
+  },
+  "laugh": {
+    "jp": "笑う",
+    "romaji": "warau",
+    "note": ""
+  },
+  "control": {
+    "jp": "制御する / コントロール",
+    "romaji": "seigyo suru / kontorooru",
+    "note": ""
+  },
+  "fly": {
+    "jp": "飛ぶ",
+    "romaji": "tobu",
+    "note": ""
+  },
+  "record": {
+    "jp": "記録する / レコード",
+    "romaji": "kiroku suru / rekoodo",
+    "note": "multi-sense"
+  },
+  "arm": {
+    "jp": "腕",
+    "romaji": "ude",
+    "note": ""
+  },
+  "safe": {
+    "jp": "安全な",
+    "romaji": "anzen na",
+    "note": ""
+  },
+  "serious": {
+    "jp": "深刻な / 真剣な",
+    "romaji": "shinkoku na / shinken na",
+    "note": ""
+  },
+  "cover": {
+    "jp": "覆う / カバーする",
+    "romaji": "oou / kabaa suru",
+    "note": ""
+  },
+  "sweet": {
+    "jp": "甘い / 優しい",
+    "romaji": "amai / yasashii",
+    "note": "multi-sense"
+  },
+  "ten": {
+    "jp": "十",
+    "romaji": "juu",
+    "note": ""
+  },
+  "ball": {
+    "jp": "ボール",
+    "romaji": "booru",
+    "note": ""
+  },
+  "sense": {
+    "jp": "感覚 / 意味が分かる",
+    "romaji": "kankaku / imi ga wakaru",
+    "note": "multi-sense"
+  },
+  "lucky": {
+    "jp": "運がいい",
+    "romaji": "un ga ii",
+    "note": ""
+  },
+  "step": {
+    "jp": "一歩 / ステップ",
+    "romaji": "ippo / suteppu",
+    "note": ""
+  },
+  "bill": {
+    "jp": "勘定 / 請求書",
+    "romaji": "kanjou / seikyuusho",
+    "note": "multi-sense"
+  },
+  "top": {
+    "jp": "上 / トップ",
+    "romaji": "ue / toppu",
+    "note": ""
+  },
+  "date": {
+    "jp": "日付 / デート",
+    "romaji": "hizuke / deeto",
+    "note": "multi-sense"
+  },
+  "air": {
+    "jp": "空気",
+    "romaji": "kuuki",
+    "note": ""
+  },
+  "human": {
+    "jp": "人間",
+    "romaji": "ningen",
+    "note": ""
+  },
+  "ring": {
+    "jp": "指輪 / 鳴る",
+    "romaji": "yubiwa / naru",
+    "note": "multi-sense"
+  },
+  "charge": {
+    "jp": "充電する / 担当 / 料金",
+    "romaji": "juuden suru / tantou / ryoukin",
+    "note": "multi-sense"
+  },
+  "explain": {
+    "jp": "説明する",
+    "romaji": "setsumei suru",
+    "note": ""
+  },
+  "key": {
+    "jp": "鍵 / キー",
+    "romaji": "kagi / kii",
+    "note": ""
+  },
+  "cry": {
+    "jp": "泣く",
+    "romaji": "naku",
+    "note": ""
+  },
+  "burn": {
+    "jp": "燃える / 焼く",
+    "romaji": "moeru / yaku",
+    "note": ""
+  },
+  "sell": {
+    "jp": "売る",
+    "romaji": "uru",
+    "note": ""
+  },
+  "handle": {
+    "jp": "扱う / 取っ手",
+    "romaji": "atsukau / totte",
+    "note": "multi-sense"
+  },
+  "begin": {
+    "jp": "始まる / 始める",
+    "romaji": "hajimaru / hajimeru",
+    "note": ""
+  },
+  "perhaps": {
+    "jp": "たぶん / もしかしたら",
+    "romaji": "tabun / moshikashitara",
+    "note": ""
+  },
+  "ride": {
+    "jp": "乗る",
+    "romaji": "noru",
+    "note": ""
+  },
+  "secret": {
+    "jp": "秘密",
+    "romaji": "himitsu",
+    "note": ""
+  },
+  "card": {
+    "jp": "カード",
+    "romaji": "kaado",
+    "note": ""
+  },
+  "class": {
+    "jp": "授業 / クラス",
+    "romaji": "jugyou / kurasu",
+    "note": ""
+  },
+  "test": {
+    "jp": "テスト / 試す",
+    "romaji": "tesuto / tamesu",
+    "note": ""
+  },
+  "law": {
+    "jp": "法律",
+    "romaji": "houritsu",
+    "note": ""
+  },
+  "hat": {
+    "jp": "帽子",
+    "romaji": "boushi",
+    "note": ""
+  },
+  "officer": {
+    "jp": "警官 / 役員",
+    "romaji": "keikan / yakuin",
+    "note": ""
+  },
+  "count": {
+    "jp": "数える",
+    "romaji": "kazoeru",
+    "note": ""
+  },
+  "blow": {
+    "jp": "吹く / 殴る",
+    "romaji": "fuku / naguru",
+    "note": "multi-sense"
+  },
+  "fix": {
+    "jp": "直す",
+    "romaji": "naosu",
+    "note": ""
+  },
+  "hospital": {
+    "jp": "病院",
+    "romaji": "byouin",
+    "note": ""
+  },
+  "boss": {
+    "jp": "上司 / ボス",
+    "romaji": "joushi / bosu",
+    "note": ""
+  },
+  "poor": {
+    "jp": "貧しい / かわいそうな",
+    "romaji": "mazushii / kawaisou na",
+    "note": "multi-sense"
+  },
+  "ship": {
+    "jp": "船",
+    "romaji": "fune",
+    "note": ""
+  },
+  "kick": {
+    "jp": "蹴る",
+    "romaji": "keru",
+    "note": ""
+  },
+  "uncle": {
+    "jp": "おじさん / 叔父・伯父",
+    "romaji": "ojisan / oji",
+    "note": ""
+  },
+  "bag": {
+    "jp": "かばん / バッグ",
+    "romaji": "kaban / baggu",
+    "note": ""
+  },
+  "stick": {
+    "jp": "棒 / 貼る / くっつく",
+    "romaji": "bou / haru / kuttsuku",
+    "note": "multi-sense"
+  },
+  "fool": {
+    "jp": "馬鹿 / 騙す",
+    "romaji": "baka / damasu",
+    "note": "multi-sense"
+  },
+  "rule": {
+    "jp": "規則 / ルール",
+    "romaji": "kisoku / ruuru",
+    "note": ""
+  },
+  "mistake": {
+    "jp": "間違い",
+    "romaji": "machigai",
+    "note": ""
+  },
+  "past": {
+    "jp": "過去",
+    "romaji": "kako",
+    "note": ""
+  },
+  "lead": {
+    "jp": "導く / リードする",
+    "romaji": "michibiku / riido suru",
+    "note": ""
+  },
+  "land": {
+    "jp": "土地 / 着陸する",
+    "romaji": "tochi / chakuriku suru",
+    "note": "multi-sense"
+  },
+  "spend": {
+    "jp": "使う（お金・時間）",
+    "romaji": "tsukau",
+    "note": ""
+  },
+  "agent": {
+    "jp": "代理人 / エージェント",
+    "romaji": "dairinin / eejento",
+    "note": ""
+  },
+  "offer": {
+    "jp": "申し出る / 提供する",
+    "romaji": "moushideru / teikyou suru",
+    "note": ""
+  },
+  "force": {
+    "jp": "力 / 強制する",
+    "romaji": "chikara / kyousei suru",
+    "note": "multi-sense"
+  },
+  "smell": {
+    "jp": "におい / 嗅ぐ",
+    "romaji": "nioi / kagu",
+    "note": ""
+  },
+  "straight": {
+    "jp": "まっすぐ / ストレート",
+    "romaji": "massugu / sutoreeto",
+    "note": ""
+  },
+  "carry": {
+    "jp": "運ぶ",
+    "romaji": "hakobu",
+    "note": ""
+  },
+  "road": {
+    "jp": "道 / 道路",
+    "romaji": "michi / douro",
+    "note": ""
+  },
+  "enjoy": {
+    "jp": "楽しむ",
+    "romaji": "tanoshimu",
+    "note": ""
+  },
+  "letter": {
+    "jp": "手紙 / 文字",
+    "romaji": "tegami / moji",
+    "note": "multi-sense"
+  },
+  "realize": {
+    "jp": "気づく / 実感する",
+    "romaji": "kizuku / jikkan suru",
+    "note": ""
+  },
+  "lock": {
+    "jp": "鍵をかける / 錠",
+    "romaji": "kagi o kakeru / jou",
+    "note": ""
+  },
+  "general": {
+    "jp": "一般的な / 将軍",
+    "romaji": "ippanteki na / shougun",
+    "note": "multi-sense"
+  },
+  "clothes": {
+    "jp": "服",
+    "romaji": "fuku",
+    "note": ""
+  },
+  "certainly": {
+    "jp": "確かに",
+    "romaji": "tashika ni",
+    "note": ""
+  },
+  "attack": {
+    "jp": "攻撃する",
+    "romaji": "kougeki suru",
+    "note": ""
+  },
+  "quiet": {
+    "jp": "静かな",
+    "romaji": "shizuka na",
+    "note": ""
+  },
+  "present": {
+    "jp": "プレゼント / 現在の",
+    "romaji": "purezento / genzai no",
+    "note": "multi-sense"
+  },
+  "table": {
+    "jp": "テーブル / 机",
+    "romaji": "teeburu / tsukue",
+    "note": ""
+  },
+  "finally": {
+    "jp": "やっと / 最終的に",
+    "romaji": "yatto / saishuuteki ni",
+    "note": ""
+  },
+  "goodbye": {
+    "jp": "さよなら",
+    "romaji": "sayonara",
+    "note": ""
+  },
+  "rock": {
+    "jp": "岩 / ロック",
+    "romaji": "iwa / rokku",
+    "note": "multi-sense"
+  },
+  "song": {
+    "jp": "歌",
+    "romaji": "uta",
+    "note": ""
+  },
+  "possible": {
+    "jp": "可能な",
+    "romaji": "kanou na",
+    "note": ""
+  },
+  "box": {
+    "jp": "箱",
+    "romaji": "hako",
+    "note": ""
+  },
+  "join": {
+    "jp": "参加する / 加わる",
+    "romaji": "sanka suru / kuwawaru",
+    "note": ""
+  },
+  "mad": {
+    "jp": "怒った / 狂った",
+    "romaji": "okotta / kurutta",
+    "note": "multi-sense"
+  },
+  "park": {
+    "jp": "公園 / 駐車する",
+    "romaji": "kouen / chuusha suru",
+    "note": "multi-sense"
+  },
+  "absolutely": {
+    "jp": "絶対に",
+    "romaji": "zettai ni",
+    "note": ""
+  },
+  "push": {
+    "jp": "押す",
+    "romaji": "osu",
+    "note": ""
+  },
+  "honor": {
+    "jp": "名誉 / 敬う",
+    "romaji": "meiyo / uyamau",
+    "note": ""
+  },
+  "blue": {
+    "jp": "青い / 青",
+    "romaji": "aoi / ao",
+    "note": ""
+  },
+  "joke": {
+    "jp": "冗談",
+    "romaji": "joudan",
+    "note": ""
+  },
+  "seat": {
+    "jp": "席",
+    "romaji": "seki",
+    "note": ""
+  },
+  "mouth": {
+    "jp": "口",
+    "romaji": "kuchi",
+    "note": ""
+  },
+  "worth": {
+    "jp": "価値がある",
+    "romaji": "kachi ga aru",
+    "note": ""
+  },
+  "message": {
+    "jp": "メッセージ",
+    "romaji": "messeiji",
+    "note": ""
+  },
+  "jump": {
+    "jp": "跳ぶ",
+    "romaji": "tobu",
+    "note": ""
+  },
+  "mess": {
+    "jp": "散らかった状態 / めちゃくちゃ",
+    "romaji": "chirakatta joutai / mechakucha",
+    "note": ""
+  },
+  "club": {
+    "jp": "クラブ / クラブ活動",
+    "romaji": "kurabu",
+    "note": ""
+  },
+  "choice": {
+    "jp": "選択 / 選択肢",
+    "romaji": "sentaku / sentakushi",
+    "note": ""
+  },
+  "floor": {
+    "jp": "床 / 階",
+    "romaji": "yuka / kai",
+    "note": "multi-sense"
+  },
+  "window": {
+    "jp": "窓",
+    "romaji": "mado",
+    "note": ""
+  },
+  "major": {
+    "jp": "主要な / 専攻",
+    "romaji": "shuyou na / senkou",
+    "note": "multi-sense"
+  },
+  "court": {
+    "jp": "裁判所 / コート",
+    "romaji": "saibansho / kooto",
+    "note": "multi-sense"
+  },
+  "careful": {
+    "jp": "注意深い / 気をつけて",
+    "romaji": "chuui bukai / ki o tsukete",
+    "note": ""
+  },
+  "quick": {
+    "jp": "速い / 素早い",
+    "romaji": "hayai / subayai",
+    "note": ""
+  },
+  "boat": {
+    "jp": "ボート / 船",
+    "romaji": "booto / fune",
+    "note": ""
+  },
+  "knock": {
+    "jp": "ノックする / 叩く",
+    "romaji": "nokku suru / tataku",
+    "note": ""
+  },
+  "hotel": {
+    "jp": "ホテル",
+    "romaji": "hoteru",
+    "note": ""
+  },
+  "system": {
+    "jp": "システム / 制度",
+    "romaji": "shisutemu / seido",
+    "note": ""
+  },
+  "relax": {
+    "jp": "リラックスする / くつろぐ",
+    "romaji": "rirakkusu suru / kutsurogu",
+    "note": ""
+  },
+  "state": {
+    "jp": "州 / 状態",
+    "romaji": "shuu / joutai",
+    "note": "multi-sense"
+  },
+  "notice": {
+    "jp": "気づく / 知らせ",
+    "romaji": "kizuku / shirase",
+    "note": ""
+  },
+  "unit": {
+    "jp": "単位 / 部隊",
+    "romaji": "tani / butai",
+    "note": "multi-sense"
+  },
+  "lunch": {
+    "jp": "昼食 / ランチ",
+    "romaji": "chuushoku / ranchi",
+    "note": ""
+  },
+  "agree": {
+    "jp": "同意する",
+    "romaji": "doui suru",
+    "note": ""
+  },
+  "fault": {
+    "jp": "欠点 / せい（責任）",
+    "romaji": "ketten / sei",
+    "note": ""
+  },
+  "dollar": {
+    "jp": "ドル",
+    "romaji": "doru",
+    "note": ""
+  },
+  "seven": {
+    "jp": "七",
+    "romaji": "nana / shichi",
+    "note": ""
+  },
+  "future": {
+    "jp": "未来 / 将来",
+    "romaji": "mirai / shourai",
+    "note": ""
+  },
+  "bar": {
+    "jp": "バー / 棒",
+    "romaji": "baa / bou",
+    "note": "multi-sense"
+  },
+  "brain": {
+    "jp": "脳",
+    "romaji": "nou",
+    "note": ""
+  },
+  "bank": {
+    "jp": "銀行",
+    "romaji": "ginkou",
+    "note": ""
+  },
+  "smoke": {
+    "jp": "煙 / タバコを吸う",
+    "romaji": "kemuri / tabako o suu",
+    "note": ""
+  },
+  "pain": {
+    "jp": "痛み",
+    "romaji": "itami",
+    "note": ""
+  },
+  "bother": {
+    "jp": "迷惑をかける / 気にする",
+    "romaji": "meiwaku o kakeru / ki ni suru",
+    "note": ""
+  },
+  "voice": {
+    "jp": "声",
+    "romaji": "koe",
+    "note": ""
+  },
+  "roll": {
+    "jp": "転がる / 巻く",
+    "romaji": "korogaru / maku",
+    "note": "multi-sense"
+  },
+  "tv": {
+    "jp": "テレビ",
+    "romaji": "terebi",
+    "note": ""
+  },
+  "service": {
+    "jp": "サービス / 勤務",
+    "romaji": "saabisu / kinmu",
+    "note": ""
+  },
+  "quit": {
+    "jp": "やめる",
+    "romaji": "yameru",
+    "note": ""
+  },
+  "weird": {
+    "jp": "変な / 奇妙な",
+    "romaji": "hen na / kimyou na",
+    "note": ""
+  },
+  "arrest": {
+    "jp": "逮捕する",
+    "romaji": "taiho suru",
+    "note": ""
+  },
+  "hundred": {
+    "jp": "百",
+    "romaji": "hyaku",
+    "note": ""
+  },
+  "birthday": {
+    "jp": "誕生日",
+    "romaji": "tanjoubi",
+    "note": ""
+  },
+  "judge": {
+    "jp": "判断する / 裁判官",
+    "romaji": "handan suru / saibankan",
+    "note": "multi-sense"
+  },
+  "protect": {
+    "jp": "守る",
+    "romaji": "mamoru",
+    "note": ""
+  },
+  "partner": {
+    "jp": "パートナー / 相棒",
+    "romaji": "paatonaa / aibou",
+    "note": ""
+  },
+  "earth": {
+    "jp": "地球 / 土",
+    "romaji": "chikyuu / tsuchi",
+    "note": "multi-sense"
+  },
+  "allow": {
+    "jp": "許可する",
+    "romaji": "kyoka suru",
+    "note": ""
+  },
+  "eight": {
+    "jp": "八",
+    "romaji": "hachi",
+    "note": ""
+  },
+  "rid": {
+    "jp": "取り除く",
+    "romaji": "torinozoku",
+    "note": "get rid of"
+  },
+  "attention": {
+    "jp": "注意 / 注目",
+    "romaji": "chuui / chuumoku",
+    "note": ""
+  },
+  "lawyer": {
+    "jp": "弁護士",
+    "romaji": "bengoshi",
+    "note": ""
+  },
+  "share": {
+    "jp": "分け合う / 共有する",
+    "romaji": "wakeau / kyouyuu suru",
+    "note": ""
+  },
+  "teach": {
+    "jp": "教える",
+    "romaji": "oshieru",
+    "note": ""
+  },
+  "smart": {
+    "jp": "賢い / 利口な",
+    "romaji": "kashikoi / rikou na",
+    "note": ""
+  },
+  "trip": {
+    "jp": "旅行 / つまずく",
+    "romaji": "ryokou / tsumazuku",
+    "note": "multi-sense"
+  },
+  "drug": {
+    "jp": "薬 / 麻薬",
+    "romaji": "kusuri / mayaku",
+    "note": "multi-sense"
+  },
+  "thousand": {
+    "jp": "千",
+    "romaji": "sen",
+    "note": ""
+  },
+  "consider": {
+    "jp": "検討する / みなす",
+    "romaji": "kentou suru / minasu",
+    "note": ""
+  },
+  "master": {
+    "jp": "マスター / 主人 / 習得する",
+    "romaji": "masutaa / shujin / shutoku suru",
+    "note": "multi-sense"
+  },
+  "wall": {
+    "jp": "壁",
+    "romaji": "kabe",
+    "note": ""
+  },
+  "imagine": {
+    "jp": "想像する",
+    "romaji": "souzou suru",
+    "note": ""
+  },
+  "short": {
+    "jp": "短い",
+    "romaji": "mijikai",
+    "note": ""
+  },
+  "tree": {
+    "jp": "木",
+    "romaji": "ki",
+    "note": ""
+  },
+  "security": {
+    "jp": "安全 / 警備",
+    "romaji": "anzen / keibi",
+    "note": ""
+  },
+  "plane": {
+    "jp": "飛行機",
+    "romaji": "hikouki",
+    "note": ""
+  },
+  "lovely": {
+    "jp": "素敵な / 愛らしい",
+    "romaji": "suteki na / airashii",
+    "note": ""
+  },
+  "appreciate": {
+    "jp": "感謝する / 理解する",
+    "romaji": "kansha suru / rikai suru",
+    "note": ""
+  },
+  "fair": {
+    "jp": "公平な / まあまあ",
+    "romaji": "kouhei na / maa maa",
+    "note": "multi-sense"
+  },
+  "reach": {
+    "jp": "届く / 着く",
+    "romaji": "todoku / tsuku",
+    "note": ""
+  },
+  "mention": {
+    "jp": "言及する",
+    "romaji": "genkyuu suru",
+    "note": ""
+  },
+  "across": {
+    "jp": "横切って / 向こうに",
+    "romaji": "yokogitte / mukou ni",
+    "note": ""
+  },
+  "raise": {
+    "jp": "上げる / 育てる",
+    "romaji": "ageru / sodateru",
+    "note": "multi-sense"
+  },
+  "terrible": {
+    "jp": "ひどい / 恐ろしい",
+    "romaji": "hidoi / osoroshii",
+    "note": ""
+  },
+  "caught": {
+    "jp": "捕まえる（過去）",
+    "romaji": "tsukamaeru",
+    "note": "catch past"
+  },
+  "treat": {
+    "jp": "扱う / ごちそう",
+    "romaji": "atsukau / gochisou",
+    "note": "multi-sense"
+  },
+  "glass": {
+    "jp": "ガラス / グラス",
+    "romaji": "garasu / gurasu",
+    "note": ""
+  },
+  "afternoon": {
+    "jp": "午後",
+    "romaji": "gogo",
+    "note": ""
+  },
+  "patient": {
+    "jp": "患者 / 忍耐強い",
+    "romaji": "kanja / nintai zuyoi",
+    "note": "multi-sense"
+  },
+  "calm": {
+    "jp": "落ち着いた",
+    "romaji": "ochitsuita",
+    "note": ""
+  },
+  "swear": {
+    "jp": "誓う / 悪態をつく",
+    "romaji": "chikau / akutai o tsuku",
+    "note": "multi-sense"
+  },
+  "horse": {
+    "jp": "馬",
+    "romaji": "uma",
+    "note": ""
+  },
+  "pop": {
+    "jp": "ポップ / 破裂する",
+    "romaji": "poppu / haretsu suru",
+    "note": "multi-sense"
+  },
+  "personal": {
+    "jp": "個人的な",
+    "romaji": "kojinteki na",
+    "note": ""
+  },
+  "list": {
+    "jp": "リスト / 一覧",
+    "romaji": "risuto / ichiran",
+    "note": ""
+  },
+  "grab": {
+    "jp": "掴む",
+    "romaji": "tsukamu",
+    "note": ""
+  },
+  "soul": {
+    "jp": "魂 / 心",
+    "romaji": "tamashii / kokoro",
+    "note": ""
+  },
+  "buck": {
+    "jp": "ドル（俗）",
+    "romaji": "doru",
+    "note": "slang"
+  },
+  "ground": {
+    "jp": "地面",
+    "romaji": "jimen",
+    "note": ""
+  },
+  "suit": {
+    "jp": "スーツ / 合う",
+    "romaji": "suutsu / au",
+    "note": "multi-sense"
+  },
+  "age": {
+    "jp": "年齢 / 時代",
+    "romaji": "nenrei / jidai",
+    "note": "multi-sense"
+  },
+  "tough": {
+    "jp": "タフな / 厳しい",
+    "romaji": "tafu na / kibishii",
+    "note": ""
+  },
+  "track": {
+    "jp": "追跡する / トラック",
+    "romaji": "tsuiseki suru / torakku",
+    "note": "multi-sense"
+  },
+  "jam": {
+    "jp": "渋滞 / ジャム",
+    "romaji": "juutai / jamu",
+    "note": "multi-sense"
+  },
+  "situation": {
+    "jp": "状況",
+    "romaji": "joukyou",
+    "note": ""
+  },
+  "guard": {
+    "jp": "警備する / 守衛",
+    "romaji": "keibi suru / shuei",
+    "note": ""
+  },
+  "middle": {
+    "jp": "真ん中",
+    "romaji": "mannaka",
+    "note": ""
+  },
+  "forgive": {
+    "jp": "許す",
+    "romaji": "yurusu",
+    "note": ""
+  },
+  "information": {
+    "jp": "情報",
+    "romaji": "jouhou",
+    "note": ""
+  },
+  "simple": {
+    "jp": "簡単な / 単純な",
+    "romaji": "kantan na / tanjun na",
+    "note": ""
+  },
+  "amaze": {
+    "jp": "驚かせる",
+    "romaji": "odorokaseru",
+    "note": ""
+  },
+  "army": {
+    "jp": "軍隊",
+    "romaji": "guntai",
+    "note": ""
+  },
+  "ticket": {
+    "jp": "切符 / チケット",
+    "romaji": "kippu / chiketto",
+    "note": ""
+  },
+  "study": {
+    "jp": "勉強する",
+    "romaji": "benkyou suru",
+    "note": ""
+  },
+  "forever": {
+    "jp": "永遠に",
+    "romaji": "eien ni",
+    "note": ""
+  },
+  "dark": {
+    "jp": "暗い",
+    "romaji": "kurai",
+    "note": ""
+  },
+  "destroy": {
+    "jp": "破壊する",
+    "romaji": "hakai suru",
+    "note": ""
+  },
+  "accident": {
+    "jp": "事故",
+    "romaji": "jiko",
+    "note": ""
+  },
+  "cute": {
+    "jp": "かわいい",
+    "romaji": "kawaii",
+    "note": ""
+  },
+  "lying": {
+    "jp": "嘘をついている / 横になっている",
+    "romaji": "uso o tsuite iru / yoko ni natte iru",
+    "note": "multi-sense"
+  },
+  "college": {
+    "jp": "大学",
+    "romaji": "daigaku",
+    "note": ""
+  },
+  "apartment": {
+    "jp": "アパート",
+    "romaji": "apaato",
+    "note": ""
+  },
+  "weapon": {
+    "jp": "武器",
+    "romaji": "buki",
+    "note": ""
+  },
+  "strong": {
+    "jp": "強い",
+    "romaji": "tsuyoi",
+    "note": ""
+  },
+  "excite": {
+    "jp": "興奮させる",
+    "romaji": "koufun saseru",
+    "note": ""
+  },
+  "cat": {
+    "jp": "猫",
+    "romaji": "neko",
+    "note": ""
+  },
+  "smile": {
+    "jp": "笑顔 / 笑う",
+    "romaji": "egao / warau",
+    "note": ""
+  },
+  "scream": {
+    "jp": "叫ぶ",
+    "romaji": "sakebu",
+    "note": ""
+  },
+  "beer": {
+    "jp": "ビール",
+    "romaji": "biiru",
+    "note": ""
+  },
+  "film": {
+    "jp": "映画 / フィルム",
+    "romaji": "eiga / firumu",
+    "note": ""
+  },
+  "totally": {
+    "jp": "完全に / まったく",
+    "romaji": "kanzen ni / mattaku",
+    "note": ""
+  },
+  "respect": {
+    "jp": "尊敬する / 尊重",
+    "romaji": "sonkei suru / sonchou",
+    "note": ""
+  },
+  "difference": {
+    "jp": "違い",
+    "romaji": "chigai",
+    "note": ""
+  },
+  "evidence": {
+    "jp": "証拠",
+    "romaji": "shouko",
+    "note": ""
+  },
+  "visit": {
+    "jp": "訪れる / 訪問",
+    "romaji": "otozureru / houmon",
+    "note": ""
+  },
+  "certain": {
+    "jp": "確かな / ある（特定の）",
+    "romaji": "tashika na / aru",
+    "note": ""
+  },
+  "history": {
+    "jp": "歴史",
+    "romaji": "rekishi",
+    "note": ""
+  },
+  "fear": {
+    "jp": "恐れ / 恐れる",
+    "romaji": "osore / osoreru",
+    "note": ""
+  },
+  "cross": {
+    "jp": "渡る / 十字",
+    "romaji": "wataru / juuji",
+    "note": "multi-sense"
+  },
+  "animal": {
+    "jp": "動物",
+    "romaji": "doubutsu",
+    "note": ""
+  },
+  "cook": {
+    "jp": "料理する",
+    "romaji": "ryouri suru",
+    "note": ""
+  },
+  "near": {
+    "jp": "近い / 近く",
+    "romaji": "chikai / chikaku",
+    "note": ""
+  },
+  "completely": {
+    "jp": "完全に",
+    "romaji": "kanzen ni",
+    "note": ""
+  },
+  "belong": {
+    "jp": "属する",
+    "romaji": "zokusuru",
+    "note": ""
+  },
+  "field": {
+    "jp": "畑 / 分野 / フィールド",
+    "romaji": "hatake / bunya / fiirudo",
+    "note": "multi-sense"
+  },
+  "girlfriend": {
+    "jp": "彼女",
+    "romaji": "kanojo",
+    "note": ""
+  },
+  "pleasure": {
+    "jp": "喜び / 快楽",
+    "romaji": "yorokobi / kairaku",
+    "note": ""
+  },
+  "file": {
+    "jp": "ファイル / 書類",
+    "romaji": "fairu / shorui",
+    "note": ""
+  },
+  "area": {
+    "jp": "地域 / エリア",
+    "romaji": "chiiki / eria",
+    "note": ""
+  },
+  "truck": {
+    "jp": "トラック",
+    "romaji": "torakku",
+    "note": ""
+  },
+  "rich": {
+    "jp": "お金持ちの",
+    "romaji": "okanemochi no",
+    "note": ""
+  },
+  "born": {
+    "jp": "生まれた",
+    "romaji": "umareta",
+    "note": ""
+  },
+  "proud": {
+    "jp": "誇りに思う",
+    "romaji": "hokori ni omou",
+    "note": ""
+  },
+  "group": {
+    "jp": "グループ / 集団",
+    "romaji": "guruupu / shuudan",
+    "note": ""
+  },
+  "owe": {
+    "jp": "借りがある",
+    "romaji": "kari ga aru",
+    "note": ""
+  },
+  "fill": {
+    "jp": "満たす / いっぱいにする",
+    "romaji": "mitasu / ippai ni suru",
+    "note": ""
+  },
+  "involve": {
+    "jp": "巻き込む / 含む",
+    "romaji": "makikomu / fukumu",
+    "note": ""
+  },
+  "gift": {
+    "jp": "贈り物",
+    "romaji": "okurimono",
+    "note": ""
+  },
+  "folk": {
+    "jp": "人々 / フォーク",
+    "romaji": "hitobito / fooku",
+    "note": ""
+  },
+  "position": {
+    "jp": "位置 / 立場",
+    "romaji": "ichi / tachiba",
+    "note": ""
+  },
+  "scene": {
+    "jp": "場面 / 現場",
+    "romaji": "bamen / genba",
+    "note": ""
+  },
+  "spot": {
+    "jp": "場所 / 染み",
+    "romaji": "basho / shimi",
+    "note": "multi-sense"
+  },
+  "chief": {
+    "jp": "長 / チーフ",
+    "romaji": "chou / chiifu",
+    "note": ""
+  },
+  "paint": {
+    "jp": "塗る / 絵の具",
+    "romaji": "nuru / enogu",
+    "note": ""
+  },
+  "steal": {
+    "jp": "盗む",
+    "romaji": "nusumu",
+    "note": ""
+  },
+  "fat": {
+    "jp": "太った / 脂肪",
+    "romaji": "futotta / shibou",
+    "note": ""
+  },
+  "race": {
+    "jp": "競争 / 人種",
+    "romaji": "kyousou / jinshu",
+    "note": "multi-sense"
+  },
+  "experience": {
+    "jp": "経験",
+    "romaji": "keiken",
+    "note": ""
+  },
+  "board": {
+    "jp": "板 / 乗り込む / 委員会",
+    "romaji": "ita / norikomu / iinkai",
+    "note": "multi-sense"
+  },
+  "contact": {
+    "jp": "連絡する / 接触",
+    "romaji": "renraku suru / sesshoku",
+    "note": ""
+  },
+  "summer": {
+    "jp": "夏",
+    "romaji": "natsu",
+    "note": ""
+  },
+  "marriage": {
+    "jp": "結婚",
+    "romaji": "kekkon",
+    "note": ""
+  },
+  "round": {
+    "jp": "丸い / 回",
+    "romaji": "marui / kai",
+    "note": "multi-sense"
+  },
+  "screw": {
+    "jp": "ネジ / 台無しにする",
+    "romaji": "neji / dainashi ni suru",
+    "note": "multi-sense"
+  },
+  "upset": {
+    "jp": "動揺した / 怒った",
+    "romaji": "douyou shita / okotta",
+    "note": ""
+  },
+  "radio": {
+    "jp": "ラジオ",
+    "romaji": "rajio",
+    "note": ""
+  },
+  "art": {
+    "jp": "芸術 / アート",
+    "romaji": "geijutsu / aato",
+    "note": ""
+  },
+  "entire": {
+    "jp": "全体の",
+    "romaji": "zentai no",
+    "note": ""
+  },
+  "pack": {
+    "jp": "詰める / パック",
+    "romaji": "tsumeru / pakku",
+    "note": ""
+  },
+  "ice": {
+    "jp": "氷",
+    "romaji": "koori",
+    "note": ""
+  },
+  "relationship": {
+    "jp": "関係",
+    "romaji": "kankei",
+    "note": ""
+  },
+  "favor": {
+    "jp": "お願い / 好意",
+    "romaji": "onegai / koui",
+    "note": ""
+  },
+  "invite": {
+    "jp": "招待する",
+    "romaji": "shoutai suru",
+    "note": ""
+  },
+  "bomb": {
+    "jp": "爆弾",
+    "romaji": "bakudan",
+    "note": ""
+  },
+  "instead": {
+    "jp": "代わりに",
+    "romaji": "kawari ni",
+    "note": ""
+  },
+  "prepare": {
+    "jp": "準備する",
+    "romaji": "junbi suru",
+    "note": ""
+  },
+  "gold": {
+    "jp": "金 / ゴールド",
+    "romaji": "kin / goorudo",
+    "note": ""
+  },
+  "breath": {
+    "jp": "息",
+    "romaji": "iki",
+    "note": ""
+  },
+  "bus": {
+    "jp": "バス",
+    "romaji": "basu",
+    "note": ""
+  },
+  "bear": {
+    "jp": "熊 / 耐える",
+    "romaji": "kuma / taeru",
+    "note": "multi-sense"
+  },
+  "idiot": {
+    "jp": "馬鹿",
+    "romaji": "baka",
+    "note": ""
+  },
+  "witness": {
+    "jp": "目撃者 / 目撃する",
+    "romaji": "mokugekisha / mokugeki suru",
+    "note": ""
+  },
+  "fit": {
+    "jp": "合う / フィットする",
+    "romaji": "au / fitto suru",
+    "note": ""
+  },
+  "boyfriend": {
+    "jp": "彼氏",
+    "romaji": "kareshi",
+    "note": ""
+  },
+  "hungry": {
+    "jp": "お腹が空いた",
+    "romaji": "onaka ga suita",
+    "note": ""
+  },
+  "private": {
+    "jp": "私的な / 私立の",
+    "romaji": "shiteki na / shiritsu no",
+    "note": ""
+  },
+  "deep": {
+    "jp": "深い",
+    "romaji": "fukai",
+    "note": ""
+  },
+  "sake": {
+    "jp": "〜のために / 酒",
+    "romaji": "tame ni / sake",
+    "note": "multi-sense"
+  },
+  "single": {
+    "jp": "独身の / 一つの",
+    "romaji": "dokushin no / hitotsu no",
+    "note": "multi-sense"
+  },
+  "cash": {
+    "jp": "現金",
+    "romaji": "genkin",
+    "note": ""
+  },
+  "forward": {
+    "jp": "前へ / 転送する",
+    "romaji": "mae e / tensou suru",
+    "note": "multi-sense"
+  },
+  "definitely": {
+    "jp": "間違いなく / 絶対に",
+    "romaji": "machigai naku / zettai ni",
+    "note": ""
+  },
+  "third": {
+    "jp": "三番目",
+    "romaji": "sanbanme",
+    "note": ""
+  },
+  "camera": {
+    "jp": "カメラ",
+    "romaji": "kamera",
+    "note": ""
+  },
+  "dangerous": {
+    "jp": "危険な",
+    "romaji": "kiken na",
+    "note": ""
+  },
+  "green": {
+    "jp": "緑 / 緑色",
+    "romaji": "midori / midori-iro",
+    "note": ""
+  },
+  "beg": {
+    "jp": "頼む / 乞う",
+    "romaji": "tanomu / kou",
+    "note": ""
+  },
+  "accept": {
+    "jp": "受け入れる",
+    "romaji": "ukeireru",
+    "note": ""
+  },
+  "evil": {
+    "jp": "悪い / 悪",
+    "romaji": "warui / aku",
+    "note": ""
+  },
+  "search": {
+    "jp": "探す / 検索",
+    "romaji": "sagasu / kensaku",
+    "note": ""
+  },
+  "client": {
+    "jp": "顧客 / クライアント",
+    "romaji": "kokyaku / kuraianto",
+    "note": ""
+  },
+  "arrive": {
+    "jp": "到着する",
+    "romaji": "touchaku suru",
+    "note": ""
+  },
+  "student": {
+    "jp": "学生 / 生徒",
+    "romaji": "gakusei / seito",
+    "note": ""
+  },
+  "doubt": {
+    "jp": "疑う / 疑い",
+    "romaji": "utagau / utagai",
+    "note": ""
+  },
+  "admit": {
+    "jp": "認める",
+    "romaji": "mitomeru",
+    "note": ""
+  },
+  "warn": {
+    "jp": "警告する",
+    "romaji": "keikoku suru",
+    "note": ""
+  },
+  "press": {
+    "jp": "押す / 報道機関",
+    "romaji": "osu / houdou kikan",
+    "note": "multi-sense"
+  },
+  "chicken": {
+    "jp": "鶏肉 / 鶏",
+    "romaji": "toriniku / niwatori",
+    "note": ""
+  },
+  "cost": {
+    "jp": "費用がかかる / 費用",
+    "romaji": "hiyou ga kakaru / hiyou",
+    "note": ""
+  },
+  "church": {
+    "jp": "教会",
+    "romaji": "kyoukai",
+    "note": ""
+  },
+  "honest": {
+    "jp": "正直な",
+    "romaji": "shoujiki na",
+    "note": ""
+  },
+  "lay": {
+    "jp": "横たえる / 置く",
+    "romaji": "yokotaeru / oku",
+    "note": ""
+  },
+  "jail": {
+    "jp": "刑務所 / 拘置所",
+    "romaji": "keimusho / kouchisho",
+    "note": ""
+  },
+  "trick": {
+    "jp": "手品 / だます",
+    "romaji": "tejina / damasu",
+    "note": ""
+  },
+  "fellow": {
+    "jp": "仲間 / 男",
+    "romaji": "nakama / otoko",
+    "note": ""
+  },
+  "rain": {
+    "jp": "雨",
+    "romaji": "ame",
+    "note": ""
+  },
+  "professor": {
+    "jp": "教授",
+    "romaji": "kyouju",
+    "note": ""
+  },
+  "congratulations": {
+    "jp": "おめでとう",
+    "romaji": "omedetou",
+    "note": ""
+  },
+  "bird": {
+    "jp": "鳥",
+    "romaji": "tori",
+    "note": ""
+  },
+  "crime": {
+    "jp": "犯罪",
+    "romaji": "hanzai",
+    "note": ""
+  },
+  "victim": {
+    "jp": "被害者",
+    "romaji": "higaisha",
+    "note": ""
+  },
+  "public": {
+    "jp": "公共の / 公の",
+    "romaji": "koukyou no / ooyake no",
+    "note": ""
+  },
+  "finger": {
+    "jp": "指",
+    "romaji": "yubi",
+    "note": ""
+  },
+  "flower": {
+    "jp": "花",
+    "romaji": "hana",
+    "note": ""
+  },
+  "match": {
+    "jp": "試合 / 合う / マッチ",
+    "romaji": "shiai / au / matchi",
+    "note": "multi-sense"
+  },
+  "taste": {
+    "jp": "味 / 味がする",
+    "romaji": "aji / aji ga suru",
+    "note": ""
+  },
+  "upstairs": {
+    "jp": "二階 / 上の階",
+    "romaji": "nikai / ue no kai",
+    "note": ""
+  },
+  "memory": {
+    "jp": "記憶 / 思い出",
+    "romaji": "kioku / omoide",
+    "note": ""
+  },
+  "sun": {
+    "jp": "太陽 / 日",
+    "romaji": "taiyou / hi",
+    "note": ""
+  },
+  "deserve": {
+    "jp": "〜に値する",
+    "romaji": "ni atai suru",
+    "note": ""
+  },
+  "normal": {
+    "jp": "普通の",
+    "romaji": "futsuu no",
+    "note": ""
+  },
+  "prove": {
+    "jp": "証明する",
+    "romaji": "shoumei suru",
+    "note": ""
+  },
+  "decision": {
+    "jp": "決定 / 決断",
+    "romaji": "kettei / ketsudan",
+    "note": ""
+  },
+  "machine": {
+    "jp": "機械",
+    "romaji": "kikai",
+    "note": ""
+  },
+  "double": {
+    "jp": "二倍 / ダブル",
+    "romaji": "nibai / daburu",
+    "note": ""
+  },
+  "space": {
+    "jp": "空間 / 宇宙",
+    "romaji": "kuukan / uchuu",
+    "note": "multi-sense"
+  },
+  "heaven": {
+    "jp": "天国",
+    "romaji": "tengoku",
+    "note": ""
+  },
+  "computer": {
+    "jp": "コンピューター",
+    "romaji": "konpyuutaa",
+    "note": ""
+  },
+  "nose": {
+    "jp": "鼻",
+    "romaji": "hana",
+    "note": ""
+  },
+  "hide": {
+    "jp": "隠す / 隠れる",
+    "romaji": "kakusu / kakureru",
+    "note": ""
+  },
+  "peace": {
+    "jp": "平和",
+    "romaji": "heiwa",
+    "note": ""
+  },
+  "escape": {
+    "jp": "逃げる / 脱出",
+    "romaji": "nigeru / dasshutsu",
+    "note": ""
+  },
+  "gas": {
+    "jp": "ガソリン / ガス",
+    "romaji": "gasorin / gasu",
+    "note": "multi-sense"
+  },
+  "wind": {
+    "jp": "風",
+    "romaji": "kaze",
+    "note": ""
+  },
+  "tape": {
+    "jp": "テープ",
+    "romaji": "teepu",
+    "note": ""
+  },
+  "settle": {
+    "jp": "解決する / 落ち着く",
+    "romaji": "kaiketsu suru / ochitsuku",
+    "note": "multi-sense"
+  },
+  "nine": {
+    "jp": "九",
+    "romaji": "kyuu / ku",
+    "note": ""
+  },
+  "weekend": {
+    "jp": "週末",
+    "romaji": "shuumatsu",
+    "note": ""
+  },
+  "government": {
+    "jp": "政府",
+    "romaji": "seifu",
+    "note": ""
+  },
+  "holy": {
+    "jp": "聖なる",
+    "romaji": "sei naru",
+    "note": ""
+  },
+  "ear": {
+    "jp": "耳",
+    "romaji": "mimi",
+    "note": ""
+  },
+  "prison": {
+    "jp": "刑務所",
+    "romaji": "keimusho",
+    "note": ""
+  },
+  "block": {
+    "jp": "ブロック / 妨げる",
+    "romaji": "burokku / samatageru",
+    "note": "multi-sense"
+  },
+  "enemy": {
+    "jp": "敵",
+    "romaji": "teki",
+    "note": ""
+  },
+  "neither": {
+    "jp": "どちらも〜ない",
+    "romaji": "dochira mo nai",
+    "note": ""
+  },
+  "bottle": {
+    "jp": "瓶 / ボトル",
+    "romaji": "bin / botoru",
+    "note": ""
+  },
+  "suspect": {
+    "jp": "疑う / 容疑者",
+    "romaji": "utagau / yougisha",
+    "note": "multi-sense"
+  },
+  "especially": {
+    "jp": "特に",
+    "romaji": "toku ni",
+    "note": ""
+  },
+  "nervous": {
+    "jp": "緊張した",
+    "romaji": "kinchou shita",
+    "note": ""
+  },
+  "whether": {
+    "jp": "〜かどうか",
+    "romaji": "ka dou ka",
+    "note": ""
+  },
+  "dirty": {
+    "jp": "汚い",
+    "romaji": "kitanai",
+    "note": ""
+  },
+  "breakfast": {
+    "jp": "朝食",
+    "romaji": "choushoku",
+    "note": ""
+  },
+  "spirit": {
+    "jp": "精神 / 精霊",
+    "romaji": "seishin / seirei",
+    "note": "multi-sense"
+  },
+  "stuck": {
+    "jp": "動かない / 行き詰まっている",
+    "romaji": "ugokanai / ikizumatte iru",
+    "note": ""
+  },
+  "remind": {
+    "jp": "思い出させる",
+    "romaji": "omoidasaseru",
+    "note": ""
+  },
+  "cell": {
+    "jp": "細胞 / 独房 / 携帯",
+    "romaji": "saibou / dokubou / keitai",
+    "note": "multi-sense"
+  },
+  "pardon": {
+    "jp": "ごめんなさい / 恩赦",
+    "romaji": "gomen nasai / onsha",
+    "note": "multi-sense"
+  },
+  "ruin": {
+    "jp": "台無しにする / 廃墟",
+    "romaji": "dainashi ni suru / haikyo",
+    "note": ""
+  },
+  "discuss": {
+    "jp": "議論する / 話し合う",
+    "romaji": "giron suru / hanashiau",
+    "note": ""
+  },
+  "copy": {
+    "jp": "コピー / 写す",
+    "romaji": "kopii / utsusu",
+    "note": ""
+  },
+  "travel": {
+    "jp": "旅行する",
+    "romaji": "ryokou suru",
+    "note": ""
+  },
+  "wash": {
+    "jp": "洗う",
+    "romaji": "arau",
+    "note": ""
+  },
+  "guest": {
+    "jp": "客 / ゲスト",
+    "romaji": "kyaku / gesuto",
+    "note": ""
+  },
+  "department": {
+    "jp": "部門 / 課",
+    "romaji": "bumon / ka",
+    "note": ""
+  },
+  "nurse": {
+    "jp": "看護師",
+    "romaji": "kangoshi",
+    "note": ""
+  },
+  "suggest": {
+    "jp": "提案する",
+    "romaji": "teian suru",
+    "note": ""
+  },
+  "egg": {
+    "jp": "卵",
+    "romaji": "tamago",
+    "note": ""
+  },
+  "south": {
+    "jp": "南",
+    "romaji": "minami",
+    "note": ""
+  },
+  "bathroom": {
+    "jp": "お風呂 / トイレ",
+    "romaji": "ofuro / toire",
+    "note": ""
+  },
+  "flight": {
+    "jp": "フライト / 飛行",
+    "romaji": "furaito / hikou",
+    "note": ""
+  },
+  "sea": {
+    "jp": "海",
+    "romaji": "umi",
+    "note": ""
+  },
+  "brown": {
+    "jp": "茶色",
+    "romaji": "chairo",
+    "note": ""
+  },
+  "seriously": {
+    "jp": "真剣に / マジで",
+    "romaji": "shinken ni / maji de",
+    "note": ""
+  },
+  "north": {
+    "jp": "北",
+    "romaji": "kita",
+    "note": ""
+  },
+  "fail": {
+    "jp": "失敗する",
+    "romaji": "shippai suru",
+    "note": ""
+  },
+  "level": {
+    "jp": "レベル / 水準",
+    "romaji": "reberu / suijun",
+    "note": ""
+  },
+  "awful": {
+    "jp": "ひどい / 最悪な",
+    "romaji": "hidoi / saiaku na",
+    "note": ""
+  },
+  "risk": {
+    "jp": "リスク / 危険",
+    "romaji": "risuku / kiken",
+    "note": ""
+  },
+  "favorite": {
+    "jp": "好きな / お気に入り",
+    "romaji": "suki na / okiniiri",
+    "note": ""
+  },
+  "sad": {
+    "jp": "悲しい",
+    "romaji": "kanashii",
+    "note": ""
+  },
+  "neck": {
+    "jp": "首",
+    "romaji": "kubi",
+    "note": ""
+  },
+  "clock": {
+    "jp": "時計",
+    "romaji": "tokei",
+    "note": ""
+  },
+  "grand": {
+    "jp": "壮大な / グランド",
+    "romaji": "soudai na / gurando",
+    "note": ""
+  },
+  "usually": {
+    "jp": "普通は / いつもは",
+    "romaji": "futsuu wa / itsumo wa",
+    "note": ""
+  },
+  "hero": {
+    "jp": "英雄 / ヒーロー",
+    "romaji": "eiyuu / hiiroo",
+    "note": ""
+  },
+  "upon": {
+    "jp": "〜の上に / 〜すると",
+    "romaji": "no ue ni",
+    "note": ""
+  },
+  "account": {
+    "jp": "口座 / 説明",
+    "romaji": "kouza / setsumei",
+    "note": "multi-sense"
+  },
+  "pretend": {
+    "jp": "ふりをする",
+    "romaji": "furi o suru",
+    "note": ""
+  },
+  "twice": {
+    "jp": "二度",
+    "romaji": "nido",
+    "note": ""
+  },
+  "dig": {
+    "jp": "掘る",
+    "romaji": "horu",
+    "note": ""
+  },
+  "camp": {
+    "jp": "キャンプ",
+    "romaji": "kyanpu",
+    "note": ""
+  },
+  "plenty": {
+    "jp": "たくさん",
+    "romaji": "takusan",
+    "note": ""
+  },
+  "guilty": {
+    "jp": "有罪の / 罪悪感がある",
+    "romaji": "yuuzai no / zaiakukan ga aru",
+    "note": ""
+  },
+  "sheriff": {
+    "jp": "保安官",
+    "romaji": "hoankan",
+    "note": ""
+  },
+  "remain": {
+    "jp": "残る",
+    "romaji": "nokoru",
+    "note": ""
+  },
+  "price": {
+    "jp": "値段",
+    "romaji": "nedan",
+    "note": ""
+  },
+  "form": {
+    "jp": "形 / 用紙 / 形式",
+    "romaji": "katachi / youshi / keishiki",
+    "note": "multi-sense"
+  },
+  "tooth": {
+    "jp": "歯",
+    "romaji": "ha",
+    "note": ""
+  },
+  "address": {
+    "jp": "住所 / 話しかける",
+    "romaji": "juusho / hanashikakeru",
+    "note": "multi-sense"
+  },
+  "beach": {
+    "jp": "海岸 / ビーチ",
+    "romaji": "kaigan / biichi",
+    "note": ""
+  },
+  "extra": {
+    "jp": "追加の / 余分な",
+    "romaji": "tsuika no / yobun na",
+    "note": ""
+  },
+  "complete": {
+    "jp": "完成する / 完全な",
+    "romaji": "kansei suru / kanzen na",
+    "note": ""
+  },
+  "support": {
+    "jp": "支える / 支援",
+    "romaji": "sasaeru / shien",
+    "note": ""
+  },
+  "chase": {
+    "jp": "追う",
+    "romaji": "ou",
+    "note": ""
+  },
+  "river": {
+    "jp": "川",
+    "romaji": "kawa",
+    "note": ""
+  },
+  "west": {
+    "jp": "西",
+    "romaji": "nishi",
+    "note": ""
+  },
+  "obviously": {
+    "jp": "明らかに",
+    "romaji": "akiraka ni",
+    "note": ""
+  },
+  "corner": {
+    "jp": "角 / コーナー",
+    "romaji": "kado / koonaa",
+    "note": ""
+  },
+  "wound": {
+    "jp": "傷",
+    "romaji": "kizu",
+    "note": ""
+  },
+  "wine": {
+    "jp": "ワイン",
+    "romaji": "wain",
+    "note": ""
+  },
+  "draw": {
+    "jp": "描く / 引く",
+    "romaji": "egaku / hiku",
+    "note": "multi-sense"
+  },
+  "bunch": {
+    "jp": "たくさん / 束",
+    "romaji": "takusan / taba",
+    "note": ""
+  },
+  "low": {
+    "jp": "低い",
+    "romaji": "hikui",
+    "note": ""
+  },
+  "strike": {
+    "jp": "打つ / ストライキ",
+    "romaji": "utsu / sutoraiki",
+    "note": "multi-sense"
+  },
+  "chair": {
+    "jp": "椅子",
+    "romaji": "isu",
+    "note": ""
+  },
+  "issue": {
+    "jp": "問題 / 発行する",
+    "romaji": "mondai / hakkou suru",
+    "note": "multi-sense"
+  },
+  "warm": {
+    "jp": "暖かい / 温かい",
+    "romaji": "atatakai",
+    "note": ""
+  },
+  "within": {
+    "jp": "〜以内に / 〜の中に",
+    "romaji": "inai ni / no naka ni",
+    "note": ""
+  },
+  "impossible": {
+    "jp": "不可能な",
+    "romaji": "fukanou na",
+    "note": ""
+  },
+  "band": {
+    "jp": "バンド / 帯",
+    "romaji": "bando / obi",
+    "note": "multi-sense"
+  },
+  "kitchen": {
+    "jp": "台所 / キッチン",
+    "romaji": "daidokoro / kitchin",
+    "note": ""
+  },
+  "angry": {
+    "jp": "怒っている",
+    "romaji": "okotte iru",
+    "note": ""
+  },
+  "color": {
+    "jp": "色",
+    "romaji": "iro",
+    "note": ""
+  },
+  "duty": {
+    "jp": "義務 / 勤務",
+    "romaji": "gimu / kinmu",
+    "note": ""
+  },
+  "blame": {
+    "jp": "責めている / 責任をなすりつける",
+    "romaji": "semete iru / sekinin o nasuritsukeru",
+    "note": ""
+  },
+  "disappear": {
+    "jp": "消える",
+    "romaji": "kieru",
+    "note": ""
+  },
+  "cup": {
+    "jp": "カップ / 杯",
+    "romaji": "kappu / hai",
+    "note": ""
+  },
+  "suffer": {
+    "jp": "苦しむ",
+    "romaji": "kurushimu",
+    "note": ""
+  },
+  "hole": {
+    "jp": "穴",
+    "romaji": "ana",
+    "note": ""
+  },
+  "release": {
+    "jp": "解放する / 発売する",
+    "romaji": "kaihou suru / hatsubai suru",
+    "note": "multi-sense"
+  },
+  "feed": {
+    "jp": "餌をやる / 養う",
+    "romaji": "esa o yaru / yashinau",
+    "note": ""
+  },
+  "hill": {
+    "jp": "丘",
+    "romaji": "oka",
+    "note": ""
+  },
+  "feeling": {
+    "jp": "気持ち / 感覚",
+    "romaji": "kimochi / kankaku",
+    "note": ""
+  },
+  "shake": {
+    "jp": "振る / 震える",
+    "romaji": "furu / furueru",
+    "note": "multi-sense"
+  },
+  "often": {
+    "jp": "よく / しばしば",
+    "romaji": "yoku / shibashiba",
+    "note": ""
+  },
+  "silly": {
+    "jp": "馬鹿な / くだらない",
+    "romaji": "baka na / kudaranai",
+    "note": ""
+  },
+  "stone": {
+    "jp": "石",
+    "romaji": "ishi",
+    "note": ""
+  },
+  "assume": {
+    "jp": "想定する / 思い込む",
+    "romaji": "soutei suru / omoikomu",
+    "note": ""
+  },
+  "aunt": {
+    "jp": "おばさん / 叔母・伯母",
+    "romaji": "obasan / oba",
+    "note": ""
+  },
+  "pressure": {
+    "jp": "圧力 / プレッシャー",
+    "romaji": "atsuryoku / puresshaa",
+    "note": ""
+  },
+  "appear": {
+    "jp": "現れる / 〜のように見える",
+    "romaji": "arawareru / you ni mieru",
+    "note": "multi-sense"
+  },
+  "emergency": {
+    "jp": "緊急事態",
+    "romaji": "kinkyuu jitai",
+    "note": ""
+  },
+  "quickly": {
+    "jp": "速く / すぐに",
+    "romaji": "hayaku / sugu ni",
+    "note": ""
+  },
+  "kelly": {
+    "jp": "TBD",
+    "romaji": "TBD",
+    "note": "needs human gloss check"
+  },
+  "final": {
+    "jp": "最終の / 決勝",
+    "romaji": "saishuu no / kesshou",
+    "note": "multi-sense"
+  },
+  "wood": {
+    "jp": "木 / 木材",
+    "romaji": "ki / mokuzai",
+    "note": ""
+  },
+  "load": {
+    "jp": "積み荷 / 積み込む",
+    "romaji": "tsumini / tsumikomu",
+    "note": ""
+  },
+  "cousin": {
+    "jp": "いとこ",
+    "romaji": "itoko",
+    "note": ""
+  },
+  "bore": {
+    "jp": "退屈させる / 退屈な",
+    "romaji": "taikutsu saseru / taikutsu na",
+    "note": "multi-sense"
+  }
+}

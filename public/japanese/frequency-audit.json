@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T04:35:12.245Z",
+  "generatedAt": "2026-09-03T04:44:33.426Z",
   "sourcesFound": {
     "spokenEnglishXlsx": "C:/Users/Administrator/Downloads/top_5000_spoken_english_lemmatised.xlsx",
     "spokenEnglishJson": "src/data/spoken-english-frequency-5000.json",
@@ -380,9 +380,9 @@
   },
   "proposedNext500": {
     "count": 500,
-    "tbdGlossCount": 500,
+    "tbdGlossCount": 0,
     "gapFromFirst500Included": 36,
-    "skippedCount": 625,
+    "skippedCount": 633,
     "selectionMethod": "Walk spoken-english-frequency-5000 in rank order; skip lemmas already covered by blocks 1-10 English glosses, function/filler words, proper nouns/junk; take next 500 teachable candidates for blocks 11-20."
   },
   "downloads": {
