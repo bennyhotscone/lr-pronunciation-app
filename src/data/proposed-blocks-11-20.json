@@ -8,71 +8,6 @@
     {
       "block": 11,
       "wordIndex": 0,
-      "spokenRank": 31,
-      "englishLemma": "just",
-      "english": "just",
-      "jp": "ただ / ちょうど",
-      "romaji": "tada / choudo",
-      "audio": "ただ",
-      "confidence": "medium",
-      "flag": "multi-sense adverb",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 1,
-      "spokenRank": 54,
-      "englishLemma": "one",
-      "english": "one",
-      "jp": "一つ / 一人",
-      "romaji": "hitotsu / hitori",
-      "audio": "ひとつ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 2,
-      "spokenRank": 61,
-      "englishLemma": "tell",
-      "english": "tell",
-      "jp": "教える / 言う",
-      "romaji": "oshieru / iu",
-      "audio": "おしえる",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 3,
-      "spokenRank": 62,
-      "englishLemma": "let",
-      "english": "let / allow",
-      "jp": "させる",
-      "romaji": "saseru",
-      "audio": "させる",
-      "confidence": "medium",
-      "flag": "causative grammar",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 4,
-      "spokenRank": 72,
-      "englishLemma": "back",
-      "english": "back (direction)",
-      "jp": "戻って",
-      "romaji": "modotte",
-      "audio": "もどって",
-      "confidence": "medium",
-      "flag": "spoken adverb sense; not body",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 5,
       "spokenRank": 75,
       "englishLemma": "gonna",
       "english": "gonna",
@@ -85,7 +20,20 @@
     },
     {
       "block": 11,
-      "wordIndex": 6,
+      "wordIndex": 1,
+      "spokenRank": 83,
+      "englishLemma": "some",
+      "english": "some",
+      "jp": "少し",
+      "romaji": "sukoshi",
+      "audio": "すこし",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 2,
       "spokenRank": 89,
       "englishLemma": "need",
       "english": "need",
@@ -98,20 +46,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 7,
-      "spokenRank": 91,
-      "englishLemma": "something",
-      "english": "something",
-      "jp": "何か",
-      "romaji": "nanika",
-      "audio": "なにか",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 8,
+      "wordIndex": 3,
       "spokenRank": 92,
       "englishLemma": "mean",
       "english": "mean",
@@ -124,7 +59,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 9,
+      "wordIndex": 4,
       "spokenRank": 93,
       "englishLemma": "down",
       "english": "down",
@@ -137,7 +72,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 10,
+      "wordIndex": 5,
       "spokenRank": 94,
       "englishLemma": "then",
       "english": "then",
@@ -150,33 +85,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 11,
-      "spokenRank": 96,
-      "englishLemma": "way",
-      "english": "way",
-      "jp": "方法",
-      "romaji": "houhou",
-      "audio": "ほうほう",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 12,
-      "spokenRank": 99,
-      "englishLemma": "call",
-      "english": "call",
-      "jp": "電話する / 呼ぶ",
-      "romaji": "denwa suru / yobu",
-      "audio": "でんわする",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 13,
+      "wordIndex": 6,
       "spokenRank": 100,
       "englishLemma": "guy",
       "english": "guy",
@@ -189,7 +98,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 14,
+      "wordIndex": 7,
       "spokenRank": 112,
       "englishLemma": "off",
       "english": "off",
@@ -202,7 +111,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 15,
+      "wordIndex": 8,
       "spokenRank": 118,
       "englishLemma": "sure",
       "english": "sure",
@@ -215,7 +124,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 16,
+      "wordIndex": 9,
       "spokenRank": 162,
       "englishLemma": "away",
       "english": "away",
@@ -228,7 +137,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 17,
+      "wordIndex": 10,
       "spokenRank": 165,
       "englishLemma": "ever",
       "english": "ever",
@@ -241,7 +150,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 18,
+      "wordIndex": 11,
       "spokenRank": 175,
       "englishLemma": "alway",
       "english": "alway",
@@ -254,7 +163,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 19,
+      "wordIndex": 12,
       "spokenRank": 177,
       "englishLemma": "miss",
       "english": "miss",
@@ -267,7 +176,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 20,
+      "wordIndex": 13,
       "spokenRank": 217,
       "englishLemma": "wanna",
       "english": "wanna",
@@ -280,7 +189,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 21,
+      "wordIndex": 14,
       "spokenRank": 237,
       "englishLemma": "else",
       "english": "else",
@@ -293,7 +202,7 @@
     },
     {
       "block": 11,
-      "wordIndex": 22,
+      "wordIndex": 15,
       "spokenRank": 240,
       "englishLemma": "real",
       "english": "real",
@@ -306,26 +215,117 @@
     },
     {
       "block": 11,
-      "wordIndex": 23,
-      "spokenRank": 253,
-      "englishLemma": "matter",
-      "english": "matter / important",
-      "jp": "大事",
-      "romaji": "daiji",
-      "audio": "だいじ",
+      "wordIndex": 16,
+      "spokenRank": 252,
+      "englishLemma": "worry",
+      "english": "worry",
+      "jp": "心配する",
+      "romaji": "shinpai suru",
+      "audio": "しんぱいする",
       "confidence": "high",
       "flag": "",
       "mnemonic": ""
     },
     {
       "block": 11,
+      "wordIndex": 17,
+      "spokenRank": 254,
+      "englishLemma": "problem",
+      "english": "problem",
+      "jp": "問題",
+      "romaji": "mondai",
+      "audio": "もんだい",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 18,
+      "spokenRank": 255,
+      "englishLemma": "idea",
+      "english": "idea",
+      "jp": "考え",
+      "romaji": "kangae",
+      "audio": "かんがえ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 19,
+      "spokenRank": 256,
+      "englishLemma": "pay",
+      "english": "pay",
+      "jp": "払う",
+      "romaji": "harau",
+      "audio": "はらう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 20,
+      "spokenRank": 257,
+      "englishLemma": "pretty",
+      "english": "pretty",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 21,
+      "spokenRank": 258,
+      "englishLemma": "ready",
+      "english": "ready",
+      "jp": "用意できた",
+      "romaji": "youi dekita",
+      "audio": "よういできた",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 22,
+      "spokenRank": 265,
+      "englishLemma": "family",
+      "english": "family",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 23,
+      "spokenRank": 266,
+      "englishLemma": "check",
+      "english": "check",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
       "wordIndex": 24,
-      "spokenRank": 261,
-      "englishLemma": "suppose",
-      "english": "suppose",
-      "jp": "思う",
-      "romaji": "omou",
-      "audio": "おもう",
+      "spokenRank": 267,
+      "englishLemma": "week",
+      "english": "week",
+      "jp": "週",
+      "romaji": "shuu",
+      "audio": "しゅう",
       "confidence": "high",
       "flag": "",
       "mnemonic": ""
@@ -333,6 +333,45 @@
     {
       "block": 11,
       "wordIndex": 25,
+      "spokenRank": 268,
+      "englishLemma": "wife",
+      "english": "wife",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 26,
+      "spokenRank": 269,
+      "englishLemma": "send",
+      "english": "send",
+      "jp": "送る",
+      "romaji": "okuru",
+      "audio": "おくる",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 27,
+      "spokenRank": 270,
+      "englishLemma": "walk",
+      "english": "walk",
+      "jp": "歩く",
+      "romaji": "aruku",
+      "audio": "あるく",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 28,
       "spokenRank": 271,
       "englishLemma": "seem",
       "english": "seem",
@@ -345,7 +384,111 @@
     },
     {
       "block": 11,
-      "wordIndex": 26,
+      "wordIndex": 29,
+      "spokenRank": 272,
+      "englishLemma": "marry",
+      "english": "marry",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 30,
+      "spokenRank": 275,
+      "englishLemma": "word",
+      "english": "word",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 31,
+      "spokenRank": 277,
+      "englishLemma": "lady",
+      "english": "lady",
+      "jp": "女性",
+      "romaji": "josei",
+      "audio": "じょせい",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 32,
+      "spokenRank": 279,
+      "englishLemma": "stand",
+      "english": "stand",
+      "jp": "立つ",
+      "romaji": "tatsu",
+      "audio": "たつ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 33,
+      "spokenRank": 280,
+      "englishLemma": "most",
+      "english": "most",
+      "jp": "一番",
+      "romaji": "ichiban",
+      "audio": "いちばん",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 34,
+      "spokenRank": 281,
+      "englishLemma": "while",
+      "english": "while",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 35,
+      "spokenRank": 283,
+      "englishLemma": "once",
+      "english": "once",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 36,
+      "spokenRank": 285,
+      "englishLemma": "everybody",
+      "english": "everybody",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 37,
       "spokenRank": 286,
       "englishLemma": "used",
       "english": "used to",
@@ -358,7 +501,683 @@
     },
     {
       "block": 11,
+      "wordIndex": 38,
+      "spokenRank": 292,
+      "englishLemma": "eye",
+      "english": "eye",
+      "jp": "目",
+      "romaji": "me",
+      "audio": "め",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 39,
+      "spokenRank": 293,
+      "englishLemma": "happy",
+      "english": "happy",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 40,
+      "spokenRank": 295,
+      "englishLemma": "question",
+      "english": "question",
+      "jp": "質問",
+      "romaji": "shitsumon",
+      "audio": "しつもん",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 41,
+      "spokenRank": 296,
+      "englishLemma": "brother",
+      "english": "brother",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 42,
+      "spokenRank": 298,
+      "englishLemma": "door",
+      "english": "door",
+      "jp": "ドア",
+      "romaji": "doa",
+      "audio": "ドア",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 43,
+      "spokenRank": 299,
+      "englishLemma": "business",
+      "english": "business",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 44,
+      "spokenRank": 300,
+      "englishLemma": "actually",
+      "english": "actually",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 45,
+      "spokenRank": 301,
+      "englishLemma": "sound",
+      "english": "sound",
+      "jp": "音",
+      "romaji": "oto",
+      "audio": "おと",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 46,
+      "spokenRank": 302,
+      "englishLemma": "hope",
+      "english": "hope",
+      "jp": "希望",
+      "romaji": "kibou",
+      "audio": "きぼう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 47,
+      "spokenRank": 303,
+      "englishLemma": "stuff",
+      "english": "stuff",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 48,
+      "spokenRank": 305,
+      "englishLemma": "hit",
+      "english": "hit",
+      "jp": "打つ",
+      "romaji": "utsu",
+      "audio": "うつ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 11,
+      "wordIndex": 49,
+      "spokenRank": 307,
+      "englishLemma": "since",
+      "english": "since",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 0,
+      "spokenRank": 308,
+      "englishLemma": "case",
+      "english": "case",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 1,
+      "spokenRank": 312,
+      "englishLemma": "cause",
+      "english": "cause",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 2,
+      "spokenRank": 316,
+      "englishLemma": "hurt",
+      "english": "hurt",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 3,
+      "spokenRank": 319,
+      "englishLemma": "damn",
+      "english": "damn",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 4,
+      "spokenRank": 320,
+      "englishLemma": "honey",
+      "english": "honey",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 5,
+      "spokenRank": 321,
+      "englishLemma": "doctor",
+      "english": "doctor",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 6,
+      "spokenRank": 322,
+      "englishLemma": "deal",
+      "english": "deal",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 7,
+      "spokenRank": 324,
+      "englishLemma": "both",
+      "english": "both",
+      "jp": "両方",
+      "romaji": "ryouhou",
+      "audio": "りょうほう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 8,
+      "spokenRank": 327,
+      "englishLemma": "such",
+      "english": "such",
+      "jp": "そのような",
+      "romaji": "sono you na",
+      "audio": "そのような",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 9,
+      "spokenRank": 328,
+      "englishLemma": "face",
+      "english": "face",
+      "jp": "顔",
+      "romaji": "kao",
+      "audio": "かお",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 10,
+      "spokenRank": 329,
+      "englishLemma": "plan",
+      "english": "plan",
+      "jp": "計画",
+      "romaji": "keikaku",
+      "audio": "けいかく",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 11,
+      "spokenRank": 330,
+      "englishLemma": "ago",
+      "english": "ago",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 12,
+      "spokenRank": 331,
+      "englishLemma": "die",
+      "english": "die",
+      "jp": "死ぬ",
+      "romaji": "shinu",
+      "audio": "しぬ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 13,
+      "spokenRank": 332,
+      "englishLemma": "five",
+      "english": "five",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 14,
+      "spokenRank": 334,
+      "englishLemma": "fight",
+      "english": "fight",
+      "jp": "戦う",
+      "romaji": "tatakau",
+      "audio": "たたかう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 15,
+      "spokenRank": 335,
+      "englishLemma": "number",
+      "english": "number",
+      "jp": "数字",
+      "romaji": "suuji",
+      "audio": "すうじ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 16,
+      "spokenRank": 337,
+      "englishLemma": "drive",
+      "english": "drive",
+      "jp": "運転する",
+      "romaji": "unten suru",
+      "audio": "うんてんする",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 17,
+      "spokenRank": 338,
+      "englishLemma": "beautiful",
+      "english": "beautiful",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 18,
+      "spokenRank": 339,
+      "englishLemma": "gun",
+      "english": "gun",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 19,
+      "spokenRank": 340,
+      "englishLemma": "tim",
+      "english": "tim",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 20,
+      "spokenRank": 341,
+      "englishLemma": "crazy",
+      "english": "crazy",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 21,
+      "spokenRank": 342,
+      "englishLemma": "shut",
+      "english": "shut",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 22,
+      "spokenRank": 343,
+      "englishLemma": "chance",
+      "english": "chance",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 23,
+      "spokenRank": 344,
+      "englishLemma": "fall",
+      "english": "fall",
+      "jp": "落ちる",
+      "romaji": "ochiru",
+      "audio": "おちる",
+      "confidence": "medium",
+      "flag": "also autumn",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 24,
+      "spokenRank": 347,
+      "englishLemma": "wish",
+      "english": "wish",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 25,
+      "spokenRank": 348,
+      "englishLemma": "set",
+      "english": "set",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 26,
+      "spokenRank": 350,
+      "englishLemma": "nobody",
+      "english": "nobody",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
       "wordIndex": 27,
+      "spokenRank": 351,
+      "englishLemma": "easy",
+      "english": "easy",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 28,
+      "spokenRank": 353,
+      "englishLemma": "cut",
+      "english": "cut",
+      "jp": "切る",
+      "romaji": "kiru",
+      "audio": "きる",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 29,
+      "spokenRank": 356,
+      "englishLemma": "party",
+      "english": "party",
+      "jp": "パーティー",
+      "romaji": "paatii",
+      "audio": "パーティー",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 30,
+      "spokenRank": 357,
+      "englishLemma": "month",
+      "english": "month",
+      "jp": "月",
+      "romaji": "tsuki",
+      "audio": "つき",
+      "confidence": "medium",
+      "flag": "also moon",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 31,
+      "spokenRank": 358,
+      "englishLemma": "jack",
+      "english": "jack",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 32,
+      "spokenRank": 359,
+      "englishLemma": "four",
+      "english": "four",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 33,
+      "spokenRank": 361,
+      "englishLemma": "book",
+      "english": "book",
+      "jp": "本",
+      "romaji": "hon",
+      "audio": "ほん",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 34,
+      "spokenRank": 363,
+      "englishLemma": "shot",
+      "english": "shot",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 35,
+      "spokenRank": 365,
+      "englishLemma": "town",
+      "english": "town",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 36,
+      "spokenRank": 367,
+      "englishLemma": "each",
+      "english": "each",
+      "jp": "それぞれ",
+      "romaji": "sorezore",
+      "audio": "それぞれ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 37,
+      "spokenRank": 369,
+      "englishLemma": "afraid",
+      "english": "afraid",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 38,
+      "spokenRank": 370,
+      "englishLemma": "anyway",
+      "english": "anyway",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 39,
+      "spokenRank": 372,
+      "englishLemma": "dog",
+      "english": "dog",
+      "jp": "犬",
+      "romaji": "inu",
+      "audio": "いぬ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 40,
       "spokenRank": 374,
       "englishLemma": "trouble",
       "english": "trouble",
@@ -370,8 +1189,99 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 28,
+      "block": 12,
+      "wordIndex": 41,
+      "spokenRank": 375,
+      "englishLemma": "young",
+      "english": "young",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 42,
+      "spokenRank": 380,
+      "englishLemma": "ass",
+      "english": "ass",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 43,
+      "spokenRank": 381,
+      "englishLemma": "police",
+      "english": "police",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 44,
+      "spokenRank": 382,
+      "englishLemma": "interest",
+      "english": "interest",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 45,
+      "spokenRank": 386,
+      "englishLemma": "promise",
+      "english": "promise",
+      "jp": "約束",
+      "romaji": "yakusoku",
+      "audio": "やくそく",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 46,
+      "spokenRank": 387,
+      "englishLemma": "couple",
+      "english": "couple",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 47,
+      "spokenRank": 388,
+      "englishLemma": "dream",
+      "english": "dream",
+      "jp": "夢",
+      "romaji": "yume",
+      "audio": "ゆめ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 12,
+      "wordIndex": 48,
       "spokenRank": 389,
       "englishLemma": "figure",
       "english": "figure out",
@@ -383,21 +1293,125 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 29,
-      "spokenRank": 395,
-      "englishLemma": "anybody",
-      "english": "anybody",
-      "jp": "誰でも",
-      "romaji": "dare demo",
-      "audio": "だれでも",
+      "block": 12,
+      "wordIndex": 49,
+      "spokenRank": 390,
+      "englishLemma": "pull",
+      "english": "pull",
+      "jp": "引く",
+      "romaji": "hiku",
+      "audio": "ひく",
       "confidence": "high",
       "flag": "",
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 30,
+      "block": 13,
+      "wordIndex": 0,
+      "spokenRank": 391,
+      "englishLemma": "light",
+      "english": "light",
+      "jp": "光",
+      "romaji": "hikari",
+      "audio": "ひかり",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 1,
+      "spokenRank": 392,
+      "englishLemma": "body",
+      "english": "body",
+      "jp": "体",
+      "romaji": "karada",
+      "audio": "からだ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 2,
+      "spokenRank": 393,
+      "englishLemma": "shoot",
+      "english": "shoot",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 3,
+      "spokenRank": 394,
+      "englishLemma": "reason",
+      "english": "reason",
+      "jp": "理由",
+      "romaji": "riyuu",
+      "audio": "りゆう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 4,
+      "spokenRank": 396,
+      "englishLemma": "dear",
+      "english": "dear",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 5,
+      "spokenRank": 398,
+      "englishLemma": "death",
+      "english": "death",
+      "jp": "死",
+      "romaji": "shi",
+      "audio": "し",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 6,
+      "spokenRank": 403,
+      "englishLemma": "funny",
+      "english": "funny",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 7,
+      "spokenRank": 404,
+      "englishLemma": "dance",
+      "english": "dance",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 8,
       "spokenRank": 406,
       "englishLemma": "hate",
       "english": "hate",
@@ -409,11 +1423,11 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 31,
-      "spokenRank": 409,
-      "englishLemma": "sometime",
-      "english": "sometime",
+      "block": 13,
+      "wordIndex": 9,
+      "spokenRank": 408,
+      "englishLemma": "hang",
+      "english": "hang",
       "jp": "TBD",
       "romaji": "TBD",
       "audio": "TBD",
@@ -422,8 +1436,125 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 32,
+      "block": 13,
+      "wordIndex": 10,
+      "spokenRank": 410,
+      "englishLemma": "captain",
+      "english": "captain",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 11,
+      "spokenRank": 411,
+      "englishLemma": "picture",
+      "english": "picture",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 12,
+      "spokenRank": 412,
+      "englishLemma": "follow",
+      "english": "follow",
+      "jp": "従う",
+      "romaji": "shitagau",
+      "audio": "したがう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 13,
+      "spokenRank": 414,
+      "englishLemma": "moment",
+      "english": "moment",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 14,
+      "spokenRank": 415,
+      "englishLemma": "sister",
+      "english": "sister",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 15,
+      "spokenRank": 416,
+      "englishLemma": "least",
+      "english": "at least",
+      "jp": "少なくとも",
+      "romaji": "sukunakutomo",
+      "audio": "すくなくとも",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 16,
+      "spokenRank": 417,
+      "englishLemma": "important",
+      "english": "important",
+      "jp": "大切",
+      "romaji": "taisetsu",
+      "audio": "たいせつ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 17,
+      "spokenRank": 421,
+      "englishLemma": "line",
+      "english": "line",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 18,
+      "spokenRank": 422,
+      "englishLemma": "drop",
+      "english": "drop",
+      "jp": "落とす",
+      "romaji": "otosu",
+      "audio": "おとす",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 19,
       "spokenRank": 424,
       "englishLemma": "office",
       "english": "office",
@@ -435,8 +1566,294 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
+      "block": 13,
+      "wordIndex": 20,
+      "spokenRank": 425,
+      "englishLemma": "quite",
+      "english": "quite",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 21,
+      "spokenRank": 426,
+      "englishLemma": "husband",
+      "english": "husband",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 22,
+      "spokenRank": 427,
+      "englishLemma": "clear",
+      "english": "clear",
+      "jp": "はっきり",
+      "romaji": "hakkiri",
+      "audio": "はっきり",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 23,
+      "spokenRank": 428,
+      "englishLemma": "against",
+      "english": "against",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 24,
+      "spokenRank": 429,
+      "englishLemma": "touch",
+      "english": "touch",
+      "jp": "触る",
+      "romaji": "sawaru",
+      "audio": "さわる",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 25,
+      "spokenRank": 430,
+      "englishLemma": "sign",
+      "english": "sign",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 26,
+      "spokenRank": 432,
+      "englishLemma": "six",
+      "english": "six",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 27,
+      "spokenRank": 434,
+      "englishLemma": "cool",
+      "english": "cool",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 28,
+      "spokenRank": 436,
+      "englishLemma": "fact",
+      "english": "fact",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 29,
+      "spokenRank": 437,
+      "englishLemma": "ahead",
+      "english": "ahead",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 30,
+      "spokenRank": 438,
+      "englishLemma": "michael",
+      "english": "michael",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 31,
+      "spokenRank": 439,
+      "englishLemma": "pass",
+      "english": "pass",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 32,
+      "spokenRank": 442,
+      "englishLemma": "john",
+      "english": "john",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
       "wordIndex": 33,
+      "spokenRank": 444,
+      "englishLemma": "truth",
+      "english": "truth",
+      "jp": "真実",
+      "romaji": "shinjitsu",
+      "audio": "しんじつ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 34,
+      "spokenRank": 446,
+      "englishLemma": "build",
+      "english": "build",
+      "jp": "建てる",
+      "romaji": "tateru",
+      "audio": "たてる",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 35,
+      "spokenRank": 448,
+      "englishLemma": "bet",
+      "english": "bet",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 36,
+      "spokenRank": 451,
+      "englishLemma": "blood",
+      "english": "blood",
+      "jp": "血",
+      "romaji": "chi",
+      "audio": "ち",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 37,
+      "spokenRank": 452,
+      "englishLemma": "power",
+      "english": "power",
+      "jp": "力",
+      "romaji": "chikara",
+      "audio": "ちから",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 38,
+      "spokenRank": 453,
+      "englishLemma": "foot",
+      "english": "foot / leg",
+      "jp": "足",
+      "romaji": "ashi",
+      "audio": "あし",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 39,
+      "spokenRank": 454,
+      "englishLemma": "daddy",
+      "english": "daddy",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 40,
+      "spokenRank": 457,
+      "englishLemma": "welcome",
+      "english": "welcome",
+      "jp": "ようこそ",
+      "romaji": "youkoso",
+      "audio": "ようこそ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 41,
+      "spokenRank": 458,
+      "englishLemma": "war",
+      "english": "war",
+      "jp": "戦争",
+      "romaji": "sensou",
+      "audio": "せんそう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 42,
       "spokenRank": 459,
       "englishLemma": "act",
       "english": "act",
@@ -448,8 +1865,34 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 34,
+      "block": 13,
+      "wordIndex": 43,
+      "spokenRank": 460,
+      "englishLemma": "stupid",
+      "english": "stupid",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 44,
+      "spokenRank": 462,
+      "englishLemma": "bitch",
+      "english": "bitch",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 45,
       "spokenRank": 463,
       "englishLemma": "along",
       "english": "along",
@@ -461,8 +1904,385 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 35,
+      "block": 13,
+      "wordIndex": 46,
+      "spokenRank": 465,
+      "englishLemma": "either",
+      "english": "either",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 47,
+      "spokenRank": 466,
+      "englishLemma": "though",
+      "english": "though",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 48,
+      "spokenRank": 467,
+      "englishLemma": "daughter",
+      "english": "daughter",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 13,
+      "wordIndex": 49,
+      "spokenRank": 468,
+      "englishLemma": "kiss",
+      "english": "kiss",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 0,
+      "spokenRank": 469,
+      "englishLemma": "bye",
+      "english": "bye",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 1,
+      "spokenRank": 470,
+      "englishLemma": "street",
+      "english": "street",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 2,
+      "spokenRank": 471,
+      "englishLemma": "win",
+      "english": "win",
+      "jp": "勝つ",
+      "romaji": "katsu",
+      "audio": "かつ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 3,
+      "spokenRank": 472,
+      "englishLemma": "expect",
+      "english": "expect",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 4,
+      "spokenRank": 473,
+      "englishLemma": "city",
+      "english": "city",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 5,
+      "spokenRank": 474,
+      "englishLemma": "hurry",
+      "english": "hurry",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 6,
+      "spokenRank": 475,
+      "englishLemma": "between",
+      "english": "between",
+      "jp": "間",
+      "romaji": "aida",
+      "audio": "あいだ",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 7,
+      "spokenRank": 476,
+      "englishLemma": "black",
+      "english": "black",
+      "jp": "黒い",
+      "romaji": "kuroi",
+      "audio": "くろい",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 8,
+      "spokenRank": 477,
+      "englishLemma": "cop",
+      "english": "cop",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 9,
+      "spokenRank": 478,
+      "englishLemma": "country",
+      "english": "country",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 10,
+      "spokenRank": 479,
+      "englishLemma": "glad",
+      "english": "glad",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 11,
+      "spokenRank": 481,
+      "englishLemma": "white",
+      "english": "white",
+      "jp": "白い",
+      "romaji": "shiroi",
+      "audio": "しろい",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 12,
+      "spokenRank": 483,
+      "englishLemma": "murder",
+      "english": "murder",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 13,
+      "spokenRank": 484,
+      "englishLemma": "beat",
+      "english": "beat",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 14,
+      "spokenRank": 488,
+      "englishLemma": "sick",
+      "english": "sick",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 15,
+      "spokenRank": 489,
+      "englishLemma": "throw",
+      "english": "throw",
+      "jp": "投げる",
+      "romaji": "nageru",
+      "audio": "なげる",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 16,
+      "spokenRank": 490,
+      "englishLemma": "scar",
+      "english": "scar",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 17,
+      "spokenRank": 491,
+      "englishLemma": "team",
+      "english": "team",
+      "jp": "チーム",
+      "romaji": "chiimu",
+      "audio": "チーム",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 18,
+      "spokenRank": 492,
+      "englishLemma": "clean",
+      "english": "clean / pretty",
+      "jp": "きれい",
+      "romaji": "kirei",
+      "audio": "きれい",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 19,
+      "spokenRank": 493,
+      "englishLemma": "wonderful",
+      "english": "wonderful",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 20,
+      "spokenRank": 495,
+      "englishLemma": "save",
+      "english": "save",
+      "jp": "救う",
+      "romaji": "sukuu",
+      "audio": "すくう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 21,
+      "spokenRank": 496,
+      "englishLemma": "sort",
+      "english": "sort",
+      "jp": "種類",
+      "romaji": "shurui",
+      "audio": "しゅるい",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 22,
+      "spokenRank": 497,
+      "englishLemma": "frank",
+      "english": "frank",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 23,
+      "spokenRank": 498,
+      "englishLemma": "jesus",
+      "english": "jesus",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 24,
+      "spokenRank": 500,
+      "englishLemma": "perfect",
+      "english": "perfect",
+      "jp": "完璧",
+      "romaji": "kanpeki",
+      "audio": "かんぺき",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 25,
       "spokenRank": 502,
       "englishLemma": "piece",
       "english": "piece / fragment",
@@ -474,8 +2294,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 36,
+      "block": 14,
+      "wordIndex": 26,
       "spokenRank": 503,
       "englishLemma": "report",
       "english": "report",
@@ -487,21 +2307,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 37,
-      "spokenRank": 505,
-      "englishLemma": "surprise",
-      "english": "be surprised",
-      "jp": "驚く",
-      "romaji": "odoroku",
-      "audio": "おどろく",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 38,
+      "block": 14,
+      "wordIndex": 27,
       "spokenRank": 506,
       "englishLemma": "dress",
       "english": "dress (noun)",
@@ -513,21 +2320,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 39,
-      "spokenRank": 509,
-      "englishLemma": "food",
-      "english": "food",
-      "jp": "食べ物",
-      "romaji": "tabemono",
-      "audio": "たべもの",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 40,
+      "block": 14,
+      "wordIndex": 28,
       "spokenRank": 513,
       "englishLemma": "lie",
       "english": "lie (falsehood)",
@@ -539,8 +2333,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 41,
+      "block": 14,
+      "wordIndex": 29,
       "spokenRank": 514,
       "englishLemma": "parent",
       "english": "parent",
@@ -552,8 +2346,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 42,
+      "block": 14,
+      "wordIndex": 30,
       "spokenRank": 516,
       "englishLemma": "catch",
       "english": "catch",
@@ -565,8 +2359,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 43,
+      "block": 14,
+      "wordIndex": 31,
       "spokenRank": 517,
       "englishLemma": "luck",
       "english": "luck",
@@ -578,8 +2372,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 44,
+      "block": 14,
+      "wordIndex": 32,
       "spokenRank": 518,
       "englishLemma": "star",
       "english": "star",
@@ -591,8 +2385,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 45,
+      "block": 14,
+      "wordIndex": 33,
       "spokenRank": 520,
       "englishLemma": "alive",
       "english": "alive",
@@ -604,8 +2398,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 46,
+      "block": 14,
+      "wordIndex": 34,
       "spokenRank": 521,
       "englishLemma": "grow",
       "english": "grow",
@@ -617,8 +2411,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 47,
+      "block": 14,
+      "wordIndex": 35,
       "spokenRank": 522,
       "englishLemma": "sex",
       "english": "sex",
@@ -630,21 +2424,8 @@
       "mnemonic": ""
     },
     {
-      "block": 11,
-      "wordIndex": 48,
-      "spokenRank": 523,
-      "englishLemma": "music",
-      "english": "music",
-      "jp": "音楽",
-      "romaji": "ongaku",
-      "audio": "おんがく",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 11,
-      "wordIndex": 49,
+      "block": 14,
+      "wordIndex": 36,
       "spokenRank": 524,
       "englishLemma": "special",
       "english": "special",
@@ -656,8 +2437,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 0,
+      "block": 14,
+      "wordIndex": 37,
       "spokenRank": 525,
       "englishLemma": "sing",
       "english": "sing",
@@ -669,8 +2450,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 1,
+      "block": 14,
+      "wordIndex": 38,
       "spokenRank": 526,
       "englishLemma": "red",
       "english": "red",
@@ -682,34 +2463,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 2,
-      "spokenRank": 528,
-      "englishLemma": "decide",
-      "english": "decide",
-      "jp": "決める",
-      "romaji": "kimeru",
-      "audio": "きめる",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 3,
-      "spokenRank": 529,
-      "englishLemma": "laugh",
-      "english": "laugh",
-      "jp": "笑う",
-      "romaji": "warau",
-      "audio": "わらう",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 4,
+      "block": 14,
+      "wordIndex": 39,
       "spokenRank": 530,
       "englishLemma": "control",
       "english": "control",
@@ -721,8 +2476,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 5,
+      "block": 14,
+      "wordIndex": 40,
       "spokenRank": 531,
       "englishLemma": "fly",
       "english": "fly",
@@ -734,8 +2489,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 6,
+      "block": 14,
+      "wordIndex": 41,
       "spokenRank": 532,
       "englishLemma": "record",
       "english": "record",
@@ -747,8 +2502,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 7,
+      "block": 14,
+      "wordIndex": 42,
       "spokenRank": 533,
       "englishLemma": "arm",
       "english": "arm",
@@ -760,8 +2515,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 8,
+      "block": 14,
+      "wordIndex": 43,
       "spokenRank": 534,
       "englishLemma": "safe",
       "english": "safe",
@@ -773,8 +2528,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 9,
+      "block": 14,
+      "wordIndex": 44,
       "spokenRank": 535,
       "englishLemma": "serious",
       "english": "serious",
@@ -786,8 +2541,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 10,
+      "block": 14,
+      "wordIndex": 45,
       "spokenRank": 536,
       "englishLemma": "cover",
       "english": "cover",
@@ -799,8 +2554,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 11,
+      "block": 14,
+      "wordIndex": 46,
       "spokenRank": 537,
       "englishLemma": "sweet",
       "english": "sweet",
@@ -812,8 +2567,21 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 12,
+      "block": 14,
+      "wordIndex": 47,
+      "spokenRank": 538,
+      "englishLemma": "ten",
+      "english": "ten",
+      "jp": "十",
+      "romaji": "juu",
+      "audio": "じゅう",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 14,
+      "wordIndex": 48,
       "spokenRank": 541,
       "englishLemma": "ball",
       "english": "ball",
@@ -825,8 +2593,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 13,
+      "block": 14,
+      "wordIndex": 49,
       "spokenRank": 542,
       "englishLemma": "sense",
       "english": "sense",
@@ -838,8 +2606,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 14,
+      "block": 15,
+      "wordIndex": 0,
       "spokenRank": 543,
       "englishLemma": "lucky",
       "english": "lucky",
@@ -851,8 +2619,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 15,
+      "block": 15,
+      "wordIndex": 1,
       "spokenRank": 544,
       "englishLemma": "president",
       "english": "president",
@@ -864,8 +2632,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 16,
+      "block": 15,
+      "wordIndex": 2,
       "spokenRank": 545,
       "englishLemma": "step",
       "english": "step",
@@ -877,8 +2645,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 17,
+      "block": 15,
+      "wordIndex": 3,
       "spokenRank": 546,
       "englishLemma": "million",
       "english": "million",
@@ -890,8 +2658,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 18,
+      "block": 15,
+      "wordIndex": 4,
       "spokenRank": 547,
       "englishLemma": "bill",
       "english": "bill (invoice)",
@@ -903,21 +2671,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 19,
-      "spokenRank": 548,
-      "englishLemma": "top",
-      "english": "top",
-      "jp": "上",
-      "romaji": "ue",
-      "audio": "うえ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 20,
+      "block": 15,
+      "wordIndex": 5,
       "spokenRank": 550,
       "englishLemma": "date",
       "english": "date (romantic)",
@@ -929,8 +2684,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 21,
+      "block": 15,
+      "wordIndex": 6,
       "spokenRank": 551,
       "englishLemma": "air",
       "english": "air",
@@ -942,8 +2697,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 22,
+      "block": 15,
+      "wordIndex": 7,
       "spokenRank": 552,
       "englishLemma": "human",
       "english": "human",
@@ -955,8 +2710,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 23,
+      "block": 15,
+      "wordIndex": 8,
       "spokenRank": 554,
       "englishLemma": "ring",
       "english": "ring (jewelry)",
@@ -968,8 +2723,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 24,
+      "block": 15,
+      "wordIndex": 9,
       "spokenRank": 555,
       "englishLemma": "charge",
       "english": "charge (battery)",
@@ -981,8 +2736,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 25,
+      "block": 15,
+      "wordIndex": 10,
       "spokenRank": 556,
       "englishLemma": "explain",
       "english": "explain",
@@ -994,34 +2749,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 26,
-      "spokenRank": 557,
-      "englishLemma": "key",
-      "english": "key",
-      "jp": "鍵",
-      "romaji": "kagi",
-      "audio": "かぎ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 27,
-      "spokenRank": 558,
-      "englishLemma": "cry",
-      "english": "cry",
-      "jp": "泣く",
-      "romaji": "naku",
-      "audio": "なく",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 28,
+      "block": 15,
+      "wordIndex": 11,
       "spokenRank": 560,
       "englishLemma": "king",
       "english": "king",
@@ -1033,8 +2762,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 29,
+      "block": 15,
+      "wordIndex": 12,
       "spokenRank": 562,
       "englishLemma": "burn",
       "english": "burn",
@@ -1046,8 +2775,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 30,
+      "block": 15,
+      "wordIndex": 13,
       "spokenRank": 563,
       "englishLemma": "sell",
       "english": "sell",
@@ -1059,8 +2788,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 31,
+      "block": 15,
+      "wordIndex": 14,
       "spokenRank": 564,
       "englishLemma": "handle",
       "english": "handle",
@@ -1072,8 +2801,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 32,
+      "block": 15,
+      "wordIndex": 15,
       "spokenRank": 568,
       "englishLemma": "tire",
       "english": "tire / get tired",
@@ -1085,21 +2814,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 33,
-      "spokenRank": 569,
-      "englishLemma": "ride",
-      "english": "ride",
-      "jp": "乗る",
-      "romaji": "noru",
-      "audio": "のる",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 34,
+      "block": 15,
+      "wordIndex": 16,
       "spokenRank": 570,
       "englishLemma": "secret",
       "english": "secret",
@@ -1111,21 +2827,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 35,
-      "spokenRank": 571,
-      "englishLemma": "card",
-      "english": "card",
-      "jp": "カード",
-      "romaji": "kaado",
-      "audio": "カード",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 36,
+      "block": 15,
+      "wordIndex": 17,
       "spokenRank": 572,
       "englishLemma": "class",
       "english": "class",
@@ -1137,8 +2840,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 37,
+      "block": 15,
+      "wordIndex": 18,
       "spokenRank": 573,
       "englishLemma": "test",
       "english": "test",
@@ -1150,8 +2853,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 38,
+      "block": 15,
+      "wordIndex": 19,
       "spokenRank": 574,
       "englishLemma": "law",
       "english": "law",
@@ -1163,21 +2866,21 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 39,
-      "spokenRank": 575,
-      "englishLemma": "hat",
-      "english": "hat",
-      "jp": "帽子",
-      "romaji": "boushi",
-      "audio": "ぼうし",
+      "block": 15,
+      "wordIndex": 20,
+      "spokenRank": 577,
+      "englishLemma": "officer",
+      "english": "officer",
+      "jp": "警官",
+      "romaji": "keikan",
+      "audio": "けいかん",
       "confidence": "high",
       "flag": "",
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 40,
+      "block": 15,
+      "wordIndex": 21,
       "spokenRank": 578,
       "englishLemma": "count",
       "english": "count",
@@ -1189,47 +2892,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 41,
-      "spokenRank": 579,
-      "englishLemma": "blow",
-      "english": "blow",
-      "jp": "吹く",
-      "romaji": "fuku",
-      "audio": "ふく",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 42,
-      "spokenRank": 580,
-      "englishLemma": "fix",
-      "english": "fix",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 43,
-      "spokenRank": 582,
-      "englishLemma": "hospital",
-      "english": "hospital",
-      "jp": "病院",
-      "romaji": "byouin",
-      "audio": "びょういん",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 12,
-      "wordIndex": 44,
+      "block": 15,
+      "wordIndex": 22,
       "spokenRank": 583,
       "englishLemma": "boss",
       "english": "boss",
@@ -1241,8 +2905,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 45,
+      "block": 15,
+      "wordIndex": 23,
       "spokenRank": 585,
       "englishLemma": "poor",
       "english": "poor",
@@ -1254,8 +2918,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 46,
+      "block": 15,
+      "wordIndex": 24,
       "spokenRank": 586,
       "englishLemma": "ship",
       "english": "ship",
@@ -1267,8 +2931,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 47,
+      "block": 15,
+      "wordIndex": 25,
       "spokenRank": 588,
       "englishLemma": "kick",
       "english": "kick",
@@ -1280,8 +2944,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 48,
+      "block": 15,
+      "wordIndex": 26,
       "spokenRank": 591,
       "englishLemma": "uncle",
       "english": "uncle",
@@ -1293,21 +2957,8 @@
       "mnemonic": ""
     },
     {
-      "block": 12,
-      "wordIndex": 49,
-      "spokenRank": 593,
-      "englishLemma": "bag",
-      "english": "bag",
-      "jp": "鞄",
-      "romaji": "kaban",
-      "audio": "かばん",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 0,
+      "block": 15,
+      "wordIndex": 27,
       "spokenRank": 594,
       "englishLemma": "stick",
       "english": "stick",
@@ -1319,8 +2970,21 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 1,
+      "block": 15,
+      "wordIndex": 28,
+      "spokenRank": 595,
+      "englishLemma": "fool",
+      "english": "fool",
+      "jp": "馬鹿",
+      "romaji": "baka",
+      "audio": "ばか",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 15,
+      "wordIndex": 29,
       "spokenRank": 596,
       "englishLemma": "rule",
       "english": "rule",
@@ -1332,8 +2996,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 2,
+      "block": 15,
+      "wordIndex": 30,
       "spokenRank": 598,
       "englishLemma": "past",
       "english": "past",
@@ -1345,8 +3009,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 3,
+      "block": 15,
+      "wordIndex": 31,
       "spokenRank": 599,
       "englishLemma": "lead",
       "english": "lead",
@@ -1358,8 +3022,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 4,
+      "block": 15,
+      "wordIndex": 32,
       "spokenRank": 600,
       "englishLemma": "land",
       "english": "land",
@@ -1371,8 +3035,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 5,
+      "block": 15,
+      "wordIndex": 33,
       "spokenRank": 601,
       "englishLemma": "spend",
       "english": "spend",
@@ -1384,8 +3048,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 6,
+      "block": 15,
+      "wordIndex": 34,
       "spokenRank": 602,
       "englishLemma": "agent",
       "english": "agent",
@@ -1397,8 +3061,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 7,
+      "block": 15,
+      "wordIndex": 35,
       "spokenRank": 603,
       "englishLemma": "offer",
       "english": "offer",
@@ -1410,8 +3074,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 8,
+      "block": 15,
+      "wordIndex": 36,
       "spokenRank": 604,
       "englishLemma": "force",
       "english": "force",
@@ -1423,8 +3087,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 9,
+      "block": 15,
+      "wordIndex": 37,
       "spokenRank": 605,
       "englishLemma": "smell",
       "english": "smell",
@@ -1436,8 +3100,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 10,
+      "block": 15,
+      "wordIndex": 38,
       "spokenRank": 606,
       "englishLemma": "angel",
       "english": "angel",
@@ -1449,8 +3113,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 11,
+      "block": 15,
+      "wordIndex": 39,
       "spokenRank": 608,
       "englishLemma": "christmas",
       "english": "Christmas",
@@ -1462,21 +3126,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 12,
-      "spokenRank": 609,
-      "englishLemma": "straight",
-      "english": "straight",
-      "jp": "まっすぐ",
-      "romaji": "massugu",
-      "audio": "まっすぐ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 13,
+      "block": 15,
+      "wordIndex": 40,
       "spokenRank": 612,
       "englishLemma": "carry",
       "english": "carry",
@@ -1488,21 +3139,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 14,
-      "spokenRank": 613,
-      "englishLemma": "road",
-      "english": "road",
-      "jp": "道",
-      "romaji": "michi",
-      "audio": "みち",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 15,
+      "block": 15,
+      "wordIndex": 41,
       "spokenRank": 614,
       "englishLemma": "enjoy",
       "english": "enjoy",
@@ -1514,8 +3152,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 16,
+      "block": 15,
+      "wordIndex": 42,
       "spokenRank": 615,
       "englishLemma": "letter",
       "english": "letter",
@@ -1527,8 +3165,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 17,
+      "block": 15,
+      "wordIndex": 43,
       "spokenRank": 616,
       "englishLemma": "realize",
       "english": "realize",
@@ -1540,8 +3178,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 18,
+      "block": 15,
+      "wordIndex": 44,
       "spokenRank": 617,
       "englishLemma": "lock",
       "english": "lock",
@@ -1553,8 +3191,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 19,
+      "block": 15,
+      "wordIndex": 45,
       "spokenRank": 618,
       "englishLemma": "general",
       "english": "general",
@@ -1566,8 +3204,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 20,
+      "block": 15,
+      "wordIndex": 46,
       "spokenRank": 619,
       "englishLemma": "cloth",
       "english": "cloth",
@@ -1579,8 +3217,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 21,
+      "block": 15,
+      "wordIndex": 47,
       "spokenRank": 622,
       "englishLemma": "attack",
       "english": "attack",
@@ -1592,8 +3230,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 22,
+      "block": 15,
+      "wordIndex": 48,
       "spokenRank": 623,
       "englishLemma": "quiet",
       "english": "quiet",
@@ -1605,8 +3243,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 23,
+      "block": 15,
+      "wordIndex": 49,
       "spokenRank": 624,
       "englishLemma": "present",
       "english": "present",
@@ -1618,8 +3256,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 24,
+      "block": 16,
+      "wordIndex": 0,
       "spokenRank": 625,
       "englishLemma": "table",
       "english": "table",
@@ -1631,8 +3269,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 25,
+      "block": 16,
+      "wordIndex": 1,
       "spokenRank": 626,
       "englishLemma": "finally",
       "english": "finally",
@@ -1644,8 +3282,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 26,
+      "block": 16,
+      "wordIndex": 2,
       "spokenRank": 627,
       "englishLemma": "goodbye",
       "english": "goodbye",
@@ -1657,8 +3295,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 27,
+      "block": 16,
+      "wordIndex": 3,
       "spokenRank": 628,
       "englishLemma": "mark",
       "english": "mark",
@@ -1670,8 +3308,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 28,
+      "block": 16,
+      "wordIndex": 4,
       "spokenRank": 629,
       "englishLemma": "rock",
       "english": "rock",
@@ -1683,21 +3321,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 29,
-      "spokenRank": 630,
-      "englishLemma": "song",
-      "english": "song",
-      "jp": "歌",
-      "romaji": "uta",
-      "audio": "うた",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 30,
+      "block": 16,
+      "wordIndex": 5,
       "spokenRank": 632,
       "englishLemma": "possible",
       "english": "possible",
@@ -1709,8 +3334,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 31,
+      "block": 16,
+      "wordIndex": 6,
       "spokenRank": 633,
       "englishLemma": "rather",
       "english": "rather",
@@ -1722,8 +3347,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 32,
+      "block": 16,
+      "wordIndex": 7,
       "spokenRank": 634,
       "englishLemma": "box",
       "english": "box",
@@ -1735,8 +3360,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 33,
+      "block": 16,
+      "wordIndex": 8,
       "spokenRank": 635,
       "englishLemma": "unless",
       "english": "unless",
@@ -1748,8 +3373,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 34,
+      "block": 16,
+      "wordIndex": 9,
       "spokenRank": 636,
       "englishLemma": "join",
       "english": "join",
@@ -1761,8 +3386,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 35,
+      "block": 16,
+      "wordIndex": 10,
       "spokenRank": 637,
       "englishLemma": "mad",
       "english": "mad",
@@ -1774,8 +3399,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 36,
+      "block": 16,
+      "wordIndex": 11,
       "spokenRank": 638,
       "englishLemma": "park",
       "english": "park",
@@ -1787,21 +3412,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 37,
-      "spokenRank": 639,
-      "englishLemma": "absolutely",
-      "english": "absolutely",
-      "jp": "絶対に",
-      "romaji": "zettai ni",
-      "audio": "ぜったいに",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 38,
+      "block": 16,
+      "wordIndex": 12,
       "spokenRank": 640,
       "englishLemma": "push",
       "english": "push",
@@ -1813,8 +3425,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 39,
+      "block": 16,
+      "wordIndex": 13,
       "spokenRank": 641,
       "englishLemma": "honor",
       "english": "honor",
@@ -1826,8 +3438,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 40,
+      "block": 16,
+      "wordIndex": 14,
       "spokenRank": 643,
       "englishLemma": "blue",
       "english": "blue",
@@ -1839,21 +3451,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 41,
-      "spokenRank": 644,
-      "englishLemma": "somewhere",
-      "english": "somewhere",
-      "jp": "どこか",
-      "romaji": "dokoka",
-      "audio": "どこか",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 42,
+      "block": 16,
+      "wordIndex": 15,
       "spokenRank": 645,
       "englishLemma": "joke",
       "english": "joke",
@@ -1865,8 +3464,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 43,
+      "block": 16,
+      "wordIndex": 16,
       "spokenRank": 646,
       "englishLemma": "except",
       "english": "except",
@@ -1878,8 +3477,21 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 44,
+      "block": 16,
+      "wordIndex": 17,
+      "spokenRank": 647,
+      "englishLemma": "leg",
+      "english": "leg",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 16,
+      "wordIndex": 18,
       "spokenRank": 648,
       "englishLemma": "seat",
       "english": "seat",
@@ -1891,8 +3503,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 45,
+      "block": 16,
+      "wordIndex": 19,
       "spokenRank": 650,
       "englishLemma": "mouth",
       "english": "mouth",
@@ -1904,21 +3516,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 46,
-      "spokenRank": 651,
-      "englishLemma": "less",
-      "english": "less",
-      "jp": "少ない",
-      "romaji": "sukunai",
-      "audio": "すくない",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 13,
-      "wordIndex": 47,
+      "block": 16,
+      "wordIndex": 20,
       "spokenRank": 653,
       "englishLemma": "none",
       "english": "none",
@@ -1930,8 +3529,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 48,
+      "block": 16,
+      "wordIndex": 21,
       "spokenRank": 654,
       "englishLemma": "worth",
       "english": "worth",
@@ -1943,21 +3542,8 @@
       "mnemonic": ""
     },
     {
-      "block": 13,
-      "wordIndex": 49,
-      "spokenRank": 655,
-      "englishLemma": "message",
-      "english": "message",
-      "jp": "メッセージ",
-      "romaji": "messeeji",
-      "audio": "メッセージ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 14,
-      "wordIndex": 0,
+      "block": 16,
+      "wordIndex": 22,
       "spokenRank": 657,
       "englishLemma": "mess",
       "english": "mess",
@@ -1969,8 +3555,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 1,
+      "block": 16,
+      "wordIndex": 23,
       "spokenRank": 659,
       "englishLemma": "club",
       "english": "club",
@@ -1982,8 +3568,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 2,
+      "block": 16,
+      "wordIndex": 24,
       "spokenRank": 660,
       "englishLemma": "choice",
       "english": "choice",
@@ -1995,8 +3581,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 3,
+      "block": 16,
+      "wordIndex": 25,
       "spokenRank": 661,
       "englishLemma": "floor",
       "english": "floor",
@@ -2008,21 +3594,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 4,
-      "spokenRank": 662,
-      "englishLemma": "window",
-      "english": "window",
-      "jp": "窓",
-      "romaji": "mado",
-      "audio": "まど",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 14,
-      "wordIndex": 5,
+      "block": 16,
+      "wordIndex": 26,
       "spokenRank": 663,
       "englishLemma": "major",
       "english": "major",
@@ -2034,8 +3607,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 6,
+      "block": 16,
+      "wordIndex": 27,
       "spokenRank": 664,
       "englishLemma": "court",
       "english": "court",
@@ -2047,8 +3620,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 7,
+      "block": 16,
+      "wordIndex": 28,
       "spokenRank": 665,
       "englishLemma": "careful",
       "english": "careful",
@@ -2060,8 +3633,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 8,
+      "block": 16,
+      "wordIndex": 29,
       "spokenRank": 667,
       "englishLemma": "boat",
       "english": "boat",
@@ -2073,8 +3646,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 9,
+      "block": 16,
+      "wordIndex": 30,
       "spokenRank": 668,
       "englishLemma": "knock",
       "english": "knock",
@@ -2086,21 +3659,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 10,
-      "spokenRank": 669,
-      "englishLemma": "hotel",
-      "english": "hotel",
-      "jp": "ホテル",
-      "romaji": "hoteru",
-      "audio": "ホテル",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 14,
-      "wordIndex": 11,
+      "block": 16,
+      "wordIndex": 31,
       "spokenRank": 670,
       "englishLemma": "system",
       "english": "system",
@@ -2112,8 +3672,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 12,
+      "block": 16,
+      "wordIndex": 32,
       "spokenRank": 671,
       "englishLemma": "relax",
       "english": "relax",
@@ -2125,8 +3685,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 13,
+      "block": 16,
+      "wordIndex": 33,
       "spokenRank": 673,
       "englishLemma": "state",
       "english": "state",
@@ -2138,21 +3698,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 14,
-      "spokenRank": 676,
-      "englishLemma": "lunch",
-      "english": "lunch",
-      "jp": "昼食",
-      "romaji": "chuushoku",
-      "audio": "ちゅうしょく",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 14,
-      "wordIndex": 15,
+      "block": 16,
+      "wordIndex": 34,
       "spokenRank": 678,
       "englishLemma": "agree",
       "english": "agree",
@@ -2164,8 +3711,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 16,
+      "block": 16,
+      "wordIndex": 35,
       "spokenRank": 680,
       "englishLemma": "fault",
       "english": "fault",
@@ -2177,8 +3724,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 17,
+      "block": 16,
+      "wordIndex": 36,
       "spokenRank": 681,
       "englishLemma": "dollar",
       "english": "dollar",
@@ -2190,8 +3737,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 18,
+      "block": 16,
+      "wordIndex": 37,
       "spokenRank": 682,
       "englishLemma": "seven",
       "english": "seven",
@@ -2203,8 +3750,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 19,
+      "block": 16,
+      "wordIndex": 38,
       "spokenRank": 685,
       "englishLemma": "future",
       "english": "future",
@@ -2216,8 +3763,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 20,
+      "block": 16,
+      "wordIndex": 39,
       "spokenRank": 686,
       "englishLemma": "bar",
       "english": "bar",
@@ -2229,8 +3776,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 21,
+      "block": 16,
+      "wordIndex": 40,
       "spokenRank": 687,
       "englishLemma": "brain",
       "english": "brain",
@@ -2242,8 +3789,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 22,
+      "block": 16,
+      "wordIndex": 41,
       "spokenRank": 689,
       "englishLemma": "bank",
       "english": "bank",
@@ -2255,8 +3802,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 23,
+      "block": 16,
+      "wordIndex": 42,
       "spokenRank": 693,
       "englishLemma": "smoke",
       "english": "smoke",
@@ -2268,8 +3815,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 24,
+      "block": 16,
+      "wordIndex": 43,
       "spokenRank": 694,
       "englishLemma": "pain",
       "english": "pain",
@@ -2281,8 +3828,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 25,
+      "block": 16,
+      "wordIndex": 44,
       "spokenRank": 695,
       "englishLemma": "bother",
       "english": "bother",
@@ -2294,8 +3841,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 26,
+      "block": 16,
+      "wordIndex": 45,
       "spokenRank": 696,
       "englishLemma": "voice",
       "english": "voice",
@@ -2307,21 +3854,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 27,
-      "spokenRank": 698,
-      "englishLemma": "tv",
-      "english": "TV",
-      "jp": "テレビ",
-      "romaji": "terebi",
-      "audio": "テレビ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 14,
-      "wordIndex": 28,
+      "block": 16,
+      "wordIndex": 46,
       "spokenRank": 700,
       "englishLemma": "service",
       "english": "service",
@@ -2333,21 +3867,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 29,
-      "spokenRank": 702,
-      "englishLemma": "quit",
-      "english": "quit",
-      "jp": "やめる",
-      "romaji": "yameru",
-      "audio": "やめる",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 14,
-      "wordIndex": 30,
+      "block": 16,
+      "wordIndex": 47,
       "spokenRank": 703,
       "englishLemma": "weird",
       "english": "weird",
@@ -2359,8 +3880,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 31,
+      "block": 16,
+      "wordIndex": 48,
       "spokenRank": 704,
       "englishLemma": "arrest",
       "english": "arrest",
@@ -2372,8 +3893,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 32,
+      "block": 16,
+      "wordIndex": 49,
       "spokenRank": 705,
       "englishLemma": "hundred",
       "english": "hundred",
@@ -2385,8 +3906,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 33,
+      "block": 17,
+      "wordIndex": 0,
       "spokenRank": 706,
       "englishLemma": "birthday",
       "english": "birthday",
@@ -2398,8 +3919,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 34,
+      "block": 17,
+      "wordIndex": 1,
       "spokenRank": 707,
       "englishLemma": "judge",
       "english": "judge",
@@ -2411,8 +3932,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 35,
+      "block": 17,
+      "wordIndex": 2,
       "spokenRank": 709,
       "englishLemma": "protect",
       "english": "protect",
@@ -2424,8 +3945,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 36,
+      "block": 17,
+      "wordIndex": 3,
       "spokenRank": 710,
       "englishLemma": "partner",
       "english": "partner",
@@ -2437,8 +3958,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 37,
+      "block": 17,
+      "wordIndex": 4,
       "spokenRank": 712,
       "englishLemma": "earth",
       "english": "earth",
@@ -2450,8 +3971,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 38,
+      "block": 17,
+      "wordIndex": 5,
       "spokenRank": 713,
       "englishLemma": "allow",
       "english": "allow",
@@ -2463,8 +3984,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 39,
+      "block": 17,
+      "wordIndex": 6,
       "spokenRank": 715,
       "englishLemma": "eight",
       "english": "eight",
@@ -2476,8 +3997,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 40,
+      "block": 17,
+      "wordIndex": 7,
       "spokenRank": 717,
       "englishLemma": "attention",
       "english": "attention",
@@ -2489,8 +4010,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 41,
+      "block": 17,
+      "wordIndex": 8,
       "spokenRank": 719,
       "englishLemma": "lawyer",
       "english": "lawyer",
@@ -2502,8 +4023,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 42,
+      "block": 17,
+      "wordIndex": 9,
       "spokenRank": 720,
       "englishLemma": "share",
       "english": "share",
@@ -2515,8 +4036,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 43,
+      "block": 17,
+      "wordIndex": 10,
       "spokenRank": 724,
       "englishLemma": "smart",
       "english": "smart",
@@ -2528,8 +4049,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 44,
+      "block": 17,
+      "wordIndex": 11,
       "spokenRank": 725,
       "englishLemma": "trip",
       "english": "trip",
@@ -2541,8 +4062,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 45,
+      "block": 17,
+      "wordIndex": 12,
       "spokenRank": 726,
       "englishLemma": "drug",
       "english": "drug",
@@ -2554,8 +4075,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 46,
+      "block": 17,
+      "wordIndex": 13,
       "spokenRank": 729,
       "englishLemma": "thousand",
       "english": "thousand",
@@ -2567,8 +4088,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 47,
+      "block": 17,
+      "wordIndex": 14,
       "spokenRank": 733,
       "englishLemma": "wall",
       "english": "wall",
@@ -2580,8 +4101,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 48,
+      "block": 17,
+      "wordIndex": 15,
       "spokenRank": 734,
       "englishLemma": "imagine",
       "english": "imagine",
@@ -2593,8 +4114,8 @@
       "mnemonic": ""
     },
     {
-      "block": 14,
-      "wordIndex": 49,
+      "block": 17,
+      "wordIndex": 16,
       "spokenRank": 735,
       "englishLemma": "short",
       "english": "short",
@@ -2606,8 +4127,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 0,
+      "block": 17,
+      "wordIndex": 17,
       "spokenRank": 736,
       "englishLemma": "tree",
       "english": "tree",
@@ -2619,8 +4140,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 1,
+      "block": 17,
+      "wordIndex": 18,
       "spokenRank": 737,
       "englishLemma": "security",
       "english": "security",
@@ -2632,21 +4153,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 2,
-      "spokenRank": 738,
-      "englishLemma": "plane",
-      "english": "plane",
-      "jp": "飛行機",
-      "romaji": "hikouki",
-      "audio": "ひこうき",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 15,
-      "wordIndex": 3,
+      "block": 17,
+      "wordIndex": 19,
       "spokenRank": 740,
       "englishLemma": "appreciate",
       "english": "appreciate",
@@ -2658,8 +4166,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 4,
+      "block": 17,
+      "wordIndex": 20,
       "spokenRank": 741,
       "englishLemma": "fair",
       "english": "fair",
@@ -2671,8 +4179,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 5,
+      "block": 17,
+      "wordIndex": 21,
       "spokenRank": 744,
       "englishLemma": "reach",
       "english": "reach",
@@ -2684,8 +4192,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 6,
+      "block": 17,
+      "wordIndex": 22,
       "spokenRank": 746,
       "englishLemma": "mention",
       "english": "mention",
@@ -2697,8 +4205,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 7,
+      "block": 17,
+      "wordIndex": 23,
       "spokenRank": 751,
       "englishLemma": "terrible",
       "english": "terrible",
@@ -2710,8 +4218,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 8,
+      "block": 17,
+      "wordIndex": 24,
       "spokenRank": 754,
       "englishLemma": "glass",
       "english": "glass",
@@ -2723,8 +4231,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 9,
+      "block": 17,
+      "wordIndex": 25,
       "spokenRank": 756,
       "englishLemma": "afternoon",
       "english": "afternoon",
@@ -2736,8 +4244,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 10,
+      "block": 17,
+      "wordIndex": 26,
       "spokenRank": 757,
       "englishLemma": "patient",
       "english": "patient",
@@ -2749,8 +4257,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 11,
+      "block": 17,
+      "wordIndex": 27,
       "spokenRank": 758,
       "englishLemma": "calm",
       "english": "calm",
@@ -2762,8 +4270,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 12,
+      "block": 17,
+      "wordIndex": 28,
       "spokenRank": 759,
       "englishLemma": "swear",
       "english": "swear",
@@ -2775,8 +4283,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 13,
+      "block": 17,
+      "wordIndex": 29,
       "spokenRank": 760,
       "englishLemma": "horse",
       "english": "horse",
@@ -2788,8 +4296,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 14,
+      "block": 17,
+      "wordIndex": 30,
       "spokenRank": 763,
       "englishLemma": "personal",
       "english": "personal",
@@ -2801,8 +4309,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 15,
+      "block": 17,
+      "wordIndex": 31,
       "spokenRank": 764,
       "englishLemma": "list",
       "english": "list",
@@ -2814,8 +4322,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 16,
+      "block": 17,
+      "wordIndex": 32,
       "spokenRank": 765,
       "englishLemma": "grab",
       "english": "grab",
@@ -2827,8 +4335,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 17,
+      "block": 17,
+      "wordIndex": 33,
       "spokenRank": 766,
       "englishLemma": "soul",
       "english": "soul",
@@ -2840,8 +4348,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 18,
+      "block": 17,
+      "wordIndex": 34,
       "spokenRank": 770,
       "englishLemma": "ground",
       "english": "ground",
@@ -2853,8 +4361,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 19,
+      "block": 17,
+      "wordIndex": 35,
       "spokenRank": 771,
       "englishLemma": "suit",
       "english": "suit",
@@ -2866,8 +4374,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 20,
+      "block": 17,
+      "wordIndex": 36,
       "spokenRank": 773,
       "englishLemma": "age",
       "english": "age",
@@ -2879,8 +4387,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 21,
+      "block": 17,
+      "wordIndex": 37,
       "spokenRank": 774,
       "englishLemma": "tough",
       "english": "tough",
@@ -2892,8 +4400,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 22,
+      "block": 17,
+      "wordIndex": 38,
       "spokenRank": 778,
       "englishLemma": "situation",
       "english": "situation",
@@ -2905,8 +4413,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 23,
+      "block": 17,
+      "wordIndex": 39,
       "spokenRank": 780,
       "englishLemma": "middle",
       "english": "middle",
@@ -2918,8 +4426,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 24,
+      "block": 17,
+      "wordIndex": 40,
       "spokenRank": 781,
       "englishLemma": "forgive",
       "english": "forgive",
@@ -2931,8 +4439,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 25,
+      "block": 17,
+      "wordIndex": 41,
       "spokenRank": 782,
       "englishLemma": "information",
       "english": "information",
@@ -2944,8 +4452,21 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 26,
+      "block": 17,
+      "wordIndex": 42,
+      "spokenRank": 783,
+      "englishLemma": "simple",
+      "english": "simple",
+      "jp": "簡単",
+      "romaji": "kantan",
+      "audio": "かんたん",
+      "confidence": "high",
+      "flag": "",
+      "mnemonic": ""
+    },
+    {
+      "block": 17,
+      "wordIndex": 43,
       "spokenRank": 786,
       "englishLemma": "army",
       "english": "army",
@@ -2957,21 +4478,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 27,
-      "spokenRank": 787,
-      "englishLemma": "ticket",
-      "english": "ticket",
-      "jp": "切符",
-      "romaji": "kippu",
-      "audio": "きっぷ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 15,
-      "wordIndex": 28,
+      "block": 17,
+      "wordIndex": 44,
       "spokenRank": 788,
       "englishLemma": "study",
       "english": "study",
@@ -2983,8 +4491,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 29,
+      "block": 17,
+      "wordIndex": 45,
       "spokenRank": 789,
       "englishLemma": "forever",
       "english": "forever",
@@ -2996,34 +4504,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 30,
-      "spokenRank": 790,
-      "englishLemma": "dark",
-      "english": "dark",
-      "jp": "暗い",
-      "romaji": "kurai",
-      "audio": "くらい",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 15,
-      "wordIndex": 31,
-      "spokenRank": 791,
-      "englishLemma": "anywhere",
-      "english": "anywhere",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 15,
-      "wordIndex": 32,
+      "block": 17,
+      "wordIndex": 46,
       "spokenRank": 793,
       "englishLemma": "accident",
       "english": "accident",
@@ -3035,8 +4517,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 33,
+      "block": 17,
+      "wordIndex": 47,
       "spokenRank": 794,
       "englishLemma": "cute",
       "english": "cute",
@@ -3048,8 +4530,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 34,
+      "block": 17,
+      "wordIndex": 48,
       "spokenRank": 795,
       "englishLemma": "lying",
       "english": "lying",
@@ -3061,8 +4543,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 35,
+      "block": 17,
+      "wordIndex": 49,
       "spokenRank": 796,
       "englishLemma": "college",
       "english": "college",
@@ -3074,8 +4556,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 36,
+      "block": 18,
+      "wordIndex": 0,
       "spokenRank": 797,
       "englishLemma": "apartment",
       "english": "apartment",
@@ -3087,8 +4569,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 37,
+      "block": 18,
+      "wordIndex": 1,
       "spokenRank": 798,
       "englishLemma": "clos",
       "english": "clos",
@@ -3100,8 +4582,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 38,
+      "block": 18,
+      "wordIndex": 2,
       "spokenRank": 799,
       "englishLemma": "weapon",
       "english": "weapon",
@@ -3113,8 +4595,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 39,
+      "block": 18,
+      "wordIndex": 3,
       "spokenRank": 800,
       "englishLemma": "strong",
       "english": "strong",
@@ -3126,8 +4608,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 40,
+      "block": 18,
+      "wordIndex": 4,
       "spokenRank": 801,
       "englishLemma": "johnny",
       "english": "johnny",
@@ -3139,8 +4621,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 41,
+      "block": 18,
+      "wordIndex": 5,
       "spokenRank": 802,
       "englishLemma": "excite",
       "english": "excite",
@@ -3152,8 +4634,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 42,
+      "block": 18,
+      "wordIndex": 6,
       "spokenRank": 803,
       "englishLemma": "cat",
       "english": "cat",
@@ -3165,8 +4647,21 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 43,
+      "block": 18,
+      "wordIndex": 7,
+      "spokenRank": 804,
+      "englishLemma": "strange",
+      "english": "strange",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 18,
+      "wordIndex": 8,
       "spokenRank": 805,
       "englishLemma": "smile",
       "english": "smile",
@@ -3178,8 +4673,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 44,
+      "block": 18,
+      "wordIndex": 9,
       "spokenRank": 806,
       "englishLemma": "scream",
       "english": "scream",
@@ -3191,21 +4686,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 45,
-      "spokenRank": 807,
-      "englishLemma": "beer",
-      "english": "beer",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 15,
-      "wordIndex": 46,
+      "block": 18,
+      "wordIndex": 10,
       "spokenRank": 808,
       "englishLemma": "film",
       "english": "film",
@@ -3217,21 +4699,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 47,
-      "spokenRank": 809,
-      "englishLemma": "totally",
-      "english": "totally",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 15,
-      "wordIndex": 48,
+      "block": 18,
+      "wordIndex": 11,
       "spokenRank": 810,
       "englishLemma": "respect",
       "english": "respect",
@@ -3243,8 +4712,8 @@
       "mnemonic": ""
     },
     {
-      "block": 15,
-      "wordIndex": 49,
+      "block": 18,
+      "wordIndex": 12,
       "spokenRank": 811,
       "englishLemma": "difference",
       "english": "difference",
@@ -3256,8 +4725,21 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 0,
+      "block": 18,
+      "wordIndex": 13,
+      "spokenRank": 812,
+      "englishLemma": "concern",
+      "english": "concern",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 18,
+      "wordIndex": 14,
       "spokenRank": 813,
       "englishLemma": "evidence",
       "english": "evidence",
@@ -3269,8 +4751,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 1,
+      "block": 18,
+      "wordIndex": 15,
       "spokenRank": 814,
       "englishLemma": "visit",
       "english": "visit",
@@ -3282,21 +4764,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 2,
-      "spokenRank": 815,
-      "englishLemma": "certain",
-      "english": "certain",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 16,
-      "wordIndex": 3,
+      "block": 18,
+      "wordIndex": 16,
       "spokenRank": 816,
       "englishLemma": "history",
       "english": "history",
@@ -3308,8 +4777,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 4,
+      "block": 18,
+      "wordIndex": 17,
       "spokenRank": 817,
       "englishLemma": "fear",
       "english": "fear",
@@ -3321,8 +4790,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 5,
+      "block": 18,
+      "wordIndex": 18,
       "spokenRank": 818,
       "englishLemma": "cross",
       "english": "cross",
@@ -3334,8 +4803,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 6,
+      "block": 18,
+      "wordIndex": 19,
       "spokenRank": 819,
       "englishLemma": "animal",
       "english": "animal",
@@ -3347,8 +4816,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 7,
+      "block": 18,
+      "wordIndex": 20,
       "spokenRank": 820,
       "englishLemma": "cook",
       "english": "cook",
@@ -3360,21 +4829,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 8,
-      "spokenRank": 821,
-      "englishLemma": "near",
-      "english": "near",
-      "jp": "近い",
-      "romaji": "chikai",
-      "audio": "ちかい",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 16,
-      "wordIndex": 9,
+      "block": 18,
+      "wordIndex": 21,
       "spokenRank": 822,
       "englishLemma": "completely",
       "english": "completely",
@@ -3386,8 +4842,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 10,
+      "block": 18,
+      "wordIndex": 22,
       "spokenRank": 823,
       "englishLemma": "belong",
       "english": "belong",
@@ -3399,8 +4855,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 11,
+      "block": 18,
+      "wordIndex": 23,
       "spokenRank": 824,
       "englishLemma": "field",
       "english": "field",
@@ -3412,8 +4868,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 12,
+      "block": 18,
+      "wordIndex": 24,
       "spokenRank": 825,
       "englishLemma": "girlfriend",
       "english": "girlfriend",
@@ -3425,8 +4881,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 13,
+      "block": 18,
+      "wordIndex": 25,
       "spokenRank": 826,
       "englishLemma": "bastard",
       "english": "bastard",
@@ -3438,8 +4894,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 14,
+      "block": 18,
+      "wordIndex": 26,
       "spokenRank": 827,
       "englishLemma": "b",
       "english": "b",
@@ -3451,8 +4907,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 15,
+      "block": 18,
+      "wordIndex": 27,
       "spokenRank": 828,
       "englishLemma": "pleasure",
       "english": "pleasure",
@@ -3464,8 +4920,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 16,
+      "block": 18,
+      "wordIndex": 28,
       "spokenRank": 829,
       "englishLemma": "file",
       "english": "file",
@@ -3477,8 +4933,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 17,
+      "block": 18,
+      "wordIndex": 29,
       "spokenRank": 830,
       "englishLemma": "area",
       "english": "area",
@@ -3490,8 +4946,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 18,
+      "block": 18,
+      "wordIndex": 30,
       "spokenRank": 831,
       "englishLemma": "truck",
       "english": "truck",
@@ -3503,8 +4959,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 19,
+      "block": 18,
+      "wordIndex": 31,
       "spokenRank": 832,
       "englishLemma": "rich",
       "english": "rich",
@@ -3516,8 +4972,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 20,
+      "block": 18,
+      "wordIndex": 32,
       "spokenRank": 833,
       "englishLemma": "born",
       "english": "born",
@@ -3529,8 +4985,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 21,
+      "block": 18,
+      "wordIndex": 33,
       "spokenRank": 834,
       "englishLemma": "proud",
       "english": "proud",
@@ -3542,8 +4998,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 22,
+      "block": 18,
+      "wordIndex": 34,
       "spokenRank": 835,
       "englishLemma": "group",
       "english": "group",
@@ -3555,8 +5011,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 23,
+      "block": 18,
+      "wordIndex": 35,
       "spokenRank": 836,
       "englishLemma": "owe",
       "english": "owe",
@@ -3568,8 +5024,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 24,
+      "block": 18,
+      "wordIndex": 36,
       "spokenRank": 837,
       "englishLemma": "fill",
       "english": "fill",
@@ -3581,8 +5037,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 25,
+      "block": 18,
+      "wordIndex": 37,
       "spokenRank": 838,
       "englishLemma": "involve",
       "english": "involve",
@@ -3594,8 +5050,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 26,
+      "block": 18,
+      "wordIndex": 38,
       "spokenRank": 839,
       "englishLemma": "gift",
       "english": "gift",
@@ -3607,8 +5063,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 27,
+      "block": 18,
+      "wordIndex": 39,
       "spokenRank": 840,
       "englishLemma": "folk",
       "english": "folk",
@@ -3620,8 +5076,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 28,
+      "block": 18,
+      "wordIndex": 40,
       "spokenRank": 841,
       "englishLemma": "position",
       "english": "position",
@@ -3633,8 +5089,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 29,
+      "block": 18,
+      "wordIndex": 41,
       "spokenRank": 842,
       "englishLemma": "scene",
       "english": "scene",
@@ -3646,8 +5102,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 30,
+      "block": 18,
+      "wordIndex": 42,
       "spokenRank": 843,
       "englishLemma": "spot",
       "english": "spot",
@@ -3659,8 +5115,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 31,
+      "block": 18,
+      "wordIndex": 43,
       "spokenRank": 844,
       "englishLemma": "chief",
       "english": "chief",
@@ -3672,8 +5128,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 32,
+      "block": 18,
+      "wordIndex": 44,
       "spokenRank": 845,
       "englishLemma": "paint",
       "english": "paint",
@@ -3685,8 +5141,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 33,
+      "block": 18,
+      "wordIndex": 45,
       "spokenRank": 847,
       "englishLemma": "steal",
       "english": "steal",
@@ -3698,8 +5154,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 34,
+      "block": 18,
+      "wordIndex": 46,
       "spokenRank": 848,
       "englishLemma": "fat",
       "english": "fat",
@@ -3711,8 +5167,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 35,
+      "block": 18,
+      "wordIndex": 47,
       "spokenRank": 849,
       "englishLemma": "harry",
       "english": "harry",
@@ -3724,8 +5180,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 36,
+      "block": 18,
+      "wordIndex": 48,
       "spokenRank": 851,
       "englishLemma": "race",
       "english": "race",
@@ -3737,8 +5193,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 37,
+      "block": 18,
+      "wordIndex": 49,
       "spokenRank": 853,
       "englishLemma": "experience",
       "english": "experience",
@@ -3750,8 +5206,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 38,
+      "block": 19,
+      "wordIndex": 0,
       "spokenRank": 854,
       "englishLemma": "yo",
       "english": "yo",
@@ -3763,8 +5219,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 39,
+      "block": 19,
+      "wordIndex": 1,
       "spokenRank": 855,
       "englishLemma": "doc",
       "english": "doc",
@@ -3776,8 +5232,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 40,
+      "block": 19,
+      "wordIndex": 2,
       "spokenRank": 856,
       "englishLemma": "board",
       "english": "board",
@@ -3789,21 +5245,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 41,
-      "spokenRank": 857,
-      "englishLemma": "contact",
-      "english": "contact",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 16,
-      "wordIndex": 42,
+      "block": 19,
+      "wordIndex": 3,
       "spokenRank": 858,
       "englishLemma": "summer",
       "english": "summer",
@@ -3815,8 +5258,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 43,
+      "block": 19,
+      "wordIndex": 4,
       "spokenRank": 859,
       "englishLemma": "danny",
       "english": "danny",
@@ -3828,8 +5271,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 44,
+      "block": 19,
+      "wordIndex": 5,
       "spokenRank": 860,
       "englishLemma": "il",
       "english": "il",
@@ -3841,8 +5284,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 45,
+      "block": 19,
+      "wordIndex": 6,
       "spokenRank": 861,
       "englishLemma": "marriage",
       "english": "marriage",
@@ -3854,8 +5297,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 46,
+      "block": 19,
+      "wordIndex": 7,
       "spokenRank": 862,
       "englishLemma": "round",
       "english": "round",
@@ -3867,8 +5310,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 47,
+      "block": 19,
+      "wordIndex": 8,
       "spokenRank": 863,
       "englishLemma": "ought",
       "english": "ought",
@@ -3880,8 +5323,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 48,
+      "block": 19,
+      "wordIndex": 9,
       "spokenRank": 864,
       "englishLemma": "screw",
       "english": "screw",
@@ -3893,8 +5336,8 @@
       "mnemonic": ""
     },
     {
-      "block": 16,
-      "wordIndex": 49,
+      "block": 19,
+      "wordIndex": 10,
       "spokenRank": 865,
       "englishLemma": "jimmy",
       "english": "jimmy",
@@ -3906,8 +5349,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 0,
+      "block": 19,
+      "wordIndex": 11,
       "spokenRank": 866,
       "englishLemma": "upset",
       "english": "upset",
@@ -3919,8 +5362,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 1,
+      "block": 19,
+      "wordIndex": 12,
       "spokenRank": 867,
       "englishLemma": "radio",
       "english": "radio",
@@ -3932,8 +5375,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 2,
+      "block": 19,
+      "wordIndex": 13,
       "spokenRank": 868,
       "englishLemma": "art",
       "english": "art",
@@ -3945,8 +5388,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 3,
+      "block": 19,
+      "wordIndex": 14,
       "spokenRank": 869,
       "englishLemma": "entire",
       "english": "entire",
@@ -3958,8 +5401,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 4,
+      "block": 19,
+      "wordIndex": 15,
       "spokenRank": 870,
       "englishLemma": "pack",
       "english": "pack",
@@ -3971,8 +5414,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 5,
+      "block": 19,
+      "wordIndex": 16,
       "spokenRank": 871,
       "englishLemma": "ice",
       "english": "ice",
@@ -3984,8 +5427,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 6,
+      "block": 19,
+      "wordIndex": 17,
       "spokenRank": 872,
       "englishLemma": "relationship",
       "english": "relationship",
@@ -3997,8 +5440,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 7,
+      "block": 19,
+      "wordIndex": 18,
       "spokenRank": 873,
       "englishLemma": "favor",
       "english": "favor",
@@ -4010,21 +5453,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 8,
-      "spokenRank": 874,
-      "englishLemma": "invite",
-      "english": "invite",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 17,
-      "wordIndex": 9,
+      "block": 19,
+      "wordIndex": 19,
       "spokenRank": 875,
       "englishLemma": "alright",
       "english": "alright",
@@ -4036,8 +5466,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 10,
+      "block": 19,
+      "wordIndex": 20,
       "spokenRank": 876,
       "englishLemma": "bomb",
       "english": "bomb",
@@ -4049,8 +5479,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 11,
+      "block": 19,
+      "wordIndex": 21,
       "spokenRank": 877,
       "englishLemma": "instead",
       "english": "instead",
@@ -4062,8 +5492,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 12,
+      "block": 19,
+      "wordIndex": 22,
       "spokenRank": 878,
       "englishLemma": "prepare",
       "english": "prepare",
@@ -4075,8 +5505,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 13,
+      "block": 19,
+      "wordIndex": 23,
       "spokenRank": 879,
       "englishLemma": "gold",
       "english": "gold",
@@ -4088,8 +5518,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 14,
+      "block": 19,
+      "wordIndex": 24,
       "spokenRank": 880,
       "englishLemma": "breath",
       "english": "breath",
@@ -4101,8 +5531,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 15,
+      "block": 19,
+      "wordIndex": 25,
       "spokenRank": 881,
       "englishLemma": "j",
       "english": "j",
@@ -4114,8 +5544,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 16,
+      "block": 19,
+      "wordIndex": 26,
       "spokenRank": 882,
       "englishLemma": "america",
       "english": "america",
@@ -4127,21 +5557,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 17,
-      "spokenRank": 883,
-      "englishLemma": "bus",
-      "english": "bus",
-      "jp": "バス",
-      "romaji": "basu",
-      "audio": "バス",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 17,
-      "wordIndex": 18,
+      "block": 19,
+      "wordIndex": 27,
       "spokenRank": 884,
       "englishLemma": "bear",
       "english": "bear",
@@ -4153,8 +5570,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 19,
+      "block": 19,
+      "wordIndex": 28,
       "spokenRank": 885,
       "englishLemma": "idiot",
       "english": "idiot",
@@ -4166,8 +5583,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 20,
+      "block": 19,
+      "wordIndex": 29,
       "spokenRank": 886,
       "englishLemma": "witness",
       "english": "witness",
@@ -4179,8 +5596,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 21,
+      "block": 19,
+      "wordIndex": 30,
       "spokenRank": 887,
       "englishLemma": "fit",
       "english": "fit",
@@ -4192,8 +5609,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 22,
+      "block": 19,
+      "wordIndex": 31,
       "spokenRank": 888,
       "englishLemma": "boyfriend",
       "english": "boyfriend",
@@ -4205,8 +5622,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 23,
+      "block": 19,
+      "wordIndex": 32,
       "spokenRank": 889,
       "englishLemma": "hungry",
       "english": "hungry",
@@ -4218,8 +5635,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 24,
+      "block": 19,
+      "wordIndex": 33,
       "spokenRank": 890,
       "englishLemma": "private",
       "english": "private",
@@ -4231,8 +5648,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 25,
+      "block": 19,
+      "wordIndex": 34,
       "spokenRank": 891,
       "englishLemma": "suck",
       "english": "suck",
@@ -4244,8 +5661,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 26,
+      "block": 19,
+      "wordIndex": 35,
       "spokenRank": 892,
       "englishLemma": "henry",
       "english": "henry",
@@ -4257,8 +5674,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 27,
+      "block": 19,
+      "wordIndex": 36,
       "spokenRank": 893,
       "englishLemma": "deep",
       "english": "deep",
@@ -4270,8 +5687,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 28,
+      "block": 19,
+      "wordIndex": 37,
       "spokenRank": 894,
       "englishLemma": "dur",
       "english": "dur",
@@ -4283,21 +5700,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 29,
-      "spokenRank": 895,
-      "englishLemma": "sake",
-      "english": "sake",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 17,
-      "wordIndex": 30,
+      "block": 19,
+      "wordIndex": 38,
       "spokenRank": 896,
       "englishLemma": "single",
       "english": "single",
@@ -4309,21 +5713,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 31,
-      "spokenRank": 897,
-      "englishLemma": "cash",
-      "english": "cash",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 17,
-      "wordIndex": 32,
+      "block": 19,
+      "wordIndex": 39,
       "spokenRank": 898,
       "englishLemma": "forward",
       "english": "forward",
@@ -4335,8 +5726,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 33,
+      "block": 19,
+      "wordIndex": 40,
       "spokenRank": 899,
       "englishLemma": "ed",
       "english": "ed",
@@ -4348,21 +5739,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 34,
-      "spokenRank": 900,
-      "englishLemma": "definitely",
-      "english": "definitely",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 17,
-      "wordIndex": 35,
+      "block": 19,
+      "wordIndex": 41,
       "spokenRank": 901,
       "englishLemma": "sho",
       "english": "sho",
@@ -4374,8 +5752,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 36,
+      "block": 19,
+      "wordIndex": 42,
       "spokenRank": 902,
       "englishLemma": "third",
       "english": "third",
@@ -4387,8 +5765,21 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 37,
+      "block": 19,
+      "wordIndex": 43,
+      "spokenRank": 903,
+      "englishLemma": "type",
+      "english": "type",
+      "jp": "TBD",
+      "romaji": "TBD",
+      "audio": "TBD",
+      "confidence": "low",
+      "flag": "Japanese gloss TBD — do not invent",
+      "mnemonic": ""
+    },
+    {
+      "block": 19,
+      "wordIndex": 44,
       "spokenRank": 904,
       "englishLemma": "camera",
       "english": "camera",
@@ -4400,8 +5791,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 38,
+      "block": 19,
+      "wordIndex": 45,
       "spokenRank": 905,
       "englishLemma": "dangerous",
       "english": "dangerous",
@@ -4413,8 +5804,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 39,
+      "block": 19,
+      "wordIndex": 46,
       "spokenRank": 906,
       "englishLemma": "green",
       "english": "green",
@@ -4426,8 +5817,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 40,
+      "block": 19,
+      "wordIndex": 47,
       "spokenRank": 907,
       "englishLemma": "beg",
       "english": "beg",
@@ -4439,8 +5830,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 41,
+      "block": 19,
+      "wordIndex": 48,
       "spokenRank": 908,
       "englishLemma": "accept",
       "english": "accept",
@@ -4452,8 +5843,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 42,
+      "block": 19,
+      "wordIndex": 49,
       "spokenRank": 909,
       "englishLemma": "evil",
       "english": "evil",
@@ -4465,8 +5856,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 43,
+      "block": 20,
+      "wordIndex": 0,
       "spokenRank": 910,
       "englishLemma": "search",
       "english": "search",
@@ -4478,8 +5869,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 44,
+      "block": 20,
+      "wordIndex": 1,
       "spokenRank": 911,
       "englishLemma": "client",
       "english": "client",
@@ -4491,8 +5882,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 45,
+      "block": 20,
+      "wordIndex": 2,
       "spokenRank": 912,
       "englishLemma": "killer",
       "english": "killer",
@@ -4504,8 +5895,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 46,
+      "block": 20,
+      "wordIndex": 3,
       "spokenRank": 913,
       "englishLemma": "english",
       "english": "english",
@@ -4517,8 +5908,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 47,
+      "block": 20,
+      "wordIndex": 4,
       "spokenRank": 914,
       "englishLemma": "robert",
       "english": "robert",
@@ -4530,21 +5921,8 @@
       "mnemonic": ""
     },
     {
-      "block": 17,
-      "wordIndex": 48,
-      "spokenRank": 915,
-      "englishLemma": "arrive",
-      "english": "arrive",
-      "jp": "着く",
-      "romaji": "tsuku",
-      "audio": "つく",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 17,
-      "wordIndex": 49,
+      "block": 20,
+      "wordIndex": 5,
       "spokenRank": 916,
       "englishLemma": "richard",
       "english": "richard",
@@ -4556,8 +5934,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 0,
+      "block": 20,
+      "wordIndex": 6,
       "spokenRank": 917,
       "englishLemma": "student",
       "english": "student",
@@ -4569,8 +5947,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 1,
+      "block": 20,
+      "wordIndex": 7,
       "spokenRank": 918,
       "englishLemma": "ln",
       "english": "ln",
@@ -4582,8 +5960,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 2,
+      "block": 20,
+      "wordIndex": 8,
       "spokenRank": 919,
       "englishLemma": "doubt",
       "english": "doubt",
@@ -4595,8 +5973,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 3,
+      "block": 20,
+      "wordIndex": 9,
       "spokenRank": 920,
       "englishLemma": "admit",
       "english": "admit",
@@ -4608,8 +5986,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 4,
+      "block": 20,
+      "wordIndex": 10,
       "spokenRank": 921,
       "englishLemma": "warn",
       "english": "warn",
@@ -4621,8 +5999,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 5,
+      "block": 20,
+      "wordIndex": 11,
       "spokenRank": 922,
       "englishLemma": "press",
       "english": "press",
@@ -4634,11 +6012,11 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 6,
-      "spokenRank": 923,
-      "englishLemma": "chicken",
-      "english": "chicken",
+      "block": 20,
+      "wordIndex": 12,
+      "spokenRank": 924,
+      "englishLemma": "action",
+      "english": "action",
       "jp": "TBD",
       "romaji": "TBD",
       "audio": "TBD",
@@ -4647,8 +6025,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 7,
+      "block": 20,
+      "wordIndex": 13,
       "spokenRank": 925,
       "englishLemma": "cost",
       "english": "cost",
@@ -4660,8 +6038,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 8,
+      "block": 20,
+      "wordIndex": 14,
       "spokenRank": 926,
       "englishLemma": "joey",
       "english": "joey",
@@ -4673,8 +6051,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 9,
+      "block": 20,
+      "wordIndex": 15,
       "spokenRank": 927,
       "englishLemma": "asshole",
       "english": "asshole",
@@ -4686,8 +6064,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 10,
+      "block": 20,
+      "wordIndex": 16,
       "spokenRank": 928,
       "englishLemma": "church",
       "english": "church",
@@ -4699,8 +6077,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 11,
+      "block": 20,
+      "wordIndex": 17,
       "spokenRank": 929,
       "englishLemma": "e",
       "english": "e",
@@ -4712,8 +6090,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 12,
+      "block": 20,
+      "wordIndex": 18,
       "spokenRank": 930,
       "englishLemma": "honest",
       "english": "honest",
@@ -4725,8 +6103,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 13,
+      "block": 20,
+      "wordIndex": 19,
       "spokenRank": 931,
       "englishLemma": "lay",
       "english": "lay",
@@ -4738,8 +6116,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 14,
+      "block": 20,
+      "wordIndex": 20,
       "spokenRank": 932,
       "englishLemma": "jail",
       "english": "jail",
@@ -4751,8 +6129,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 15,
+      "block": 20,
+      "wordIndex": 21,
       "spokenRank": 933,
       "englishLemma": "fella",
       "english": "fella",
@@ -4764,8 +6142,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 16,
+      "block": 20,
+      "wordIndex": 22,
       "spokenRank": 934,
       "englishLemma": "trick",
       "english": "trick",
@@ -4777,8 +6155,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 17,
+      "block": 20,
+      "wordIndex": 23,
       "spokenRank": 935,
       "englishLemma": "mommy",
       "english": "mommy",
@@ -4790,8 +6168,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 18,
+      "block": 20,
+      "wordIndex": 24,
       "spokenRank": 936,
       "englishLemma": "fellow",
       "english": "fellow",
@@ -4803,8 +6181,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 19,
+      "block": 20,
+      "wordIndex": 25,
       "spokenRank": 937,
       "englishLemma": "max",
       "english": "max",
@@ -4816,8 +6194,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 20,
+      "block": 20,
+      "wordIndex": 26,
       "spokenRank": 938,
       "englishLemma": "rain",
       "english": "rain",
@@ -4829,8 +6207,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 21,
+      "block": 20,
+      "wordIndex": 27,
       "spokenRank": 939,
       "englishLemma": "professor",
       "english": "professor",
@@ -4842,8 +6220,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 22,
+      "block": 20,
+      "wordIndex": 28,
       "spokenRank": 940,
       "englishLemma": "congratulation",
       "english": "congratulation",
@@ -4855,8 +6233,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 23,
+      "block": 20,
+      "wordIndex": 29,
       "spokenRank": 941,
       "englishLemma": "bird",
       "english": "bird",
@@ -4868,8 +6246,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 24,
+      "block": 20,
+      "wordIndex": 30,
       "spokenRank": 942,
       "englishLemma": "bullshit",
       "english": "bullshit",
@@ -4881,8 +6259,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 25,
+      "block": 20,
+      "wordIndex": 31,
       "spokenRank": 943,
       "englishLemma": "crime",
       "english": "crime",
@@ -4894,8 +6272,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 26,
+      "block": 20,
+      "wordIndex": 32,
       "spokenRank": 944,
       "englishLemma": "victim",
       "english": "victim",
@@ -4907,8 +6285,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 27,
+      "block": 20,
+      "wordIndex": 33,
       "spokenRank": 945,
       "englishLemma": "public",
       "english": "public",
@@ -4920,8 +6298,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 28,
+      "block": 20,
+      "wordIndex": 34,
       "spokenRank": 946,
       "englishLemma": "finger",
       "english": "finger",
@@ -4933,8 +6311,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 29,
+      "block": 20,
+      "wordIndex": 35,
       "spokenRank": 947,
       "englishLemma": "flower",
       "english": "flower",
@@ -4946,8 +6324,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 30,
+      "block": 20,
+      "wordIndex": 36,
       "spokenRank": 948,
       "englishLemma": "match",
       "english": "match",
@@ -4959,8 +6337,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 31,
+      "block": 20,
+      "wordIndex": 37,
       "spokenRank": 949,
       "englishLemma": "taste",
       "english": "taste",
@@ -4972,8 +6350,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 32,
+      "block": 20,
+      "wordIndex": 38,
       "spokenRank": 950,
       "englishLemma": "upstair",
       "english": "upstair",
@@ -4985,8 +6363,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 33,
+      "block": 20,
+      "wordIndex": 39,
       "spokenRank": 951,
       "englishLemma": "memory",
       "english": "memory",
@@ -4998,8 +6376,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 34,
+      "block": 20,
+      "wordIndex": 40,
       "spokenRank": 952,
       "englishLemma": "sun",
       "english": "sun",
@@ -5011,8 +6389,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 35,
+      "block": 20,
+      "wordIndex": 41,
       "spokenRank": 953,
       "englishLemma": "deserve",
       "english": "deserve",
@@ -5024,8 +6402,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 36,
+      "block": 20,
+      "wordIndex": 42,
       "spokenRank": 954,
       "englishLemma": "normal",
       "english": "normal",
@@ -5037,8 +6415,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 37,
+      "block": 20,
+      "wordIndex": 43,
       "spokenRank": 955,
       "englishLemma": "prove",
       "english": "prove",
@@ -5050,8 +6428,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 38,
+      "block": 20,
+      "wordIndex": 44,
       "spokenRank": 956,
       "englishLemma": "decision",
       "english": "decision",
@@ -5063,8 +6441,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 39,
+      "block": 20,
+      "wordIndex": 45,
       "spokenRank": 957,
       "englishLemma": "machine",
       "english": "machine",
@@ -5076,8 +6454,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 40,
+      "block": 20,
+      "wordIndex": 46,
       "spokenRank": 958,
       "englishLemma": "freak",
       "english": "freak",
@@ -5089,8 +6467,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 41,
+      "block": 20,
+      "wordIndex": 47,
       "spokenRank": 959,
       "englishLemma": "r",
       "english": "r",
@@ -5102,8 +6480,8 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 42,
+      "block": 20,
+      "wordIndex": 48,
       "spokenRank": 960,
       "englishLemma": "double",
       "english": "double",
@@ -5115,1389 +6493,11 @@
       "mnemonic": ""
     },
     {
-      "block": 18,
-      "wordIndex": 43,
+      "block": 20,
+      "wordIndex": 49,
       "spokenRank": 961,
       "englishLemma": "space",
       "english": "space",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 18,
-      "wordIndex": 44,
-      "spokenRank": 962,
-      "englishLemma": "spent",
-      "english": "spent",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 18,
-      "wordIndex": 45,
-      "spokenRank": 963,
-      "englishLemma": "heaven",
-      "english": "heaven",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 18,
-      "wordIndex": 46,
-      "spokenRank": 964,
-      "englishLemma": "computer",
-      "english": "computer",
-      "jp": "コンピューター",
-      "romaji": "konpyuutaa",
-      "audio": "コンピューター",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 18,
-      "wordIndex": 47,
-      "spokenRank": 966,
-      "englishLemma": "hide",
-      "english": "hide",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 18,
-      "wordIndex": 48,
-      "spokenRank": 967,
-      "englishLemma": "bobby",
-      "english": "bobby",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 18,
-      "wordIndex": 49,
-      "spokenRank": 968,
-      "englishLemma": "peace",
-      "english": "peace",
-      "jp": "平和",
-      "romaji": "heiwa",
-      "audio": "へいわ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 0,
-      "spokenRank": 969,
-      "englishLemma": "escape",
-      "english": "escape",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 1,
-      "spokenRank": 970,
-      "englishLemma": "french",
-      "english": "french",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 2,
-      "spokenRank": 971,
-      "englishLemma": "gas",
-      "english": "gas",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 3,
-      "spokenRank": 972,
-      "englishLemma": "steve",
-      "english": "steve",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 4,
-      "spokenRank": 973,
-      "englishLemma": "paris",
-      "english": "paris",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 5,
-      "spokenRank": 974,
-      "englishLemma": "putt",
-      "english": "putt",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 6,
-      "spokenRank": 975,
-      "englishLemma": "nut",
-      "english": "nut",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 7,
-      "spokenRank": 976,
-      "englishLemma": "wind",
-      "english": "wind",
-      "jp": "風",
-      "romaji": "kaze",
-      "audio": "かぜ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 8,
-      "spokenRank": 977,
-      "englishLemma": "billy",
-      "english": "billy",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 9,
-      "spokenRank": 978,
-      "englishLemma": "using",
-      "english": "using",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 10,
-      "spokenRank": 979,
-      "englishLemma": "la",
-      "english": "la",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 11,
-      "spokenRank": 980,
-      "englishLemma": "tape",
-      "english": "tape",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 12,
-      "spokenRank": 981,
-      "englishLemma": "tony",
-      "english": "tony",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 13,
-      "spokenRank": 982,
-      "englishLemma": "settle",
-      "english": "settle",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 14,
-      "spokenRank": 983,
-      "englishLemma": "nine",
-      "english": "nine",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 15,
-      "spokenRank": 984,
-      "englishLemma": "weekend",
-      "english": "weekend",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 16,
-      "spokenRank": 985,
-      "englishLemma": "government",
-      "english": "government",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 17,
-      "spokenRank": 986,
-      "englishLemma": "holy",
-      "english": "holy",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 18,
-      "spokenRank": 987,
-      "englishLemma": "ear",
-      "english": "ear",
-      "jp": "耳",
-      "romaji": "mimi",
-      "audio": "みみ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 19,
-      "spokenRank": 988,
-      "englishLemma": "prison",
-      "english": "prison",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 20,
-      "spokenRank": 989,
-      "englishLemma": "block",
-      "english": "block",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 21,
-      "spokenRank": 990,
-      "englishLemma": "enemy",
-      "english": "enemy",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 22,
-      "spokenRank": 991,
-      "englishLemma": "detective",
-      "english": "detective",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 23,
-      "spokenRank": 992,
-      "englishLemma": "neither",
-      "english": "neither",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 24,
-      "spokenRank": 993,
-      "englishLemma": "bottle",
-      "english": "bottle",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 25,
-      "spokenRank": 994,
-      "englishLemma": "suspect",
-      "english": "suspect",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 26,
-      "spokenRank": 995,
-      "englishLemma": "especially",
-      "english": "especially",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 27,
-      "spokenRank": 996,
-      "englishLemma": "nervous",
-      "english": "nervous",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 28,
-      "spokenRank": 997,
-      "englishLemma": "whether",
-      "english": "whether",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 29,
-      "spokenRank": 999,
-      "englishLemma": "soldier",
-      "english": "soldier",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 30,
-      "spokenRank": 1000,
-      "englishLemma": "dying",
-      "english": "dying",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 31,
-      "spokenRank": 1001,
-      "englishLemma": "dirty",
-      "english": "dirty",
-      "jp": "汚い",
-      "romaji": "kitanai",
-      "audio": "きたない",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 32,
-      "spokenRank": 1002,
-      "englishLemma": "breakfast",
-      "english": "breakfast",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 33,
-      "spokenRank": 1003,
-      "englishLemma": "spirit",
-      "english": "spirit",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 34,
-      "spokenRank": 1004,
-      "englishLemma": "stuck",
-      "english": "stuck",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 35,
-      "spokenRank": 1005,
-      "englishLemma": "remind",
-      "english": "remind",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 36,
-      "spokenRank": 1006,
-      "englishLemma": "sweetheart",
-      "english": "sweetheart",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 37,
-      "spokenRank": 1007,
-      "englishLemma": "cell",
-      "english": "cell",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 38,
-      "spokenRank": 1008,
-      "englishLemma": "pardon",
-      "english": "pardon",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 39,
-      "spokenRank": 1009,
-      "englishLemma": "crap",
-      "english": "crap",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 40,
-      "spokenRank": 1010,
-      "englishLemma": "ruin",
-      "english": "ruin",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 41,
-      "spokenRank": 1011,
-      "englishLemma": "discuss",
-      "english": "discuss",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 42,
-      "spokenRank": 1012,
-      "englishLemma": "copy",
-      "english": "copy",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 43,
-      "spokenRank": 1013,
-      "englishLemma": "travel",
-      "english": "travel",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 44,
-      "spokenRank": 1014,
-      "englishLemma": "wash",
-      "english": "wash",
-      "jp": "洗う",
-      "romaji": "arau",
-      "audio": "あらう",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 45,
-      "spokenRank": 1015,
-      "englishLemma": "guest",
-      "english": "guest",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 46,
-      "spokenRank": 1016,
-      "englishLemma": "p",
-      "english": "p",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 47,
-      "spokenRank": 1017,
-      "englishLemma": "department",
-      "english": "department",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 48,
-      "spokenRank": 1018,
-      "englishLemma": "nurse",
-      "english": "nurse",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 19,
-      "wordIndex": 49,
-      "spokenRank": 1019,
-      "englishLemma": "suggest",
-      "english": "suggest",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 0,
-      "spokenRank": 1020,
-      "englishLemma": "egg",
-      "english": "egg",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 1,
-      "spokenRank": 1021,
-      "englishLemma": "south",
-      "english": "south",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 2,
-      "spokenRank": 1022,
-      "englishLemma": "queen",
-      "english": "queen",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 3,
-      "spokenRank": 1023,
-      "englishLemma": "bathroom",
-      "english": "bathroom",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 4,
-      "spokenRank": 1024,
-      "englishLemma": "dat",
-      "english": "dat",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 5,
-      "spokenRank": 1025,
-      "englishLemma": "flight",
-      "english": "flight",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 6,
-      "spokenRank": 1026,
-      "englishLemma": "jim",
-      "english": "jim",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 7,
-      "spokenRank": 1027,
-      "englishLemma": "sea",
-      "english": "sea",
-      "jp": "海",
-      "romaji": "umi",
-      "audio": "うみ",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 8,
-      "spokenRank": 1028,
-      "englishLemma": "brown",
-      "english": "brown",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 9,
-      "spokenRank": 1029,
-      "englishLemma": "seriously",
-      "english": "seriously",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 10,
-      "spokenRank": 1030,
-      "englishLemma": "north",
-      "english": "north",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 11,
-      "spokenRank": 1031,
-      "englishLemma": "fail",
-      "english": "fail",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 12,
-      "spokenRank": 1032,
-      "englishLemma": "sergeant",
-      "english": "sergeant",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 13,
-      "spokenRank": 1033,
-      "englishLemma": "pant",
-      "english": "pant",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 14,
-      "spokenRank": 1034,
-      "englishLemma": "pal",
-      "english": "pal",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 15,
-      "spokenRank": 1035,
-      "englishLemma": "stat",
-      "english": "stat",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 16,
-      "spokenRank": 1036,
-      "englishLemma": "level",
-      "english": "level",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 17,
-      "spokenRank": 1037,
-      "englishLemma": "awful",
-      "english": "awful",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 18,
-      "spokenRank": 1038,
-      "englishLemma": "risk",
-      "english": "risk",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 19,
-      "spokenRank": 1039,
-      "englishLemma": "favorite",
-      "english": "favorite",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 20,
-      "spokenRank": 1040,
-      "englishLemma": "sad",
-      "english": "sad",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 21,
-      "spokenRank": 1041,
-      "englishLemma": "motherfucker",
-      "english": "motherfucker",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 22,
-      "spokenRank": 1042,
-      "englishLemma": "neck",
-      "english": "neck",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 23,
-      "spokenRank": 1043,
-      "englishLemma": "clock",
-      "english": "clock",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 24,
-      "spokenRank": 1044,
-      "englishLemma": "grand",
-      "english": "grand",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 25,
-      "spokenRank": 1045,
-      "englishLemma": "usually",
-      "english": "usually",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 26,
-      "spokenRank": 1046,
-      "englishLemma": "hero",
-      "english": "hero",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 27,
-      "spokenRank": 1047,
-      "englishLemma": "upon",
-      "english": "upon",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 28,
-      "spokenRank": 1048,
-      "englishLemma": "account",
-      "english": "account",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 29,
-      "spokenRank": 1049,
-      "englishLemma": "pretend",
-      "english": "pretend",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 30,
-      "spokenRank": 1050,
-      "englishLemma": "jerry",
-      "english": "jerry",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 31,
-      "spokenRank": 1051,
-      "englishLemma": "twice",
-      "english": "twice",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 32,
-      "spokenRank": 1052,
-      "englishLemma": "dig",
-      "english": "dig",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 33,
-      "spokenRank": 1053,
-      "englishLemma": "whose",
-      "english": "whose",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 34,
-      "spokenRank": 1054,
-      "englishLemma": "outta",
-      "english": "outta",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 35,
-      "spokenRank": 1055,
-      "englishLemma": "camp",
-      "english": "camp",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 36,
-      "spokenRank": 1056,
-      "englishLemma": "plenty",
-      "english": "plenty",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 37,
-      "spokenRank": 1057,
-      "englishLemma": "guilty",
-      "english": "guilty",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 38,
-      "spokenRank": 1058,
-      "englishLemma": "nick",
-      "english": "nick",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 39,
-      "spokenRank": 1059,
-      "englishLemma": "sheriff",
-      "english": "sheriff",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 40,
-      "spokenRank": 1060,
-      "englishLemma": "remain",
-      "english": "remain",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 41,
-      "spokenRank": 1061,
-      "englishLemma": "price",
-      "english": "price",
-      "jp": "値段",
-      "romaji": "nedan",
-      "audio": "ねだん",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 42,
-      "spokenRank": 1062,
-      "englishLemma": "form",
-      "english": "form / shape",
-      "jp": "形",
-      "romaji": "katachi",
-      "audio": "かたち",
-      "confidence": "high",
-      "flag": "",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 43,
-      "spokenRank": 1063,
-      "englishLemma": "tooth",
-      "english": "tooth",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 44,
-      "spokenRank": 1064,
-      "englishLemma": "address",
-      "english": "address",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 45,
-      "spokenRank": 1065,
-      "englishLemma": "beach",
-      "english": "beach",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 46,
-      "spokenRank": 1066,
-      "englishLemma": "extra",
-      "english": "extra",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 47,
-      "spokenRank": 1067,
-      "englishLemma": "complete",
-      "english": "complete",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 48,
-      "spokenRank": 1068,
-      "englishLemma": "support",
-      "english": "support",
-      "jp": "TBD",
-      "romaji": "TBD",
-      "audio": "TBD",
-      "confidence": "low",
-      "flag": "Japanese gloss TBD — do not invent",
-      "mnemonic": ""
-    },
-    {
-      "block": 20,
-      "wordIndex": 49,
-      "spokenRank": 1069,
-      "englishLemma": "chase",
-      "english": "chase",
       "jp": "TBD",
       "romaji": "TBD",
       "audio": "TBD",

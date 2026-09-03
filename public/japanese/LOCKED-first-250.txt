@@ -253,4 +253,4 @@ Format: globalIndex. romaji - english (Bblock)
 250. konya - tonight (B5)
 
 === END OF FIRST 250 / DO NOT CHANGE ABOVE ===
-Next word 251 (block 6 word 1): akeru - open
+Next word 251 (block 6 word 1): yaru - do / give (casual)
