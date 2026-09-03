@@ -57,6 +57,7 @@ import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseRevisionGate } from "./JapaneseRevisionGate";
 import { JapaneseWordList } from "./JapaneseWordList";
+import { JapaneseWordFamilies } from "./JapaneseWordFamilies";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
 import {
   playCorrectAnswerSound,
@@ -74,7 +75,7 @@ import {
 } from "@/lib/japanese/round-queue";
 import "./japanese-learning.css";
 
-type Screen = "train" | "list" | "gate" | "revision";
+type Screen = "train" | "list" | "families" | "gate" | "revision";
 
 function getTrainingRound(view: Exclude<JapaneseRoundView, { kind: "round-complete" }>): number {
   return view.kind === "formal" ? view.round : 1;
@@ -826,9 +827,25 @@ export function JapaneseLearningApp() {
         >
           Word list
         </button>
+        <button
+          type="button"
+          className={`jp-learn-btn ${screen === "families" ? "jp-learn-btn-primary" : ""}`}
+          onClick={() => setScreen("families")}
+        >
+          Related words
+        </button>
       </nav>
 
-      {screen === "train" ? (
+      {screen === "families" ? (
+        <JapaneseWordFamilies
+          currentBlock={block}
+          onSelectBlock={(n) => {
+            if (!meta) return;
+            if (!isJapaneseBlockUnlocked(meta, block, n) || !isPlayableJapaneseBlock(n)) return;
+            setBlock(n);
+          }}
+        />
+      ) : screen === "train" ? (
         <>
           <section className="jp-learn-card" aria-live="polite">
           {roundComplete ? (

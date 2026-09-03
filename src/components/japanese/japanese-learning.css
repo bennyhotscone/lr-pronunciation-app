@@ -418,6 +418,84 @@
 .jp-particle-romaji-choice-main { font-size: 1.15rem; font-weight: 850; }
 .jp-particle-romaji-choice-jp { font-size: 0.95rem; color: var(--muted); font-weight: 600; }
 
+/* Related words / word families — indented sound maps */
+.jp-learn-families { margin-top: 0.25rem; }
+.jp-learn-family-list { display: grid; gap: 1rem; margin-top: 0.75rem; }
+.jp-learn-family {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.jp-learn-family-head {
+  padding: 0.75rem 0.9rem 0.55rem;
+  border-bottom: 1px solid var(--border);
+  background: #f7f4ee;
+}
+.jp-learn-family-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.jp-learn-family-blurb {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.jp-learn-family-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+}
+.jp-learn-family-node {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr) auto;
+  gap: 0.35rem 0.55rem;
+  align-items: baseline;
+  padding: 0.45rem 0.9rem;
+  border-top: 1px solid transparent;
+}
+.jp-learn-family-node + .jp-learn-family-node { border-top-color: var(--border); }
+.jp-learn-family-depth-1 { padding-left: 1.35rem; }
+.jp-learn-family-depth-2 { padding-left: 2rem; }
+.jp-learn-family-branch {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--muted);
+  font-weight: 700;
+}
+.jp-learn-family-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.jp-learn-family-main .jp-learn-romaji { font-size: 1.08rem; margin: 0; }
+.jp-learn-family-main .jp-learn-english { margin: 0; font-size: 0.92rem; }
+.jp-learn-family-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+.jp-learn-family-play {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+}
+@media (max-width: 620px) {
+  .jp-learn-family-node {
+    grid-template-columns: 1.1rem minmax(0, 1fr);
+    grid-template-areas:
+      "branch main"
+      ". meta";
+  }
+  .jp-learn-family-branch { grid-area: branch; }
+  .jp-learn-family-main { grid-area: main; }
+  .jp-learn-family-meta { grid-area: meta; justify-content: flex-start; }
+}
+
 @media (max-width: 650px) {
   .jp-particle-controls { grid-template-columns: 1fr 1fr; }
   .jp-particle-controls .jp-learn-btn { grid-column: 1 / -1; }
