@@ -7,3 +7,4 @@ export * from "./matching";
 export * from "./unlock";
 export * from "./audio";
 export * from "./mnemonics";
+export * from "./mnemonic-storage";

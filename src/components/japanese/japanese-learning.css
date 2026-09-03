@@ -515,3 +515,97 @@
   .jp-particle-form-row { grid-template-columns: 1fr auto; }
   .jp-particle-meaning { grid-column: 1 / -1; }
 }
+
+/* Verb ending / group mnemonic UI */
+.jp-particle-group-panel {
+  background: #f7f3ea;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  margin: 1rem 0;
+}
+.jp-particle-group-grid {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+}
+@media (min-width: 720px) {
+  .jp-particle-group-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.jp-particle-group-card {
+  background: #fff;
+  border: 1px solid #e6dfd2;
+  border-radius: 12px;
+  padding: 0.75rem;
+  line-height: 1.45;
+}
+.jp-particle-group-card p { margin: 0.35rem 0; font-size: 0.95rem; }
+.jp-particle-group-hook {
+  margin-top: 0.35rem;
+  font-weight: 750;
+  color: #6b5b4d;
+  font-size: 0.92rem;
+}
+.jp-particle-verb-group-banner {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid #eee9df;
+}
+.jp-particle-ending-guide { margin: 0.65rem 0 0.25rem; }
+.jp-particle-form-row-teach {
+  grid-template-columns: minmax(8rem, 1fr) minmax(10rem, 1.4fr) auto;
+  align-items: start;
+}
+.jp-particle-ending-mnemonic-card {
+  background: #ece7dd;
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+.jp-particle-ending-mnemonic-card.is-compact {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.88rem;
+}
+.jp-particle-mn-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #7a6a5a;
+  margin-bottom: 0.1rem;
+}
+.jp-particle-mn-sound {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.65rem;
+}
+.jp-particle-mn-options {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+.jp-particle-mn-option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.jp-particle-mn-option {
+  font: inherit;
+  text-align: left;
+  border: 1px solid #d5cbb8;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.45rem 0.6rem;
+  cursor: pointer;
+  font-weight: 650;
+}
+.jp-particle-mn-option.is-active {
+  border-color: #8ab3aa;
+  background: #edf6f3;
+  font-weight: 800;
+}
