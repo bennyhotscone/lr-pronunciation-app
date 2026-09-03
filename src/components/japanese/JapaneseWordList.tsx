@@ -245,14 +245,12 @@ export function JapaneseWordList({
         />
       </div>
       <div className="jp-learn-downloads" aria-label="Download word lists">
-        <p className="jp-learn-sub">
-          Download curriculum lists: blocks 1–10 (shipped) and proposed blocks 11–20 (frequency draft — review TBD glosses before building).
-        </p>
+        <p className="jp-learn-sub">Download curriculum word lists (CSV or JSON):</p>
         <div className="jp-learn-row jp-learn-downloads-row">
-          <a className="jp-learn-btn jp-learn-btn-primary" href="/japanese/blocks-1-10.csv" download>
+          <a className="jp-learn-btn jp-learn-btn-primary" href="/japanese/blocks-1-10-words.csv" download>
             Download first 500 (CSV)
           </a>
-          <a className="jp-learn-btn" href="/japanese/blocks-1-10.json" download>
+          <a className="jp-learn-btn" href="/japanese/blocks-1-10-words.json" download>
             First 500 (JSON)
           </a>
           <a className="jp-learn-btn jp-learn-btn-primary" href="/japanese/proposed-blocks-11-20.csv" download>
