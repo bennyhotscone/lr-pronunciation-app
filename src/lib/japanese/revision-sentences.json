@@ -4,123 +4,190 @@
       "id": "g1-s1",
       "english": "I drink water.",
       "romaji": "watashi mizu nomu",
-      "words": ["watashi", "mizu", "nomu"]
+      "words": [
+        "watashi",
+        "mizu",
+        "nomu"
+      ]
     },
     {
       "id": "g1-s2",
       "english": "I go home now.",
       "romaji": "watashi ima ie iku",
-      "words": ["watashi", "ima", "ie", "iku"]
+      "words": [
+        "watashi",
+        "ima",
+        "ie",
+        "iku"
+      ]
     },
     {
       "id": "g1-s3",
       "english": "My friend is good.",
       "romaji": "tomodachi ii",
-      "words": ["tomodachi", "ii"]
+      "words": [
+        "tomodachi",
+        "ii"
+      ]
     },
     {
       "id": "g1-s4",
       "english": "The meal is good.",
       "romaji": "gohan ii",
-      "words": ["gohan", "ii"]
+      "words": [
+        "gohan",
+        "ii"
+      ]
     },
     {
       "id": "g1-s5",
       "english": "I like you.",
       "romaji": "watashi anata suki",
-      "words": ["watashi", "anata", "suki"]
+      "words": [
+        "watashi",
+        "anata",
+        "suki"
+      ]
     },
     {
       "id": "g1-s6",
       "english": "What is your name?",
       "romaji": "anata namae nani",
-      "words": ["anata", "namae", "nani"]
+      "words": [
+        "anata",
+        "namae",
+        "nani"
+      ]
     },
     {
       "id": "g1-s7",
       "english": "I understand.",
       "romaji": "watashi wakaru",
-      "words": ["watashi", "wakaru"]
+      "words": [
+        "watashi",
+        "wakaru"
+      ]
     },
     {
       "id": "g1-s8",
       "english": "Thank you very much.",
       "romaji": "arigatou totemo",
-      "words": ["arigatou", "totemo"]
+      "words": [
+        "arigatou",
+        "totemo"
+      ]
     },
     {
       "id": "g1-s9",
       "english": "Children go to school.",
       "romaji": "kodomo gakkou iku",
-      "words": ["kodomo", "gakkou", "iku"]
+      "words": [
+        "kodomo",
+        "gakkou",
+        "iku"
+      ]
     },
     {
       "id": "g1-s10",
       "english": "My friend came yesterday.",
       "romaji": "kinou tomodachi kuru",
-      "words": ["kinou", "tomodachi", "kuru"]
+      "words": [
+        "kinou",
+        "tomodachi",
+        "kuru"
+      ]
     }
   ],
   "2": [
     {
       "id": "g2-s1",
-      "english": "The phone is difficult.",
-      "romaji": "denwa muzukashii",
-      "words": ["denwa", "muzukashii"]
+      "english": "Delicious food.",
+      "romaji": "oishii tabemono",
+      "words": [
+        "oishii",
+        "tabemono"
+      ]
     },
     {
       "id": "g2-s2",
-      "english": "Let's eat together.",
-      "romaji": "taberu isshoni",
-      "words": ["taberu", "isshoni"]
+      "english": "Bad-tasting drink.",
+      "romaji": "mazui nomimono",
+      "words": [
+        "mazui",
+        "nomimono"
+      ]
     },
     {
       "id": "g2-s3",
-      "english": "Already ready.",
-      "romaji": "junbi mou",
-      "words": ["junbi", "mou"]
+      "english": "There is money.",
+      "romaji": "okane aru",
+      "words": [
+        "okane",
+        "aru"
+      ]
     },
     {
       "id": "g2-s4",
-      "english": "Worry and problems.",
-      "romaji": "shinpai mondai",
-      "words": ["shinpai", "mondai"]
+      "english": "Open the room.",
+      "romaji": "heya akeru",
+      "words": [
+        "heya",
+        "akeru"
+      ]
     },
     {
       "id": "g2-s5",
-      "english": "Children and school.",
-      "romaji": "kodomo gakkou",
-      "words": ["kodomo", "gakkou"]
+      "english": "Close the window.",
+      "romaji": "mado shimeru",
+      "words": [
+        "mado",
+        "shimeru"
+      ]
     },
     {
       "id": "g2-s6",
-      "english": "Walk with family.",
-      "romaji": "aruku kazoku",
-      "words": ["aruku", "kazoku"]
+      "english": "Everyone gathers.",
+      "romaji": "minna atsumaru",
+      "words": [
+        "minna",
+        "atsumaru"
+      ]
     },
     {
       "id": "g2-s7",
-      "english": "Buy a book.",
-      "romaji": "kau hon",
-      "words": ["kau", "hon"]
+      "english": "A person is here.",
+      "romaji": "hito iru",
+      "words": [
+        "hito",
+        "iru"
+      ]
     },
     {
       "id": "g2-s8",
-      "english": "Read a book.",
-      "romaji": "yomu hon",
-      "words": ["yomu", "hon"]
+      "english": "Try hard at work.",
+      "romaji": "shigoto ganbaru",
+      "words": [
+        "shigoto",
+        "ganbaru"
+      ]
     },
     {
       "id": "g2-s9",
-      "english": "The problem is easy.",
-      "romaji": "kantan mondai",
-      "words": ["kantan", "mondai"]
+      "english": "Call someone.",
+      "romaji": "dareka yobu",
+      "words": [
+        "dareka",
+        "yobu"
+      ]
     },
     {
       "id": "g2-s10",
-      "english": "Sorry, I'm worried.",
-      "romaji": "sumimasen shinpai",
-      "words": ["sumimasen", "shinpai"]
+      "english": "Look for the key.",
+      "romaji": "kagi sagasu",
+      "words": [
+        "kagi",
+        "sagasu"
+      ]
     }
   ]
 }

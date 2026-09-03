@@ -19,9 +19,9 @@ describe("japanese word catalog", () => {
   });
 
   it("counts unique romaji vs repeated headwords", () => {
-    expect(summary.uniqueRomaji).toBe(431);
-    expect(summary.repeatedRomajiCount).toBe(66);
-    expect(summary.repeatedRomajiSlots).toBe(135);
+    expect(summary.uniqueRomaji).toBe(452);
+    expect(summary.repeatedRomajiCount).toBe(45);
+    expect(summary.repeatedRomajiSlots).toBe(93);
   });
 
   it("flags the worst repeats across blocks", () => {
@@ -29,9 +29,9 @@ describe("japanese word catalog", () => {
     const byRomaji = Object.fromEntries(
       groups.map((group) => [group.romajiKey, group.entries.map((e) => e.blockNumber)]),
     );
-    expect(byRomaji.mada).toEqual([2, 4, 6]);
-    expect(byRomaji.mou).toEqual([2, 7, 9]);
-    expect(byRomaji.dareka).toEqual([5, 6, 8]);
+    expect(byRomaji.mada).toEqual([2, 4]);
+    expect(byRomaji.dareka).toEqual([5, 7]);
+    expect(byRomaji.hito).toEqual([1, 3, 7]);
     expect(groups[0]?.entries.length).toBe(3);
   });
 

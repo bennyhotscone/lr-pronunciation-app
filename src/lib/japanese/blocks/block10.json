@@ -1,352 +1,352 @@
 [
   {
-    "jp": "血",
-    "audio": "ち",
-    "r": "chi",
-    "en": "blood",
-    "m": "CHI — BLOOD. → chi."
+    "jp": "会社",
+    "audio": "かいしゃ",
+    "r": "kaisha",
+    "en": "company / workplace",
+    "m": "KAISHA — COMPANY → kaisha."
   },
   {
-    "jp": "力",
-    "audio": "ちから",
-    "r": "chikara",
-    "en": "power",
-    "m": "CHI-KA-RA — POWER. → chikara."
+    "jp": "仕事",
+    "audio": "しごと",
+    "r": "shigoto",
+    "en": "work / job",
+    "m": "SHE GOes TO WORK. → shigoto."
   },
   {
-    "jp": "足",
-    "audio": "あし",
-    "r": "ashi",
-    "en": "foot / leg",
-    "m": "ASHI — FOOT / leg → ashi."
+    "jp": "教室",
+    "audio": "きょうしつ",
+    "r": "kyoushitsu",
+    "en": "classroom",
+    "m": "KYOU-SHI-TSU — CLASSROOM. → kyoushitsu."
   },
   {
-    "jp": "パパ",
-    "audio": "パパ",
-    "r": "papa",
-    "en": "daddy",
-    "m": "PAPA — DADDY. → papa."
+    "jp": "大学",
+    "audio": "だいがく",
+    "r": "daigaku",
+    "en": "university",
+    "m": "DAI-GA-KU — UNIVERSITY. → daigaku."
   },
   {
-    "jp": "ママ",
-    "audio": "ママ",
-    "r": "mama",
-    "en": "mom",
-    "m": "MAMA — MOM. → mama."
+    "jp": "病院",
+    "audio": "びょういん",
+    "r": "byouin",
+    "en": "hospital",
+    "m": "BYOUIN — HOSPITAL. → byouin."
   },
   {
-    "jp": "〜しよう",
-    "audio": "〜しよう",
-    "r": "shiyou",
-    "en": "let's / shall we",
-    "m": "~SHIYOU — LET'S / shall we → shiyou."
+    "jp": "コンビニ",
+    "audio": "こんびに",
+    "r": "konbini",
+    "en": "convenience store",
+    "m": "KON-BIN-I — CONVENIENCE STORE. → konbini."
   },
   {
-    "jp": "ようこそ",
-    "audio": "ようこそ",
-    "r": "youkoso",
-    "en": "welcome",
-    "m": "YOU-KO-SO — WELCOME. → youkoso."
+    "jp": "スーパー",
+    "audio": "すーぱー",
+    "r": "suupaa",
+    "en": "supermarket",
+    "m": "SUU-PAA — SUPERMARKET. → suupaa."
   },
   {
-    "jp": "戦争",
-    "audio": "せんそう",
-    "r": "sensou",
-    "en": "war",
-    "m": "SEN-SOU — WAR. → sensou."
+    "jp": "レストラン",
+    "audio": "れすとらん",
+    "r": "resutoran",
+    "en": "restaurant",
+    "m": "RE-SU-TO-RAN — RESTAURANT. → resutoran."
   },
   {
-    "jp": "行動",
-    "audio": "こうどう",
-    "r": "koudou",
-    "en": "action / behavior",
-    "m": "KOUDOU — ACTION / behavior → koudou."
+    "jp": "喫茶店",
+    "audio": "きっさてん",
+    "r": "kissa",
+    "en": "cafe / coffee shop",
+    "m": "KI-SSA — CAFE. → kissa."
   },
   {
-    "jp": "バカ",
-    "audio": "ばか",
-    "r": "baka",
-    "en": "stupid",
-    "m": "BA-KA — STUPID. → baka."
+    "jp": "ホテル",
+    "audio": "ほてる",
+    "r": "hotera",
+    "en": "hotel",
+    "m": "HOTERA — HOTEL. → hotera."
   },
   {
-    "jp": "前",
-    "audio": "まえ",
-    "r": "mae",
-    "en": "before / in front",
-    "m": "MAE — BEFORE / in front. → mae."
+    "jp": "空港",
+    "audio": "くうこう",
+    "r": "kuukou",
+    "en": "airport",
+    "m": "KUU-KOU — AIRPORT. → kuukou."
   },
   {
-    "jp": "クソ女",
-    "audio": "くそおんな",
-    "r": "kusoonna",
-    "en": "bitch",
-    "m": "KUSO-ONNA — crude insult. → kusoonna."
+    "jp": "バス",
+    "audio": "ばす",
+    "r": "basu",
+    "en": "bus",
+    "m": "BA-SU — BUS. → basu."
   },
   {
-    "jp": "一緒に",
-    "audio": "いっしょに",
-    "r": "isshoni",
-    "en": "together",
-    "m": "ISSHO-NI — TOGETHER. → isshoni."
+    "jp": "タクシー",
+    "audio": "たくしー",
+    "r": "takushii",
+    "en": "taxi",
+    "m": "TA-KU-SHII — TAXI. → takushii."
   },
   {
-    "jp": "自由",
-    "audio": "じゆう",
-    "r": "jiyuu",
-    "en": "freedom / free",
-    "m": "JIYUU — FREEDOM / free → jiyuu."
+    "jp": "自転車",
+    "audio": "じてんしゃ",
+    "r": "jitensha",
+    "en": "bicycle",
+    "m": "JI-TEN-SHA — BICYCLE. → jitensha."
   },
   {
-    "jp": "どちらか",
-    "audio": "どちらか",
-    "r": "dochiraka",
-    "en": "either",
-    "m": "DO-CHI-RA-KA — EITHER one. → dochiraka."
+    "jp": "飛行機",
+    "audio": "ひこうき",
+    "r": "hikouki",
+    "en": "airplane",
+    "m": "HI-KOU-KI — AIRPLANE. → hikouki."
   },
   {
-    "jp": "だけど",
-    "audio": "だけど",
-    "r": "dakedo",
-    "en": "though",
-    "m": "DA-KE-DO — THOUGH. → dakedo."
+    "jp": "地下鉄",
+    "audio": "ちかてつ",
+    "r": "chikatetsu",
+    "en": "subway",
+    "m": "CHI-KA-TE-TSU — SUBWAY. → chikatetsu."
   },
   {
-    "jp": "娘",
-    "audio": "むすめ",
-    "r": "musume",
-    "en": "daughter",
-    "m": "MU-SU-ME — DAUGHTER. → musume."
+    "jp": "乗り場",
+    "audio": "のりば",
+    "r": "noriba",
+    "en": "boarding place / stop",
+    "m": "N-O-RI-BA — BOARDING PLACE. → noriba."
   },
   {
-    "jp": "キス",
-    "audio": "キス",
-    "r": "kisu",
-    "en": "kiss",
-    "m": "KISS — same word. → kisu."
+    "jp": "切符",
+    "audio": "きっぷ",
+    "r": "kippu",
+    "en": "ticket",
+    "m": "KI-PPU — TICKET. → kippu."
   },
   {
-    "jp": "バイバイ",
-    "audio": "バイバイ",
-    "r": "baibai",
-    "en": "bye",
-    "m": "BYE-BYE — BYE. → baibai."
+    "jp": "料金",
+    "audio": "りょうきん",
+    "r": "ryoukin",
+    "en": "fee / fare",
+    "m": "RYOU-KIN — FEE. → ryoukin."
   },
   {
-    "jp": "通り",
-    "audio": "とおり",
-    "r": "toori",
-    "en": "street",
-    "m": "TO-O-RI — STREET. → toori."
+    "jp": "お金",
+    "audio": "おかね",
+    "r": "okane",
+    "en": "money",
+    "m": "OKAY, NE? Need MONEY. → okane."
   },
   {
-    "jp": "勝つ",
-    "audio": "かつ",
-    "r": "katsu",
-    "en": "win",
-    "m": "KA-TSU — WIN. → katsu."
+    "jp": "現金",
+    "audio": "げんきん",
+    "r": "genkin",
+    "en": "cash",
+    "m": "GEN-KIN — CASH. → genkin."
   },
   {
-    "jp": "期待する",
-    "audio": "きたいする",
-    "r": "kitaisuru",
-    "en": "expect",
-    "m": "KI-TAI — EXPECT. → kitaisuru."
+    "jp": "カード",
+    "audio": "かーど",
+    "r": "kaado",
+    "en": "card",
+    "m": "KAA-DO — CARD. → kaado."
   },
   {
-    "jp": "都会",
-    "audio": "とかい",
-    "r": "tokai",
-    "en": "city",
-    "m": "TO-KAI — the CITY. → tokai."
+    "jp": "クレジットカード",
+    "audio": "くれじっとかーど",
+    "r": "kurejitto kaado",
+    "en": "credit card",
+    "m": "KU-RE-JI-TTO KAA-DO — CREDIT CARD. → kurejitto kaado."
   },
   {
-    "jp": "急ぐ",
-    "audio": "いそぐ",
-    "r": "isogu",
-    "en": "hurry",
-    "m": "I-SO-GU — HURRY. → isogu."
+    "jp": "領収書",
+    "audio": "りょうしゅうしょ",
+    "r": "ryoushuusho",
+    "en": "receipt",
+    "m": "RYOU-SHUU-SHO — RECEIPT. → ryoushuusho."
   },
   {
-    "jp": "間",
-    "audio": "あいだ",
-    "r": "aida",
-    "en": "between / while",
-    "m": "AI-DA — BETWEEN. → aida."
+    "jp": "値段",
+    "audio": "ねだん",
+    "r": "nedan",
+    "en": "price",
+    "m": "N-E-DAN — PRICE. → nedan."
   },
   {
-    "jp": "黒",
-    "audio": "くろ",
-    "r": "kuro",
-    "en": "black",
-    "m": "KU-RO — BLACK. → kuro."
+    "jp": "割引",
+    "audio": "わりびき",
+    "r": "waribiki",
+    "en": "discount",
+    "m": "WA-RI-BI-KI — DISCOUNT. → waribiki."
   },
   {
-    "jp": "警官",
-    "audio": "けいかん",
-    "r": "keikan",
-    "en": "cop",
-    "m": "KEI-KAN — COP. → keikan."
+    "jp": "合計",
+    "audio": "ごうけい",
+    "r": "goukei",
+    "en": "total / sum",
+    "m": "GOU-KEI — TOTAL. → goukei."
   },
   {
-    "jp": "国",
-    "audio": "くに",
-    "r": "kuni",
-    "en": "country",
-    "m": "KU-NI — COUNTRY. → kuni."
+    "jp": "お釣り",
+    "audio": "おつり",
+    "r": "otsuri",
+    "en": "change (money)",
+    "m": "O-TSU-RI — CHANGE (MONEY). → otsuri."
   },
   {
-    "jp": "嬉しい",
-    "audio": "うれしい",
-    "r": "ureshii",
-    "en": "happy / glad",
-    "m": "URESHII — HAPPY / glad → ureshii."
+    "jp": "ただ",
+    "audio": "ただ",
+    "r": "tada",
+    "en": "free / just",
+    "m": "TA-DA — FREE. → tada."
   },
   {
-    "jp": "その",
-    "audio": "その",
-    "r": "sono",
-    "en": "that / its",
-    "m": "SONO — THAT / its → sono."
+    "jp": "無料",
+    "audio": "むりょう",
+    "r": "muryou",
+    "en": "free of charge",
+    "m": "MU-RYOU — FREE OF CHARGE. → muryou."
   },
   {
-    "jp": "白",
-    "audio": "しろ",
-    "r": "shiro",
-    "en": "white",
-    "m": "SHI-RO — WHITE. → shiro."
+    "jp": "料理",
+    "audio": "りょうり",
+    "r": "ryouri",
+    "en": "cooking / cuisine",
+    "m": "RYOU-RI — COOKING. → ryouri."
   },
   {
-    "jp": "外",
-    "audio": "そと",
-    "r": "soto",
-    "en": "outside",
-    "m": "SO-TO — OUTSIDE. → soto."
+    "jp": "食べ物",
+    "audio": "たべもの",
+    "r": "tabemono",
+    "en": "food",
+    "m": "TA-BE-MON-O — FOOD. → tabemono."
   },
   {
-    "jp": "殺人",
-    "audio": "さつじん",
-    "r": "satsujin",
-    "en": "murder",
-    "m": "SATSU-JIN — MURDER. → satsujin."
+    "jp": "飲み物",
+    "audio": "のみもの",
+    "r": "nomimono",
+    "en": "drink / beverage",
+    "m": "N-O-MI-MON-O — DRINK. → nomimono."
   },
   {
-    "jp": "殴る",
-    "audio": "なぐる",
-    "r": "naguru",
-    "en": "beat",
-    "m": "NA-GU-RU — BEAT. → naguru."
+    "jp": "朝ご飯",
+    "audio": "あさごはん",
+    "r": "asa gohan",
+    "en": "breakfast",
+    "m": "A-SA GO-HAN — BREAKFAST. → asa gohan."
   },
   {
-    "jp": "映画",
-    "audio": "えいが",
-    "r": "eiga",
-    "en": "movie",
-    "m": "EI-GA — MOVIE. → eiga."
+    "jp": "昼ご飯",
+    "audio": "ひるごはん",
+    "r": "hiru gohan",
+    "en": "lunch",
+    "m": "HI-RU GO-HAN — LUNCH. → hiru gohan."
   },
   {
-    "jp": "〜まで",
-    "audio": "〜まで",
-    "r": "made",
-    "en": "until",
-    "m": "MADE — UNTIL. → made."
+    "jp": "晩ご飯",
+    "audio": "ばんごはん",
+    "r": "ban gohan",
+    "en": "dinner",
+    "m": "BAN GO-HAN — DINNER. → ban gohan."
   },
   {
-    "jp": "いっぱい",
-    "audio": "いっぱい",
-    "r": "ippai",
-    "en": "a lot / full",
-    "m": "IPPAI — A LOT / full → ippai."
+    "jp": "パン",
+    "audio": "ぱん",
+    "r": "pan",
+    "en": "bread",
+    "m": "PAN — BREAD. → pan."
   },
   {
-    "jp": "病気",
-    "audio": "びょうき",
-    "r": "byouki",
-    "en": "sick",
-    "m": "BYOU-KI — SICK. → byouki."
+    "jp": "卵",
+    "audio": "たまご",
+    "r": "tamago",
+    "en": "egg",
+    "m": "TA-MA-GO — EGG. → tamago."
   },
   {
-    "jp": "投げる",
-    "audio": "なげる",
-    "r": "nageru",
-    "en": "throw",
-    "m": "NA-GE-RU — THROW. → nageru."
+    "jp": "鶏肉",
+    "audio": "とりにく",
+    "r": "tori niku",
+    "en": "chicken",
+    "m": "TO-RI N-I-KU — CHICKEN. → tori niku."
   },
   {
-    "jp": "傷",
-    "audio": "きず",
-    "r": "kizu",
-    "en": "scar",
-    "m": "KI-ZU — SCAR / wound. → kizu."
+    "jp": "豚肉",
+    "audio": "ぶたにく",
+    "r": "buta niku",
+    "en": "pork",
+    "m": "BU-TA N-I-KU — PORK. → buta niku."
   },
   {
-    "jp": "チーム",
-    "audio": "チーム",
-    "r": "chiimu",
-    "en": "team",
-    "m": "TEAM — same word. → chiimu."
+    "jp": "牛肉",
+    "audio": "ぎゅうにく",
+    "r": "gyuu niku",
+    "en": "beef",
+    "m": "GYUU N-I-KU — BEEF. → gyuu niku."
   },
   {
-    "jp": "きれい",
-    "audio": "きれい",
-    "r": "kirei",
-    "en": "pretty / clean",
-    "m": "KIREI — PRETTY / clean → kirei."
+    "jp": "塩",
+    "audio": "しお",
+    "r": "shio",
+    "en": "salt",
+    "m": "SHIO — SALT. → shio."
   },
   {
-    "jp": "素晴らしい",
-    "audio": "すばらしい",
-    "r": "subarashii",
-    "en": "wonderful",
-    "m": "SU-BA-RA-SHII — WONDERFUL. → subarashii."
+    "jp": "砂糖",
+    "audio": "さとう",
+    "r": "satou",
+    "en": "sugar",
+    "m": "SA-TOU — SUGAR. → satou."
   },
   {
-    "jp": "なる",
-    "audio": "なる",
-    "r": "naru",
-    "en": "become",
-    "m": "NA-RU — BECOME. → naru."
+    "jp": "油",
+    "audio": "あぶら",
+    "r": "abura",
+    "en": "oil",
+    "m": "A-BU-RA — OIL. → abura."
   },
   {
-    "jp": "救う",
-    "audio": "すくう",
-    "r": "sukuu",
-    "en": "save",
-    "m": "SU-KUU — SAVE. → sukuu."
+    "jp": "牛乳",
+    "audio": "ぎゅうにゅう",
+    "r": "gyuunyuu",
+    "en": "milk",
+    "m": "GYUUN-YUU — MILK. → gyuunyuu."
   },
   {
-    "jp": "種類",
-    "audio": "しゅるい",
-    "r": "shurui",
-    "en": "kind / type",
-    "m": "SHURUI — KIND / type → shurui."
+    "jp": "ビール",
+    "audio": "びーる",
+    "r": "biiru",
+    "en": "beer",
+    "m": "BII-RU — BEER. → biiru."
   },
   {
-    "jp": "フランク",
-    "audio": "フランク",
-    "r": "furanku",
-    "en": "Frank",
-    "m": "FRANK — name. → furanku."
+    "jp": "お酒",
+    "audio": "おさけ",
+    "r": "osake",
+    "en": "alcohol / sake",
+    "m": "O-SA-KE — ALCOHOL. → osake."
   },
   {
-    "jp": "ジーザス",
-    "audio": "ジーザス",
-    "r": "jiizasu",
-    "en": "Jesus",
-    "m": "JESUS — name. → jiizasu."
+    "jp": "美味しい",
+    "audio": "おいしい",
+    "r": "oishii",
+    "en": "delicious",
+    "m": "OI-SHII — DELICIOUS. → oishii."
   },
   {
-    "jp": "チェン",
-    "audio": "チェン",
-    "r": "chen",
-    "en": "Chang",
-    "m": "CHEN — name. → chen."
+    "jp": "まずい",
+    "audio": "まずい",
+    "r": "mazui",
+    "en": "bad-tasting / bad",
+    "m": "MA-ZUI — BAD-TASTING. → mazui."
   },
   {
-    "jp": "完璧",
-    "audio": "かんぺき",
-    "r": "kanpeki",
-    "en": "perfect",
-    "m": "KAN-PEKI — PERFECT. → kanpeki."
+    "jp": "お腹",
+    "audio": "おなか",
+    "r": "onaka",
+    "en": "stomach / belly",
+    "m": "ON-A-KA — STOMACH. → onaka."
   }
 ]

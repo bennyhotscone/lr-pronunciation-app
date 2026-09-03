@@ -9,64 +9,47 @@
   },
   "stats": {
     "blockWordCount": 500,
-    "matchedAnySpokenLemma": 492,
-    "matchedSpokenTop500": 469,
-    "matchedSpokenTop1000": 483,
-    "unmatchedEnglishGloss": 8,
-    "beyondSpokenTop500": 23,
-    "beyondSpokenTop1000": 9,
-    "uniqueSpokenTop500LemmasTouched": 411,
-    "missingSpokenTop500Count": 89
+    "matchedAnySpokenLemma": 481,
+    "matchedSpokenTop500": 374,
+    "matchedSpokenTop1000": 422,
+    "unmatchedEnglishGloss": 19,
+    "beyondSpokenTop500": 107,
+    "beyondSpokenTop1000": 59,
+    "uniqueSpokenTop500LemmasTouched": 273,
+    "missingSpokenTop500Count": 227
   },
   "missingSpokenTop500Sample": [
     "the",
     "to",
-    "a",
     "it",
     "and",
     "we",
-    "this",
     "he",
-    "on",
-    "for",
     "my",
     "your",
     "with",
-    "just",
     "but",
     "out",
     "she",
     "up",
-    "about",
-    "if",
     "him",
     "oh",
-    "one",
+    "at",
     "yeah",
     "her",
-    "look",
-    "tell",
-    "let",
-    "as",
     "will",
     "his",
-    "back",
     "gonna",
     "an",
     "would",
     "some",
     "hey",
     "or",
-    "us",
-    "could",
     "need",
-    "something",
     "mean",
     "down",
     "then",
-    "way",
     "our",
-    "call",
     "guy",
     "off",
     "sure",
@@ -81,33 +64,61 @@
     "else",
     "real",
     "morn",
-    "matter",
+    "worry",
+    "problem",
+    "idea",
+    "pay",
+    "pretty",
+    "ready",
     "whole",
     "suppose",
+    "hour",
+    "family",
+    "check",
+    "week",
+    "wife",
+    "send",
+    "walk",
     "seem",
+    "marry",
+    "word",
     "lady",
+    "stand",
+    "most",
+    "while",
+    "once",
     "somebody",
+    "everybody",
     "used",
     "myself",
     "yet",
-    "bit",
-    "whatever",
-    "trouble",
-    "figure",
-    "anybody",
-    "hate",
-    "sometime",
-    "least",
-    "trust",
-    "office",
-    "clear",
-    "wonder",
-    "ma",
-    "act",
-    "front",
-    "along",
-    "till",
-    "sort"
+    "eye",
+    "happy",
+    "question",
+    "brother",
+    "door",
+    "business",
+    "actually",
+    "sound",
+    "hope",
+    "stuff",
+    "hit",
+    "since",
+    "case",
+    "mrs",
+    "cause",
+    "pick",
+    "hurt",
+    "damn",
+    "honey",
+    "doctor",
+    "deal",
+    "dr",
+    "both",
+    "such",
+    "face",
+    "plan",
+    "ago"
   ],
   "questionableOrJunkSample": [
     {
@@ -161,45 +172,213 @@
     },
     {
       "block": 6,
-      "romaji": "jibun",
-      "english": "oneself / self",
-      "jp": "自分",
-      "spokenRank": 2913
+      "romaji": "atsumeru",
+      "english": "collect / gather",
+      "jp": "集める",
+      "spokenRank": 1631
+    },
+    {
+      "block": 7,
+      "romaji": "daitai",
+      "english": "roughly / generally",
+      "jp": "だいたい",
+      "spokenRank": 4287
+    },
+    {
+      "block": 7,
+      "romaji": "tama ni",
+      "english": "occasionally",
+      "jp": "たまに",
+      "spokenRank": 4676
+    },
+    {
+      "block": 8,
+      "romaji": "oyoso",
+      "english": "approximately / roughly",
+      "jp": "およそ",
+      "spokenRank": 4552
+    },
+    {
+      "block": 8,
+      "romaji": "chikaku",
+      "english": "nearby",
+      "jp": "近く",
+      "spokenRank": 4284
     },
     {
       "block": 9,
-      "romaji": "sukunakutomo",
-      "english": "at least",
-      "jp": "少なくとも",
-      "spokenRank": 52
+      "romaji": "iriguchi",
+      "english": "entrance",
+      "jp": "入口",
+      "spokenRank": 2718
     },
     {
       "block": 9,
-      "romaji": "hakkiri",
-      "english": "clearly",
-      "jp": "はっきり",
-      "spokenRank": 1793
+      "romaji": "deguchi",
+      "english": "exit",
+      "jp": "出口",
+      "spokenRank": 2354
     },
     {
       "block": 9,
-      "romaji": "fushigi",
-      "english": "mysterious / strange",
-      "jp": "不思議",
-      "spokenRank": 804
+      "romaji": "erebeetaa",
+      "english": "elevator",
+      "jp": "エレベーター",
+      "spokenRank": 1898
+    },
+    {
+      "block": 9,
+      "romaji": "toire",
+      "english": "toilet",
+      "jp": "トイレ",
+      "spokenRank": 1708
+    },
+    {
+      "block": 9,
+      "romaji": "keitai",
+      "english": "mobile phone",
+      "jp": "携帯",
+      "spokenRank": 4550
+    },
+    {
+      "block": 9,
+      "romaji": "internetto",
+      "english": "internet",
+      "jp": "インターネット",
+      "spokenRank": 4919
+    },
+    {
+      "block": 9,
+      "romaji": "manga",
+      "english": "manga / comic",
+      "jp": "漫画",
+      "spokenRank": 2939
+    },
+    {
+      "block": 9,
+      "romaji": "shinbun",
+      "english": "newspaper",
+      "jp": "新聞",
+      "spokenRank": 1595
+    },
+    {
+      "block": 9,
+      "romaji": "pen",
+      "english": "pen",
+      "jp": "ペン",
+      "spokenRank": 1892
+    },
+    {
+      "block": 9,
+      "romaji": "saifu",
+      "english": "wallet",
+      "jp": "財布",
+      "spokenRank": 2094
+    },
+    {
+      "block": 9,
+      "romaji": "uwagi",
+      "english": "jacket / outerwear",
+      "jp": "上着",
+      "spokenRank": 1540
+    },
+    {
+      "block": 9,
+      "romaji": "kasa",
+      "english": "umbrella",
+      "jp": "傘",
+      "spokenRank": 4234
     },
     {
       "block": 10,
-      "romaji": "koudou",
-      "english": "action / behavior",
-      "jp": "行動",
-      "spokenRank": 924
+      "romaji": "daigaku",
+      "english": "university",
+      "jp": "大学",
+      "spokenRank": 2053
     },
     {
       "block": 10,
-      "romaji": "furanku",
-      "english": "Frank",
-      "jp": "フランク",
-      "spokenRank": 497
+      "romaji": "takushii",
+      "english": "taxi",
+      "jp": "タクシー",
+      "spokenRank": 1989
+    },
+    {
+      "block": 10,
+      "romaji": "jitensha",
+      "english": "bicycle",
+      "jp": "自転車",
+      "spokenRank": 4716
+    },
+    {
+      "block": 10,
+      "romaji": "hikouki",
+      "english": "airplane",
+      "jp": "飛行機",
+      "spokenRank": 3073
+    },
+    {
+      "block": 10,
+      "romaji": "chikatetsu",
+      "english": "subway",
+      "jp": "地下鉄",
+      "spokenRank": 3543
+    },
+    {
+      "block": 10,
+      "romaji": "ryoukin",
+      "english": "fee / fare",
+      "jp": "料金",
+      "spokenRank": 3316
+    },
+    {
+      "block": 10,
+      "romaji": "ryoushuusho",
+      "english": "receipt",
+      "jp": "領収書",
+      "spokenRank": 3632
+    },
+    {
+      "block": 10,
+      "romaji": "pan",
+      "english": "bread",
+      "jp": "パン",
+      "spokenRank": 1845
+    },
+    {
+      "block": 10,
+      "romaji": "buta niku",
+      "english": "pork",
+      "jp": "豚肉",
+      "spokenRank": 3723
+    },
+    {
+      "block": 10,
+      "romaji": "gyuu niku",
+      "english": "beef",
+      "jp": "牛肉",
+      "spokenRank": 2322
+    },
+    {
+      "block": 10,
+      "romaji": "shio",
+      "english": "salt",
+      "jp": "塩",
+      "spokenRank": 2282
+    },
+    {
+      "block": 10,
+      "romaji": "oishii",
+      "english": "delicious",
+      "jp": "美味しい",
+      "spokenRank": 2299
+    },
+    {
+      "block": 10,
+      "romaji": "onaka",
+      "english": "stomach / belly",
+      "jp": "お腹",
+      "spokenRank": 1612
     }
   ],
   "historical": [

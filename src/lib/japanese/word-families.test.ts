@@ -8,15 +8,17 @@ describe("word-families", () => {
 
   it("builds dare / nani / itsu / dore stem families from blocks 1–10", () => {
     expect(byId.dare).toBeTruthy();
-    expect(byId.dare.nodes.map((n) => n.romaji.toLowerCase())).toEqual(
-      expect.arrayContaining(["dare", "dareka", "daremo", "daredemo"]),
-    );
+    const dareKeys = [
+      ...new Set(byId.dare.nodes.map((n) => n.romaji.toLowerCase().replace(/\s+/g, ""))),
+    ];
+    expect(dareKeys).toEqual(expect.arrayContaining(["dare", "dareka", "daredemo"]));
 
     expect(byId.nani).toBeTruthy();
-    const naniKeys = [...new Set(byId.nani.nodes.map((n) => n.romaji.toLowerCase()))];
+    const naniKeys = [
+      ...new Set(byId.nani.nodes.map((n) => n.romaji.toLowerCase().replace(/\s+/g, ""))),
+    ];
     expect(naniKeys).toEqual(expect.arrayContaining(["nani", "nanimo", "nandemo"]));
     expect(naniKeys.some((k) => k === "naka")).toBe(false);
-
     expect(byId.itsu).toBeTruthy();
     expect([...new Set(byId.itsu.nodes.map((n) => n.romaji.toLowerCase()))]).toEqual(
       expect.arrayContaining(["itsu", "itsumo"]),
