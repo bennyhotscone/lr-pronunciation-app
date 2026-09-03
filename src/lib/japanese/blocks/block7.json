@@ -17,14 +17,14 @@
     "jp": "もの",
     "audio": "もの",
     "r": "mono",
-    "en": "stuff",
-    "m": "MO-NO — STUFF / things. → mono."
+    "en": "thing / stuff",
+    "m": "MONO — THING / stuff → mono."
   },
   {
     "jp": "もう",
     "audio": "もう",
     "r": "mou",
-    "en": "already",
+    "en": "already / anymore",
     "m": "MOU — ALREADY done. → mou."
   },
   {
@@ -73,8 +73,8 @@
     "jp": "難しい",
     "audio": "むずかしい",
     "r": "muzukashii",
-    "en": "hard",
-    "m": "MUSIC? Gosh! HARD. → muzukashii."
+    "en": "hard / difficult",
+    "m": "MUZUKASHII — DIFFICULT. → muzukashii."
   },
   {
     "jp": "原因",
@@ -87,8 +87,8 @@
     "jp": "選ぶ",
     "audio": "えらぶ",
     "r": "erabu",
-    "en": "pick",
-    "m": "E-RA-BU — PICK one. → erabu."
+    "en": "choose / pick",
+    "m": "ERABU — CHOOSE / pick → erabu."
   },
   {
     "jp": "一人",
@@ -122,15 +122,15 @@
     "jp": "少し",
     "audio": "すこし",
     "r": "sukoshi",
-    "en": "few / a little",
+    "en": "a little / few",
     "m": "SU-KO-SHI — a FEW / a little. → sukoshi."
   },
   {
     "jp": "畜生",
     "audio": "ちくしょう",
     "r": "chikushou",
-    "en": "damn",
-    "m": "CHIKU-SHOU — DAMN it. → chikushou."
+    "en": "damn it / fuck",
+    "m": "CHIKU-SHOU — DAMN IT / fuck. → chikushou."
   },
   {
     "jp": "ハニー",
@@ -157,7 +157,7 @@
     "jp": "先生",
     "audio": "せんせい",
     "r": "sensei",
-    "en": "Dr. / teacher",
+    "en": "teacher / Dr.",
     "m": "SEN-SEI — DOCTOR / teacher. → sensei."
   },
   {
@@ -248,7 +248,7 @@
     "jp": "多分",
     "audio": "たぶん",
     "r": "tabun",
-    "en": "probably",
+    "en": "probably / maybe",
     "m": "TA-BUN — PROBABLY. → tabun."
   },
   {
@@ -311,7 +311,7 @@
     "jp": "遅い",
     "audio": "おそい",
     "r": "osoi",
-    "en": "late",
+    "en": "late / slow",
     "m": "O-SOI — LATE. → osoi."
   },
   {

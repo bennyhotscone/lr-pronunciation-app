@@ -3,7 +3,7 @@
     "jp": "やあ",
     "audio": "やあ",
     "r": "yaa",
-    "en": "hi",
+    "en": "hello / hi",
     "m": "\"YAA!\" — casual HI when you spot a friend. → yaa."
   },
   {
@@ -45,7 +45,7 @@
     "jp": "家",
     "audio": "いえ",
     "r": "ie",
-    "en": "house",
+    "en": "house / home",
     "m": "IE browser at the HOUSE. → ie."
   },
   {
@@ -87,7 +87,7 @@
     "jp": "お父さん",
     "audio": "おとうさん",
     "r": "otousan",
-    "en": "dad",
+    "en": "dad / father",
     "m": "OTO-SAN — DAD. → otousan."
   },
   {
@@ -101,22 +101,22 @@
     "jp": "オーケー",
     "audio": "オーケー",
     "r": "okee",
-    "en": "ok",
-    "m": "OK — sounds like OKE. → okee."
+    "en": "OK",
+    "m": "OKEE — OK → okee."
   },
   {
     "jp": "〜なきゃ",
     "audio": "〜なきゃ",
     "r": "nakya",
-    "en": "gotta",
-    "m": "NAKya — I GOTTA go. → nakya."
+    "en": "have to / gotta",
+    "m": "~NAKYA — HAVE TO / gotta → nakya."
   },
   {
     "jp": "〜したい",
     "audio": "〜したい",
     "r": "shitai",
-    "en": "wanna",
-    "m": "SHI-TAI — I WANNA do it. → shitai."
+    "en": "want to do",
+    "m": "~SHITAI — WANT TO DO → shitai."
   },
   {
     "jp": "曲がる",
@@ -171,8 +171,8 @@
     "jp": "くそ",
     "audio": "くそ",
     "r": "kuso",
-    "en": "shit / damn",
-    "m": "KUSO! Spoken damn. → kuso."
+    "en": "fuck / shit",
+    "m": "KUSO — FUCK / shit → kuso."
   },
   {
     "jp": "頭",
@@ -213,7 +213,7 @@
     "jp": "見る",
     "audio": "みる",
     "r": "miru",
-    "en": "watch / see",
+    "en": "see / watch",
     "m": "ME-RU — WATCH this. → miru."
   },
   {
@@ -255,7 +255,7 @@
     "jp": "他",
     "audio": "ほか",
     "r": "hoka",
-    "en": "else / other",
+    "en": "other",
     "m": "HOOK A different OTHER one. → hoka."
   },
   {
@@ -276,14 +276,14 @@
     "jp": "本当",
     "audio": "ほんとう",
     "r": "hontou",
-    "en": "real / really",
+    "en": "really / true",
     "m": "HON-TOU — REAL talk. → hontou."
   },
   {
     "jp": "仕事",
     "audio": "しごと",
     "r": "shigoto",
-    "en": "job",
+    "en": "work / job",
     "m": "SHE GOes TO WORK. → shigoto."
   },
   {

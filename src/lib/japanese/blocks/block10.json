@@ -17,8 +17,8 @@
     "jp": "足",
     "audio": "あし",
     "r": "ashi",
-    "en": "foot",
-    "m": "A-SHI — FOOT. → ashi."
+    "en": "foot / leg",
+    "m": "ASHI — FOOT / leg → ashi."
   },
   {
     "jp": "パパ",
@@ -31,15 +31,15 @@
     "jp": "ママ",
     "audio": "ママ",
     "r": "mama",
-    "en": "ma",
-    "m": "MAMA — MA / mom. → mama."
+    "en": "mom",
+    "m": "MAMA — MOM. → mama."
   },
   {
     "jp": "〜しよう",
     "audio": "〜しよう",
     "r": "shiyou",
-    "en": "shall",
-    "m": "SHI-YOU — we SHALL. → shiyou."
+    "en": "let's / shall we",
+    "m": "~SHIYOU — LET'S / shall we → shiyou."
   },
   {
     "jp": "ようこそ",
@@ -59,8 +59,8 @@
     "jp": "行動",
     "audio": "こうどう",
     "r": "koudou",
-    "en": "act",
-    "m": "KOU-DOU — ACT / action. → koudou."
+    "en": "action / behavior",
+    "m": "KOUDOU — ACTION / behavior → koudou."
   },
   {
     "jp": "バカ",
@@ -73,8 +73,8 @@
     "jp": "前",
     "audio": "まえ",
     "r": "mae",
-    "en": "front",
-    "m": "MAE — in FRONT. → mae."
+    "en": "before / in front",
+    "m": "MAE — BEFORE / in front. → mae."
   },
   {
     "jp": "クソ女",
@@ -87,15 +87,15 @@
     "jp": "一緒に",
     "audio": "いっしょに",
     "r": "isshoni",
-    "en": "along",
-    "m": "ISSHO-NI — go ALONG. → isshoni."
+    "en": "together",
+    "m": "ISSHO-NI — TOGETHER. → isshoni."
   },
   {
     "jp": "自由",
     "audio": "じゆう",
     "r": "jiyuu",
-    "en": "free",
-    "m": "JI-YUU — FREE. → jiyuu."
+    "en": "freedom / free",
+    "m": "JIYUU — FREEDOM / free → jiyuu."
   },
   {
     "jp": "どちらか",
@@ -171,7 +171,7 @@
     "jp": "間",
     "audio": "あいだ",
     "r": "aida",
-    "en": "between",
+    "en": "between / while",
     "m": "AI-DA — BETWEEN. → aida."
   },
   {
@@ -199,15 +199,15 @@
     "jp": "嬉しい",
     "audio": "うれしい",
     "r": "ureshii",
-    "en": "glad",
-    "m": "U-RE-SHII — GLAD. → ureshii."
+    "en": "happy / glad",
+    "m": "URESHII — HAPPY / glad → ureshii."
   },
   {
     "jp": "その",
     "audio": "その",
     "r": "sono",
-    "en": "its",
-    "m": "SO-NO — ITS / that. → sono."
+    "en": "that / its",
+    "m": "SONO — THAT / its → sono."
   },
   {
     "jp": "白",
@@ -248,15 +248,15 @@
     "jp": "〜まで",
     "audio": "〜まで",
     "r": "made",
-    "en": "till",
-    "m": "MA-DE — TILL then. → made."
+    "en": "until",
+    "m": "MADE — UNTIL. → made."
   },
   {
     "jp": "いっぱい",
     "audio": "いっぱい",
     "r": "ippai",
-    "en": "full",
-    "m": "IP-PAI — FULL. → ippai."
+    "en": "a lot / full",
+    "m": "IPPAI — A LOT / full → ippai."
   },
   {
     "jp": "病気",
@@ -290,8 +290,8 @@
     "jp": "きれい",
     "audio": "きれい",
     "r": "kirei",
-    "en": "clean",
-    "m": "KI-REI — CLEAN. → kirei."
+    "en": "pretty / clean",
+    "m": "KIREI — PRETTY / clean → kirei."
   },
   {
     "jp": "素晴らしい",
@@ -318,8 +318,8 @@
     "jp": "種類",
     "audio": "しゅるい",
     "r": "shurui",
-    "en": "sort",
-    "m": "SHU-RUI — SORT / kind. → shurui."
+    "en": "kind / type",
+    "m": "SHURUI — KIND / type → shurui."
   },
   {
     "jp": "フランク",

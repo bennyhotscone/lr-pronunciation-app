@@ -31,8 +31,8 @@
     "jp": "終わる",
     "audio": "おわる",
     "r": "owaru",
-    "en": "be over / end",
-    "m": "\"OH, WAR is OVER.\" → owaru."
+    "en": "end / finish",
+    "m": "OWARU — END / finish → owaru."
   },
   {
     "jp": "愛",
@@ -80,8 +80,8 @@
     "jp": "消す",
     "audio": "けす",
     "r": "kesu",
-    "en": "turn off",
-    "m": "CASE closed — TURN OFF the lights. → kesu."
+    "en": "erase / turn off",
+    "m": "KESU — ERASE / turn off → kesu."
   },
   {
     "jp": "さん",
@@ -129,8 +129,8 @@
     "jp": "どれでも",
     "audio": "どれでも",
     "r": "doredemo",
-    "en": "any",
-    "m": "\"DOOR, eh? DEMO any one works.\" → doredemo."
+    "en": "any (whichever)",
+    "m": "DORE DEMO — ANY (whichever) → doredemo."
   },
   {
     "jp": "だけ",
@@ -150,8 +150,8 @@
     "jp": "から",
     "audio": "から",
     "r": "kara",
-    "en": "because",
-    "m": "CAR broke down BECAUSE of rain. → kara."
+    "en": "because / from",
+    "m": "KARA — BECAUSE / from → kara."
   },
   {
     "jp": "二",

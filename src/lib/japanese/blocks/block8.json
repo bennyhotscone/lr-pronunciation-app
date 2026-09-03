@@ -66,8 +66,8 @@
     "jp": "すぐ",
     "audio": "すぐ",
     "r": "sugu",
-    "en": "soon",
-    "m": "SU-GU — SOON. → sugu."
+    "en": "soon / right away",
+    "m": "SUGU — SOON / right away → sugu."
   },
   {
     "jp": "本",
@@ -80,8 +80,8 @@
     "jp": "ちょっと",
     "audio": "ちょっと",
     "r": "chotto",
-    "en": "bit",
-    "m": "CHO-TO — a BIT. → chotto."
+    "en": "a little",
+    "m": "CHOTTO — A LITTLE. → chotto."
   },
   {
     "jp": "ショット",
@@ -108,8 +108,8 @@
     "jp": "本当に",
     "audio": "ほんとうに",
     "r": "hontouni",
-    "en": "true",
-    "m": "HON-TOU-NI — truly TRUE. → hontouni."
+    "en": "really",
+    "m": "HONTOUNI — REALLY → hontouni."
   },
   {
     "jp": "それぞれ",
@@ -129,8 +129,8 @@
     "jp": "怖い",
     "audio": "こわい",
     "r": "kowai",
-    "en": "afraid",
-    "m": "KO-WAI — AFRAID. → kowai."
+    "en": "scary / afraid",
+    "m": "KOWAI — SCARY / afraid → kowai."
   },
   {
     "jp": "とにかく",
@@ -154,18 +154,18 @@
     "m": "I-NU — DOG. → inu."
   },
   {
-    "jp": "なんでも",
+    "jp": "何でも",
     "audio": "なんでも",
     "r": "nandemo",
-    "en": "whatever",
-    "m": "NANI DEMO — WHATEVER. → nandemo."
+    "en": "anything",
+    "m": "NAN-DEMO — ANYTHING. → nandemo."
   },
   {
     "jp": "困る",
     "audio": "こまる",
     "r": "komaru",
-    "en": "trouble",
-    "m": "KO-MA-RU — in TROUBLE. → komaru."
+    "en": "be in trouble",
+    "m": "KOMARU — be in TROUBLE → komaru."
   },
   {
     "jp": "若い",
@@ -227,7 +227,7 @@
     "jp": "楽しい",
     "audio": "たのしい",
     "r": "tanoshii",
-    "en": "fun",
+    "en": "fun / enjoyable",
     "m": "TA-NO-SHII — FUN. → tanoshii."
   },
   {
@@ -269,8 +269,8 @@
     "jp": "考える",
     "audio": "かんがえる",
     "r": "kangaeru",
-    "en": "figure",
-    "m": "KAN-GAE-RU — FIGURE it out. → kangaeru."
+    "en": "think",
+    "m": "KANGAERU — THINK → kangaeru."
   },
   {
     "jp": "引く",
@@ -311,8 +311,8 @@
     "jp": "誰か",
     "audio": "だれか",
     "r": "dareka",
-    "en": "anybody",
-    "m": "DARE-KA — ANYBODY. → dareka."
+    "en": "someone",
+    "m": "DARE-KA — SOMEONE. → dareka."
   },
   {
     "jp": "親愛なる",
@@ -325,7 +325,7 @@
     "jp": "休む",
     "audio": "やすむ",
     "r": "yasumu",
-    "en": "rest",
+    "en": "rest / take off",
     "m": "YA-SU-MU — REST. → yasumu."
   },
   {

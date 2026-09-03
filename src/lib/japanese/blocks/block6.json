@@ -17,15 +17,15 @@
     "jp": "問題",
     "audio": "もんだい",
     "r": "mondai",
-    "en": "matter",
-    "m": "MON-DAY — that's a MATTER. → mondai."
+    "en": "problem",
+    "m": "MONDAI — PROBLEM → mondai."
   },
   {
     "jp": "悩み",
     "audio": "なやみ",
     "r": "nayami",
-    "en": "problem",
-    "m": "NA-YA-MI — a PROBLEM weighing on you. → nayami."
+    "en": "worry / concern",
+    "m": "NAYAMI — WORRY / concern → nayami."
   },
   {
     "jp": "考え",
@@ -52,15 +52,15 @@
     "jp": "準備",
     "audio": "じゅんび",
     "r": "junbi",
-    "en": "ready",
-    "m": "JUN-BI — get READY. → junbi."
+    "en": "preparation / ready",
+    "m": "JUNBI — PREP / ready → junbi."
   },
   {
     "jp": "全部",
     "audio": "ぜんぶ",
     "r": "zenbu",
-    "en": "whole",
-    "m": "ZEN-BU — the WHOLE thing. → zenbu."
+    "en": "everything",
+    "m": "ZEN BU — EVERYTHING. → zenbu."
   },
   {
     "jp": "一緒に",
@@ -73,14 +73,14 @@
     "jp": "〜だろう",
     "audio": "〜だろう",
     "r": "darou",
-    "en": "suppose",
-    "m": "DA-ROU — I SUPPOSE so. → darou."
+    "en": "probably / I suppose",
+    "m": "~DAROU — I SUPPOSE / probably → darou."
   },
   {
     "jp": "すみません",
     "audio": "すみません",
     "r": "sumimasen",
-    "en": "excuse me",
+    "en": "excuse me / sorry",
     "m": "SOO-ME-MA-SEN — EXCUSE ME. → sumimasen."
   },
   {
@@ -143,8 +143,8 @@
     "jp": "〜そう",
     "audio": "〜そう",
     "r": "sou",
-    "en": "seem",
-    "m": "SO-U — it SEEMS so. → sou."
+    "en": "seems / looks like",
+    "m": "~SOU — SEEMS / looks like → sou."
   },
   {
     "jp": "結婚する",
@@ -157,7 +157,7 @@
     "jp": "たくさん",
     "audio": "たくさん",
     "r": "takusan",
-    "en": "many",
+    "en": "much / many",
     "m": "TUCK SUN away — so MANY. → takusan."
   },
   {
@@ -185,8 +185,8 @@
     "jp": "女性",
     "audio": "じょせい",
     "r": "josei",
-    "en": "lady",
-    "m": "JO-SEI — LADY / woman. → josei."
+    "en": "woman",
+    "m": "JOSEI — WOMAN → josei."
   },
   {
     "jp": "〜なしで",
@@ -206,15 +206,15 @@
     "jp": "一番",
     "audio": "いちばん",
     "r": "ichiban",
-    "en": "most",
-    "m": "ICHI-BAN — the MOST. → ichiban."
+    "en": "number one / most",
+    "m": "ICHIBAN — NUMBER ONE / most → ichiban."
   },
   {
     "jp": "間",
     "audio": "あいだ",
     "r": "aida",
-    "en": "while",
-    "m": "AI-DA — in the WHILE. → aida."
+    "en": "between / while",
+    "m": "AIDA — BETWEEN / WHILE → aida."
   },
   {
     "jp": "学校",
@@ -234,7 +234,7 @@
     "jp": "誰か",
     "audio": "だれか",
     "r": "dareka",
-    "en": "somebody",
+    "en": "someone",
     "m": "DARE-KA — SOMEBODY. → dareka."
   },
   {
@@ -248,15 +248,15 @@
     "jp": "慣れる",
     "audio": "なれる",
     "r": "nareru",
-    "en": "used to",
-    "m": "NA-RERU — get USED to it. → nareru."
+    "en": "get used to",
+    "m": "NARERU — get USED TO → nareru."
   },
   {
     "jp": "自分",
     "audio": "じぶん",
     "r": "jibun",
-    "en": "myself",
-    "m": "JI-BUN — MYSELF. → jibun."
+    "en": "oneself / self",
+    "m": "JIBUN — ONESELF → jibun."
   },
   {
     "jp": "終わり",
@@ -269,7 +269,7 @@
     "jp": "まだ",
     "audio": "まだ",
     "r": "mada",
-    "en": "yet / still",
+    "en": "still / not yet",
     "m": "MADA is STILL not done. → mada."
   },
   {
@@ -283,7 +283,7 @@
     "jp": "話す",
     "audio": "はなす",
     "r": "hanasu",
-    "en": "speak",
+    "en": "speak / talk",
     "m": "HA-NA-SU — SPEAK up. → hanasu."
   },
   {
@@ -297,8 +297,8 @@
     "jp": "嬉しい",
     "audio": "うれしい",
     "r": "ureshii",
-    "en": "happy",
-    "m": "U-RE-SHII — HAPPY. → ureshii."
+    "en": "happy / glad",
+    "m": "U-RE-SHII — HAPPY / glad. → ureshii."
   },
   {
     "jp": "子供",

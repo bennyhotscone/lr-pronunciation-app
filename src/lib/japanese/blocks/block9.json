@@ -17,8 +17,8 @@
     "jp": "面白い",
     "audio": "おもしろい",
     "r": "omoshiroi",
-    "en": "funny",
-    "m": "O-MO-SHI-ROI — FUNNY. → omoshiroi."
+    "en": "interesting / funny",
+    "m": "OMOSHIROI — INTERESTING / funny → omoshiroi."
   },
   {
     "jp": "踊る",
@@ -38,8 +38,8 @@
     "jp": "嫌い",
     "audio": "きらい",
     "r": "kirai",
-    "en": "hate",
-    "m": "KI-RAI — HATE it. → kirai."
+    "en": "dislike",
+    "m": "KIRAI — DISLIKE. → kirai."
   },
   {
     "jp": "中",
@@ -108,8 +108,8 @@
     "jp": "少なくとも",
     "audio": "すくなくとも",
     "r": "sukunakutomo",
-    "en": "least",
-    "m": "SU-KU-NA-KU-TOMO — at LEAST. → sukunakutomo."
+    "en": "at least",
+    "m": "SUKUNAKUTOMO — AT LEAST → sukunakutomo."
   },
   {
     "jp": "重要",
@@ -136,7 +136,7 @@
     "jp": "も",
     "audio": "も",
     "r": "mo",
-    "en": "also",
+    "en": "too / also",
     "m": "\"ME TOO!\" — ALSO. → mo."
   },
   {
@@ -157,21 +157,21 @@
     "jp": "信じる",
     "audio": "しんじる",
     "r": "shinjiru",
-    "en": "trust",
-    "m": "SHIN-JI-RU — TRUST. → shinjiru."
+    "en": "believe",
+    "m": "SHIN-JI-RU — BELIEVE. → shinjiru."
   },
   {
     "jp": "会社",
     "audio": "かいしゃ",
     "r": "kaisha",
-    "en": "office",
-    "m": "KAI-SHA — OFFICE / company. → kaisha."
+    "en": "company",
+    "m": "KAISHA — COMPANY → kaisha."
   },
   {
     "jp": "かなり",
     "audio": "かなり",
     "r": "kanari",
-    "en": "quite",
+    "en": "pretty / quite",
     "m": "KA-NA-RI — QUITE. → kanari."
   },
   {
@@ -185,8 +185,8 @@
     "jp": "はっきり",
     "audio": "はっきり",
     "r": "hakkiri",
-    "en": "clear",
-    "m": "HAK-KI-RI — CLEAR. → hakkiri."
+    "en": "clearly",
+    "m": "HAKKIRI — CLEARLY → hakkiri."
   },
   {
     "jp": "〜に対して",
@@ -213,8 +213,8 @@
     "jp": "不思議",
     "audio": "ふしぎ",
     "r": "fushigi",
-    "en": "wonder",
-    "m": "FU-SHI-GI — I WONDER. → fushigi."
+    "en": "mysterious / strange",
+    "m": "FUSHIGI — MYSTERIOUS / strange → fushigi."
   },
   {
     "jp": "六",
@@ -255,8 +255,8 @@
     "jp": "先に",
     "audio": "さきに",
     "r": "sakini",
-    "en": "ahead",
-    "m": "SA-KI-NI — AHEAD. → sakini."
+    "en": "ahead / first",
+    "m": "SAKINI — AHEAD / first → sakini."
   },
   {
     "jp": "マイケル",
@@ -283,7 +283,7 @@
     "jp": "高い",
     "audio": "たかい",
     "r": "takai",
-    "en": "high",
+    "en": "expensive / high",
     "m": "TA-KAI — HIGH. → takai."
   },
   {
@@ -297,8 +297,8 @@
     "jp": "終わる",
     "audio": "おわる",
     "r": "owaru",
-    "en": "finish",
-    "m": "O-WA-RU — FINISH. → owaru."
+    "en": "end / finish",
+    "m": "OWARU — END / finish → owaru."
   },
   {
     "jp": "真実",
@@ -325,7 +325,7 @@
     "jp": "暑い",
     "audio": "あつい",
     "r": "atsui",
-    "en": "hot",
+    "en": "hot (weather)",
     "m": "A-TSU-I — HOT. → atsui."
   },
   {
@@ -346,7 +346,7 @@
     "jp": "もう",
     "audio": "もう",
     "r": "mou",
-    "en": "anymore",
+    "en": "already / anymore",
     "m": "MOU — not ANYMORE. → mou."
   }
 ]

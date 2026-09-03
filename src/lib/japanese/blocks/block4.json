@@ -3,14 +3,14 @@
     "jp": "また",
     "audio": "また",
     "r": "mata",
-    "en": "again",
+    "en": "again / also",
     "m": "\"MAH, TA?\" — AGAIN? → mata."
   },
   {
     "jp": "まだ",
     "audio": "まだ",
     "r": "mada",
-    "en": "still",
+    "en": "still / not yet",
     "m": "MADA is STILL not done. → mada."
   },
   {
@@ -45,8 +45,8 @@
     "jp": "くそ",
     "audio": "くそ",
     "r": "kuso",
-    "en": "fuck / damn",
-    "m": "KUSO! Spoken damn. → kuso."
+    "en": "fuck / shit",
+    "m": "KUSO — FUCK / shit → kuso."
   },
   {
     "jp": "それら",
@@ -80,8 +80,8 @@
     "jp": "離れる",
     "audio": "はなれる",
     "r": "hanareru",
-    "en": "away",
-    "m": "HA, NAH, RETreat — go AWAY. → hanareru."
+    "en": "leave / separate",
+    "m": "Leave / SEPARATE → hanareru."
   },
   {
     "jp": "友達",
@@ -101,8 +101,8 @@
     "jp": "今まで",
     "audio": "いままで",
     "r": "imamade",
-    "en": "ever",
-    "m": "I MA MADE it EVER this far. → imamade."
+    "en": "until now / so far",
+    "m": "IMA MADE — until NOW / so FAR → imamade."
   },
   {
     "jp": "悪い",
@@ -164,8 +164,8 @@
     "jp": "彼ら",
     "audio": "かれら",
     "r": "karera",
-    "en": "their / they",
-    "m": "KA RARE — THEIR crew. → karera."
+    "en": "they / them",
+    "m": "THEY / THEM → karera."
   },
   {
     "jp": "いつも",
@@ -185,8 +185,8 @@
     "jp": "会いたい",
     "audio": "あいたい",
     "r": "aitai",
-    "en": "miss (someone)",
-    "m": "I TIE — I MISS you, want to meet. → aitai."
+    "en": "want to meet",
+    "m": "Want to MEET → aitai."
   },
   {
     "jp": "分",
@@ -241,14 +241,14 @@
     "jp": "いっぱい",
     "audio": "いっぱい",
     "r": "ippai",
-    "en": "a lot",
+    "en": "a lot / full",
     "m": "EAT PIE — a LOT. → ippai."
   },
   {
     "jp": "聞く",
     "audio": "きく",
     "r": "kiku",
-    "en": "listen",
+    "en": "listen / ask",
     "m": "KEY COOL — LISTEN up. → kiku."
   },
   {
@@ -311,7 +311,7 @@
     "jp": "やあ",
     "audio": "やあ",
     "r": "yaa",
-    "en": "hello",
+    "en": "hello / hi",
     "m": "YAA — casual HELLO! → yaa."
   },
   {
@@ -339,8 +339,8 @@
     "jp": "お父さん",
     "audio": "おとうさん",
     "r": "otousan",
-    "en": "dad",
-    "m": "OTO-SAN — DAD. → otousan."
+    "en": "dad / father",
+    "m": "OTO-SAN — FATHER / dad. → otousan."
   },
   {
     "jp": "持つ",

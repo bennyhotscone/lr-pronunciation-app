@@ -66,7 +66,7 @@ describe("japanese matching", () => {
       jp: "お父さん",
       audio: "おとうさん",
       r: "otousan",
-      en: "dad",
+      en: "dad / father",
       m: "x",
     };
     const okaasan: JapaneseWord = {
@@ -81,6 +81,40 @@ describe("japanese matching", () => {
     expect(fuzzyMatchEnglish("mum", okaasan)).toBe(true);
     expect(fuzzyMatchEnglish("mom", okaasan)).toBe(true);
     expect(fuzzyMatchEnglish("mother", okaasan)).toBe(true);
+  });
+
+  it("accepts fuck/shit/damn/crap for kuso and chikushou", () => {
+    const kuso: JapaneseWord = {
+      jp: "くそ",
+      audio: "くそ",
+      r: "kuso",
+      en: "fuck / shit",
+      m: "x",
+    };
+    const chikushou: JapaneseWord = {
+      jp: "畜生",
+      audio: "ちくしょう",
+      r: "chikushou",
+      en: "damn it / fuck",
+      m: "x",
+    };
+    for (const ans of ["fuck", "shit", "damn", "crap"]) {
+      expect(fuzzyMatchEnglish(ans, kuso)).toBe(true);
+      expect(fuzzyMatchEnglish(ans, chikushou)).toBe(true);
+    }
+    expect(fuzzyMatchEnglish("damn it", chikushou)).toBe(true);
+  });
+
+  it("accepts sure for of course (mochiron)", () => {
+    const mochiron: JapaneseWord = {
+      jp: "もちろん",
+      audio: "もちろん",
+      r: "mochiron",
+      en: "of course",
+      m: "x",
+    };
+    expect(fuzzyMatchEnglish("of course", mochiron)).toBe(true);
+    expect(fuzzyMatchEnglish("sure", mochiron)).toBe(true);
   });
 
   it("accepts romaji with long-vowel shortcuts", () => {
