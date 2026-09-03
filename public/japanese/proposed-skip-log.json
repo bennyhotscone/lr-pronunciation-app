@@ -1,0 +1,3127 @@
+[
+  {
+    "rank": 1,
+    "lemma": "you",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 2,
+    "lemma": "i",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 3,
+    "lemma": "be",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 4,
+    "lemma": "the",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 5,
+    "lemma": "to",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 6,
+    "lemma": "a",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 7,
+    "lemma": "it",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 8,
+    "lemma": "that",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 9,
+    "lemma": "and",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 10,
+    "lemma": "of",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 11,
+    "lemma": "do",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 12,
+    "lemma": "what",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 13,
+    "lemma": "in",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 14,
+    "lemma": "have",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 15,
+    "lemma": "me",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 16,
+    "lemma": "we",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 17,
+    "lemma": "get",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 18,
+    "lemma": "this",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 19,
+    "lemma": "he",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 20,
+    "lemma": "on",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 21,
+    "lemma": "for",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 22,
+    "lemma": "go",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 23,
+    "lemma": "my",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 24,
+    "lemma": "your",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 25,
+    "lemma": "know",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 26,
+    "lemma": "no",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 27,
+    "lemma": "not",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 28,
+    "lemma": "can",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 29,
+    "lemma": "all",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 30,
+    "lemma": "with",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 32,
+    "lemma": "here",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 33,
+    "lemma": "but",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 34,
+    "lemma": "come",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 35,
+    "lemma": "there",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 36,
+    "lemma": "so",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 37,
+    "lemma": "like",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 38,
+    "lemma": "they",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 39,
+    "lemma": "right",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 40,
+    "lemma": "think",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 41,
+    "lemma": "out",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 42,
+    "lemma": "good",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 43,
+    "lemma": "she",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 44,
+    "lemma": "up",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 45,
+    "lemma": "about",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 46,
+    "lemma": "want",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 47,
+    "lemma": "if",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 48,
+    "lemma": "see",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 49,
+    "lemma": "him",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 50,
+    "lemma": "say",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 51,
+    "lemma": "oh",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 52,
+    "lemma": "at",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 53,
+    "lemma": "now",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 54,
+    "lemma": "one",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 55,
+    "lemma": "how",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 56,
+    "lemma": "well",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 57,
+    "lemma": "yeah",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 58,
+    "lemma": "her",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 60,
+    "lemma": "take",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 63,
+    "lemma": "make",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 64,
+    "lemma": "why",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 65,
+    "lemma": "man",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 66,
+    "lemma": "who",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 67,
+    "lemma": "as",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 68,
+    "lemma": "will",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 69,
+    "lemma": "his",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 70,
+    "lemma": "from",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 71,
+    "lemma": "when",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 73,
+    "lemma": "okay",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 74,
+    "lemma": "yes",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 75,
+    "lemma": "gonna",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 76,
+    "lemma": "time",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 77,
+    "lemma": "an",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 78,
+    "lemma": "where",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 79,
+    "lemma": "thing",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 80,
+    "lemma": "them",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 81,
+    "lemma": "would",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 82,
+    "lemma": "thank",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 84,
+    "lemma": "hey",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 85,
+    "lemma": "or",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 86,
+    "lemma": "us",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 87,
+    "lemma": "give",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 88,
+    "lemma": "could",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 90,
+    "lemma": "really",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 94,
+    "lemma": "then",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 95,
+    "lemma": "talk",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 97,
+    "lemma": "little",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 98,
+    "lemma": "our",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 101,
+    "lemma": "too",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 102,
+    "lemma": "never",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 103,
+    "lemma": "by",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 104,
+    "lemma": "person",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 105,
+    "lemma": "over",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 106,
+    "lemma": "love",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 107,
+    "lemma": "more",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 108,
+    "lemma": "find",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 109,
+    "lemma": "work",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 110,
+    "lemma": "very",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 111,
+    "lemma": "leave",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 112,
+    "lemma": "off",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 113,
+    "lemma": "mr",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 114,
+    "lemma": "sorry",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 115,
+    "lemma": "try",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 116,
+    "lemma": "day",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 117,
+    "lemma": "please",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 119,
+    "lemma": "any",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 120,
+    "lemma": "only",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 121,
+    "lemma": "wait",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 122,
+    "lemma": "because",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 123,
+    "lemma": "two",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 124,
+    "lemma": "should",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 125,
+    "lemma": "help",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 126,
+    "lemma": "even",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 127,
+    "lemma": "hear",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 128,
+    "lemma": "feel",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 129,
+    "lemma": "much",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 130,
+    "lemma": "happen",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 131,
+    "lemma": "sir",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 132,
+    "lemma": "life",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 133,
+    "lemma": "maybe",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 134,
+    "lemma": "god",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 135,
+    "lemma": "anything",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 136,
+    "lemma": "these",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 137,
+    "lemma": "night",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 138,
+    "lemma": "keep",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 139,
+    "lemma": "new",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 140,
+    "lemma": "nothing",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 141,
+    "lemma": "put",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 142,
+    "lemma": "year",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 143,
+    "lemma": "into",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 144,
+    "lemma": "ask",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 145,
+    "lemma": "first",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 146,
+    "lemma": "kill",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 147,
+    "lemma": "other",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 148,
+    "lemma": "stop",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 149,
+    "lemma": "great",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 150,
+    "lemma": "before",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 151,
+    "lemma": "again",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 152,
+    "lemma": "still",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 153,
+    "lemma": "home",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 154,
+    "lemma": "kid",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 155,
+    "lemma": "girl",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 156,
+    "lemma": "boy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 157,
+    "lemma": "fuck",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 158,
+    "lemma": "those",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 159,
+    "lemma": "than",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 160,
+    "lemma": "around",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 161,
+    "lemma": "last",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 162,
+    "lemma": "away",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 163,
+    "lemma": "friend",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 164,
+    "lemma": "uh",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 166,
+    "lemma": "bad",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 167,
+    "lemma": "must",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 168,
+    "lemma": "meet",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 169,
+    "lemma": "big",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 170,
+    "lemma": "after",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 171,
+    "lemma": "long",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 172,
+    "lemma": "place",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 173,
+    "lemma": "believe",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 174,
+    "lemma": "their",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 175,
+    "lemma": "alway",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 176,
+    "lemma": "everything",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 178,
+    "lemma": "minute",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 179,
+    "lemma": "nice",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 180,
+    "lemma": "start",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 181,
+    "lemma": "name",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 182,
+    "lemma": "money",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 183,
+    "lemma": "move",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 184,
+    "lemma": "woman",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 185,
+    "lemma": "lot",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 186,
+    "lemma": "listen",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 187,
+    "lemma": "stay",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 188,
+    "lemma": "run",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 189,
+    "lemma": "kind",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 190,
+    "lemma": "old",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 191,
+    "lemma": "show",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 192,
+    "lemma": "fine",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 193,
+    "lemma": "car",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 194,
+    "lemma": "play",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 195,
+    "lemma": "hello",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 196,
+    "lemma": "bring",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 197,
+    "lemma": "remember",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 198,
+    "lemma": "live",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 199,
+    "lemma": "father",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 200,
+    "lemma": "hold",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 201,
+    "lemma": "hi",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 202,
+    "lemma": "through",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 203,
+    "lemma": "every",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 204,
+    "lemma": "understand",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 205,
+    "lemma": "three",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 206,
+    "lemma": "baby",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 207,
+    "lemma": "house",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 208,
+    "lemma": "hand",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 209,
+    "lemma": "wrong",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 210,
+    "lemma": "might",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 211,
+    "lemma": "may",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 212,
+    "lemma": "mind",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 213,
+    "lemma": "dad",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 214,
+    "lemma": "another",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 215,
+    "lemma": "ok",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 216,
+    "lemma": "gotta",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 217,
+    "lemma": "wanna",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 218,
+    "lemma": "turn",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 219,
+    "lemma": "enough",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 220,
+    "lemma": "lose",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 221,
+    "lemma": "mother",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 222,
+    "lemma": "own",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 223,
+    "lemma": "course",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 224,
+    "lemma": "care",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 225,
+    "lemma": "shit",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 226,
+    "lemma": "head",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 227,
+    "lemma": "which",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 228,
+    "lemma": "guess",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 229,
+    "lemma": "hell",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 230,
+    "lemma": "room",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 231,
+    "lemma": "watch",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 232,
+    "lemma": "world",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 233,
+    "lemma": "yourself",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 234,
+    "lemma": "break",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 235,
+    "lemma": "next",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 236,
+    "lemma": "dead",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 238,
+    "lemma": "sit",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 239,
+    "lemma": "someone",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 241,
+    "lemma": "job",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 242,
+    "lemma": "morn",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 243,
+    "lemma": "huh",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 244,
+    "lemma": "mom",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 245,
+    "lemma": "today",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 246,
+    "lemma": "son",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 247,
+    "lemma": "forget",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 248,
+    "lemma": "drink",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 249,
+    "lemma": "same",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 250,
+    "lemma": "tonight",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 251,
+    "lemma": "open",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 252,
+    "lemma": "worry",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 254,
+    "lemma": "problem",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 255,
+    "lemma": "idea",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 256,
+    "lemma": "pay",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 257,
+    "lemma": "pretty",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 258,
+    "lemma": "ready",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 260,
+    "lemma": "together",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 261,
+    "lemma": "suppose",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 262,
+    "lemma": "excuse",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 263,
+    "lemma": "eat",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 264,
+    "lemma": "hour",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 265,
+    "lemma": "family",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 266,
+    "lemma": "check",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 267,
+    "lemma": "week",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 268,
+    "lemma": "wife",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 269,
+    "lemma": "send",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 270,
+    "lemma": "walk",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 272,
+    "lemma": "marry",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 273,
+    "lemma": "many",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 274,
+    "lemma": "use",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 275,
+    "lemma": "word",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 276,
+    "lemma": "second",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 278,
+    "lemma": "without",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 279,
+    "lemma": "stand",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 280,
+    "lemma": "most",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 281,
+    "lemma": "while",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 282,
+    "lemma": "school",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 283,
+    "lemma": "once",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 285,
+    "lemma": "everybody",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 286,
+    "lemma": "used",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 287,
+    "lemma": "myself",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 288,
+    "lemma": "end",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 289,
+    "lemma": "yet",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 290,
+    "lemma": "tomorrow",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 291,
+    "lemma": "speak",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 292,
+    "lemma": "eye",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 293,
+    "lemma": "happy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 294,
+    "lemma": "child",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 295,
+    "lemma": "question",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 296,
+    "lemma": "brother",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 297,
+    "lemma": "sleep",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 298,
+    "lemma": "door",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 299,
+    "lemma": "business",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 300,
+    "lemma": "actually",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 301,
+    "lemma": "sound",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 302,
+    "lemma": "hope",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 303,
+    "lemma": "stuff",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 304,
+    "lemma": "already",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 305,
+    "lemma": "hit",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 306,
+    "lemma": "buy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 307,
+    "lemma": "since",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 308,
+    "lemma": "case",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 309,
+    "lemma": "read",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 310,
+    "lemma": "mrs",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 311,
+    "lemma": "hard",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 312,
+    "lemma": "cause",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 313,
+    "lemma": "pick",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 314,
+    "lemma": "alone",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 315,
+    "lemma": "write",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 316,
+    "lemma": "hurt",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 317,
+    "lemma": "until",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 318,
+    "lemma": "few",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 319,
+    "lemma": "damn",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 320,
+    "lemma": "honey",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 321,
+    "lemma": "doctor",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 322,
+    "lemma": "deal",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 323,
+    "lemma": "dr",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 324,
+    "lemma": "both",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 325,
+    "lemma": "part",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 326,
+    "lemma": "later",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 327,
+    "lemma": "such",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 328,
+    "lemma": "face",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 329,
+    "lemma": "plan",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 330,
+    "lemma": "ago",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 331,
+    "lemma": "die",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 332,
+    "lemma": "five",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 333,
+    "lemma": "point",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 334,
+    "lemma": "fight",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 335,
+    "lemma": "number",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 336,
+    "lemma": "probably",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 337,
+    "lemma": "drive",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 338,
+    "lemma": "beautiful",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 339,
+    "lemma": "gun",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 340,
+    "lemma": "tim",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 341,
+    "lemma": "crazy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 342,
+    "lemma": "shut",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 343,
+    "lemma": "chance",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 344,
+    "lemma": "fall",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 345,
+    "lemma": "late",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 346,
+    "lemma": "phone",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 347,
+    "lemma": "wish",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 348,
+    "lemma": "set",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 349,
+    "lemma": "heart",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 350,
+    "lemma": "nobody",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 351,
+    "lemma": "easy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 352,
+    "lemma": "story",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 353,
+    "lemma": "cut",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 354,
+    "lemma": "order",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 355,
+    "lemma": "under",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 356,
+    "lemma": "party",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 357,
+    "lemma": "month",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 358,
+    "lemma": "jack",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 359,
+    "lemma": "four",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 360,
+    "lemma": "soon",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 361,
+    "lemma": "book",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 363,
+    "lemma": "shot",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 364,
+    "lemma": "anyone",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 365,
+    "lemma": "town",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 366,
+    "lemma": "true",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 367,
+    "lemma": "each",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 368,
+    "lemma": "mine",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 369,
+    "lemma": "afraid",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 370,
+    "lemma": "anyway",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 371,
+    "lemma": "exactly",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 372,
+    "lemma": "dog",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 374,
+    "lemma": "trouble",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 375,
+    "lemma": "young",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 376,
+    "lemma": "everyone",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 377,
+    "lemma": "change",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 378,
+    "lemma": "wear",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 379,
+    "lemma": "water",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 380,
+    "lemma": "ass",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 381,
+    "lemma": "police",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 382,
+    "lemma": "interest",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 383,
+    "lemma": "fun",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 384,
+    "lemma": "answer",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 385,
+    "lemma": "game",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 386,
+    "lemma": "promise",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 387,
+    "lemma": "couple",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 388,
+    "lemma": "dream",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 390,
+    "lemma": "pull",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 391,
+    "lemma": "light",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 392,
+    "lemma": "body",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 393,
+    "lemma": "shoot",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 394,
+    "lemma": "reason",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 396,
+    "lemma": "dear",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 397,
+    "lemma": "rest",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 398,
+    "lemma": "death",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 399,
+    "lemma": "far",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 400,
+    "lemma": "um",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 401,
+    "lemma": "close",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 402,
+    "lemma": "side",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 403,
+    "lemma": "funny",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 404,
+    "lemma": "dance",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 405,
+    "lemma": "fire",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 407,
+    "lemma": "inside",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 408,
+    "lemma": "hang",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 409,
+    "lemma": "sometime",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 410,
+    "lemma": "captain",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 411,
+    "lemma": "picture",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 412,
+    "lemma": "follow",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 413,
+    "lemma": "different",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 414,
+    "lemma": "moment",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 415,
+    "lemma": "sister",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 416,
+    "lemma": "least",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 417,
+    "lemma": "important",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 418,
+    "lemma": "dinner",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 419,
+    "lemma": "ah",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 420,
+    "lemma": "also",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 421,
+    "lemma": "line",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 422,
+    "lemma": "drop",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 425,
+    "lemma": "quite",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 426,
+    "lemma": "husband",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 428,
+    "lemma": "against",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 429,
+    "lemma": "touch",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 430,
+    "lemma": "sign",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 432,
+    "lemma": "six",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 433,
+    "lemma": "half",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 434,
+    "lemma": "cool",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 435,
+    "lemma": "learn",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 436,
+    "lemma": "fact",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 437,
+    "lemma": "ahead",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 438,
+    "lemma": "michael",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 439,
+    "lemma": "pass",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 440,
+    "lemma": "bed",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 441,
+    "lemma": "high",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 442,
+    "lemma": "john",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 443,
+    "lemma": "finish",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 444,
+    "lemma": "truth",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 445,
+    "lemma": "almost",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 446,
+    "lemma": "build",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 447,
+    "lemma": "hot",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 448,
+    "lemma": "bet",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 449,
+    "lemma": "behind",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 450,
+    "lemma": "anymore",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 451,
+    "lemma": "blood",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 452,
+    "lemma": "power",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 453,
+    "lemma": "foot",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 454,
+    "lemma": "daddy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 455,
+    "lemma": "ma",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 456,
+    "lemma": "shall",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 457,
+    "lemma": "welcome",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 458,
+    "lemma": "war",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 460,
+    "lemma": "stupid",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 461,
+    "lemma": "front",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 462,
+    "lemma": "bitch",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 464,
+    "lemma": "free",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 465,
+    "lemma": "either",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 466,
+    "lemma": "though",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 467,
+    "lemma": "daughter",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 468,
+    "lemma": "kiss",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 469,
+    "lemma": "bye",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 470,
+    "lemma": "street",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 471,
+    "lemma": "win",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 472,
+    "lemma": "expect",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 473,
+    "lemma": "city",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 474,
+    "lemma": "hurry",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 475,
+    "lemma": "between",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 476,
+    "lemma": "black",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 477,
+    "lemma": "cop",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 478,
+    "lemma": "country",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 479,
+    "lemma": "glad",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 480,
+    "lemma": "its",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 481,
+    "lemma": "white",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 482,
+    "lemma": "outside",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 483,
+    "lemma": "murder",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 484,
+    "lemma": "beat",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 485,
+    "lemma": "movie",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 487,
+    "lemma": "full",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 488,
+    "lemma": "sick",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 489,
+    "lemma": "throw",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 490,
+    "lemma": "scar",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 491,
+    "lemma": "team",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 492,
+    "lemma": "clean",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 493,
+    "lemma": "wonderful",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 494,
+    "lemma": "become",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 495,
+    "lemma": "save",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 497,
+    "lemma": "frank",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 498,
+    "lemma": "jesus",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 499,
+    "lemma": "chang",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 500,
+    "lemma": "perfect",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 501,
+    "lemma": "wow",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 504,
+    "lemma": "able",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 508,
+    "lemma": "company",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 510,
+    "lemma": "whoa",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 511,
+    "lemma": "died",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 512,
+    "lemma": "train",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 519,
+    "lemma": "gentlemen",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 522,
+    "lemma": "sex",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 527,
+    "lemma": "ya",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 539,
+    "lemma": "george",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 540,
+    "lemma": "coffee",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 544,
+    "lemma": "president",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 546,
+    "lemma": "million",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 549,
+    "lemma": "lord",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 553,
+    "lemma": "himself",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 559,
+    "lemma": "york",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 560,
+    "lemma": "king",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 561,
+    "lemma": "fast",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 565,
+    "lemma": "return",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 568,
+    "lemma": "tire",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 576,
+    "lemma": "darling",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 581,
+    "lemma": "cold",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 584,
+    "lemma": "nam",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 587,
+    "lemma": "joe",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 589,
+    "lemma": "american",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 590,
+    "lemma": "cannot",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 592,
+    "lemma": "small",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 606,
+    "lemma": "angel",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 607,
+    "lemma": "sam",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 608,
+    "lemma": "christmas",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 610,
+    "lemma": "ha",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 611,
+    "lemma": "wake",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 621,
+    "lemma": "goddamn",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 628,
+    "lemma": "mark",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 631,
+    "lemma": "buddy",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 633,
+    "lemma": "rather",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 635,
+    "lemma": "unless",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 642,
+    "lemma": "mike",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 644,
+    "lemma": "somewhere",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 646,
+    "lemma": "except",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 647,
+    "lemma": "leg",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 649,
+    "lemma": "charlie",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 651,
+    "lemma": "less",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 652,
+    "lemma": "fish",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 653,
+    "lemma": "none",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 658,
+    "lemma": "tom",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 672,
+    "lemma": "early",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 677,
+    "lemma": "wed",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 679,
+    "lemma": "busy",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 683,
+    "lemma": "hop",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 684,
+    "lemma": "lieutenant",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 688,
+    "lemma": "mama",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 690,
+    "lemma": "meant",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 691,
+    "lemma": "al",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 692,
+    "lemma": "hmm",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 699,
+    "lemma": "david",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 701,
+    "lemma": "ray",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 708,
+    "lemma": "beside",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 711,
+    "lemma": "sav",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 714,
+    "lemma": "dude",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 718,
+    "lemma": "longer",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 721,
+    "lemma": "ben",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 723,
+    "lemma": "th",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 727,
+    "lemma": "ls",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 728,
+    "lemma": "yesterday",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 730,
+    "lemma": "colonel",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 742,
+    "lemma": "station",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 743,
+    "lemma": "ooh",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 745,
+    "lemma": "l",
+    "reason": "too short"
+  },
+  {
+    "rank": 747,
+    "lemma": "choose",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 749,
+    "lemma": "paul",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 755,
+    "lemma": "peter",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 762,
+    "lemma": "bob",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 767,
+    "lemma": "c",
+    "reason": "too short"
+  },
+  {
+    "rank": 769,
+    "lemma": "mil",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 772,
+    "lemma": "fir",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 776,
+    "lemma": "christ",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 785,
+    "lemma": "mary",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 791,
+    "lemma": "anywhere",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 798,
+    "lemma": "clos",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 801,
+    "lemma": "johnny",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 804,
+    "lemma": "strange",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 812,
+    "lemma": "concern",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 826,
+    "lemma": "bastard",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 827,
+    "lemma": "b",
+    "reason": "too short"
+  },
+  {
+    "rank": 846,
+    "lemma": "slow",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 849,
+    "lemma": "harry",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 850,
+    "lemma": "continue",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 852,
+    "lemma": "store",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 854,
+    "lemma": "yo",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 855,
+    "lemma": "doc",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 859,
+    "lemma": "danny",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 860,
+    "lemma": "il",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 863,
+    "lemma": "ought",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 865,
+    "lemma": "jimmy",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 875,
+    "lemma": "alright",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 881,
+    "lemma": "j",
+    "reason": "too short"
+  },
+  {
+    "rank": 882,
+    "lemma": "america",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 891,
+    "lemma": "suck",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 892,
+    "lemma": "henry",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 894,
+    "lemma": "dur",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 899,
+    "lemma": "ed",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 901,
+    "lemma": "sho",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 903,
+    "lemma": "type",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 912,
+    "lemma": "killer",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 913,
+    "lemma": "english",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 914,
+    "lemma": "robert",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 916,
+    "lemma": "richard",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 918,
+    "lemma": "ln",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 924,
+    "lemma": "action",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 926,
+    "lemma": "joey",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 927,
+    "lemma": "asshole",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 929,
+    "lemma": "e",
+    "reason": "too short"
+  },
+  {
+    "rank": 933,
+    "lemma": "fella",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 935,
+    "lemma": "mommy",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 937,
+    "lemma": "max",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 942,
+    "lemma": "bullshit",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 958,
+    "lemma": "freak",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 959,
+    "lemma": "r",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 962,
+    "lemma": "spent",
+    "reason": "duplicate"
+  },
+  {
+    "rank": 967,
+    "lemma": "bobby",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 970,
+    "lemma": "french",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 972,
+    "lemma": "steve",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 973,
+    "lemma": "paris",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 974,
+    "lemma": "putt",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 975,
+    "lemma": "nut",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 977,
+    "lemma": "billy",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 978,
+    "lemma": "using",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 979,
+    "lemma": "la",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 981,
+    "lemma": "tony",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 991,
+    "lemma": "detective",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 998,
+    "lemma": "teacher",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 999,
+    "lemma": "soldier",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1000,
+    "lemma": "dying",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 1006,
+    "lemma": "sweetheart",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1009,
+    "lemma": "crap",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1016,
+    "lemma": "p",
+    "reason": "too short"
+  },
+  {
+    "rank": 1022,
+    "lemma": "queen",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1024,
+    "lemma": "dat",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1026,
+    "lemma": "jim",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1032,
+    "lemma": "sergeant",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1033,
+    "lemma": "pant",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1034,
+    "lemma": "pal",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1035,
+    "lemma": "stat",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1041,
+    "lemma": "motherfucker",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1050,
+    "lemma": "jerry",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1053,
+    "lemma": "whose",
+    "reason": "function/filler skip"
+  },
+  {
+    "rank": 1054,
+    "lemma": "outta",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1058,
+    "lemma": "nick",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1071,
+    "lemma": "gay",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1078,
+    "lemma": "luke",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1079,
+    "lemma": "difficult",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 1082,
+    "lemma": "enter",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 1088,
+    "lemma": "tea",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 1094,
+    "lemma": "bless",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1097,
+    "lemma": "hid",
+    "reason": "duplicate"
+  },
+  {
+    "rank": 1099,
+    "lemma": "rat",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1104,
+    "lemma": "shop",
+    "reason": "already in blocks 1-10"
+  },
+  {
+    "rank": 1106,
+    "lemma": "bury",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1107,
+    "lemma": "hook",
+    "reason": "proper-noun/junk/offensive"
+  },
+  {
+    "rank": 1120,
+    "lemma": "receive",
+    "reason": "already in blocks 1-10"
+  }
+]

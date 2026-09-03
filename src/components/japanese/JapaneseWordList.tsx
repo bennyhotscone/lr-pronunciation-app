@@ -245,12 +245,14 @@ export function JapaneseWordList({
         />
       </div>
       <div className="jp-learn-downloads" aria-label="Download word lists">
-        <p className="jp-learn-sub">Download curriculum word lists (CSV or JSON):</p>
+        <p className="jp-learn-sub">
+          Download curriculum lists: blocks 1–10 (shipped) and proposed blocks 11–20 (frequency draft — review TBD glosses before building).
+        </p>
         <div className="jp-learn-row jp-learn-downloads-row">
-          <a className="jp-learn-btn jp-learn-btn-primary" href="/japanese/blocks-1-10-words.csv" download>
+          <a className="jp-learn-btn jp-learn-btn-primary" href="/japanese/blocks-1-10.csv" download>
             Download first 500 (CSV)
           </a>
-          <a className="jp-learn-btn" href="/japanese/blocks-1-10-words.json" download>
+          <a className="jp-learn-btn" href="/japanese/blocks-1-10.json" download>
             First 500 (JSON)
           </a>
           <a className="jp-learn-btn jp-learn-btn-primary" href="/japanese/proposed-blocks-11-20.csv" download>
@@ -263,23 +265,6 @@ export function JapaneseWordList({
       </div>
       <p className="jp-learn-counts">
         Known {counts.known} / unknown {counts.unknown} / total {counts.total}
-      </p>
-      <div className="jp-learn-row mt-2" role="group" aria-label="Download word lists">
-        <a className="jp-learn-btn" href="/japanese/blocks-1-10.csv" download>
-          Download CSV (blocks 1–10)
-        </a>
-        <a className="jp-learn-btn" href="/japanese/blocks-1-10.json" download>
-          Download JSON (blocks 1–10)
-        </a>
-        <a className="jp-learn-btn" href="/japanese/proposed-blocks-11-20.csv" download>
-          Download proposed 11–20 CSV
-        </a>
-        <a className="jp-learn-btn" href="/japanese/proposed-blocks-11-20.json" download>
-          Download proposed 11–20 JSON
-        </a>
-      </div>
-      <p className="jp-learn-sub">
-        Full blocks 1–10 export plus a frequency-based draft for blocks 11–20 (many Japanese glosses marked TBD for review).
       </p>
       <p className="jp-learn-sub">
         {filter === "known"

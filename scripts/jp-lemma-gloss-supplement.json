@@ -1,0 +1,947 @@
+{
+  "just": {
+    "jp": "ただ / ちょうど",
+    "romaji": "tada / choudo",
+    "audio": "ただ",
+    "english": "just",
+    "flag": "multi-sense adverb"
+  },
+  "one": {
+    "jp": "一つ / 一人",
+    "romaji": "hitotsu / hitori",
+    "audio": "ひとつ",
+    "english": "one"
+  },
+  "look": {
+    "jp": "見る",
+    "romaji": "miru",
+    "audio": "みる",
+    "english": "look",
+    "flag": "may overlap see"
+  },
+  "tell": {
+    "jp": "教える / 言う",
+    "romaji": "oshieru / iu",
+    "audio": "おしえる",
+    "english": "tell"
+  },
+  "let": {
+    "jp": "させる",
+    "romaji": "saseru",
+    "audio": "させる",
+    "english": "let / allow",
+    "flag": "causative grammar"
+  },
+  "gonna": {
+    "jp": "〜するつもり",
+    "romaji": "suru tsumori",
+    "audio": "するつもり",
+    "english": "gonna",
+    "flag": "spoken contraction"
+  },
+  "some": {
+    "jp": "少し",
+    "romaji": "sukoshi",
+    "audio": "すこし",
+    "english": "some"
+  },
+  "something": {
+    "jp": "何か",
+    "romaji": "nanika",
+    "audio": "なにか",
+    "english": "something"
+  },
+  "mean": {
+    "jp": "意味する",
+    "romaji": "imi suru",
+    "audio": "いみする",
+    "english": "mean"
+  },
+  "down": {
+    "jp": "下へ",
+    "romaji": "shita e",
+    "audio": "したへ",
+    "english": "down",
+    "flag": "adverb-like"
+  },
+  "then": {
+    "jp": "それから",
+    "romaji": "sorekara",
+    "audio": "それから",
+    "english": "then"
+  },
+  "way": {
+    "jp": "方法",
+    "romaji": "houhou",
+    "audio": "ほうほう",
+    "english": "way"
+  },
+  "call": {
+    "jp": "電話する / 呼ぶ",
+    "romaji": "denwa suru / yobu",
+    "audio": "でんわする",
+    "english": "call"
+  },
+  "guy": {
+    "jp": "やつ",
+    "romaji": "yatsu",
+    "audio": "やつ",
+    "english": "guy"
+  },
+  "off": {
+    "jp": "オフ",
+    "romaji": "ofu",
+    "audio": "オフ",
+    "english": "off",
+    "flag": "multi-sense"
+  },
+  "sure": {
+    "jp": "確かに",
+    "romaji": "tashika ni",
+    "audio": "たしかに",
+    "english": "sure"
+  },
+  "away": {
+    "jp": "離れて",
+    "romaji": "hanarete",
+    "audio": "はなれて",
+    "english": "away"
+  },
+  "ever": {
+    "jp": "かつて",
+    "romaji": "katsute",
+    "audio": "かつて",
+    "english": "ever"
+  },
+  "miss": {
+    "jp": "恋しい / 逃す",
+    "romaji": "koishii / nogasu",
+    "audio": "こいしい",
+    "english": "miss",
+    "flag": "multi-sense"
+  },
+  "wanna": {
+    "jp": "〜したい",
+    "romaji": "-tai",
+    "audio": "たい",
+    "english": "wanna",
+    "flag": "spoken contraction"
+  },
+  "course": {
+    "jp": "もちろん",
+    "romaji": "mochiron",
+    "audio": "もちろん",
+    "english": "of course",
+    "flag": "or class course"
+  },
+  "else": {
+    "jp": "他に",
+    "romaji": "hoka ni",
+    "audio": "ほかに",
+    "english": "else"
+  },
+  "real": {
+    "jp": "本当の",
+    "romaji": "hontou no",
+    "audio": "ほんとうの",
+    "english": "real"
+  },
+  "whole": {
+    "jp": "全部",
+    "romaji": "zenbu",
+    "audio": "ぜんぶ",
+    "english": "whole"
+  },
+  "suppose": {
+    "jp": "思う",
+    "romaji": "omou",
+    "audio": "おもう",
+    "english": "suppose"
+  },
+  "lady": {
+    "jp": "女性",
+    "romaji": "josei",
+    "audio": "じょせい",
+    "english": "lady"
+  },
+  "somebody": {
+    "jp": "誰か",
+    "romaji": "dareka",
+    "audio": "だれか",
+    "english": "somebody"
+  },
+  "used": {
+    "jp": "慣れている",
+    "romaji": "nareteiru",
+    "audio": "なれている",
+    "english": "used to",
+    "flag": "used to"
+  },
+  "yet": {
+    "jp": "まだ",
+    "romaji": "mada",
+    "audio": "まだ",
+    "english": "yet"
+  },
+  "bit": {
+    "jp": "少し",
+    "romaji": "sukoshi",
+    "audio": "すこし",
+    "english": "a bit"
+  },
+  "whatever": {
+    "jp": "何でも",
+    "romaji": "nandemo",
+    "audio": "なんでも",
+    "english": "whatever"
+  },
+  "trouble": {
+    "jp": "面倒",
+    "romaji": "mendou",
+    "audio": "めんどう",
+    "english": "trouble"
+  },
+  "figure": {
+    "jp": "理解する",
+    "romaji": "rikai suru",
+    "audio": "りかいする",
+    "english": "figure out",
+    "flag": "figure out"
+  },
+  "anybody": {
+    "jp": "誰でも",
+    "romaji": "dare demo",
+    "audio": "だれでも",
+    "english": "anybody"
+  },
+  "least": {
+    "jp": "少なくとも",
+    "romaji": "sukunakutomo",
+    "audio": "すくなくとも",
+    "english": "at least"
+  },
+  "office": {
+    "jp": "事務所",
+    "romaji": "jimusho",
+    "audio": "じむしょ",
+    "english": "office"
+  },
+  "clear": {
+    "jp": "はっきり",
+    "romaji": "hakkiri",
+    "audio": "はっきり",
+    "english": "clear"
+  },
+  "wonder": {
+    "jp": "思う",
+    "romaji": "omou",
+    "audio": "おもう",
+    "english": "wonder",
+    "flag": "I wonder = kashira"
+  },
+  "act": {
+    "jp": "行動する",
+    "romaji": "koudou suru",
+    "audio": "こうどうする",
+    "english": "act"
+  },
+  "along": {
+    "jp": "一緒に",
+    "romaji": "issho ni",
+    "audio": "いっしょに",
+    "english": "along"
+  },
+  "sort": {
+    "jp": "種類",
+    "romaji": "shurui",
+    "audio": "しゅるい",
+    "english": "sort"
+  },
+  "land": {
+    "jp": "土地",
+    "romaji": "tochi",
+    "audio": "とち",
+    "english": "land"
+  },
+  "spend": {
+    "jp": "過ごす",
+    "romaji": "sugosu",
+    "audio": "すごす",
+    "english": "spend"
+  },
+  "agent": {
+    "jp": "代理人",
+    "romaji": "dairinin",
+    "audio": "だいりにん",
+    "english": "agent"
+  },
+  "offer": {
+    "jp": "申し出る",
+    "romaji": "moushideru",
+    "audio": "もうしでる",
+    "english": "offer"
+  },
+  "force": {
+    "jp": "強制する",
+    "romaji": "kyousei suru",
+    "audio": "きょうせいする",
+    "english": "force"
+  },
+  "straight": {
+    "jp": "まっすぐ",
+    "romaji": "massugu",
+    "audio": "まっすぐ",
+    "english": "straight"
+  },
+  "carry": {
+    "jp": "運ぶ",
+    "romaji": "hakobu",
+    "audio": "はこぶ",
+    "english": "carry"
+  },
+  "realize": {
+    "jp": "気づく",
+    "romaji": "kizuku",
+    "audio": "きづく",
+    "english": "realize"
+  },
+  "lock": {
+    "jp": "鍵をかける",
+    "romaji": "kagi o kakeru",
+    "audio": "かぎをかける",
+    "english": "lock"
+  },
+  "general": {
+    "jp": "一般的",
+    "romaji": "ippanteki",
+    "audio": "いっぱんてき",
+    "english": "general"
+  },
+  "cloth": {
+    "jp": "布",
+    "romaji": "nuno",
+    "audio": "ぬの",
+    "english": "cloth"
+  },
+  "certainly": {
+    "jp": "確かに",
+    "romaji": "tashika ni",
+    "audio": "たしかに",
+    "english": "certainly"
+  },
+  "attack": {
+    "jp": "攻撃する",
+    "romaji": "kougeki suru",
+    "audio": "こうげきする",
+    "english": "attack"
+  },
+  "present": {
+    "jp": "プレゼント",
+    "romaji": "purezento",
+    "audio": "プレゼント",
+    "english": "present",
+    "flag": "gift sense"
+  },
+  "table": {
+    "jp": "テーブル",
+    "romaji": "teeburu",
+    "audio": "テーブル",
+    "english": "table"
+  },
+  "finally": {
+    "jp": "やっと",
+    "romaji": "yatto",
+    "audio": "やっと",
+    "english": "finally"
+  },
+  "mark": {
+    "jp": "印",
+    "romaji": "shirushi",
+    "audio": "しるし",
+    "english": "mark"
+  },
+  "rock": {
+    "jp": "岩",
+    "romaji": "iwa",
+    "audio": "いわ",
+    "english": "rock"
+  },
+  "rather": {
+    "jp": "むしろ",
+    "romaji": "mushiro",
+    "audio": "むしろ",
+    "english": "rather"
+  },
+  "box": {
+    "jp": "箱",
+    "romaji": "hako",
+    "audio": "はこ",
+    "english": "box"
+  },
+  "unless": {
+    "jp": "〜ない限り",
+    "romaji": "-nai kagiri",
+    "audio": "ないかぎり",
+    "english": "unless"
+  },
+  "join": {
+    "jp": "参加する",
+    "romaji": "sanka suru",
+    "audio": "さんかする",
+    "english": "join"
+  },
+  "mad": {
+    "jp": "怒っている",
+    "romaji": "okotteiru",
+    "audio": "おこっている",
+    "english": "mad"
+  },
+  "park": {
+    "jp": "公園",
+    "romaji": "kouen",
+    "audio": "こうえん",
+    "english": "park"
+  },
+  "absolutely": {
+    "jp": "絶対に",
+    "romaji": "zettai ni",
+    "audio": "ぜったいに",
+    "english": "absolutely"
+  },
+  "honor": {
+    "jp": "名誉",
+    "romaji": "meiyo",
+    "audio": "めいよ",
+    "english": "honor"
+  },
+  "somewhere": {
+    "jp": "どこか",
+    "romaji": "dokoka",
+    "audio": "どこか",
+    "english": "somewhere"
+  },
+  "joke": {
+    "jp": "丁寧",
+    "romaji": "joudan",
+    "audio": "じょうだん",
+    "english": "joke"
+  },
+  "except": {
+    "jp": "除いて",
+    "romaji": "nozoite",
+    "audio": "のぞいて",
+    "english": "except"
+  },
+  "seat": {
+    "jp": "席",
+    "romaji": "seki",
+    "audio": "せき",
+    "english": "seat"
+  },
+  "none": {
+    "jp": "誰も〜ない",
+    "romaji": "daremo nai",
+    "audio": "だれも",
+    "english": "none"
+  },
+  "worth": {
+    "jp": "価値がある",
+    "romaji": "kachi ga aru",
+    "audio": "かちがある",
+    "english": "worth"
+  },
+  "message": {
+    "jp": "メッセージ",
+    "romaji": "messeeji",
+    "audio": "メッセージ",
+    "english": "message"
+  },
+  "mess": {
+    "jp": "散らかっている",
+    "romaji": "chirakatteiru",
+    "audio": "ちらかっている",
+    "english": "mess"
+  },
+  "club": {
+    "jp": "クラブ",
+    "romaji": "kurabu",
+    "audio": "クラブ",
+    "english": "club"
+  },
+  "choice": {
+    "jp": "選択",
+    "romaji": "sentaku",
+    "audio": "せんたく",
+    "english": "choice"
+  },
+  "major": {
+    "jp": "主要な",
+    "romaji": "shuyou na",
+    "audio": "しゅような",
+    "english": "major"
+  },
+  "court": {
+    "jp": "裁判所",
+    "romaji": "saibansho",
+    "audio": "さいばんしょ",
+    "english": "court"
+  },
+  "careful": {
+    "jp": "気をつけて",
+    "romaji": "ki o tsukete",
+    "audio": "きをつけて",
+    "english": "careful"
+  },
+  "quick": {
+    "jp": "速い",
+    "romaji": "hayai",
+    "audio": "はやい",
+    "english": "quick"
+  },
+  "boat": {
+    "jp": "ボート",
+    "romaji": "booto",
+    "audio": "ボート",
+    "english": "boat"
+  },
+  "knock": {
+    "jp": "ノックする",
+    "romaji": "nokku suru",
+    "audio": "ノックする",
+    "english": "knock"
+  },
+  "hotel": {
+    "jp": "ホテル",
+    "romaji": "hoteru",
+    "audio": "ホテル",
+    "english": "hotel"
+  },
+  "system": {
+    "jp": "システム",
+    "romaji": "shisutemu",
+    "audio": "システム",
+    "english": "system"
+  },
+  "relax": {
+    "jp": "リラックスする",
+    "romaji": "rirakkusu suru",
+    "audio": "リラックスする",
+    "english": "relax"
+  },
+  "state": {
+    "jp": "状態",
+    "romaji": "joutai",
+    "audio": "じょうたい",
+    "english": "state"
+  },
+  "notice": {
+    "jp": "気づく",
+    "romaji": "kizuku",
+    "audio": "きづく",
+    "english": "notice"
+  },
+  "lunch": {
+    "jp": "昼食",
+    "romaji": "chuushoku",
+    "audio": "ちゅうしょく",
+    "english": "lunch"
+  },
+  "fault": {
+    "jp": "せい",
+    "romaji": "sei",
+    "audio": "せい",
+    "english": "fault"
+  },
+  "dollar": {
+    "jp": "ドル",
+    "romaji": "doru",
+    "audio": "ドル",
+    "english": "dollar"
+  },
+  "seven": {
+    "jp": "七",
+    "romaji": "nana",
+    "audio": "なな",
+    "english": "seven"
+  },
+  "future": {
+    "jp": "未来",
+    "romaji": "mirai",
+    "audio": "みらい",
+    "english": "future"
+  },
+  "bar": {
+    "jp": "バー",
+    "romaji": "baa",
+    "audio": "バー",
+    "english": "bar"
+  },
+  "brain": {
+    "jp": "脳",
+    "romaji": "nou",
+    "audio": "のう",
+    "english": "brain"
+  },
+  "mama": {
+    "jp": "ママ",
+    "romaji": "mama",
+    "audio": "ママ",
+    "english": "mama"
+  },
+  "bank": {
+    "jp": "銀行",
+    "romaji": "ginkou",
+    "audio": "ぎんこう",
+    "english": "bank"
+  },
+  "smoke": {
+    "jp": "吸う",
+    "romaji": "suu",
+    "audio": "すう",
+    "english": "smoke"
+  },
+  "pain": {
+    "jp": "痛み",
+    "romaji": "itami",
+    "audio": "いたみ",
+    "english": "pain"
+  },
+  "bother": {
+    "jp": "邪魔する",
+    "romaji": "jama suru",
+    "audio": "じゃまする",
+    "english": "bother"
+  },
+  "tv": {
+    "jp": "テレビ",
+    "romaji": "terebi",
+    "audio": "テレビ",
+    "english": "TV"
+  },
+  "service": {
+    "jp": "サービス",
+    "romaji": "saabisu",
+    "audio": "サービス",
+    "english": "service"
+  },
+  "quit": {
+    "jp": "やめる",
+    "romaji": "yameru",
+    "audio": "やめる",
+    "english": "quit"
+  },
+  "weird": {
+    "jp": "変な",
+    "romaji": "hen na",
+    "audio": "へんな",
+    "english": "weird"
+  },
+  "arrest": {
+    "jp": "逮捕する",
+    "romaji": "taiho suru",
+    "audio": "たいほする",
+    "english": "arrest"
+  },
+  "hundred": {
+    "jp": "百",
+    "romaji": "hyaku",
+    "audio": "ひゃく",
+    "english": "hundred"
+  },
+  "birthday": {
+    "jp": "誕生日",
+    "romaji": "tanjoubi",
+    "audio": "たんじょうび",
+    "english": "birthday"
+  },
+  "judge": {
+    "jp": "裁判官",
+    "romaji": "saibankan",
+    "audio": "さいばんかん",
+    "english": "judge"
+  },
+  "protect": {
+    "jp": "守る",
+    "romaji": "mamoru",
+    "audio": "まもる",
+    "english": "protect"
+  },
+  "partner": {
+    "jp": "パートナー",
+    "romaji": "paatonaa",
+    "audio": "パートナー",
+    "english": "partner"
+  },
+  "eight": {
+    "jp": "八",
+    "romaji": "hachi",
+    "audio": "はち",
+    "english": "eight"
+  },
+  "attention": {
+    "jp": "注意",
+    "romaji": "chuui",
+    "audio": "ちゅうい",
+    "english": "attention"
+  },
+  "lawyer": {
+    "jp": "弁護士",
+    "romaji": "bengoshi",
+    "audio": "べんごし",
+    "english": "lawyer"
+  },
+  "share": {
+    "jp": "分け合う",
+    "romaji": "wakeau",
+    "audio": "わけあう",
+    "english": "share"
+  },
+  "smart": {
+    "jp": "賢い",
+    "romaji": "kashikoi",
+    "audio": "かしこい",
+    "english": "smart"
+  },
+  "trip": {
+    "jp": "旅行",
+    "romaji": "ryokou",
+    "audio": "りょこう",
+    "english": "trip"
+  },
+  "drug": {
+    "jp": "薬",
+    "romaji": "kusuri",
+    "audio": "くすり",
+    "english": "drug"
+  },
+  "thousand": {
+    "jp": "千",
+    "romaji": "sen",
+    "audio": "せん",
+    "english": "thousand"
+  },
+  "consider": {
+    "jp": "考える",
+    "romaji": "kangaeru",
+    "audio": "かんがえる",
+    "english": "consider"
+  },
+  "imagine": {
+    "jp": "想像する",
+    "romaji": "souzou suru",
+    "audio": "そうぞうする",
+    "english": "imagine"
+  },
+  "short": {
+    "jp": "短い",
+    "romaji": "mijikai",
+    "audio": "みじかい",
+    "english": "short"
+  },
+  "security": {
+    "jp": "セキュリティ",
+    "romaji": "sekyuriti",
+    "audio": "セキュリティ",
+    "english": "security"
+  },
+  "appreciate": {
+    "jp": "感謝する",
+    "romaji": "kansha suru",
+    "audio": "かんしゃする",
+    "english": "appreciate"
+  },
+  "fair": {
+    "jp": "公平",
+    "romaji": "kouhei",
+    "audio": "こうへい",
+    "english": "fair"
+  },
+  "reach": {
+    "jp": "届く",
+    "romaji": "todoku",
+    "audio": "とどく",
+    "english": "reach"
+  },
+  "mention": {
+    "jp": "言及する",
+    "romaji": "genkyuu suru",
+    "audio": "げんきゅうする",
+    "english": "mention"
+  },
+  "raise": {
+    "jp": "上げる",
+    "romaji": "ageru",
+    "audio": "あげる",
+    "english": "raise"
+  },
+  "terrible": {
+    "jp": "ひどい",
+    "romaji": "hidoi",
+    "audio": "ひどい",
+    "english": "terrible"
+  },
+  "treat": {
+    "jp": "扱う",
+    "romaji": "atsukau",
+    "audio": "あつかう",
+    "english": "treat"
+  },
+  "glass": {
+    "jp": "ガラス",
+    "romaji": "garasu",
+    "audio": "ガラス",
+    "english": "glass"
+  },
+  "afternoon": {
+    "jp": "午後",
+    "romaji": "gogo",
+    "audio": "ごご",
+    "english": "afternoon"
+  },
+  "patient": {
+    "jp": "患者",
+    "romaji": "kanja",
+    "audio": "かんじゃ",
+    "english": "patient"
+  },
+  "calm": {
+    "jp": "落ち着く",
+    "romaji": "ochitsuku",
+    "audio": "おちつく",
+    "english": "calm"
+  },
+  "swear": {
+    "jp": "誓う",
+    "romaji": "chikau",
+    "audio": "ちかう",
+    "english": "swear"
+  },
+  "personal": {
+    "jp": "個人的",
+    "romaji": "kojinteki",
+    "audio": "こじんてき",
+    "english": "personal"
+  },
+  "list": {
+    "jp": "リスト",
+    "romaji": "risuto",
+    "audio": "リスト",
+    "english": "list"
+  },
+  "grab": {
+    "jp": "掴む",
+    "romaji": "tsukamu",
+    "audio": "つかむ",
+    "english": "grab"
+  },
+  "soul": {
+    "jp": "魂",
+    "romaji": "tamashii",
+    "audio": "たましい",
+    "english": "soul"
+  },
+  "ground": {
+    "jp": "地面",
+    "romaji": "jimen",
+    "audio": "じめん",
+    "english": "ground"
+  },
+  "suit": {
+    "jp": "スーツ",
+    "romaji": "suutsu",
+    "audio": "スーツ",
+    "english": "suit"
+  },
+  "age": {
+    "jp": "年齢",
+    "romaji": "nenrei",
+    "audio": "ねんれい",
+    "english": "age"
+  },
+  "tough": {
+    "jp": "厳しい",
+    "romaji": "kibishii",
+    "audio": "きびしい",
+    "english": "tough"
+  },
+  "situation": {
+    "jp": "状況",
+    "romaji": "joukyou",
+    "audio": "じょうきょう",
+    "english": "situation"
+  },
+  "guard": {
+    "jp": "守る",
+    "romaji": "mamoru",
+    "audio": "まもる",
+    "english": "guard"
+  },
+  "forgive": {
+    "jp": "許す",
+    "romaji": "yurusu",
+    "audio": "ゆるす",
+    "english": "forgive"
+  },
+  "information": {
+    "jp": "情報",
+    "romaji": "jouhou",
+    "audio": "じょうほう",
+    "english": "information"
+  },
+  "simple": {
+    "jp": "簡単",
+    "romaji": "kantan",
+    "audio": "かんたん",
+    "english": "simple"
+  },
+  "army": {
+    "jp": "軍隊",
+    "romaji": "guntai",
+    "audio": "ぐんたい",
+    "english": "army"
+  },
+  "ticket": {
+    "jp": "切符",
+    "romaji": "kippu",
+    "audio": "きっぷ",
+    "english": "ticket"
+  },
+  "forever": {
+    "jp": "永遠に",
+    "romaji": "eien ni",
+    "audio": "えいえんに",
+    "english": "forever"
+  },
+  "christmas": {
+    "jp": "クリスマス",
+    "romaji": "kurisumasu",
+    "audio": "クリスマス",
+    "english": "Christmas"
+  },
+  "angel": {
+    "jp": "天使",
+    "romaji": "tenshi",
+    "audio": "てんし",
+    "english": "angel"
+  },
+  "morn": {
+    "jp": "朝",
+    "romaji": "asa",
+    "audio": "あさ",
+    "english": "morning",
+    "flag": "spoken truncation"
+  },
+  "morning": {
+    "jp": "朝",
+    "romaji": "asa",
+    "audio": "あさ",
+    "english": "morning"
+  },
+  "back": {
+    "jp": "戻って",
+    "romaji": "modotte",
+    "audio": "もどって",
+    "english": "back (direction)",
+    "flag": "spoken adverb sense; not body"
+  }
+}

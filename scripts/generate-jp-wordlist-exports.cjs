@@ -62,7 +62,7 @@ const SKIP_AS_HEADWORD = new Set([
 ]);
 
 /** High-confidence lemma -> Japanese. Prefer TBD over wrong glosses. */
-const EN_TO_JP = Object.assign({}, supplement, {
+const EN_TO_JP_INLINE = {
   perfect: { jp: "完璧", romaji: "kanpeki", audio: "かんぺき", english: "perfect" },
   piece: { jp: "かけら", romaji: "kakera", audio: "かけら", english: "piece / fragment", flag: "also 一切れ hitokire" },
   report: { jp: "報告する", romaji: "houkoku suru", audio: "ほうこくする", english: "report" },
@@ -417,7 +417,8 @@ const EN_TO_JP = Object.assign({}, supplement, {
   far: { jp: "遠い", romaji: "tooi", audio: "とおい", english: "far" },
   inside: { jp: "中", romaji: "naka", audio: "なか", english: "inside" },
   outside: { jp: "外", romaji: "soto", audio: "そと", english: "outside" },
-});
+};
+const EN_TO_JP = Object.assign({}, EN_TO_JP_INLINE, supplement);
 
 function writeCsv(filePath, rows, headers) {
   const lines = [headers.join(",")];
