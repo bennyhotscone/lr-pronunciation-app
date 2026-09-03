@@ -13,6 +13,7 @@ import {
   matchParticleSentence,
   normalizeParticleText,
 } from "./matching";
+import { getParticleAudioText } from "./audio";
 
 export const PARTICLE_ROUND_ORDER: ParticleRoundId[] = [
   "teach",
@@ -80,7 +81,11 @@ export type McChoice = {
 };
 
 export function questionJapaneseAudio(question: ParticleQuestion): string {
-  return question.jp?.trim() ?? "";
+  return getParticleAudioText({
+    jp: question.jp,
+    romaji: question.romaji,
+    en: question.en,
+  });
 }
 
 export function formatVerbFormLabel(question: ParticleQuestion): string {
