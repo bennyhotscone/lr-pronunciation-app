@@ -2,6 +2,7 @@ import { PARTICLES } from "./particles";
 import { PARTICLE_VERBS } from "./verbs";
 import type { ParticleLesson, ParticleQuestion } from "./types";
 import { englishAlts } from "./matching";
+import { formatEndingMnemonicLine } from "./mnemonics";
 
 export const VERB_LESSON_ID = "verbs";
 
@@ -19,6 +20,7 @@ export function flattenVerbQuestions(): ParticleQuestion[] {
         ending: form.ending,
         single: true,
         alts: englishAlts(form.meaning),
+        mnemonic: formatEndingMnemonicLine(form.ending, form.romaji) ?? undefined,
       });
     }
   }

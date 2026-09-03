@@ -35,6 +35,96 @@ export function normalizeForJapaneseTts(text: string): string {
   return trimmed;
 }
 
+const ROMAJI_KATAKANA: Record<string, string> = {
+  a: "ア", i: "イ", u: "ウ", e: "エ", o: "オ",
+  ka: "カ", ki: "キ", ku: "ク", ke: "ケ", ko: "コ",
+  ga: "ガ", gi: "ギ", gu: "グ", ge: "ゲ", go: "ゴ",
+  sa: "サ", shi: "シ", su: "ス", se: "セ", so: "ソ",
+  za: "ザ", ji: "ジ", zu: "ズ", ze: "ゼ", zo: "ゾ",
+  ta: "タ", chi: "チ", tsu: "ツ", te: "テ", to: "ト",
+  da: "ダ", di: "ヂ", du: "ヅ", de: "デ", do: "ド",
+  na: "ナ", ni: "ニ", nu: "ヌ", ne: "ネ", no: "ノ",
+  ha: "ハ", hi: "ヒ", fu: "フ", he: "ヘ", ho: "ホ",
+  ba: "バ", bi: "ビ", bu: "ブ", be: "ベ", bo: "ボ",
+  pa: "パ", pi: "ピ", pu: "プ", pe: "ペ", po: "ポ",
+  ma: "マ", mi: "ミ", mu: "ム", me: "メ", mo: "モ",
+  ya: "ヤ", yu: "ユ", yo: "ヨ",
+  ra: "ラ", ri: "リ", ru: "ル", re: "レ", ro: "ロ",
+  wa: "ワ", wo: "ヲ", n: "ン",
+  kya: "キャ", kyu: "キュ", kyo: "キョ",
+  gya: "ギャ", gyu: "ギュ", gyo: "ギョ",
+  sha: "シャ", shu: "シュ", sho: "ショ",
+  ja: "ジャ", ju: "ジュ", jo: "ジョ",
+  cha: "チャ", chu: "チュ", cho: "チョ",
+  nya: "ニャ", nyu: "ニュ", nyo: "ニョ",
+  hya: "ヒャ", hyu: "ヒュ", hyo: "ヒョ",
+  bya: "ビャ", byu: "ビュ", byo: "ビョ",
+  pya: "ピャ", pyu: "ピュ", pyo: "ピョ",
+  mya: "ミャ", myu: "ミュ", myo: "ミョ",
+  rya: "リャ", ryu: "リュ", ryo: "リョ",
+  ou: "オウ", you: "ヨウ",
+};
+
+const ROMAJI_SYLLABLES = Object.keys(ROMAJI_KATAKANA).sort((a, b) => b.length - a.length);
+
+function isRomajiVowel(ch: string): boolean {
+  return "aeiou".includes(ch);
+}
+
+function convertRomajiWord(word: string): string {
+  const s = word
+    .toLowerCase()
+    .replace(/ā/g, "aa")
+    .replace(/ī/g, "ii")
+    .replace(/ū/g, "uu")
+    .replace(/ē/g, "ee")
+    .replace(/ō/g, "ou");
+
+  let result = "";
+  let i = 0;
+  while (i < s.length) {
+    if (i + 1 < s.length && s[i] === s[i + 1] && !isRomajiVowel(s[i]) && s[i] !== "n") {
+      result += "ッ";
+      i += 1;
+      continue;
+    }
+
+    if (s[i] === "n") {
+      if (i + 1 < s.length && s[i + 1] === "n") {
+        result += "ン";
+        i += 2;
+        continue;
+      }
+      if (i + 1 === s.length || !isRomajiVowel(s[i + 1])) {
+        result += "ン";
+        i += 1;
+        continue;
+      }
+    }
+
+    let matched = false;
+    for (const syllable of ROMAJI_SYLLABLES) {
+      if (s.startsWith(syllable, i)) {
+        result += ROMAJI_KATAKANA[syllable];
+        i += syllable.length;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) i += 1;
+  }
+  return result;
+}
+
+/** Build full-katakana TTS text from stored romaji (avoids kanji misreadings like 食 -> shoku). */
+export function romajiToKatakana(input: string): string {
+  return input
+    .trim()
+    .split(/\s+/)
+    .map(convertRomajiWord)
+    .join("");
+}
+
 export function getMnemonic(
   word: JapaneseWord,
   override?: JapaneseWordOverrideFields | null,

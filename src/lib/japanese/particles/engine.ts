@@ -25,8 +25,8 @@ export const PARTICLE_ROUND_ORDER: ParticleRoundId[] = [
 
 export const PARTICLE_ROUND_LABELS: Record<ParticleRoundId, string> = {
   teach: "1. See the patterns",
-  formMC: "2. Hear form -> choose meaning",
-  verbMC: "3. Mixed verbs -> choose meaning",
+  formMC: "2. Same verb, different endings",
+  verbMC: "3. Different verbs, same ending",
   build: "4. Build / choose Japanese",
   listenType: "5. Hear Japanese -> type English",
   typeRomaji: "6. English -> type romaji",
@@ -66,22 +66,102 @@ export {
   normalizeParticleText,
 };
 
+export type FormRomajiChoice = {
+  romaji: string;
+  en?: string;
+  jp?: string;
+};
+
+export type McChoice = {
+  key: string;
+  romaji: string;
+  en: string;
+  base: string;
+};
+
+export function questionJapaneseAudio(question: ParticleQuestion): string {
+  return question.jp?.trim() ?? "";
+}
+
+export function formatVerbFormLabel(question: ParticleQuestion): string {
+  const base = question.base?.trim() ?? "";
+  const romaji = question.romaji?.trim() ?? "";
+  const meaning = question.en?.trim() ?? "";
+  if (base && romaji) {
+    return meaning ? `${base} -> ${romaji} - ${meaning}` : `${base} -> ${romaji}`;
+  }
+  if (romaji && meaning) return `${romaji} - ${meaning}`;
+  return romaji || meaning || "";
+}
+
+function toMcChoice(question: ParticleQuestion): McChoice {
+  return {
+    key: question.romaji,
+    romaji: question.romaji,
+    en: question.en,
+    base: question.base ?? "",
+  };
+}
+
+export function formRomajiChoices(
+  question: ParticleQuestion,
+  pool: ParticleQuestion[],
+  restrictSameVerb: boolean,
+): FormRomajiChoice[] {
+  const candidates = pool.filter(
+    (q) => q !== question && (!restrictSameVerb || q.base === question.base),
+  );
+  const choices: FormRomajiChoice[] = [
+    { romaji: question.romaji, en: question.en, jp: question.jp },
+  ];
+  for (const candidate of shuffle(candidates)) {
+    if (
+      !choices.some(
+        (choice) =>
+          normalizeParticleText(choice.romaji) === normalizeParticleText(candidate.romaji),
+      )
+    ) {
+      choices.push({ romaji: candidate.romaji, en: candidate.en, jp: candidate.jp });
+    }
+    if (choices.length >= 8) break;
+  }
+  return shuffle(choices);
+}
+
+export function mcChoices(
+  question: ParticleQuestion,
+  pool: ParticleQuestion[],
+  mode: "form" | "verb",
+): McChoice[] {
+  if (mode === "form") {
+    return formRomajiChoices(question, pool, true).map((choice) => ({
+      key: choice.romaji,
+      romaji: choice.romaji,
+      en: choice.en ?? "",
+      base: question.base ?? "",
+    }));
+  }
+  const ending = question.ending ?? "";
+  const candidates = pool.filter(
+    (q) => q !== question && (ending ? q.ending === ending : q.base !== question.base),
+  );
+  const choices: McChoice[] = [toMcChoice(question)];
+  for (const candidate of shuffle(candidates)) {
+    if (!choices.some((choice) => choice.romaji === candidate.romaji)) {
+      choices.push(toMcChoice(candidate));
+    }
+    if (choices.length >= 8) break;
+  }
+  return shuffle(choices);
+}
+
 export function meaningChoices(
   question: ParticleQuestion,
   pool: ParticleQuestion[],
   restrictSameVerb: boolean,
 ): string[] {
-  const candidates = pool.filter(
-    (q) => q !== question && (!restrictSameVerb || q.base === question.base),
-  );
-  const meanings = [question.en];
-  for (const candidate of shuffle(candidates)) {
-    if (!meanings.some((m) => normalizeParticleText(m) === normalizeParticleText(candidate.en))) {
-      meanings.push(candidate.en);
-    }
-    if (meanings.length >= 8) break;
-  }
-  return shuffle(meanings);
+  const mode = restrictSameVerb ? "form" : "verb";
+  return mcChoices(question, pool, mode).map((choice) => choice.en);
 }
 
 export function buildTiles(lesson: ParticleLesson, question: ParticleQuestion): string[] {
@@ -92,9 +172,9 @@ export function buildTiles(lesson: ParticleLesson, question: ParticleQuestion): 
     const other = shuffle(
       lesson.questions.filter((q) => q.base !== question.base).map((q) => q.romaji),
     ).slice(0, 3);
-    const merged = shuffle([...new Set([...same, ...other])]);
-    if (!merged.includes(question.romaji)) merged.unshift(question.romaji);
-    return merged.slice(0, 12);
+    const pool = [...new Set([...same, ...other])];
+    const distractors = shuffle(pool.filter((romaji) => romaji !== question.romaji)).slice(0, 11);
+    return shuffle([question.romaji, ...distractors]);
   }
   return shuffle(question.tiles ?? []);
 }

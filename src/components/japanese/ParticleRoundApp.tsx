@@ -18,12 +18,16 @@ import {
   buildTiles,
   createInitialParticleMeta,
   createInitialParticleSession,
+  formRomajiChoices,
+  formatVerbFormLabel,
   getEffectiveRound,
   isVerbLesson,
-  meaningChoices,
+  mcChoices,
   normalizeParticleText,
   markRoundCompleted,
+  questionJapaneseAudio,
   updateMetaAfterRound,
+
 } from "@/lib/japanese/particles/engine";
 import {
   getAllParticleLessons,
@@ -44,6 +48,7 @@ import {
   isParticleRoundAccessible,
 } from "@/lib/japanese/particles/unlock";
 import { PARTICLE_VERBS } from "@/lib/japanese/particles/verbs";
+import { formatEndingMnemonicLine, getVerbEndingMnemonic } from "@/lib/japanese/particles/mnemonics";
 import { playParticleAudio } from "@/lib/japanese/particles/audio";
 import "./japanese-learning.css";
 
@@ -67,6 +72,22 @@ export function ParticleRoundApp() {
   const effectiveRound = getEffectiveRound(lesson.id, session?.round ?? "teach");
   const questions = lesson.questions;
   const current = questions[session?.questionIndex ?? 0];
+  const questionKey = `${session?.round ?? "teach"}-${session?.questionIndex ?? 0}`;
+  const shuffledVerbChoices = useMemo(() => {
+    const q = lesson.questions[session?.questionIndex ?? 0];
+    if (!q) return [];
+    return mcChoices(q, lesson.questions, "verb");
+  }, [questionKey, lessonId]);
+  const shuffledBuildTiles = useMemo(() => {
+    const q = lesson.questions[session?.questionIndex ?? 0];
+    if (!q) return [];
+    return buildTiles(lesson, q);
+  }, [questionKey, lessonId]);
+  const shuffledFormChoices = useMemo(() => {
+    const q = lesson.questions[session?.questionIndex ?? 0];
+    if (!q) return [];
+    return formRomajiChoices(q, lesson.questions, true);
+  }, [questionKey, lessonId]);
   const roundTotal = effectiveRound === "teach" ? 1 : questions.length;
 
   const persist = useCallback(
@@ -111,12 +132,14 @@ export function ParticleRoundApp() {
   }, [lessonId, session?.round, session?.questionIndex]);
 
   useEffect(() => {
-    if (!session || !current) return;
+    if (!session) return;
+    const q = lesson.questions[session.questionIndex ?? 0];
+    if (!q) return;
     if (effectiveRound === "formMC" || effectiveRound === "verbMC" || effectiveRound === "listenType") {
-      const t = setTimeout(() => playParticleAudio(current), 250);
+      const t = setTimeout(() => playParticleAudio(q), 250);
       return () => clearTimeout(t);
     }
-  }, [session?.round, session?.questionIndex, effectiveRound, current]);
+  }, [session?.round, session?.questionIndex, effectiveRound, lessonId]);
 
   const lessonAccessible = isParticleLessonAccessible(
     lesson.id,
@@ -168,6 +191,40 @@ export function ParticleRoundApp() {
     setTimeout(() => playParticleAudio(question), 120);
   };
 
+  const handleRomajiChoice = (choiceRomaji: string, question: ParticleQuestion) => {
+    if (!session || !meta || locked) return;
+    const ok = matchParticleRomaji(choiceRomaji, question.romaji);
+    setLocked(true);
+    if (ok) { const next = { ...session, score: session.score + 1 }; setSession(next); handleCorrect(question); }
+    else { playIncorrectAnswerSound(); }
+    if (ok) {
+      setFeedback("Correct");
+    } else {
+      const hook =
+        question.mnemonic ?? formatEndingMnemonicLine(question.ending, question.romaji);
+      setFeedback(hook ? `Answer: ${question.romaji} — ${hook}` : `Answer: ${question.romaji}`);
+    }
+  };
+  const handleVerbChoice = (choiceKey: string, question: ParticleQuestion) => {
+    if (!session || !meta || locked) return;
+    const ok = normalizeParticleText(choiceKey) === normalizeParticleText(question.base ?? question.romaji);
+    setLocked(true);
+    if (ok) {
+      const next = { ...session, score: session.score + 1 };
+      setSession(next);
+      handleCorrect(question);
+    } else {
+      playIncorrectAnswerSound();
+    }
+    if (ok) {
+      setFeedback("Correct");
+    } else {
+      const answer = question.base ?? question.romaji;
+      const meaning = question.verb ?? question.en;
+      setFeedback(`Answer: ${answer}${meaning ? ` — ${meaning}` : ""}`);
+    }
+  };
+
   const handleChoice = (choiceEn: string, question: ParticleQuestion) => {
     if (!session || !meta || locked) return;
     const ok = normalizeParticleText(choiceEn) === normalizeParticleText(question.en);
@@ -179,7 +236,13 @@ export function ParticleRoundApp() {
     } else {
       playIncorrectAnswerSound();
     }
-    setFeedback(ok ? "Correct" : `Answer: ${question.en}`);
+    if (ok) {
+      setFeedback("Correct");
+    } else {
+      const hook =
+        question.mnemonic ?? formatEndingMnemonicLine(question.ending, question.romaji);
+      setFeedback(hook ? `Answer: ${question.en} — ${hook}` : `Answer: ${question.en}`);
+    }
   };
 
   const handleBuildCheck = () => {
@@ -193,7 +256,7 @@ export function ParticleRoundApp() {
     } else {
       playIncorrectAnswerSound();
     }
-    setFeedback(ok ? "Correct" : `Answer: ${current.romaji}`);
+    setFeedback(ok ? "Correct" : `Answer: ${isVerbLesson(lesson) ? formatVerbFormLabel(current) : current.romaji}`);
   };
 
   const handleTypedCheck = (mode: "english" | "romaji") => {
@@ -215,7 +278,7 @@ export function ParticleRoundApp() {
         ? "Correct"
         : mode === "english"
           ? `Target: ${current.en}`
-          : `Answer: ${current.romaji}`,
+          : `Answer: ${isVerbLesson(lesson) ? formatVerbFormLabel(current) : current.romaji}`,
     );
   };
 
@@ -230,12 +293,10 @@ export function ParticleRoundApp() {
           Notice what stays similar and what changes at the end. Hear the forms mixed until the meanings become automatic.
         </p>
         <div className="jp-particle-pattern-intro">
-          <strong>Example:</strong>
-          <span className="jp-particle-stem">TABE</span>
-          <span className="jp-particle-ending">ru</span>
-          {" -> "}
-          <span className="jp-particle-stem">TABE</span>
-          <span className="jp-particle-ending">nai</span>
+          <strong>Example:</strong>{" "}
+          <span className="jp-particle-form-label">taberu — eat</span>
+          {" · "}
+          <span className="jp-particle-form-label">taberu → tabenai — don&apos;t eat</span>
         </div>
         <div className="jp-particle-verb-tabs">
           {PARTICLE_VERBS.map((v, i) => (
@@ -253,18 +314,33 @@ export function ParticleRoundApp() {
           <div className="jp-learn-meta">{verb.family}</div>
           <div className="jp-learn-big">{verb.base} <span className="jp-learn-sub">= {verb.meaning}</span></div>
           <div className="jp-particle-forms">
-            {verb.forms.map((form) => (
-              <div key={form.romaji} className="jp-particle-form-row">
-                <div className="jp-particle-form-word">
-                  <span className="jp-particle-stem">{form.stem}</span>
-                  <span className="jp-particle-ending">{form.ending}</span>
+            {verb.forms.map((form) => {
+              const mnemonic = getVerbEndingMnemonic(form.ending, form.romaji);
+              return (
+                <div key={form.romaji} className="jp-particle-form-row">
+                  <div className="jp-particle-form-word">
+                    <div className="jp-particle-form-label">{verb.base}{" -> "}{form.romaji}</div>
+                    {form.stem && form.ending ? (
+                      <div className="jp-particle-form-breakdown">
+                        <span className="jp-particle-stem">{form.stem}</span>
+                        <span className="jp-particle-ending">{form.ending}</span>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="jp-particle-meaning-cell">
+                    <div className="jp-particle-meaning">{form.meaning}</div>
+                    {mnemonic ? (
+                      <div className="jp-particle-ending-hook">
+                        <strong>Sound hook:</strong> {mnemonic.sound} - {mnemonic.hint}
+                      </div>
+                    ) : null}
+                  </div>
+                  <button type="button" className="jp-learn-btn" onClick={() => playParticleAudio({ jp: form.jp, romaji: form.romaji, en: form.meaning })}>
+                    Play
+                  </button>
                 </div>
-                <div className="jp-particle-meaning">{form.meaning}</div>
-                <button type="button" className="jp-learn-btn" onClick={() => playParticleAudio({ jp: form.jp, romaji: form.romaji, en: form.meaning })}>
-                  Play
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         <button
@@ -327,31 +403,85 @@ export function ParticleRoundApp() {
       return isVerbLesson(lesson) ? teachVerbs() : teachParticle(lesson);
     }
 
-    if (effectiveRound === "formMC" || effectiveRound === "verbMC") {
-      const choices = meaningChoices(
-        current,
-        questions,
-        effectiveRound === "formMC",
-      );
+    if (effectiveRound === "formMC") {
+      const choices = shuffledFormChoices;
+      const mnemonicLine =
+        current.mnemonic ?? formatEndingMnemonicLine(current.ending, current.romaji);
+      const hasAudio = !!questionJapaneseAudio(current);
       return (
         <div className="jp-learn-card">
-          <div className="jp-learn-meta">
-            {effectiveRound === "formMC" ? "ONE VERB - MIXED FORMS" : "MANY VERBS - MIXED FORMS"}
-          </div>
-          <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={() => playParticleAudio(current)}>
-            Play Japanese
-          </button>
-          <div className="jp-learn-prompt-en">What does it mean?</div>
+          <div className="jp-learn-meta">Same verb, different endings</div>
+          {locked ? (
+            <>
+              {current.jp ? <div className="jp-learn-jp">{current.jp}</div> : null}
+              <div className="jp-particle-form-label jp-learn-romaji-xl">{formatVerbFormLabel(current)}</div>
+            </>
+          ) : (
+            <div className="jp-particle-form-audio-prompt"><div className="jp-learn-big">{current.base}</div><div className="jp-learn-sub">— {current.verb ?? current.base}</div></div>
+          )}
+          <button type="button" className="jp-learn-btn jp-learn-btn-primary" disabled={!hasAudio} onClick={() => playParticleAudio(current)}>Play</button>
+          <p className="jp-learn-sub" style={{ marginTop: "0.75rem" }}>
+            {locked
+              ? "Full form shown above (tabenai, not shoku from the kanji)."
+              : "Listen for a form of " + current.base + ", then pick matching romaji and meaning."}
+          </p>
+          {mnemonicLine ? (
+            <div className="jp-learn-mnemonic">
+              <strong>Ending hook</strong>
+              {mnemonicLine}
+            </div>
+          ) : null}
           <div className="jp-learn-choices">
             {choices.map((choice) => (
               <button
-                key={choice}
+                key={choice.romaji}
                 type="button"
-                className="jp-learn-btn jp-learn-choice"
+                className="jp-learn-btn jp-learn-choice jp-particle-romaji-choice"
                 disabled={locked}
-                onClick={() => handleChoice(choice, current)}
+                onClick={() => handleRomajiChoice(choice.romaji, current)}
               >
-                {choice}
+                <span className="jp-particle-romaji-choice-main">{current.base}{" -> "}{choice.romaji}</span>
+                <span className="jp-particle-romaji-choice-jp">{choice.en}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    if (effectiveRound === "verbMC") {
+      const choices = shuffledVerbChoices;
+      const hasAudio = !!questionJapaneseAudio(current);
+      return (
+        <div className="jp-learn-card">
+          <div className="jp-learn-meta">Different verbs, same ending</div>
+          {current.ending ? (
+            <div className="jp-learn-sub" style={{ marginTop: "0.5rem" }}>
+              Same ending: <strong>{current.ending}</strong>
+            </div>
+          ) : null}
+          <button type="button" className="jp-learn-btn jp-learn-btn-primary" disabled={!hasAudio} onClick={() => playParticleAudio(current)}>Play Japanese</button>
+          <div className="jp-learn-prompt-en">Which verb did you hear?</div>
+          {(() => {
+            const mnemonicLine =
+              current.mnemonic ?? formatEndingMnemonicLine(current.ending, current.romaji);
+            return mnemonicLine ? (
+              <div className="jp-learn-mnemonic">
+                <strong>Ending hook</strong>
+                {mnemonicLine}
+              </div>
+            ) : null;
+          })()}
+          <div className="jp-learn-choices">
+            {choices.map((choice) => (
+              <button
+                key={choice.key}
+                type="button"
+                className="jp-learn-btn jp-learn-choice jp-particle-romaji-choice"
+                disabled={locked}
+                onClick={() => handleVerbChoice(choice.key, current)}
+              >
+                <span className="jp-particle-romaji-choice-main">{choice.base}{" -> "}{choice.romaji}</span>
+                <span className="jp-particle-romaji-choice-jp">{choice.en}</span>
               </button>
             ))}
           </div>
@@ -360,7 +490,7 @@ export function ParticleRoundApp() {
     }
 
     if (effectiveRound === "build") {
-      const tiles = buildTiles(lesson, current);
+      const tiles = shuffledBuildTiles;
       return (
         <div className="jp-learn-card">
           <div className="jp-learn-meta">{lesson.title}</div>

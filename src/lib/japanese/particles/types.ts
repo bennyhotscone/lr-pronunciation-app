@@ -23,6 +23,7 @@ export type ParticleQuestion = {
   ending?: string;
   single?: boolean;
   alts?: string[];
+  mnemonic?: string;
 };
 
 export type VerbFormEntry = {

@@ -5,6 +5,7 @@ import {
   getAudioText,
   hiraganaToKatakana,
   isLikelyRomaji,
+  romajiToKatakana,
 } from "./word-helpers";
 
 const shitteru: JapaneseWord = {
@@ -51,6 +52,14 @@ describe("isLikelyRomaji", () => {
   it("detects ascii romaji cues", () => {
     expect(isLikelyRomaji("shitteru")).toBe(true);
     expect(isLikelyRomaji("\u3059\u304d")).toBe(false);
+  });
+});
+
+describe("romajiToKatakana", () => {
+  it("converts verb romaji without kanji misreadings", () => {
+    expect(romajiToKatakana("tabenai")).toBe("\u30bf\u30d9\u30ca\u30a4");
+    expect(romajiToKatakana("tabenakatta")).toBe("\u30bf\u30d9\u30ca\u30ab\u30c3\u30bf");
+    expect(romajiToKatakana("itta")).toBe("\u30a4\u30c3\u30bf");
   });
 });
 
