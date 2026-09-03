@@ -41,6 +41,19 @@
   border-radius: 6px;
 }
 .jp-learn-repeat-tag-block { margin-top: 0.4rem; }
+.jp-learn-review-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #7a4a1e;
+  background: #f3ddc4;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+}
 .jp-learn-catalog-toolbar {
   display: flex;
   flex-wrap: wrap;

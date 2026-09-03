@@ -255,13 +255,28 @@ describe("known words in formal rounds", () => {
     }
   });
 
-  it("includes full queue on a new formal round", () => {
+  it("skips known words on a new formal round, not only retries", () => {
     const state = startFormalRound(createInitialSessionState(), 3, 10, {
       isRetry: false,
       knownIndices: [0, 1, 2],
+      skipIndices: [0, 1, 2],
     });
-    expect(state.order).toHaveLength(10);
-    expect(state.roundIsRetry).toBe(false);
+    expect(state.order).toHaveLength(7);
+    expect(state.order).not.toContain(0);
+    expect(state.order).not.toContain(1);
+    expect(state.order).not.toContain(2);
+  });
+
+  it("mixes labeled prior-block review into rounds 4 and 5", () => {
+    const state = startFormalRound(createInitialSessionState(), 4, 10, {
+      isRetry: false,
+      knownIndices: [],
+      skipIndices: [0, 1],
+      blockNumber: 1,
+    });
+    expect(state.order).toHaveLength(8);
+    expect(state.order).not.toContain(0);
+    expect(state.order).not.toContain(1);
   });
 });
 

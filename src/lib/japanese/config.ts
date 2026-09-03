@@ -28,6 +28,9 @@ export const JAPANESE_REVISION_PASS_THRESHOLD = 80;
 /** Multiple-choice options shown per question. */
 export const JAPANESE_CHOICE_COUNT = 6;
 
+/** Max previous-block review items mixed into Rounds 4 and 5. */
+export const JAPANESE_PRIOR_REVIEW_CAP = 8;
+
 /** Blocks 1–N are always selectable (no revision lock). */
 export const JAPANESE_ALWAYS_UNLOCKED_BLOCKS = 10;
 

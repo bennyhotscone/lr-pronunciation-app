@@ -21,6 +21,7 @@ import {
   EMPTY_KNOWN_PROGRESS,
   knownProgressFromDb,
 } from "@/lib/japanese/known-words";
+import { wordlistKnownKey } from "@/lib/japanese/wordlist-catalog";
 import { isStaff } from "@/lib/portal-access";
 import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
 import { revalidatePath } from "next/cache";
@@ -55,6 +56,12 @@ export type JapaneseProgressPayload = {
     { mnemonic?: string | null; pronunciationCue?: string | null; ttsInput?: string | null }
   >;
   stats: Record<number, JapaneseWordStatSnapshot>;
+  /** Cross-block learning flags used to skip re-teaching and label R4/R5 review. */
+  priorLearning: {
+    knownKeys: string[];
+    seenKeys: string[];
+    masteredBlocks: number[];
+  };
 };
 
 
@@ -85,7 +92,7 @@ export async function loadJapaneseProgress(
 
     const userId = session.user.id;
 
-    const [progress, allProgress, overrideRows, statRows, gatesPassed, revisionGatesPassed] =
+    const [progress, allProgress, overrideRows, statRows, allStatKeys, gatesPassed, revisionGatesPassed] =
       await Promise.all([
       prisma.japaneseBlockProgress.findUnique({
         where: { userId_blockNumber: { userId, blockNumber } },
@@ -99,6 +106,10 @@ export async function loadJapaneseProgress(
       }),
       prisma.japaneseWordStat.findMany({
         where: { userId, blockNumber },
+      }),
+      prisma.japaneseWordStat.findMany({
+        where: { userId },
+        select: { blockNumber: true, wordIndex: true, known: true, timesSeen: true },
       }),
       loadGatesPassed(userId),
       loadRevisionGatesPassed(userId),
@@ -116,6 +127,18 @@ export async function loadJapaneseProgress(
         ...knownProgressFromDb(row),
       };
     }
+
+    const knownKeys: string[] = [];
+    const seenKeys: string[] = [];
+    for (const row of allStatKeys) {
+      const key = wordlistKnownKey(row.blockNumber, row.wordIndex);
+      if (row.known) knownKeys.push(key);
+      if (row.timesSeen > 0) seenKeys.push(key);
+    }
+    const masteredBlocks = allProgress
+      .filter((row) => row.blockMastered)
+      .map((row) => row.blockNumber);
+    const priorLearning = { knownKeys, seenKeys, masteredBlocks };
 
     const wordCount = getJapaneseBlock(blockNumber).length;
     const knownIndices = [...getKnownIndices(statsToKnownWordsMap(stats))];
@@ -168,7 +191,15 @@ export async function loadJapaneseProgress(
       };
     }
 
-    return { session: sessionState, meta, gatesPassed, revisionGatesPassed, overrides, stats };
+    return {
+      session: sessionState,
+      meta,
+      gatesPassed,
+      revisionGatesPassed,
+      overrides,
+      stats,
+      priorLearning,
+    };
   } catch (err) {
     console.error("[loadJapaneseProgress] failed", err);
     return { error: "Couldn't load progress. Please try again." };

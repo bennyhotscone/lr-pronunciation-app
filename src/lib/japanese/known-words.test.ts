@@ -57,15 +57,16 @@ describe("known-words", () => {
     expect(p.round5CorrectCount).toBe(0);
   });
 
-  it("includes all words on new round and skips known on retry", () => {
+  it("skips known words on every learn pass, not only retry", () => {
     const known = new Set([0, 2]);
-    expect(buildPracticeOrder(5, known, false)).toEqual([0, 1, 2, 3, 4]);
+    expect(buildPracticeOrder(5, known, false)).toEqual([1, 3, 4]);
     expect(buildPracticeOrder(5, known, true)).toEqual([1, 3, 4]);
   });
 
-  it("counts known words toward mastery on retry", () => {
+  it("counts known words toward mastery on every formal pass", () => {
     const known = new Set([0, 1, 2, 3, 4, 5, 6, 7]);
     expect(computeFormalRoundScorePct(2, 2, 10, known, true)).toBe(100);
+    expect(computeFormalRoundScorePct(2, 2, 10, known, false)).toBe(100);
     expect(computeRoundScorePct(1, 10, 8)).toBe(90);
   });
 

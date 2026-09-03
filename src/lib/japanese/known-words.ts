@@ -33,14 +33,18 @@ function toKnownSet(knownIndices: ReadonlySet<number> | readonly number[]): Set<
   return knownIndices instanceof Set ? knownIndices : new Set(knownIndices);
 }
 
+/**
+ * Build a practice queue, always skipping known / credit indices.
+ * `isRetry` is kept for call-site compatibility; known words are never re-taught.
+ */
 export function buildPracticeOrder(
   wordCount: number,
   knownIndices: ReadonlySet<number> | readonly number[],
-  isRetry: boolean,
+  _isRetry = true,
 ): number[] {
   const all = Array.from({ length: wordCount }, (_, i) => i);
-  if (!isRetry) return all;
   const known = toKnownSet(knownIndices);
+  if (known.size === 0) return all;
   return all.filter((i) => !known.has(i));
 }
 
@@ -70,11 +74,11 @@ export function computeFormalRoundScorePct(
   orderLen: number,
   wordCount: number,
   knownIndices: ReadonlySet<number> | readonly number[],
-  isRetry: boolean,
+  _isRetry = true,
 ): number {
   if (orderLen === 0) return 100;
   const known = toKnownSet(knownIndices);
-  const knownCount = isRetry ? countKnownWords(known, wordCount) : 0;
+  const knownCount = countKnownWords(known, wordCount);
   return computeRoundScorePct(roundScore, wordCount, knownCount);
 }
 

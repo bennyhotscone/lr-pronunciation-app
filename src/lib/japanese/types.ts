@@ -51,6 +51,8 @@ export type JapaneseRoundView =
   | {
       kind: "round1-new";
       wordIndex: number;
+      sourceBlock: number;
+      sourceWordIndex: number;
       counter: string;
       roundLabel: string;
       instruction: string;
@@ -58,10 +60,13 @@ export type JapaneseRoundView =
       showMnemonic: true;
       choicePool: number[];
       progressPct: number;
+      reviewLabel?: string;
     }
   | {
       kind: "round1-mini";
       wordIndex: number;
+      sourceBlock: number;
+      sourceWordIndex: number;
       counter: string;
       roundLabel: string;
       instruction: string;
@@ -69,10 +74,13 @@ export type JapaneseRoundView =
       showMnemonic: true;
       choicePool: number[];
       progressPct: number;
+      reviewLabel?: string;
     }
   | {
       kind: "formal";
       wordIndex: number;
+      sourceBlock: number;
+      sourceWordIndex: number;
       round: 2 | 3 | 4 | 5;
       counter: string;
       roundLabel: string;
@@ -86,6 +94,7 @@ export type JapaneseRoundView =
       scoreLabel: string;
       mode: "choices" | "type-english" | "type-romaji";
       promptEnglish?: string;
+      reviewLabel?: string;
     }
   | {
       kind: "round-complete";

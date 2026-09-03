@@ -64,6 +64,14 @@ import {
 } from "@/lib/correct-answer-sound";
 import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
 import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
+import {
+  decodeExternalReview,
+  emptyPriorLearning,
+  isExternalReviewOrderId,
+  learnSkipIndices,
+  priorLearningFromArrays,
+  type PriorLearning,
+} from "@/lib/japanese/round-queue";
 import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "gate" | "revision";
@@ -99,6 +107,7 @@ export function JapaneseLearningApp() {
   const [activeRevisionGate, setActiveRevisionGate] = useState<number | null>(null);
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
   const [wordStats, setWordStats] = useState<Record<number, JapaneseWordStatSnapshot>>({});
+  const [priorLearning, setPriorLearning] = useState<PriorLearning>(emptyPriorLearning);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loadAttempt, setLoadAttempt] = useState(0);
@@ -136,10 +145,22 @@ export function JapaneseLearningApp() {
         const blockKnownIndices = [
           ...getKnownIndices(statsToKnownWordsMap(data.stats)),
         ];
+        const loadedPrior = priorLearningFromArrays(data.priorLearning);
+        const skipIndices = learnSkipIndices(
+          block,
+          getJapaneseBlock(block).length,
+          blockKnownIndices,
+          loadedPrior,
+        );
         const repaired = repairSessionState(
           data.session,
           getJapaneseBlock(block).length,
           blockKnownIndices,
+          {
+            blockNumber: block,
+            priorLearning: loadedPrior,
+            skipIndices,
+          },
         );
         setSession(repaired);
         setMeta(data.meta);
@@ -147,6 +168,7 @@ export function JapaneseLearningApp() {
         setRevisionGatesPassed(data.revisionGatesPassed);
         setOverrides(data.overrides);
         setWordStats(data.stats);
+        setPriorLearning(loadedPrior);
         setLoading(false);
         if (
           repaired.phase !== data.session.phase ||
@@ -174,15 +196,34 @@ export function JapaneseLearningApp() {
 
   const knownWordsMap = useMemo(() => statsToKnownWordsMap(wordStats), [wordStats]);
   const knownIndices = useMemo(() => [...getKnownIndices(knownWordsMap)], [knownWordsMap]);
+  const skipIndices = useMemo(
+    () => learnSkipIndices(block, words.length, knownIndices, priorLearning),
+    [block, words.length, knownIndices, priorLearning],
+  );
+  const roundOptions = useMemo(
+    () => ({
+      skipIndices,
+      blockNumber: block,
+      priorLearning,
+    }),
+    [skipIndices, block, priorLearning],
+  );
 
   const applyWordStat = useCallback((wordIndex: number, stat: JapaneseWordStatSnapshot) => {
     setWordStats((prev) => ({ ...prev, [wordIndex]: stat }));
   }, []);
 
   const recordWordResult = useCallback(
-    (wordIndex: number, correct: boolean, round: 1 | 2 | 3 | 4 | 5) => {
-      void recordJapaneseWordResult(block, wordIndex, correct, round).then((result) => {
-        if ("ok" in result && result.ok) applyWordStat(wordIndex, result.stat);
+    (
+      wordIndex: number,
+      correct: boolean,
+      round: 1 | 2 | 3 | 4 | 5,
+      sourceBlock = block,
+    ) => {
+      void recordJapaneseWordResult(sourceBlock, wordIndex, correct, round).then((result) => {
+        if ("ok" in result && result.ok && sourceBlock === block) {
+          applyWordStat(wordIndex, result.stat);
+        }
       });
     },
     [block, applyWordStat],
@@ -230,8 +271,15 @@ export function JapaneseLearningApp() {
 
   const view = useMemo(() => {
     if (!session) return null;
-    return buildRoundView(session, words, overrides, knownWordsMap);
-  }, [session, words, overrides, knownWordsMap]);
+    const creditKnown = Object.fromEntries(skipIndices.map((i) => [i, { known: true as const }]));
+    return buildRoundView(
+      session,
+      words,
+      overrides,
+      { ...knownWordsMap, ...creditKnown },
+      { blockNumber: block, priorLearning },
+    );
+  }, [session, words, overrides, knownWordsMap, block, priorLearning, skipIndices]);
 
   useEffect(() => {
     if (!session || !meta || !view || view.kind !== "round-complete") return;
@@ -257,23 +305,34 @@ export function JapaneseLearningApp() {
 
   const currentWord = useMemo(() => {
     if (!view || view.kind === "round-complete") return null;
-    const idx = view.wordIndex;
+    if (view.sourceBlock !== block) {
+      const sourceWords = getJapaneseBlock(view.sourceBlock);
+      return resolveWord(sourceWords[view.sourceWordIndex], view.sourceWordIndex, null);
+    }
+    const idx = view.sourceWordIndex;
     return resolveWord(words[idx], idx, overrides[idx]);
-  }, [view, words, overrides]);
+  }, [view, words, overrides, block]);
 
-  const playWordAudioAtIndex = useCallback((wordIndex: number) => {
+  const playWordAudioAtIndex = useCallback((wordIndex: number, sourceBlock = block) => {
+    if (sourceBlock !== block) {
+      const word = getJapaneseBlock(sourceBlock)[wordIndex];
+      if (!word) return;
+      const resolved = resolveWord(word, wordIndex, null);
+      playWordAudio(resolved.speakText, buildPlayAudioDebug(word, wordIndex, null));
+      return;
+    }
     const { words: w, overrides: o } = playbackRef.current;
     const word = w[wordIndex];
     if (!word) return;
     const resolved = resolveWord(word, wordIndex, o[wordIndex]);
     const debug = buildPlayAudioDebug(word, wordIndex, o[wordIndex]);
     playWordAudio(resolved.speakText, debug);
-  }, []);
+  }, [block]);
 
   const playCurrentWordAudio = useCallback(() => {
     const v = playbackRef.current.view;
     if (!v || v.kind === "round-complete") return;
-    playWordAudioAtIndex(v.wordIndex);
+    playWordAudioAtIndex(v.sourceWordIndex, v.sourceBlock);
   }, [playWordAudioAtIndex]);
 
   const activeWordKey =
@@ -285,10 +344,11 @@ export function JapaneseLearningApp() {
     if (!activeWordKey || !view || view.kind === "round-complete") return;
     if (view.kind === "formal" && view.mode === "type-romaji") return;
 
-    const wordIndex = view.wordIndex;
+    const wordIndex = view.sourceWordIndex;
+    const sourceBlock = view.sourceBlock;
     if (autoPlayTimer.current) clearTimeout(autoPlayTimer.current);
     autoPlayTimer.current = setTimeout(() => {
-      playWordAudioAtIndex(wordIndex);
+      playWordAudioAtIndex(wordIndex, sourceBlock);
     }, 300);
 
     return () => {
@@ -317,13 +377,19 @@ export function JapaneseLearningApp() {
     (round: 1 | 2 | 3 | 4 | 5) => {
       if (!session || !meta) return;
       if (round > highestRoundReached) return;
-      const nextSession = jumpToRound(session, round, words.length, knownIndices);
+      const nextSession = jumpToRound(
+        session,
+        round,
+        words.length,
+        knownIndices,
+        roundOptions,
+      );
       resetQuestionUi();
       setSession(nextSession);
       persist(nextSession, meta);
       setScreen("train");
     },
-    [session, meta, words.length, highestRoundReached, resetQuestionUi, persist, knownIndices],
+    [session, meta, words.length, highestRoundReached, resetQuestionUi, persist, knownIndices, roundOptions],
   );
 
   const handleMnemonicChange = useCallback((wordIndex: number, value: string | null) => {
@@ -346,20 +412,34 @@ export function JapaneseLearningApp() {
     if (!correct) nextChoices[correctIndex] = "correct";
     setChoiceStates(nextChoices);
 
+    const external = isExternalReviewOrderId(view.wordIndex);
     let nextSession = session;
-    if (correct) {
-      const round = getActiveRound(session, words.length);
-      nextSession =
-        round >= 4 ? recordCorrectWithStreak(session, correctIndex) : recordCorrect(session);
+    if (!external) {
+      if (correct) {
+        const round = getActiveRound(session, words.length);
+        nextSession =
+          round >= 4 ? recordCorrectWithStreak(session, correctIndex) : recordCorrect(session);
+        setStatus("Correct");
+        playCorrectAnswerSound();
+      } else {
+        nextSession = recordMiss(session, correctIndex);
+        setStatus(`Answer: ${currentWord?.en ?? words[correctIndex]?.en ?? ""}`);
+        playIncorrectAnswerSound();
+      }
+    } else if (correct) {
       setStatus("Correct");
       playCorrectAnswerSound();
     } else {
-      nextSession = recordMiss(session, correctIndex);
-      setStatus(`Answer: ${words[correctIndex].en}`);
+      setStatus(`Answer: ${currentWord?.en ?? ""}`);
       playIncorrectAnswerSound();
     }
 
-    recordWordResult(correctIndex, correct, getActiveRound(session, words.length));
+    recordWordResult(
+      view.sourceWordIndex,
+      correct,
+      getActiveRound(session, words.length),
+      view.sourceBlock,
+    );
     setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -374,7 +454,10 @@ export function JapaneseLearningApp() {
     }
 
     setAnswered(true);
-    const word = words[view.wordIndex];
+    const word =
+      view.sourceBlock === block
+        ? words[view.sourceWordIndex]
+        : getJapaneseBlock(view.sourceBlock)[view.sourceWordIndex];
     let correct = false;
     if (view.mode === "type-english") {
       correct = fuzzyMatchEnglish(typedAnswer, word);
@@ -382,25 +465,38 @@ export function JapaneseLearningApp() {
       correct = fuzzyMatchRomaji(typedAnswer, word);
     }
 
+    const external = isExternalReviewOrderId(view.wordIndex);
     let nextSession = session;
-    if (correct) {
-      nextSession =
-        view.round >= 4
-          ? recordCorrectWithStreak(session, view.wordIndex)
-          : recordCorrect(session);
+    if (!external) {
+      if (correct) {
+        nextSession =
+          view.round >= 4
+            ? recordCorrectWithStreak(session, view.wordIndex)
+            : recordCorrect(session);
+        setStatus("Accepted");
+        playCorrectAnswerSound();
+        if (view.mode === "type-romaji" && view.round === 5) {
+          playWordAudioAtIndex(view.sourceWordIndex, view.sourceBlock);
+        }
+      } else {
+        nextSession = recordMiss(session, view.wordIndex);
+        setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);
+        playIncorrectAnswerSound();
+        playCurrentWordAudio();
+      }
+    } else if (correct) {
       setStatus("Accepted");
       playCorrectAnswerSound();
       if (view.mode === "type-romaji" && view.round === 5) {
-        playWordAudioAtIndex(view.wordIndex);
+        playWordAudioAtIndex(view.sourceWordIndex, view.sourceBlock);
       }
     } else {
-      nextSession = recordMiss(session, view.wordIndex);
       setStatus(view.mode === "type-english" ? `Answer: ${word.en}` : `Answer: ${word.r}`);
       playIncorrectAnswerSound();
       playCurrentWordAudio();
     }
 
-    recordWordResult(view.wordIndex, correct, view.round);
+    recordWordResult(view.sourceWordIndex, correct, view.round, view.sourceBlock);
     setWasWrong(!correct);
     setShowReveal(true);
     setSession(nextSession);
@@ -409,7 +505,7 @@ export function JapaneseLearningApp() {
 
   const handleRetryRound = () => {
     if (!session || !meta || !view || view.kind !== "round-complete") return;
-    const nextSession = retryRound(session, words.length, knownIndices);
+    const nextSession = retryRound(session, words.length, knownIndices, roundOptions);
     resetQuestionUi();
     setSession(nextSession);
     persist(nextSession, meta);
@@ -427,9 +523,10 @@ export function JapaneseLearningApp() {
       if (view.nextRound) {
         const nextSession =
           view.round === 1
-            ? transitionRound1ToRound2(session, words.length, knownIndices)
+            ? transitionRound1ToRound2(session, words.length, knownIndices, roundOptions)
             : startFormalRound(session, view.nextRound, words.length, {
                 knownIndices,
+                ...roundOptions,
               });
         resetQuestionUi();
         setSession(nextSession);
@@ -441,7 +538,7 @@ export function JapaneseLearningApp() {
     resetQuestionUi();
 
     if (session.phase === "round1") {
-      const nextSession = advanceAfterRound1Correct(session, words.length);
+      const nextSession = advanceAfterRound1Correct(session, words.length, skipIndices);
       setSession(nextSession);
       persist(nextSession, meta);
       return;
@@ -450,7 +547,7 @@ export function JapaneseLearningApp() {
     const nextSession = advanceFormalQuestion(session);
     if (nextSession.qIndex >= nextSession.order.length) {
       const round = Number(session.phase.replace("round", "")) as 2 | 3 | 4 | 5;
-      const scorePct = computeSessionRoundScorePct(session, words.length, knownIndices);
+      const scorePct = computeSessionRoundScorePct(session, words.length, skipIndices);
       setSession(nextSession);
       if (saveTimer.current) clearTimeout(saveTimer.current);
       startTransition(async () => {
@@ -462,6 +559,7 @@ export function JapaneseLearningApp() {
         if (!("error" in fresh)) {
           setMeta(fresh.meta);
           setWordStats(fresh.stats);
+          setPriorLearning(priorLearningFromArrays(fresh.priorLearning));
           setRevisionGatesPassed(fresh.revisionGatesPassed);
         }
       });
@@ -482,6 +580,7 @@ export function JapaneseLearningApp() {
       setGatesPassed(fresh.gatesPassed);
       setRevisionGatesPassed(fresh.revisionGatesPassed);
       setWordStats(fresh.stats);
+      setPriorLearning(priorLearningFromArrays(fresh.priorLearning));
       resetQuestionUi();
     });
   };
@@ -767,11 +866,23 @@ export function JapaneseLearningApp() {
                 ) : (
                   <div>
                     <strong>Missed words</strong>
-                    {view.missedIndices.slice(0, 20).map((idx) => (
-                      <div key={idx} style={{ margin: "0.5rem 0" }}>
-                        <b>{words[idx].r}</b> — {words[idx].en}
-                      </div>
-                    ))}
+                    {view.missedIndices.slice(0, 20).map((idx) => {
+                      const decoded = decodeExternalReview(idx);
+                      const missedWord = decoded
+                        ? getJapaneseBlock(decoded.blockNumber)[decoded.wordIndex]
+                        : words[idx];
+                      if (!missedWord) return null;
+                      return (
+                        <div key={idx} style={{ margin: "0.5rem 0" }}>
+                          <b>{missedWord.r}</b> — {missedWord.en}
+                          {decoded ? (
+                            <span className="jp-learn-review-badge" style={{ marginLeft: "0.5rem" }}>
+                              Review · Block {decoded.blockNumber}
+                            </span>
+                          ) : null}
+                        </div>
+                      );
+                    })}
                     {view.missedIndices.length > 20 ? (
                       <div className="jp-learn-sub">+ {view.missedIndices.length - 20} more</div>
                     ) : null}
@@ -843,6 +954,9 @@ export function JapaneseLearningApp() {
                 <div>
                   <div className="jp-learn-meta">{view.roundLabel}</div>
                   <div className="jp-learn-meta">{view.counter}</div>
+                  {"reviewLabel" in view && view.reviewLabel ? (
+                    <div className="jp-learn-review-badge">{view.reviewLabel}</div>
+                  ) : null}
                 </div>
                 {"scoreLabel" in view ? (
                   <div className="jp-learn-meta">{view.scoreLabel}</div>
@@ -854,10 +968,18 @@ export function JapaneseLearningApp() {
 
               {view.showMnemonic && view.kind !== "formal" && !(answered && wasWrong) ? (
                 <JapaneseMnemonicHook
-                  blockNumber={block}
-                  wordIndex={currentWord.index}
-                  canonicalMnemonic={words[currentWord.index].m}
-                  mnemonic={overrides[currentWord.index]?.mnemonic}
+                  blockNumber={view.sourceBlock}
+                  wordIndex={view.sourceWordIndex}
+                  canonicalMnemonic={
+                    view.sourceBlock === block
+                      ? words[view.sourceWordIndex].m
+                      : getJapaneseBlock(view.sourceBlock)[view.sourceWordIndex].m
+                  }
+                  mnemonic={
+                    view.sourceBlock === block
+                      ? overrides[view.sourceWordIndex]?.mnemonic
+                      : undefined
+                  }
                   showRomajiLine={
                     view.kind === "round1-new"
                       ? { romaji: currentWord.displayRomaji, english: currentWord.en }
@@ -891,7 +1013,10 @@ export function JapaneseLearningApp() {
               ) : null}
 
               {(() => {
-                const word = words[currentWord.index];
+                const word =
+                  view.sourceBlock === block
+                    ? words[view.sourceWordIndex]
+                    : getJapaneseBlock(view.sourceBlock)[view.sourceWordIndex];
                 const hasNuance = wordHasNuanceExplanation(word);
                 const trainingRound = getTrainingRound(view);
                 if (!hasNuance || trainingRound >= 4) return null;
@@ -975,16 +1100,26 @@ export function JapaneseLearningApp() {
                   <div className="jp-learn-english">{currentWord.en}</div>
                   {wasWrong &&
                   getTrainingRound(view) >= 4 &&
-                  wordHasNuanceExplanation(words[currentWord.index]) ? (
-                    <JapaneseWordNuance word={words[currentWord.index]} />
+                  wordHasNuanceExplanation(
+                    view.sourceBlock === block
+                      ? words[view.sourceWordIndex]
+                      : getJapaneseBlock(view.sourceBlock)[view.sourceWordIndex],
+                  ) ? (
+                    <JapaneseWordNuance
+                      word={
+                        view.sourceBlock === block
+                          ? words[view.sourceWordIndex]
+                          : getJapaneseBlock(view.sourceBlock)[view.sourceWordIndex]
+                      }
+                    />
                   ) : null}
-                  {wasWrong ? (
+                  {wasWrong && view.sourceBlock === block ? (
                     <>
                       <JapaneseMnemonicHook
-                        blockNumber={block}
-                        wordIndex={currentWord.index}
-                        canonicalMnemonic={words[currentWord.index].m}
-                        mnemonic={overrides[currentWord.index]?.mnemonic}
+                        blockNumber={view.sourceBlock}
+                        wordIndex={view.sourceWordIndex}
+                        canonicalMnemonic={words[view.sourceWordIndex].m}
+                        mnemonic={overrides[view.sourceWordIndex]?.mnemonic}
                         onMnemonicChange={handleMnemonicChange}
                         autoEdit
                       />
@@ -996,6 +1131,14 @@ export function JapaneseLearningApp() {
                         Replay audio
                       </button>
                     </>
+                  ) : wasWrong ? (
+                    <button
+                      type="button"
+                      className="jp-learn-btn mt-2"
+                      onClick={playCurrentWordAudio}
+                    >
+                      Replay audio
+                    </button>
                   ) : null}
                 </div>
               ) : null}
