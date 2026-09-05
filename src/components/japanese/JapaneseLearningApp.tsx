@@ -1140,9 +1140,33 @@ export function JapaneseLearningApp() {
 
               {showReveal && currentWord ? (
                 <div className="jp-learn-reveal">
+                  {wasWrong ? (
+                    <div className="jp-mnemonic-feedback jp-mnemonic-feedback-bad">
+                      <div>✗ {status.startsWith("Answer:") ? status : `Answer: ${currentWord.en}`}</div>
+                      <div>
+                        Correct: <strong>{currentWord.displayRomaji}</strong>
+                      </div>
+                      <div>{currentWord.en}</div>
+                      <div className="jp-mnemonic-line">
+                        Mnemonic:{" "}
+                        {(view.sourceBlock === block
+                          ? overrides[view.sourceWordIndex]?.mnemonic?.trim()
+                          : null) || currentWord.displayMnemonic}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="jp-mnemonic-feedback jp-mnemonic-feedback-ok">
+                      <div>✓ {currentWord.displayRomaji}</div>
+                      <div>{currentWord.en}</div>
+                      <div className="jp-mnemonic-line">
+                        Mnemonic:{" "}
+                        {(view.sourceBlock === block
+                          ? overrides[view.sourceWordIndex]?.mnemonic?.trim()
+                          : null) || currentWord.displayMnemonic}
+                      </div>
+                    </div>
+                  )}
                   <div className="jp-learn-jp">{currentWord.jp}</div>
-                  <div className="jp-learn-romaji">{currentWord.displayRomaji}</div>
-                  <div className="jp-learn-english">{currentWord.en}</div>
                   {wasWrong &&
                   getTrainingRound(view) >= 4 &&
                   wordHasNuanceExplanation(
@@ -1158,36 +1182,23 @@ export function JapaneseLearningApp() {
                       }
                     />
                   ) : null}
-                  {view.sourceBlock === block &&
-                  (wasWrong || getTrainingRound(view) >= 4) ? (
-                    <>
-                      <JapaneseMnemonicHook
-                        blockNumber={view.sourceBlock}
-                        wordIndex={view.sourceWordIndex}
-                        canonicalMnemonic={words[view.sourceWordIndex].m}
-                        mnemonic={overrides[view.sourceWordIndex]?.mnemonic}
-                        onMnemonicChange={handleMnemonicChange}
-                        autoEdit={wasWrong}
-                      />
-                      {wasWrong ? (
-                        <button
-                          type="button"
-                          className="jp-learn-btn mt-2"
-                          onClick={playCurrentWordAudio}
-                        >
-                          Replay audio
-                        </button>
-                      ) : null}
-                    </>
-                  ) : wasWrong ? (
-                    <button
-                      type="button"
-                      className="jp-learn-btn mt-2"
-                      onClick={playCurrentWordAudio}
-                    >
-                      Replay audio
-                    </button>
+                  {view.sourceBlock === block ? (
+                    <JapaneseMnemonicHook
+                      blockNumber={view.sourceBlock}
+                      wordIndex={view.sourceWordIndex}
+                      canonicalMnemonic={words[view.sourceWordIndex].m}
+                      mnemonic={overrides[view.sourceWordIndex]?.mnemonic}
+                      onMnemonicChange={handleMnemonicChange}
+                      autoEdit={wasWrong}
+                    />
                   ) : null}
+                  <button
+                    type="button"
+                    className="jp-learn-btn mt-2"
+                    onClick={playCurrentWordAudio}
+                  >
+                    Replay audio
+                  </button>
                 </div>
               ) : null}
 

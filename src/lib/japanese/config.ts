@@ -25,8 +25,14 @@ export const JAPANESE_MILESTONE_PASS_THRESHOLD = 75;
 /** Revision quiz score (%) required to unlock the next block group. */
 export const JAPANESE_REVISION_PASS_THRESHOLD = 80;
 
-/** Word questions sampled per revision quiz from that gate's full pool (e.g. 250). */
-export const JAPANESE_REVISION_WORD_SAMPLE = 75;
+/**
+ * Word questions per revision quiz.
+ * null = test every word in the gate's pool at least once (full 250 coverage).
+ */
+export const JAPANESE_REVISION_WORD_SAMPLE: number | null = null;
+
+/** Curriculum epoch for Blocks 6+ (audited #251–1000). Invalidates old B6+ mastery. */
+export const JAPANESE_B6PLUS_CURRICULUM_EPOCH = "audited-251-1000-v1";
 
 /** Multiple-choice options shown per question. */
 export const JAPANESE_CHOICE_COUNT = 6;
@@ -35,7 +41,7 @@ export const JAPANESE_CHOICE_COUNT = 6;
 export const JAPANESE_PRIOR_REVIEW_CAP = 8;
 
 /** Blocks 1–N are always selectable (no revision lock). */
-export const JAPANESE_ALWAYS_UNLOCKED_BLOCKS = 10;
+export const JAPANESE_ALWAYS_UNLOCKED_BLOCKS = 20;
 
 /** Set to a number to limit block words for QA; null = full block. */
 export const JAPANESE_TEST_WORD_LIMIT: number | null = null;

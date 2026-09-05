@@ -1,12 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useState, useTransition } from "react";
-import { getJapaneseBlock } from "@/lib/japanese/blocks";
+import { ParticleSentenceBuilder } from "@/components/japanese/ParticleSentenceBuilder";
+import { speakJapanese } from "@/lib/japanese/tts";
+import {
+  formatPreferredRomaji,
+  matchAcceptedSentenceAnswers,
+} from "@/lib/japanese/revision-sentence-match";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
-import { matchRevisionSentence } from "@/lib/japanese/revision-sentence-match";
-import { playWordAudio } from "@/lib/japanese/tts";
-import { resolveWord } from "@/lib/japanese/engine";
-import { buildPlayAudioDebug } from "@/lib/japanese/word-helpers";
 import {
   loadRevisionGate,
   submitRevisionAnswers,
@@ -14,6 +15,7 @@ import {
   type RevisionQuestion,
   type RevisionSubmitResult,
   type RevisionWordQuestion,
+  type RevisionSentenceQuestion,
 } from "@/lib/japanese-revision-actions";
 import {
   playCorrectAnswerSound,
@@ -33,20 +35,39 @@ function isWordQuestion(q: RevisionQuestion): q is RevisionWordQuestion {
   return q.kind === "word";
 }
 
+function isSentenceQuestion(q: RevisionQuestion): q is RevisionSentenceQuestion {
+  return q.kind === "sentence";
+}
+
 export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   const [payload, setPayload] = useState<RevisionGatePayload | null>(null);
   const [phase, setPhase] = useState<Phase>("quiz");
   const [qIndex, setQIndex] = useState(0);
   const [typed, setTyped] = useState("");
+  const [selectedTiles, setSelectedTiles] = useState<string[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [modes, setModes] = useState<Record<string, "type-english" | "type-romaji">>({});
+  const [coveredWordIds, setCoveredWordIds] = useState<Set<string>>(new Set());
   const [status, setStatus] = useState("");
   const [result, setResult] = useState<RevisionSubmitResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [pending, startTransition] = useTransition();
-  const [sentencePassed, setSentencePassed] = useState(false);
-  const [revealedRomaji, setRevealedRomaji] = useState<string | null>(null);
-  const [pendingAnswers, setPendingAnswers] = useState<Record<string, string> | null>(null);
+  const [feedback, setFeedback] = useState<{
+    correct: boolean;
+    yourAnswer?: string;
+    natural?: string;
+  } | null>(null);
+
+  const applyPayload = (data: RevisionGatePayload) => {
+    setPayload(data);
+    const modeMap: Record<string, "type-english" | "type-romaji"> = {};
+    for (const q of data.questions) {
+      if (isWordQuestion(q)) modeMap[q.id] = q.mode;
+    }
+    setModes(modeMap);
+    setCoveredWordIds(new Set());
+    setLoading(false);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -55,10 +76,9 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     setQIndex(0);
     setAnswers({});
     setTyped("");
+    setSelectedTiles([]);
     setResult(null);
-    setSentencePassed(false);
-    setRevealedRomaji(null);
-    setPendingAnswers(null);
+    setFeedback(null);
     loadRevisionGate(gateNumber)
       .then((data) => {
         if ("error" in data) {
@@ -67,13 +87,7 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           setLoading(false);
           return;
         }
-        setPayload(data);
-        const modeMap: Record<string, "type-english" | "type-romaji"> = {};
-        for (const q of data.questions) {
-          if (isWordQuestion(q)) modeMap[q.id] = q.mode;
-        }
-        setModes(modeMap);
-        setLoading(false);
+        applyPayload(data);
       })
       .catch((err) => {
         console.error("[JapaneseRevisionGate] loadRevisionGate failed", err);
@@ -90,10 +104,9 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     setQIndex(0);
     setAnswers({});
     setTyped("");
+    setSelectedTiles([]);
     setResult(null);
-    setSentencePassed(false);
-    setRevealedRomaji(null);
-    setPendingAnswers(null);
+    setFeedback(null);
     loadRevisionGate(gateNumber)
       .then((data) => {
         if ("error" in data) {
@@ -102,13 +115,7 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           setLoading(false);
           return;
         }
-        setPayload(data);
-        const modeMap: Record<string, "type-english" | "type-romaji"> = {};
-        for (const q of data.questions) {
-          if (isWordQuestion(q)) modeMap[q.id] = q.mode;
-        }
-        setModes(modeMap);
-        setLoading(false);
+        applyPayload(data);
       })
       .catch((err) => {
         console.error("[JapaneseRevisionGate] reload failed", err);
@@ -119,16 +126,16 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   };
 
   const current = payload?.questions[qIndex];
-  const isSentence = current?.kind === "sentence";
+  const isSentence = current ? isSentenceQuestion(current) : false;
   const wordCount = payload?.questions.filter(isWordQuestion).length ?? 0;
   const sentenceCount = (payload?.questions.length ?? 0) - wordCount;
 
+  const coverageTotal = payload?.coverageWordIds.length ?? payload?.wordCount ?? 0;
+  const coverageDone = coveredWordIds.size;
+
   const playCurrentAudio = useCallback(() => {
-    if (!current || !isWordQuestion(current) || current.mode !== "type-english") return;
-    const word = getJapaneseBlock(current.blockNumber)[current.wordIndex];
-    if (!word) return;
-    const resolved = resolveWord(word, current.wordIndex);
-    playWordAudio(resolved.speakText, buildPlayAudioDebug(word, current.wordIndex));
+    if (!current || !isWordQuestion(current)) return;
+    speakJapanese(current.audio || current.romaji);
   }, [current]);
 
   useEffect(() => {
@@ -138,27 +145,26 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   }, [current, playCurrentAudio]);
 
   useEffect(() => {
-    setSentencePassed(false);
-    setRevealedRomaji(null);
-    setPendingAnswers(null);
+    setFeedback(null);
     setTyped("");
+    setSelectedTiles([]);
     setStatus("");
   }, [qIndex]);
 
-  const advanceOrSubmit = (nextAnswers: Record<string, string>) => {
+  const submitAll = (nextAnswers: Record<string, string>, covered: Set<string>) => {
     if (!payload) return;
-    if (qIndex + 1 < payload.questions.length) {
-      setQIndex(qIndex + 1);
-      return;
-    }
-
     startTransition(async () => {
       const res = await submitRevisionAnswers(gateNumber, {
         answers: nextAnswers,
         modes,
+        coveredWordIds: [...covered],
       });
-      if ("error" in res) {
+      if ("error" in res && res.error) {
         setStatus(res.error);
+        return;
+      }
+      if ("error" in res) {
+        setStatus("Couldn't submit revision.");
         return;
       }
       setResult(res);
@@ -167,48 +173,80 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     });
   };
 
-  const saveAndAdvance = () => {
-    if (!payload || !current || !typed.trim()) {
+  const advanceAfterFeedback = () => {
+    if (!payload || !current) return;
+    if (qIndex + 1 < payload.questions.length) {
+      setQIndex(qIndex + 1);
+      return;
+    }
+    submitAll(answers, coveredWordIds);
+  };
+
+  const checkWordAnswer = () => {
+    if (!payload || !current || !isWordQuestion(current) || !typed.trim()) {
       setStatus("Type an answer first.");
       return;
     }
-
-    if (isSentence) {
-      const ok = matchRevisionSentence(typed, current.requiredWords);
-      if (!ok) {
-        playIncorrectAnswerSound();
-        setStatus("Not quite — use every word from the bank (any order).");
-        return;
-      }
-      playCorrectAnswerSound();
-      const nextAnswers = { ...answers, [current.id]: typed.trim() };
-      setAnswers(nextAnswers);
-      setPendingAnswers(nextAnswers);
-      setSentencePassed(true);
-      setRevealedRomaji(current.canonicalRomaji);
-      setStatus("");
-      return;
-    }
-
-    const word = getJapaneseBlock(current.blockNumber)[current.wordIndex];
-    if (!word) return;
     const ok =
       current.mode === "type-english"
-        ? fuzzyMatchEnglish(typed, word)
-        : fuzzyMatchRomaji(typed, word);
+        ? fuzzyMatchEnglish(typed, {
+            jp: "",
+            audio: current.audio,
+            r: current.romaji,
+            en: current.english,
+            m: current.mnemonic,
+          })
+        : fuzzyMatchRomaji(typed, {
+            jp: "",
+            audio: current.audio,
+            r: current.romaji,
+            en: current.english,
+            m: current.mnemonic,
+          });
+
     if (ok) playCorrectAnswerSound();
     else playIncorrectAnswerSound();
+    speakJapanese(current.audio || current.romaji);
+
+    const nextCovered = new Set(coveredWordIds);
+    nextCovered.add(current.wordId);
+    setCoveredWordIds(nextCovered);
 
     const nextAnswers = { ...answers, [current.id]: typed.trim() };
     setAnswers(nextAnswers);
-    setTyped("");
+    setFeedback({
+      correct: ok,
+      yourAnswer: ok ? undefined : typed.trim(),
+    });
     setStatus("");
-    advanceOrSubmit(nextAnswers);
   };
 
-  const continueAfterSentence = () => {
-    if (!payload || !current || current.kind !== "sentence" || !pendingAnswers) return;
-    advanceOrSubmit(pendingAnswers);
+  const checkSentenceAnswer = () => {
+    if (!payload || !current || !isSentenceQuestion(current)) return;
+    if (!selectedTiles.length) {
+      setStatus("Tap tiles to build your answer.");
+      return;
+    }
+    const match = matchAcceptedSentenceAnswers(
+      selectedTiles,
+      current.preferredAnswer,
+      current.acceptedAnswers,
+    );
+    if (!match.ok) {
+      playIncorrectAnswerSound();
+      setStatus("Not quite — try different tiles (particles optional).");
+      return;
+    }
+    playCorrectAnswerSound();
+    const natural = formatPreferredRomaji(current.preferredAnswer);
+    speakJapanese(natural);
+    const nextAnswers = { ...answers, [current.id]: selectedTiles.join(" ") };
+    setAnswers(nextAnswers);
+    setFeedback({
+      correct: true,
+      natural: match.caveman ? natural : undefined,
+    });
+    setStatus("");
   };
 
   if (loading) {
@@ -243,6 +281,9 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
             Score: {result.scorePct}% ({result.correctCount}/{result.total}) · need{" "}
             {result.threshold}%
           </p>
+          <p className="jp-learn-sub">
+            Coverage: {result.coveredCount} / {result.coverageTotal} words reviewed
+          </p>
           {result.passed ? (
             <p className="jp-learn-sub">Block {result.unlocksBlock} is now unlocked.</p>
           ) : null}
@@ -254,9 +295,6 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           >
             {result.passed ? "Practice again" : "Try again"}
           </button>
-          {payload.passed && result.passed ? (
-            <p className="jp-learn-sub mt-2">You already passed this checkpoint — practice anytime.</p>
-          ) : null}
           {onClose ? (
             <button type="button" className="jp-learn-btn mt-3" onClick={onClose}>
               Back to training
@@ -277,13 +315,11 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
       <header className="jp-learn-header">
         <h1 className="jp-learn-title">Revision quiz</h1>
         <p className="jp-learn-meta">
-          {payload.label} · {payload.sampleSize} word questions from the{" "}
-          {payload.wordCount}-word pool + {sentenceCount} sentences · {payload.threshold}% to
-          pass
+          {payload.label} · full {payload.wordCount}-word coverage + {sentenceCount} sentences ·{" "}
+          {payload.threshold}% to pass
         </p>
         <p className="jp-learn-sub">
-          Romaji-first drill drawn from blocks {(gateNumber - 1) * 5 + 1}–{gateNumber * 5}. Mix of
-          type-the-Japanese and type-the-meaning, then sentence building.
+          {coverageDone} / {coverageTotal} words reviewed
         </p>
       </header>
       <section className="jp-learn-card">
@@ -292,81 +328,116 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           Question {qIndex + 1} of {payload.questions.length}
         </div>
         <div className="jp-learn-progress">
-          <div style={{ width: `${((qIndex + 1) / payload.questions.length) * 100}%` }} />
-        </div>
-        {isSentence ? (
-          <>
-            <div className="jp-learn-big">BUILD A SENTENCE (ROMAJI)</div>
-            <div className="jp-learn-prompt-en">{current.promptEnglish}</div>
-            <p className="jp-learn-sub mt-2">
-              Use these words in any order (grammar does not need to be perfect):
-            </p>
-            <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.35rem" }}>
-              {current.wordBank.map((word) => (
-                <span key={word} className="jp-learn-btn" style={{ cursor: "default" }}>
-                  {word}
-                </span>
-              ))}
-            </div>
-            {revealedRomaji ? (
-              <div className="mt-3">
-                <p className="jp-learn-sub">Model sentence (word order):</p>
-                <div className="jp-learn-romaji-xl">{revealedRomaji}</div>
-              </div>
-            ) : null}
-          </>
-        ) : current.mode === "type-english" ? (
-          <>
-            <div className="jp-learn-big">LISTEN AND TYPE THE MEANING</div>
-            <div className="jp-learn-romaji-xl">{current.prompt}</div>
-            <button type="button" className="jp-learn-btn jp-learn-btn-primary" onClick={playCurrentAudio}>
-              Play audio
-            </button>
-          </>
-        ) : (
-          <>
-            <div className="jp-learn-big">TYPE THE JAPANESE WORD</div>
-            <div className="jp-learn-prompt-en">{current.prompt}</div>
-          </>
-        )}
-        {!sentencePassed ? (
-          <input
-            className="jp-learn-input mt-3"
-            value={typed}
-            onChange={(e) => setTyped(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") saveAndAdvance();
+          <div
+            style={{
+              width: `${coverageTotal ? (coverageDone / coverageTotal) * 100 : 0}%`,
             }}
-            disabled={pending}
-            autoFocus
-            placeholder={isSentence ? "Type romaji words separated by spaces" : undefined}
           />
+        </div>
+
+        {isSentence && isSentenceQuestion(current) ? (
+          <>
+            <div className="jp-learn-big">BUILD A SENTENCE</div>
+            {!feedback ? (
+              <ParticleSentenceBuilder
+                instruction={current.promptEnglish}
+                tiles={current.tiles}
+                selected={selectedTiles}
+                locked={false}
+                onSelectedChange={setSelectedTiles}
+                onClear={() => setSelectedTiles([])}
+                onCheck={checkSentenceAnswer}
+              />
+            ) : (
+              <div className="jp-learn-reveal mt-3">
+                <div className="jp-mnemonic-feedback jp-mnemonic-feedback-ok">
+                  ✓ Correct
+                  {feedback.natural ? (
+                    <div className="jp-learn-sub mt-2">
+                      Natural Japanese: <strong>{feedback.natural}</strong>
+                    </div>
+                  ) : (
+                    <div className="jp-learn-romaji-xl mt-2">{current.canonicalRomaji}</div>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
+        ) : isWordQuestion(current) ? (
+          <>
+            {current.mode === "type-english" ? (
+              <>
+                <div className="jp-learn-big">LISTEN AND TYPE THE MEANING</div>
+                <div className="jp-learn-romaji-xl">{current.prompt}</div>
+                <button
+                  type="button"
+                  className="jp-learn-btn jp-learn-btn-primary"
+                  onClick={playCurrentAudio}
+                >
+                  Play audio
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="jp-learn-big">TYPE THE JAPANESE WORD</div>
+                <div className="jp-learn-prompt-en">{current.prompt}</div>
+              </>
+            )}
+            {!feedback ? (
+              <input
+                className="jp-learn-input mt-3"
+                value={typed}
+                onChange={(e) => setTyped(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") checkWordAnswer();
+                }}
+                disabled={pending}
+                autoFocus
+              />
+            ) : (
+              <div className="jp-learn-reveal mt-3">
+                {feedback.correct ? (
+                  <div className="jp-mnemonic-feedback jp-mnemonic-feedback-ok">
+                    <div>✓ {current.romaji}</div>
+                    <div>{current.english}</div>
+                    <div className="jp-mnemonic-line">Mnemonic: {current.mnemonic}</div>
+                  </div>
+                ) : (
+                  <div className="jp-mnemonic-feedback jp-mnemonic-feedback-bad">
+                    <div>✗ Your answer: {feedback.yourAnswer}</div>
+                    <div>Correct: {current.romaji}</div>
+                    <div>{current.english}</div>
+                    <div className="jp-mnemonic-line">Mnemonic: {current.mnemonic}</div>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         ) : null}
+
         {status ? <p className="jp-learn-sub mt-2">{status}</p> : null}
+
         <div className="jp-learn-row mt-3">
-          {sentencePassed ? (
+          {!feedback && !isSentence ? (
             <button
               type="button"
               className="jp-learn-btn jp-learn-btn-primary"
-              onClick={continueAfterSentence}
+              onClick={checkWordAnswer}
               disabled={pending}
             >
-              {qIndex + 1 >= payload.questions.length ? "Submit revision" : "Next"}
+              Check
             </button>
-          ) : (
+          ) : null}
+          {feedback ? (
             <button
               type="button"
               className="jp-learn-btn jp-learn-btn-primary"
-              onClick={saveAndAdvance}
+              onClick={advanceAfterFeedback}
               disabled={pending}
             >
-              {isSentence
-                ? "Check sentence"
-                : qIndex + 1 >= payload.questions.length
-                  ? "Submit revision"
-                  : "Next"}
+              {qIndex + 1 >= payload.questions.length ? "Submit revision" : "Continue"}
             </button>
-          )}
+          ) : null}
           {onClose ? (
             <button type="button" className="jp-learn-btn" onClick={onClose} disabled={pending}>
               Cancel

@@ -2,7 +2,11 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
-import { getJapaneseBlock, isPlayableJapaneseBlock } from "@/lib/japanese/blocks";
+import {
+  getJapaneseBlock,
+  getJapaneseWordId,
+  isPlayableJapaneseBlock,
+} from "@/lib/japanese/blocks";
 import {
   JAPANESE_REVISION_PASS_THRESHOLD,
   JAPANESE_REVISION_WORD_SAMPLE,
@@ -15,7 +19,10 @@ import {
   revisionGateLabel,
   revisionGateWordCount,
 } from "@/lib/japanese/revision-gate";
-import { matchRevisionSentence } from "@/lib/japanese/revision-sentence-match";
+import {
+  formatPreferredRomaji,
+  matchAcceptedSentenceAnswers,
+} from "@/lib/japanese/revision-sentence-match";
 import { getRevisionSentencesForGate } from "@/lib/japanese/revision-sentences";
 import type { JapaneseWord } from "@/lib/japanese/types";
 import { isStaff } from "@/lib/portal-access";
@@ -34,19 +41,28 @@ async function requireJapaneseLearner() {
 export type RevisionWordQuestion = {
   kind: "word";
   id: string;
+  wordId: string;
   blockNumber: number;
   wordIndex: number;
   mode: "type-english" | "type-romaji";
   prompt: string;
+  romaji: string;
+  english: string;
+  mnemonic: string;
+  audio: string;
 };
 
 export type RevisionSentenceQuestion = {
   kind: "sentence";
   id: string;
   promptEnglish: string;
-  wordBank: string[];
+  tiles: string[];
+  preferredAnswer: string[];
+  acceptedAnswers: string[][];
   canonicalRomaji: string;
+  /** @deprecated content words for legacy matchers */
   requiredWords: string[];
+  wordBank: string[];
 };
 
 export type RevisionQuestion = RevisionWordQuestion | RevisionSentenceQuestion;
@@ -56,8 +72,10 @@ export type RevisionGatePayload = {
   label: string;
   /** Full vocabulary pool for this gate (e.g. 250). */
   wordCount: number;
-  /** How many word questions were sampled into this quiz. */
+  /** How many unique word questions are in this quiz (should equal wordCount for full coverage). */
   sampleSize: number;
+  /** All vocab ids that must be covered before completion. */
+  coverageWordIds: string[];
   unlocksBlock: number;
   passed: boolean;
   attempts: number;
@@ -94,44 +112,66 @@ function shuffle<T>(items: T[]): T[] {
 
 function buildSentenceQuestions(gateNumber: number): RevisionSentenceQuestion[] {
   const templates = getRevisionSentencesForGate(gateNumber);
-  return templates.map((sentence) => ({
-    kind: "sentence" as const,
-    id: sentence.id,
-    promptEnglish: sentence.english,
-    wordBank: shuffle([...sentence.words]),
-    canonicalRomaji: sentence.romaji,
-    requiredWords: [...sentence.words],
-  }));
+  return templates.map((sentence) => {
+    const tiles = shuffle([...sentence.tiles]);
+    return {
+      kind: "sentence" as const,
+      id: sentence.id,
+      promptEnglish: sentence.english,
+      tiles,
+      preferredAnswer: [...sentence.preferredAnswer],
+      acceptedAnswers: sentence.acceptedAnswers.map((a) => [...a]),
+      canonicalRomaji: formatPreferredRomaji(sentence.preferredAnswer),
+      requiredWords: [...sentence.words],
+      wordBank: tiles,
+    };
+  });
 }
 
 function buildRevisionQuestions(gateNumber: number): {
   questions: RevisionQuestion[];
   sampleSize: number;
+  coverageWordIds: string[];
 } {
   const pool = collectRevisionWords(gateNumber);
-  const sampled = shuffle(pool).slice(0, Math.min(JAPANESE_REVISION_WORD_SAMPLE, pool.length));
-  const wordQuestions: RevisionWordQuestion[] = sampled.map(({ blockNumber, wordIndex, word }, i) => {
-    // Romaji-first: mostly EN→romaji produce; every 3rd is romaji→EN understand.
-    const mode: RevisionWordQuestion["mode"] = i % 3 === 0 ? "type-english" : "type-romaji";
-    return {
-      kind: "word",
-      id: `${blockNumber}-${wordIndex}`,
-      blockNumber,
-      wordIndex,
-      mode,
-      prompt: mode === "type-english" ? word.r : word.en,
-    };
-  });
+  const take =
+    JAPANESE_REVISION_WORD_SAMPLE == null
+      ? pool.length
+      : Math.min(JAPANESE_REVISION_WORD_SAMPLE, pool.length);
+  // Full coverage: every word once (shuffled). Sample mode still shuffles subset.
+  const sampled = shuffle(pool).slice(0, take);
+  const coverageWordIds = sampled.map(({ blockNumber, wordIndex, word }) =>
+    getJapaneseWordId(blockNumber, wordIndex, word),
+  );
+  const wordQuestions: RevisionWordQuestion[] = sampled.map(
+    ({ blockNumber, wordIndex, word }, i) => {
+      const mode: RevisionWordQuestion["mode"] = i % 3 === 0 ? "type-english" : "type-romaji";
+      return {
+        kind: "word" as const,
+        id: `${blockNumber}-${wordIndex}`,
+        wordId: getJapaneseWordId(blockNumber, wordIndex, word),
+        blockNumber,
+        wordIndex,
+        mode,
+        prompt: mode === "type-english" ? word.r : word.en,
+        romaji: word.r,
+        english: word.en,
+        mnemonic: word.m,
+        audio: word.audio || word.jp,
+      };
+    },
+  );
   return {
     questions: [...wordQuestions, ...buildSentenceQuestions(gateNumber)],
     sampleSize: wordQuestions.length,
+    coverageWordIds,
   };
 }
 
 export async function loadRevisionGatesPassed(userId: string): Promise<number[]> {
   try {
     const rows = await prisma.japaneseRevisionProgress.findMany({
-      where: { userId, passed: true },
+      where: { userId, passed: true, gateNumber: { lt: 900 } },
       select: { gateNumber: true },
     });
     return rows.map((r) => r.gateNumber).sort((a, b) => a - b);
@@ -155,7 +195,7 @@ export async function loadRevisionGate(
     if (!isLiveRevisionGate(gateNumber)) {
       return { error: "This revision gate is not enabled." };
     }
-    const { questions, sampleSize } = buildRevisionQuestions(gateNumber);
+    const { questions, sampleSize, coverageWordIds } = buildRevisionQuestions(gateNumber);
     if (!questions.length) {
       return { error: "No vocabulary loaded for this revision gate." };
     }
@@ -167,7 +207,6 @@ export async function loadRevisionGate(
         select: { passed: true, attempts: true },
       });
     } catch (err) {
-      // Quiz still runs if progress table isn't migrated yet — don't block learners.
       if (isPrismaSchemaMissingError(err)) {
         console.warn(
           "[loadRevisionGate] JapaneseRevisionProgress missing; running quiz without saved progress",
@@ -182,6 +221,7 @@ export async function loadRevisionGate(
       label: revisionGateLabel(gateNumber),
       wordCount: revisionGateWordCount(gateNumber),
       sampleSize,
+      coverageWordIds,
       unlocksBlock: getFirstBlockUnlockedByRevisionGate(gateNumber),
       passed: progress?.passed ?? false,
       attempts: progress?.attempts ?? 0,
@@ -197,6 +237,8 @@ export async function loadRevisionGate(
 export type RevisionAnswerSubmission = {
   answers: Record<string, string>;
   modes: Record<string, "type-english" | "type-romaji">;
+  /** Unique word ids answered at least once (coverage). */
+  coveredWordIds?: string[];
   sentenceIds?: string[];
 };
 
@@ -206,7 +248,10 @@ export type RevisionSubmitResult = {
   threshold: number;
   correctCount: number;
   total: number;
+  coveredCount: number;
+  coverageTotal: number;
   unlocksBlock: number;
+  error?: string;
 };
 
 export async function submitRevisionAnswers(
@@ -225,6 +270,30 @@ export async function submitRevisionAnswers(
     return { error: "No vocabulary loaded for this revision gate." };
   }
 
+  const expectedCoverage = new Set(
+    playable.map(({ blockNumber, wordIndex, word }) =>
+      getJapaneseWordId(blockNumber, wordIndex, word),
+    ),
+  );
+  const covered = new Set(submission.coveredWordIds ?? []);
+  // Also infer coverage from answered word question ids (block-index).
+  for (const id of Object.keys(submission.answers)) {
+    if (id.includes("-") && !id.startsWith("g")) {
+      const [blockPart, indexPart] = id.split("-");
+      const blockNumber = Number(blockPart);
+      const wordIndex = Number(indexPart);
+      const word = getJapaneseBlock(blockNumber)?.[wordIndex];
+      if (word) covered.add(getJapaneseWordId(blockNumber, wordIndex, word));
+    }
+  }
+
+  const missingCoverage = [...expectedCoverage].filter((id) => !covered.has(id));
+  if (missingCoverage.length > 0 && JAPANESE_REVISION_WORD_SAMPLE == null) {
+    return {
+      error: `Review incomplete — ${missingCoverage.length} words still untested.`,
+    };
+  }
+
   const sentenceById = new Map(
     buildSentenceQuestions(gateNumber).map((q) => [q.id, q] as const),
   );
@@ -233,7 +302,12 @@ export async function submitRevisionAnswers(
   for (const [id, input] of Object.entries(submission.answers)) {
     const sentence = sentenceById.get(id);
     if (sentence) {
-      if (matchRevisionSentence(input, sentence.requiredWords)) correctCount += 1;
+      const result = matchAcceptedSentenceAnswers(
+        input,
+        sentence.preferredAnswer,
+        sentence.acceptedAnswers,
+      );
+      if (result.ok) correctCount += 1;
       continue;
     }
 
@@ -274,7 +348,6 @@ export async function submitRevisionAnswers(
       },
     });
   } catch (err) {
-    // Still return the scored result so the quiz is usable without persistence.
     if (isPrismaSchemaMissingError(err)) {
       console.warn(
         "[submitRevisionAnswers] JapaneseRevisionProgress missing; returning score without save",
@@ -292,6 +365,8 @@ export async function submitRevisionAnswers(
     threshold: JAPANESE_REVISION_PASS_THRESHOLD,
     correctCount,
     total,
+    coveredCount: covered.size,
+    coverageTotal: expectedCoverage.size,
     unlocksBlock: getFirstBlockUnlockedByRevisionGate(gateNumber),
   };
 }

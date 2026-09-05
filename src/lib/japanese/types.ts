@@ -6,6 +6,12 @@ export type JapaneseWord = {
   m: string;
   /** Optional per-word nuance override (see word-nuances.ts). */
   nuance?: string;
+  /** Stable id for coverage tracking (e.g. b6-r251). */
+  id?: string;
+  globalRank?: number;
+  block?: number;
+  cejcRank?: number;
+  englishFrequencyRank?: number;
 };
 
 export type JapanesePhase = "round1" | "round2" | "round3" | "round4" | "round5";

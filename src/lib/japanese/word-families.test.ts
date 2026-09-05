@@ -6,25 +6,25 @@ describe("word-families", () => {
   const families = buildWordFamilies(getJapaneseCatalog());
   const byId = Object.fromEntries(families.map((f) => [f.id, f]));
 
-  it("builds dare / nani / itsu / dore stem families from blocks 1–10", () => {
+  it("builds dare / nani / itsu / dore stem families from playable blocks", () => {
     expect(byId.dare).toBeTruthy();
     expect(byId.dare.nodes.map((n) => n.romaji.toLowerCase())).toEqual(
-      expect.arrayContaining(["dare", "dareka", "daremo", "daredemo"]),
+      expect.arrayContaining(["dare", "dareka"]),
     );
 
     expect(byId.nani).toBeTruthy();
     const naniKeys = [...new Set(byId.nani.nodes.map((n) => n.romaji.toLowerCase()))];
-    expect(naniKeys).toEqual(expect.arrayContaining(["nani", "nanimo", "nandemo"]));
+    expect(naniKeys).toEqual(expect.arrayContaining(["nani"]));
     expect(naniKeys.some((k) => k === "naka")).toBe(false);
 
     expect(byId.itsu).toBeTruthy();
     expect([...new Set(byId.itsu.nodes.map((n) => n.romaji.toLowerCase()))]).toEqual(
-      expect.arrayContaining(["itsu", "itsumo"]),
+      expect.arrayContaining(["itsu"]),
     );
 
     expect(byId.dore).toBeTruthy();
     expect([...new Set(byId.dore.nodes.map((n) => n.romaji.toLowerCase()))]).toEqual(
-      expect.arrayContaining(["dore", "doredemo"]),
+      expect.arrayContaining(["dore"]),
     );
   });
 
@@ -53,7 +53,7 @@ describe("word-families", () => {
       expect(family.nodes.length).toBeGreaterThanOrEqual(2);
       for (const node of family.nodes) {
         expect(node.blockNumber).toBeGreaterThanOrEqual(1);
-        expect(node.blockNumber).toBeLessThanOrEqual(10);
+        expect(node.blockNumber).toBeLessThanOrEqual(20);
         expect(node.romaji.length).toBeGreaterThan(0);
         expect(node.english.length).toBeGreaterThan(0);
       }

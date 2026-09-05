@@ -1,0 +1,754 @@
+LRMastery Japanese vocabulary #251–1000 — audited revision
+750 items; Blocks 6–20; 50 items each.
+Ranking score: 50% English spoken-frequency rank + 50% CEJC rank (equal log-rank scales).
+
+251 | B6.01 | ore | 俺 | I / me (rough male) | ENG #2 | CEJC #102
+252 | B6.02 | iru | 居る | be / exist (living things) | ENG #3 | CEJC #66
+253 | B6.03 | boku | 僕 | I / me (male) | ENG #2 | CEJC #203
+254 | B6.04 | kimi | 君 | you | ENG #1 | CEJC #705
+255 | B6.05 | yaru | 遣る | do / give | ENG #11 | CEJC #46
+256 | B6.06 | aru | 有る | have / exist | ENG #14 | CEJC #37
+257 | B6.07 | iya | いや | no / unpleasant | ENG #26 | CEJC #52
+258 | B6.08 | yoi | 良い | good | ENG #42 | CEJC #33
+259 | B6.09 | omou | 思う | think | ENG #40 | CEJC #48
+260 | B6.10 | maa | まあ | well / I guess | ENG #56 | CEJC #45
+261 | B6.11 | donna | どんな | what kind of | ENG #12 | CEJC #581
+262 | B6.12 | toki | 時 | time / when | ENG #76 | CEJC #78
+263 | B6.13 | kou | こう | like this | ENG #96 | CEJC #61
+264 | B6.14 | kangaeru | 考える | think / consider | ENG #40 | CEJC #204
+265 | B6.15 | kare | 彼 | he / boyfriend | ENG #19 | CEJC #527
+266 | B6.16 | uun | ううん | no / uh-uh | ENG #26 | CEJC #371
+267 | B6.17 | eru | 得る | obtain / gain | ENG #17 | CEJC #731
+268 | B6.18 | yoku | 良く | well / often | ENG #56 | CEJC #181
+269 | B6.19 | mukou | 向こう | over there / the other side | ENG #35 | CEJC #335
+270 | B6.20 | dasu | 出す | take out / put out | ENG #60 | CEJC #177
+271 | B6.21 | hitori | 一人 | one person / alone | ENG #54 | CEJC #220
+272 | B6.22 | ichiou | 一応 | for now / technically | ENG #53 | CEJC #236
+273 | B6.23 | yatsu | 奴 | guy / thing | ENG #100 | CEJC #111
+274 | B6.24 | hanashi | 話 | talk / story | ENG #95 | CEJC #120
+275 | B6.25 | kureru | 呉れる | give me / us | ENG #87 | CEJC #140
+276 | B6.26 | mieru | 見える | can see / look | ENG #48 | CEJC #289
+277 | B6.27 | deru | 出る | go out / come out | ENG #111 | CEJC #105
+278 | B6.28 | kanji | 感じ | feeling / impression | ENG #128 | CEJC #95
+279 | B6.29 | moshi | 若し | if | ENG #47 | CEJC #329
+280 | B6.30 | zutto | ずっと | the whole time / much more | ENG #76 | CEJC #211
+281 | B6.31 | tada | 唯 | just / merely | ENG #31 | CEJC #726
+282 | B6.32 | ireru | 入れる | put in | ENG #141 | CEJC #131
+283 | B6.33 | migi | 右 | right | ENG #39 | CEJC #631
+284 | B6.34 | amari | 余り | not much / too much | ENG #129 | CEJC #166
+285 | B6.35 | mecha | 目茶 | really / extremely | ENG #90 | CEJC #263
+286 | B6.36 | fuu | 風 | way / style | ENG #96 | CEJC #244
+287 | B6.37 | tashika | 確か | if I remember right / certain | ENG #118 | CEJC #195
+288 | B6.38 | imi | 意味 | meaning | ENG #92 | CEJC #271
+289 | B6.39 | kekkou | 結構 | fine / quite | ENG #192 | CEJC #115
+290 | B6.40 | dame | 駄目 | no good / can't | ENG #166 | CEJC #139
+291 | B6.41 | ataru | 当たる | hit / be right | ENG #39 | CEJC #818
+292 | B6.42 | kanojo | 彼女 | she / girlfriend | ENG #43 | CEJC #784
+293 | B6.43 | naru | 成る | become | ENG #494 | CEJC #49
+294 | B6.44 | hitsuyou | 必要 | necessary / need | ENG #89 | CEJC #390
+295 | B6.45 | sagasu | 探す | look for | ENG #59 | CEJC #642
+296 | B6.46 | konkai | 今回 | this time | ENG #76 | CEJC #480
+297 | B6.47 | konoaida | 此の間 | the other day | ENG #116 | CEJC #305
+298 | B6.48 | futari | 二人 | two people | ENG #123 | CEJC #289
+299 | B6.49 | naruhodo | 成る程 | I see | ENG #204 | CEJC #162
+300 | B6.50 | katazukeru | 片付ける | tidy up / put away | ENG #44 | CEJC #1052
+301 | B7.01 | yameru | 止める | stop / quit | ENG #148 | CEJC #243
+302 | B7.02 | sukoshi | 少し | a little | ENG #97 | CEJC #431
+303 | B7.03 | ganbaru | 頑張る | do one's best | ENG #115 | CEJC #359
+304 | B7.04 | appu | アップ | up / increase | ENG #44 | CEJC #1154
+305 | B7.05 | kakeru | 掛ける | hang / call / put on | ENG #141 | CEJC #291
+306 | B7.06 | yobu | 呼ぶ | call / invite | ENG #99 | CEJC #455
+307 | B7.07 | chigau | 違う | be different / wrong | ENG #413 | CEJC #85
+308 | B7.08 | saikou | 最高 | the best / awesome | ENG #42 | CEJC #1382
+309 | B7.09 | mazu | 先ず | first / firstly | ENG #145 | CEJC #321
+310 | B7.10 | ura | 裏 | back / reverse side | ENG #72 | CEJC #749
+311 | B7.11 | watasu | 渡す | hand over / give | ENG #87 | CEJC #602
+312 | B7.12 | naze | 何故 | why | ENG #64 | CEJC #874
+313 | B7.13 | tokui | 得意 | good at / strong point | ENG #42 | CEJC #1467
+314 | B7.14 | ijou | 以上 | more than / that's all | ENG #107 | CEJC #480
+315 | B7.15 | yahari | 矢張り | as expected / after all | ENG #472 | CEJC #81
+316 | B7.16 | sasuga | 流石 | as expected | ENG #67 | CEJC #880
+317 | B7.17 | kotoshi | 今年 | this year | ENG #142 | CEJC #357
+318 | B7.18 | kane | 金 | money | ENG #182 | CEJC #288
+319 | B7.19 | issho | 一緒 | together | ENG #260 | CEJC #198
+320 | B7.20 | koro | 頃 | around / time | ENG #160 | CEJC #360
+321 | B7.21 | kyonen | 去年 | last year | ENG #142 | CEJC #418
+322 | B7.22 | tochuu | 途中 | on the way / midway | ENG #96 | CEJC #677
+323 | B7.23 | tanomu | 頼む | ask / request | ENG #144 | CEJC #416
+324 | B7.24 | kaiwa | 会話 | conversation | ENG #95 | CEJC #717
+325 | B7.25 | tsutaeru | 伝える | tell / convey | ENG #61 | CEJC #1226
+326 | B7.26 | ooi | 多い | many / a lot | ENG #273 | CEJC #212
+327 | B7.27 | hajimete | 初めて | for the first time | ENG #145 | CEJC #461
+328 | B7.28 | oriru | 下りる | get off / go down | ENG #112 | CEJC #639
+329 | B7.29 | taimingu | タイミング | timing | ENG #76 | CEJC #1105
+330 | B7.30 | daisuki | 大好き | love / really like | ENG #106 | CEJC #741
+331 | B7.31 | kondo | 今度 | next time / this time | ENG #235 | CEJC #299
+332 | B7.32 | papa | パパ | dad / papa | ENG #213 | CEJC #342
+333 | B7.33 | maniau | 間に合う | make it in time | ENG #76 | CEJC #1192
+334 | B7.34 | kanzuru | 感ずる | feel | ENG #128 | CEJC #644
+335 | B7.35 | erai | 偉い | great / important | ENG #149 | CEJC #558
+336 | B7.36 | choudai | 頂戴 | give me / please | ENG #87 | CEJC #1094
+337 | B7.37 | choi | ちょい | a little | ENG #97 | CEJC #975
+338 | B7.38 | naka | 中 | inside | ENG #407 | CEJC #174
+339 | B7.39 | kekkyoku | 結局 | in the end / after all | ENG #288 | CEJC #265
+340 | B7.40 | honma | 本真 | really / truth | ENG #90 | CEJC #1086
+341 | B7.41 | betsu | 別 | different / separate | ENG #413 | CEJC #176
+342 | B7.42 | yabai | やばい | bad / crazy / awesome | ENG #341 | CEJC #234
+343 | B7.43 | koshi | 腰 | lower back / hips | ENG #72 | CEJC #1551
+344 | B7.44 | mawari | 周り | around / surroundings | ENG #160 | CEJC #602
+345 | B7.45 | zannen | 残念 | too bad / unfortunate | ENG #101 | CEJC #1069
+346 | B7.46 | kubaru | 配る | hand out / distribute | ENG #87 | CEJC #1285
+347 | B7.47 | omoshiroi | 面白い | interesting / funny | ENG #382 | CEJC #216
+348 | B7.48 | nukeru | 抜ける | come out / leave | ENG #111 | CEJC #985
+349 | B7.49 | aruku | 歩く | walk | ENG #270 | CEJC #338
+350 | B7.50 | kawaru | 変わる | change | ENG #377 | CEJC #229
+351 | B8.01 | yoroshiku | 宜しく | please / regards | ENG #117 | CEJC #964
+352 | B8.02 | mondai | 問題 | problem | ENG #254 | CEJC #380
+353 | B8.03 | sagyou | 作業 | work / task | ENG #109 | CEJC #1094
+354 | B8.04 | mawaru | 回る | go around / turn | ENG #218 | CEJC #476
+355 | B8.05 | sakuhin | 作品 | work / piece | ENG #109 | CEJC #1105
+356 | B8.06 | tomaru | 泊まる | stay overnight | ENG #187 | CEJC #583
+357 | B8.07 | kiru | 切る | cut | ENG #353 | CEJC #276
+358 | B8.08 | me | 目 | eye | ENG #292 | CEJC #348
+359 | B8.09 | ikiru | 生きる | live / be alive | ENG #198 | CEJC #561
+360 | B8.10 | okuru | 送る | send | ENG #269 | CEJC #392
+361 | B8.11 | houhou | 方法 | method / way | ENG #96 | CEJC #1382
+362 | B8.12 | nokosu | 残す | leave behind | ENG #111 | CEJC #1179
+363 | B8.13 | sugu | 直ぐ | right away / nearby | ENG #360 | CEJC #286
+364 | B8.14 | kirei | 奇麗 | beautiful / clean | ENG #338 | CEJC #314
+365 | B8.15 | dono | 何の | which / what kind of | ENG #227 | CEJC #508
+366 | B8.16 | masaka | まさか | no way / surely not | ENG #96 | CEJC #1483
+367 | B8.17 | jikka | 実家 | parents' home | ENG #153 | CEJC #863
+368 | B8.18 | akeru | 開ける | open | ENG #251 | CEJC #484
+369 | B8.19 | zenzen | 全然 | not at all / totally | ENG #809 | CEJC #118
+370 | B8.20 | negau | 願う | wish / request | ENG #347 | CEJC #331
+371 | B8.21 | kotoba | 言葉 | word / language | ENG #275 | CEJC #439
+372 | B8.22 | kao | 顔 | face | ENG #328 | CEJC #358
+373 | B8.23 | sakki | さっき | a moment ago | ENG #414 | CEJC #271
+374 | B8.24 | kitto | 急度 | surely / probably | ENG #336 | CEJC #349
+375 | B8.25 | ironna | 色んな | various / different | ENG #413 | CEJC #273
+376 | B8.26 | mazui | 不味い | bad-tasting / bad | ENG #166 | CEJC #826
+377 | B8.27 | baai | 場合 | case / situation | ENG #308 | CEJC #399
+378 | B8.28 | tonari | 隣り | next door / beside | ENG #235 | CEJC #573
+379 | B8.29 | dekakeru | 出掛ける | go out | ENG #111 | CEJC #1422
+380 | B8.30 | tsureru | 連れる | take someone along | ENG #196 | CEJC #720
+381 | B8.31 | toriaezu | 取り敢えず | for now / anyway | ENG #370 | CEJC #343
+382 | B8.32 | suteki | 素敵 | lovely / nice | ENG #179 | CEJC #826
+383 | B8.33 | tetsudau | 手伝う | help / lend a hand | ENG #125 | CEJC #1285
+384 | B8.34 | shiraberu | 調べる | check / investigate | ENG #266 | CEJC #516
+385 | B8.35 | shinu | 死ぬ | die | ENG #331 | CEJC #402
+386 | B8.36 | sukunai | 少ない | few / not many | ENG #318 | CEJC #422
+387 | B8.37 | sugiru | 過ぎる | pass / exceed / too much | ENG #439 | CEJC #293
+388 | B8.38 | tariru | 足りる | be enough | ENG #219 | CEJC #688
+389 | B8.39 | bun | 分 | part / amount | ENG #325 | CEJC #429
+390 | B8.40 | denwa | 電話 | phone / call | ENG #346 | CEJC #401
+391 | B8.41 | harau | 払う | pay | ENG #256 | CEJC #592
+392 | B8.42 | shurui | 種類 | kind / type | ENG #189 | CEJC #862
+393 | B8.43 | ookina | 大きな | big / large | ENG #169 | CEJC #995
+394 | B8.44 | choudo | 丁度 | exactly / just right | ENG #371 | CEJC #386
+395 | B8.45 | jimoto | 地元 | local area / hometown | ENG #153 | CEJC #1154
+396 | B8.46 | yuugata | 夕方 | early evening | ENG #137 | CEJC #1333
+397 | B8.47 | noru | 乗る | ride / get on | ENG #569 | CEJC #239
+398 | B8.48 | aku | 空く | open / become empty | ENG #251 | CEJC #651
+399 | B8.49 | rainen | 来年 | next year | ENG #235 | CEJC #720
+400 | B8.50 | tatsu | 立つ | stand | ENG #279 | CEJC #588
+401 | B9.01 | hisashii | 久しい | long time | ENG #171 | CEJC #1078
+402 | B9.02 | mawasu | 回す | turn / pass around | ENG #218 | CEJC #806
+403 | B9.03 | kakunin | 確認 | check / confirmation | ENG #266 | CEJC #635
+404 | B9.04 | koosu | コース | course | ENG #223 | CEJC #786
+405 | B9.05 | subete | 全て | everything / all | ENG #176 | CEJC #1052
+406 | B9.06 | saki | 先 | ahead / earlier | ENG #437 | CEJC #351
+407 | B9.07 | nii | 兄 | older brother | ENG #296 | CEJC #563
+408 | B9.08 | ochiru | 落ちる | fall / drop | ENG #344 | CEJC #471
+409 | B9.09 | shimau | 仕舞う | put away / finish | ENG #443 | CEJC #347
+410 | B9.10 | tateru | 立てる | stand up / build | ENG #279 | CEJC #612
+411 | B9.11 | ureshii | 嬉しい | happy / glad | ENG #293 | CEJC #578
+412 | B9.12 | danshi | 男子 | boy / male student | ENG #156 | CEJC #1251
+413 | B9.13 | oto | 音 | sound | ENG #301 | CEJC #568
+414 | B9.14 | utsu | 打つ | hit / shoot | ENG #305 | CEJC #560
+415 | B9.15 | omoidasu | 思い出す | remember / recall | ENG #197 | CEJC #952
+416 | B9.16 | wakai | 若い | young | ENG #375 | CEJC #438
+417 | B9.17 | mukashi | 昔 | long ago / old days | ENG #598 | CEJC #254
+418 | B9.18 | jissai | 実際 | actually / in reality | ENG #300 | CEJC #592
+419 | B9.19 | owari | 終わり | end | ENG #288 | CEJC #631
+420 | B9.20 | maji | まじ | seriously / for real | ENG #535 | CEJC #304
+421 | B9.21 | kireru | 切れる | break / run out / be cut | ENG #234 | CEJC #834
+422 | B9.22 | han | 半 | half | ENG #433 | CEJC #399
+423 | B9.23 | zentai | 全体 | whole / overall | ENG #259 | CEJC #746
+424 | B9.24 | nakanaka | 中々 | quite / not easily | ENG #425 | CEJC #411
+425 | B9.25 | koukou | 高校 | high school | ENG #441 | CEJC #397
+426 | B9.26 | raku | 楽 | easy / comfortable | ENG #351 | CEJC #524
+427 | B9.27 | kaisha | 会社 | company | ENG #508 | CEJC #337
+428 | B9.28 | idou | 移動 | move / transfer | ENG #183 | CEJC #1168
+429 | B9.29 | sensei | 先生 | teacher | ENG #998 | CEJC #152
+430 | B9.30 | shiriai | 知り合い | acquaintance / someone you know | ENG #163 | CEJC #1367
+431 | B9.31 | osaeru | 押さえる | hold down / suppress | ENG #200 | CEJC #1069
+432 | B9.32 | daiji | 大事 | important | ENG #417 | CEJC #440
+433 | B9.33 | heta | 下手 | bad at / unskilled | ENG #166 | CEJC #1346
+434 | B9.34 | nigate | 苦手 | bad at / not good with | ENG #166 | CEJC #1355
+435 | B9.35 | ugokasu | 動かす | move something | ENG #183 | CEJC #1251
+436 | B9.36 | bubun | 部分 | part / section | ENG #325 | CEJC #625
+437 | B9.37 | baito | バイト | part-time job | ENG #241 | CEJC #898
+438 | B9.38 | kazoku | 家族 | family | ENG #265 | CEJC #806
+439 | B9.39 | katei | 家庭 | home / household | ENG #153 | CEJC #1567
+440 | B9.40 | kokugo | 国語 | Japanese language (school subject) | ENG #282 | CEJC #749
+441 | B9.41 | hon | 本 | book | ENG #361 | CEJC #570
+442 | B9.42 | nagasu | 流す | let flow / play | ENG #194 | CEJC #1213
+443 | B9.43 | taihen | 大変 | tough / serious | ENG #774 | CEJC #228
+444 | B9.44 | shinpai | 心配 | worry | ENG #252 | CEJC #890
+445 | B9.45 | futsuu | 普通 | normal / usually | ENG #954 | CEJC #179
+446 | B9.46 | yoyuu | 余裕 | room / leeway | ENG #230 | CEJC #1014
+447 | B9.47 | uru | 売る | sell | ENG #563 | CEJC #345
+448 | B9.48 | aisatsu | 挨拶 | greeting | ENG #195 | CEJC #1251
+449 | B9.49 | karada | 体 | body | ENG #392 | CEJC #540
+450 | B9.50 | uso | 嘘 | lie / not true | ENG #513 | CEJC #395
+451 | B10.01 | hiku | 引く | pull / play | ENG #390 | CEJC #552
+452 | B10.02 | haha | 母 | mother | ENG #221 | CEJC #1117
+453 | B10.03 | hen | 辺 | area / around | ENG #830 | CEJC #227
+454 | B10.04 | yoko | 横 | side / beside | ENG #402 | CEJC #548
+455 | B10.05 | oyaji | 親父 | dad / old man | ENG #213 | CEJC #1202
+456 | B10.06 | chekku | チェック | check | ENG #266 | CEJC #922
+457 | B10.07 | aida | 間 | between / while | ENG #475 | CEJC #460
+458 | B10.08 | yasumi | 休み | rest / day off | ENG #397 | CEJC #573
+459 | B10.09 | ashi | 足 | foot / leg | ENG #453 | CEJC #491
+460 | B10.10 | nareru | 慣れる | get used to | ENG #286 | CEJC #857
+461 | B10.11 | yotei | 予定 | plan / schedule | ENG #329 | CEJC #726
+462 | B10.12 | zettai | 絶対 | definitely / absolutely | ENG #900 | CEJC #219
+463 | B10.13 | tooru | 通る | pass through | ENG #439 | CEJC #522
+464 | B10.14 | machigau | 間違う | be wrong / make a mistake | ENG #209 | CEJC #1285
+465 | B10.15 | hotondo | 殆ど | almost / mostly | ENG #445 | CEJC #516
+466 | B10.16 | kantan | 簡単 | easy / simple | ENG #351 | CEJC #696
+467 | B10.17 | ryouhou | 両方 | both | ENG #324 | CEJC #770
+468 | B10.18 | hanbun | 半分 | half | ENG #433 | CEJC #545
+469 | B10.19 | ryoukai | 了解 | understood / got it | ENG #204 | CEJC #1355
+470 | B10.20 | nee | 姉 | older sister | ENG #415 | CEJC #576
+471 | B10.21 | kawaii | 可愛い | cute | ENG #794 | CEJC #263
+472 | B10.22 | katai | 固い | hard / stiff | ENG #311 | CEJC #826
+473 | B10.23 | zenin | 全員 | everyone / all members | ENG #376 | CEJC #658
+474 | B10.24 | rikai | 理解 | understanding | ENG #204 | CEJC #1382
+475 | B10.25 | soto | 外 | outside | ENG #482 | CEJC #491
+476 | B10.26 | daibu | 大分 | quite / considerably | ENG #425 | CEJC #572
+477 | B10.27 | kimaru | 決まる | be decided | ENG #528 | CEJC #444
+478 | B10.28 | oya | 親 | parent | ENG #514 | CEJC #459
+479 | B10.29 | kimeru | 決める | decide | ENG #528 | CEJC #451
+480 | B10.30 | shitsumon | 質問 | question | ENG #295 | CEJC #922
+481 | B10.31 | tamatama | 偶々 | by chance | ENG #343 | CEJC #792
+482 | B10.32 | rain | ライン | line | ENG #421 | CEJC #620
+483 | B10.33 | tonikaku | 兎に角 | anyway | ENG #370 | CEJC #732
+484 | B10.34 | amai | 甘い | sweet | ENG #537 | CEJC #474
+485 | B10.35 | yorokobu | 喜ぶ | be pleased / rejoice | ENG #293 | CEJC #995
+486 | B10.36 | hiraku | 開く | open / hold | ENG #251 | CEJC #1202
+487 | B10.37 | tooi | 遠い | far | ENG #399 | CEJC #690
+488 | B10.38 | kikaku | 企画 | plan / project | ENG #329 | CEJC #890
+489 | B10.39 | ushiro | 後ろ | behind | ENG #449 | CEJC #614
+490 | B10.40 | inu | 犬 | dog | ENG #372 | CEJC #789
+491 | B10.41 | geemu | ゲーム | game | ENG #385 | CEJC #758
+492 | B10.42 | kyoumi | 興味 | interest | ENG #382 | CEJC #770
+493 | B10.43 | kakaru | 掛かる | take / cost / hang | ENG #925 | CEJC #266
+494 | B10.44 | jugyou | 授業 | class / lesson | ENG #572 | CEJC #477
+495 | B10.45 | nuku | 抜く | pull out / remove | ENG #390 | CEJC #761
+496 | B10.46 | unten | 運転 | driving | ENG #337 | CEJC #910
+497 | B10.47 | keitai | 携帯 | mobile phone | ENG #346 | CEJC #887
+498 | B10.48 | ningen | 人間 | human / person | ENG #552 | CEJC #505
+499 | B10.49 | waru | 割る | break / split | ENG #234 | CEJC #1433
+500 | B10.50 | modoru | 戻る | return / go back | ENG #565 | CEJC #497
+501 | B11.01 | tsumori | 積り | intention / plan | ENG #329 | CEJC #964
+502 | B11.02 | suteru | 捨てる | throw away | ENG #489 | CEJC #607
+503 | B11.03 | raishuu | 来週 | next week | ENG #267 | CEJC #1267
+504 | B11.04 | oshieru | 教える | teach / tell | ENG #722 | CEJC #381
+505 | B11.05 | yononaka | 世の中 | the world / society | ENG #232 | CEJC #1506
+506 | B11.06 | hobo | 略 | almost / roughly | ENG #445 | CEJC #686
+507 | B11.07 | yome | 嫁 | wife / bride | ENG #268 | CEJC #1267
+508 | B11.08 | tobu | 飛ぶ | fly / jump | ENG #531 | CEJC #563
+509 | B11.09 | nayamu | 悩む | worry / struggle with | ENG #252 | CEJC #1422
+510 | B11.10 | muku | 向く | face / turn toward | ENG #328 | CEJC #1047
+511 | B11.11 | kazu | 数 | number / quantity | ENG #335 | CEJC #1025
+512 | B11.12 | kanari | 可成 | quite / considerably | ENG #425 | CEJC #770
+513 | B11.13 | isha | 医者 | doctor | ENG #321 | CEJC #1094
+514 | B11.14 | shibaraku | 暫く | for a while | ENG #281 | CEJC #1285
+515 | B11.15 | ue | 上 | above / on | ENG #1251 | CEJC #212
+516 | B11.16 | gawa | 側 | side | ENG #402 | CEJC #846
+517 | B11.17 | oji | 伯父 | uncle | ENG #591 | CEJC #552
+518 | B11.18 | sorezore | 其々 | each / respectively | ENG #367 | CEJC #985
+519 | B11.19 | katsu | 勝つ | win | ENG #471 | CEJC #732
+520 | B11.20 | tsuyoi | 強い | strong | ENG #800 | CEJC #387
+521 | B11.21 | osu | 押す | push | ENG #640 | CEJC #511
+522 | B11.22 | tsukareru | 疲れる | get tired | ENG #568 | CEJC #596
+523 | B11.23 | sagaru | 下がる | go down / fall | ENG #344 | CEJC #1094
+524 | B11.24 | otosu | 落とす | drop / lower | ENG #422 | CEJC #857
+525 | B11.25 | kankei | 関係 | relationship / connection | ENG #872 | CEJC #361
+526 | B11.26 | warau | 笑う | laugh | ENG #529 | CEJC #667
+527 | B11.27 | sasu | 差す | point / insert | ENG #333 | CEJC #1168
+528 | B11.28 | karui | 軽い | light | ENG #391 | CEJC #969
+529 | B11.29 | eiga | 映画 | movie | ENG #485 | CEJC #749
+530 | B11.30 | sumaho | スマホ | smartphone | ENG #346 | CEJC #1128
+531 | B11.31 | narabu | 並ぶ | line up | ENG #421 | CEJC #890
+532 | B11.32 | koe | 声 | voice | ENG #696 | CEJC #488
+533 | B11.33 | subarashii | 素晴らしい | wonderful | ENG #493 | CEJC #741
+534 | B11.34 | utau | 歌う | sing | ENG #525 | CEJC #689
+535 | B11.35 | oishii | 美味しい | delicious | ENG #2299 | CEJC #116
+536 | B11.36 | danna | 旦那 | husband | ENG #426 | CEJC #898
+537 | B11.37 | onsen | 温泉 | hot spring | ENG #447 | CEJC #851
+538 | B11.38 | pasu | パス | pass | ENG #439 | CEJC #874
+539 | B11.39 | sorosoro | そろそろ | soon / about time | ENG #360 | CEJC #1111
+540 | B11.40 | riyuu | 理由 | reason | ENG #394 | CEJC #1003
+541 | B11.41 | ongaku | 音楽 | music | ENG #523 | CEJC #714
+542 | B11.42 | kurasu | クラス | class | ENG #572 | CEJC #649
+543 | B11.43 | kashi | 菓子 | sweets / confectionery | ENG #537 | CEJC #701
+544 | B11.44 | douse | どうせ | anyway / in any case | ENG #370 | CEJC #1105
+545 | B11.45 | muri | 無理 | impossible / unreasonable | ENG #1089 | CEJC #300
+546 | B11.46 | bangou | 番号 | number | ENG #335 | CEJC #1251
+547 | B11.47 | hajimaru | 始まる | begin / start | ENG #566 | CEJC #667
+548 | B11.48 | chikai | 近い | near / close | ENG #821 | CEJC #427
+549 | B11.49 | sawaru | 触る | touch | ENG #429 | CEJC #938
+550 | B11.50 | musume | 娘 | daughter / young woman | ENG #467 | CEJC #851
+551 | B12.01 | okashii | 可笑しい | strange / funny | ENG #804 | CEJC #442
+552 | B12.02 | junban | 順番 | order / turn | ENG #354 | CEJC #1192
+553 | B12.03 | tagai | 互い | each other | ENG #367 | CEJC #1154
+554 | B12.04 | biiru | ビール | beer | ENG #807 | CEJC #446
+555 | B12.05 | zuibun | 随分 | quite / considerably | ENG #425 | CEJC #969
+556 | B12.06 | basu | バス | bus | ENG #883 | CEJC #405
+557 | B12.07 | byouin | 病院 | hospital | ENG #582 | CEJC #673
+558 | B12.08 | kochiragawa | 此方側 | this side | ENG #402 | CEJC #1063
+559 | B12.09 | haru | 張る | stick / stretch | ENG #594 | CEJC #667
+560 | B12.10 | hoteru | ホテル | hotel | ENG #669 | CEJC #580
+561 | B12.11 | shiai | 試合 | match / game | ENG #385 | CEJC #1135
+562 | B12.12 | shiroi | 白い | white | ENG #481 | CEJC #868
+563 | B12.13 | suu | 吸う | smoke / inhale | ENG #693 | CEJC #561
+564 | B12.14 | benkyou | 勉強 | study | ENG #788 | CEJC #484
+565 | B12.15 | yu | 湯 | hot water | ENG #379 | CEJC #1192
+566 | B12.16 | michi | 道 | road / way | ENG #613 | CEJC #672
+567 | B12.17 | okureru | 遅れる | be late / be delayed | ENG #345 | CEJC #1355
+568 | B12.18 | shiro | 白 | white | ENG #481 | CEJC #910
+569 | B12.19 | erabu | 選ぶ | choose | ENG #747 | CEJC #537
+570 | B12.20 | kaeri | 帰り | return / way home | ENG #565 | CEJC #758
+571 | B12.21 | terebi | テレビ | TV | ENG #698 | CEJC #588
+572 | B12.22 | nobiru | 伸びる | grow / extend | ENG #521 | CEJC #846
+573 | B12.23 | ureru | 売れる | sell well | ENG #563 | CEJC #777
+574 | B12.24 | chiimu | チーム | team | ENG #491 | CEJC #917
+575 | B12.25 | kuchi | 口 | mouth | ENG #650 | CEJC #656
+576 | B12.26 | chigai | 違い | difference | ENG #413 | CEJC #1135
+577 | B12.27 | nioi | 匂い | smell | ENG #605 | CEJC #720
+578 | B12.28 | raamen | ラーメン | ramen | ENG #509 | CEJC #890
+579 | B12.29 | machigaeru | 間違える | make a mistake | ENG #597 | CEJC #739
+580 | B12.30 | kaesu | 返す | return / give back | ENG #565 | CEJC #792
+581 | B12.31 | aji | 味 | taste / flavour | ENG #949 | CEJC #428
+582 | B12.32 | hima | 暇 | free time / not busy | ENG #464 | CEJC #1021
+583 | B12.33 | kuni | 国 | country | ENG #478 | CEJC #985
+584 | B12.34 | nashi | 無し | none / without | ENG #653 | CEJC #677
+585 | B12.35 | keikaku | 計画 | plan | ENG #329 | CEJC #1551
+586 | B12.36 | temae | 手前 | in front / this side | ENG #461 | CEJC #1034
+587 | B12.37 | jiyuu | 自由 | freedom / free | ENG #464 | CEJC #1027
+588 | B12.38 | uta | 歌 | song | ENG #630 | CEJC #714
+589 | B12.39 | mattaku | 全く | completely / really | ENG #822 | CEJC #519
+590 | B12.40 | cha | 茶 | tea | ENG #1088 | CEJC #371
+591 | B12.41 | booru | ボール | ball | ENG #541 | CEJC #868
+592 | B12.42 | aka | 赤 | red | ENG #526 | CEJC #910
+593 | B12.43 | udon | 饂飩 | udon noodles | ENG #509 | CEJC #952
+594 | B12.44 | noseru | 乗せる | put on / give a ride | ENG #569 | CEJC #839
+595 | B12.45 | kuro | 黒 | black | ENG #476 | CEJC #1047
+596 | B12.46 | houkoku | 報告 | report | ENG #503 | CEJC #981
+597 | B12.47 | hipparu | 引っ張る | pull / drag | ENG #390 | CEJC #1355
+598 | B12.48 | tokidoki | 時々 | sometimes | ENG #409 | CEJC #1285
+599 | B12.49 | kankaku | 感覚 | sense / feeling | ENG #542 | CEJC #917
+600 | B12.50 | shiken | 試験 | exam / test | ENG #573 | CEJC #868
+601 | B13.01 | kouen | 公園 | park | ENG #638 | CEJC #765
+602 | B13.02 | naosu | 直す | fix / correct | ENG #580 | CEJC #874
+603 | B13.03 | kuroi | 黒い | black | ENG #476 | CEJC #1117
+604 | B13.04 | kaado | カード | card | ENG #571 | CEJC #898
+605 | B13.05 | bentou | 弁当 | boxed lunch | ENG #634 | CEJC #792
+606 | B13.06 | hakkiri | はっきり | clearly | ENG #427 | CEJC #1277
+607 | B13.07 | somosomo | 抑 | to begin with | ENG #566 | CEJC #910
+608 | B13.08 | kaburu | 被る | put on / wear on the head | ENG #378 | CEJC #1483
+609 | B13.09 | nakunaru | 無くなる | disappear / run out | ENG #1098 | CEJC #409
+610 | B13.10 | kekkon | 結婚 | marriage | ENG #861 | CEJC #552
+611 | B13.11 | isshun | 一瞬 | an instant / a moment | ENG #414 | CEJC #1346
+612 | B13.12 | souji | 掃除 | cleaning | ENG #492 | CEJC #1094
+613 | B13.13 | renraku | 連絡 | contact | ENG #857 | CEJC #563
+614 | B13.14 | baka | 馬鹿 | idiot / stupid | ENG #885 | CEJC #544
+615 | B13.15 | daitai | 大体 | roughly / generally | ENG #1495 | CEJC #291
+616 | B13.16 | senmon | 専門 | speciality / specialist field | ENG #524 | CEJC #1034
+617 | B13.17 | kanou | 可能 | possible | ENG #632 | CEJC #829
+618 | B13.18 | mannaka | 真ん中 | middle / centre | ENG #780 | CEJC #644
+619 | B13.19 | ki | 木 | tree / wood | ENG #736 | CEJC #692
+620 | B13.20 | sushi | 寿司 | sushi | ENG #509 | CEJC #1086
+621 | B13.21 | ukeru | 受ける | receive / take | ENG #1120 | CEJC #422
+622 | B13.22 | natsu | 夏 | summer | ENG #858 | CEJC #583
+623 | B13.23 | abunai | 危ない | dangerous | ENG #905 | CEJC #548
+624 | B13.24 | tokuni | 特に | especially | ENG #995 | CEJC #500
+625 | B13.25 | jibun | 自分 | self / myself | ENG #2913 | CEJC #137
+626 | B13.26 | shashin | 写真 | photo | ENG #1382 | CEJC #339
+627 | B13.27 | kyaku | 客 | guest / customer | ENG #1015 | CEJC #494
+628 | B13.28 | kitsui | きつい | tough / tight | ENG #774 | CEJC #692
+629 | B13.29 | inaka | 田舎 | countryside | ENG #478 | CEJC #1251
+630 | B13.30 | kimochi | 気持ち | feeling | ENG #1111 | CEJC #453
+631 | B13.31 | nokoru | 残る | remain / stay | ENG #1060 | CEJC #482
+632 | B13.32 | naku | 泣く | cry | ENG #558 | CEJC #1047
+633 | B13.33 | kizuku | 気付く | notice / realise | ENG #674 | CEJC #834
+634 | B13.34 | tatoeba | 例えば | for example | ENG #1725 | CEJC #268
+635 | B13.35 | gaikoku | 外国 | foreign country | ENG #478 | CEJC #1267
+636 | B13.36 | moji | 文字 | letter / character | ENG #615 | CEJC #938
+637 | B13.37 | ao | 青 | blue | ENG #643 | CEJC #890
+638 | B13.38 | eigo | 英語 | English | ENG #913 | CEJC #585
+639 | B13.39 | kamera | カメラ | camera | ENG #904 | CEJC #607
+640 | B13.40 | jouhou | 情報 | information | ENG #782 | CEJC #724
+641 | B13.41 | shita | 下 | below / under | ENG #1879 | CEJC #255
+642 | B13.42 | an | 餡 | sweet bean paste | ENG #537 | CEJC #1162
+643 | B13.43 | tabemono | 食べ物 | food | ENG #509 | CEJC #1240
+644 | B13.44 | tesuto | テスト | test | ENG #573 | CEJC #1078
+645 | B13.45 | aite | 相手 | other person / partner | ENG #710 | CEJC #839
+646 | B13.46 | akai | 赤い | red | ENG #526 | CEJC #1226
+647 | B13.47 | wakeru | 分ける | divide / share | ENG #720 | CEJC #839
+648 | B13.48 | seki | 席 | seat | ENG #648 | CEJC #958
+649 | B13.49 | koi | 濃い | strong / thick | ENG #800 | CEJC #749
+650 | B13.50 | modosu | 戻す | put back / return | ENG #565 | CEJC #1154
+651 | B14.01 | ukaru | 受かる | pass (an exam) | ENG #439 | CEJC #1567
+652 | B14.02 | yukkuri | ゆっくり | slowly / take it easy | ENG #846 | CEJC #717
+653 | B14.03 | tame | 為 | purpose / sake | ENG #1451 | CEJC #375
+654 | B14.04 | guruupu | グループ | group | ENG #835 | CEJC #732
+655 | B14.05 | kowai | 怖い | scary | ENG #1973 | CEJC #259
+656 | B14.06 | shouga | 生姜 | ginger | ENG #509 | CEJC #1333
+657 | B14.07 | mijikai | 短い | short | ENG #735 | CEJC #863
+658 | B14.08 | hyou | 表 | table / chart | ENG #625 | CEJC #1052
+659 | B14.09 | kata | 方 | shoulder | ENG #1505 | CEJC #364
+660 | B14.10 | ippan | 一般 | general / ordinary | ENG #618 | CEJC #1069
+661 | B14.11 | happyou | 発表 | announcement / presentation | ENG #624 | CEJC #1063
+662 | B14.12 | kaa | 母 | mum | ENG #2259 | CEJC #225
+663 | B14.13 | kaze | 風邪 | cold / flu | ENG #581 | CEJC #1162
+664 | B14.14 | joukyou | 状況 | situation | ENG #778 | CEJC #818
+665 | B14.15 | agaru | 上がる | go up / rise | ENG #1459 | CEJC #383
+666 | B14.16 | mushiro | 寧ろ | rather | ENG #633 | CEJC #1052
+667 | B14.17 | nattou | 納豆 | natto | ENG #509 | CEJC #1382
+668 | B14.18 | hidoi | 酷い | awful / terrible | ENG #1037 | CEJC #592
+669 | B14.19 | jama | 邪魔 | in the way / bother | ENG #695 | CEJC #964
+670 | B14.20 | kanarazu | 必ず | without fail / definitely | ENG #900 | CEJC #709
+671 | B14.21 | arau | 洗う | wash | ENG #1014 | CEJC #620
+672 | B14.22 | mechakucha | 目茶苦茶 | mess / extremely | ENG #657 | CEJC #1052
+673 | B14.23 | karaoke | カラオケ | karaoke | ENG #525 | CEJC #1382
+674 | B14.24 | nyuuin | 入院 | hospitalisation | ENG #582 | CEJC #1226
+675 | B14.25 | saikin | 最近 | recently | ENG #1981 | CEJC #280
+676 | B14.26 | neko | 猫 | cat | ENG #803 | CEJC #834
+677 | B14.27 | gakusei | 学生 | student | ENG #917 | CEJC #711
+678 | B14.28 | furu | 降る | fall (rain/snow) | ENG #938 | CEJC #696
+679 | B14.29 | umai | 旨い | tasty / skilful | ENG #2299 | CEJC #236
+680 | B14.30 | kaminoke | 髪の毛 | hair | ENG #507 | CEJC #1467
+681 | B14.31 | yama | 山 | mountain | ENG #1160 | CEJC #540
+682 | B14.32 | aisu | アイス | ice cream / ice | ENG #871 | CEJC #770
+683 | B14.33 | tsukiau | 付き合う | go out with / associate with | ENG #550 | CEJC #1346
+684 | B14.34 | ryokou | 旅行 | travel / trip | ENG #1013 | CEJC #644
+685 | B14.35 | hana | 花 | flower | ENG #947 | CEJC #705
+686 | B14.36 | fushigi | 不思議 | strange / mysterious | ENG #804 | CEJC #874
+687 | B14.37 | naoru | 直る | get better / be fixed | ENG #580 | CEJC #1302
+688 | B14.38 | tokubetsu | 特別 | special | ENG #524 | CEJC #1483
+689 | B14.39 | kigyou | 企業 | company / enterprise | ENG #508 | CEJC #1545
+690 | B14.40 | kafe | カフェ | cafe | ENG #540 | CEJC #1447
+691 | B14.41 | ame | 雨 | rain | ENG #938 | CEJC #749
+692 | B14.42 | dekai | でかい | huge / big | ENG #1259 | CEJC #532
+693 | B14.43 | pasokon | パソコン | computer / PC | ENG #964 | CEJC #737
+694 | B14.44 | tanoshimu | 楽しむ | enjoy | ENG #614 | CEJC #1277
+695 | B14.45 | junbi | 準備 | preparation / prepare | ENG #878 | CEJC #839
+696 | B14.46 | wain | ワイン | wine | ENG #1076 | CEJC #658
+697 | B14.47 | kako | 過去 | past | ENG #598 | CEJC #1346
+698 | B14.48 | gogo | 午後 | afternoon / p.m. | ENG #756 | CEJC #1014
+699 | B14.49 | ruuru | ルール | rule | ENG #596 | CEJC #1355
+700 | B14.50 | kuttsuku | くっ付く | stick / be attached | ENG #594 | CEJC #1367
+701 | B15.01 | tsumetai | 冷たい | cold to the touch / cold-hearted | ENG #581 | CEJC #1422
+702 | B15.02 | hako | 箱 | box | ENG #634 | CEJC #1285
+703 | B15.03 | chuusha | 駐車 | parking | ENG #638 | CEJC #1285
+704 | B15.04 | tori | 鳥 | bird | ENG #941 | CEJC #814
+705 | B15.05 | manshon | マンション | apartment building | ENG #797 | CEJC #1008
+706 | B15.06 | umareru | 生まれる | be born | ENG #833 | CEJC #958
+707 | B15.07 | nenrei | 年齢 | age | ENG #773 | CEJC #1063
+708 | B15.08 | satsuei | 撮影 | filming / photography | ENG #808 | CEJC #1008
+709 | B15.09 | oba | 伯母 | aunt | ENG #1121 | CEJC #681
+710 | B15.10 | awaseru | 合わせる | match / combine | ENG #948 | CEJC #834
+711 | B15.11 | chi | 地 | ground / land | ENG #770 | CEJC #1078
+712 | B15.12 | shikatanai | 仕方無い | can't be helped / no choice | ENG #660 | CEJC #1302
+713 | B15.13 | keiken | 経験 | experience | ENG #853 | CEJC #958
+714 | B15.14 | kariru | 借りる | borrow / rent | ENG #1381 | CEJC #536
+715 | B15.15 | omoi | 重い | heavy | ENG #1280 | CEJC #590
+716 | B15.16 | kurabu | クラブ | club | ENG #659 | CEJC #1319
+717 | B15.17 | doubutsu | 動物 | animal | ENG #819 | CEJC #1021
+718 | B15.18 | yatto | 漸と | finally / at last | ENG #626 | CEJC #1413
+719 | B15.19 | nedan | 値段 | price | ENG #1061 | CEJC #749
+720 | B15.20 | kanzen | 完全 | complete / perfect | ENG #1067 | CEJC #749
+721 | B15.21 | aoi | 青い | blue | ENG #643 | CEJC #1413
+722 | B15.22 | tsuku | 付く | attach / arrive | ENG #2869 | CEJC #232
+723 | B15.23 | pan | パン | bread | ENG #1845 | CEJC #396
+724 | B15.24 | kenkyuu | 研究 | research | ENG #1574 | CEJC #488
+725 | B15.25 | joutai | 状態 | state / condition | ENG #1136 | CEJC #724
+726 | B15.26 | kyoku | 曲 | song / piece of music | ENG #630 | CEJC #1483
+727 | B15.27 | isu | 椅子 | chair | ENG #1084 | CEJC #770
+728 | B15.28 | kawari | 代わり | instead / replacement | ENG #877 | CEJC #995
+729 | B15.29 | seito | 生徒 | student / pupil | ENG #917 | CEJC #944
+730 | B15.30 | reberu | レベル | level | ENG #1036 | CEJC #816
+731 | B15.31 | kioku | 記憶 | memory | ENG #951 | CEJC #905
+732 | B15.32 | katachi | 形 | shape / form | ENG #1781 | CEJC #424
+733 | B15.33 | koeru | 越える | cross / exceed | ENG #818 | CEJC #1086
+734 | B15.34 | teeburu | テーブル | table | ENG #625 | CEJC #1506
+735 | B15.35 | chiiki | 地域 | area / region | ENG #830 | CEJC #1069
+736 | B15.36 | sa | 差 | difference | ENG #811 | CEJC #1117
+737 | B15.37 | taipu | タイプ | type | ENG #903 | CEJC #985
+738 | B15.38 | chanto | ちゃんと | properly | ENG #3258 | CEJC #210
+739 | B15.39 | tsukeru | 付ける | attach / turn on | ENG #2869 | CEJC #245
+740 | B15.40 | ha | 歯 | tooth | ENG #1063 | CEJC #829
+741 | B15.41 | onaka | 御腹 | stomach / belly | ENG #1612 | CEJC #503
+742 | B15.42 | daigaku | 大学 | university | ENG #2053 | CEJC #376
+743 | B15.43 | fudan | 普段 | usually / normally | ENG #1045 | CEJC #851
+744 | B15.44 | okosu | 起こす | wake someone / cause | ENG #611 | CEJC #1648
+745 | B15.45 | shoukai | 紹介 | introduction / introduce | ENG #1211 | CEJC #726
+746 | B15.46 | hikou | 飛行 | flight / aviation | ENG #1025 | CEJC #905
+747 | B15.47 | tsumaru | 詰まる | be blocked / be packed | ENG #989 | CEJC #952
+748 | B15.48 | tsuzuku | 続く | continue / last | ENG #850 | CEJC #1147
+749 | B15.49 | ochitsuku | 落ち着く | calm down / settle | ENG #758 | CEJC #1319
+750 | B15.50 | zehi | 是非 | definitely / by all means | ENG #900 | CEJC #1078
+751 | B16.01 | kitanai | 汚い | dirty | ENG #1001 | CEJC #952
+752 | B16.02 | tamago | 卵 | egg | ENG #1020 | CEJC #942
+753 | B16.03 | atatakai | 温かい | warm | ENG #1086 | CEJC #880
+754 | B16.04 | chiketto | チケット | ticket | ENG #787 | CEJC #1302
+755 | B16.05 | umi | 海 | sea | ENG #1027 | CEJC #944
+756 | B16.06 | sodateru | 育てる | raise / grow | ENG #750 | CEJC #1382
+757 | B16.07 | komu | 混む | be crowded | ENG #1210 | CEJC #777
+758 | B16.08 | kyanpu | キャンプ | camping / camp | ENG #1055 | CEJC #922
+759 | B16.09 | soudan | 相談 | consult / discuss | ENG #1011 | CEJC #985
+760 | B16.10 | zenjitsu | 前日 | the previous day | ENG #728 | CEJC #1467
+761 | B16.11 | midori | 緑 | green | ENG #906 | CEJC #1147
+762 | B16.12 | nuru | 塗る | paint / apply | ENG #845 | CEJC #1251
+763 | B16.13 | kawa | 川 | river | ENG #1070 | CEJC #944
+764 | B16.14 | renshuu | 練習 | practice | ENG #1320 | CEJC #739
+765 | B16.15 | imeeji | イメージ | image / impression | ENG #1728 | CEJC #537
+766 | B16.16 | todoku | 届く | arrive / reach | ENG #915 | CEJC #1213
+767 | B16.17 | shaberu | 喋る | chat / talk | ENG #2401 | CEJC #381
+768 | B16.18 | koudou | 行動 | action / behaviour | ENG #924 | CEJC #1213
+769 | B16.19 | hakobu | 運ぶ | carry / transport | ENG #612 | CEJC #1998
+770 | B16.20 | kurai | 暗い | dark / gloomy | ENG #790 | CEJC #1483
+771 | B16.21 | gyaku | 逆 | reverse / opposite | ENG #2835 | CEJC #319
+772 | B16.22 | konbini | コンビニ | convenience store | ENG #852 | CEJC #1367
+773 | B16.23 | furo | 風呂 | bath | ENG #1365 | CEJC #777
+774 | B16.24 | kensaku | 検索 | search | ENG #910 | CEJC #1302
+775 | B16.25 | ikinari | 行成 | suddenly | ENG #1137 | CEJC #1003
+776 | B16.26 | kikai | 機械 | machine | ENG #957 | CEJC #1240
+777 | B16.27 | gasu | ガス | gas | ENG #971 | CEJC #1226
+778 | B16.28 | yuumei | 有名 | famous | ENG #1331 | CEJC #846
+779 | B16.29 | komakai | 細かい | detailed / small | ENG #1184 | CEJC #985
+780 | B16.30 | rekishi | 歴史 | history | ENG #816 | CEJC #1551
+781 | B16.31 | amaru | 余る | be left over | ENG #1060 | CEJC #1135
+782 | B16.32 | iki | 息 | breath | ENG #880 | CEJC #1422
+783 | B16.33 | kyuu | 急 | sudden / urgent | ENG #1670 | CEJC #658
+784 | B16.34 | suku | 空く | become empty / uncrowded | ENG #1224 | CEJC #958
+785 | B16.35 | ibento | イベント | event | ENG #1367 | CEJC #839
+786 | B16.36 | itai | 痛い | painful / hurts | ENG #2941 | CEJC #336
+787 | B16.37 | shakai | 社会 | society | ENG #1644 | CEJC #685
+788 | B16.38 | kubi | 首 | neck | ENG #1042 | CEJC #1192
+789 | B16.39 | kopii | コピー | copy | ENG #1012 | CEJC #1240
+790 | B16.40 | tachiba | 立場 | position / standpoint | ENG #841 | CEJC #1551
+791 | B16.41 | taiken | 体験 | experience | ENG #853 | CEJC #1528
+792 | B16.42 | iroiro | 色々 | various / all sorts | ENG #4109 | CEJC #231
+793 | B16.43 | ishi | 石 | stone | ENG #1116 | CEJC #1117
+794 | B16.44 | jitai | 自体 | itself / situation | ENG #1466 | CEJC #806
+795 | B16.45 | sasou | 誘う | invite | ENG #874 | CEJC #1506
+796 | B16.46 | hikui | 低い | low / short | ENG #1081 | CEJC #1168
+797 | B16.47 | utsuru | 映る | be reflected / appear | ENG #1125 | CEJC #1117
+798 | B16.48 | yubi | 指 | finger | ENG #946 | CEJC #1382
+799 | B16.49 | nigeru | 逃げる | run away / escape | ENG #969 | CEJC #1346
+800 | B16.50 | tabako | タバコ | cigarette / tobacco | ENG #1342 | CEJC #910
+801 | B17.01 | kanashii | 悲しい | sad | ENG #1040 | CEJC #1240
+802 | B17.02 | purasu | プラス | plus | ENG #1284 | CEJC #969
+803 | B17.03 | chikara | 力 | strength / power | ENG #1507 | CEJC #806
+804 | B17.04 | teido | 程度 | degree / extent | ENG #1687 | CEJC #709
+805 | B17.05 | mimi | 耳 | ear | ENG #987 | CEJC #1367
+806 | B17.06 | yuki | 雪 | snow | ENG #1542 | CEJC #801
+807 | B17.07 | ichiban | 一番 | number one / most | ENG #5001 | CEJC #194
+808 | B17.08 | kekka | 結果 | result | ENG #1328 | CEJC #975
+809 | B17.09 | shippai | 失敗 | fail / failure | ENG #1031 | CEJC #1333
+810 | B17.10 | choushi | 調子 | condition / form | ENG #1136 | CEJC #1202
+811 | B17.11 | shima | 島 | island | ENG #1349 | CEJC #995
+812 | B17.12 | iken | 意見 | opinion | ENG #1290 | CEJC #1052
+813 | B17.13 | atsumaru | 集まる | gather | ENG #1678 | CEJC #766
+814 | B17.14 | kihon | 基本 | basics / basic | ENG #2651 | CEJC #450
+815 | B17.15 | senpai | 先輩 | senior | ENG #1847 | CEJC #699
+816 | B17.16 | gyuunyuu | 牛乳 | milk | ENG #1338 | CEJC #1034
+817 | B17.17 | supootsu | スポーツ | sport | ENG #1221 | CEJC #1168
+818 | B17.18 | satou | 砂糖 | sugar | ENG #1487 | CEJC #922
+819 | B17.19 | dankai | 段階 | stage / step | ENG #1323 | CEJC #1078
+820 | B17.20 | monosugoi | 物凄い | incredible / tremendous | ENG #1517 | CEJC #917
+821 | B17.21 | abura | 油 | oil | ENG #1377 | CEJC #1034
+822 | B17.22 | ishiki | 意識 | awareness / consciousness | ENG #1577 | CEJC #887
+823 | B17.23 | sake | 酒 | alcohol / sake | ENG #2784 | CEJC #453
+824 | B17.24 | kieru | 消える | disappear / go out | ENG #1098 | CEJC #1406
+825 | B17.25 | mazeru | 交ぜる | mix | ENG #1416 | CEJC #1034
+826 | B17.26 | hiroi | 広い | wide / spacious | ENG #2127 | CEJC #635
+827 | B17.27 | kaimono | 買い物 | shopping | ENG #1104 | CEJC #1406
+828 | B17.28 | tasu | 足す | add | ENG #1219 | CEJC #1251
+829 | B17.29 | tsunagaru | 繋がる | connect / be connected | ENG #1720 | CEJC #834
+830 | B17.30 | shocchuu | しょっちゅう | very often / constantly | ENG #1114 | CEJC #1433
+831 | B17.31 | saizu | サイズ | size | ENG #1228 | CEJC #1277
+832 | B17.32 | warito | 割と | relatively / fairly | ENG #2648 | CEJC #512
+833 | B17.33 | setsumei | 説明 | explanation | ENG #2276 | CEJC #615
+834 | B17.34 | fukumeru | 含める | include | ENG #1200 | CEJC #1333
+835 | B17.35 | akiru | 飽きる | get bored / tire of | ENG #1133 | CEJC #1433
+836 | B17.36 | hazukashii | 恥ずかしい | embarrassing / embarrassed | ENG #1168 | CEJC #1382
+837 | B17.37 | ana | 穴 | hole | ENG #1102 | CEJC #1483
+838 | B17.38 | kawaisou | 可哀想 | poor thing / pitiful | ENG #2071 | CEJC #692
+839 | B17.39 | yakyuu | 野球 | baseball | ENG #1994 | CEJC #732
+840 | B17.40 | menbaa | メンバー | member | ENG #1188 | CEJC #1382
+841 | B17.41 | koppu | コップ | cup / glass | ENG #1100 | CEJC #1528
+842 | B17.42 | iro | 色 | colour | ENG #3123 | CEJC #435
+843 | B17.43 | noboru | 上る | climb / go up | ENG #1664 | CEJC #933
+844 | B17.44 | ryou | 量 | amount | ENG #1852 | CEJC #825
+845 | B17.45 | douga | 動画 | video | ENG #1321 | CEJC #1251
+846 | B17.46 | guai | 具合 | condition / how something feels | ENG #1136 | CEJC #1506
+847 | B17.47 | fueru | 増える | increase | ENG #2656 | CEJC #545
+848 | B17.48 | kenkou | 健康 | health / healthy | ENG #1449 | CEJC #1135
+849 | B17.49 | shokuji | 食事 | meal | ENG #1544 | CEJC #1052
+850 | B17.50 | shatsu | シャツ | shirt | ENG #1151 | CEJC #1506
+851 | B18.01 | otona | 大人 | adult | ENG #2125 | CEJC #720
+852 | B18.02 | kusuri | 薬 | medicine | ENG #1589 | CEJC #1027
+853 | B18.03 | hazusu | 外す | remove / miss | ENG #1454 | CEJC #1147
+854 | B18.04 | houkou | 方向 | direction | ENG #1660 | CEJC #981
+855 | B18.05 | resutoran | レストラン | restaurant | ENG #1170 | CEJC #1506
+856 | B18.06 | futoru | 太る | gain weight | ENG #1475 | CEJC #1147
+857 | B18.07 | deeta | データ | data | ENG #2017 | CEJC #789
+858 | B18.08 | jouzu | 上手 | good at / skilful | ENG #1974 | CEJC #818
+859 | B18.09 | shio | 塩 | salt | ENG #2282 | CEJC #703
+860 | B18.10 | wakareru | 分かれる | split / separate | ENG #1599 | CEJC #1111
+861 | B18.11 | wadai | 話題 | topic / subject | ENG #1318 | CEJC #1422
+862 | B18.12 | sekkaku | 折角 | with effort / since we're here | ENG #1946 | CEJC #898
+863 | B18.13 | sukejuuru | スケジュール | schedule | ENG #1383 | CEJC #1367
+864 | B18.14 | chousa | 調査 | investigation / survey | ENG #1747 | CEJC #1034
+865 | B18.15 | atarimae | 当たり前 | obvious / normal | ENG #1811 | CEJC #1008
+866 | B18.16 | sageru | 下げる | lower | ENG #1731 | CEJC #1069
+867 | B18.17 | kuukou | 空港 | airport | ENG #1473 | CEJC #1302
+868 | B18.18 | mokuteki | 目的 | purpose / goal | ENG #1451 | CEJC #1333
+869 | B18.19 | puro | プロ | professional / pro | ENG #1543 | CEJC #1251
+870 | B18.20 | shinbun | 新聞 | newspaper | ENG #1595 | CEJC #1202
+871 | B18.21 | kakkou | 格好 | appearance / style | ENG #3002 | CEJC #563
+872 | B18.22 | tsukamu | 掴む | grab / grasp | ENG #765 | CEJC #2944
+873 | B18.23 | seikatsu | 生活 | daily life / living | ENG #2807 | CEJC #625
+874 | B18.24 | sarada | サラダ | salad | ENG #2319 | CEJC #792
+875 | B18.25 | mushi | 虫 | insect / bug | ENG #1420 | CEJC #1433
+876 | B18.26 | sabishii | 寂しい | lonely | ENG #1422 | CEJC #1447
+877 | B18.27 | oyogu | 泳ぐ | swim | ENG #1176 | CEJC #1873
+878 | B18.28 | tsume | 爪 | nail / claw | ENG #1514 | CEJC #1382
+879 | B18.29 | zureru | ずれる | shift / be out of place | ENG #1750 | CEJC #1168
+880 | B18.30 | juusu | ジュース | juice | ENG #1860 | CEJC #1086
+881 | B18.31 | wazawaza | 態々 | go out of one's way | ENG #1946 | CEJC #1034
+882 | B18.32 | orosu | 下ろす | lower / unload | ENG #1731 | CEJC #1192
+883 | B18.33 | gengo | 言語 | language | ENG #1480 | CEJC #1447
+884 | B18.34 | kojin | 個人 | individual / personal | ENG #2837 | CEJC #665
+885 | B18.35 | nagare | 流れ | flow | ENG #2309 | CEJC #868
+886 | B18.36 | aki | 秋 | autumn | ENG #1529 | CEJC #1447
+887 | B18.37 | rei | 例 | example | ENG #1725 | CEJC #1251
+888 | B18.38 | otouto | 弟 | younger brother | ENG #2061 | CEJC #1034
+889 | B18.39 | hosoi | 細い | thin / narrow | ENG #2335 | CEJC #890
+890 | B18.40 | usui | 薄い | thin / weak | ENG #2335 | CEJC #890
+891 | B18.41 | pinku | ピンク | pink | ENG #1835 | CEJC #1202
+892 | B18.42 | susumu | 進む | move forward / progress | ENG #2183 | CEJC #975
+893 | B18.43 | chizu | 地図 | map | ENG #1499 | CEJC #1545
+894 | B18.44 | atsumeru | 集める | collect / gather | ENG #1631 | CEJC #1406
+895 | B18.45 | igai | 意外 | unexpected / except | ENG #4156 | CEJC #455
+896 | B18.46 | tenki | 天気 | weather | ENG #1584 | CEJC #1467
+897 | B18.47 | arigatai | 有り難い | grateful / appreciated | ENG #1950 | CEJC #1147
+898 | B18.48 | kyori | 距離 | distance | ENG #1937 | CEJC #1162
+899 | B18.49 | kiiro | 黄色 | yellow | ENG #1630 | CEJC #1447
+900 | B18.50 | yowai | 弱い | weak | ENG #1738 | CEJC #1367
+901 | B19.01 | fuyu | 冬 | winter | ENG #1830 | CEJC #1285
+902 | B19.02 | undou | 運動 | exercise / movement | ENG #2136 | CEJC #1078
+903 | B19.03 | hara | 腹 | belly / stomach | ENG #1612 | CEJC #1528
+904 | B19.04 | kutsu | 靴 | shoes | ENG #1770 | CEJC #1382
+905 | B19.05 | kyouiku | 教育 | education | ENG #2468 | CEJC #933
+906 | B19.06 | gomi | 塵 | rubbish / trash | ENG #1996 | CEJC #1213
+907 | B19.07 | yawarakai | 柔らかい | soft | ENG #1719 | CEJC #1467
+908 | B19.08 | fuku | 拭く | wipe | ENG #1865 | CEJC #1355
+909 | B19.09 | bikkuri | びっくり | surprised | ENG #5001 | CEJC #414
+910 | B19.10 | katte | 勝手 | selfish / one's own way | ENG #2856 | CEJC #818
+911 | B19.11 | kasu | 貸す | lend | ENG #3091 | CEJC #749
+912 | B19.12 | imouto | 妹 | younger sister | ENG #2061 | CEJC #1226
+913 | B19.13 | jidai | 時代 | era / period | ENG #5001 | CEJC #420
+914 | B19.14 | tsurai | 辛い | painful / hard | ENG #2941 | CEJC #801
+915 | B19.15 | kikan | 期間 | period / duration | ENG #1806 | CEJC #1447
+916 | B19.16 | nama | 生 | raw / live | ENG #3815 | CEJC #596
+917 | B19.17 | hayaru | 流行る | be popular / spread | ENG #2192 | CEJC #1179
+918 | B19.18 | mezurashii | 珍しい | rare / unusual | ENG #2281 | CEJC #1135
+919 | B19.19 | yaseru | 痩せる | lose weight / get thin | ENG #2335 | CEJC #1105
+920 | B19.20 | orenji | オレンジ | orange | ENG #2242 | CEJC #1179
+921 | B19.21 | dondon | どんどん | rapidly / one after another | ENG #5001 | CEJC #449
+922 | B19.22 | nagareru | 流れる | flow | ENG #2309 | CEJC #1147
+923 | B19.23 | kumo | 雲 | cloud | ENG #2172 | CEJC #1240
+924 | B19.24 | mendou | 面倒 | troublesome / hassle | ENG #5001 | CEJC #461
+925 | B19.25 | motomoto | 元々 | originally | ENG #4747 | CEJC #494
+926 | B19.26 | taiou | 対応 | response / handling | ENG #2663 | CEJC #1014
+927 | B19.27 | motomeru | 求める | seek / request | ENG #1940 | CEJC #1506
+928 | B19.28 | byouki | 病気 | illness | ENG #2270 | CEJC #1251
+929 | B19.29 | moushikomu | 申し込む | apply / sign up | ENG #2063 | CEJC #1406
+930 | B19.30 | takushii | タクシー | taxi | ENG #1989 | CEJC #1483
+931 | B19.31 | ryouri | 料理 | cooking / cuisine | ENG #5001 | CEJC #496
+932 | B19.32 | oshare | 御洒落 | stylish / fashion | ENG #2341 | CEJC #1267
+933 | B19.33 | kuse | 癖 | habit / tendency | ENG #2388 | CEJC #1240
+934 | B19.34 | tamani | 偶に | occasionally | ENG #4676 | CEJC #552
+935 | B19.35 | kona | 粉 | powder / flour | ENG #2557 | CEJC #1179
+936 | B19.36 | kaigi | 会議 | meeting | ENG #3749 | CEJC #746
+937 | B19.37 | hantai | 反対 | opposite / against | ENG #2835 | CEJC #1052
+938 | B19.38 | ninki | 人気 | popular / popularity | ENG #2192 | CEJC #1447
+939 | B19.39 | susumeru | 勧める | recommend / suggest | ENG #2310 | CEJC #1367
+940 | B19.40 | naiyou | 内容 | content / details | ENG #3282 | CEJC #898
+941 | B19.41 | komaru | 困る | be troubled / have a problem | ENG #5001 | CEJC #540
+942 | B19.42 | annai | 案内 | guide / directions | ENG #2130 | CEJC #1551
+943 | B19.43 | chikaku | 近く | nearby | ENG #4284 | CEJC #673
+944 | B19.44 | kuraberu | 比べる | compare | ENG #2266 | CEJC #1467
+945 | B19.45 | hakaru | 測る | measure | ENG #2339 | CEJC #1413
+946 | B19.46 | sakura | 桜 | cherry blossom | ENG #2893 | CEJC #1105
+947 | B19.47 | bunka | 文化 | culture | ENG #2620 | CEJC #1251
+948 | B19.48 | dandan | 段々 | gradually | ENG #5001 | CEJC #581
+949 | B19.49 | raibu | ライブ | live show / concert | ENG #2485 | CEJC #1382
+950 | B19.50 | saito | サイト | website / site | ENG #2506 | CEJC #1382
+951 | B20.01 | semai | 狭い | narrow / cramped | ENG #3763 | CEJC #874
+952 | B20.02 | hidari | 左 | left | ENG #5001 | CEJC #627
+953 | B20.03 | meeru | メール | email | ENG #5001 | CEJC #627
+954 | B20.04 | niru | 似る | resemble | ENG #5001 | CEJC #630
+955 | B20.05 | yoyaku | 予約 | reservation / book | ENG #3102 | CEJC #1128
+956 | B20.06 | karai | 辛い | spicy | ENG #5001 | CEJC #635
+957 | B20.07 | jiko | 自己 | self / oneself | ENG #2913 | CEJC #1226
+958 | B20.08 | kega | 怪我 | injury | ENG #2668 | CEJC #1433
+959 | B20.09 | kanri | 管理 | management / control | ENG #3479 | CEJC #1052
+960 | B20.10 | nobasu | 伸ばす | extend / stretch | ENG #3298 | CEJC #1128
+961 | B20.11 | urusai | 煩い | noisy / annoying | ENG #5001 | CEJC #684
+962 | B20.12 | nugu | 脱ぐ | take off clothes / shoes | ENG #1454 | CEJC #3103
+963 | B20.13 | haku | 吐く | vomit / breathe out | ENG #3934 | CEJC #933
+964 | B20.14 | kome | 米 | rice (uncooked) | ENG #2953 | CEJC #1367
+965 | B20.15 | funiki | 雰囲気 | atmosphere / vibe | ENG #3908 | CEJC #981
+966 | B20.16 | ken | 県 | prefecture | ENG #5001 | CEJC #741
+967 | B20.17 | nimotsu | 荷物 | luggage / package | ENG #3584 | CEJC #1111
+968 | B20.18 | manga | 漫画 | manga / comic | ENG #2939 | CEJC #1433
+969 | B20.19 | sanka | 参加 | participation / join | ENG #5001 | CEJC #761
+970 | B20.20 | sentaa | センター | centre | ENG #3731 | CEJC #1086
+971 | B20.21 | kibishii | 厳しい | strict / harsh | ENG #4732 | CEJC #818
+972 | B20.22 | netto | ネット | internet / net | ENG #4919 | CEJC #786
+973 | B20.23 | anshin | 安心 | relief / peace of mind | ENG #2977 | CEJC #1567
+974 | B20.24 | moto | 元 | origin / former | ENG #5001 | CEJC #839
+975 | B20.25 | nakami | 中身 | contents / what is inside | ENG #3282 | CEJC #1433
+976 | B20.26 | gozen | 午前 | morning / a.m. | ENG #5001 | CEJC #880
+977 | B20.27 | tekitou | 適当 | suitable / casual / random | ENG #5001 | CEJC #880
+978 | B20.28 | chika | 地下 | underground / basement | ENG #3413 | CEJC #1447
+979 | B20.29 | sakkaa | サッカー | soccer | ENG #3315 | CEJC #1506
+980 | B20.30 | heru | 減る | decrease | ENG #5001 | CEJC #917
+981 | B20.31 | biru | ビル | building | ENG #3861 | CEJC #1302
+982 | B20.32 | nemui | 眠い | sleepy | ENG #4209 | CEJC #1179
+983 | B20.33 | denki | 電気 | electricity / light | ENG #3520 | CEJC #1483
+984 | B20.34 | kyuuryou | 給料 | salary / pay | ENG #3434 | CEJC #1551
+985 | B20.35 | suupaa | スーパー | supermarket | ENG #5001 | CEJC #1021
+986 | B20.36 | kaigai | 海外 | overseas | ENG #5001 | CEJC #1034
+987 | B20.37 | menyuu | メニュー | menu | ENG #3868 | CEJC #1413
+988 | B20.38 | tsukare | 疲れ | tiredness / fatigue | ENG #5001 | CEJC #1063
+989 | B20.39 | bimyou | 微妙 | subtle / questionable | ENG #5001 | CEJC #1086
+990 | B20.40 | jisho | 辞書 | dictionary | ENG #5001 | CEJC #1094
+991 | B20.41 | keisan | 計算 | calculation | ENG #5001 | CEJC #1094
+992 | B20.42 | matomeru | 纏める | put together / summarise | ENG #5001 | CEJC #1105
+993 | B20.43 | jinja | 神社 | shrine | ENG #5001 | CEJC #1117
+994 | B20.44 | natsukashii | 懐かしい | nostalgic | ENG #5001 | CEJC #1128
+995 | B20.45 | miyage | 土産 | souvenir | ENG #4731 | CEJC #1226
+996 | B20.46 | hashi | 箸 | chopsticks | ENG #5001 | CEJC #1213
+997 | B20.47 | saiaku | 最悪 | the worst | ENG #5001 | CEJC #1213
+998 | B20.48 | tsui | つい | accidentally / without thinking | ENG #4146 | CEJC #1551
+999 | B20.49 | shimeru | 締める | tighten / close | ENG #5001 | CEJC #1267
+1000 | B20.50 | kayou | 通う | commute / regularly go | ENG #5001 | CEJC #1355

@@ -83,6 +83,70 @@ async function loadGatesPassed(userId: string): Promise<number[]> {
   }
 }
 
+async function migrateBlock6PlusCurriculum(userId: string): Promise<void> {
+  /** Sentinel gateNumber marks audited #251–1000 curriculum migration. */
+  const EPOCH_GATE = 999;
+  try {
+    const marker = await prisma.japaneseRevisionProgress.findUnique({
+      where: { userId_gateNumber: { userId, gateNumber: EPOCH_GATE } },
+      select: { passed: true },
+    });
+    if (marker?.passed) return;
+
+    // Invalidate old Block 6+ mastery so new #251–1000 ids don't inherit unrelated known flags.
+    await prisma.japaneseWordStat.deleteMany({
+      where: { userId, blockNumber: { gte: 6 } },
+    });
+    await prisma.japaneseWordOverride.deleteMany({
+      where: { userId, blockNumber: { gte: 6 } },
+    });
+    await prisma.japaneseBlockProgress.deleteMany({
+      where: { userId, blockNumber: { gte: 6 } },
+    });
+    // Keep revision gate 1 (blocks 1–5); clear gates 2+ tied to old B6–10 content.
+    await prisma.japaneseRevisionProgress.deleteMany({
+      where: { userId, gateNumber: { gte: 2, lt: EPOCH_GATE } },
+    });
+
+    await prisma.japaneseRevisionProgress.upsert({
+      where: { userId_gateNumber: { userId, gateNumber: EPOCH_GATE } },
+      create: {
+        userId,
+        gateNumber: EPOCH_GATE,
+        passed: true,
+        attempts: 1,
+        passedAt: new Date(),
+        scorePct: 100,
+      },
+      update: { passed: true, passedAt: new Date() },
+    });
+
+    // Ensure blocks 1–20 are selectable after migration.
+    const block1 = await prisma.japaneseBlockProgress.findUnique({
+      where: { userId_blockNumber: { userId, blockNumber: 1 } },
+      select: { unlockedBlocks: true },
+    });
+    if (block1) {
+      const unlocked = Array.from(
+        new Set([
+          ...block1.unlockedBlocks,
+          ...Array.from({ length: 20 }, (_, i) => i + 1),
+        ]),
+      ).sort((a, b) => a - b);
+      await prisma.japaneseBlockProgress.update({
+        where: { userId_blockNumber: { userId, blockNumber: 1 } },
+        data: { unlockedBlocks: unlocked },
+      });
+    }
+  } catch (err) {
+    if (isPrismaSchemaMissingError(err)) {
+      console.warn("[migrateBlock6PlusCurriculum] schema missing; skipped");
+      return;
+    }
+    throw err;
+  }
+}
+
 export async function loadJapaneseProgress(
   blockNumber = 1,
 ): Promise<{ error: string } | JapaneseProgressPayload> {
@@ -91,6 +155,7 @@ export async function loadJapaneseProgress(
     if (!session) return { error: "Unauthorized" };
 
     const userId = session.user.id;
+    await migrateBlock6PlusCurriculum(userId);
 
     const [progress, allProgress, overrideRows, statRows, allStatKeys, gatesPassed, revisionGatesPassed] =
       await Promise.all([

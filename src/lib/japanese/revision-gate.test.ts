@@ -30,11 +30,13 @@ describe("revision gates", () => {
     expect(revisionGateWordCount(2)).toBe(250);
   });
 
-  it("does not block blocks 1–10 behind revision gates", () => {
+  it("does not block blocks 1–20 behind revision gates (always unlocked)", () => {
     expect(isBlockBehindRevisionGate(6, [])).toBe(false);
     expect(isBlockBehindRevisionGate(10, [])).toBe(false);
-    expect(isBlockBehindRevisionGate(11, [])).toBe(true);
-    expect(isBlockBehindRevisionGate(11, [2])).toBe(false);
+    expect(isBlockBehindRevisionGate(11, [])).toBe(false);
+    expect(isBlockBehindRevisionGate(20, [])).toBe(false);
+    expect(isBlockBehindRevisionGate(21, [])).toBe(true);
+    expect(isBlockBehindRevisionGate(21, [4])).toBe(false);
   });
 
   it("unlocks block 4 when block 3 is mastered", () => {
@@ -44,7 +46,7 @@ describe("revision gates", () => {
     expect(mergeUnlockedBlocks(rows, [], [])).toContain(4);
   });
 
-  it("unlocks block 6 after block 5 mastery (blocks 1–10 always open)", () => {
+  it("unlocks block 6 after block 5 mastery (blocks 1–20 always open)", () => {
     const rows = [
       { blockNumber: 5, unlockedBlocks: [1, 2, 3, 4, 5], blockMastered: true },
     ];
@@ -58,8 +60,11 @@ describe("revision gates", () => {
     expect(meta.unlockedBlocks).toContain(6);
   });
 
-  it("marks only gate 1 as live", () => {
+  it("marks revision gates 1–4 as live", () => {
     expect(isLiveRevisionGate(1)).toBe(true);
-    expect(isLiveRevisionGate(2)).toBe(false);
+    expect(isLiveRevisionGate(2)).toBe(true);
+    expect(isLiveRevisionGate(3)).toBe(true);
+    expect(isLiveRevisionGate(4)).toBe(true);
+    expect(isLiveRevisionGate(5)).toBe(false);
   });
 });

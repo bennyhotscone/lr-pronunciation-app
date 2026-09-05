@@ -3,124 +3,307 @@
     {
       "id": "g1-s1",
       "english": "I drink water.",
-      "romaji": "watashi mizu nomu",
-      "words": ["watashi", "mizu", "nomu"]
+      "preferredAnswer": ["watashi", "wa", "mizu", "o", "nomu"],
+      "acceptedAnswers": [
+        ["mizu", "o", "nomu"],
+        ["mizu", "nomu"],
+        ["watashi", "mizu", "nomu"]
+      ],
+      "tiles": ["watashi", "wa", "mizu", "o", "nomu", "taberu", "ie", "ni"]
     },
     {
       "id": "g1-s2",
       "english": "I go home now.",
-      "romaji": "watashi ima ie iku",
-      "words": ["watashi", "ima", "ie", "iku"]
+      "preferredAnswer": ["ima", "ie", "ni", "iku"],
+      "acceptedAnswers": [
+        ["ie", "ni", "iku"],
+        ["ie", "iku"],
+        ["ima", "ie", "iku"]
+      ],
+      "tiles": ["ima", "ie", "ni", "iku", "kuru", "gakkou", "de", "watashi"]
     },
     {
       "id": "g1-s3",
       "english": "My friend is good.",
-      "romaji": "tomodachi ii",
-      "words": ["tomodachi", "ii"]
+      "preferredAnswer": ["tomodachi", "wa", "ii"],
+      "acceptedAnswers": [["tomodachi", "ii"]],
+      "tiles": ["tomodachi", "wa", "ii", "warui", "ga", "anata"]
     },
     {
       "id": "g1-s4",
-      "english": "The meal is good.",
-      "romaji": "gohan ii",
-      "words": ["gohan", "ii"]
+      "english": "I like you.",
+      "preferredAnswer": ["anata", "ga", "suki"],
+      "acceptedAnswers": [["anata", "suki"], ["suki"]],
+      "tiles": ["anata", "ga", "suki", "watashi", "wa", "kirai", "o"]
     },
     {
       "id": "g1-s5",
-      "english": "I like you.",
-      "romaji": "watashi anata suki",
-      "words": ["watashi", "anata", "suki"]
+      "english": "Children go to school.",
+      "preferredAnswer": ["kodomo", "wa", "gakkou", "ni", "iku"],
+      "acceptedAnswers": [
+        ["kodomo", "gakkou", "ni", "iku"],
+        ["kodomo", "gakkou", "iku"],
+        ["gakkou", "ni", "iku"]
+      ],
+      "tiles": ["kodomo", "wa", "gakkou", "ni", "iku", "ie", "de", "taberu"]
     },
     {
       "id": "g1-s6",
-      "english": "What is your name?",
-      "romaji": "anata namae nani",
-      "words": ["anata", "namae", "nani"]
+      "english": "I understand.",
+      "preferredAnswer": ["wakaru"],
+      "acceptedAnswers": [["watashi", "wa", "wakaru"], ["watashi", "wakaru"]],
+      "tiles": ["watashi", "wa", "wakaru", "ne", "ii"]
     },
     {
       "id": "g1-s7",
-      "english": "I understand.",
-      "romaji": "watashi wakaru",
-      "words": ["watashi", "wakaru"]
+      "english": "What is your name?",
+      "preferredAnswer": ["namae", "wa", "nani"],
+      "acceptedAnswers": [["namae", "nani"], ["anata", "namae", "nani"]],
+      "tiles": ["namae", "wa", "nani", "anata", "no", "dare"]
     },
     {
       "id": "g1-s8",
-      "english": "Thank you very much.",
-      "romaji": "arigatou totemo",
-      "words": ["arigatou", "totemo"]
+      "english": "I eat rice.",
+      "preferredAnswer": ["gohan", "o", "taberu"],
+      "acceptedAnswers": [["gohan", "taberu"], ["watashi", "gohan", "taberu"]],
+      "tiles": ["gohan", "o", "taberu", "nomu", "mizu", "ni"]
     },
     {
       "id": "g1-s9",
-      "english": "Children go to school.",
-      "romaji": "kodomo gakkou iku",
-      "words": ["kodomo", "gakkou", "iku"]
+      "english": "My friend comes yesterday.",
+      "preferredAnswer": ["kinou", "tomodachi", "ga", "kuru"],
+      "acceptedAnswers": [
+        ["kinou", "tomodachi", "kuru"],
+        ["tomodachi", "ga", "kuru"]
+      ],
+      "tiles": ["kinou", "tomodachi", "ga", "kuru", "iku", "wa"]
     },
     {
       "id": "g1-s10",
-      "english": "My friend came yesterday.",
-      "romaji": "kinou tomodachi kuru",
-      "words": ["kinou", "tomodachi", "kuru"]
+      "english": "Thank you very much.",
+      "preferredAnswer": ["arigatou"],
+      "acceptedAnswers": [["arigatou", "totemo"], ["totemo", "arigatou"]],
+      "tiles": ["arigatou", "totemo", "sumimasen", "ne"]
     }
   ],
   "2": [
     {
       "id": "g2-s1",
-      "english": "The phone is difficult.",
-      "romaji": "denwa muzukashii",
-      "words": ["denwa", "muzukashii"]
+      "english": "I go to school with a friend.",
+      "preferredAnswer": ["tomodachi", "to", "gakkou", "ni", "iku"],
+      "acceptedAnswers": [
+        ["tomodachi", "to", "gakkou", "iku"],
+        ["gakkou", "ni", "iku"],
+        ["tomodachi", "gakkou", "iku"]
+      ],
+      "tiles": ["tomodachi", "to", "gakkou", "ni", "iku", "kuru", "de", "mise"]
     },
     {
       "id": "g2-s2",
-      "english": "Let's eat together.",
-      "romaji": "taberu isshoni",
-      "words": ["taberu", "isshoni"]
+      "english": "I eat at home.",
+      "preferredAnswer": ["ie", "de", "taberu"],
+      "acceptedAnswers": [["ie", "taberu"], ["taberu"]],
+      "tiles": ["ie", "de", "taberu", "nomu", "ni", "mise"]
     },
     {
       "id": "g2-s3",
-      "english": "Already ready.",
-      "romaji": "junbi mou",
-      "words": ["junbi", "mou"]
+      "english": "Tonight I watch.",
+      "preferredAnswer": ["konya", "miru"],
+      "acceptedAnswers": [["konya", "o", "miru"], ["miru"]],
+      "tiles": ["konya", "miru", "kiku", "ashita", "ni", "o"]
     },
     {
       "id": "g2-s4",
-      "english": "Worry and problems.",
-      "romaji": "shinpai mondai",
-      "words": ["shinpai", "mondai"]
+      "english": "I'll call later.",
+      "preferredAnswer": ["ato", "de", "denwa", "suru"],
+      "acceptedAnswers": [["ato", "denwa", "suru"], ["denwa", "suru"]],
+      "tiles": ["ato", "de", "denwa", "suru", "iku", "ni", "ima"]
     },
     {
       "id": "g2-s5",
-      "english": "Children and school.",
-      "romaji": "kodomo gakkou",
-      "words": ["kodomo", "gakkou"]
+      "english": "I'm busy.",
+      "preferredAnswer": ["isogashii"],
+      "acceptedAnswers": [["watashi", "wa", "isogashii"]],
+      "tiles": ["isogashii", "hima", "wa", "ne", "watashi"]
     },
     {
       "id": "g2-s6",
-      "english": "Walk with family.",
-      "romaji": "aruku kazoku",
-      "words": ["aruku", "kazoku"]
+      "english": "That shop is expensive.",
+      "preferredAnswer": ["mise", "wa", "takai"],
+      "acceptedAnswers": [["mise", "takai"]],
+      "tiles": ["mise", "wa", "takai", "yasui", "ga"]
     },
     {
       "id": "g2-s7",
-      "english": "Buy a book.",
-      "romaji": "kau hon",
-      "words": ["kau", "hon"]
+      "english": "I want it.",
+      "preferredAnswer": ["hoshii"],
+      "acceptedAnswers": [["ga", "hoshii"]],
+      "tiles": ["hoshii", "ga", "wa", "suki", "kirai"]
     },
     {
       "id": "g2-s8",
-      "english": "Read a book.",
-      "romaji": "yomu hon",
-      "words": ["yomu", "hon"]
+      "english": "He thinks a lot.",
+      "preferredAnswer": ["kare", "wa", "yoku", "kangaeru"],
+      "acceptedAnswers": [["kare", "kangaeru"], ["yoku", "kangaeru"]],
+      "tiles": ["kare", "wa", "yoku", "kangaeru", "omou", "kanojo"]
     },
     {
       "id": "g2-s9",
-      "english": "The problem is easy.",
-      "romaji": "kantan mondai",
-      "words": ["kantan", "mondai"]
+      "english": "I look for it.",
+      "preferredAnswer": ["sagasu"],
+      "acceptedAnswers": [["o", "sagasu"]],
+      "tiles": ["sagasu", "o", "miru", "wa", "dasu"]
     },
     {
       "id": "g2-s10",
-      "english": "Sorry, I'm worried.",
-      "romaji": "sumimasen shinpai",
-      "words": ["sumimasen", "shinpai"]
+      "english": "I tidy up.",
+      "preferredAnswer": ["katazukeru"],
+      "acceptedAnswers": [["o", "katazukeru"]],
+      "tiles": ["katazukeru", "o", "dasu", "ireru", "wa"]
+    }
+  ],
+  "3": [
+    {
+      "id": "g3-s1",
+      "english": "I plan to go.",
+      "preferredAnswer": ["iku", "tsumori"],
+      "acceptedAnswers": [["iku", "tsumori", "da"]],
+      "tiles": ["iku", "tsumori", "da", "kuru", "wa"]
+    },
+    {
+      "id": "g3-s2",
+      "english": "The park is fun.",
+      "preferredAnswer": ["kouen", "wa", "tanoshii"],
+      "acceptedAnswers": [["kouen", "tanoshii"]],
+      "tiles": ["kouen", "wa", "tanoshii", "okashii", "ga"]
+    },
+    {
+      "id": "g3-s3",
+      "english": "I return it later.",
+      "preferredAnswer": ["ato", "de", "modosu"],
+      "acceptedAnswers": [["ato", "modosu"], ["modosu"]],
+      "tiles": ["ato", "de", "modosu", "modoru", "ni"]
+    },
+    {
+      "id": "g3-s4",
+      "english": "The exam is difficult.",
+      "preferredAnswer": ["shiken", "wa", "muzukashii"],
+      "acceptedAnswers": [["shiken", "muzukashii"]],
+      "tiles": ["shiken", "wa", "muzukashii", "yasashii", "ga"]
+    },
+    {
+      "id": "g3-s5",
+      "english": "I eat sushi.",
+      "preferredAnswer": ["sushi", "o", "taberu"],
+      "acceptedAnswers": [["sushi", "taberu"]],
+      "tiles": ["sushi", "o", "taberu", "nomu", "wa", "gohan"]
+    },
+    {
+      "id": "g3-s6",
+      "english": "I watch a movie.",
+      "preferredAnswer": ["eiga", "o", "miru"],
+      "acceptedAnswers": [["eiga", "miru"]],
+      "tiles": ["eiga", "o", "miru", "kiku", "ni"]
+    },
+    {
+      "id": "g3-s7",
+      "english": "That's strange.",
+      "preferredAnswer": ["okashii"],
+      "acceptedAnswers": [["wa", "okashii"]],
+      "tiles": ["okashii", "wa", "ii", "ne"]
+    },
+    {
+      "id": "g3-s8",
+      "english": "My daughter is kind.",
+      "preferredAnswer": ["musume", "wa", "yasashii"],
+      "acceptedAnswers": [["musume", "yasashii"]],
+      "tiles": ["musume", "wa", "yasashii", "kibishii", "ga"]
+    },
+    {
+      "id": "g3-s9",
+      "english": "I've been busy lately.",
+      "preferredAnswer": ["saikin", "isogashii"],
+      "acceptedAnswers": [["saikin", "wa", "isogashii"], ["isogashii"]],
+      "tiles": ["saikin", "isogashii", "wa", "hima", "ne"]
+    },
+    {
+      "id": "g3-s10",
+      "english": "I pass the exam.",
+      "preferredAnswer": ["shiken", "ni", "ukaru"],
+      "acceptedAnswers": [["shiken", "ukaru"], ["ukaru"]],
+      "tiles": ["shiken", "ni", "ukaru", "ochiru", "de"]
+    }
+  ],
+  "4": [
+    {
+      "id": "g4-s1",
+      "english": "It's dirty.",
+      "preferredAnswer": ["kitanai"],
+      "acceptedAnswers": [["wa", "kitanai"]],
+      "tiles": ["kitanai", "kirei", "wa", "ne"]
+    },
+    {
+      "id": "g4-s2",
+      "english": "Adults are busy.",
+      "preferredAnswer": ["otona", "wa", "isogashii"],
+      "acceptedAnswers": [["otona", "isogashii"]],
+      "tiles": ["otona", "wa", "isogashii", "kodomo", "ga"]
+    },
+    {
+      "id": "g4-s3",
+      "english": "Winter is cold.",
+      "preferredAnswer": ["fuyu", "wa", "samui"],
+      "acceptedAnswers": [["fuyu", "samui"]],
+      "tiles": ["fuyu", "wa", "samui", "natsu", "atsui"]
+    },
+    {
+      "id": "g4-s4",
+      "english": "It's narrow.",
+      "preferredAnswer": ["semai"],
+      "acceptedAnswers": [["wa", "semai"]],
+      "tiles": ["semai", "hiroi", "wa", "ga"]
+    },
+    {
+      "id": "g4-s5",
+      "english": "I commute.",
+      "preferredAnswer": ["kayou"],
+      "acceptedAnswers": [["de", "kayou"]],
+      "tiles": ["kayou", "de", "ni", "iku", "kuru"]
+    },
+    {
+      "id": "g4-s6",
+      "english": "I'm sleepy.",
+      "preferredAnswer": ["nemui"],
+      "acceptedAnswers": [["watashi", "wa", "nemui"]],
+      "tiles": ["nemui", "genki", "wa", "ne", "watashi"]
+    },
+    {
+      "id": "g4-s7",
+      "english": "I buy cigarettes.",
+      "preferredAnswer": ["tabako", "o", "kau"],
+      "acceptedAnswers": [["tabako", "kau"]],
+      "tiles": ["tabako", "o", "kau", "nomu", "ni"]
+    },
+    {
+      "id": "g4-s8",
+      "english": "That's the worst.",
+      "preferredAnswer": ["saiaku"],
+      "acceptedAnswers": [["saiaku", "da"]],
+      "tiles": ["saiaku", "saikou", "da", "wa"]
+    },
+    {
+      "id": "g4-s9",
+      "english": "I take off my shoes.",
+      "preferredAnswer": ["kutsu", "o", "nugu"],
+      "acceptedAnswers": [["kutsu", "nugu"], ["nugu"]],
+      "tiles": ["kutsu", "o", "nugu", "haku", "ni"]
+    },
+    {
+      "id": "g4-s10",
+      "english": "I'm relieved.",
+      "preferredAnswer": ["anshin"],
+      "acceptedAnswers": [["anshin", "da"]],
+      "tiles": ["anshin", "da", "shinpai", "ne"]
     }
   ]
 }

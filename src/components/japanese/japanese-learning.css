@@ -17,6 +17,27 @@
 .jp-learn-choice-correct { background: #dff3e4; border-color: #4f8a5b; }
 .jp-learn-choice-wrong { background: #f7dddd; border-color: #a95d5d; }
 .jp-learn-reveal { margin-top: 1.125rem; padding: 1rem; border-top: 1px solid var(--border); }
+.jp-mnemonic-feedback {
+  margin: 0.75rem 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-weight: 650;
+}
+.jp-mnemonic-feedback-ok {
+  background: rgba(45, 138, 94, 0.12);
+  border: 1px solid rgba(45, 138, 94, 0.35);
+}
+.jp-mnemonic-feedback-bad {
+  background: rgba(180, 60, 60, 0.1);
+  border: 1px solid rgba(180, 60, 60, 0.3);
+}
+.jp-mnemonic-line {
+  margin-top: 0.45rem;
+  font-weight: 700;
+  font-size: 1.08rem;
+}
 .jp-learn-jp { font-size: 1.8rem; }
 .jp-learn-romaji { font-size: 1.2rem; font-weight: 750; margin-top: 0.2rem; }
 .jp-learn-english { color: var(--muted); margin-top: 0.15rem; }

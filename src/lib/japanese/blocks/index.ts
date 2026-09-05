@@ -14,6 +14,16 @@ import block7 from "./block7.json";
 import block8 from "./block8.json";
 import block9 from "./block9.json";
 import block10 from "./block10.json";
+import block11 from "./block11.json";
+import block12 from "./block12.json";
+import block13 from "./block13.json";
+import block14 from "./block14.json";
+import block15 from "./block15.json";
+import block16 from "./block16.json";
+import block17 from "./block17.json";
+import block18 from "./block18.json";
+import block19 from "./block19.json";
+import block20 from "./block20.json";
 
 /** Blocks with full Japanese learning content (JSON). */
 const BLOCKS: Record<number, JapaneseWord[]> = {
@@ -27,6 +37,16 @@ const BLOCKS: Record<number, JapaneseWord[]> = {
   8: block8 as JapaneseWord[],
   9: block9 as JapaneseWord[],
   10: block10 as JapaneseWord[],
+  11: block11 as JapaneseWord[],
+  12: block12 as JapaneseWord[],
+  13: block13 as JapaneseWord[],
+  14: block14 as JapaneseWord[],
+  15: block15 as JapaneseWord[],
+  16: block16 as JapaneseWord[],
+  17: block17 as JapaneseWord[],
+  18: block18 as JapaneseWord[],
+  19: block19 as JapaneseWord[],
+  20: block20 as JapaneseWord[],
 };
 
 export function isPlayableJapaneseBlock(blockNumber: number): boolean {
@@ -66,4 +86,15 @@ export function getPlayableBlockNumbers(): number[] {
 /** All curriculum block slots (1-100), including future content. */
 export function getAvailableBlockNumbers(): number[] {
   return Array.from({ length: JAPANESE_TOTAL_BLOCKS }, (_, i) => i + 1);
+}
+
+/** Stable vocab id for coverage tracking. */
+export function getJapaneseWordId(
+  blockNumber: number,
+  wordIndex: number,
+  word?: JapaneseWord,
+): string {
+  if (word?.id) return word.id;
+  if (word?.globalRank != null) return `b${blockNumber}-r${word.globalRank}`;
+  return `b${blockNumber}-i${wordIndex}`;
 }

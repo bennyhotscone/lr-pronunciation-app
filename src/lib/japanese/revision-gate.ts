@@ -7,7 +7,8 @@ export const JAPANESE_REVISION_GROUP_SIZE = 5;
  * Gates with a fully working quiz end-to-end.
  * Never surface CTAs / unlocks / links for gates outside this list.
  */
-export const LIVE_REVISION_GATES: readonly number[] = [1];
+/** Gates 1–4 cover blocks 1–5, 6–10, 11–15, 16–20. */
+export const LIVE_REVISION_GATES: readonly number[] = [1, 2, 3, 4];
 
 export function isLiveRevisionGate(gateNumber: number): boolean {
   return LIVE_REVISION_GATES.includes(gateNumber);
