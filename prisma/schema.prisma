@@ -1077,7 +1077,7 @@ model JapaneseMilestoneProgress {
   @@index([userId])
 }
 
-/// Pass/fail progress for cumulative revision gates (every 5 blocks).
+/// Pass/fail + mid-quiz resume for cumulative revision gates (every 5 blocks).
 model JapaneseRevisionProgress {
   id          String    @id @default(cuid())
   userId      String
@@ -1087,6 +1087,8 @@ model JapaneseRevisionProgress {
   scorePct    Int?
   attempts    Int       @default(0)
   passedAt    DateTime?
+  /// Mid-quiz resume: { round, qIndex, answers, modes, coveredWordIds, questions, revealedMnemonicIds, savedAt }
+  inProgress  Json?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

@@ -3,10 +3,9 @@ import {
   getJapaneseWordId,
   isPlayableJapaneseBlock,
 } from "./blocks";
-import { JAPANESE_REVISION_MIN_QUESTIONS } from "./config";
 import { getBlocksForRevisionGate } from "./revision-gate";
 import { formatPreferredRomaji } from "./revision-sentence-match";
-import { getRevisionSentencesForGate } from "./revision-sentences";
+import batchBank from "./revision-sentence-batches.json";
 import type { JapaneseWord } from "./types";
 
 export type RevisionWordQuestion = {
@@ -21,6 +20,10 @@ export type RevisionWordQuestion = {
   english: string;
   mnemonic: string;
   audio: string;
+  /** 1 = first pass (reveal mnemonic allowed); 2 = second pass */
+  round: 1 | 2;
+  /** Round-2 batch id (sentence follows every 5 words in the batch). */
+  batchId?: string;
 };
 
 export type RevisionSentenceQuestion = {
@@ -33,6 +36,10 @@ export type RevisionSentenceQuestion = {
   canonicalRomaji: string;
   requiredWords: string[];
   wordBank: string[];
+  round: 2;
+  batchId: string;
+  /** The five word ids this sentence drills. */
+  batchWordIds: string[];
 };
 
 export type RevisionQuestion = RevisionWordQuestion | RevisionSentenceQuestion;
@@ -42,6 +49,26 @@ type RevisionWordRef = {
   wordIndex: number;
   word: JapaneseWord;
 };
+
+type BatchTemplate = {
+  id: string;
+  blockNumber: number;
+  wordIndices: number[];
+  wordRomaji: string[];
+  english: string;
+  preferredAnswer: string[];
+  acceptedAnswers: string[][];
+  tiles: string[];
+};
+
+function shuffle<T>(items: T[]): T[] {
+  const x = [...items];
+  for (let i = x.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [x[i], x[j]] = [x[j], x[i]];
+  }
+  return x;
+}
 
 export function collectRevisionWords(gateNumber: number): RevisionWordRef[] {
   const out: RevisionWordRef[] = [];
@@ -55,42 +82,16 @@ export function collectRevisionWords(gateNumber: number): RevisionWordRef[] {
   return out;
 }
 
-function shuffle<T>(items: T[]): T[] {
-  const x = [...items];
-  for (let i = x.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [x[i], x[j]] = [x[j], x[i]];
-  }
-  return x;
-}
-
-function buildSentenceQuestions(gateNumber: number): RevisionSentenceQuestion[] {
-  const templates = getRevisionSentencesForGate(gateNumber);
-  return templates.map((sentence) => {
-    const tiles = shuffle([...sentence.tiles]);
-    return {
-      kind: "sentence" as const,
-      id: sentence.id,
-      promptEnglish: sentence.english,
-      tiles,
-      preferredAnswer: [...sentence.preferredAnswer],
-      acceptedAnswers: sentence.acceptedAnswers.map((a) => [...a]),
-      canonicalRomaji: formatPreferredRomaji(sentence.preferredAnswer),
-      requiredWords: [...sentence.words],
-      wordBank: tiles,
-    };
-  });
-}
-
 function buildWordQuestion(
   ref: RevisionWordRef,
   mode: RevisionWordQuestion["mode"],
-  idSuffix = "",
+  round: 1 | 2,
+  opts?: { idSuffix?: string; batchId?: string },
 ): RevisionWordQuestion {
   const { blockNumber, wordIndex, word } = ref;
   return {
     kind: "word",
-    id: `${blockNumber}-${wordIndex}${idSuffix}`,
+    id: `${round}-${blockNumber}-${wordIndex}${opts?.idSuffix ?? ""}`,
     wordId: getJapaneseWordId(blockNumber, wordIndex, word),
     blockNumber,
     wordIndex,
@@ -100,65 +101,115 @@ function buildWordQuestion(
     english: word.en,
     mnemonic: word.m,
     audio: word.audio || word.jp,
+    round,
+    batchId: opts?.batchId,
   };
 }
 
+function batchesForGate(gateNumber: number): BatchTemplate[] {
+  const raw = (batchBank as Record<string, BatchTemplate[]>)[String(gateNumber)] ?? [];
+  return raw;
+}
+
+/**
+ * Two-round revision:
+ * Round 1 — all 250 words (shuffled), reveal-mnemonic allowed.
+ * Round 2 — same words in curated batches of 5; after each batch, a sentence using those words.
+ */
 export function buildRevisionQuestions(gateNumber: number): {
   questions: RevisionQuestion[];
   sampleSize: number;
   coverageWordIds: string[];
+  round1Count: number;
+  round2Count: number;
 } {
   const pool = collectRevisionWords(gateNumber);
-  // ALWAYS test every word in the gate at least once (full 250 coverage).
-  const sampled = shuffle(pool);
-  const coverageWordIds = sampled.map(({ blockNumber, wordIndex, word }) =>
+  const byKey = new Map<string, RevisionWordRef>(
+    pool.map((ref) => [`${ref.blockNumber}:${ref.wordIndex}`, ref]),
+  );
+
+  const coverageWordIds = pool.map(({ blockNumber, wordIndex, word }) =>
     getJapaneseWordId(blockNumber, wordIndex, word),
   );
 
-  const wordQuestions: RevisionWordQuestion[] = sampled.map((ref, i) =>
-    buildWordQuestion(ref, i % 3 === 0 ? "type-english" : "type-romaji"),
+  // Round 1: shuffle all words once
+  const round1Refs = shuffle([...pool]);
+  const round1: RevisionWordQuestion[] = round1Refs.map((ref, i) =>
+    buildWordQuestion(ref, i % 3 === 0 ? "type-english" : "type-romaji", 1),
   );
 
-  const sentenceQuestions = buildSentenceQuestions(gateNumber);
-  let questions: RevisionQuestion[] = [...wordQuestions, ...sentenceQuestions];
+  // Round 2: curated batches of 5 in curriculum order, sentence after each batch
+  const round2: RevisionQuestion[] = [];
+  const batches = batchesForGate(gateNumber);
+  const used = new Set<string>();
 
-  // Pad with alternate-mode extras until we hit the minimum question floor (≥350).
-  if (questions.length < JAPANESE_REVISION_MIN_QUESTIONS) {
-    const extras: RevisionWordQuestion[] = [];
-    let i = 0;
-    while (
-      wordQuestions.length + sentenceQuestions.length + extras.length <
-        JAPANESE_REVISION_MIN_QUESTIONS &&
-      i < sampled.length * 3
-    ) {
-      const ref = sampled[i % sampled.length];
-      const primary = wordQuestions[i % wordQuestions.length];
-      const altMode: RevisionWordQuestion["mode"] =
-        primary.mode === "type-english" ? "type-romaji" : "type-english";
-      extras.push(buildWordQuestion(ref, altMode, `-x${extras.length}`));
-      i += 1;
+  for (const batch of batches) {
+    const refs: RevisionWordRef[] = [];
+    for (const idx of batch.wordIndices) {
+      const key = `${batch.blockNumber}:${idx}`;
+      const ref = byKey.get(key);
+      if (ref) {
+        refs.push(ref);
+        used.add(key);
+      }
     }
-    questions = [...wordQuestions, ...shuffle(extras), ...sentenceQuestions];
+    if (refs.length < 5) continue;
+
+    const batchWordIds = refs.map((r) =>
+      getJapaneseWordId(r.blockNumber, r.wordIndex, r.word),
+    );
+
+    refs.forEach((ref, i) => {
+      round2.push(
+        buildWordQuestion(ref, i % 2 === 0 ? "type-romaji" : "type-english", 2, {
+          batchId: batch.id,
+        }),
+      );
+    });
+
+    const tiles = shuffle([...batch.tiles]);
+    round2.push({
+      kind: "sentence",
+      id: batch.id,
+      promptEnglish: batch.english,
+      tiles,
+      preferredAnswer: [...batch.preferredAnswer],
+      acceptedAnswers: batch.acceptedAnswers.map((a) => [...a]),
+      canonicalRomaji: formatPreferredRomaji(batch.preferredAnswer),
+      requiredWords: [...batch.wordRomaji],
+      wordBank: tiles,
+      round: 2,
+      batchId: batch.id,
+      batchWordIds,
+    });
   }
+
+  // Any words not covered by batches (shouldn't happen) go at end of round 2
+  for (const ref of pool) {
+    const key = `${ref.blockNumber}:${ref.wordIndex}`;
+    if (used.has(key)) continue;
+    round2.push(buildWordQuestion(ref, "type-romaji", 2));
+  }
+
+  const questions: RevisionQuestion[] = [...round1, ...round2];
 
   return {
     questions,
-    sampleSize: wordQuestions.length,
+    sampleSize: pool.length,
     coverageWordIds,
+    round1Count: round1.length,
+    round2Count: round2.length,
   };
 }
 
-export function getRevisionQuestionCountsForGate(gateNumber: number): {
-  poolSize: number;
-  questionTotal: number;
-  wordCoverage: number;
-  sentenceCount: number;
-} {
+export function getRevisionQuestionCountsForGate(gateNumber: number) {
   const built = buildRevisionQuestions(gateNumber);
   return {
     poolSize: collectRevisionWords(gateNumber).length,
     questionTotal: built.questions.length,
     wordCoverage: built.coverageWordIds.length,
     sentenceCount: built.questions.filter((q) => q.kind === "sentence").length,
+    round1Count: built.round1Count,
+    round2Count: built.round2Count,
   };
 }

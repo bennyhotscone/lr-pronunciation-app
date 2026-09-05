@@ -70,16 +70,30 @@ describe("revision gates", () => {
 });
 
 describe("revision quiz size", () => {
-  it("builds at least 350 questions with full 250-word coverage per live gate", async () => {
-    const { getRevisionQuestionCountsForGate } = await import(
+  it("builds two rounds (250+250 words) with a sentence after every 5 round-2 words", async () => {
+    const { getRevisionQuestionCountsForGate, buildRevisionQuestions } = await import(
       "./revision-quiz-build"
     );
     for (const gate of [1, 2, 3, 4]) {
       const counts = getRevisionQuestionCountsForGate(gate);
       expect(counts.poolSize).toBe(250);
       expect(counts.wordCoverage).toBe(250);
-      expect(counts.questionTotal).toBeGreaterThanOrEqual(350);
-      expect(counts.sentenceCount).toBeGreaterThanOrEqual(8);
+      expect(counts.round1Count).toBe(250);
+      // Round 2: 250 word questions + 50 curated sentence batches
+      expect(counts.round2Count).toBe(300);
+      expect(counts.sentenceCount).toBe(50);
+      expect(counts.questionTotal).toBe(550);
+
+      const { questions } = buildRevisionQuestions(gate);
+      const round2 = questions.filter((q) => q.round === 2);
+      for (let i = 0; i < round2.length; i++) {
+        const q = round2[i]!;
+        if ((i + 1) % 6 === 0) {
+          expect(q.kind).toBe("sentence");
+        } else {
+          expect(q.kind).toBe("word");
+        }
+      }
     }
   });
 });

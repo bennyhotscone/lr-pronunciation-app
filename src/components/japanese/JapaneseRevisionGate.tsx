@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { ParticleSentenceBuilder } from "@/components/japanese/ParticleSentenceBuilder";
 import { speakJapanese } from "@/lib/japanese/tts";
 import {
@@ -9,7 +9,9 @@ import {
 } from "@/lib/japanese/revision-sentence-match";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import {
+  clearRevisionInProgress,
   loadRevisionGate,
+  saveRevisionInProgress,
   submitRevisionAnswers,
   type RevisionGatePayload,
   type RevisionQuestion,
@@ -39,6 +41,8 @@ function isSentenceQuestion(q: RevisionQuestion): q is RevisionSentenceQuestion 
   return q.kind === "sentence";
 }
 
+const LS_PREFIX = "jp-revision-inprogress-v1:";
+
 export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   const [payload, setPayload] = useState<RevisionGatePayload | null>(null);
   const [phase, setPhase] = useState<Phase>("quiz");
@@ -48,24 +52,114 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [modes, setModes] = useState<Record<string, "type-english" | "type-romaji">>({});
   const [coveredWordIds, setCoveredWordIds] = useState<Set<string>>(new Set());
+  const [revealedMnemonicIds, setRevealedMnemonicIds] = useState<Set<string>>(new Set());
   const [status, setStatus] = useState("");
   const [result, setResult] = useState<RevisionSubmitResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [pending, startTransition] = useTransition();
+  const [mnemonicRevealed, setMnemonicRevealed] = useState(false);
   const [feedback, setFeedback] = useState<{
     correct: boolean;
     yourAnswer?: string;
     natural?: string;
   } | null>(null);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const applyPayload = (data: RevisionGatePayload) => {
-    setPayload(data);
+  const persistProgress = useCallback(
+    (
+      next: {
+        questions: RevisionQuestion[];
+        qIndex: number;
+        answers: Record<string, string>;
+        modes: Record<string, "type-english" | "type-romaji">;
+        coveredWordIds: string[];
+        revealedMnemonicIds: string[];
+      },
+    ) => {
+      const state = { ...next, savedAt: new Date().toISOString() };
+      try {
+        localStorage.setItem(`${LS_PREFIX}${gateNumber}`, JSON.stringify(state));
+      } catch {
+        /* ignore quota */
+      }
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      saveTimer.current = setTimeout(() => {
+        void saveRevisionInProgress(gateNumber, state);
+      }, 400);
+    },
+    [gateNumber],
+  );
+
+  const applyPayload = (data: RevisionGatePayload, forceFresh = false) => {
+    let working = data;
+
+    if (!forceFresh && data.resume) {
+      setPayload(data);
+      const modeMap: Record<string, "type-english" | "type-romaji"> = {};
+      for (const q of data.questions) {
+        if (isWordQuestion(q)) modeMap[q.id] = q.mode;
+      }
+      setQIndex(data.resume.qIndex);
+      setAnswers(data.resume.answers);
+      setModes({ ...modeMap, ...data.resume.modes });
+      setCoveredWordIds(new Set(data.resume.coveredWordIds));
+      setRevealedMnemonicIds(new Set(data.resume.revealedMnemonicIds));
+      setLoading(false);
+      return;
+    }
+
+    if (!forceFresh) {
+      try {
+        const raw = localStorage.getItem(`${LS_PREFIX}${gateNumber}`);
+        if (raw) {
+          const saved = JSON.parse(raw) as {
+            questions?: RevisionQuestion[];
+            qIndex?: number;
+            answers?: Record<string, string>;
+            modes?: Record<string, "type-english" | "type-romaji">;
+            coveredWordIds?: string[];
+            revealedMnemonicIds?: string[];
+          };
+          if (
+            Array.isArray(saved.questions) &&
+            saved.questions.length > 0 &&
+            typeof saved.qIndex === "number" &&
+            saved.qIndex < saved.questions.length
+          ) {
+            working = {
+              ...data,
+              questions: saved.questions,
+              resume: undefined,
+            };
+            setPayload(working);
+            const modeMap: Record<string, "type-english" | "type-romaji"> = {};
+            for (const q of working.questions) {
+              if (isWordQuestion(q)) modeMap[q.id] = q.mode;
+            }
+            setQIndex(saved.qIndex);
+            setAnswers(saved.answers ?? {});
+            setModes({ ...modeMap, ...(saved.modes ?? {}) });
+            setCoveredWordIds(new Set(saved.coveredWordIds ?? []));
+            setRevealedMnemonicIds(new Set(saved.revealedMnemonicIds ?? []));
+            setLoading(false);
+            return;
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+
+    setPayload(working);
     const modeMap: Record<string, "type-english" | "type-romaji"> = {};
-    for (const q of data.questions) {
+    for (const q of working.questions) {
       if (isWordQuestion(q)) modeMap[q.id] = q.mode;
     }
     setModes(modeMap);
     setCoveredWordIds(new Set());
+    setRevealedMnemonicIds(new Set());
+    setQIndex(0);
+    setAnswers({});
     setLoading(false);
   };
 
@@ -73,12 +167,8 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     setLoading(true);
     setStatus("");
     setPhase("quiz");
-    setQIndex(0);
-    setAnswers({});
-    setTyped("");
-    setSelectedTiles([]);
-    setResult(null);
     setFeedback(null);
+    setMnemonicRevealed(false);
     loadRevisionGate(gateNumber)
       .then((data) => {
         if ("error" in data) {
@@ -90,45 +180,16 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
         applyPayload(data);
       })
       .catch((err) => {
-        console.error("[JapaneseRevisionGate] loadRevisionGate failed", err);
+        console.error("[JapaneseRevisionGate] load failed", err);
         setStatus("Couldn't load revision checkpoint. Please try again.");
         setPayload(null);
         setLoading(false);
       });
   }, [gateNumber]);
 
-  const restartQuiz = () => {
-    setLoading(true);
-    setStatus("");
-    setPhase("quiz");
-    setQIndex(0);
-    setAnswers({});
-    setTyped("");
-    setSelectedTiles([]);
-    setResult(null);
-    setFeedback(null);
-    loadRevisionGate(gateNumber)
-      .then((data) => {
-        if ("error" in data) {
-          setStatus(data.error);
-          setPayload(null);
-          setLoading(false);
-          return;
-        }
-        applyPayload(data);
-      })
-      .catch((err) => {
-        console.error("[JapaneseRevisionGate] reload failed", err);
-        setStatus("Couldn't load revision checkpoint. Please try again.");
-        setPayload(null);
-        setLoading(false);
-      });
-  };
-
   const current = payload?.questions[qIndex];
   const isSentence = current ? isSentenceQuestion(current) : false;
-  const wordCount = payload?.questions.filter(isWordQuestion).length ?? 0;
-  const sentenceCount = (payload?.questions.length ?? 0) - wordCount;
+  const currentRound = current?.round ?? 1;
 
   const coverageTotal = payload?.coverageWordIds.length ?? payload?.wordCount ?? 0;
   const coverageDone = coveredWordIds.size;
@@ -149,7 +210,22 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     setTyped("");
     setSelectedTiles([]);
     setStatus("");
-  }, [qIndex]);
+    setMnemonicRevealed(
+      !!(current && isWordQuestion(current) && revealedMnemonicIds.has(current.id)),
+    );
+  }, [qIndex, current, revealedMnemonicIds]);
+
+  const snapshot = useCallback(() => {
+    if (!payload) return null;
+    return {
+      questions: payload.questions,
+      qIndex,
+      answers,
+      modes,
+      coveredWordIds: [...coveredWordIds],
+      revealedMnemonicIds: [...revealedMnemonicIds],
+    };
+  }, [payload, qIndex, answers, modes, coveredWordIds, revealedMnemonicIds]);
 
   const submitAll = (nextAnswers: Record<string, string>, covered: Set<string>) => {
     if (!payload) return;
@@ -167,6 +243,12 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
         setStatus("Couldn't submit revision.");
         return;
       }
+      try {
+        localStorage.removeItem(`${LS_PREFIX}${gateNumber}`);
+      } catch {
+        /* ignore */
+      }
+      void clearRevisionInProgress(gateNumber);
       setResult(res);
       setPhase("results");
       if (res.passed) onPassed(res.unlocksBlock);
@@ -175,11 +257,29 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
 
   const advanceAfterFeedback = () => {
     if (!payload || !current) return;
-    if (qIndex + 1 < payload.questions.length) {
-      setQIndex(qIndex + 1);
+    const nextIndex = qIndex + 1;
+    if (nextIndex < payload.questions.length) {
+      setQIndex(nextIndex);
+      const snap = snapshot();
+      if (snap) persistProgress({ ...snap, qIndex: nextIndex });
       return;
     }
     submitAll(answers, coveredWordIds);
+  };
+
+  const revealMnemonic = () => {
+    if (!current || !isWordQuestion(current) || current.round !== 1) return;
+    setMnemonicRevealed(true);
+    const next = new Set(revealedMnemonicIds);
+    next.add(current.id);
+    setRevealedMnemonicIds(next);
+    const snap = snapshot();
+    if (snap) {
+      persistProgress({
+        ...snap,
+        revealedMnemonicIds: [...next],
+      });
+    }
   };
 
   const checkWordAnswer = () => {
@@ -212,13 +312,27 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     nextCovered.add(current.wordId);
     setCoveredWordIds(nextCovered);
 
+    const nextRevealed = new Set(revealedMnemonicIds);
+    nextRevealed.add(current.id);
+    setRevealedMnemonicIds(nextRevealed);
+
     const nextAnswers = { ...answers, [current.id]: typed.trim() };
     setAnswers(nextAnswers);
     setFeedback({
       correct: ok,
       yourAnswer: ok ? undefined : typed.trim(),
     });
+    setMnemonicRevealed(true);
     setStatus("");
+
+    persistProgress({
+      questions: payload.questions,
+      qIndex,
+      answers: nextAnswers,
+      modes,
+      coveredWordIds: [...nextCovered],
+      revealedMnemonicIds: [...nextRevealed],
+    });
   };
 
   const checkSentenceAnswer = () => {
@@ -247,6 +361,49 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
       natural: match.caveman ? natural : undefined,
     });
     setStatus("");
+    persistProgress({
+      questions: payload.questions,
+      qIndex,
+      answers: nextAnswers,
+      modes,
+      coveredWordIds: [...coveredWordIds],
+      revealedMnemonicIds: [...revealedMnemonicIds],
+    });
+  };
+
+  const restartQuiz = () => {
+    try {
+      localStorage.removeItem(`${LS_PREFIX}${gateNumber}`);
+    } catch {
+      /* ignore */
+    }
+    setLoading(true);
+    setStatus("");
+    setPhase("quiz");
+    setQIndex(0);
+    setAnswers({});
+    setTyped("");
+    setSelectedTiles([]);
+    setResult(null);
+    setFeedback(null);
+    setCoveredWordIds(new Set());
+    setRevealedMnemonicIds(new Set());
+    void (async () => {
+      await clearRevisionInProgress(gateNumber);
+      try {
+        const data = await loadRevisionGate(gateNumber);
+        if ("error" in data) {
+          setStatus(data.error);
+          setPayload(null);
+          setLoading(false);
+          return;
+        }
+        applyPayload({ ...data, resume: undefined }, true);
+      } catch {
+        setStatus("Couldn't reload.");
+        setLoading(false);
+      }
+    })();
   };
 
   if (loading) {
@@ -284,9 +441,6 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
           <p className="jp-learn-sub">
             Coverage: {result.coveredCount} / {result.coverageTotal} words reviewed
           </p>
-          {result.passed ? (
-            <p className="jp-learn-sub">Block {result.unlocksBlock} is now unlocked.</p>
-          ) : null}
           <button
             type="button"
             className="jp-learn-btn jp-learn-btn-primary mt-3"
@@ -307,37 +461,43 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
 
   if (!current) return null;
 
-  const sentenceSection =
-    sentenceCount > 0 && qIndex >= wordCount ? "sentence" : "word";
+  const showRevealBtn =
+    isWordQuestion(current) &&
+    current.round === 1 &&
+    !feedback &&
+    !mnemonicRevealed;
+
+  const showMnemonicNow =
+    isWordQuestion(current) &&
+    (feedback || (current.round === 1 && mnemonicRevealed));
 
   return (
     <div className="jp-learn-wrap">
       <header className="jp-learn-header">
         <h1 className="jp-learn-title">Revision quiz</h1>
         <p className="jp-learn-meta">
-          {payload.label} · {payload.questions.length} questions (all {payload.wordCount} words
-          covered + extras + {sentenceCount} sentences) · {payload.threshold}% to pass
+          {payload.label} · Round {currentRound} of 2 · Question {qIndex + 1} of{" "}
+          {payload.questions.length} · {payload.threshold}% to pass
         </p>
         <p className="jp-learn-sub">
           {coverageDone} / {coverageTotal} words reviewed
+          {currentRound === 1
+            ? " · Round 1: tap Reveal mnemonic if stuck"
+            : " · Round 2: sentence after every 5 words"}
         </p>
       </header>
       <section className="jp-learn-card">
-        <div className="jp-learn-meta">
-          {sentenceSection === "sentence" ? "Sentence building · " : null}
-          Question {qIndex + 1} of {payload.questions.length}
-        </div>
         <div className="jp-learn-progress">
           <div
             style={{
-              width: `${coverageTotal ? (coverageDone / coverageTotal) * 100 : 0}%`,
+              width: `${payload.questions.length ? ((qIndex + 1) / payload.questions.length) * 100 : 0}%`,
             }}
           />
         </div>
 
         {isSentence && isSentenceQuestion(current) ? (
           <>
-            <div className="jp-learn-big">BUILD A SENTENCE</div>
+            <div className="jp-learn-big">SENTENCE — use the last 5 words</div>
             {!feedback ? (
               <ParticleSentenceBuilder
                 instruction={current.promptEnglish}
@@ -383,6 +543,19 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
                 <div className="jp-learn-prompt-en">{current.prompt}</div>
               </>
             )}
+
+            {showRevealBtn ? (
+              <button type="button" className="jp-learn-btn mt-2" onClick={revealMnemonic}>
+                Reveal mnemonic
+              </button>
+            ) : null}
+
+            {showMnemonicNow && !feedback ? (
+              <div className="jp-mnemonic-feedback jp-mnemonic-feedback-ok mt-2">
+                <div className="jp-mnemonic-line">Mnemonic: {current.mnemonic}</div>
+              </div>
+            ) : null}
+
             {!feedback ? (
               <input
                 className="jp-learn-input mt-3"
@@ -439,8 +612,17 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
             </button>
           ) : null}
           {onClose ? (
-            <button type="button" className="jp-learn-btn" onClick={onClose} disabled={pending}>
-              Cancel
+            <button
+              type="button"
+              className="jp-learn-btn"
+              onClick={() => {
+                const snap = snapshot();
+                if (snap) persistProgress(snap);
+                onClose();
+              }}
+              disabled={pending}
+            >
+              Save &amp; exit
             </button>
           ) : null}
         </div>

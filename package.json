@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build --webpack",
+    "build": "prisma generate && if [ -n \"$DATABASE_URL\" ]; then prisma db push; fi && next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",

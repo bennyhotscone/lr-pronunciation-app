@@ -60,6 +60,10 @@ import {
   type JapaneseProgressPayload,
   type JapaneseWordStatSnapshot,
 } from "@/lib/japanese-actions";
+import {
+  loadLastJapaneseBlock,
+  saveLastJapaneseBlock,
+} from "@/lib/japanese-revision-actions";
 import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseRevisionGate } from "./JapaneseRevisionGate";
@@ -85,6 +89,8 @@ import "./japanese-learning.css";
 
 type Screen = "train" | "list" | "families" | "gate" | "revision";
 
+const LS_LAST_BLOCK = "jp-last-block-v1";
+
 function getTrainingRound(view: Exclude<JapaneseRoundView, { kind: "round-complete" }>): number {
   return view.kind === "formal" ? view.round : 1;
 }
@@ -104,8 +110,20 @@ function isJapaneseBlockUnlocked(
   );
 }
 
+function readLastBlockFromLocalStorage(): number | null {
+  try {
+    const raw = localStorage.getItem(LS_LAST_BLOCK);
+    const n = raw ? Number(raw) : NaN;
+    if (Number.isInteger(n) && n >= 1 && isPlayableJapaneseBlock(n)) return n;
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
 export function JapaneseLearningApp() {
   const [block, setBlock] = useState(1);
+  const [blockReady, setBlockReady] = useState(false);
   const words = useMemo(() => getJapaneseBlock(block), [block]);
   const [screen, setScreen] = useState<Screen>("train");
   const [session, setSession] = useState<JapaneseSessionState | null>(null);
@@ -132,7 +150,40 @@ export function JapaneseLearningApp() {
   const autoPlayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Restore last block from localStorage + DB so multitasking/reload doesn't always open block 1.
   useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const fromLs = readLastBlockFromLocalStorage();
+      let next = fromLs ?? 1;
+      try {
+        const fromDb = await loadLastJapaneseBlock();
+        if (fromDb != null && isPlayableJapaneseBlock(fromDb)) next = fromDb;
+      } catch {
+        /* keep localStorage / default */
+      }
+      if (cancelled) return;
+      setBlock(next);
+      setBlockReady(true);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Persist active block (local + DB) after bootstrap.
+  useEffect(() => {
+    if (!blockReady) return;
+    try {
+      localStorage.setItem(LS_LAST_BLOCK, String(block));
+    } catch {
+      /* ignore */
+    }
+    void saveLastJapaneseBlock(block);
+  }, [block, blockReady]);
+
+  useEffect(() => {
+    if (!blockReady) return;
     if (!isPlayableJapaneseBlock(block)) {
       setLoading(false);
       setLoadError("This block is not available yet.");
@@ -201,7 +252,7 @@ export function JapaneseLearningApp() {
     return () => {
       cancelled = true;
     };
-  }, [block, loadAttempt]);
+  }, [block, loadAttempt, blockReady]);
 
   const masterySyncRef = useRef(false);
   useEffect(() => {
@@ -767,8 +818,9 @@ export function JapaneseLearningApp() {
           <section className="jp-learn-practice" aria-labelledby="jp-revision-heading">
             <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quiz</h2>
             <p className="jp-learn-sub">
-              Full 250-word coverage from each 5-block group, padded to at least 350 questions
-              (including sentence building). Every word is tested at least once. 80% to pass.
+              Two rounds over all 250 words: Round 1 with Reveal mnemonic if stuck; Round 2
+              without pre-answer hints, plus a sentence after every 5 words. Progress is saved if
+              you leave mid-quiz. 80% to pass.
             </p>
             <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
               {availableRevisionGates.map((gate) => (
