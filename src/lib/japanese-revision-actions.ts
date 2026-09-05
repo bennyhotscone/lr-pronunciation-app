@@ -2,34 +2,34 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
-import {
-  getJapaneseBlock,
-  getJapaneseWordId,
-  isPlayableJapaneseBlock,
-} from "@/lib/japanese/blocks";
-import {
-  JAPANESE_REVISION_PASS_THRESHOLD,
-  JAPANESE_REVISION_WORD_SAMPLE,
-} from "@/lib/japanese/config";
+import { getJapaneseBlock, getJapaneseWordId } from "@/lib/japanese/blocks";
+import { JAPANESE_REVISION_PASS_THRESHOLD } from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import {
-  getBlocksForRevisionGate,
   getFirstBlockUnlockedByRevisionGate,
   isLiveRevisionGate,
   revisionGateLabel,
   revisionGateWordCount,
 } from "@/lib/japanese/revision-gate";
+import { matchAcceptedSentenceAnswers } from "@/lib/japanese/revision-sentence-match";
 import {
-  formatPreferredRomaji,
-  matchAcceptedSentenceAnswers,
-} from "@/lib/japanese/revision-sentence-match";
-import { getRevisionSentencesForGate } from "@/lib/japanese/revision-sentences";
-import type { JapaneseWord } from "@/lib/japanese/types";
+  buildRevisionQuestions,
+  collectRevisionWords,
+  type RevisionQuestion,
+  type RevisionSentenceQuestion,
+  type RevisionWordQuestion,
+} from "@/lib/japanese/revision-quiz-build";
 import { isStaff } from "@/lib/portal-access";
 import { isPrismaSchemaMissingError } from "@/lib/prisma-errors";
 import { revalidatePath } from "next/cache";
 
 const LEARN_PATH = "/portal/learn-japanese";
+
+export type {
+  RevisionQuestion,
+  RevisionSentenceQuestion,
+  RevisionWordQuestion,
+};
 
 async function requireJapaneseLearner() {
   const session = await auth();
@@ -38,43 +38,11 @@ async function requireJapaneseLearner() {
   return null;
 }
 
-export type RevisionWordQuestion = {
-  kind: "word";
-  id: string;
-  wordId: string;
-  blockNumber: number;
-  wordIndex: number;
-  mode: "type-english" | "type-romaji";
-  prompt: string;
-  romaji: string;
-  english: string;
-  mnemonic: string;
-  audio: string;
-};
-
-export type RevisionSentenceQuestion = {
-  kind: "sentence";
-  id: string;
-  promptEnglish: string;
-  tiles: string[];
-  preferredAnswer: string[];
-  acceptedAnswers: string[][];
-  canonicalRomaji: string;
-  /** @deprecated content words for legacy matchers */
-  requiredWords: string[];
-  wordBank: string[];
-};
-
-export type RevisionQuestion = RevisionWordQuestion | RevisionSentenceQuestion;
-
 export type RevisionGatePayload = {
   gateNumber: number;
   label: string;
-  /** Full vocabulary pool for this gate (e.g. 250). */
   wordCount: number;
-  /** How many unique word questions are in this quiz (should equal wordCount for full coverage). */
   sampleSize: number;
-  /** All vocab ids that must be covered before completion. */
   coverageWordIds: string[];
   unlocksBlock: number;
   passed: boolean;
@@ -82,91 +50,6 @@ export type RevisionGatePayload = {
   threshold: number;
   questions: RevisionQuestion[];
 };
-
-type RevisionWordRef = {
-  blockNumber: number;
-  wordIndex: number;
-  word: JapaneseWord;
-};
-
-function collectRevisionWords(gateNumber: number): RevisionWordRef[] {
-  const out: RevisionWordRef[] = [];
-  for (const blockNumber of getBlocksForRevisionGate(gateNumber)) {
-    if (!isPlayableJapaneseBlock(blockNumber)) continue;
-    const block = getJapaneseBlock(blockNumber);
-    block.forEach((word, wordIndex) => {
-      out.push({ blockNumber, wordIndex, word });
-    });
-  }
-  return out;
-}
-
-function shuffle<T>(items: T[]): T[] {
-  const x = [...items];
-  for (let i = x.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [x[i], x[j]] = [x[j], x[i]];
-  }
-  return x;
-}
-
-function buildSentenceQuestions(gateNumber: number): RevisionSentenceQuestion[] {
-  const templates = getRevisionSentencesForGate(gateNumber);
-  return templates.map((sentence) => {
-    const tiles = shuffle([...sentence.tiles]);
-    return {
-      kind: "sentence" as const,
-      id: sentence.id,
-      promptEnglish: sentence.english,
-      tiles,
-      preferredAnswer: [...sentence.preferredAnswer],
-      acceptedAnswers: sentence.acceptedAnswers.map((a) => [...a]),
-      canonicalRomaji: formatPreferredRomaji(sentence.preferredAnswer),
-      requiredWords: [...sentence.words],
-      wordBank: tiles,
-    };
-  });
-}
-
-function buildRevisionQuestions(gateNumber: number): {
-  questions: RevisionQuestion[];
-  sampleSize: number;
-  coverageWordIds: string[];
-} {
-  const pool = collectRevisionWords(gateNumber);
-  const take =
-    JAPANESE_REVISION_WORD_SAMPLE == null
-      ? pool.length
-      : Math.min(JAPANESE_REVISION_WORD_SAMPLE, pool.length);
-  // Full coverage: every word once (shuffled). Sample mode still shuffles subset.
-  const sampled = shuffle(pool).slice(0, take);
-  const coverageWordIds = sampled.map(({ blockNumber, wordIndex, word }) =>
-    getJapaneseWordId(blockNumber, wordIndex, word),
-  );
-  const wordQuestions: RevisionWordQuestion[] = sampled.map(
-    ({ blockNumber, wordIndex, word }, i) => {
-      const mode: RevisionWordQuestion["mode"] = i % 3 === 0 ? "type-english" : "type-romaji";
-      return {
-        kind: "word" as const,
-        id: `${blockNumber}-${wordIndex}`,
-        wordId: getJapaneseWordId(blockNumber, wordIndex, word),
-        blockNumber,
-        wordIndex,
-        mode,
-        prompt: mode === "type-english" ? word.r : word.en,
-        romaji: word.r,
-        english: word.en,
-        mnemonic: word.m,
-        audio: word.audio || word.jp,
-      };
-    },
-  );
-  return {
-    questions: [...wordQuestions, ...buildSentenceQuestions(gateNumber)],
-    sampleSize: wordQuestions.length,
-    coverageWordIds,
-  };
-}
 
 export async function loadRevisionGatesPassed(userId: string): Promise<number[]> {
   try {
@@ -237,7 +120,6 @@ export async function loadRevisionGate(
 export type RevisionAnswerSubmission = {
   answers: Record<string, string>;
   modes: Record<string, "type-english" | "type-romaji">;
-  /** Unique word ids answered at least once (coverage). */
   coveredWordIds?: string[];
   sentenceIds?: string[];
 };
@@ -253,6 +135,13 @@ export type RevisionSubmitResult = {
   unlocksBlock: number;
   error?: string;
 };
+
+function parseWordQuestionId(id: string): { blockNumber: number; wordIndex: number } | null {
+  // ids: "3-12" or "3-12-x0"
+  const m = /^(\d+)-(\d+)(?:-x\d+)?$/.exec(id);
+  if (!m) return null;
+  return { blockNumber: Number(m[1]), wordIndex: Number(m[2]) };
+}
 
 export async function submitRevisionAnswers(
   gateNumber: number,
@@ -276,26 +165,25 @@ export async function submitRevisionAnswers(
     ),
   );
   const covered = new Set(submission.coveredWordIds ?? []);
-  // Also infer coverage from answered word question ids (block-index).
   for (const id of Object.keys(submission.answers)) {
-    if (id.includes("-") && !id.startsWith("g")) {
-      const [blockPart, indexPart] = id.split("-");
-      const blockNumber = Number(blockPart);
-      const wordIndex = Number(indexPart);
-      const word = getJapaneseBlock(blockNumber)?.[wordIndex];
-      if (word) covered.add(getJapaneseWordId(blockNumber, wordIndex, word));
-    }
+    const parsed = parseWordQuestionId(id);
+    if (!parsed) continue;
+    const word = getJapaneseBlock(parsed.blockNumber)?.[parsed.wordIndex];
+    if (word) covered.add(getJapaneseWordId(parsed.blockNumber, parsed.wordIndex, word));
   }
 
   const missingCoverage = [...expectedCoverage].filter((id) => !covered.has(id));
-  if (missingCoverage.length > 0 && JAPANESE_REVISION_WORD_SAMPLE == null) {
+  if (missingCoverage.length > 0) {
     return {
       error: `Review incomplete — ${missingCoverage.length} words still untested.`,
     };
   }
 
+  const built = buildRevisionQuestions(gateNumber);
   const sentenceById = new Map(
-    buildSentenceQuestions(gateNumber).map((q) => [q.id, q] as const),
+    built.questions
+      .filter((q): q is RevisionSentenceQuestion => q.kind === "sentence")
+      .map((q) => [q.id, q] as const),
   );
 
   let correctCount = 0;
@@ -313,10 +201,9 @@ export async function submitRevisionAnswers(
 
     const mode = submission.modes[id];
     if (!mode) continue;
-    const [blockPart, indexPart] = id.split("-");
-    const blockNumber = Number(blockPart);
-    const wordIndex = Number(indexPart);
-    const word = getJapaneseBlock(blockNumber)[wordIndex];
+    const parsed = parseWordQuestionId(id);
+    if (!parsed) continue;
+    const word = getJapaneseBlock(parsed.blockNumber)[parsed.wordIndex];
     if (!word) continue;
     const ok =
       mode === "type-english"

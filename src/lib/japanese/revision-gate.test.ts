@@ -68,3 +68,18 @@ describe("revision gates", () => {
     expect(isLiveRevisionGate(5)).toBe(false);
   });
 });
+
+describe("revision quiz size", () => {
+  it("builds at least 350 questions with full 250-word coverage per live gate", async () => {
+    const { getRevisionQuestionCountsForGate } = await import(
+      "./revision-quiz-build"
+    );
+    for (const gate of [1, 2, 3, 4]) {
+      const counts = getRevisionQuestionCountsForGate(gate);
+      expect(counts.poolSize).toBe(250);
+      expect(counts.wordCoverage).toBe(250);
+      expect(counts.questionTotal).toBeGreaterThanOrEqual(350);
+      expect(counts.sentenceCount).toBeGreaterThanOrEqual(8);
+    }
+  });
+});

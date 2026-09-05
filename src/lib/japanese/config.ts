@@ -26,10 +26,10 @@ export const JAPANESE_MILESTONE_PASS_THRESHOLD = 75;
 export const JAPANESE_REVISION_PASS_THRESHOLD = 80;
 
 /**
- * Word questions per revision quiz.
- * null = test every word in the gate's pool at least once (full 250 coverage).
+ * Minimum total questions per revision quiz (vocab + extras + sentences).
+ * Unique-word coverage is always the full gate pool (250); extras push the total to this floor.
  */
-export const JAPANESE_REVISION_WORD_SAMPLE: number | null = null;
+export const JAPANESE_REVISION_MIN_QUESTIONS = 350;
 
 /** Curriculum epoch for Blocks 6+ (audited #251–1000). Invalidates old B6+ mastery. */
 export const JAPANESE_B6PLUS_CURRICULUM_EPOCH = "audited-251-1000-v1";

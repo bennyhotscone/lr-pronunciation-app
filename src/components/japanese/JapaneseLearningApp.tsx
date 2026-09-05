@@ -767,8 +767,8 @@ export function JapaneseLearningApp() {
           <section className="jp-learn-practice" aria-labelledby="jp-revision-heading">
             <h2 id="jp-revision-heading" className="jp-learn-practice-title">Revision quiz</h2>
             <p className="jp-learn-sub">
-              75 romaji-first questions sampled from the 250-word pool (blocks 1–5), plus sentence
-              building. 80% to pass.
+              Full 250-word coverage from each 5-block group, padded to at least 350 questions
+              (including sentence building). Every word is tested at least once. 80% to pass.
             </p>
             <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
               {availableRevisionGates.map((gate) => (

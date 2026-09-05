@@ -315,8 +315,8 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
       <header className="jp-learn-header">
         <h1 className="jp-learn-title">Revision quiz</h1>
         <p className="jp-learn-meta">
-          {payload.label} · full {payload.wordCount}-word coverage + {sentenceCount} sentences ·{" "}
-          {payload.threshold}% to pass
+          {payload.label} · {payload.questions.length} questions (all {payload.wordCount} words
+          covered + extras + {sentenceCount} sentences) · {payload.threshold}% to pass
         </p>
         <p className="jp-learn-sub">
           {coverageDone} / {coverageTotal} words reviewed
