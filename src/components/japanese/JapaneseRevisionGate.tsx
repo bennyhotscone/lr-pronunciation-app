@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { ParticleSentenceBuilder } from "@/components/japanese/ParticleSentenceBuilder";
+import { JapaneseMnemonicHook } from "@/components/japanese/JapaneseMnemonicHook";
 import { speakJapanese } from "@/lib/japanese/tts";
 import {
   formatPreferredRomaji,
@@ -510,6 +511,54 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
 
   if (!current) return null;
 
+  const handleMnemonicChange = (wordIndex: number, value: string | null) => {
+    if (!payload || !current || !isWordQuestion(current)) return;
+    if (current.wordIndex !== wordIndex) return;
+    const canonical = current.canonicalMnemonic || current.mnemonic;
+    const display = value?.trim() || canonical;
+    const nextQuestions = payload.questions.map((q) => {
+      if (
+        q.kind === "word" &&
+        q.blockNumber === current.blockNumber &&
+        q.wordIndex === current.wordIndex
+      ) {
+        return {
+          ...q,
+          canonicalMnemonic: q.canonicalMnemonic || canonical,
+          mnemonic: display,
+        };
+      }
+      return q;
+    });
+    setPayload({ ...payload, questions: nextQuestions });
+    persistProgress({
+      questions: nextQuestions,
+      qIndex,
+      answers,
+      modes,
+      coveredWordIds: [...coveredWordIds],
+      revealedMnemonicIds: [...revealedMnemonicIds],
+    });
+  };
+
+  const mnemonicOverrideValue = (q: RevisionWordQuestion): string | null => {
+    const canonical = (q.canonicalMnemonic || q.mnemonic).trim();
+    const effective = q.mnemonic.trim();
+    return effective && effective !== canonical ? effective : null;
+  };
+
+  const renderEditableMnemonic = (q: RevisionWordQuestion, autoEdit = false) => (
+    <JapaneseMnemonicHook
+      blockNumber={q.blockNumber}
+      wordIndex={q.wordIndex}
+      canonicalMnemonic={q.canonicalMnemonic || q.mnemonic}
+      mnemonic={mnemonicOverrideValue(q)}
+      onMnemonicChange={handleMnemonicChange}
+      autoEdit={autoEdit}
+      className="jp-learn-mnemonic mt-2"
+    />
+  );
+
   const showRevealBtn =
     isWordQuestion(current) &&
     current.round === 1 &&
@@ -599,11 +648,7 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
               </button>
             ) : null}
 
-            {showMnemonicNow && !feedback ? (
-              <div className="jp-mnemonic-feedback jp-mnemonic-feedback-ok mt-2">
-                <div className="jp-mnemonic-line">Mnemonic: {current.mnemonic}</div>
-              </div>
-            ) : null}
+            {showMnemonicNow && !feedback ? renderEditableMnemonic(current) : null}
 
             {!feedback ? (
               <input
@@ -622,14 +667,14 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
                   <div className="jp-mnemonic-feedback jp-mnemonic-feedback-ok">
                     <div>✓ {current.romaji}</div>
                     <div>{current.english}</div>
-                    <div className="jp-mnemonic-line">Mnemonic: {current.mnemonic}</div>
+                    {renderEditableMnemonic(current)}
                   </div>
                 ) : (
                   <div className="jp-mnemonic-feedback jp-mnemonic-feedback-bad">
                     <div>✗ Your answer: {feedback.yourAnswer}</div>
                     <div>Correct: {current.romaji}</div>
                     <div>{current.english}</div>
-                    <div className="jp-mnemonic-line">Mnemonic: {current.mnemonic}</div>
+                    {renderEditableMnemonic(current, true)}
                   </div>
                 )}
               </div>

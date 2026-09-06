@@ -7,6 +7,7 @@ import { getJapaneseBlock, getJapaneseWordId } from "@/lib/japanese/blocks";
 import { JAPANESE_REVISION_PASS_THRESHOLD } from "@/lib/japanese/config";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
 import {
+  getBlocksForRevisionGate,
   getFirstBlockUnlockedByRevisionGate,
   isLiveRevisionGate,
   revisionGateLabel,
@@ -14,6 +15,7 @@ import {
 } from "@/lib/japanese/revision-gate";
 import { matchAcceptedSentenceAnswers } from "@/lib/japanese/revision-sentence-match";
 import {
+  applyMnemonicOverridesToQuestions,
   buildRevisionQuestions,
   collectRevisionWords,
   type RevisionQuestion,
@@ -153,6 +155,31 @@ export async function loadRevisionGate(
       return { error: "No vocabulary loaded for this revision gate." };
     }
 
+    // Always overlay the learner's saved memory hooks (including mid-quiz resume).
+    const gateBlocks = getBlocksForRevisionGate(gateNumber);
+    const overrideMap = new Map<string, string>();
+    try {
+      const overrideRows = await prisma.japaneseWordOverride.findMany({
+        where: {
+          userId,
+          blockNumber: { in: gateBlocks },
+          mnemonic: { not: null },
+        },
+        select: { blockNumber: true, wordIndex: true, mnemonic: true },
+      });
+      for (const row of overrideRows) {
+        if (row.mnemonic?.trim()) {
+          overrideMap.set(`${row.blockNumber}:${row.wordIndex}`, row.mnemonic.trim());
+        }
+      }
+    } catch (err) {
+      if (!isPrismaSchemaMissingError(err)) {
+        console.warn("[loadRevisionGate] could not load mnemonic overrides", err);
+      }
+    }
+
+    const questions = applyMnemonicOverridesToQuestions(built.questions, overrideMap);
+
     return {
       gateNumber,
       label: revisionGateLabel(gateNumber),
@@ -163,7 +190,7 @@ export async function loadRevisionGate(
       passed: progress?.passed ?? false,
       attempts: progress?.attempts ?? 0,
       threshold: JAPANESE_REVISION_PASS_THRESHOLD,
-      questions: built.questions,
+      questions,
       round1Count: built.round1Count,
       round2Count: built.round2Count,
       resume: hasResume

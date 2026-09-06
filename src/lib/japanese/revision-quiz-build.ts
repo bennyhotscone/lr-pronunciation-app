@@ -18,7 +18,10 @@ export type RevisionWordQuestion = {
   prompt: string;
   romaji: string;
   english: string;
+  /** Effective mnemonic shown (learner override if set, else curriculum default). */
   mnemonic: string;
+  /** Curriculum default mnemonic (for edit/reset). */
+  canonicalMnemonic: string;
   audio: string;
   /** 1 = first pass (reveal mnemonic allowed); 2 = second pass */
   round: 1 | 2;
@@ -100,10 +103,40 @@ function buildWordQuestion(
     romaji: word.r,
     english: word.en,
     mnemonic: word.m,
+    canonicalMnemonic: word.m,
     audio: word.audio || word.jp,
     round,
     batchId: opts?.batchId,
   };
+}
+
+/** Key for mnemonic overrides: blockNumber:wordIndex */
+export function revisionMnemonicKey(blockNumber: number, wordIndex: number): string {
+  return `${blockNumber}:${wordIndex}`;
+}
+
+/**
+ * Apply the learner's saved memory hooks onto revision word questions.
+ * Always refreshes from live overrides (including mid-quiz resume).
+ */
+export function applyMnemonicOverridesToQuestions(
+  questions: RevisionQuestion[],
+  overrides: Map<string, string>,
+): RevisionQuestion[] {
+  return questions.map((q) => {
+    if (q.kind !== "word") return q;
+    let canonical = q.canonicalMnemonic?.trim();
+    if (!canonical) {
+      const word = getJapaneseBlock(q.blockNumber)[q.wordIndex];
+      canonical = word?.m?.trim() || q.mnemonic;
+    }
+    const override = overrides.get(revisionMnemonicKey(q.blockNumber, q.wordIndex))?.trim();
+    return {
+      ...q,
+      canonicalMnemonic: canonical,
+      mnemonic: override || canonical,
+    };
+  });
 }
 
 function batchesForGate(gateNumber: number): BatchTemplate[] {
