@@ -205,15 +205,60 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     return () => clearTimeout(timer);
   }, [current, playCurrentAudio]);
 
+  // Only reset the answer UI when the question index changes.
+  // Do NOT depend on revealedMnemonicIds — updating that after Check was
+  // clearing feedback and trapping users on Q1 with no Continue button.
   useEffect(() => {
     setFeedback(null);
     setTyped("");
     setSelectedTiles([]);
     setStatus("");
-    setMnemonicRevealed(
-      !!(current && isWordQuestion(current) && revealedMnemonicIds.has(current.id)),
-    );
+  }, [qIndex]);
+
+  useEffect(() => {
+    if (!current || !isWordQuestion(current)) {
+      setMnemonicRevealed(false);
+      return;
+    }
+    setMnemonicRevealed(revealedMnemonicIds.has(current.id));
   }, [qIndex, current, revealedMnemonicIds]);
+
+  // Resume onto a question that was already answered → show feedback + Continue.
+  useEffect(() => {
+    if (!current || !payload) return;
+    const prior = answers[current.id];
+    if (!prior) return;
+
+    if (isWordQuestion(current)) {
+      const ok =
+        current.mode === "type-english"
+          ? fuzzyMatchEnglish(prior, {
+              jp: "",
+              audio: current.audio,
+              r: current.romaji,
+              en: current.english,
+              m: current.mnemonic,
+            })
+          : fuzzyMatchRomaji(prior, {
+              jp: "",
+              audio: current.audio,
+              r: current.romaji,
+              en: current.english,
+              m: current.mnemonic,
+            });
+      setFeedback({
+        correct: ok,
+        yourAnswer: ok ? undefined : prior,
+      });
+      setMnemonicRevealed(true);
+      return;
+    }
+
+    if (isSentenceQuestion(current)) {
+      setSelectedTiles(prior.split(/\s+/).filter(Boolean));
+      setFeedback({ correct: true });
+    }
+  }, [qIndex, current, payload, answers]);
 
   const snapshot = useCallback(() => {
     if (!payload) return null;
@@ -259,6 +304,10 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     if (!payload || !current) return;
     const nextIndex = qIndex + 1;
     if (nextIndex < payload.questions.length) {
+      setFeedback(null);
+      setTyped("");
+      setSelectedTiles([]);
+      setStatus("");
       setQIndex(nextIndex);
       const snap = snapshot();
       if (snap) persistProgress({ ...snap, qIndex: nextIndex });
