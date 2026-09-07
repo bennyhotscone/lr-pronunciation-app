@@ -280,20 +280,42 @@
 }
 .jp-learn-btn-danger:hover:not(:disabled) { background: #f7dddd; }
 
-.jp-know-checkbox {
+.jp-know-choice {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0.75rem 0 0;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  user-select: none;
 }
-.jp-know-checkbox input {
-  width: 1.15rem;
-  height: 1.15rem;
-  accent-color: #1f6b4a;
+.jp-know-choice-btn {
+  flex: 1 1 10rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #222;
+}
+.jp-know-choice-btn:hover:not(:disabled) {
+  border-color: #222;
+}
+.jp-know-choice-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.jp-know-choice-btn-active.jp-know-choice-btn-know {
+  background: #e8f6ef;
+  border-color: #1f6b4a;
+  color: #14532d;
+  box-shadow: 0 0 0 1px #1f6b4a;
+}
+.jp-know-choice-btn-active.jp-know-choice-btn-practice {
+  background: #fff4e8;
+  border-color: #b86a1c;
+  color: #7a3e08;
+  box-shadow: 0 0 0 1px #b86a1c;
 }
 
 .jp-learn-gate-wrap { border-top: 4px solid #22c55e; }

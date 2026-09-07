@@ -566,7 +566,7 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
   const renderKnowCheckbox = (q: RevisionWordQuestion) => (
     <JapaneseKnowCheckbox
       id={`jp-rev-know-${q.id}`}
-      checked={!!knownMarks[q.wordId]}
+      checked={knownMarks[q.wordId] ?? null}
       onChange={(known) => {
         setKnownMarks((prev) => ({ ...prev, [q.wordId]: known }));
         void markJapaneseWordKnown(q.blockNumber, q.wordIndex, known);

@@ -1,25 +1,45 @@
 "use client";
 
 type Props = {
-  checked: boolean;
+  /** true = known, false = needs practice. null/undefined = not chosen yet when `requireChoice`. */
+  checked: boolean | null;
   disabled?: boolean;
   onChange: (known: boolean) => void;
   id?: string;
 };
 
-/** Explicit Know / Don't know control (source of truth for JapaneseWordStat.known). */
+/**
+ * Explicit Know / Need practice control (source of truth for JapaneseWordStat.known).
+ */
 export function JapaneseKnowCheckbox({ checked, disabled, onChange, id }: Props) {
-  const inputId = id ?? "jp-know-word";
+  const baseId = id ?? "jp-know-word";
   return (
-    <label className="jp-know-checkbox" htmlFor={inputId}>
-      <input
-        id={inputId}
-        type="checkbox"
-        checked={checked}
+    <div
+      className="jp-know-choice"
+      role="group"
+      aria-label="Do you know this word?"
+      id={baseId}
+    >
+      <button
+        type="button"
+        id={`${baseId}-know`}
+        className={`jp-know-choice-btn${checked === true ? " jp-know-choice-btn-active jp-know-choice-btn-know" : ""}`}
         disabled={disabled}
-        onChange={(e) => onChange(e.target.checked)}
-      />
-      <span>I know this</span>
-    </label>
+        aria-pressed={checked === true}
+        onClick={() => onChange(true)}
+      >
+        I know this
+      </button>
+      <button
+        type="button"
+        id={`${baseId}-practice`}
+        className={`jp-know-choice-btn${checked === false ? " jp-know-choice-btn-active jp-know-choice-btn-practice" : ""}`}
+        disabled={disabled}
+        aria-pressed={checked === false}
+        onClick={() => onChange(false)}
+      >
+        I need to practice this
+      </button>
+    </div>
   );
 }

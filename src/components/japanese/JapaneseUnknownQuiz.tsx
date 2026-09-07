@@ -255,7 +255,7 @@ export function JapaneseUnknownQuiz({ onClose }: Props) {
         </p>
         <p className="jp-learn-sub">
           Audio → meaning / English → romaji. Sentence builders appear when five unknowns match a
-          curated batch. Mark “I know this” to remove a word from this list.
+          curated batch. Mark “I know this” or “I need to practice this” after each word.
         </p>
       </header>
       <section className="jp-learn-card">
@@ -380,7 +380,7 @@ export function JapaneseUnknownQuiz({ onClose }: Props) {
                   />
                   <JapaneseKnowCheckbox
                     id={`jp-unk-know-${current.id}`}
-                    checked={!!knownMarks[current.wordId]}
+                    checked={knownMarks[current.wordId] ?? null}
                     onChange={(known) => {
                       setKnownMarks((prev) => ({ ...prev, [current.wordId]: known }));
                       void markJapaneseWordKnown(

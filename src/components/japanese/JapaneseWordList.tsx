@@ -278,7 +278,7 @@ export function JapaneseWordList({
         {filter === "known"
           ? "Words you marked “I know this” on Round 4/5, revision, or here. They skip teach/retry queues but still appear in milestone stories."
           : filter === "unknown"
-            ? "Words not marked known yet. Use Practice unknowns for audio → meaning/romaji drills and sentence builders."
+            ? "Words marked “I need to practice this” (or not marked known yet). Use Practice unknowns for audio → meaning/romaji drills and sentence builders."
             : scope === "block"
               ? `Block ${blockNumber} reference. Mark Know to skip queues. Tap Edit to customize memory hooks.`
               : filter === "repeats"

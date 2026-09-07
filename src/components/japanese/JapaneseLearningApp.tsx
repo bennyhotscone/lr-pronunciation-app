@@ -982,8 +982,9 @@ export function JapaneseLearningApp() {
         <section className="jp-learn-practice" aria-labelledby="jp-unknown-heading">
           <h2 id="jp-unknown-heading" className="jp-learn-practice-title">Unknown words</h2>
           <p className="jp-learn-sub">
-            Mark “I know this” on Round 4/5 or revision. Unknown words stay here until you mark
-            them known — practice with audio quizzes and sentence builders.
+            Mark “I know this” or “I need to practice this” on Round 4/5 or revision. Unknown
+            words stay here until you mark them known — practice with audio quizzes and sentence
+            builders.
           </p>
           <p className="jp-learn-meta">{unknownWordCount} unknown across unlocked blocks</p>
           <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
