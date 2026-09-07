@@ -47,7 +47,7 @@ export type RevisionSentenceQuestion = {
 
 export type RevisionQuestion = RevisionWordQuestion | RevisionSentenceQuestion;
 
-type RevisionWordRef = {
+export type RevisionWordRef = {
   blockNumber: number;
   wordIndex: number;
   word: JapaneseWord;
@@ -246,3 +246,72 @@ export function getRevisionQuestionCountsForGate(gateNumber: number) {
     round2Count: built.round2Count,
   };
 }
+
+/** Max words per unknown-practice session (mobile-friendly). */
+export const UNKNOWN_PRACTICE_CAP = 50;
+
+function sentenceForExactWordSet(
+  refs: RevisionWordRef[],
+): RevisionSentenceQuestion | null {
+  if (refs.length !== 5) return null;
+  const keySet = new Set(refs.map((r) => `${r.blockNumber}:${r.wordIndex}`));
+  for (const gateNumber of [1, 2, 3, 4]) {
+    for (const batch of batchesForGate(gateNumber)) {
+      const batchKeys = batch.wordIndices.map((idx) => `${batch.blockNumber}:${idx}`);
+      if (
+        batchKeys.length !== 5 ||
+        batchKeys.some((k) => !keySet.has(k)) ||
+        [...keySet].some((k) => !batchKeys.includes(k))
+      ) {
+        continue;
+      }
+      const batchWordIds = refs.map((r) =>
+        getJapaneseWordId(r.blockNumber, r.wordIndex, r.word),
+      );
+      const tiles = shuffle([...batch.tiles]);
+      return {
+        kind: "sentence",
+        id: `unknown-${batch.id}`,
+        promptEnglish: batch.english,
+        tiles,
+        preferredAnswer: [...batch.preferredAnswer],
+        acceptedAnswers: batch.acceptedAnswers.map((a) => [...a]),
+        canonicalRomaji: formatPreferredRomaji(batch.preferredAnswer),
+        requiredWords: [...batch.wordRomaji],
+        wordBank: tiles,
+        round: 2,
+        batchId: batch.id,
+        batchWordIds,
+      };
+    }
+  }
+  return null;
+}
+
+/**
+ * Custom quiz over unknown words: mixed audio→English / English→romaji,
+ * plus curated sentence builders only when a saved 5-word batch matches.
+ */
+export function buildUnknownPracticeQuestions(refs: RevisionWordRef[]): {
+  questions: RevisionQuestion[];
+  wordCount: number;
+} {
+  const shuffled = shuffle(refs).slice(0, UNKNOWN_PRACTICE_CAP);
+  const questions: RevisionQuestion[] = [];
+
+  for (let i = 0; i < shuffled.length; i += 5) {
+    const chunk = shuffled.slice(i, i + 5);
+    chunk.forEach((ref, j) => {
+      questions.push(
+        buildWordQuestion(ref, j % 2 === 0 ? "type-english" : "type-romaji", 1, {
+          idSuffix: `-u${i}-${j}`,
+        }),
+      );
+    });
+    const sentence = sentenceForExactWordSet(chunk);
+    if (sentence) questions.push(sentence);
+  }
+
+  return { questions, wordCount: shuffled.length };
+}
+

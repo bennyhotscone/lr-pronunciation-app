@@ -280,6 +280,22 @@
 }
 .jp-learn-btn-danger:hover:not(:disabled) { background: #f7dddd; }
 
+.jp-know-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  user-select: none;
+}
+.jp-know-checkbox input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: #1f6b4a;
+}
+
 .jp-learn-gate-wrap { border-top: 4px solid #22c55e; }
 .jp-learn-gate-header { background: linear-gradient(180deg, #ecfdf5 0%, transparent 100%); padding-top: 0.5rem; }
 .jp-learn-gate-card { border-color: #86efac; box-shadow: 0 0 0 1px #bbf7d0; }

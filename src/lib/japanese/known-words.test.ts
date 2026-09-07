@@ -1,46 +1,34 @@
 import { describe, expect, it } from "vitest";
 import {
   applyAnswerToKnownProgress,
+  applyManualKnownMark,
   buildPracticeOrder,
   computeFormalRoundScorePct,
   computeRoundScorePct,
   EMPTY_KNOWN_PROGRESS,
   indicesFromKnownStats,
+  shouldRetireWordAfterCorrect,
   statsToKnownWordsMap,
 } from "./known-words";
 
 describe("known-words", () => {
-  it("promotes after three consecutive correct answers in round 4", () => {
+  it("does not auto-promote known from consecutive corrects", () => {
     let p = { ...EMPTY_KNOWN_PROGRESS };
     p = applyAnswerToKnownProgress(p, 4, true);
-    expect(p.known).toBe(false);
+    p = applyAnswerToKnownProgress(p, 4, true);
     p = applyAnswerToKnownProgress(p, 4, true);
     expect(p.known).toBe(false);
-    p = applyAnswerToKnownProgress(p, 4, true);
-    expect(p.known).toBe(true);
     expect(p.consecutiveCorrect).toBe(3);
   });
 
-  it("promotes after correct answers in rounds 4 and 5 without early misses", () => {
+  it("does not auto-promote from R4 then R5 corrects", () => {
     let p = { ...EMPTY_KNOWN_PROGRESS };
     p = applyAnswerToKnownProgress(p, 4, true);
-    expect(p.known).toBe(false);
-    p = applyAnswerToKnownProgress(p, 5, true);
-    expect(p.known).toBe(true);
-  });
-
-  it("disqualifies promotion after a miss in round 2", () => {
-    let p = { ...EMPTY_KNOWN_PROGRESS };
-    p = applyAnswerToKnownProgress(p, 2, false);
-    p = applyAnswerToKnownProgress(p, 4, true);
-    p = applyAnswerToKnownProgress(p, 4, true);
-    p = applyAnswerToKnownProgress(p, 5, true);
     p = applyAnswerToKnownProgress(p, 5, true);
     expect(p.known).toBe(false);
-    expect(p.missedEarlyRounds).toBe(true);
   });
 
-  it("removes known status on wrong answer", () => {
+  it("preserves manual known on wrong answer", () => {
     const p = applyAnswerToKnownProgress(
       {
         known: true,
@@ -52,9 +40,36 @@ describe("known-words", () => {
       5,
       false,
     );
-    expect(p.known).toBe(false);
+    expect(p.known).toBe(true);
+    expect(p.consecutiveCorrect).toBe(0);
     expect(p.round4CorrectCount).toBe(0);
     expect(p.round5CorrectCount).toBe(0);
+  });
+
+  it("never auto-retires from streaks", () => {
+    expect(shouldRetireWordAfterCorrect(EMPTY_KNOWN_PROGRESS, 4, true)).toBe(false);
+  });
+
+  it("applies manual known and don't-know marks", () => {
+    const known = applyManualKnownMark(
+      { ...EMPTY_KNOWN_PROGRESS, missedEarlyRounds: true },
+      true,
+    );
+    expect(known.known).toBe(true);
+    expect(known.missedEarlyRounds).toBe(false);
+
+    const unknown = applyManualKnownMark(
+      {
+        known: true,
+        missedEarlyRounds: false,
+        consecutiveCorrect: 3,
+        round4CorrectCount: 1,
+        round5CorrectCount: 1,
+      },
+      false,
+    );
+    expect(unknown.known).toBe(false);
+    expect(unknown.consecutiveCorrect).toBe(0);
   });
 
   it("skips known words on every learn pass, not only retry", () => {
@@ -71,7 +86,6 @@ describe("known-words", () => {
   });
 
   it("caps mastery at 100% when review/side points inflate the raw score", () => {
-    // 8 credited skips + 10 answered (including 8 review side-points) would be 180% uncapped.
     expect(computeRoundScorePct(10, 10, 8)).toBe(100);
     expect(computeFormalRoundScorePct(18, 18, 25, new Set([0, 1, 2, 3, 4, 5, 6, 7, 8]), true)).toBe(
       100,

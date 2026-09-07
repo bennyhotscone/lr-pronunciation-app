@@ -3,7 +3,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getJapaneseBlock } from "@/lib/japanese/blocks";
-import { JAPANESE_MASTERY_THRESHOLD } from "@/lib/japanese/config";
 import { mergeUnlockedBlocks } from "@/lib/japanese/milestone";
 import { loadRevisionGatesPassed } from "@/lib/japanese-revision-actions";
 import {
@@ -14,12 +13,14 @@ import {
   syncMasteryFromCompletedRound5,
   updateMetaAfterRound,
 } from "@/lib/japanese/engine";
-import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
 import type { JapaneseBlockMeta, JapaneseSessionState } from "@/lib/japanese/types";
 import {
   applyAnswerToKnownProgress,
+  applyManualKnownMark,
   EMPTY_KNOWN_PROGRESS,
+  getKnownIndices,
   knownProgressFromDb,
+  statsToKnownWordsMap,
 } from "@/lib/japanese/known-words";
 import { wordlistKnownKey } from "@/lib/japanese/wordlist-catalog";
 import { isStaff } from "@/lib/portal-access";
@@ -413,19 +414,6 @@ export async function completeJapaneseRound(
     revisionGatesPassed,
   );
 
-  if (round === 5 && scorePct >= JAPANESE_MASTERY_THRESHOLD) {
-    await prisma.japaneseWordStat.updateMany({
-      where: {
-        userId,
-        blockNumber,
-        missedEarlyRounds: false,
-        consecutiveCorrect: { gte: 3 },
-        known: false,
-      },
-      data: { known: true },
-    });
-  }
-
   const save = await saveJapaneseProgress(blockNumber, sessionState, nextMeta);
   if ("error" in save) return save;
 
@@ -440,6 +428,66 @@ export async function completeJapaneseRound(
   };
 
   return { ok: true, meta: mergedMeta };
+}
+
+export async function markJapaneseWordKnown(
+  blockNumber: number,
+  wordIndex: number,
+  known: boolean,
+): Promise<{ ok: true; stat: JapaneseWordStatSnapshot } | { error: string }> {
+  const session = await requireJapaneseLearner();
+  if (!session) return { error: "Unauthorized" };
+
+  const userId = session.user.id;
+  const words = getJapaneseBlock(blockNumber);
+  if (wordIndex < 0 || wordIndex >= words.length) return { error: "Invalid word." };
+
+  const existing = await prisma.japaneseWordStat.findUnique({
+    where: {
+      userId_blockNumber_wordIndex: { userId, blockNumber, wordIndex },
+    },
+  });
+
+  const prior = existing ? knownProgressFromDb(existing) : { ...EMPTY_KNOWN_PROGRESS };
+  const nextKnown = applyManualKnownMark(prior, known);
+
+  const row = await prisma.japaneseWordStat.upsert({
+    where: {
+      userId_blockNumber_wordIndex: { userId, blockNumber, wordIndex },
+    },
+    create: {
+      userId,
+      blockNumber,
+      wordIndex,
+      timesSeen: existing?.timesSeen ?? 0,
+      timesCorrect: existing?.timesCorrect ?? 0,
+      timesMissed: existing?.timesMissed ?? 0,
+      known: nextKnown.known,
+      missedEarlyRounds: nextKnown.missedEarlyRounds,
+      consecutiveCorrect: nextKnown.consecutiveCorrect,
+      round4CorrectCount: nextKnown.round4CorrectCount,
+      round5CorrectCount: nextKnown.round5CorrectCount,
+      lastSeenAt: existing?.lastSeenAt ?? null,
+    },
+    update: {
+      known: nextKnown.known,
+      missedEarlyRounds: nextKnown.missedEarlyRounds,
+      consecutiveCorrect: nextKnown.consecutiveCorrect,
+      round4CorrectCount: nextKnown.round4CorrectCount,
+      round5CorrectCount: nextKnown.round5CorrectCount,
+    },
+  });
+
+  revalidatePath(LEARN_PATH);
+  return {
+    ok: true,
+    stat: {
+      timesSeen: row.timesSeen,
+      timesCorrect: row.timesCorrect,
+      timesMissed: row.timesMissed,
+      ...knownProgressFromDb(row),
+    },
+  };
 }
 
 export async function saveJapaneseWordOverride(

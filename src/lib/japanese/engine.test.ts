@@ -400,13 +400,12 @@ describe("syncMasteryFromCompletedRound5", () => {
 });
 
 describe("round 4/5 streak retirement", () => {
-  it("retires a word after three consecutive correct answers in round 4", () => {
+  it("does not auto-retire from streaks (Know checkbox retires instead)", () => {
     let state = startFormalRound(createInitialSessionState(), 4, 10);
     state = recordCorrectWithStreak(state, 3);
     state = recordCorrectWithStreak(state, 3);
-    expect(state.sessionRetired).not.toContain(3);
     state = recordCorrectWithStreak(state, 3);
-    expect(state.sessionRetired).toContain(3);
-    expect(state.order.filter((i) => i === 3).length).toBeLessThanOrEqual(1);
+    expect(state.sessionRetired ?? []).not.toContain(3);
+    expect(state.roundStreaks?.[3]).toBe(3);
   });
 });

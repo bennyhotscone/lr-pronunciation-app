@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { ParticleSentenceBuilder } from "@/components/japanese/ParticleSentenceBuilder";
+import { JapaneseKnowCheckbox } from "@/components/japanese/JapaneseKnowCheckbox";
 import { JapaneseMnemonicHook } from "@/components/japanese/JapaneseMnemonicHook";
 import { speakJapanese } from "@/lib/japanese/tts";
 import {
@@ -9,6 +10,7 @@ import {
   matchAcceptedSentenceAnswers,
 } from "@/lib/japanese/revision-sentence-match";
 import { fuzzyMatchEnglish, fuzzyMatchRomaji } from "@/lib/japanese/matching";
+import { markJapaneseWordKnown } from "@/lib/japanese-actions";
 import {
   clearRevisionInProgress,
   loadRevisionGate,
@@ -64,6 +66,8 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     yourAnswer?: string;
     natural?: string;
   } | null>(null);
+  /** Per wordId — learner Know marks during this quiz. */
+  const [knownMarks, setKnownMarks] = useState<Record<string, boolean>>({});
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const persistProgress = useCallback(
@@ -559,6 +563,17 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
     />
   );
 
+  const renderKnowCheckbox = (q: RevisionWordQuestion) => (
+    <JapaneseKnowCheckbox
+      id={`jp-rev-know-${q.id}`}
+      checked={!!knownMarks[q.wordId]}
+      onChange={(known) => {
+        setKnownMarks((prev) => ({ ...prev, [q.wordId]: known }));
+        void markJapaneseWordKnown(q.blockNumber, q.wordIndex, known);
+      }}
+    />
+  );
+
   const showRevealBtn =
     isWordQuestion(current) &&
     current.round === 1 &&
@@ -668,6 +683,7 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
                     <div>✓ {current.romaji}</div>
                     <div>{current.english}</div>
                     {renderEditableMnemonic(current)}
+                    {renderKnowCheckbox(current)}
                   </div>
                 ) : (
                   <div className="jp-mnemonic-feedback jp-mnemonic-feedback-bad">
@@ -675,6 +691,7 @@ export function JapaneseRevisionGate({ gateNumber, onPassed, onClose }: Props) {
                     <div>Correct: {current.romaji}</div>
                     <div>{current.english}</div>
                     {renderEditableMnemonic(current, true)}
+                    {renderKnowCheckbox(current)}
                   </div>
                 )}
               </div>

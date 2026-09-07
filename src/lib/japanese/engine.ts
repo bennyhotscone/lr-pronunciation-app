@@ -1,7 +1,6 @@
 import {
   JAPANESE_ALWAYS_UNLOCKED_BLOCKS,
   JAPANESE_BATCH_SIZE,
-  JAPANESE_KNOWN_THRESHOLD,
   JAPANESE_MASTERY_THRESHOLD,
   JAPANESE_CHOICE_COUNT,
   JAPANESE_MINI_REVIEW_SIZE,
@@ -666,7 +665,7 @@ export function retireWordFromFormalOrder(
   return { ...state, order, sessionRetired: [...retired] };
 }
 
-/** Record a correct answer; retires the word after 3-in-a-row in R4/R5. */
+/** Record a correct answer in R4/R5 (known / retire is manual via Know checkbox). */
 export function recordCorrectWithStreak(
   state: JapaneseSessionState,
   wordIndex: number,
@@ -677,11 +676,7 @@ export function recordCorrectWithStreak(
 
   const streaks = { ...(next.roundStreaks ?? {}) };
   streaks[wordIndex] = (streaks[wordIndex] ?? 0) + 1;
-  next = { ...next, roundStreaks: streaks };
-  if (streaks[wordIndex] >= JAPANESE_KNOWN_THRESHOLD) {
-    next = retireWordFromFormalOrder(next, wordIndex);
-  }
-  return next;
+  return { ...next, roundStreaks: streaks };
 }
 
 export function computeSessionRoundScorePct(

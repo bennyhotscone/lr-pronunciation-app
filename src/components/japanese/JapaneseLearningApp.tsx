@@ -17,6 +17,7 @@ import {
   repairSessionState,
   resolveWord,
   retryRound,
+  retireWordFromFormalOrder,
   ROUND_SHORT_LABELS,
   startFormalRound,
   transitionRound1ToRound2,
@@ -54,6 +55,7 @@ import type {
 import {
   loadJapaneseProgress,
   completeJapaneseRound,
+  markJapaneseWordKnown,
   recordJapaneseWordResult,
   resetJapaneseBlockProgress,
   saveJapaneseProgress,
@@ -64,9 +66,11 @@ import {
   loadLastJapaneseBlock,
   saveLastJapaneseBlock,
 } from "@/lib/japanese-revision-actions";
+import { JapaneseKnowCheckbox } from "./JapaneseKnowCheckbox";
 import { JapaneseMnemonicHook } from "./JapaneseMnemonicHook";
 import { JapaneseMilestoneGate } from "./JapaneseMilestoneGate";
 import { JapaneseRevisionGate } from "./JapaneseRevisionGate";
+import { JapaneseUnknownQuiz } from "./JapaneseUnknownQuiz";
 import { JapaneseWordList } from "./JapaneseWordList";
 import { JapaneseWordFamilies } from "./JapaneseWordFamilies";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
@@ -76,6 +80,7 @@ import {
 } from "@/lib/correct-answer-sound";
 import { wordHasNuanceExplanation } from "@/lib/japanese/word-nuances";
 import { getKnownIndices, statsToKnownWordsMap } from "@/lib/japanese/known-words";
+import { wordlistKnownKey } from "@/lib/japanese/wordlist-catalog";
 import {
   decodeExternalReview,
   emptyPriorLearning,
@@ -87,7 +92,8 @@ import {
 } from "@/lib/japanese/round-queue";
 import "./japanese-learning.css";
 
-type Screen = "train" | "list" | "families" | "gate" | "revision";
+type Screen = "train" | "list" | "families" | "gate" | "revision" | "unknown-quiz";
+type ListFilter = "all" | "known" | "unknown" | "repeats";
 
 const LS_LAST_BLOCK = "jp-last-block-v1";
 
@@ -132,6 +138,7 @@ export function JapaneseLearningApp() {
   const [revisionGatesPassed, setRevisionGatesPassed] = useState<number[]>([]);
   const [activeGate, setActiveGate] = useState<number | null>(null);
   const [activeRevisionGate, setActiveRevisionGate] = useState<number | null>(null);
+  const [listFilter, setListFilter] = useState<ListFilter>("all");
   const [overrides, setOverrides] = useState<JapaneseProgressPayload["overrides"]>({});
   const [wordStats, setWordStats] = useState<Record<number, JapaneseWordStatSnapshot>>({});
   const [priorLearning, setPriorLearning] = useState<PriorLearning>(emptyPriorLearning);
@@ -294,7 +301,73 @@ export function JapaneseLearningApp() {
     [block, applyWordStat],
   );
 
+  const markWordKnown = useCallback(
+    (sourceBlock: number, wordIndex: number, known: boolean) => {
+      const key = wordlistKnownKey(sourceBlock, wordIndex);
+      setPriorLearning((prev) => {
+        const next = new Set(prev.knownKeys);
+        if (known) next.add(key);
+        else next.delete(key);
+        return { ...prev, knownKeys: next };
+      });
+      if (sourceBlock === block) {
+        setWordStats((prev) => ({
+          ...prev,
+          [wordIndex]: {
+            ...(prev[wordIndex] ?? {
+              timesSeen: 0,
+              timesCorrect: 0,
+              timesMissed: 0,
+            }),
+            known,
+            consecutiveCorrect: known ? prev[wordIndex]?.consecutiveCorrect ?? 0 : 0,
+            round4CorrectCount: known ? prev[wordIndex]?.round4CorrectCount ?? 0 : 0,
+            round5CorrectCount: known ? prev[wordIndex]?.round5CorrectCount ?? 0 : 0,
+            missedEarlyRounds: known ? false : prev[wordIndex]?.missedEarlyRounds,
+          },
+        }));
+        if (known && session) {
+          setSession(retireWordFromFormalOrder(session, wordIndex));
+        }
+      }
+      void markJapaneseWordKnown(sourceBlock, wordIndex, known).then((result) => {
+        if ("ok" in result && result.ok && sourceBlock === block) {
+          applyWordStat(wordIndex, result.stat);
+        }
+      });
+    },
+    [block, session, applyWordStat],
+  );
+
   const playableBlocks = useMemo(() => getPlayableBlockNumbers(), []);
+
+  const unknownWordCount = useMemo(() => {
+    if (!meta) return 0;
+    const unlocked = new Set<number>([
+      ...Array.from({ length: JAPANESE_ALWAYS_UNLOCKED_BLOCKS }, (_, i) => i + 1),
+      ...meta.unlockedBlocks,
+    ]);
+    let total = 0;
+    let known = 0;
+    for (const b of unlocked) {
+      if (!isPlayableJapaneseBlock(b)) continue;
+      const n = getJapaneseBlock(b).length;
+      total += n;
+      for (let i = 0; i < n; i++) {
+        if (priorLearning.knownKeys.has(wordlistKnownKey(b, i))) known += 1;
+      }
+    }
+    return Math.max(0, total - known);
+  }, [meta, priorLearning.knownKeys]);
+
+  const openUnknownList = () => {
+    setListFilter("unknown");
+    setScreen("list");
+  };
+
+  const openUnknownQuiz = () => {
+    setScreen("unknown-quiz");
+  };
 
   const openMilestoneGate = (milestoneNumber: number) => {
     setActiveGate(milestoneNumber);
@@ -677,6 +750,27 @@ export function JapaneseLearningApp() {
     );
   }, []);
 
+  if (screen === "unknown-quiz") {
+    return (
+      <JapaneseUnknownQuiz
+        onClose={() => {
+          void loadJapaneseProgress(block).then((data) => {
+            if ("error" in data) return;
+            setWordStats(data.stats);
+            setPriorLearning(
+              priorLearningFromArrays({
+                knownKeys: data.priorLearning.knownKeys,
+                seenKeys: data.priorLearning.seenKeys,
+                masteredBlocks: data.priorLearning.masteredBlocks,
+              }),
+            );
+          });
+          setScreen("train");
+        }}
+      />
+    );
+  }
+
   if (screen === "revision" && activeRevisionGate) {
     return (
       <JapaneseRevisionGate
@@ -885,6 +979,27 @@ export function JapaneseLearningApp() {
           <p className="jp-learn-sub">Block {block} — pick any round you have reached (1–5).</p>
           {practiceRoundNav}
         </section>
+        <section className="jp-learn-practice" aria-labelledby="jp-unknown-heading">
+          <h2 id="jp-unknown-heading" className="jp-learn-practice-title">Unknown words</h2>
+          <p className="jp-learn-sub">
+            Mark “I know this” on Round 4/5 or revision. Unknown words stay here until you mark
+            them known — practice with audio quizzes and sentence builders.
+          </p>
+          <p className="jp-learn-meta">{unknownWordCount} unknown across unlocked blocks</p>
+          <div className="jp-learn-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
+            <button type="button" className="jp-learn-btn" onClick={openUnknownList}>
+              Unknown list
+            </button>
+            <button
+              type="button"
+              className="jp-learn-btn jp-learn-btn-primary"
+              onClick={openUnknownQuiz}
+              disabled={unknownWordCount === 0}
+            >
+              Practice unknowns
+            </button>
+          </div>
+        </section>
       </header>
 
       <nav className="jp-learn-nav" aria-label="Japanese learning sections">
@@ -898,7 +1013,10 @@ export function JapaneseLearningApp() {
         <button
           type="button"
           className={`jp-learn-btn ${screen === "list" ? "jp-learn-btn-primary" : ""}`}
-          onClick={() => setScreen("list")}
+          onClick={() => {
+            setListFilter("all");
+            setScreen("list");
+          }}
         >
           Word list
         </button>
@@ -1244,6 +1362,21 @@ export function JapaneseLearningApp() {
                       autoEdit={wasWrong}
                     />
                   ) : null}
+                  {getTrainingRound(view) >= 4 ? (
+                    <JapaneseKnowCheckbox
+                      id={`jp-know-${view.sourceBlock}-${view.sourceWordIndex}`}
+                      checked={
+                        view.sourceBlock === block
+                          ? !!wordStats[view.sourceWordIndex]?.known
+                          : priorLearning.knownKeys.has(
+                              wordlistKnownKey(view.sourceBlock, view.sourceWordIndex),
+                            )
+                      }
+                      onChange={(known) =>
+                        markWordKnown(view.sourceBlock, view.sourceWordIndex, known)
+                      }
+                    />
+                  ) : null}
                   <button
                     type="button"
                     className="jp-learn-btn mt-2"
@@ -1308,6 +1441,8 @@ export function JapaneseLearningApp() {
           words={words}
           overrides={overrides}
           wordStats={wordStats}
+          initialFilter={listFilter}
+          onMarkKnown={(wordIndex, known) => markWordKnown(block, wordIndex, known)}
           onSelectBlock={(n) => {
             if (!meta) return;
             if (!isJapaneseBlockUnlocked(meta, block, n) || !isPlayableJapaneseBlock(n)) return;

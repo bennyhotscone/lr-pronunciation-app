@@ -28,6 +28,7 @@ import {
 } from "@/lib/japanese-actions";
 import { loadJapaneseKnownFlags } from "@/lib/japanese-wordlist-actions";
 import { JapaneseCatalogList } from "./JapaneseCatalogList";
+import { JapaneseKnowCheckbox } from "./JapaneseKnowCheckbox";
 import { JapaneseWordNuance } from "./JapaneseWordNuance";
 
 type ListScope = "block" | "all";
@@ -38,6 +39,8 @@ type Props = {
   words: JapaneseWord[];
   overrides: JapaneseProgressPayload["overrides"];
   wordStats?: Record<number, JapaneseWordStatSnapshot>;
+  initialFilter?: ListFilter;
+  onMarkKnown?: (wordIndex: number, known: boolean) => void;
   onOverrideChange: (
     wordIndex: number,
     field: "mnemonic" | "pronunciationCue" | "ttsInput",
@@ -65,6 +68,8 @@ export function JapaneseWordList({
   words,
   overrides,
   wordStats = {},
+  initialFilter = "all",
+  onMarkKnown,
   onOverrideChange,
   onSelectBlock,
 }: Props) {
@@ -76,8 +81,13 @@ export function JapaneseWordList({
   });
   const [pending, startTransition] = useTransition();
   const [scope, setScope] = useState<ListScope>("all");
-  const [filter, setFilter] = useState<ListFilter>("all");
+  const [filter, setFilter] = useState<ListFilter>(initialFilter);
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setFilter(initialFilter);
+    if (initialFilter === "unknown") setScope("all");
+  }, [initialFilter]);
   const [fetchedKnownKeys, setFetchedKnownKeys] = useState<string[]>([]);
 
   useEffect(() => {
@@ -266,11 +276,11 @@ export function JapaneseWordList({
       </p>
       <p className="jp-learn-sub">
         {filter === "known"
-          ? "Words you never missed in rounds 1–3, then got right in rounds 4 and 5. They skip round retries but still appear in milestone stories."
+          ? "Words you marked “I know this” on Round 4/5, revision, or here. They skip teach/retry queues but still appear in milestone stories."
           : filter === "unknown"
-            ? "Everything in this view that is not known yet."
+            ? "Words not marked known yet. Use Practice unknowns for audio → meaning/romaji drills and sentence builders."
             : scope === "block"
-              ? `Block ${blockNumber} reference. Known words skip round retries but still appear in milestone stories. Tap Edit to customize memory hooks.`
+              ? `Block ${blockNumber} reference. Mark Know to skip queues. Tap Edit to customize memory hooks.`
               : filter === "repeats"
                 ? "Grouped by romaji so the same headword is easy to compare across blocks."
                 : "Romaji first. Highlighted rows appear in more than one block."}
@@ -328,6 +338,13 @@ export function JapaneseWordList({
                   <strong>Mnemonic</strong>
                   {resolved.displayMnemonic}
                 </div>
+                {onMarkKnown ? (
+                  <JapaneseKnowCheckbox
+                    id={`jp-list-know-${blockNumber}-${i}`}
+                    checked={isKnown}
+                    onChange={(known) => onMarkKnown(i, known)}
+                  />
+                ) : null}
                 <div className="jp-learn-row mt-2">
                   <button
                     type="button"

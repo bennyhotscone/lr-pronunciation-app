@@ -1,5 +1,3 @@
-import { JAPANESE_KNOWN_THRESHOLD } from "./config";
-
 export type KnownWordProgress = {
   known: boolean;
   missedEarlyRounds: boolean;
@@ -121,6 +119,10 @@ export function knownProgressFromDb(row: {
   };
 }
 
+/**
+ * Update seen/streak counters from an answer without flipping `known`.
+ * Known status is set only via the learner's explicit Know / Don't know control.
+ */
 export function applyAnswerToKnownProgress(
   prev: KnownWordProgress,
   round: 1 | 2 | 3 | 4 | 5,
@@ -128,7 +130,7 @@ export function applyAnswerToKnownProgress(
 ): KnownWordProgress {
   if (!correct) {
     return {
-      known: false,
+      known: prev.known,
       missedEarlyRounds: prev.missedEarlyRounds || round <= 3,
       consecutiveCorrect: 0,
       round4CorrectCount: 0,
@@ -136,7 +138,7 @@ export function applyAnswerToKnownProgress(
     };
   }
 
-  let { consecutiveCorrect, round4CorrectCount, round5CorrectCount, missedEarlyRounds } = prev;
+  let { consecutiveCorrect, round4CorrectCount, round5CorrectCount } = prev;
   if (round === 4) {
     round4CorrectCount += 1;
     consecutiveCorrect += 1;
@@ -145,27 +147,41 @@ export function applyAnswerToKnownProgress(
     consecutiveCorrect += 1;
   }
 
-  const known =
-    !missedEarlyRounds &&
-    (consecutiveCorrect >= JAPANESE_KNOWN_THRESHOLD ||
-      (round4CorrectCount >= 1 && round5CorrectCount >= 1));
-
   return {
-    known,
-    missedEarlyRounds,
+    known: prev.known,
+    missedEarlyRounds: prev.missedEarlyRounds,
     consecutiveCorrect,
     round4CorrectCount,
     round5CorrectCount,
   };
 }
 
-/** True when a word should leave the active R4/R5 pool after this correct answer. */
+/** Session retirement is manual via Know checkbox — never auto-retire from streaks. */
 export function shouldRetireWordAfterCorrect(
-  prev: KnownWordProgress,
-  round: 4 | 5,
-  correct: boolean,
+  _prev: KnownWordProgress,
+  _round: 4 | 5,
+  _correct: boolean,
 ): boolean {
-  if (!correct || (round !== 4 && round !== 5)) return false;
-  const next = applyAnswerToKnownProgress(prev, round, true);
-  return next.consecutiveCorrect >= JAPANESE_KNOWN_THRESHOLD;
+  return false;
+}
+
+/** Apply an explicit Know / Don't know mark. */
+export function applyManualKnownMark(
+  prev: KnownWordProgress,
+  known: boolean,
+): KnownWordProgress {
+  if (known) {
+    return {
+      ...prev,
+      known: true,
+      missedEarlyRounds: false,
+    };
+  }
+  return {
+    ...prev,
+    known: false,
+    consecutiveCorrect: 0,
+    round4CorrectCount: 0,
+    round5CorrectCount: 0,
+  };
 }
