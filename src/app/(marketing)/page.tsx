@@ -20,6 +20,13 @@ const practicePaths = [
     description: "Practise English sounds, words, and clear speech.",
     cta: "Start Practising",
   },
+  {
+    href: "/photo-treasure-hunt",
+    title: "Photo Treasure Hunt",
+    description:
+      "Fifteen Melbourne photo missions. Pictures, words, and sentences stay on this device.",
+    cta: "Photo Treasure Hunt",
+  },
 ] as const;
 
 export default function HomePage() {
@@ -74,6 +81,12 @@ export default function HomePage() {
             >
               Create account
             </Link>
+            <Link
+              href="/photo-treasure-hunt"
+              className="touch-target inline-flex min-h-12 items-center justify-center rounded-[18px] border-2 border-[#efc5dd] bg-[#fff0f7] px-7 py-3.5 text-base font-bold text-[#8f3e78] shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition hover:bg-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[#8065ba]"
+            >
+              Photo Treasure Hunt
+            </Link>
           </div>
         </div>
       </section>
@@ -91,7 +104,7 @@ export default function HomePage() {
               Pick a path and start where you are today.
             </p>
 
-            <ul className="landing-path-grid mt-8 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-3 md:gap-5">
+            <ul className="landing-path-grid mt-8 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 sm:gap-5">
               {practicePaths.map((path, index) => (
                 <li key={path.href} className="min-w-0">
                   <Link

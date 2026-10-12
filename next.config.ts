@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
         destination: "/teacher/classes/:id",
         permanent: false,
       },
+      {
+        source: "/rita-photo-hunt",
+        destination: "/photo-treasure-hunt",
+        permanent: false,
+      },
+      {
+        source: "/rita-photo-hunt/:path*",
+        destination: "/photo-treasure-hunt",
+        permanent: false,
+      },
     ];
   },
   async headers() {
@@ -35,6 +45,22 @@ const nextConfig: NextConfig = {
           {
             key: "Cross-Origin-Resource-Policy",
             value: "cross-origin",
+          },
+        ],
+      },
+      {
+        source: "/photo-treasure-hunt/sw.js",
+        headers: [
+          { key: "Service-Worker-Allowed", value: "/" },
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+        ],
+      },
+      {
+        source: "/photo-treasure-hunt/manifest.webmanifest",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/manifest+json; charset=utf-8",
           },
         ],
       },
