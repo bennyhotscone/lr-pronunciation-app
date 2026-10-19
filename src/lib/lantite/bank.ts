@@ -1,17 +1,28 @@
 import { CONVENTION_PASSAGES, CONVENTION_QUESTIONS } from "@/lib/lantite/conventions";
+import { CONVENTION_PASSAGES_EXTRA, CONVENTION_QUESTIONS_B } from "@/lib/lantite/conventions-b";
+import { CONVENTION_QUESTIONS_C } from "@/lib/lantite/conventions-c";
 import { READING_PASSAGES } from "@/lib/lantite/passages";
+import { READING_PASSAGES_EXTRA } from "@/lib/lantite/passages-extra";
 import { READING_QUESTIONS_A } from "@/lib/lantite/reading-a";
 import { READING_QUESTIONS_B } from "@/lib/lantite/reading-b";
+import { READING_QUESTIONS_C } from "@/lib/lantite/reading-c";
+import { READING_QUESTIONS_D } from "@/lib/lantite/reading-d";
+import { READING_QUESTIONS_E } from "@/lib/lantite/reading-e";
 import type { BankItem, LantitePassage, LantiteQuestion } from "@/lib/lantite/types";
 import { BANK_VERSION, CONVENTION_SKILLS, READING_SKILLS, TEXT_TYPES } from "@/lib/lantite/types";
 
 export { BANK_VERSION };
 
-const passages: readonly LantitePassage[] = [...READING_PASSAGES, ...CONVENTION_PASSAGES];
+const passages: readonly LantitePassage[] = [...READING_PASSAGES, ...READING_PASSAGES_EXTRA, ...CONVENTION_PASSAGES, ...CONVENTION_PASSAGES_EXTRA];
 const questions: readonly LantiteQuestion[] = [
   ...READING_QUESTIONS_A,
   ...READING_QUESTIONS_B,
+  ...READING_QUESTIONS_C,
+  ...READING_QUESTIONS_D,
+  ...READING_QUESTIONS_E,
   ...CONVENTION_QUESTIONS,
+  ...CONVENTION_QUESTIONS_B,
+  ...CONVENTION_QUESTIONS_C,
 ];
 
 const passageById = new Map(passages.map((passage) => [passage.id, passage]));

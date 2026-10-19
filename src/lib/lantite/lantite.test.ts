@@ -2,16 +2,36 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { BANK, validateBank } from "@/lib/lantite/bank";
 import { buildAnswerKey, buildStudentPaper, resultsToCsv, studentPaperHidesAnswers } from "@/lib/lantite/export";
-import { generateTest, poolForKind } from "@/lib/lantite/generate";
+import { generateTest } from "@/lib/lantite/generate";
 import { gradeAnswers, summariseHistory } from "@/lib/lantite/grade";
 import { loadStore, serializeStore } from "@/lib/lantite/storage";
 import { elapsedNow, freshTimer, freezeTimer, remainingMs, stopTimer } from "@/lib/lantite/timer";
 import { CONVENTION_SKILLS, READING_SKILLS, TEXT_TYPES } from "@/lib/lantite/types";
 
 describe("LANTITE bank", () => {
-  it("is a reviewed original bank of at least 50 questions", () => {
-    expect(BANK.length).toBeGreaterThanOrEqual(50);
+  it("is a reviewed original bank of at least 700 questions", () => {
+    expect(BANK.length).toBeGreaterThanOrEqual(700);
     expect(validateBank()).toEqual([]);
+    const ids = BANK.map((item) => item.question.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    const stems = BANK.map((item) => item.question.stem.trim());
+    expect(new Set(stems).size).toBe(stems.length);
+    for (const item of BANK) {
+      expect(item.passage.text.trim().length).toBeGreaterThan(40);
+      expect(/[.!?]/.test(item.passage.text)).toBe(true);
+      expect(item.question.options).toHaveLength(4);
+      expect(item.question.correctIndex).toBeGreaterThanOrEqual(0);
+      expect(item.question.correctIndex).toBeLessThanOrEqual(3);
+      expect(item.question.explanation.trim().length).toBeGreaterThan(20);
+      expect(item.question.optionWhy).toHaveLength(4);
+      for (const why of item.question.optionWhy) expect(why.trim().length).toBeGreaterThan(10);
+    }
+    const reading = BANK.filter((item) => item.question.category === "reading").length;
+    const conventions = BANK.filter((item) => item.question.category === "conventions").length;
+    expect(reading).toBeGreaterThanOrEqual(450);
+    expect(conventions).toBeGreaterThanOrEqual(250);
+    const pitfalls = BANK.filter((item) => item.question.pitfall).length;
+    expect(pitfalls).toBeGreaterThanOrEqual(65);
   });
 
   it("covers every text type and skill", () => {
@@ -37,11 +57,22 @@ describe("LANTITE generator", () => {
     for (const id of pitfalls.questionIds) expect(byId.get(id)?.pitfall).not.toBeNull();
   });
 
+  it("fills 65 questions for reading, conventions, mixed, pitfalls and exam", () => {
+    for (const kind of ["reading", "conventions", "mixed", "pitfalls", "exam"] as const) {
+      const generated = generateTest({ kind, count: 65, difficulty: "standard", seed: 1 });
+      expect(generated.shortfall, kind).toBe(0);
+      expect(generated.questionIds.length, kind).toBe(65);
+    }
+  });
+
   it("reports a shortfall instead of inventing items", () => {
-    const generated = generateTest({ kind: "conventions", count: 65, difficulty: "standard", seed: 1 });
-    expect(generated.questionIds.length).toBe(poolForKind("conventions").length);
-    expect(generated.shortfall).toBeGreaterThan(0);
-    expect(generated.questionIds.length).toBeLessThan(65);
+    const source = BANK.filter((item) => item.question.category === "reading")
+      .slice(0, 3)
+      .map((item) => item.question);
+    const generated = generateTest({ kind: "reading", count: 10, difficulty: "standard", seed: 1 }, source);
+    expect(generated.questionIds.length).toBe(3);
+    expect(generated.shortfall).toBe(7);
+    expect(generated.questionIds.length).toBeLessThan(10);
   });
 
   it("builds a 65-question exam from the bank", () => {

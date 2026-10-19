@@ -24,7 +24,7 @@ const practicePaths = [
     href: "/lantite",
     title: "LANTITE Literacy Practice",
     description:
-      "Reading and writing-convention practice. No account. Answers stay on this device.",
+      "700 original reading and writing-convention questions. No account. Answers stay on this device.",
     cta: "Start practice",
   },
   {

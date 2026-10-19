@@ -214,7 +214,7 @@ export const CONVENTION_QUESTIONS: readonly LantiteQuestion[] = [
     difficulty: "standard",
     tags: ["agreement", "set"],
     pitfall: { id: "agreement-intervening", label: "Letting a nearby noun choose the verb" },
-    stem: "Which revision agrees in number?",
+    stem: "Which revision of the campus results note agrees in number?",
     options: [
       "The set of results from the two campuses is ready for you to review on Thursday.",
       "The set of results from the two campuses are ready for you to review on Thursday.",
@@ -239,7 +239,7 @@ export const CONVENTION_QUESTIONS: readonly LantiteQuestion[] = [
     difficulty: "easy",
     tags: ["agreement", "quality"],
     pitfall: { id: "agreement-intervening", label: "Letting a nearby noun choose the verb" },
-    stem: "Which revision agrees in number?",
+    stem: "Which revision of the report-quality line agrees in number?",
     options: [
       "The quality of the student reports has improved since the checklist was introduced.",
       "The quality of the student reports have improved since the checklist was introduced.",
@@ -263,7 +263,7 @@ export const CONVENTION_QUESTIONS: readonly LantiteQuestion[] = [
     difficulty: "easy",
     tags: ["agreement", "there"],
     pitfall: { id: "there-is-plural", label: "Using ‘there is’ before a plural subject" },
-    stem: "Which revision agrees in number?",
+    stem: "Which revision of the attendance draft agrees in number?",
     options: [
       "There are several issues in the attendance draft that the coordinator still needs to check.",
       "There is several issues in the attendance draft that the coordinator still needs to check.",
@@ -287,7 +287,7 @@ export const CONVENTION_QUESTIONS: readonly LantiteQuestion[] = [
     difficulty: "standard",
     tags: ["agreement", "number"],
     pitfall: { id: "agreement-intervening", label: "Letting a nearby noun choose the verb" },
-    stem: "Which revision agrees in number?",
+    stem: "Which revision of the absence-count note agrees in number?",
     options: [
       "The number of unexplained absences has risen since the start of term.",
       "The number of unexplained absences have risen since the start of term.",

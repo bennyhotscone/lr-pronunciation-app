@@ -19,7 +19,7 @@ export const TIMER_NOTICE =
   "Timed sittings use a practice allowance for this tool. The allowance is not an official test duration.";
 
 export const BANK_NOTICE =
-  "Each test is drawn from a fixed, original practice bank. It does not generate new questions, and it will not repeat an item inside one test.";
+  "Each test is drawn from a fixed bank of 700 original practice questions. It does not generate new questions, and it will not repeat an item inside one test.";
 
 export const TEXT_TYPE_LABELS: Record<TextType, string> = {
   "research-summary": "Research summary",
