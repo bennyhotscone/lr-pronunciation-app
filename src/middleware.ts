@@ -4,8 +4,8 @@ import { authConfig } from "@/auth.config";
 export default NextAuth(authConfig).auth;
 
 export const config = {
+  // /photo-treasure-hunt and /lantite stay public. Do not add them here.
   matcher: [
-    // /photo-treasure-hunt stays public. Do not add it here.
     "/portal/:path*",
     "/teacher/:path*",
     "/login",

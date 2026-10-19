@@ -21,6 +21,13 @@ const practicePaths = [
     cta: "Start Practising",
   },
   {
+    href: "/lantite",
+    title: "LANTITE Literacy Practice",
+    description:
+      "Reading and writing-convention practice. No account. Answers stay on this device.",
+    cta: "Start practice",
+  },
+  {
     href: "/photo-treasure-hunt",
     title: "Photo Treasure Hunt",
     description:
@@ -62,8 +69,8 @@ export default function HomePage() {
             className="landing-rise mt-3 max-w-md text-base leading-relaxed text-white/75 sm:text-lg"
             style={{ animationDelay: "160ms" }}
           >
-            Pronunciation practice, vocabulary games, and your student desk —
-            together.
+            Pronunciation practice, vocabulary games, literacy practice, and your
+            student desk — together.
           </p>
           <div
             className="landing-rise mt-9 flex flex-wrap items-center gap-3.5"
@@ -86,6 +93,12 @@ export default function HomePage() {
               className="touch-target inline-flex min-h-12 items-center justify-center rounded-[18px] border-2 border-[#efc5dd] bg-[#fff0f7] px-7 py-3.5 text-base font-bold text-[#8f3e78] shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition hover:bg-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[#8065ba]"
             >
               Photo Treasure Hunt
+            </Link>
+            <Link
+              href="/lantite"
+              className="touch-target inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-[#d7e8c8] bg-[#f4fbe8] px-7 py-3.5 text-base font-bold text-[#245c32] shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition hover:bg-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-white"
+            >
+              LANTITE Literacy Practice
             </Link>
           </div>
         </div>
